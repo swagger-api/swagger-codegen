@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -28,35 +27,27 @@ import javax.validation.Valid;
 
 public class Dog extends Animal {
 
-  
   @JsonProperty("breed")
+
   private String breed = null;
-  
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
   
+
   /**
   * Get breed
   * @return breed
   **/
-  
-
-
-
-
-
-  
-  @Schema(description = "")
+    @Schema(description = "")
   public String getBreed() {
     return breed;
   }
   public void setBreed(String breed) {
     this.breed = breed;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -74,7 +65,7 @@ public class Dog extends Animal {
   public int hashCode() {
     return java.util.Objects.hash(breed, super.hashCode());
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -96,8 +87,4 @@ public class Dog extends Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

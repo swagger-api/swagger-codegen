@@ -28,14 +28,6 @@ public class ReadOnlyFirst  {
     return bar;
   }
 
-  public void setBar(String bar) {
-    this.bar = bar;
-  }
-
-  public ReadOnlyFirst bar(String bar) {
-    this.bar = bar;
-    return this;
-  }
 
  /**
    * Get baz

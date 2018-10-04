@@ -32,10 +32,13 @@ import org.joda.time.DateTime;
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
+
   @SerializedName("uuid")
   private UUID uuid = null;
+
   @SerializedName("dateTime")
   private DateTime dateTime = null;
+
   @SerializedName("map")
   private Map<String, Animal> map = null;
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {

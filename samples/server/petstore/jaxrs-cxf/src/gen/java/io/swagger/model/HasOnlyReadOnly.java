@@ -28,14 +28,6 @@ public class HasOnlyReadOnly  {
     return bar;
   }
 
-  public void setBar(String bar) {
-    this.bar = bar;
-  }
-
-  public HasOnlyReadOnly bar(String bar) {
-    this.bar = bar;
-    return this;
-  }
 
  /**
    * Get foo
@@ -46,14 +38,6 @@ public class HasOnlyReadOnly  {
     return foo;
   }
 
-  public void setFoo(String foo) {
-    this.foo = foo;
-  }
-
-  public HasOnlyReadOnly foo(String foo) {
-    this.foo = foo;
-    return this;
-  }
 
 
   @Override

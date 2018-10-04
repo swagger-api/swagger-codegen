@@ -90,7 +90,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     @Suppress("UNCHECKED_CAST")
     fun findPetsByStatus(status: kotlin.Array<kotlin.String>) : kotlin.Array<Pet> {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf("status" to toMultiValue(status.toList(), ""))
+        val localVariableQuery: MultiValueMap = mapOf("status" to toMultiValue(status.toList(), "multi"))
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
@@ -122,7 +122,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
     @Suppress("UNCHECKED_CAST")
     fun findPetsByTags(tags: kotlin.Array<kotlin.String>) : kotlin.Array<Pet> {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf("tags" to toMultiValue(tags.toList(), ""))
+        val localVariableQuery: MultiValueMap = mapOf("tags" to toMultiValue(tags.toList(), "multi"))
         val localVariableHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,

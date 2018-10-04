@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -34,25 +33,23 @@ public class Pet {
 
   @SerializedName("id")
   private Long id = null;
-  
+
   @SerializedName("category")
   private Category category = null;
-  
+
   @SerializedName("name")
   private String name = null;
-  
+
   @SerializedName("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
-  
+
   @SerializedName("tags")
   private List<Tag> tags = null;
-  
   /**
    * pet status in the store
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
-    
     AVAILABLE("available"),
     PENDING("pending"),
     SOLD("sold");
@@ -62,7 +59,6 @@ public class Pet {
     StatusEnum(String value) {
       this.value = value;
     }
-    
     public String getValue() {
       return value;
     }
@@ -71,7 +67,6 @@ public class Pet {
     public String toString() {
       return String.valueOf(value);
     }
-    
     public static StatusEnum fromValue(String text) {
       for (StatusEnum b : StatusEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -80,7 +75,6 @@ public class Pet {
       }
       return null;
     }
-    
     public static class Adapter extends TypeAdapter<StatusEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
@@ -94,22 +88,19 @@ public class Pet {
       }
     }
   }
-  
   @SerializedName("status")
   private StatusEnum status = null;
-  
   public Pet id(Long id) {
     this.id = id;
     return this;
   }
 
   
+
   /**
   * Get id
   * @return id
   **/
-  
-  
   @Schema(description = "")
   public Long getId() {
     return id;
@@ -117,19 +108,17 @@ public class Pet {
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Pet category(Category category) {
     this.category = category;
     return this;
   }
 
   
+
   /**
   * Get category
   * @return category
   **/
-  
-  
   @Schema(description = "")
   public Category getCategory() {
     return category;
@@ -137,19 +126,17 @@ public class Pet {
   public void setCategory(Category category) {
     this.category = category;
   }
-  
   public Pet name(String name) {
     this.name = name;
     return this;
   }
 
   
+
   /**
   * Get name
   * @return name
   **/
-  
-  
   @Schema(example = "doggie", required = true, description = "")
   public String getName() {
     return name;
@@ -157,24 +144,20 @@ public class Pet {
   public void setName(String name) {
     this.name = name;
   }
-  
   public Pet photoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
     return this;
   }
 
   public Pet addPhotoUrlsItem(String photoUrlsItem) {
-    
     this.photoUrls.add(photoUrlsItem);
     return this;
   }
-  
+
   /**
   * Get photoUrls
   * @return photoUrls
   **/
-  
-  
   @Schema(required = true, description = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -182,28 +165,23 @@ public class Pet {
   public void setPhotoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
   }
-  
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
     return this;
   }
 
   public Pet addTagsItem(Tag tagsItem) {
-    
     if (this.tags == null) {
       this.tags = new ArrayList<Tag>();
     }
-    
     this.tags.add(tagsItem);
     return this;
   }
-  
+
   /**
   * Get tags
   * @return tags
   **/
-  
-  
   @Schema(description = "")
   public List<Tag> getTags() {
     return tags;
@@ -211,19 +189,17 @@ public class Pet {
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
-  
   public Pet status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
+
   /**
   * pet status in the store
   * @return status
   **/
-  
-  
   @Schema(description = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
@@ -231,7 +207,6 @@ public class Pet {
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -253,7 +228,7 @@ public class Pet {
   public int hashCode() {
     return java.util.Objects.hash(id, category, name, photoUrls, tags, status);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -280,8 +255,4 @@ public class Pet {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

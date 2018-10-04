@@ -25,9 +25,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Tag {
 
   @JsonProperty("id")
+
   private Long id = null;
 
   @JsonProperty("name")
+
   private String name = null;
   public Tag id(Long id) {
     this.id = id;

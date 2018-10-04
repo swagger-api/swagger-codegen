@@ -188,7 +188,7 @@
     <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
   <h2>Access</h2>
     <ol>
-      <li>APIKey KeyParamName:api_key KeyInQuery: KeyInHeader:</li>
+      <li>APIKey KeyParamName:api_key KeyInQuery:false KeyInHeader:true</li>
       <li>OAuth AuthorizationUrl:http://petstore.swagger.io/api/oauth/dialogTokenUrl:</li>
     </ol>
 
@@ -261,7 +261,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">405</h4>
     Invalid input
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="deletePet"></a>
@@ -293,7 +293,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">400</h4>
     Invalid pet value
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="findPetsByStatus"></a>
@@ -316,8 +316,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      array[<a href="#Pet">Pet</a>]
       
-      array[Pet]
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -337,7 +337,7 @@
         
     <h4 class="field-label">400</h4>
     Invalid status value
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="findPetsByTags"></a>
@@ -360,8 +360,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      array[<a href="#Pet">Pet</a>]
       
-      array[Pet]
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -381,7 +381,7 @@
         
     <h4 class="field-label">400</h4>
     Invalid tag value
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="getPetById"></a>
@@ -404,8 +404,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      <a href="#Pet">Pet</a>
       
-      Pet
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -422,13 +422,13 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        
+        <a href="#Pet">Pet</a>
     <h4 class="field-label">400</h4>
     Invalid ID supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     Pet not found
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="updatePet"></a>
@@ -464,13 +464,13 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">400</h4>
     Invalid ID supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     Pet not found
-        
+        <a href="#"></a>
     <h4 class="field-label">405</h4>
     Validation exception
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="updatePetWithForm"></a>
@@ -511,7 +511,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">405</h4>
     Invalid input
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="uploadFile"></a>
@@ -546,8 +546,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      <a href="#ApiResponse">ApiResponse</a>
       
-      ApiResponse
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -563,7 +563,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        
+        <a href="#ApiResponse">ApiResponse</a>
   </div> <!-- method -->
   <hr/>
   <h1><a name="Store">Store</a></h1>
@@ -593,10 +593,10 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">400</h4>
     Invalid ID supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     Order not found
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="getInventory"></a>
@@ -654,8 +654,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      <a href="#Order">Order</a>
       
-      Order
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -672,13 +672,13 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        
+        <a href="#Order">Order</a>
     <h4 class="field-label">400</h4>
     Invalid ID supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     Order not found
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="placeOrder"></a>
@@ -707,8 +707,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      <a href="#Order">Order</a>
       
-      Order
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -725,10 +725,10 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        
+        <a href="#Order">Order</a>
     <h4 class="field-label">400</h4>
     Invalid Order
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <h1><a name="User">User</a></h1>
@@ -764,7 +764,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">default</h4>
     successful operation
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="createUsersWithArrayInput"></a>
@@ -799,7 +799,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">default</h4>
     successful operation
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="createUsersWithListInput"></a>
@@ -834,7 +834,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">default</h4>
     successful operation
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="deleteUser"></a>
@@ -863,10 +863,10 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">400</h4>
     Invalid username supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     User not found
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="getUserByName"></a>
@@ -889,8 +889,8 @@
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      <a href="#User">User</a>
       
-      User
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -907,13 +907,13 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        
+        <a href="#User">User</a>
     <h4 class="field-label">400</h4>
     Invalid username supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     User not found
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="loginUser"></a>
@@ -956,10 +956,10 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        
+        <a href="#String">String</a>
     <h4 class="field-label">400</h4>
     Invalid username/password supplied
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="logoutUser"></a>
@@ -983,7 +983,7 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">default</h4>
     successful operation
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="updateUser"></a>
@@ -1023,10 +1023,10 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">400</h4>
     Invalid user supplied
-        
+        <a href="#"></a>
     <h4 class="field-label">404</h4>
     User not found
-        
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
 

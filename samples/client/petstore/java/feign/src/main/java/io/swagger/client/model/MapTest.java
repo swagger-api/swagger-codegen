@@ -28,6 +28,7 @@ import java.util.Map;
 public class MapTest {
 
   @JsonProperty("map_map_of_string")
+
   private Map<String, Map<String, String>> mapMapOfString = null;
   /**
    * Gets or Sets inner
@@ -62,13 +63,15 @@ public class MapTest {
 
   }
   @JsonProperty("map_of_enum_string")
+
   private Map<String, InnerEnum> mapOfEnumString = null;
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;
   }
 
-    public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
+  
+  public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
     if (this.mapMapOfString == null) {
       this.mapMapOfString = new HashMap<>();
     }
@@ -91,7 +94,8 @@ public class MapTest {
     return this;
   }
 
-    public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
+  
+  public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
     if (this.mapOfEnumString == null) {
       this.mapOfEnumString = new HashMap<>();
     }
@@ -148,6 +152,5 @@ public class MapTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

@@ -25,13 +25,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class SpecialModelName {
 
   @JsonProperty("$special[property.name]")
+
   private Long $specialPropertyName = null;
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
-    
+  
+
   /**
   * Get $specialPropertyName
   * @return $specialPropertyName
@@ -80,6 +82,5 @@ public class SpecialModelName {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

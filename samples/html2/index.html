@@ -1053,8 +1053,8 @@ Pet *body = ; //
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Add a new pet to the store
-[apiInstance addPetWithCompletionHandler: :body
-              ^(NSError* error) {
+[apiInstance addPetWith:body
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -1071,6 +1071,8 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var body = ; // {{Pet}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1078,7 +1080,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.addPet(bodycallback);
+api.addPet(body, callback);
 </code></pre>
                             </div>
 
@@ -1328,9 +1330,9 @@ String *apiKey = ; //  (optional)
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Deletes a pet
-[apiInstance deletePetWithCompletionHandler: :petId
+[apiInstance deletePetWith:petId
     apiKey:apiKey
-              ^(NSError* error) {
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -1347,6 +1349,10 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var petId = ; // {{Integer}} Pet id to delete
+var opts = { 
+  'apiKey':  // {{String}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1354,7 +1360,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.deletePet(petIdcallback);
+api.deletePet(petId, opts, callback);
 </code></pre>
                             </div>
 
@@ -1629,8 +1635,8 @@ array[String] *status = ; // Status values that need to be considered for filter
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Finds Pets by status
-[apiInstance findPetsByStatusWithCompletionHandler: :status
-              ^(array[Pet] output, NSError* error) {
+[apiInstance findPetsByStatusWith:status
+              completionHandler: ^(array[Pet] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1650,6 +1656,8 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var status = ; // {{array[String]}} Status values that need to be considered for filter
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1657,7 +1665,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.findPetsByStatus(statuscallback);
+api.findPetsByStatus(status, callback);
 </code></pre>
                             </div>
 
@@ -1964,8 +1972,8 @@ array[String] *tags = ; // Tags to filter by
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Finds Pets by tags
-[apiInstance findPetsByTagsWithCompletionHandler: :tags
-              ^(array[Pet] output, NSError* error) {
+[apiInstance findPetsByTagsWith:tags
+              completionHandler: ^(array[Pet] output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1985,6 +1993,8 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var tags = ; // {{array[String]}} Tags to filter by
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1992,7 +2002,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.findPetsByTags(tagscallback);
+api.findPetsByTags(tags, callback);
 </code></pre>
                             </div>
 
@@ -2303,8 +2313,8 @@ Integer *petId = ; // ID of pet to return
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Find pet by ID
-[apiInstance getPetByIdWithCompletionHandler: :petId
-              ^(Pet output, NSError* error) {
+[apiInstance getPetByIdWith:petId
+              completionHandler: ^(Pet output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2326,6 +2336,8 @@ api_key.apiKey = "YOUR API KEY"
 //api_key.apiKeyPrefix['api_key'] = "Token"
 
 var api = new SwaggerPetstore.PetApi()
+var petId = ; // {{Integer}} ID of pet to return
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2333,7 +2345,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getPetById(petIdcallback);
+api.getPetById(petId, callback);
 </code></pre>
                             </div>
 
@@ -2651,8 +2663,8 @@ Pet *body = ; //
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Update an existing pet
-[apiInstance updatePetWithCompletionHandler: :body
-              ^(NSError* error) {
+[apiInstance updatePetWith:body
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -2669,6 +2681,8 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var body = ; // {{Pet}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2676,7 +2690,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.updatePet(bodycallback);
+api.updatePet(body, callback);
 </code></pre>
                             </div>
 
@@ -2945,10 +2959,10 @@ String *status = ; //  (optional)
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // Updates a pet in the store with form data
-[apiInstance updatePetWithFormWithCompletionHandler: :petId
+[apiInstance updatePetWithFormWith:petId
     name:name
     status:status
-              ^(NSError* error) {
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -2965,6 +2979,8 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var petId = ; // {{Integer}} ID of pet that needs to be updated
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -2972,7 +2988,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.updatePetWithForm(petIdcallback);
+api.updatePetWithForm(petId, callback);
 </code></pre>
                             </div>
 
@@ -3273,10 +3289,10 @@ File *file = file_example; //  (optional)
 PetApi *apiInstance = [[PetApi alloc] init];
 
 // uploads an image
-[apiInstance uploadFileWithCompletionHandler: :petId
+[apiInstance uploadFileWith:petId
     additionalMetadata:additionalMetadata
     file:file
-              ^(ApiResponse output, NSError* error) {
+              completionHandler: ^(ApiResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3296,6 +3312,8 @@ var petstore_auth = defaultClient.authentications['petstore_auth'];
 petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
+var petId = ; // {{Integer}} ID of pet to update
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3303,7 +3321,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.uploadFile(petIdcallback);
+api.uploadFile(petId, callback);
 </code></pre>
                             </div>
 
@@ -3597,8 +3615,7 @@ import java.util.*;
 public class StoreApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         StoreApi apiInstance = new StoreApi();
         String orderId = ; // String | ID of the order that needs to be deleted
         try {
@@ -3633,14 +3650,13 @@ public class StoreApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Store-deleteOrder-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-String *orderId = ; // ID of the order that needs to be deleted
+                              <pre class="prettyprint"><code class="language-cpp">String *orderId = ; // ID of the order that needs to be deleted
 
 StoreApi *apiInstance = [[StoreApi alloc] init];
 
 // Delete purchase order by ID
-[apiInstance deleteOrderWithCompletionHandler: :orderId
-              ^(NSError* error) {
+[apiInstance deleteOrderWith:orderId
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -3650,9 +3666,10 @@ StoreApi *apiInstance = [[StoreApi alloc] init];
 
                             <div class="tab-pane" id="examples-Store-deleteOrder-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.StoreApi()
+var orderId = ; // {{String}} ID of the order that needs to be deleted
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3660,7 +3677,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.deleteOrder(orderIdcallback);
+api.deleteOrder(orderId, callback);
 </code></pre>
                             </div>
 
@@ -3680,7 +3697,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new StoreApi();
             var orderId = new String(); // String | ID of the order that needs to be deleted
@@ -3704,7 +3720,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $orderId = ; // String | ID of the order that needs to be deleted
 
@@ -3720,7 +3735,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::StoreApi;
-
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $orderId = ; # String | ID of the order that needs to be deleted
@@ -3739,7 +3753,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.StoreApi()
@@ -4153,8 +4166,7 @@ import java.util.*;
 public class StoreApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         StoreApi apiInstance = new StoreApi();
         Integer orderId = ; // Integer | ID of pet that needs to be fetched
         try {
@@ -4191,14 +4203,13 @@ public class StoreApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Store-getOrderById-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-Integer *orderId = ; // ID of pet that needs to be fetched
+                              <pre class="prettyprint"><code class="language-cpp">Integer *orderId = ; // ID of pet that needs to be fetched
 
 StoreApi *apiInstance = [[StoreApi alloc] init];
 
 // Find purchase order by ID
-[apiInstance getOrderByIdWithCompletionHandler: :orderId
-              ^(Order output, NSError* error) {
+[apiInstance getOrderByIdWith:orderId
+              completionHandler: ^(Order output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4211,9 +4222,10 @@ StoreApi *apiInstance = [[StoreApi alloc] init];
 
                             <div class="tab-pane" id="examples-Store-getOrderById-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.StoreApi()
+var orderId = ; // {{Integer}} ID of pet that needs to be fetched
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -4221,7 +4233,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getOrderById(orderIdcallback);
+api.getOrderById(orderId, callback);
 </code></pre>
                             </div>
 
@@ -4241,7 +4253,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new StoreApi();
             var orderId = new Integer(); // Integer | ID of pet that needs to be fetched
@@ -4266,7 +4277,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $orderId = ; // Integer | ID of pet that needs to be fetched
 
@@ -4283,7 +4293,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::StoreApi;
-
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $orderId = ; # Integer | ID of pet that needs to be fetched
@@ -4303,7 +4312,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.StoreApi()
@@ -4475,8 +4483,7 @@ import java.util.*;
 public class StoreApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         StoreApi apiInstance = new StoreApi();
         Order body = ; // Order | 
         try {
@@ -4513,14 +4520,13 @@ public class StoreApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Store-placeOrder-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-Order *body = ; // 
+                              <pre class="prettyprint"><code class="language-cpp">Order *body = ; // 
 
 StoreApi *apiInstance = [[StoreApi alloc] init];
 
 // Place an order for a pet
-[apiInstance placeOrderWithCompletionHandler: :body
-              ^(Order output, NSError* error) {
+[apiInstance placeOrderWith:body
+              completionHandler: ^(Order output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4533,9 +4539,10 @@ StoreApi *apiInstance = [[StoreApi alloc] init];
 
                             <div class="tab-pane" id="examples-Store-placeOrder-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.StoreApi()
+var body = ; // {{Order}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -4543,7 +4550,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.placeOrder(bodycallback);
+api.placeOrder(body, callback);
 </code></pre>
                             </div>
 
@@ -4563,7 +4570,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new StoreApi();
             var body = new Order(); // Order | 
@@ -4588,7 +4594,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $body = ; // Order | 
 
@@ -4605,7 +4610,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::StoreApi;
-
 
 my $api_instance = WWW::SwaggerClient::StoreApi->new();
 my $body = WWW::SwaggerClient::Object::Order->new(); # Order | 
@@ -4625,7 +4629,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.StoreApi()
@@ -4793,8 +4796,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         User body = ; // User | 
         try {
@@ -4829,14 +4831,13 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-createUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-User *body = ; // 
+                              <pre class="prettyprint"><code class="language-cpp">User *body = ; // 
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Create user
-[apiInstance createUserWithCompletionHandler: :body
-              ^(NSError* error) {
+[apiInstance createUserWith:body
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -4846,9 +4847,10 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-createUser-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var body = ; // {{User}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -4856,7 +4858,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.createUser(bodycallback);
+api.createUser(body, callback);
 </code></pre>
                             </div>
 
@@ -4876,7 +4878,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var body = new User(); // User | 
@@ -4900,7 +4901,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $body = ; // User | 
 
@@ -4916,7 +4916,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $body = WWW::SwaggerClient::Object::User->new(); # User | 
@@ -4935,7 +4934,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -5047,8 +5045,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         array[User] body = ; // array[User] | 
         try {
@@ -5083,14 +5080,13 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-createUsersWithArrayInput-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-array[User] *body = ; // 
+                              <pre class="prettyprint"><code class="language-cpp">array[User] *body = ; // 
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Creates list of users with given input array
-[apiInstance createUsersWithArrayInputWithCompletionHandler: :body
-              ^(NSError* error) {
+[apiInstance createUsersWithArrayInputWith:body
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -5100,9 +5096,10 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-createUsersWithArrayInput-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var body = ; // {{array[User]}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5110,7 +5107,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.createUsersWithArrayInput(bodycallback);
+api.createUsersWithArrayInput(body, callback);
 </code></pre>
                             </div>
 
@@ -5130,7 +5127,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var body = new array[User](); // array[User] | 
@@ -5154,7 +5150,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $body = ; // array[User] | 
 
@@ -5170,7 +5165,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $body = [WWW::SwaggerClient::Object::array[User]->new()]; # array[User] | 
@@ -5189,7 +5183,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -5301,8 +5294,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         array[User] body = ; // array[User] | 
         try {
@@ -5337,14 +5329,13 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-createUsersWithListInput-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-array[User] *body = ; // 
+                              <pre class="prettyprint"><code class="language-cpp">array[User] *body = ; // 
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Creates list of users with given input array
-[apiInstance createUsersWithListInputWithCompletionHandler: :body
-              ^(NSError* error) {
+[apiInstance createUsersWithListInputWith:body
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -5354,9 +5345,10 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-createUsersWithListInput-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var body = ; // {{array[User]}} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5364,7 +5356,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.createUsersWithListInput(bodycallback);
+api.createUsersWithListInput(body, callback);
 </code></pre>
                             </div>
 
@@ -5384,7 +5376,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var body = new array[User](); // array[User] | 
@@ -5408,7 +5399,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $body = ; // array[User] | 
 
@@ -5424,7 +5414,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $body = [WWW::SwaggerClient::Object::array[User]->new()]; # array[User] | 
@@ -5443,7 +5432,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -5555,8 +5543,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         String username = ; // String | The name that needs to be deleted
         try {
@@ -5591,14 +5578,13 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-deleteUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-String *username = ; // The name that needs to be deleted
+                              <pre class="prettyprint"><code class="language-cpp">String *username = ; // The name that needs to be deleted
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Delete user
-[apiInstance deleteUserWithCompletionHandler: :username
-              ^(NSError* error) {
+[apiInstance deleteUserWith:username
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -5608,9 +5594,10 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-deleteUser-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var username = ; // {{String}} The name that needs to be deleted
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5618,7 +5605,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.deleteUser(usernamecallback);
+api.deleteUser(username, callback);
 </code></pre>
                             </div>
 
@@ -5638,7 +5625,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var username = new String(); // String | The name that needs to be deleted
@@ -5662,7 +5648,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $username = ; // String | The name that needs to be deleted
 
@@ -5678,7 +5663,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $username = ; # String | The name that needs to be deleted
@@ -5697,7 +5681,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -5813,8 +5796,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         String username = ; // String | The name that needs to be fetched. Use user1 for testing. 
         try {
@@ -5851,14 +5833,13 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-getUserByName-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-String *username = ; // The name that needs to be fetched. Use user1 for testing. 
+                              <pre class="prettyprint"><code class="language-cpp">String *username = ; // The name that needs to be fetched. Use user1 for testing. 
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Get user by user name
-[apiInstance getUserByNameWithCompletionHandler: :username
-              ^(User output, NSError* error) {
+[apiInstance getUserByNameWith:username
+              completionHandler: ^(User output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -5871,9 +5852,10 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-getUserByName-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var username = ; // {{String}} The name that needs to be fetched. Use user1 for testing. 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5881,7 +5863,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getUserByName(usernamecallback);
+api.getUserByName(username, callback);
 </code></pre>
                             </div>
 
@@ -5901,7 +5883,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var username = new String(); // String | The name that needs to be fetched. Use user1 for testing. 
@@ -5926,7 +5907,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $username = ; // String | The name that needs to be fetched. Use user1 for testing. 
 
@@ -5943,7 +5923,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $username = ; # String | The name that needs to be fetched. Use user1 for testing. 
@@ -5963,7 +5942,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -6132,8 +6110,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         String username = ; // String | The user name for login
         String password = ; // String | The password for login in clear text
@@ -6172,16 +6149,15 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-loginUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-String *username = ; // The user name for login
+                              <pre class="prettyprint"><code class="language-cpp">String *username = ; // The user name for login
 String *password = ; // The password for login in clear text
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Logs user into the system
-[apiInstance loginUserWithCompletionHandler: :username
+[apiInstance loginUserWith:username
     password:password
-              ^('String' output, NSError* error) {
+              completionHandler: ^('String' output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -6194,9 +6170,11 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-loginUser-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var username = ; // {{String}} The user name for login
+var password = ; // {{String}} The password for login in clear text
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -6204,7 +6182,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.loginUser(username, passwordcallback);
+api.loginUser(username, password, callback);
 </code></pre>
                             </div>
 
@@ -6224,7 +6202,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var username = new String(); // String | The user name for login
@@ -6250,7 +6227,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $username = ; // String | The user name for login
 $password = ; // String | The password for login in clear text
@@ -6268,7 +6244,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $username = ; # String | The user name for login
@@ -6289,7 +6264,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -6371,6 +6345,9 @@ except ApiException as e:
                                   <a data-toggle="tab" href="#responses-loginUser-200-schema">Schema</a>
                                 </li>
 
+                                <li class="">
+                                  <a data-toggle="tab" href="#responses-loginUser-200-headers">Headers</a>
+                                </li>
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
@@ -6429,6 +6406,28 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-loginUser-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                                <div class="tab-pane" id="responses-loginUser-200-headers">
+                                    <table>
+                                        <tr>
+                                            <th width="150px">Name</th>
+                                            <th width="100px">Type</th>
+                                            <th width="100px">Format</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        <tr>
+                                            <td>X-Rate-Limit</td>
+                                            <td>Integer</td>
+                                            <td>int32</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>X-Expires-After</td>
+                                            <td>Date</td>
+                                            <td>date-time</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
 
@@ -6489,8 +6488,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         try {
             apiInstance.logoutUser();
@@ -6523,8 +6521,7 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-logoutUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-
+                              <pre class="prettyprint"><code class="language-cpp">
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Logs out current logged in user session
@@ -6539,7 +6536,6 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-logoutUser-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
 var callback = function(error, data, response) {
@@ -6570,7 +6566,6 @@ namespace Example
         public void main()
         {
 
-
             var apiInstance = new UserApi();
 
             try
@@ -6592,7 +6587,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 
 try {
@@ -6607,7 +6601,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 
@@ -6625,7 +6618,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()
@@ -6703,8 +6695,7 @@ import java.util.*;
 public class UserApiExample {
 
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
+        
         UserApi apiInstance = new UserApi();
         User body = ; // User | 
         String username = ; // String | name that need to be deleted
@@ -6741,16 +6732,15 @@ public class UserApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-User-updateUser-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
-User *body = ; // 
+                              <pre class="prettyprint"><code class="language-cpp">User *body = ; // 
 String *username = ; // name that need to be deleted
 
 UserApi *apiInstance = [[UserApi alloc] init];
 
 // Updated user
-[apiInstance updateUserWithCompletionHandler: :body
+[apiInstance updateUserWith:body
     username:username
-              ^(NSError* error) {
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -6760,9 +6750,11 @@ UserApi *apiInstance = [[UserApi alloc] init];
 
                             <div class="tab-pane" id="examples-User-updateUser-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var SwaggerPetstore = require('swagger_petstore');
-var defaultClient = SwaggerPetstore.ApiClient.instance;
 
 var api = new SwaggerPetstore.UserApi()
+var body = ; // {{User}} 
+var username = ; // {{String}} name that need to be deleted
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -6770,7 +6762,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.updateUser(body, usernamecallback);
+api.updateUser(body, username, callback);
 </code></pre>
                             </div>
 
@@ -6790,7 +6782,6 @@ namespace Example
     {
         public void main()
         {
-
 
             var apiInstance = new UserApi();
             var body = new User(); // User | 
@@ -6815,7 +6806,6 @@ namespace Example
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
 $api_instance = new Swagger\Client\Api{{classname}}();
 $body = ; // User | 
 $username = ; // String | name that need to be deleted
@@ -6832,7 +6822,6 @@ try {
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::UserApi;
-
 
 my $api_instance = WWW::SwaggerClient::UserApi->new();
 my $body = WWW::SwaggerClient::Object::User->new(); # User | 
@@ -6852,7 +6841,6 @@ import time
 import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
-
 
 # create an instance of the API class
 api_instance = swagger_client.UserApi()

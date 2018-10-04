@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -27,33 +26,30 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "Tag")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Tag")
-public class Tag {
+@JacksonXmlRootElement(localName = "Tag")public class Tag {
 
-  
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
   @XmlElement(name="id")
+
   private Long id = null;
-  
-  
+
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
   @XmlElement(name="name")
+
   private String name = null;
-  
   public Tag id(Long id) {
     this.id = id;
     return this;
   }
 
   
+
   /**
   * Get id
   * @return id
   **/
-  
-  
   @Schema(description = "")
   public Long getId() {
     return id;
@@ -61,19 +57,17 @@ public class Tag {
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Tag name(String name) {
     this.name = name;
     return this;
   }
 
   
+
   /**
   * Get name
   * @return name
   **/
-  
-  
   @Schema(description = "")
   public String getName() {
     return name;
@@ -81,7 +75,6 @@ public class Tag {
   public void setName(String name) {
     this.name = name;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -99,7 +92,7 @@ public class Tag {
   public int hashCode() {
     return java.util.Objects.hash(id, name);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -122,8 +115,4 @@ public class Tag {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

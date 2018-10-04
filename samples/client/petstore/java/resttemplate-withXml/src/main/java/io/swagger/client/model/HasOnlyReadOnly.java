@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -27,45 +26,35 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "HasOnlyReadOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "HasOnlyReadOnly")
-public class HasOnlyReadOnly {
+@JacksonXmlRootElement(localName = "HasOnlyReadOnly")public class HasOnlyReadOnly {
 
-  
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")
   @XmlElement(name="bar")
+
   private String bar = null;
-  
-  
+
   @JsonProperty("foo")
   @JacksonXmlProperty(localName = "foo")
   @XmlElement(name="foo")
+
   private String foo = null;
-  
-  
   /**
   * Get bar
   * @return bar
   **/
-  
-  
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  
-  
   /**
   * Get foo
   * @return foo
   **/
-  
-  
   @Schema(description = "")
   public String getFoo() {
     return foo;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -83,7 +72,7 @@ public class HasOnlyReadOnly {
   public int hashCode() {
     return java.util.Objects.hash(bar, foo);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -106,8 +95,4 @@ public class HasOnlyReadOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

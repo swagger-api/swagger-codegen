@@ -10,13 +10,10 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
-
-
 
 import java.io.IOException;
 import com.google.gson.TypeAdapter;
@@ -24,19 +21,13 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-
 /**
  * Gets or Sets OuterEnum
  */
-
 @JsonAdapter(OuterEnum.Adapter.class)
-
 public enum OuterEnum {
-  
   PLACED("placed"),
-  
   APPROVED("approved"),
-  
   DELIVERED("delivered");
 
   private String value;
@@ -44,7 +35,6 @@ public enum OuterEnum {
   OuterEnum(String value) {
     this.value = value;
   }
-
 
   public String getValue() {
     return value;
@@ -55,7 +45,6 @@ public enum OuterEnum {
     return String.valueOf(value);
   }
 
-
   public static OuterEnum fromValue(String text) {
     for (OuterEnum b : OuterEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
@@ -64,7 +53,6 @@ public enum OuterEnum {
     }
     return null;
   }
-
 
   public static class Adapter extends TypeAdapter<OuterEnum> {
     @Override
@@ -78,8 +66,4 @@ public enum OuterEnum {
       return OuterEnum.fromValue(String.valueOf(value));
     }
   }
-
 }
-
-
-

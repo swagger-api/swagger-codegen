@@ -132,7 +132,7 @@ public class PetApi {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "status", status));
+        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase()), "status", status));
 
         final String[] accepts = { 
             "application/xml", "application/json"
@@ -166,7 +166,7 @@ public class PetApi {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "tags", tags));
+        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase()), "tags", tags));
 
         final String[] accepts = { 
             "application/xml", "application/json"

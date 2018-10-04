@@ -25,9 +25,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ReadOnlyFirst {
 
   @JsonProperty("bar")
+
   private String bar = null;
 
   @JsonProperty("baz")
+
   private String baz = null;
   /**
   * Get bar
@@ -42,7 +44,8 @@ public class ReadOnlyFirst {
     return this;
   }
 
-    
+  
+
   /**
   * Get baz
   * @return baz
@@ -93,6 +96,5 @@ public class ReadOnlyFirst {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

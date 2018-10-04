@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -28,38 +27,35 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "Order")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Order")
-public class Order {
+@JacksonXmlRootElement(localName = "Order")public class Order {
 
-  
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
   @XmlElement(name="id")
+
   private Long id = null;
-  
-  
+
   @JsonProperty("petId")
   @JacksonXmlProperty(localName = "petId")
   @XmlElement(name="petId")
+
   private Long petId = null;
-  
-  
+
   @JsonProperty("quantity")
   @JacksonXmlProperty(localName = "quantity")
   @XmlElement(name="quantity")
+
   private Integer quantity = null;
-  
-  
+
   @JsonProperty("shipDate")
   @JacksonXmlProperty(localName = "shipDate")
   @XmlElement(name="shipDate")
+
   private OffsetDateTime shipDate = null;
-  
   /**
    * Order Status
    */
   public enum StatusEnum {
-    
     PLACED("placed"),
     APPROVED("approved"),
     DELIVERED("delivered");
@@ -69,9 +65,7 @@ public class Order {
     StatusEnum(String value) {
       this.value = value;
     }
-    
     @JsonValue
-    
     public String getValue() {
       return value;
     }
@@ -80,9 +74,7 @@ public class Order {
     public String toString() {
       return String.valueOf(value);
     }
-    
     @JsonCreator
-    
     public static StatusEnum fromValue(String text) {
       for (StatusEnum b : StatusEnum.values()) {
         if (String.valueOf(b.value).equals(text)) {
@@ -91,33 +83,30 @@ public class Order {
       }
       return null;
     }
-    
+
   }
-  
-  
   @JsonProperty("status")
   @JacksonXmlProperty(localName = "status")
   @XmlElement(name="status")
+
   private StatusEnum status = null;
-  
-  
+
   @JsonProperty("complete")
   @JacksonXmlProperty(localName = "complete")
   @XmlElement(name="complete")
+
   private Boolean complete = false;
-  
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
   
+
   /**
   * Get id
   * @return id
   **/
-  
-  
   @Schema(description = "")
   public Long getId() {
     return id;
@@ -125,19 +114,17 @@ public class Order {
   public void setId(Long id) {
     this.id = id;
   }
-  
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
   
+
   /**
   * Get petId
   * @return petId
   **/
-  
-  
   @Schema(description = "")
   public Long getPetId() {
     return petId;
@@ -145,19 +132,17 @@ public class Order {
   public void setPetId(Long petId) {
     this.petId = petId;
   }
-  
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
   
+
   /**
   * Get quantity
   * @return quantity
   **/
-  
-  
   @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
@@ -165,19 +150,17 @@ public class Order {
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
-  
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
   
+
   /**
   * Get shipDate
   * @return shipDate
   **/
-  
-  
   @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
@@ -185,19 +168,17 @@ public class Order {
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
-  
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
   
+
   /**
   * Order Status
   * @return status
   **/
-  
-  
   @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
@@ -205,19 +186,17 @@ public class Order {
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
-  
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
   
+
   /**
   * Get complete
   * @return complete
   **/
-  
-  
   @Schema(description = "")
   public Boolean isComplete() {
     return complete;
@@ -225,7 +204,6 @@ public class Order {
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -247,7 +225,7 @@ public class Order {
   public int hashCode() {
     return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -274,8 +252,4 @@ public class Order {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

@@ -3,7 +3,6 @@ package io.swagger.client.auth;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
-
 public class OAuth implements Authentication {
     private String accessToken;
 
