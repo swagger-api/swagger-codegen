@@ -46,7 +46,9 @@ public class PetApi  {
     
     @Consumes({ "application/json", "application/xml" })
     
-    @Operation(summary = "Add a new pet to the store", description = "", tags={ "pet" })
+    @Operation(summary = "Add a new pet to the store", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response addPet(
@@ -59,7 +61,9 @@ public class PetApi  {
     @Path("/{petId}")
     
     
-    @Operation(summary = "Deletes a pet", description = "", tags={ "pet" })
+    @Operation(summary = "Deletes a pet", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
     public Response deletePet(
@@ -74,7 +78,9 @@ public class PetApi  {
     @Path("/findByStatus")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", tags={ "pet" })
+    @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         @ApiResponse(responseCode = "400", description = "Invalid status value") })
@@ -89,7 +95,9 @@ public class PetApi  {
     @Path("/findByTags")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", tags={ "pet" })
+    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         @ApiResponse(responseCode = "400", description = "Invalid tag value") })
@@ -103,7 +111,8 @@ public class PetApi  {
     @Path("/{petId}")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find pet by ID", description = "Returns a single pet", tags={ "pet" })
+    @Operation(summary = "Find pet by ID", description = "Returns a single pet", security = {
+        @SecurityRequirement(name = "api_key")    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Pet.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
@@ -118,7 +127,9 @@ public class PetApi  {
     
     @Consumes({ "application/json", "application/xml" })
     
-    @Operation(summary = "Update an existing pet", description = "", tags={ "pet" })
+    @Operation(summary = "Update an existing pet", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found"),
@@ -133,7 +144,9 @@ public class PetApi  {
     @Path("/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
     
-    @Operation(summary = "Updates a pet in the store with form data", description = "", tags={ "pet" })
+    @Operation(summary = "Updates a pet in the store with form data", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response updatePetWithForm(
@@ -146,7 +159,9 @@ public class PetApi  {
     @Path("/{petId}/uploadImage")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
-    @Operation(summary = "uploads an image", description = "", tags={ "pet" })
+    @Operation(summary = "uploads an image", description = "", security = {
+        @SecurityRequirement(name = "petstore_auth", scopes = {
+            ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
     public Response uploadFile(
