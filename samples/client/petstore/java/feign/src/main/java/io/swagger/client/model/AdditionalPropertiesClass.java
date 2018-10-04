@@ -28,16 +28,19 @@ import java.util.Map;
 public class AdditionalPropertiesClass {
 
   @JsonProperty("map_property")
+
   private Map<String, String> mapProperty = null;
 
   @JsonProperty("map_of_map_property")
+
   private Map<String, Map<String, String>> mapOfMapProperty = null;
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
     return this;
   }
 
-    public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
+  
+  public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
     if (this.mapProperty == null) {
       this.mapProperty = new HashMap<>();
     }
@@ -60,7 +63,8 @@ public class AdditionalPropertiesClass {
     return this;
   }
 
-    public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
+  
+  public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
     if (this.mapOfMapProperty == null) {
       this.mapOfMapProperty = new HashMap<>();
     }
@@ -117,6 +121,5 @@ public class AdditionalPropertiesClass {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

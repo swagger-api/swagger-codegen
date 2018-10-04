@@ -80,7 +80,7 @@ public interface PetApi extends ApiClient.Api {
    */
   public static class FindPetsByStatusQueryParams extends HashMap<String, Object> {
     public FindPetsByStatusQueryParams status(final List<String> value) {
-      put("status", EncodingUtils.encode(value));
+      put("status", EncodingUtils.encodeCollection(value, "multi"));
       return this;
     }
   }
@@ -125,7 +125,7 @@ public interface PetApi extends ApiClient.Api {
    */
   public static class FindPetsByTagsQueryParams extends HashMap<String, Object> {
     public FindPetsByTagsQueryParams tags(final List<String> value) {
-      put("tags", EncodingUtils.encode(value));
+      put("tags", EncodingUtils.encodeCollection(value, "multi"));
       return this;
     }
   }

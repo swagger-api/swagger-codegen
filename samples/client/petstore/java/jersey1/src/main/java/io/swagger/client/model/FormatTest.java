@@ -29,49 +29,63 @@ import org.threeten.bp.OffsetDateTime;
 public class FormatTest {
 
   @JsonProperty("integer")
+
   private Integer integer = null;
 
   @JsonProperty("int32")
+
   private Integer int32 = null;
 
   @JsonProperty("int64")
+
   private Long int64 = null;
 
   @JsonProperty("number")
+
   private BigDecimal number = null;
 
   @JsonProperty("float")
+
   private Float _float = null;
 
   @JsonProperty("double")
+
   private Double _double = null;
 
   @JsonProperty("string")
+
   private String string = null;
 
   @JsonProperty("byte")
+
   private String _byte = null;
 
   @JsonProperty("binary")
+
   private String binary = null;
 
   @JsonProperty("date")
+
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
+
   private OffsetDateTime dateTime = null;
 
   @JsonProperty("uuid")
+
   private UUID uuid = null;
 
   @JsonProperty("password")
+
   private String password = null;
   public FormatTest integer(Integer integer) {
     this.integer = integer;
     return this;
   }
 
-    
+  
+
   /**
   * Get integer
   * minimum: 10
@@ -90,7 +104,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get int32
   * minimum: 20
@@ -109,7 +124,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get int64
   * @return int64
@@ -126,7 +142,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get number
   * minimum: 32
@@ -145,7 +162,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get _float
   * minimum: 54
@@ -164,7 +182,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get _double
   * minimum: 67
@@ -183,7 +202,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get string
   * @return string
@@ -200,7 +220,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get _byte
   * @return _byte
@@ -217,7 +238,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get binary
   * @return binary
@@ -234,7 +256,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get date
   * @return date
@@ -251,7 +274,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get dateTime
   * @return dateTime
@@ -268,7 +292,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get uuid
   * @return uuid
@@ -285,7 +310,8 @@ public class FormatTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get password
   * @return password
@@ -358,6 +384,5 @@ public class FormatTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

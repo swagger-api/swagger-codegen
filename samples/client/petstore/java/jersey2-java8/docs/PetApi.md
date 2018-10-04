@@ -22,9 +22,17 @@ Add a new pet to the store
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 Pet body = new Pet(); // Pet | Pet object that needs to be added to the store
@@ -64,9 +72,17 @@ Deletes a pet
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 Integer petId = 56; // Integer | Pet id to delete
@@ -110,9 +126,17 @@ Multiple status values can be provided with comma separated strings
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 List<String> status = Arrays.asList("status_example"); // List<String> | Status values that need to be considered for filter
@@ -155,9 +179,17 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 List<String> tags = Arrays.asList("tags_example"); // List<String> | Tags to filter by
@@ -200,9 +232,19 @@ Returns a single pet
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: api_key
+ApiKeyAuth api_key = (ApiKeyAuth) defaultClient.getAuthentication("api_key");
+api_key.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//api_key.setApiKeyPrefix("Token");
 
 PetApi apiInstance = new PetApi();
 Integer petId = 56; // Integer | ID of pet to return
@@ -243,9 +285,17 @@ Update an existing pet
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 Pet body = new Pet(); // Pet | Pet object that needs to be added to the store
@@ -285,9 +335,17 @@ Updates a pet in the store with form data
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 Integer petId = 56; // Integer | ID of pet that needs to be updated
@@ -331,9 +389,17 @@ uploads an image
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.PetApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure OAuth2 access token for authorization: petstore_auth
+OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
+petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
 Integer petId = 56; // Integer | ID of pet to update

@@ -25,34 +25,43 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class User {
 
   @JsonProperty("id")
+
   private Long id = null;
 
   @JsonProperty("username")
+
   private String username = null;
 
   @JsonProperty("firstName")
+
   private String firstName = null;
 
   @JsonProperty("lastName")
+
   private String lastName = null;
 
   @JsonProperty("email")
+
   private String email = null;
 
   @JsonProperty("password")
+
   private String password = null;
 
   @JsonProperty("phone")
+
   private String phone = null;
 
   @JsonProperty("userStatus")
+
   private Integer userStatus = null;
   public User id(Long id) {
     this.id = id;
     return this;
   }
 
-    
+  
+
   /**
   * Get id
   * @return id
@@ -69,7 +78,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * Get username
   * @return username
@@ -86,7 +96,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * Get firstName
   * @return firstName
@@ -103,7 +114,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * Get lastName
   * @return lastName
@@ -120,7 +132,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * Get email
   * @return email
@@ -137,7 +150,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * Get password
   * @return password
@@ -154,7 +168,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * Get phone
   * @return phone
@@ -171,7 +186,8 @@ public class User {
     return this;
   }
 
-    
+  
+
   /**
   * User Status
   * @return userStatus
@@ -234,6 +250,5 @@ public class User {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

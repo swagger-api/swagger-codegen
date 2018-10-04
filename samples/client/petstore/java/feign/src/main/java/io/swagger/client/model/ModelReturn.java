@@ -25,13 +25,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ModelReturn {
 
   @JsonProperty("return")
+
   private Integer _return = null;
   public ModelReturn _return(Integer _return) {
     this._return = _return;
     return this;
   }
 
-    
+  
+
   /**
   * Get _return
   * @return _return
@@ -80,6 +82,5 @@ public class ModelReturn {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

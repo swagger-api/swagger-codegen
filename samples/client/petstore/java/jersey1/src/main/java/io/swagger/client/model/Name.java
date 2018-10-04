@@ -25,22 +25,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Name {
 
   @JsonProperty("name")
+
   private Integer name = null;
 
   @JsonProperty("snake_case")
+
   private Integer snakeCase = null;
 
   @JsonProperty("property")
+
   private String property = null;
 
   @JsonProperty("123Number")
+
   private Integer _123Number = null;
   public Name name(Integer name) {
     this.name = name;
     return this;
   }
 
-    
+  
+
   /**
   * Get name
   * @return name
@@ -65,7 +70,8 @@ public class Name {
     return this;
   }
 
-    
+  
+
   /**
   * Get property
   * @return property
@@ -128,6 +134,5 @@ public class Name {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

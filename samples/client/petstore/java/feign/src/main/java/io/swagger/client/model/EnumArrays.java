@@ -58,6 +58,7 @@ public class EnumArrays {
 
   }
   @JsonProperty("just_symbol")
+
   private JustSymbolEnum justSymbol = null;
   /**
    * Gets or Sets arrayEnum
@@ -92,13 +93,15 @@ public class EnumArrays {
 
   }
   @JsonProperty("array_enum")
+
   private List<ArrayEnumEnum> arrayEnum = null;
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-    
+  
+
   /**
   * Get justSymbol
   * @return justSymbol
@@ -122,7 +125,7 @@ public class EnumArrays {
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
-  
+
   /**
   * Get arrayEnum
   * @return arrayEnum
@@ -173,6 +176,5 @@ public class EnumArrays {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

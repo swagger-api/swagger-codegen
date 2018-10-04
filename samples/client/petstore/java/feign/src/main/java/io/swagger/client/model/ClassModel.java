@@ -25,13 +25,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ClassModel {
 
   @JsonProperty("_class")
+
   private String propertyClass = null;
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-    
+  
+
   /**
   * Get propertyClass
   * @return propertyClass
@@ -80,6 +82,5 @@ public class ClassModel {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

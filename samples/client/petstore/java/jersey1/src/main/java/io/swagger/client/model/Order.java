@@ -26,15 +26,19 @@ import org.threeten.bp.OffsetDateTime;
 public class Order {
 
   @JsonProperty("id")
+
   private Long id = null;
 
   @JsonProperty("petId")
+
   private Long petId = null;
 
   @JsonProperty("quantity")
+
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
+
   private OffsetDateTime shipDate = null;
   /**
    * Order Status
@@ -70,16 +74,19 @@ public class Order {
 
   }
   @JsonProperty("status")
+
   private StatusEnum status = null;
 
   @JsonProperty("complete")
+
   private Boolean complete = false;
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
-    
+  
+
   /**
   * Get id
   * @return id
@@ -96,7 +103,8 @@ public class Order {
     return this;
   }
 
-    
+  
+
   /**
   * Get petId
   * @return petId
@@ -113,7 +121,8 @@ public class Order {
     return this;
   }
 
-    
+  
+
   /**
   * Get quantity
   * @return quantity
@@ -130,7 +139,8 @@ public class Order {
     return this;
   }
 
-    
+  
+
   /**
   * Get shipDate
   * @return shipDate
@@ -147,7 +157,8 @@ public class Order {
     return this;
   }
 
-    
+  
+
   /**
   * Order Status
   * @return status
@@ -164,7 +175,8 @@ public class Order {
     return this;
   }
 
-    
+  
+
   /**
   * Get complete
   * @return complete
@@ -223,6 +235,5 @@ public class Order {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

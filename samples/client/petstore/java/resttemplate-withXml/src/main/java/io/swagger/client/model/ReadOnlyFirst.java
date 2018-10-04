@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.model;
 
 import java.util.Objects;
@@ -27,45 +26,38 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "ReadOnlyFirst")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ReadOnlyFirst")
-public class ReadOnlyFirst {
+@JacksonXmlRootElement(localName = "ReadOnlyFirst")public class ReadOnlyFirst {
 
-  
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")
   @XmlElement(name="bar")
+
   private String bar = null;
-  
-  
+
   @JsonProperty("baz")
   @JacksonXmlProperty(localName = "baz")
   @XmlElement(name="baz")
+
   private String baz = null;
-  
-  
   /**
   * Get bar
   * @return bar
   **/
-  
-  
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
   
+
   /**
   * Get baz
   * @return baz
   **/
-  
-  
   @Schema(description = "")
   public String getBaz() {
     return baz;
@@ -73,7 +65,6 @@ public class ReadOnlyFirst {
   public void setBaz(String baz) {
     this.baz = baz;
   }
-  
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -91,7 +82,7 @@ public class ReadOnlyFirst {
   public int hashCode() {
     return java.util.Objects.hash(bar, baz);
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -114,8 +105,4 @@ public class ReadOnlyFirst {
     return o.toString().replace("\n", "\n    ");
   }
 
-  
 }
-
-
-

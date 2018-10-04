@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.auth;
 
 import io.swagger.client.Pair;
@@ -21,7 +20,6 @@ import java.util.List;
 /**
  * Holds ApiKey auth info
  */
-
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

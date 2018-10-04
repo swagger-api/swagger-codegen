@@ -58,6 +58,7 @@ public class EnumTest {
 
   }
   @JsonProperty("enum_string")
+
   private EnumStringEnum enumString = null;
   /**
    * Gets or Sets enumInteger
@@ -92,6 +93,7 @@ public class EnumTest {
 
   }
   @JsonProperty("enum_integer")
+
   private EnumIntegerEnum enumInteger = null;
   /**
    * Gets or Sets enumNumber
@@ -126,16 +128,19 @@ public class EnumTest {
 
   }
   @JsonProperty("enum_number")
+
   private EnumNumberEnum enumNumber = null;
 
   @JsonProperty("outerEnum")
+
   private OuterEnum outerEnum = null;
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
-    
+  
+
   /**
   * Get enumString
   * @return enumString
@@ -152,7 +157,8 @@ public class EnumTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get enumInteger
   * @return enumInteger
@@ -169,7 +175,8 @@ public class EnumTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get enumNumber
   * @return enumNumber
@@ -186,7 +193,8 @@ public class EnumTest {
     return this;
   }
 
-    
+  
+
   /**
   * Get outerEnum
   * @return outerEnum
@@ -241,6 +249,5 @@ public class EnumTest {
     }
     return o.toString().replace("\n", "\n    ");
   }
-
 
 }

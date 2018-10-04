@@ -250,9 +250,17 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.FakeApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+// Configure HTTP basic authorization: http_basic_test
+HttpBasicAuth http_basic_test = (HttpBasicAuth) defaultClient.getAuthentication("http_basic_test");
+http_basic_test.setUsername("YOUR USERNAME");
+http_basic_test.setPassword("YOUR PASSWORD");
 
 FakeApi apiInstance = new FakeApi();
 Object body = null; // Object | 
