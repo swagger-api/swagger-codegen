@@ -8,6 +8,7 @@ import { Configuration } from "./configuration";
 
 const BASE_PATH = "{{{basePath}}}".replace(/\/+$/, "");
 
+{{#hasFileOperations}}
 const responseToFile = (fileResponse: Response): Promise<File> => {
   let filename = "download"; // Default filename of 'download'
 
@@ -26,9 +27,9 @@ const responseToFile = (fileResponse: Response): Promise<File> => {
   }
 
   return fileResponse.blob().then(blob => {
-    // If the File constructor is available, use it...
+    // If the File constructor is available and this is not Edge (which has an unimplemented constructor), use it...
     // (https://developer.mozilla.org/en-US/docs/Web/API/File/File)
-    if (typeof File === "function") {
+    if (typeof File === "function" && !/Edge/.test(navigator.userAgent)) {
       return new File([blob], filename, { type, lastModified });
     }
     // Otherwise, extend the Blob with the additional properties and return it as a File...
@@ -41,6 +42,7 @@ const responseToFile = (fileResponse: Response): Promise<File> => {
   });
 };
 
+{{/hasFileOperations}}
 /**
  *
  * @export
