@@ -58,14 +58,6 @@ public class Name  {
     return snakeCase;
   }
 
-  public void setSnakeCase(Integer snakeCase) {
-    this.snakeCase = snakeCase;
-  }
-
-  public Name snakeCase(Integer snakeCase) {
-    this.snakeCase = snakeCase;
-    return this;
-  }
 
  /**
    * Get property
@@ -94,14 +86,6 @@ public class Name  {
     return _123Number;
   }
 
-  public void set123Number(Integer _123Number) {
-    this._123Number = _123Number;
-  }
-
-  public Name _123Number(Integer _123Number) {
-    this._123Number = _123Number;
-    return this;
-  }
 
 
   @Override
