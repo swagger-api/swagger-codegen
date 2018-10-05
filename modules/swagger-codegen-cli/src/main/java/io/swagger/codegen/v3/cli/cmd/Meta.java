@@ -23,7 +23,7 @@ public class Meta implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Meta.class);
 
-    private static final String TEMPLATE_DIR_CLASSPATH = "v2/codegen";
+    private static final String TEMPLATE_DIR_CLASSPATH = "handlebars/codegen";
     private static final String MUSTACHE_EXTENSION = ".mustache";
 
     private String outputFolder = "";
