@@ -26,7 +26,7 @@ At this point, you've likely generated a client setup.  It will include somethin
 |----- myClientCodegen // template files
 |----- META-INF
 |------ services
-|------- io.swagger.codegen.v3.CodegenConfig
+|------- io.swagger.codegen.CodegenConfig
 ```
 
 You _will_ need to make changes in at least the following:
@@ -46,7 +46,7 @@ mvn package
 In your generator project.  A single jar file will be produced in `target`.  You can now use that with codegen:
 
 ```
-java -cp /path/to/swagger-codegen-cli.jar:/path/to/your.jar io.swagger.codegen.v3.Codegen -l myClientCodegen -i /path/to/swagger.yaml -o ./test
+java -cp /path/to/swagger-codegen-cli.jar:/path/to/your.jar io.swagger.codegen.Codegen -l myClientCodegen -i /path/to/swagger.yaml -o ./test
 ```
 
 Now your templates are available to the client generator and you can write output values
@@ -67,7 +67,7 @@ the object you have available during client generation:
 # -DdebugOperations prints operations passed to the template engine
 # -DdebugSupportingFiles prints additional data passed to the template engine
 
-java -DdebugOperations -cp /path/to/swagger-codegen-cli.jar:/path/to/your.jar io.swagger.codegen.v3.Codegen -l myClientCodegen -i /path/to/swagger.yaml -o ./test
+java -DdebugOperations -cp /path/to/swagger-codegen-cli.jar:/path/to/your.jar io.swagger.codegen.Codegen -l myClientCodegen -i /path/to/swagger.yaml -o ./test
 ```
 
 Will, for example, output the debug info for operations.  You can use this info
