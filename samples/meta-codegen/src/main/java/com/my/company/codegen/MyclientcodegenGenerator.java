@@ -1,12 +1,12 @@
 package com.my.company.codegen;
 
-import io.swagger.codegen.*;
-import io.swagger.codegen.languages.DefaultCodegenConfig;
+import io.swagger.codegen.v3.*;
+import io.swagger.codegen.v3.generators.DefaultCodegenConfig;
 
 import java.util.*;
 import java.io.File;
 
-public class MyclientcodegenGenerator extends DefaultCodegenConfig implements CodegenConfig {
+public class MyclientcodegenGenerator extends DefaultCodegenConfig {
 
   // source folder where to write the files
   protected String sourceFolder = "src";
@@ -150,5 +150,15 @@ public class MyclientcodegenGenerator extends DefaultCodegenConfig implements Co
   @Override
   public String getArgumentsLocation() {
     return null;
+  }
+
+  @Override
+  protected String getTemplateDir() {
+    return templateDir;
+  }
+
+  @Override
+  public String getDefaultTemplateDir() {
+    return templateDir;
   }
 }
