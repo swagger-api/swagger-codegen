@@ -229,6 +229,8 @@ docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
     -o /local/out/go
 ```
 
+(On Windows replace `${PWD}` with `%CD%`)
+
 The generated code will be located under `./out/go` in the current directory.
 
 ## Getting Started
