@@ -10,6 +10,7 @@ import io.swagger.model.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -132,6 +133,21 @@ public interface FakeApi {
                     return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
                 }
             }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
+        }
+        return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED));
+    }
+
+
+    @ApiOperation(value = "", nickname = "testBodyWithQueryParams", notes = "", tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success") })
+    @RequestMapping(value = "/fake/body-with-query-params",
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    default CompletableFuture<ResponseEntity<Void>> testBodyWithQueryParams(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "query", required = true) String query) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
         }

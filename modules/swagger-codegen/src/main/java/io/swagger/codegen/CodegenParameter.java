@@ -13,11 +13,12 @@ public class CodegenParameter {
           collectionFormat, description, unescapedDescription, baseType, defaultValue, enumName;
 
     public String example; // example value (x-example)
+    public String testExample;
     public String jsonSchema;
     public boolean isString, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBinary, isBoolean, isDate, isDateTime, isUuid;
     public boolean isListContainer, isMapContainer;
     public boolean isFile, notFile;
-    public boolean isEnum;
+    public boolean isEnum, isConstEnumParam;
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
@@ -116,9 +117,11 @@ public class CodegenParameter {
         output.jsonSchema = this.jsonSchema;
         output.defaultValue = this.defaultValue;
         output.example = this.example;
+        output.testExample = this.testExample;
         output.isEnum = this.isEnum;
         if (this._enum != null) {
             output._enum = new ArrayList<String>(this._enum);
+            this.isConstEnumParam = (this._enum.size() == 1 && this.required);
         }
         if (this.allowableValues != null) {
             output.allowableValues = new HashMap<String, Object>(this.allowableValues);
