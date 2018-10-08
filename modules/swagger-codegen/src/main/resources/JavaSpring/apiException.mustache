@@ -1,7 +1,7 @@
 package {{apiPackage}};
 
 {{>generatedAnnotation}}
-public class ApiException extends Exception{
+public class ApiException extends{{#useRuntimeException}} RuntimeException {{/useRuntimeException}}{{^useRuntimeException}} Exception {{/useRuntimeException}}{
     private int code;
     public ApiException (int code, String msg) {
         super(msg);
