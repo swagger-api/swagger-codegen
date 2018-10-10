@@ -45,7 +45,6 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         super();
         outputFolder = "generated-code/rust";
         modelTemplateFiles.put("model.mustache", ".rs");
-        apiTemplateFiles.put("api.mustache", ".rs");
 
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
@@ -162,20 +161,22 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             LOGGER.error("Unknown library option (-l/--library): {}", getLibrary());
         }
 
+        apiTemplateFiles.put(getLibrary() + "/api.mustache", ".rs");
+
         modelPackage = packageName;
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", apiFolder, "configuration.rs"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
-
-        supportingFiles.add(new SupportingFile("client.mustache", apiFolder, "client.rs"));
-        supportingFiles.add(new SupportingFile("api_mod.mustache", apiFolder, "mod.rs"));
         supportingFiles.add(new SupportingFile("model_mod.mustache", modelFolder, "mod.rs"));
         supportingFiles.add(new SupportingFile("lib.rs.mustache", "src", "lib.rs"));
         supportingFiles.add(new SupportingFile("Cargo.mustache", "", "Cargo.toml"));
+
+        supportingFiles.add(new SupportingFile(getLibrary() + "/configuration.mustache", apiFolder, "configuration.rs"));
+        supportingFiles.add(new SupportingFile(getLibrary() + "/client.mustache", apiFolder, "client.rs"));
+        supportingFiles.add(new SupportingFile(getLibrary() + "/api_mod.mustache", apiFolder, "mod.rs"));
     }
 
     @Override
