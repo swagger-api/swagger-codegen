@@ -4,7 +4,6 @@ import io.swagger.codegen.*;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.parameters.Parameter;
 
 import java.io.File;
 import java.util.*;
@@ -15,9 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
+
     static Logger LOGGER = LoggerFactory.getLogger(RustClientCodegen.class);
     public static final String PACKAGE_NAME = "packageName";
     public static final String PACKAGE_VERSION = "packageVersion";
+
+    public static final String HYPER_LIBRARY = "hyper";
+    public static final String REQWEST_LIBRARY = "reqwest";
 
     protected String packageName = "swagger";
     protected String packageVersion = "1.0.0";
@@ -115,6 +118,16 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
 
+        supportedLibraries.put(HYPER_LIBRARY, "HTTP client: Hyper.");
+        supportedLibraries.put(REQWEST_LIBRARY, "HTTP client: Reqwest");
+
+        CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+        libraryOption.setEnum(supportedLibraries);
+        // set hyper as the default
+        libraryOption.setDefault(HYPER_LIBRARY);
+        cliOptions.add(libraryOption);
+        setLibrary(HYPER_LIBRARY);
+
     }
 
     @Override
@@ -140,6 +153,14 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
+
+        if ( HYPER_LIBRARY.equals(getLibrary())){
+            additionalProperties.put(HYPER_LIBRARY, "true");
+        } else if (REQWEST_LIBRARY.equals(getLibrary())) {
+            additionalProperties.put(REQWEST_LIBRARY, "true");
+        } else {
+            LOGGER.error("Unknown library option (-l/--library): {}", getLibrary());
+        }
 
         modelPackage = packageName;
         apiPackage = packageName;

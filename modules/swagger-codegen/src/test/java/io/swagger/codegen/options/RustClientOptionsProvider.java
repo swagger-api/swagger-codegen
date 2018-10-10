@@ -10,7 +10,7 @@ import java.util.Map;
 public class RustClientOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_test";
     public static final String PACKAGE_VERSION_VALUE = "2.1.2";
-
+    public static final String DEFAULT_LIBRARY_VALUE = "reqwest";
 
     @Override
     public String getLanguage() {
@@ -23,6 +23,7 @@ public class RustClientOptionsProvider implements OptionsProvider {
         return builder.put(RustClientCodegen.PACKAGE_NAME, PACKAGE_NAME_VALUE)
                 .put(RustClientCodegen.PACKAGE_VERSION, PACKAGE_VERSION_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
+                .put(CodegenConstants.LIBRARY, DEFAULT_LIBRARY_VALUE)
                 .build();
     }
 
