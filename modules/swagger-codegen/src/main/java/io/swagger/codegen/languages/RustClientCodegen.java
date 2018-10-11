@@ -354,9 +354,32 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
         @SuppressWarnings("unchecked")
         List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
+        Set<String> headerKeys = new HashSet<>();
         for (CodegenOperation operation : operations) {
             // http method verb conversion (e.g. PUT => Put)
-            operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+            if (HYPER_LIBRARY.equals(getLibrary())) {
+                operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+            } else if (REQWEST_LIBRARY.equals(getLibrary())) {
+                operation.httpMethod = operation.httpMethod.toLowerCase();
+            }
+
+            // TODO Manage Rust var codestyle (snake case) and compile problems (headers with special chars, like '-').
+
+            // Collect all possible headers.
+            if (operation.authMethods != null) {
+                for (CodegenSecurity authMethod : operation.authMethods) {
+                    if (authMethod.isKeyInHeader) {
+                        headerKeys.add(authMethod.keyParamName);
+                    }
+                }
+            }
+
+            if (operation.headerParams != null) {
+                for (CodegenParameter parameter : operation.headerParams) {
+                    headerKeys.add(parameter.baseName);
+                }
+            }
+
             // update return type to conform to rust standard
             /*
             if (operation.returnType != null) {
@@ -407,6 +430,8 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
                 }
             }*/
         }
+
+        additionalProperties.put("headerKeys", headerKeys);
 
         return objs;
     }
