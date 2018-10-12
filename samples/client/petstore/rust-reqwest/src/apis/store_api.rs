@@ -46,8 +46,10 @@ impl StoreApi for StoreApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/store/order/{orderId}?{}", configuration.base_path, query_string, orderId=order_id);
@@ -72,22 +74,11 @@ impl StoreApi for StoreApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref apikey) = configuration.api_key {
-            let key = apikey.key.clone();
-            let val = match apikey.prefix {
-                Some(ref prefix) => format!("{} {}", prefix, key),
-                None => key,
-            };
-            auth_headers.push(req_builder.header(configuration::Configuration::header_api_key(val)));
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/store/inventory?{}", configuration.base_path, query_string);
@@ -99,9 +90,17 @@ impl StoreApi for StoreApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref apikey) = configuration.api_key {
+            let key = apikey.key.clone();
+            let val = match apikey.prefix {
+                Some(ref prefix) => format!("{} {}", prefix, key),
+                None => key,
+            };
+
+            req_builder.header(configuration::Configuration::header_api_key(val));
+        };
+        
 
 
         // send request
@@ -115,8 +114,10 @@ impl StoreApi for StoreApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/store/order/{orderId}?{}", configuration.base_path, query_string, orderId=order_id);
@@ -141,8 +142,10 @@ impl StoreApi for StoreApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/store/order?{}", configuration.base_path, query_string);

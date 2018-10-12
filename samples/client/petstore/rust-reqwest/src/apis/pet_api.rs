@@ -49,22 +49,11 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet?{}", configuration.base_path, query_string);
@@ -76,9 +65,15 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
         req_builder.json(&body);
 
@@ -93,22 +88,11 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet/{petId}?{}", configuration.base_path, query_string, petId=pet_id);
@@ -121,9 +105,15 @@ impl PetApi for PetApiClient {
 
         req_builder.header(configuration::Configuration::header_api_key(api_key.to_string()));
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
 
         // send request
@@ -137,23 +127,12 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
             query.append_pair("status", &status.join(",").to_string());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet/findByStatus?{}", configuration.base_path, query_string);
@@ -165,9 +144,15 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
 
         // send request
@@ -180,23 +165,12 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
             query.append_pair("tags", &tags.join(",").to_string());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet/findByTags?{}", configuration.base_path, query_string);
@@ -208,9 +182,15 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
 
         // send request
@@ -223,22 +203,11 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref apikey) = configuration.api_key {
-            let key = apikey.key.clone();
-            let val = match apikey.prefix {
-                Some(ref prefix) => format!("{} {}", prefix, key),
-                None => key,
-            };
-            auth_headers.push(req_builder.header(configuration::Configuration::header_api_key(val)));
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet/{petId}?{}", configuration.base_path, query_string, petId=pet_id);
@@ -250,9 +219,17 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref apikey) = configuration.api_key {
+            let key = apikey.key.clone();
+            let val = match apikey.prefix {
+                Some(ref prefix) => format!("{} {}", prefix, key),
+                None => key,
+            };
+
+            req_builder.header(configuration::Configuration::header_api_key(val));
+        };
+        
 
 
         // send request
@@ -265,22 +242,11 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet?{}", configuration.base_path, query_string);
@@ -292,9 +258,15 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
         req_builder.json(&body);
 
@@ -309,22 +281,11 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet/{petId}?{}", configuration.base_path, query_string, petId=pet_id);
@@ -336,9 +297,15 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
 
         // send request
@@ -352,22 +319,11 @@ impl PetApi for PetApiClient {
         let configuration: &configuration::Configuration = self.configuration.borrow();
         let client = &configuration.client;
 
-        let mut auth_headers = Vec::<reqwest::header::Header>::new();
-        let mut auth_query = HashMap::<String, String>::new();
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = reqwest::header::Authorization(
-                reqwest::header::Bearer {
-                    token: token.to_owned(),
-                }
-            );
-            auth_headers.push(auth.to_owned());
-        };
+
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
-            for (key, val) in &auth_query {
-                query.append_pair(key, val);
-            }
+
             query.finish()
         };
         let uri_str = format!("{}/pet/{petId}/uploadImage?{}", configuration.base_path, query_string, petId=pet_id);
@@ -379,9 +335,15 @@ impl PetApi for PetApiClient {
         }
 
 
-        for (header) in auth_headers {
-            req_builder.header(header);
-        }
+        
+        if let Some(ref token) = configuration.oauth_access_token {
+            let auth = reqwest::header::Authorization(
+                reqwest::header::Bearer {
+                    token: token.to_owned(),
+                }
+            );
+            req_builder.header(auth.to_owned());
+        };
 
 
         // send request

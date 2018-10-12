@@ -50,8 +50,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user?{}", configuration.base_path, query_string);
@@ -78,8 +80,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user/createWithArray?{}", configuration.base_path, query_string);
@@ -106,8 +110,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user/createWithList?{}", configuration.base_path, query_string);
@@ -134,8 +140,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user/{username}?{}", configuration.base_path, query_string, username=username);
@@ -161,8 +169,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user/{username}?{}", configuration.base_path, query_string, username=username);
@@ -187,10 +197,12 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
             query.append_pair("username", &username.to_string());
             query.append_pair("password", &password.to_string());
+
             query.finish()
         };
         let uri_str = format!("{}/user/login?{}", configuration.base_path, query_string);
@@ -215,8 +227,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user/logout?{}", configuration.base_path, query_string);
@@ -242,8 +256,10 @@ impl UserApi for UserApiClient {
         let client = &configuration.client;
 
 
+
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+
             query.finish()
         };
         let uri_str = format!("{}/user/{username}?{}", configuration.base_path, query_string, username=username);

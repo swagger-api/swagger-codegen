@@ -368,7 +368,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
             // Collect all possible headers.
             if (operation.authMethods != null) {
                 for (CodegenSecurity authMethod : operation.authMethods) {
-                    if (authMethod.isKeyInHeader) {
+                    if (authMethod.isApiKey && authMethod.isKeyInHeader) {
                         headerKeys.add(authMethod.keyParamName);
                     }
                 }
