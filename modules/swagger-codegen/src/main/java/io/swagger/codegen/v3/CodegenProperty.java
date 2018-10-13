@@ -37,6 +37,7 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
     public boolean exclusiveMinimum;
     public boolean exclusiveMaximum;
     public boolean required, secondaryParam;
+    public boolean nullable;
 
     public List<String> _enum;
     public Map<String, Object> allowableValues;
@@ -279,6 +280,14 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
         this.secondaryParam = secondaryParam;
     }
 
+    public boolean getNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
+    }
+
     public List<String> get_enum() {
         return _enum;
     }
@@ -403,6 +412,7 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
         result = prime * result + ((pattern == null) ? 0 : pattern.hashCode());
         result = prime * result + ((required  ? 13:31));
         result = prime * result + ((secondaryParam ? 13:31));
+        result = prime * result + ((nullable  ? 13:31));
         result = prime * result + ((setter == null) ? 0 : setter.hashCode());
         result = prime * result + ((unescapedDescription == null) ? 0 : unescapedDescription.hashCode());
         result = prime * result + ((vendorExtensions == null) ? 0 : vendorExtensions.hashCode());
@@ -501,6 +511,9 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
             return false;
         }
         if (this.secondaryParam != other.secondaryParam) {
+            return false;
+        }
+        if (this.nullable != other.nullable) {
             return false;
         }
         if (this._enum != other._enum && (this._enum == null || !this._enum.equals(other._enum))) {
