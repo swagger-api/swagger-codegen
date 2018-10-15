@@ -137,7 +137,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<User>\n  <id>123456789</id>\n  <username>aeiou</username>\n  <firstName>aeiou</firstName>\n  <lastName>aeiou</lastName>\n  <email>aeiou</email>\n  <password>aeiou</password>\n  <phone>aeiou</phone>\n  <userStatus>123</userStatus>\n</User>";
-            exampleJson = "{\r\n  \"firstName\" : \"firstName\",\r\n  \"lastName\" : \"lastName\",\r\n  \"password\" : \"password\",\r\n  \"userStatus\" : 6,\r\n  \"phone\" : \"phone\",\r\n  \"id\" : 0,\r\n  \"email\" : \"email\",\r\n  \"username\" : \"username\"\r\n}";
+            exampleJson = "{\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"userStatus\" : 6,\n  \"phone\" : \"phone\",\n  \"id\" : 0,\n  \"email\" : \"email\",\n  \"username\" : \"username\"\n}";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<User>(exampleJson)
