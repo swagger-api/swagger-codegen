@@ -1442,7 +1442,7 @@ public class DefaultCodegen {
                     addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
-            addVars(m, properties, required, allProperties, allRequired);
+            addVars(m, properties, required, allDefinitions, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
             if (impl.getType() != null) {
@@ -1458,7 +1458,7 @@ public class DefaultCodegen {
             if (impl.getAdditionalProperties() != null) {
                 addAdditionPropertiesToCodeGenModel(m, impl);
             }
-            addVars(m, impl.getProperties(), impl.getRequired());
+            addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
         if (m.vars != null) {
@@ -2156,10 +2156,10 @@ public class DefaultCodegen {
             op.responses.get(op.responses.size() - 1).hasMore = false;
 
             if (methodResponse != null) {
-                if (methodResponse.getSchema() != null) {
-                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
-
-                    Property responseProperty = methodResponse.getSchema();
+                final Property responseProperty = methodResponse.getSchema();
+                if (responseProperty != null) {
+                    responseProperty.setRequired(true);
+                    CodegenProperty cm = fromProperty("response", responseProperty);
 
                     if (responseProperty instanceof ArrayProperty) {
                         ArrayProperty ap = (ArrayProperty) responseProperty;
@@ -3092,11 +3092,11 @@ public class DefaultCodegen {
         }
     }
 
-    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required) {
-        addVars(m, properties, required, null, null);
+    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required, Map<String, Model> allDefinitions) {
+        addVars(m, properties, required, allDefinitions, null, null);
     }
 
-    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required,
+    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required, Map<String, Model> allDefinitions,
                          Map<String, Property> allProperties, List<String> allRequired) {
 
         m.hasRequired = false;
@@ -3107,7 +3107,7 @@ public class DefaultCodegen {
 
             Set<String> mandatory = required == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(required);
-            addVars(m, m.vars, properties, mandatory);
+            addVars(m, m.vars, properties, mandatory, allDefinitions);
             m.allMandatory = m.mandatory = mandatory;
         } else {
             m.emptyVars = true;
@@ -3118,12 +3118,12 @@ public class DefaultCodegen {
         if (allProperties != null) {
             Set<String> allMandatory = allRequired == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(allRequired);
-            addVars(m, m.allVars, allProperties, allMandatory);
+            addVars(m, m.allVars, allProperties, allMandatory, allDefinitions);
             m.allMandatory = allMandatory;
         }
     }
 
-    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory) {
+    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory, Map<String, Model> allDefinitions) {
         // convert set to list so that we can access the next entry in the loop
         List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
         final int totalCount = propertyList.size();
@@ -3144,6 +3144,17 @@ public class DefaultCodegen {
                     // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
                     // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
                     m.hasEnums = true;
+                }
+
+                if (allDefinitions != null && prop instanceof RefProperty) {
+                    RefProperty refProperty = (RefProperty) prop;
+                    Model model =  allDefinitions.get(refProperty.getSimpleRef());
+                    if (model instanceof ModelImpl) {
+                        ModelImpl modelImpl = (ModelImpl) model;
+                        cp.pattern = modelImpl.getPattern();
+                        cp.minLength = modelImpl.getMinLength();
+                        cp.maxLength = modelImpl.getMaxLength();
+                    }
                 }
 
                 // set model's hasOnlyReadOnly to false if the property is read-only

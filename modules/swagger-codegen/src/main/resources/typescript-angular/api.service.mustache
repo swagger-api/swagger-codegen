@@ -14,7 +14,12 @@ import { Response, ResponseContentType }                     from '@angular/http
 import { CustomQueryEncoderHelper }                          from '../encoder';
 {{/useHttpClient}}
 
+{{^useRxJS6}}
 import { Observable }                                        from 'rxjs/Observable';
+{{/useRxJS6}}
+{{#useRxJS6}}
+import { Observable }                                        from 'rxjs';
+{{/useRxJS6}}
 {{^useHttpClient}}
 import '../rxjs-operators';
 {{/useHttpClient}}
@@ -26,7 +31,7 @@ import { {{classname}} } from '../{{filename}}';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 {{#withInterfaces}}
-import { {{classname}}Interface }                            from './{{classname}}Interface';
+import { {{classname}}Interface }                            from './{{classFilename}}Interface';
 {{/withInterfaces}}
 
 {{#operations}}
@@ -149,7 +154,7 @@ export class {{classname}} {
         }
         {{/isListContainer}}
         {{^isListContainer}}
-        if ({{paramName}} !== undefined) {
+        if ({{paramName}} !== undefined && {{paramName}} !== null) {
         {{#isDateTime}}
             {{#useHttpClient}}queryParameters = {{/useHttpClient}}queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
         {{/isDateTime}}

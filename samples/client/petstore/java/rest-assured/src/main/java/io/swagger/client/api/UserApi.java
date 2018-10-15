@@ -14,35 +14,28 @@
 package io.swagger.client.api;
 
 import com.google.gson.reflect.TypeToken;
-import io.swagger.client.model.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
+import io.swagger.client.model.User;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import io.swagger.client.JSON;
 
-import static io.restassured.http.Method.*;
+import static io.restassured.http.Method.DELETE;
+import static io.restassured.http.Method.GET;
+import static io.restassured.http.Method.POST;
+import static io.restassured.http.Method.PUT;
 
 public class UserApi {
 
     private RequestSpecBuilder reqSpec;
 
-    private JSON json;
-
     private UserApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
-        this.json = new JSON();
     }
 
     public static UserApi user(RequestSpecBuilder reqSpec) {
@@ -80,26 +73,6 @@ public class UserApi {
 
     public UpdateUserOper updateUser() {
         return new UpdateUserOper(reqSpec);
-    }
-
-    /**
-     * Get JSON
-     *
-     * @return JSON object
-     */
-    public JSON getJSON() {
-        return json;
-    }
-
-    /**
-     * Set JSON
-     *
-     * @param json JSON object
-     * @return UserApi
-     */
-    public UserApi setJSON(JSON json) {
-        this.json = json;
-        return this;
     }
 
     /**
@@ -149,7 +122,7 @@ public class UserApi {
          * @param body (User) Created user object (required)
          */
         public CreateUserOper body(User body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -208,7 +181,7 @@ public class UserApi {
          * @param body (List<User>) List of user object (required)
          */
         public CreateUsersWithArrayInputOper body(List<User> body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -267,7 +240,7 @@ public class UserApi {
          * @param body (List<User>) List of user object (required)
          */
         public CreateUsersWithListInputOper body(List<User> body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -384,7 +357,7 @@ public class UserApi {
          */
         public User executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<User>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -452,7 +425,7 @@ public class UserApi {
          */
         public String executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<String>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -575,7 +548,7 @@ public class UserApi {
          * @param body (User) Updated user object (required)
          */
         public UpdateUserOper body(User body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
