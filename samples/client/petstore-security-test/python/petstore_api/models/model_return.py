@@ -91,6 +91,9 @@ class ModelReturn(object):
                 ))
             else:
                 result[attr] = value
+        if issubclass(ModelReturn, dict):
+            for key, value in self.items():
+                result[key] = value
 
         return result
 

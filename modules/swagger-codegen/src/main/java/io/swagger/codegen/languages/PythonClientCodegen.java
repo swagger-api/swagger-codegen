@@ -77,6 +77,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         languageSpecificPrimitives.add("date");
         languageSpecificPrimitives.add("object");
 
+        instantiationTypes.put("map", "dict");
+
         typeMapping.clear();
         typeMapping.put("integer", "int");
         typeMapping.put("float", "float");
@@ -348,6 +350,14 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     @Override
     public String modelTestFileFolder() {
         return outputFolder + File.separatorChar + testFolder;
+    }
+
+    @Override
+    public String toInstantiationType(Property p) {
+        if (p instanceof MapProperty) {
+            return instantiationTypes.get("map");
+        }
+        return null;
     }
 
     @Override

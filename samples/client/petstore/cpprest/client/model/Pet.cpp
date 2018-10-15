@@ -83,14 +83,19 @@ void Pet::fromJson(web::json::value& val)
 {
     if(val.has_field(utility::conversions::to_string_t("id")))
     {
-        setId(ModelBase::int64_tFromJson(val[utility::conversions::to_string_t("id")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("id")];
+        if(!fieldValue.is_null())
+        {
+            setId(ModelBase::int64_tFromJson(fieldValue));
+        }
     }
     if(val.has_field(utility::conversions::to_string_t("category")))
     {
-        if(!val[utility::conversions::to_string_t("category")].is_null())
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("category")];
+        if(!fieldValue.is_null())
         {
             std::shared_ptr<Category> newItem(new Category());
-            newItem->fromJson(val[utility::conversions::to_string_t("category")]);
+            newItem->fromJson(fieldValue);
             setCategory( newItem );
         }
     }
@@ -125,7 +130,11 @@ void Pet::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("status")))
     {
-        setStatus(ModelBase::stringFromJson(val[utility::conversions::to_string_t("status")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("status")];
+        if(!fieldValue.is_null())
+        {
+            setStatus(ModelBase::stringFromJson(fieldValue));
+        }
     }
 }
 

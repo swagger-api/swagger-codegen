@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -31,11 +32,13 @@ public abstract class FakeApiService {
       throws NotFoundException;
       public abstract Response fakeOuterStringSerialize(String body,SecurityContext securityContext)
       throws NotFoundException;
+      public abstract Response testBodyWithQueryParams(User body, @NotNull String query,SecurityContext securityContext)
+      throws NotFoundException;
       public abstract Response testClientModel(Client body,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response testEndpointParameters(BigDecimal number,Double _double,String patternWithoutDelimiter,byte[] _byte,Integer integer,Integer int32,Long int64,Float _float,String string,byte[] binary,Date date,Date dateTime,String password,String paramCallback,SecurityContext securityContext)
+      public abstract Response testEndpointParameters(BigDecimal number,Double _double,String patternWithoutDelimiter,Integer integer,Integer int32,Long int64,Float _float,String string,Date date,Date dateTime,String password,String paramCallback,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response testEnumParameters(List<String> enumFormStringArray,String enumFormString,List<String> enumHeaderStringArray,String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger,Double enumQueryDouble,SecurityContext securityContext)
+      public abstract Response testEnumParameters(List<String> enumHeaderStringArray,String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger,SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response testInlineAdditionalProperties(Object param,SecurityContext securityContext)
       throws NotFoundException;

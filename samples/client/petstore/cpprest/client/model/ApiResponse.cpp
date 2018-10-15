@@ -62,15 +62,27 @@ void ApiResponse::fromJson(web::json::value& val)
 {
     if(val.has_field(utility::conversions::to_string_t("code")))
     {
-        setCode(ModelBase::int32_tFromJson(val[utility::conversions::to_string_t("code")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("code")];
+        if(!fieldValue.is_null())
+        {
+            setCode(ModelBase::int32_tFromJson(fieldValue));
+        }
     }
     if(val.has_field(utility::conversions::to_string_t("type")))
     {
-        setType(ModelBase::stringFromJson(val[utility::conversions::to_string_t("type")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("type")];
+        if(!fieldValue.is_null())
+        {
+            setType(ModelBase::stringFromJson(fieldValue));
+        }
     }
     if(val.has_field(utility::conversions::to_string_t("message")))
     {
-        setMessage(ModelBase::stringFromJson(val[utility::conversions::to_string_t("message")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("message")];
+        if(!fieldValue.is_null())
+        {
+            setMessage(ModelBase::stringFromJson(fieldValue));
+        }
     }
 }
 

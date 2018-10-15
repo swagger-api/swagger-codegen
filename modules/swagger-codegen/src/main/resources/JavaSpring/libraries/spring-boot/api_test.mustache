@@ -1,0 +1,38 @@
+package {{package}};
+{{#imports}}import {{import}};
+{{/imports}}
+import java.util.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.Assert.assertEquals;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class {{classname}}ControllerIntegrationTest {
+@Autowired
+private {{classname}} api;
+{{#operations}}
+    {{#operation}}
+        @Test
+        public void {{operationId}}Test() throws Exception {
+        {{#allParams}}
+        {{^isFile}}
+            {{{dataType}}} {{paramName}} = {{{example}}};
+        {{/isFile}}
+        {{#isFile}}
+            org.springframework.web.multipart.MultipartFile {{paramName}} = null;
+        {{/isFile}}
+        {{/allParams}}
+            ResponseEntity<{{>returnTypes}}> responseEntity = api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+            assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        }
+    {{/operation}}
+{{/operations}}
+}
