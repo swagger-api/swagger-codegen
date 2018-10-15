@@ -23,30 +23,25 @@ using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// Cat
+    /// Model for testing reserved words
     /// </summary>
     [DataContract]
-    public partial class Cat : Animal,  IEquatable<Cat>
+    public partial class Return :  IEquatable<Return>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Cat" /> class.
+        /// Initializes a new instance of the <see cref="Return" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected Cat() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Cat" /> class.
-        /// </summary>
-        /// <param name="declawed">declawed.</param>
-        public Cat(bool? declawed = default(bool?), string className = "Cat", string color = "red") : base(className, color)
+        /// <param name="_return">_return.</param>
+        public Return(int? _return = default(int?))
         {
-            this.Declawed = declawed;
+            this._Return = _return;
         }
         
         /// <summary>
-        /// Gets or Sets Declawed
+        /// Gets or Sets _Return
         /// </summary>
-        [DataMember(Name="declawed", EmitDefaultValue=false)]
-        public bool? Declawed { get; set; }
+        [DataMember(Name="return", EmitDefaultValue=false)]
+        public int? _Return { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -55,9 +50,8 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Cat {\n");
-            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
-            sb.Append("  Declawed: ").Append(Declawed).Append("\n");
+            sb.Append("class Return {\n");
+            sb.Append("  _Return: ").Append(_Return).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -66,7 +60,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public override string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -78,24 +72,24 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Cat);
+            return this.Equals(input as Return);
         }
 
         /// <summary>
-        /// Returns true if Cat instances are equal
+        /// Returns true if Return instances are equal
         /// </summary>
-        /// <param name="input">Instance of Cat to be compared</param>
+        /// <param name="input">Instance of Return to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Cat input)
+        public bool Equals(Return input)
         {
             if (input == null)
                 return false;
 
-            return base.Equals(input) && 
+            return 
                 (
-                    this.Declawed == input.Declawed ||
-                    (this.Declawed != null &&
-                    this.Declawed.Equals(input.Declawed))
+                    this._Return == input._Return ||
+                    (this._Return != null &&
+                    this._Return.Equals(input._Return))
                 );
         }
 
@@ -107,9 +101,9 @@ namespace IO.Swagger.Model
         {
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = base.GetHashCode();
-                if (this.Declawed != null)
-                    hashCode = hashCode * 59 + this.Declawed.GetHashCode();
+                int hashCode = 41;
+                if (this._Return != null)
+                    hashCode = hashCode * 59 + this._Return.GetHashCode();
                 return hashCode;
             }
         }
