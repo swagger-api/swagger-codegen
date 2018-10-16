@@ -18,6 +18,7 @@ import java.util.Map;
 
 public abstract class AbstractKotlinCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(AbstractKotlinCodegen.class);
+    public static final String PARCELIZE_MODELS = "parcelizeModels";
 
     protected String artifactId;
     protected String artifactVersion = "1.0.0";
@@ -28,6 +29,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected boolean parcelizeModels = false;
 
     protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.camelCase;
 
@@ -179,6 +181,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
         CliOption enumPropertyNamingOpt = new CliOption(CodegenConstants.ENUM_PROPERTY_NAMING, CodegenConstants.ENUM_PROPERTY_NAMING_DESC);
         cliOptions.add(enumPropertyNamingOpt.defaultValue(enumPropertyNaming.name()));
+        cliOptions.add(new CliOption(PARCELIZE_MODELS, "boolean - toggle \"@Parcelize\" for generated models"));
     }
 
     @Override
@@ -332,6 +335,12 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
             LOGGER.warn(CodegenConstants.INVOKER_PACKAGE + " with " + this.getName() + " generator is ignored. Use " + CodegenConstants.PACKAGE_NAME + ".");
         }
 
+        if (additionalProperties.containsKey(PARCELIZE_MODELS)) {
+            this.setParcelizeModels(Boolean.valueOf((String)additionalProperties.get(PARCELIZE_MODELS)));
+        } else {
+            additionalProperties.put(PARCELIZE_MODELS, parcelizeModels);
+        }
+
         additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage());
         additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage());
 
@@ -357,6 +366,14 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
+    }
+
+    public Boolean getParcelizeModels() {
+        return parcelizeModels;
+    }
+
+    public void setParcelizeModels(Boolean parcelizeModels) {
+        this.parcelizeModels = parcelizeModels;
     }
 
     /**
