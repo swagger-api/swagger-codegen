@@ -11,21 +11,21 @@
 */
 package io.swagger.client.models
 
+import io.swagger.client.models.Currency
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**
- * Describes the result of uploading an image resource
- * @param code 
- * @param type 
- * @param message 
+ * some description 
+ * @param value some description 
+ * @param currency 
  */
 @Parcelize
-data class ApiResponse (
-    val code: kotlin.Int? = null,
-    val type: kotlin.String? = null,
-    val message: kotlin.String? = null
+data class Amount (
+    /* some description  */
+    val value: kotlin.Double,
+    val currency: Currency
 ) : Parcelable {
 
 }

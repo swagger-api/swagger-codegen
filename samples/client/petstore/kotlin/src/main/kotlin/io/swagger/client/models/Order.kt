@@ -13,8 +13,11 @@ package io.swagger.client.models
 
 
 import com.squareup.moshi.Json
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
- * 
+ * An order for a pets from the pet store
  * @param id 
  * @param petId 
  * @param quantity 
@@ -22,6 +25,7 @@ import com.squareup.moshi.Json
  * @param status Order Status
  * @param complete 
  */
+@Parcelize
 data class Order (
     val id: kotlin.Long? = null,
     val petId: kotlin.Long? = null,
@@ -30,7 +34,7 @@ data class Order (
     /* Order Status */
     val status: Order.Status? = null,
     val complete: kotlin.Boolean? = null
-) {
+) : Parcelable {
 
     /**
     * Order Status

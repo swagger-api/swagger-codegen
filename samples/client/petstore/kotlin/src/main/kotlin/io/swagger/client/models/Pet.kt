@@ -15,8 +15,11 @@ import io.swagger.client.models.Category
 import io.swagger.client.models.Tag
 
 import com.squareup.moshi.Json
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
- * 
+ * A pet for sale in the pet store
  * @param id 
  * @param category 
  * @param name 
@@ -24,6 +27,7 @@ import com.squareup.moshi.Json
  * @param tags 
  * @param status pet status in the store
  */
+@Parcelize
 data class Pet (
     val name: kotlin.String,
     val photoUrls: kotlin.Array<kotlin.String>,
@@ -32,7 +36,7 @@ data class Pet (
     val tags: kotlin.Array<Tag>? = null,
     /* pet status in the store */
     val status: Pet.Status? = null
-) {
+) : Parcelable {
 
     /**
     * pet status in the store

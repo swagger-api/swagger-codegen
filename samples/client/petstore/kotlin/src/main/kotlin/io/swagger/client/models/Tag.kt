@@ -12,15 +12,19 @@
 package io.swagger.client.models
 
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
- * 
+ * A tag for a pet
  * @param id 
  * @param name 
  */
+@Parcelize
 data class Tag (
     val id: kotlin.Long? = null,
     val name: kotlin.String? = null
-) {
+) : Parcelable {
 
 }
 
