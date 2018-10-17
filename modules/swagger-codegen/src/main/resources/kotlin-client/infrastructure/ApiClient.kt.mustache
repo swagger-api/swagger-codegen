@@ -58,6 +58,8 @@ open class ApiClient(val baseUrl: String) {
         
         if(T::class.java == java.io.File::class.java){
             return downloadFileFromResponse(response) as T
+        } else if(T::class == kotlin.Unit::class) {
+            return kotlin.Unit as T
         }
         
         var contentType = response.headers().get("Content-Type")

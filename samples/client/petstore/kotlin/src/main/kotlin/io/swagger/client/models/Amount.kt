@@ -11,28 +11,17 @@
 */
 package io.swagger.client.models
 
+import io.swagger.client.models.Currency
 
 /**
- * A User who is purchasing from the pet store
- * @param id 
- * @param username 
- * @param firstName 
- * @param lastName 
- * @param email 
- * @param password 
- * @param phone 
- * @param userStatus User Status
+ * some description 
+ * @param value some description 
+ * @param currency 
  */
-data class User (
-    val id: kotlin.Long? = null,
-    val username: kotlin.String? = null,
-    val firstName: kotlin.String? = null,
-    val lastName: kotlin.String? = null,
-    val email: kotlin.String? = null,
-    val password: kotlin.String? = null,
-    val phone: kotlin.String? = null,
-    /* User Status */
-    val userStatus: kotlin.Int? = null
+data class Amount (
+    /* some description  */
+    val value: kotlin.Double,
+    val currency: Currency
 ) {
 
 }

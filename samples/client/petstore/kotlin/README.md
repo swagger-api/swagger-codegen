@@ -31,7 +31,7 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -60,8 +60,10 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [io.swagger.client.models.Amount](docs/Amount.md)
  - [io.swagger.client.models.ApiResponse](docs/ApiResponse.md)
  - [io.swagger.client.models.Category](docs/Category.md)
+ - [io.swagger.client.models.Currency](docs/Currency.md)
  - [io.swagger.client.models.Order](docs/Order.md)
  - [io.swagger.client.models.Pet](docs/Pet.md)
  - [io.swagger.client.models.Tag](docs/Tag.md)
@@ -83,7 +85,7 @@ Class | Method | HTTP request | Description
 
 - **Type**: OAuth
 - **Flow**: implicit
-- **Authorization URL**: https://petstore.swagger.io/oauth/dialog
+- **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
   - write:pets: modify pets in your account
   - read:pets: read your pets
