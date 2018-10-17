@@ -24,7 +24,9 @@ Check out [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) 
     - [Docker](#docker)
       - [Development in Docker](#development-in-docker)
       - [Run docker in Vagrant](#run-docker-in-vagrant)
-      - [Public Docker image](#public-docker-image)
+      - [Public Docker image](#public-pre-built-docker-images)
+      - [Swagger Generator Docker Image](#swagger-generator--docker-image)
+      
     - [Homebrew](#homebrew)
   - [Getting Started](#getting-started)
   - Generators
@@ -164,8 +166,8 @@ See also [online generators](#online-generators)
 The Swagger Generator image provides a ready to use web application (swagger-generator) providing code generation services.
 
 Image accepts the following env variables:
-JAVA_MEM e.g. 1024m
 
+- `JAVA_MEM` e.g. `1024m`
 - `HTTP_PORT` e.g. `8080`
 - `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file definining which languages to hide. e.g. `/data/hiddenOptions.yaml`
 - `HIDDEN_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass hidden options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
@@ -180,6 +182,10 @@ An example of running the container:
 or
 
 `docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3`
+
+This docker image supports custom generators by dropping the generator jar into `/jetty_home/lib/ext` directory (typically via a docker volume); e.g having on host `/my/custom/coolgenerator.jar` and `/my/custom/weirdgenerator.jar`  the following would have them added to generator service generators:
+
+`docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 -v /my/custom:/jetty_home/lib/shared swaggerapi/swagger-generator-v3`
 
 ##### Swagger Generator "Minimal" Docker Image
 
@@ -668,9 +674,7 @@ curl -X POST \
   -H 'content-type: application/json' \
   -d '{
   "specURL" : "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
-  "options" : {
-    "lang" : "java"
-  },
+  "lang" : "java",
   "type" : "CLIENT",
   "codegenVersion" : "V3"
 }'
@@ -681,8 +685,8 @@ To customize the SDK, you can specify language specific options  with the follow
 ```json
 {
   "specURL" : "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
+  "lang" : "java",
   "options" : {
-    "lang" : "java",
     "additionalProperties" : {
     	"useRuntimeException": true,
     	"useRxJava" : true
@@ -694,7 +698,7 @@ To customize the SDK, you can specify language specific options  with the follow
 ```
 in which the `options` `additionalProperties` for a language can be obtained by submitting a `GET` request to `https://generator3.swagger.io/api/options?language={language}&version={codegenVersion}`:
 
-For example, `curlhttps://generator3.swagger.io/api/options?language=java&version=V3` returns (truncated output):
+For example, `curl https://generator3.swagger.io/api/options?language=java&version=V3` returns (truncated output):
 
 ```json
 {
@@ -738,28 +742,6 @@ Instead of using `specURL` with an URL to the OpenAPI/Swagger spec, one can incl
   }
 }
 ```
-
-
-### Docker image (`swaggerapi/swagger-generator-v3`)
-
-Docker image accepts the following env variables:
-
-- `JAVA_MEM` e.g. `1024m`
-- `HTTP_PORT` e.g. `8080`
-- `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file definining which languages to hide. e.g. `/data/hiddenOptions.yaml`
-- `HIDDEN_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass hidden options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
-e.g. `servers:foo,bar|clientsV3:wtf,isthis` where `category` can be `clients`, `servers`, `clientsV3`, `serversV3`
-
-An example of running the container:
-
-`docker run -e "HIDDEN_OPTIONS=servers:foo,bar|clientsV3:fgf,sdsd" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3:3.0.0`
-
-or
-
-`docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3:3.0.0`
-
-
-
 
 Guidelines for Contribution
 ---------------------------
