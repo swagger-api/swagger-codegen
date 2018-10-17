@@ -9,6 +9,7 @@ COPY target/lib/start.jar /jetty_home/
 ENV JETTY_HOME /jetty_home
 WORKDIR /generator
 COPY docker/jetty_base /generator/
+COPY docker/ROOT.xml /generator/webapps/ROOT.xml
 COPY target/*.war /generator/webapps/ROOT.war
 ENV JETTY_BASE /generator
 ARG HIDDEN_OPTIONS_DEFAULT_PATH
