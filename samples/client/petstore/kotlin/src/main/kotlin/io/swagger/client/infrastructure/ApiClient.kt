@@ -34,13 +34,22 @@ open class ApiClient(val baseUrl: String) {
                     MediaType.parse(mediaType), content
             )
         } else if(mediaType == FormDataMediaType) {
-            var builder = FormBody.Builder()
+           val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
             // content's type *must* be Map<String, Any>
             @Suppress("UNCHECKED_CAST")
-            (content as Map<String,String>).forEach { key, value ->
-                builder = builder.add(key, value)
+            (content as Map<String,Any>).forEach { key, value ->
+                if(value::class == File::class) {
+                    val file = value as File
+                    requestBodyBuilder.addFormDataPart(key, file.name, RequestBody.create(MediaType.parse("application/octet-stream"), file))
+                } else {
+                    val stringValue = value as String
+                    requestBodyBuilder.addFormDataPart(key, stringValue)
+                }
+                TODO("Handle other types inside FormDataMediaType")
             }
-            return builder.build()
+
+            return requestBodyBuilder.build()
         }  else if(mediaType == JsonMediaType) {
             return RequestBody.create(
                     MediaType.parse(mediaType), Serializer.moshi.adapter(T::class.java).toJson(content)
