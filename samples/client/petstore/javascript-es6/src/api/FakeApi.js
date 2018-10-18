@@ -18,6 +18,7 @@ import OuterBoolean from '../model/OuterBoolean';
 import OuterComposite from '../model/OuterComposite';
 import OuterNumber from '../model/OuterNumber';
 import OuterString from '../model/OuterString';
+import User from '../model/User';
 
 /**
 * Fake service.
@@ -197,6 +198,55 @@ export default class FakeApi {
 
       return this.apiClient.callApi(
         '/fake/outer/string', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the testBodyWithQueryParams operation.
+     * @callback module:api/FakeApi~testBodyWithQueryParamsCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {module:model/User} body 
+     * @param {String} query 
+     * @param {module:api/FakeApi~testBodyWithQueryParamsCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    testBodyWithQueryParams(body, query, callback) {
+      let postBody = body;
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling testBodyWithQueryParams");
+      }
+
+      // verify the required parameter 'query' is set
+      if (query === undefined || query === null) {
+        throw new Error("Missing the required parameter 'query' when calling testBodyWithQueryParams");
+      }
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'query': query
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/fake/body-with-query-params', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

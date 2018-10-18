@@ -44,6 +44,7 @@ export default class FakeClassnameTags123Api {
 
     /**
      * To test class name in snake case
+     * To test class name in snake case
      * @param {module:model/Client} body client model
      * @param {module:api/FakeClassnameTags123Api~testClassnameCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Client}
