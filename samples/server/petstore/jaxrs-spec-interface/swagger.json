@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "available", "pending", "sold" ],
-            "default" : "available"
+            "default" : "available",
+            "enum" : [ "available", "pending", "sold" ]
           },
           "collectionFormat" : "csv"
         } ],
@@ -516,9 +516,6 @@
         "responses" : {
           "200" : {
             "description" : "successful operation",
-            "schema" : {
-              "type" : "string"
-            },
             "headers" : {
               "X-Rate-Limit" : {
                 "type" : "integer",
@@ -528,8 +525,11 @@
               "X-Expires-After" : {
                 "type" : "string",
                 "format" : "date-time",
-                "description" : "date in UTC when toekn expires"
+                "description" : "date in UTC when token expires"
               }
+            },
+            "schema" : {
+              "type" : "string"
             }
           },
           "400" : {
@@ -563,7 +563,7 @@
         "parameters" : [ {
           "name" : "username",
           "in" : "path",
-          "description" : "The name that needs to be fetched. Use user1 for testing. ",
+          "description" : "The name that needs to be fetched. Use user1 for testing.",
           "required" : true,
           "type" : "string"
         } ],
@@ -639,6 +639,7 @@
       "patch" : {
         "tags" : [ "fake_classname_tags 123#$%^" ],
         "summary" : "To test class name in snake case",
+        "description" : "To test class name in snake case",
         "operationId" : "testClassname",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
@@ -680,8 +681,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_form_string",
@@ -699,8 +700,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_header_string",
@@ -718,8 +719,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ ">", "$" ],
-            "default" : "$"
+            "default" : "$",
+            "enum" : [ ">", "$" ]
           }
         }, {
           "name" : "enum_query_string",
@@ -1056,6 +1057,31 @@
         }
       }
     },
+    "/fake/body-with-query-params" : {
+      "put" : {
+        "tags" : [ "fake" ],
+        "operationId" : "testBodyWithQueryParams",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        }, {
+          "name" : "query",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          }
+        }
+      }
+    },
     "/another-fake/dummy" : {
       "patch" : {
         "tags" : [ "$another-fake?" ],
@@ -1287,10 +1313,10 @@
           "format" : "int32"
         }
       },
-      "description" : "Model for testing reserved words",
       "xml" : {
         "name" : "Return"
-      }
+      },
+      "description" : "Model for testing reserved words"
     },
     "Name" : {
       "required" : [ "name" ],
@@ -1312,10 +1338,10 @@
           "readOnly" : true
         }
       },
-      "description" : "Model for testing model name same as property name",
       "xml" : {
         "name" : "Name"
-      }
+      },
+      "description" : "Model for testing model name same as property name"
     },
     "200_response" : {
       "properties" : {
@@ -1327,10 +1353,10 @@
           "type" : "string"
         }
       },
-      "description" : "Model for testing model name starting with number",
       "xml" : {
         "name" : "Name"
-      }
+      },
+      "description" : "Model for testing model name starting with number"
     },
     "ClassModel" : {
       "properties" : {
@@ -1460,8 +1486,13 @@
     },
     "Enum_Test" : {
       "type" : "object",
+      "required" : [ "enum_string_required" ],
       "properties" : {
         "enum_string" : {
+          "type" : "string",
+          "enum" : [ "UPPER", "lower", "" ]
+        },
+        "enum_string_required" : {
           "type" : "string",
           "enum" : [ "UPPER", "lower", "" ]
         },
