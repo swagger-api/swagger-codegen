@@ -10,59 +10,51 @@
  * Do not edit the class manually.
  */
 
-/*
- * Tag.h
- *
- * A tag for a pet
- */
-
-#ifndef Tag_H_
-#define Tag_H_
 
 
+#include "Currency.h"
 
 #include <string>
-#include <memory>
+#include <sstream>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+using boost::property_tree::ptree;
+using boost::property_tree::read_json;
+using boost::property_tree::write_json;
 
 namespace io {
 namespace swagger {
 namespace server {
 namespace model {
 
-/// <summary>
-/// A tag for a pet
-/// </summary>
-class  Tag
+Currency::Currency()
 {
-public:
-    Tag();
-    virtual ~Tag();
     
-    std::string toJsonString();
-    void fromJsonString(std::string const& jsonString);
+}
 
-    /////////////////////////////////////////////
-    /// Tag members
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    int64_t getId() const;
-    void setId(int64_t value);
-    /// <summary>
-    /// 
-    /// </summary>
-    std::string getName() const;
-    void setName(std::string value);
+Currency::~Currency()
+{
+}
 
-protected:
-    int64_t m_Id;
-    std::string m_Name;
-};
+std::string Currency::toJsonString()
+{
+	std::stringstream ss;
+	ptree pt;
+	write_json(ss, pt, false);
+	return ss.str();
+}
+
+void Currency::fromJsonString(std::string const& jsonString)
+{
+	std::stringstream ss(jsonString);
+	ptree pt;
+	read_json(ss,pt);
+}
+
 
 }
 }
 }
 }
 
-#endif /* Tag_H_ */

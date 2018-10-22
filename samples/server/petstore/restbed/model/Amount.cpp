@@ -12,7 +12,7 @@
 
 
 
-#include "ApiResponse.h"
+#include "Amount.h"
 
 #include <string>
 #include <sstream>
@@ -28,62 +28,48 @@ namespace swagger {
 namespace server {
 namespace model {
 
-ApiResponse::ApiResponse()
+Amount::Amount()
 {
-    m_Code = 0;
-    m_Type = "";
-    m_Message = "";
+    m_Value = 0.0;
     
 }
 
-ApiResponse::~ApiResponse()
+Amount::~Amount()
 {
 }
 
-std::string ApiResponse::toJsonString()
+std::string Amount::toJsonString()
 {
 	std::stringstream ss;
 	ptree pt;
-	pt.put("Code", m_Code);
-	pt.put("Type", m_Type);
-	pt.put("Message", m_Message);
+	pt.put("Value", m_Value);
 	write_json(ss, pt, false);
 	return ss.str();
 }
 
-void ApiResponse::fromJsonString(std::string const& jsonString)
+void Amount::fromJsonString(std::string const& jsonString)
 {
 	std::stringstream ss(jsonString);
 	ptree pt;
 	read_json(ss,pt);
-	m_Code = pt.get("Code", 0);
-	m_Type = pt.get("Type", "");
-	m_Message = pt.get("Message", "");
+	m_Value = pt.get("Value", 0.0);
 }
 
-int32_t ApiResponse::getCode() const
+double Amount::getValue() const
 {
-    return m_Code;
+    return m_Value;
 }
-void ApiResponse::setCode(int32_t value)
+void Amount::setValue(double value)
 {
-    m_Code = value;
+    m_Value = value;
 }
-std::string ApiResponse::getType() const
+std::shared_ptr<Currency> Amount::getCurrency() const
 {
-    return m_Type;
+    return m_Currency;
 }
-void ApiResponse::setType(std::string value)
+void Amount::setCurrency(std::shared_ptr<Currency> value)
 {
-    m_Type = value;
-}
-std::string ApiResponse::getMessage() const
-{
-    return m_Message;
-}
-void ApiResponse::setMessage(std::string value)
-{
-    m_Message = value;
+    m_Currency = value;
 }
 
 }

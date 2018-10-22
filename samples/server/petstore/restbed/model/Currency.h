@@ -11,17 +11,16 @@
  */
 
 /*
- * Category.h
+ * Currency.h
  *
- * A category for a pet
+ * some description 
  */
 
-#ifndef Category_H_
-#define Category_H_
+#ifndef Currency_H_
+#define Currency_H_
 
 
 
-#include <string>
 #include <memory>
 
 namespace io {
@@ -30,34 +29,22 @@ namespace server {
 namespace model {
 
 /// <summary>
-/// A category for a pet
+/// some description 
 /// </summary>
-class  Category
+class  Currency
 {
 public:
-    Category();
-    virtual ~Category();
+    Currency();
+    virtual ~Currency();
     
     std::string toJsonString();
     void fromJsonString(std::string const& jsonString);
 
     /////////////////////////////////////////////
-    /// Category members
+    /// Currency members
     
-    /// <summary>
-    /// 
-    /// </summary>
-    int64_t getId() const;
-    void setId(int64_t value);
-    /// <summary>
-    /// 
-    /// </summary>
-    std::string getName() const;
-    void setName(std::string value);
 
 protected:
-    int64_t m_Id;
-    std::string m_Name;
 };
 
 }
@@ -65,4 +52,4 @@ protected:
 }
 }
 
-#endif /* Category_H_ */
+#endif /* Currency_H_ */

@@ -11,17 +11,17 @@
  */
 
 /*
- * Category.h
+ * Amount.h
  *
- * A category for a pet
+ * some description 
  */
 
-#ifndef Category_H_
-#define Category_H_
+#ifndef Amount_H_
+#define Amount_H_
 
 
 
-#include <string>
+#include "Currency.h"
 #include <memory>
 
 namespace io {
@@ -30,34 +30,34 @@ namespace server {
 namespace model {
 
 /// <summary>
-/// A category for a pet
+/// some description 
 /// </summary>
-class  Category
+class  Amount
 {
 public:
-    Category();
-    virtual ~Category();
+    Amount();
+    virtual ~Amount();
     
     std::string toJsonString();
     void fromJsonString(std::string const& jsonString);
 
     /////////////////////////////////////////////
-    /// Category members
+    /// Amount members
     
     /// <summary>
-    /// 
+    /// some description 
     /// </summary>
-    int64_t getId() const;
-    void setId(int64_t value);
+    double getValue() const;
+    void setValue(double value);
     /// <summary>
     /// 
     /// </summary>
-    std::string getName() const;
-    void setName(std::string value);
+    std::shared_ptr<Currency> getCurrency() const;
+    void setCurrency(std::shared_ptr<Currency> value);
 
 protected:
-    int64_t m_Id;
-    std::string m_Name;
+    double m_Value;
+    std::shared_ptr<Currency> m_Currency;
 };
 
 }
@@ -65,4 +65,4 @@ protected:
 }
 }
 
-#endif /* Category_H_ */
+#endif /* Amount_H_ */
