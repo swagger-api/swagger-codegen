@@ -13,13 +13,13 @@
 package io.swagger.client.model
 import play.api.libs.json._
 
-case class ApiResponse (
-                  code: Option[Int],
-                  `type`: Option[String],
-                  message: Option[String]
+case class Amount (
+            /* some description  */
+                  value: Double,
+                  currency: Currency
 )
 
-object ApiResponse {
-implicit val format: Format[ApiResponse] = Json.format
+object Amount {
+implicit val format: Format[Amount] = Json.format
 }
 
