@@ -495,8 +495,8 @@ open class FakeAPI: APIBase {
         
         var url = URLComponents(string: URLString)
         url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
-            "enum_query_string_array": enumQueryStringArray, 
-            "enum_query_string": enumQueryString?.rawValue, 
+            "enum_query_string_array": enumQueryStringArray,
+            "enum_query_string": enumQueryString?.rawValue,
             "enum_query_integer": enumQueryInteger?.rawValue
         ])
         let nillableHeaders: [String: Any?] = [
