@@ -11,6 +11,4 @@
 
 package io.swagger.server.model
 
-case class Category(
-  id: Option[Long],
-  name: Option[String])
+case class Currency()
