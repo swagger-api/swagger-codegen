@@ -1,0 +1,90 @@
+{{>licenseInfo}}
+import { IAjaxProvider } from 'jinqu';
+import { LinqService, QueryOptions } from 'linquest';
+import {
+{{#modelImports}}  {{this}},
+{{/modelImports}}
+} from './models';
+
+{{#operations}}
+{{#operation}}
+/**
+ * {{operationId}} - parameters interface
+ */
+export interface I{{operationIdCamelCase}}Params {
+{{#allParams}}  {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
+{{/allParams}}
+}
+
+{{/operation}}
+/**
+ * {{classname}} - API class{{#description}}
+ * {{&description}}{{/description}}
+ */
+export class {{classname}} extends LinqService {
+
+  /**
+   * Creates a new {{classname}} class.
+   *
+   * @param ajaxProvider The Linquest Ajax Provider to inject. When not specified, default Fetch provider will be used.
+   */
+  constructor(ajaxProvider?: IAjaxProvider) {
+    super('{{basePath}}', ajaxProvider);
+  }
+{{#operation}}
+
+  /**
+  {{#summary}}
+   * {{summary}}
+  {{/summary}}
+  {{#notes}}
+   * {{notes}}
+  {{/notes}}
+  {{#allParams}}
+   * @param params.{{paramName}} {{description}}
+  {{/allParams}}
+   */
+  {{nickname}}({{#hasParams}}params: I{{operationIdCamelCase}}Params{{/hasParams}}) {
+    // Create query
+    const options: QueryOptions = {
+      method: '{{httpMethod}}',
+      params: [],
+      headers: {},
+      data: {}
+    };
+
+    const url = `{{{path}}}`{{#pathParams}}
+      .replace(`{{{baseName}}}`, encodeURIComponent(params.{{paramName}} ? params.{{paramName}}.toString() : '')){{/pathParams}};
+
+    let query = this.createQuery<{{#returnType}}{{#isMapContainer}}{{returnType}}{{/isMapContainer}}{{^isMapContainer}}{{returnBaseType}}{{/isMapContainer}}{{/returnType}}{{^returnType}}any{{/returnType}}>(url);
+{{#hasQueryParams}}
+  {{#queryParams}}
+    // Set query parameters
+    options.params.push({ key: '{{baseName}}', value: params.{{paramName}} && params.{{paramName}}.toString() });
+  {{/queryParams}}
+{{/hasQueryParams}}
+{{#hasBodyParam}}
+  {{#bodyParam}}
+    // Encode body parameter
+    options.data = params.{{paramName}} || {};
+  {{/bodyParam}}
+{{/hasBodyParam}}
+{{#hasFormParams}}
+  {{#formParams}}
+    // Encode form parameters
+    options.data['{{baseName}}'] = params.{{paramName}};
+  {{/formParams}}
+{{/hasFormParams}}
+    // Set headers
+{{#headerParams}}
+  {{#headerParams}}
+    options.headers['{{baseName}}'] = (<any>params)['{{paramName}}'] && (<any>params)['{{paramName}}'].toString();
+  {{/headerParams}}
+{{/headerParams}}
+    query = query.withOptions(options);
+
+    return query{{^returnContainer}}.firstAsync(){{/returnContainer}}{{#isMapContainer}}.toArrayAsync(){{/isMapContainer}};
+  }
+{{/operation}}
+}
+{{/operations}}
