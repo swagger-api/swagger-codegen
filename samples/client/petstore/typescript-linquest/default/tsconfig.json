@@ -11,8 +11,7 @@
     "rootDir": ".",
     "lib": [
         "es2015",
-        "dom",
-        "esnext.asynciterable"
+        "dom"
     ]
   },
   "exclude": [

@@ -17,33 +17,6 @@ import {
 } from './models';
 
 /**
- * deleteOrder - parameters interface
- */
-export interface IDeleteOrderParams {
-  orderId: string;
-}
-
-/**
- * getInventory - parameters interface
- */
-export interface IGetInventoryParams {
-}
-
-/**
- * getOrderById - parameters interface
- */
-export interface IGetOrderByIdParams {
-  orderId: number;
-}
-
-/**
- * placeOrder - parameters interface
- */
-export interface IPlaceOrderParams {
-  body: Order;
-}
-
-/**
  * StoreApi - API class
  */
 export class StoreApi extends LinqService {
@@ -60,22 +33,20 @@ export class StoreApi extends LinqService {
   /**
    * Delete purchase order by ID
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-   * @param params.orderId ID of the order that needs to be deleted
+   * @param orderId ID of the order that needs to be deleted
    */
-  deleteOrder(params: IDeleteOrderParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'DELETE',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  deleteOrder(orderId: string, options?: QueryOptions) {
+    // create query
     const url = `/store/order/{orderId}`
-      .replace(`orderId`, encodeURIComponent(params.orderId ? params.orderId.toString() : ''));
-
+        .replace('{orderId}', encodeURIComponent(orderId.toString()));
     let query = this.createQuery<any>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'DELETE';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -85,19 +56,17 @@ export class StoreApi extends LinqService {
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
    */
-  getInventory() {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  getInventory(options?: QueryOptions) {
+    // create query
     const url = `/store/inventory`;
-
     let query = this.createQuery<{ [key: string]: number; }>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.toArrayAsync();
@@ -106,22 +75,20 @@ export class StoreApi extends LinqService {
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-   * @param params.orderId ID of pet that needs to be fetched
+   * @param orderId ID of pet that needs to be fetched
    */
-  getOrderById(params: IGetOrderByIdParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  getOrderById(orderId: number, options?: QueryOptions) {
+    // create query
     const url = `/store/order/{orderId}`
-      .replace(`orderId`, encodeURIComponent(params.orderId ? params.orderId.toString() : ''));
-
+        .replace('{orderId}', encodeURIComponent(orderId.toString()));
     let query = this.createQuery<Order>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -130,23 +97,21 @@ export class StoreApi extends LinqService {
   /**
    * Place an order for a pet
    * 
-   * @param params.body order placed for purchasing the pet
+   * @param body order placed for purchasing the pet
    */
-  placeOrder(params: IPlaceOrderParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  placeOrder(body: Order, options?: QueryOptions) {
+    // create query
     const url = `/store/order`;
-
     let query = this.createQuery<Order>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();

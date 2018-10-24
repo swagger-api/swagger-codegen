@@ -18,67 +18,6 @@ import {
 } from './models';
 
 /**
- * addPet - parameters interface
- */
-export interface IAddPetParams {
-  body: Pet;
-}
-
-/**
- * deletePet - parameters interface
- */
-export interface IDeletePetParams {
-  petId: number;
-  apiKey?: string;
-}
-
-/**
- * findPetsByStatus - parameters interface
- */
-export interface IFindPetsByStatusParams {
-  status: Array<'available' | 'pending' | 'sold'>;
-}
-
-/**
- * findPetsByTags - parameters interface
- */
-export interface IFindPetsByTagsParams {
-  tags: Array<string>;
-}
-
-/**
- * getPetById - parameters interface
- */
-export interface IGetPetByIdParams {
-  petId: number;
-}
-
-/**
- * updatePet - parameters interface
- */
-export interface IUpdatePetParams {
-  body: Pet;
-}
-
-/**
- * updatePetWithForm - parameters interface
- */
-export interface IUpdatePetWithFormParams {
-  petId: number;
-  name?: string;
-  status?: string;
-}
-
-/**
- * uploadFile - parameters interface
- */
-export interface IUploadFileParams {
-  petId: number;
-  additionalMetadata?: string;
-  file?: any;
-}
-
-/**
  * PetApi - API class
  */
 export class PetApi extends LinqService {
@@ -95,23 +34,21 @@ export class PetApi extends LinqService {
   /**
    * Add a new pet to the store
    * 
-   * @param params.body Pet object that needs to be added to the store
+   * @param body Pet object that needs to be added to the store
    */
-  addPet(params: IAddPetParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  addPet(body: Pet, options?: QueryOptions) {
+    // create query
     const url = `/pet`;
-
     let query = this.createQuery<any>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -120,24 +57,23 @@ export class PetApi extends LinqService {
   /**
    * Deletes a pet
    * 
-   * @param params.petId Pet id to delete
-   * @param params.apiKey 
+   * @param petId Pet id to delete
+   * @param apiKey 
    */
-  deletePet(params: IDeletePetParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'DELETE',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  deletePet(petId: number, apiKey?: string, options?: QueryOptions) {
+    // create query
     const url = `/pet/{petId}`
-      .replace(`petId`, encodeURIComponent(params.petId ? params.petId.toString() : ''));
-
+        .replace('{petId}', encodeURIComponent(petId.toString()));
     let query = this.createQuery<any>(url);
-    // Set headers
-    options.headers['api_key'] = (<any>params)['apiKey'] && (<any>params)['apiKey'].toString();
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'DELETE';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set headers
+    options.headers['api_key'] = apiKey && apiKey.toString();
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -146,23 +82,21 @@ export class PetApi extends LinqService {
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
-   * @param params.status Status values that need to be considered for filter
+   * @param status Status values that need to be considered for filter
    */
-  findPetsByStatus(params: IFindPetsByStatusParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: QueryOptions) {
+    // create query
     const url = `/pet/findByStatus`;
-
     let query = this.createQuery<Pet>(url);
-    // Set query parameters
-    options.params.push({ key: 'status', value: params.status && params.status.toString() });
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set query parameters
+    options.params.push({ key: 'status', value: status && status.toString() });
     query = query.withOptions(options);
 
     return query;
@@ -171,23 +105,21 @@ export class PetApi extends LinqService {
   /**
    * Finds Pets by tags
    * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-   * @param params.tags Tags to filter by
+   * @param tags Tags to filter by
    */
-  findPetsByTags(params: IFindPetsByTagsParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  findPetsByTags(tags: Array<string>, options?: QueryOptions) {
+    // create query
     const url = `/pet/findByTags`;
-
     let query = this.createQuery<Pet>(url);
-    // Set query parameters
-    options.params.push({ key: 'tags', value: params.tags && params.tags.toString() });
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set query parameters
+    options.params.push({ key: 'tags', value: tags && tags.toString() });
     query = query.withOptions(options);
 
     return query;
@@ -196,22 +128,20 @@ export class PetApi extends LinqService {
   /**
    * Find pet by ID
    * Returns a single pet
-   * @param params.petId ID of pet to return
+   * @param petId ID of pet to return
    */
-  getPetById(params: IGetPetByIdParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  getPetById(petId: number, options?: QueryOptions) {
+    // create query
     const url = `/pet/{petId}`
-      .replace(`petId`, encodeURIComponent(params.petId ? params.petId.toString() : ''));
-
+        .replace('{petId}', encodeURIComponent(petId.toString()));
     let query = this.createQuery<Pet>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -220,23 +150,21 @@ export class PetApi extends LinqService {
   /**
    * Update an existing pet
    * 
-   * @param params.body Pet object that needs to be added to the store
+   * @param body Pet object that needs to be added to the store
    */
-  updatePet(params: IUpdatePetParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'PUT',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  updatePet(body: Pet, options?: QueryOptions) {
+    // create query
     const url = `/pet`;
-
     let query = this.createQuery<any>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'PUT';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -245,28 +173,26 @@ export class PetApi extends LinqService {
   /**
    * Updates a pet in the store with form data
    * 
-   * @param params.petId ID of pet that needs to be updated
-   * @param params.name Updated name of the pet
-   * @param params.status Updated status of the pet
+   * @param petId ID of pet that needs to be updated
+   * @param name Updated name of the pet
+   * @param status Updated status of the pet
    */
-  updatePetWithForm(params: IUpdatePetWithFormParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  updatePetWithForm(petId: number, name?: string, status?: string, options?: QueryOptions) {
+    // create query
     const url = `/pet/{petId}`
-      .replace(`petId`, encodeURIComponent(params.petId ? params.petId.toString() : ''));
-
+        .replace('{petId}', encodeURIComponent(petId.toString()));
     let query = this.createQuery<any>(url);
-    // Encode form parameters
-    options.data['name'] = params.name;
-    // Encode form parameters
-    options.data['status'] = params.status;
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set form parameters
+    options.data = options.data || {};
+    options.data['name'] = name;
+    options.data['status'] = status;
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -275,28 +201,26 @@ export class PetApi extends LinqService {
   /**
    * uploads an image
    * 
-   * @param params.petId ID of pet to update
-   * @param params.additionalMetadata Additional data to pass to server
-   * @param params.file file to upload
+   * @param petId ID of pet to update
+   * @param additionalMetadata Additional data to pass to server
+   * @param file file to upload
    */
-  uploadFile(params: IUploadFileParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: QueryOptions) {
+    // create query
     const url = `/pet/{petId}/uploadImage`
-      .replace(`petId`, encodeURIComponent(params.petId ? params.petId.toString() : ''));
-
+        .replace('{petId}', encodeURIComponent(petId.toString()));
     let query = this.createQuery<ApiResponse>(url);
-    // Encode form parameters
-    options.data['additionalMetadata'] = params.additionalMetadata;
-    // Encode form parameters
-    options.data['file'] = params.file;
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set form parameters
+    options.data = options.data || {};
+    options.data['additionalMetadata'] = additionalMetadata;
+    options.data['file'] = file;
     query = query.withOptions(options);
 
     return query.firstAsync();

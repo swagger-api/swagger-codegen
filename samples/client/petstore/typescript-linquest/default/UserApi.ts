@@ -17,63 +17,6 @@ import {
 } from './models';
 
 /**
- * createUser - parameters interface
- */
-export interface ICreateUserParams {
-  body: User;
-}
-
-/**
- * createUsersWithArrayInput - parameters interface
- */
-export interface ICreateUsersWithArrayInputParams {
-  body: Array<User>;
-}
-
-/**
- * createUsersWithListInput - parameters interface
- */
-export interface ICreateUsersWithListInputParams {
-  body: Array<User>;
-}
-
-/**
- * deleteUser - parameters interface
- */
-export interface IDeleteUserParams {
-  username: string;
-}
-
-/**
- * getUserByName - parameters interface
- */
-export interface IGetUserByNameParams {
-  username: string;
-}
-
-/**
- * loginUser - parameters interface
- */
-export interface ILoginUserParams {
-  username: string;
-  password: string;
-}
-
-/**
- * logoutUser - parameters interface
- */
-export interface ILogoutUserParams {
-}
-
-/**
- * updateUser - parameters interface
- */
-export interface IUpdateUserParams {
-  username: string;
-  body: User;
-}
-
-/**
  * UserApi - API class
  */
 export class UserApi extends LinqService {
@@ -90,23 +33,21 @@ export class UserApi extends LinqService {
   /**
    * Create user
    * This can only be done by the logged in user.
-   * @param params.body Created user object
+   * @param body Created user object
    */
-  createUser(params: ICreateUserParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  createUser(body: User, options?: QueryOptions) {
+    // create query
     const url = `/user`;
-
     let query = this.createQuery<any>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -115,23 +56,21 @@ export class UserApi extends LinqService {
   /**
    * Creates list of users with given input array
    * 
-   * @param params.body List of user object
+   * @param body List of user object
    */
-  createUsersWithArrayInput(params: ICreateUsersWithArrayInputParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  createUsersWithArrayInput(body: Array<User>, options?: QueryOptions) {
+    // create query
     const url = `/user/createWithArray`;
-
     let query = this.createQuery<any>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -140,23 +79,21 @@ export class UserApi extends LinqService {
   /**
    * Creates list of users with given input array
    * 
-   * @param params.body List of user object
+   * @param body List of user object
    */
-  createUsersWithListInput(params: ICreateUsersWithListInputParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'POST',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  createUsersWithListInput(body: Array<User>, options?: QueryOptions) {
+    // create query
     const url = `/user/createWithList`;
-
     let query = this.createQuery<any>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'POST';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -165,22 +102,20 @@ export class UserApi extends LinqService {
   /**
    * Delete user
    * This can only be done by the logged in user.
-   * @param params.username The name that needs to be deleted
+   * @param username The name that needs to be deleted
    */
-  deleteUser(params: IDeleteUserParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'DELETE',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  deleteUser(username: string, options?: QueryOptions) {
+    // create query
     const url = `/user/{username}`
-      .replace(`username`, encodeURIComponent(params.username ? params.username.toString() : ''));
-
+        .replace('{username}', encodeURIComponent(username.toString()));
     let query = this.createQuery<any>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'DELETE';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -189,22 +124,20 @@ export class UserApi extends LinqService {
   /**
    * Get user by user name
    * 
-   * @param params.username The name that needs to be fetched. Use user1 for testing.
+   * @param username The name that needs to be fetched. Use user1 for testing.
    */
-  getUserByName(params: IGetUserByNameParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  getUserByName(username: string, options?: QueryOptions) {
+    // create query
     const url = `/user/{username}`
-      .replace(`username`, encodeURIComponent(params.username ? params.username.toString() : ''));
-
+        .replace('{username}', encodeURIComponent(username.toString()));
     let query = this.createQuery<User>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -213,26 +146,24 @@ export class UserApi extends LinqService {
   /**
    * Logs user into the system
    * 
-   * @param params.username The user name for login
-   * @param params.password The password for login in clear text
+   * @param username The user name for login
+   * @param password The password for login in clear text
    */
-  loginUser(params: ILoginUserParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  loginUser(username: string, password: string, options?: QueryOptions) {
+    // create query
     const url = `/user/login`;
-
     let query = this.createQuery<string>(url);
-    // Set query parameters
-    options.params.push({ key: 'username', value: params.username && params.username.toString() });
-    // Set query parameters
-    options.params.push({ key: 'password', value: params.password && params.password.toString() });
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set query parameters
+    options.params.push({ key: 'username', value: username && username.toString() });
+    // set query parameters
+    options.params.push({ key: 'password', value: password && password.toString() });
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -242,19 +173,17 @@ export class UserApi extends LinqService {
    * Logs out current logged in user session
    * 
    */
-  logoutUser() {
-    // Create query
-    const options: QueryOptions = {
-      method: 'GET',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  logoutUser(options?: QueryOptions) {
+    // create query
     const url = `/user/logout`;
-
     let query = this.createQuery<any>(url);
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'GET';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
     query = query.withOptions(options);
 
     return query.firstAsync();
@@ -263,25 +192,23 @@ export class UserApi extends LinqService {
   /**
    * Updated user
    * This can only be done by the logged in user.
-   * @param params.username name that need to be deleted
-   * @param params.body Updated user object
+   * @param username name that need to be deleted
+   * @param body Updated user object
    */
-  updateUser(params: IUpdateUserParams) {
-    // Create query
-    const options: QueryOptions = {
-      method: 'PUT',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
+  updateUser(username: string, body: User, options?: QueryOptions) {
+    // create query
     const url = `/user/{username}`
-      .replace(`username`, encodeURIComponent(params.username ? params.username.toString() : ''));
-
+        .replace('{username}', encodeURIComponent(username.toString()));
     let query = this.createQuery<any>(url);
-    // Encode body parameter
-    options.data = params.body || {};
-    // Set headers
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || 'PUT';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
+    // set body parameter
+    options.data = body;
     query = query.withOptions(options);
 
     return query.firstAsync();
