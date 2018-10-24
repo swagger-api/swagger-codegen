@@ -16,7 +16,7 @@ import io.swagger.client.models.Tag
 
 import com.squareup.moshi.Json
 /**
- * A pet for sale in the pet store
+ * 
  * @param id 
  * @param category 
  * @param name 
