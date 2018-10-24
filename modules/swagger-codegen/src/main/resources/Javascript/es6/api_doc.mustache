@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ### Example
 ```javascript
-import {{{moduleName}}} from '{{{projectName}}}';
+import {{=<% %>=}}{<%moduleName%>}<%={{ }}=%> from '{{{projectName}}}';
 {{#hasAuthMethods}}
 let defaultClient = {{{moduleName}}}.ApiClient.instance;
 {{#authMethods}}{{#isBasic}}
