@@ -5,18 +5,8 @@ import {
 {{#modelImports}}  {{this}},
 {{/modelImports}}
 } from './models';
-
 {{#operations}}
-{{#operation}}
-/**
- * {{operationId}} - parameters interface
- */
-export interface I{{operationIdCamelCase}}Params {
-{{#allParams}}  {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
-{{/allParams}}
-}
 
-{{/operation}}
 /**
  * {{classname}} - API class{{#description}}
  * {{&description}}{{/description}}
@@ -41,46 +31,48 @@ export class {{classname}} extends LinqService {
    * {{notes}}
   {{/notes}}
   {{#allParams}}
-   * @param params.{{paramName}} {{description}}
+   * @param {{paramName}} {{description}}
   {{/allParams}}
    */
-  {{nickname}}({{#hasParams}}params: I{{operationIdCamelCase}}Params{{/hasParams}}) {
-    // Create query
-    const options: QueryOptions = {
-      method: '{{httpMethod}}',
-      params: [],
-      headers: {},
-      data: {}
-    };
-
-    const url = `{{{path}}}`{{#pathParams}}
-      .replace(`{{{baseName}}}`, encodeURIComponent(params.{{paramName}} ? params.{{paramName}}.toString() : '')){{/pathParams}};
-
+  {{nickname}}({{#hasParams}}{{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}{{/hasParams}}options?: QueryOptions) {
+    // create query
+    {{=<% %>=}}
+    const url = `<%path%>`<%#pathParams%>
+      .replace('{<%baseName%>}', encodeURIComponent(<%paramName%>.toString()))<%/pathParams%>;
+    <%={{ }}=%>
     let query = this.createQuery<{{#returnType}}{{#isMapContainer}}{{returnType}}{{/isMapContainer}}{{^isMapContainer}}{{returnBaseType}}{{/isMapContainer}}{{/returnType}}{{^returnType}}any{{/returnType}}>(url);
+
+    // initialize options
+    options = options || {};
+    options.method = options.method || '{{httpMethod}}';
+    options.params = options.params || [];
+    options.headers = options.headers || {};
+
 {{#hasQueryParams}}
   {{#queryParams}}
-    // Set query parameters
-    options.params.push({ key: '{{baseName}}', value: params.{{paramName}} && params.{{paramName}}.toString() });
+    // set query parameters
+    options.params.push({ key: '{{baseName}}', value: {{paramName}} && {{paramName}}.toString() });
   {{/queryParams}}
 {{/hasQueryParams}}
 {{#hasBodyParam}}
   {{#bodyParam}}
-    // Encode body parameter
-    options.data = params.{{paramName}} || {};
+    // set body parameter
+    options.data = {{paramName}};
   {{/bodyParam}}
 {{/hasBodyParam}}
 {{#hasFormParams}}
+    // set form parameters
+    options.data = options.data || {};
   {{#formParams}}
-    // Encode form parameters
-    options.data['{{baseName}}'] = params.{{paramName}};
+    options.data['{{baseName}}'] = {{paramName}};
   {{/formParams}}
 {{/hasFormParams}}
-    // Set headers
-{{#headerParams}}
+{{#hasHeaderParams}}
+    // set headers
   {{#headerParams}}
-    options.headers['{{baseName}}'] = (<any>params)['{{paramName}}'] && (<any>params)['{{paramName}}'].toString();
+    options.headers['{{baseName}}'] = {{paramName}} && {{paramName}}.toString();
   {{/headerParams}}
-{{/headerParams}}
+{{/hasHeaderParams}}
     query = query.withOptions(options);
 
     return query{{^returnContainer}}.firstAsync(){{/returnContainer}}{{#isMapContainer}}.toArrayAsync(){{/isMapContainer}};
