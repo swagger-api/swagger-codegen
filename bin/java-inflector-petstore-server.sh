@@ -1,4 +1,4 @@
-#!/bin/sh
+.(b#!/bin/sh
 
 SCRIPT="$0"
 
