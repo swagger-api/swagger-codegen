@@ -39,7 +39,7 @@ configuration = {{{packageName}}}.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'{{/isOAuth}}{{/authMethods}}
 
 # create an instance of the API class
-api_instance = {{{packageName}}}.{{{classname}}}({{{packageName}}}.ApiClient(configuration))
+api_instance = {{{packageName}}}.{{{classname}}}({{{packageName}}}.ApiClient(configuration=configuration))
 {{#allParams}}{{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
 {{/allParams}}
 {{/hasAuthMethods}}
