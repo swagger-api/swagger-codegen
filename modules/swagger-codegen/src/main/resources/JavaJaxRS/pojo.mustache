@@ -17,6 +17,8 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
       {{/isContainer}}
       {{/items}}
     {{/items.isEnum}}
+    {{#isContainer}}
+        {{#useBeanValidation}}@Valid{{/useBeanValidation}} {{/isContainer}}
   {{#jackson}}
   @JsonProperty("{{baseName}}")
   {{/jackson}}

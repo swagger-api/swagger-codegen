@@ -3,6 +3,7 @@ package {{package}};
 {{#imports}}import {{import}};
 {{/imports}}
 {{#useBeanValidation}}
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 {{/useBeanValidation}}
 {{#models}}

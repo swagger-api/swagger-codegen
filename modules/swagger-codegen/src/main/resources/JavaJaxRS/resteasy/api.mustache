@@ -22,6 +22,7 @@ import javax.ws.rs.*;
 import javax.inject.Inject;
 
 {{#useBeanValidation}}
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 {{/useBeanValidation}}
 {{#operations}}{{#operation}}{{#isMultipart}}import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
