@@ -213,6 +213,27 @@ public class FakeApi {
         }));
     }
     /**
+     * test inline additionalProperties
+     * 
+     * @param param request body (required)
+     * @param resultHandler Asynchronous result handler
+     */
+    public void testInlineAdditionalProperties(Object param, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.testInlineAdditionalProperties(param, resultHandler);
+    }
+
+    /**
+     * test inline additionalProperties
+     * 
+     * @param param request body (required)
+     * @return Asynchronous result handler (RxJava Single)
+     */
+    public Single<Void> rxTestInlineAdditionalProperties(Object param) {
+        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
+            delegate.testInlineAdditionalProperties(param, fut);
+        }));
+    }
+    /**
      * test json serialization of form data
      * 
      * @param param field1 (required)
