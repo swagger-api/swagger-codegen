@@ -279,6 +279,8 @@ public class CodegenConstants {
     public static final String IS_RESTFUL_EXT_NAME = PREFIX_IS + "restful";
     public static final String IS_DEPRECATED_EXT_NAME = PREFIX_IS + "deprecated";
 
+    public static final String IS_FORM_EXT_NAME = PREFIX_IS + "form";
+
     public static final String IS_FORM_PARAM_EXT_NAME = PREFIX_IS + "form-param";
     public static final String IS_QUERY_PARAM_EXT_NAME = PREFIX_IS + "query-param";
     public static final String IS_PATH_PARAM_EXT_NAME = PREFIX_IS + "path-param";
