@@ -878,12 +878,15 @@ public class ApiClient {
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Response response) {
                 T result;
                 try {
                     result = (T) handleResponse(response, returnType);
                 } catch (ApiException e) {
                     callback.onFailure(e, response.code(), response.headers().toMultimap());
+                    return;
+                } catch (Throwable e) {
+                    callback.onFailure(new ApiException(e), 0, null);
                     return;
                 }
                 callback.onSuccess(result, response.code(), response.headers().toMultimap());
