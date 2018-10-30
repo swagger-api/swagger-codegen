@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -28,6 +29,7 @@ import javax.validation.constraints.*;
  */
 
 public class ArrayOfNumberOnly   {
+        @Valid 
   @JsonProperty("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
 
@@ -50,6 +52,7 @@ public class ArrayOfNumberOnly   {
    **/
   @JsonProperty("ArrayNumber")
   @ApiModelProperty(value = "")
+  @Valid
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }

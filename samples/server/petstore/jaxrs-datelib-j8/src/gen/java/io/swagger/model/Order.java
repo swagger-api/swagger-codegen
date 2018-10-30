@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -28,14 +29,18 @@ import javax.validation.constraints.*;
  */
 
 public class Order  implements Serializable {
+
   @JsonProperty("id")
   private Long id = null;
+
 
   @JsonProperty("petId")
   private Long petId = null;
 
+
   @JsonProperty("quantity")
   private Integer quantity = null;
+
 
   @JsonProperty("shipDate")
   private OffsetDateTime shipDate = null;
@@ -73,8 +78,10 @@ public class Order  implements Serializable {
     }
   }
 
+
   @JsonProperty("status")
   private StatusEnum status = null;
+
 
   @JsonProperty("complete")
   private Boolean complete = false;
@@ -147,6 +154,7 @@ public class Order  implements Serializable {
    **/
   @JsonProperty("shipDate")
   @ApiModelProperty(value = "")
+  @Valid
   public OffsetDateTime getShipDate() {
     return shipDate;
   }

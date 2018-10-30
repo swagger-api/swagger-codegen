@@ -24,6 +24,7 @@ import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -31,18 +32,23 @@ import javax.validation.constraints.*;
  */
 
 public class Pet  implements Serializable {
+
   @JsonProperty("id")
   private Long id = null;
+
 
   @JsonProperty("category")
   private Category category = null;
 
+
   @JsonProperty("name")
   private String name = null;
 
+        @Valid 
   @JsonProperty("photoUrls")
   private List<String> photoUrls = new ArrayList<>();
 
+        @Valid 
   @JsonProperty("tags")
   private List<Tag> tags = null;
 
@@ -79,6 +85,7 @@ public class Pet  implements Serializable {
     }
   }
 
+
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -112,6 +119,7 @@ public class Pet  implements Serializable {
    **/
   @JsonProperty("category")
   @ApiModelProperty(value = "")
+  @Valid
   public Category getCategory() {
     return category;
   }
@@ -184,6 +192,7 @@ public class Pet  implements Serializable {
    **/
   @JsonProperty("tags")
   @ApiModelProperty(value = "")
+  @Valid
   public List<Tag> getTags() {
     return tags;
   }

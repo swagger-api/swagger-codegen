@@ -97,6 +97,7 @@ public enum StatusEnum {
    * @return category
   **/
   @JsonProperty("category")
+        @Valid
   public Category getCategory() {
     return category;
   }
@@ -158,6 +159,7 @@ public enum StatusEnum {
    * @return tags
   **/
   @JsonProperty("tags")
+            @Valid
   public List<Tag> getTags() {
     return tags;
   }

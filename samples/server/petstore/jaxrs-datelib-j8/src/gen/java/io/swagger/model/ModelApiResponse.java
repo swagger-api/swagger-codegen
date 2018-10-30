@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -26,11 +27,14 @@ import javax.validation.constraints.*;
  */
 
 public class ModelApiResponse  implements Serializable {
+
   @JsonProperty("code")
   private Integer code = null;
 
+
   @JsonProperty("type")
   private String type = null;
+
 
   @JsonProperty("message")
   private String message = null;

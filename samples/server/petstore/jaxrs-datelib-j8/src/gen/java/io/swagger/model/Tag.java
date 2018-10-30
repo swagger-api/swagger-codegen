@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -26,8 +27,10 @@ import javax.validation.constraints.*;
  */
 
 public class Tag  implements Serializable {
+
   @JsonProperty("id")
   private Long id = null;
+
 
   @JsonProperty("name")
   private String name = null;

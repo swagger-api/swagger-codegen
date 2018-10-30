@@ -230,6 +230,7 @@ public enum EnumNumberEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("outerEnum")
+        @Valid
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

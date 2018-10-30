@@ -11,6 +11,7 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
@@ -65,6 +66,7 @@ public class Pet   {
   
   @ApiModelProperty(value = "")
   @JsonProperty("category")
+        @Valid
   public Category getCategory() {
     return category;
   }
@@ -103,6 +105,7 @@ public class Pet   {
   
   @ApiModelProperty(value = "")
   @JsonProperty("tags")
+            @Valid
   public List<Tag> getTags() {
     return tags;
   }

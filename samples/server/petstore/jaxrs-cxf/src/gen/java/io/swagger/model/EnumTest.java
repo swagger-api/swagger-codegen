@@ -253,6 +253,7 @@ public enum EnumNumberEnum {
    * @return outerEnum
   **/
   @JsonProperty("outerEnum")
+        @Valid
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

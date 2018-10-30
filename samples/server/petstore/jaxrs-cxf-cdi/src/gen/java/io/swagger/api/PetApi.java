@@ -20,6 +20,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import java.util.Map;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 @Path("/pet")
 @RequestScoped
@@ -48,7 +49,7 @@ public class PetApi  {
     }, tags={ "pet",  })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body) {
+    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) @Valid  Pet body) {
         return delegate.addPet(body, securityContext);
     }
 
@@ -131,7 +132,7 @@ public class PetApi  {
         @ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @ApiResponse(code = 404, message = "Pet not found", response = Void.class),
         @ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
-    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body) {
+    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) @Valid  Pet body) {
         return delegate.updatePet(body, securityContext);
     }
 

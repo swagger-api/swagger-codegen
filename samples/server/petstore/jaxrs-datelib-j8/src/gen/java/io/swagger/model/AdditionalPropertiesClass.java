@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -29,9 +30,11 @@ import javax.validation.constraints.*;
  */
 
 public class AdditionalPropertiesClass  implements Serializable {
+        @Valid 
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = null;
 
+        @Valid 
   @JsonProperty("map_of_map_property")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
 
@@ -81,6 +84,7 @@ public class AdditionalPropertiesClass  implements Serializable {
    **/
   @JsonProperty("map_of_map_property")
   @ApiModelProperty(value = "")
+  @Valid
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

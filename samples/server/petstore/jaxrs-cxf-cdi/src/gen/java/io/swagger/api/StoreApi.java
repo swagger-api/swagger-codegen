@@ -19,6 +19,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import java.util.Map;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 @Path("/store")
 @RequestScoped
@@ -81,7 +82,7 @@ public class StoreApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Order.class),
         @ApiResponse(code = 400, message = "Invalid Order", response = Void.class) })
-    public Response placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true) Order body) {
+    public Response placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true) @Valid  Order body) {
         return delegate.placeOrder(body, securityContext);
     }
 }

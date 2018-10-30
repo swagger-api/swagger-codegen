@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -25,11 +26,14 @@ import javax.validation.constraints.*;
  */
 
 public class ModelApiResponse   {
+
   @JsonProperty("code")
   private Integer code = null;
 
+
   @JsonProperty("type")
   private String type = null;
+
 
   @JsonProperty("message")
   private String message = null;

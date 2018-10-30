@@ -27,6 +27,7 @@ public class OuterComposite  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("my_number")
+        @Valid
   public BigDecimal getMyNumber() {
     return myNumber;
   }

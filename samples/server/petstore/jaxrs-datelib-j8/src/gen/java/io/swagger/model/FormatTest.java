@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -30,41 +31,54 @@ import javax.validation.constraints.*;
  */
 
 public class FormatTest  implements Serializable {
+
   @JsonProperty("integer")
   private Integer integer = null;
+
 
   @JsonProperty("int32")
   private Integer int32 = null;
 
+
   @JsonProperty("int64")
   private Long int64 = null;
+
 
   @JsonProperty("number")
   private BigDecimal number = null;
 
+
   @JsonProperty("float")
   private Float _float = null;
+
 
   @JsonProperty("double")
   private Double _double = null;
 
+
   @JsonProperty("string")
   private String string = null;
+
 
   @JsonProperty("byte")
   private byte[] _byte = null;
 
+
   @JsonProperty("binary")
   private byte[] binary = null;
+
 
   @JsonProperty("date")
   private LocalDate date = null;
 
+
   @JsonProperty("dateTime")
   private OffsetDateTime dateTime = null;
 
+
   @JsonProperty("uuid")
   private UUID uuid = null;
+
 
   @JsonProperty("password")
   private String password = null;
@@ -144,6 +158,7 @@ public class FormatTest  implements Serializable {
   @JsonProperty("number")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
@@ -264,6 +279,7 @@ public class FormatTest  implements Serializable {
   @JsonProperty("date")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
   public LocalDate getDate() {
     return date;
   }
@@ -283,6 +299,7 @@ public class FormatTest  implements Serializable {
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
+  @Valid
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -302,6 +319,7 @@ public class FormatTest  implements Serializable {
    **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
+  @Valid
   public UUID getUuid() {
     return uuid;
   }

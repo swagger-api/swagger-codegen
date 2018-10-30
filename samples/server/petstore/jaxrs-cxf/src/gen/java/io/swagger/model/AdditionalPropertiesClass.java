@@ -52,6 +52,7 @@ public class AdditionalPropertiesClass  {
    * @return mapOfMapProperty
   **/
   @JsonProperty("map_of_map_property")
+            @Valid
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

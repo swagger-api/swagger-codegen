@@ -62,6 +62,7 @@ public enum InnerEnum {
    * @return mapMapOfString
   **/
   @JsonProperty("map_map_of_string")
+            @Valid
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }

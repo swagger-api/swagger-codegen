@@ -56,6 +56,7 @@ public class ArrayTest  {
    * @return arrayArrayOfInteger
   **/
   @JsonProperty("array_array_of_integer")
+            @Valid
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -79,6 +80,7 @@ public class ArrayTest  {
    * @return arrayArrayOfModel
   **/
   @JsonProperty("array_array_of_model")
+            @Valid
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }

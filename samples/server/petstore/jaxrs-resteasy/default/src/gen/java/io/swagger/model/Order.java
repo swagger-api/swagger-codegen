@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import java.util.Date;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
@@ -85,6 +86,7 @@ public class Order   {
   
   @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
+        @Valid
   public Date getShipDate() {
     return shipDate;
   }
