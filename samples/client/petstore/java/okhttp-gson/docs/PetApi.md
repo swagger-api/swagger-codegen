@@ -380,58 +380,6 @@ null (empty response body)
  - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: Not defined
 
-<a name="updatePetWithForm"></a>
-# **updatePetWithForm**
-> updatePetWithForm(petId, body)
-
-Updates a pet in the store with form data
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.PetApi;
-
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-// Configure OAuth2 access token for authorization: petstore_auth
-OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
-petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
-
-PetApi apiInstance = new PetApi();
-Integer petId = 56; // Integer | ID of pet that needs to be updated
-Object body = null; // Object | 
-try {
-    apiInstance.updatePetWithForm(petId, body);
-} catch (ApiException e) {
-    System.err.println("Exception when calling PetApi#updatePetWithForm");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **petId** | [**Integer**](.md)| ID of pet that needs to be updated |
- **body** | [**Object**](Object.md)|  | [optional]
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-[petstore_auth](../README.md#petstore_auth)
-
-### HTTP request headers
-
- - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: Not defined
-
 <a name="uploadFile"></a>
 # **uploadFile**
 > ModelApiResponse uploadFile(petId, additionalMetadata, file)
@@ -473,59 +421,6 @@ Name | Type | Description  | Notes
  **petId** | [**Integer**](.md)| ID of pet to update |
  **additionalMetadata** | [**String**](.md)|  | [optional]
  **file** | **File**|  | [optional]
-
-### Return type
-
-[**ModelApiResponse**](ModelApiResponse.md)
-
-### Authorization
-
-[petstore_auth](../README.md#petstore_auth)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-<a name="uploadFile"></a>
-# **uploadFile**
-> ModelApiResponse uploadFile(petId, body)
-
-uploads an image
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.PetApi;
-
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-// Configure OAuth2 access token for authorization: petstore_auth
-OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
-petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
-
-PetApi apiInstance = new PetApi();
-Integer petId = 56; // Integer | ID of pet to update
-Object body = null; // Object | 
-try {
-    ModelApiResponse result = apiInstance.uploadFile(petId, body);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling PetApi#uploadFile");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **petId** | [**Integer**](.md)| ID of pet to update |
- **body** | [**Object**](Object.md)|  | [optional]
 
 ### Return type
 
