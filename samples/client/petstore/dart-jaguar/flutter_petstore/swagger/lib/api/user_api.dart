@@ -23,7 +23,13 @@ class UserApi extends _$UserApiClient implements ApiClient {
     Future<void> createUser(
         
         @AsJson() User body
-    );
+    ) {
+        return super.createUser(
+
+            
+            body
+        );
+    }
 
     /// Creates list of users with given input array
     ///
@@ -32,7 +38,13 @@ class UserApi extends _$UserApiClient implements ApiClient {
     Future<void> createUsersWithArrayInput(
         
         @AsJson() List<User> body
-    );
+    ) {
+        return super.createUsersWithArrayInput(
+
+            
+            body
+        );
+    }
 
     /// Creates list of users with given input array
     ///
@@ -41,7 +53,13 @@ class UserApi extends _$UserApiClient implements ApiClient {
     Future<void> createUsersWithListInput(
         
         @AsJson() List<User> body
-    );
+    ) {
+        return super.createUsersWithListInput(
+
+            
+            body
+        );
+    }
 
     /// Delete user
     ///
@@ -49,7 +67,12 @@ class UserApi extends _$UserApiClient implements ApiClient {
     @DeleteReq(path: "/user/:username")
     Future<void> deleteUser(
             @PathParam("username") String username
-    );
+    ) {
+        return super.deleteUser(
+            username
+
+        );
+    }
 
     /// Get user by user name
     ///
@@ -57,7 +80,12 @@ class UserApi extends _$UserApiClient implements ApiClient {
     @GetReq(path: "/user/:username")
     Future<User> getUserByName(
             @PathParam("username") String username
-    );
+    ) {
+        return super.getUserByName(
+            username
+
+        );
+    }
 
     /// Logs user into the system
     ///
@@ -68,14 +96,26 @@ class UserApi extends _$UserApiClient implements ApiClient {
         @QueryParam("username") String username, 
         
         @QueryParam("password") String password
-    );
+    ) {
+        return super.loginUser(
+        
+            username, 
+        
+            password
+
+        );
+    }
 
     /// Logs out current logged in user session
     ///
     /// 
     @GetReq(path: "/user/logout")
     Future<void> logoutUser(
-    );
+    ) {
+        return super.logoutUser(
+
+        );
+    }
 
     /// Updated user
     ///
@@ -85,7 +125,14 @@ class UserApi extends _$UserApiClient implements ApiClient {
             @PathParam("username") String username
         ,
         @AsJson() User body
-    );
+    ) {
+        return super.updateUser(
+            username
+
+            ,
+            body
+        );
+    }
 
 
 }

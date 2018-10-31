@@ -24,7 +24,13 @@ class PetApi extends _$PetApiClient implements ApiClient {
     Future<void> addPet(
         
         @AsJson() Pet body
-    );
+    ) {
+        return super.addPet(
+
+            
+            body
+        );
+    }
 
     /// Deletes a pet
     ///
@@ -34,7 +40,14 @@ class PetApi extends _$PetApiClient implements ApiClient {
             @PathParam("petId") int petId
         ,
         @Header("api_key") String apiKey
-    );
+    ) {
+        return super.deletePet(
+            petId
+        ,
+            apiKey
+
+        );
+    }
 
     /// Finds Pets by status
     ///
@@ -43,7 +56,13 @@ class PetApi extends _$PetApiClient implements ApiClient {
     Future<List<Pet>> findPetsByStatus(
         
         @QueryParam("status") List<String> status
-    );
+    ) {
+        return super.findPetsByStatus(
+        
+            status
+
+        );
+    }
 
     /// Finds Pets by tags
     ///
@@ -52,7 +71,13 @@ class PetApi extends _$PetApiClient implements ApiClient {
     Future<List<Pet>> findPetsByTags(
         
         @QueryParam("tags") List<String> tags
-    );
+    ) {
+        return super.findPetsByTags(
+        
+            tags
+
+        );
+    }
 
     /// Find pet by ID
     ///
@@ -60,7 +85,12 @@ class PetApi extends _$PetApiClient implements ApiClient {
     @GetReq(path: "/pet/:petId", metadata: {"auth": [ {"type": "apiKey", "name": "api_key", "keyName": "api_key", "where": "header" }]})
     Future<Pet> getPetById(
             @PathParam("petId") int petId
-    );
+    ) {
+        return super.getPetById(
+            petId
+
+        );
+    }
 
     /// Update an existing pet
     ///
@@ -69,7 +99,13 @@ class PetApi extends _$PetApiClient implements ApiClient {
     Future<void> updatePet(
         
         @AsJson() Pet body
-    );
+    ) {
+        return super.updatePet(
+
+            
+            body
+        );
+    }
 
     /// Updates a pet in the store with form data
     ///
@@ -81,7 +117,16 @@ class PetApi extends _$PetApiClient implements ApiClient {
         @AsFormField() String name, 
         
         @AsFormField() String status
-    );
+    ) {
+        return super.updatePetWithForm(
+            petId
+
+            ,
+            name, 
+            
+            status
+        );
+    }
 
     /// uploads an image
     ///
@@ -93,7 +138,16 @@ class PetApi extends _$PetApiClient implements ApiClient {
         @AsMultipartField() String additionalMetadata, 
         
         @AsMultipartField() MultipartFile file
-    );
+    ) {
+        return super.uploadFile(
+            petId
+
+            ,
+            additionalMetadata, 
+            
+            file
+        );
+    }
 
 
 }
