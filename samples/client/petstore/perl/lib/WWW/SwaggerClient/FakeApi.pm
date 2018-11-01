@@ -706,6 +706,67 @@ sub test_enum_parameters {
 }
 
 #
+# test_inline_additional_properties
+#
+# test inline additionalProperties
+# 
+# @param object $param request body (required)
+{
+    my $params = {
+    'param' => {
+        data_type => 'object',
+        description => 'request body',
+        required => '1',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'test_inline_additional_properties' } = { 
+    	summary => 'test inline additionalProperties',
+        params => $params,
+        returns => undef,
+        };
+}
+# @return void
+#
+sub test_inline_additional_properties {
+    my ($self, %args) = @_;
+
+    # verify the required parameter 'param' is set
+    unless (exists $args{'param'}) {
+      croak("Missing the required parameter 'param' when calling test_inline_additional_properties");
+    }
+
+    # parse inputs
+    my $_resource_path = '/fake/inline-additionalProperties';
+
+    my $_method = 'POST';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept();
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
+
+    my $_body_data;
+    # body params
+    if ( exists $args{'param'}) {
+        $_body_data = $args{'param'};
+    }
+
+    # authentication setting, if any
+    my $auth_settings = [qw()];
+
+    # make the API Call
+    $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    return;
+}
+
+#
 # test_json_form_data
 #
 # test json serialization of form data
