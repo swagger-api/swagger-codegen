@@ -65,21 +65,21 @@ namespace IO.Swagger.Models
         public enum StatusEnum
         { 
             /// <summary>
-            /// Enum AvailableEnum for "available"
+            /// Enum AvailableEnum for available
             /// </summary>
-            [EnumMember(Value = "available")]
+            [EnumMember(Value = available)]
             AvailableEnum = 1,
             
             /// <summary>
-            /// Enum PendingEnum for "pending"
+            /// Enum PendingEnum for pending
             /// </summary>
-            [EnumMember(Value = "pending")]
+            [EnumMember(Value = pending)]
             PendingEnum = 2,
             
             /// <summary>
-            /// Enum SoldEnum for "sold"
+            /// Enum SoldEnum for sold
             /// </summary>
-            [EnumMember(Value = "sold")]
+            [EnumMember(Value = sold)]
             SoldEnum = 3
         }
 

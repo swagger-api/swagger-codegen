@@ -57,21 +57,21 @@ namespace IO.Swagger.Models
         public enum StatusEnum
         { 
             /// <summary>
-            /// Enum PlacedEnum for "placed"
+            /// Enum PlacedEnum for placed
             /// </summary>
-            [EnumMember(Value = "placed")]
+            [EnumMember(Value = placed)]
             PlacedEnum = 1,
             
             /// <summary>
-            /// Enum ApprovedEnum for "approved"
+            /// Enum ApprovedEnum for approved
             /// </summary>
-            [EnumMember(Value = "approved")]
+            [EnumMember(Value = approved)]
             ApprovedEnum = 2,
             
             /// <summary>
-            /// Enum DeliveredEnum for "delivered"
+            /// Enum DeliveredEnum for delivered
             /// </summary>
-            [EnumMember(Value = "delivered")]
+            [EnumMember(Value = delivered)]
             DeliveredEnum = 3
         }
 
