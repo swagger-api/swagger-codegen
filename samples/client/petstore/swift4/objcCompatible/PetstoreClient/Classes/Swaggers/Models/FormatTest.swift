@@ -30,11 +30,6 @@ open class FormatTest: Codable {
         }
     }
     public var number: Double
-    public var numberNum: NSNumber? {
-        get {
-            return number.map({ return NSNumber(value: $0) })
-        }
-    }
     public var float: Float?
     public var floatNum: NSNumber? {
         get {
