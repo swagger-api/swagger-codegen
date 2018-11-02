@@ -12,7 +12,6 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS:"Eiffel swagger codegen", "src=https://github.com/swagger-api/swagger-codegen.git", "protocol=uri"
-
 class ENUM_TEST 
 
 inherit
@@ -77,24 +76,26 @@ feature -- Change Element
         create Result.make_empty
         Result.append("%Nclass ENUM_TEST%N")
         if attached enum_string as l_enum_string then
-          Result.append ("%N")
+          Result.append ("%Nenum_string:")
           Result.append (l_enum_string.out)
           Result.append ("%N")    
         end  
         if attached enum_integer as l_enum_integer then
-          Result.append ("%N")
+          Result.append ("%Nenum_integer:")
           Result.append (l_enum_integer.out)
           Result.append ("%N")    
         end  
         if attached enum_number as l_enum_number then
-          Result.append ("%N")
+          Result.append ("%Nenum_number:")
           Result.append (l_enum_number.out)
           Result.append ("%N")    
         end  
         if attached outer_enum as l_outer_enum then
-          Result.append ("%N")
+          Result.append ("%Nouter_enum:")
           Result.append (l_outer_enum.out)
           Result.append ("%N")    
         end  
       end
 end
+
+

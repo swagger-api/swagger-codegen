@@ -11,6 +11,7 @@ Feature | HTTP request | Description
 [**test_client_model**](FAKE_API.md#test_client_model) | **Patch** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FAKE_API.md#test_endpoint_parameters) | **Post** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FAKE_API.md#test_enum_parameters) | **Get** /fake | To test enum parameters
+[**test_inline_additional_properties**](FAKE_API.md#test_inline_additional_properties) | **Post** /fake/inline-additionalProperties | test inline additionalProperties
 [**test_json_form_data**](FAKE_API.md#test_json_form_data) | **Get** /fake/jsonFormData | test json serialization of form data
 
 
@@ -241,6 +242,36 @@ No authorization required
 
  - **Content-Type**: */*
  - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **test_inline_additional_properties**
+> test_inline_additional_properties (param: ANY )
+	
+
+test inline additionalProperties
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **param** | [**ANY**](ANY.md)| request body | 
+
+### Return type
+
+{empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
