@@ -32,7 +32,6 @@ class FormatTest
     public $int64;
     /**
      * @DTA\Data(field="number")
-     * @DTA\Validator(name="Type", options={"type":"float"})
      * @DTA\Validator(name="GreaterThan", options={"min":32.1, "inclusive":true})
      * @DTA\Validator(name="LessThan", options={"max":543.2, "inclusive":true})
      * @var float

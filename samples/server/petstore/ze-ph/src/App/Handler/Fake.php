@@ -35,9 +35,9 @@ class Fake implements Operation\PatchInterface, Operation\PostInterface, Operati
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      * TODO check if producer is valid, if it has correct priority and if it can be moved to class annotation
-     * @PHA\Producer(name=PHProducer\Transfer::class, mediaType="application/xml; charset&#x3D;utf-8")
+     * @PHA\Producer(name=PHProducer\Transfer::class, mediaType="application/xml; charset=utf-8")
      * TODO check if producer is valid, if it has correct priority and if it can be moved to class annotation
-     * @PHA\Producer(name=PHProducer\Transfer::class, mediaType="application/json; charset&#x3D;utf-8")
+     * @PHA\Producer(name=PHProducer\Transfer::class, mediaType="application/json; charset=utf-8")
      * @param ServerRequestInterface $request
      *
      * @throws PHException\HttpCode 500 if the method is not implemented

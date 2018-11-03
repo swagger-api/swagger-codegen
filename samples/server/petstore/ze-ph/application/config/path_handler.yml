@@ -1,6 +1,17 @@
 path_handler:
   routes:
     routes:
+      'another-fake':
+        type: Literal
+        options:
+          route: /another-fake
+        child_routes:
+          'dummy':
+            type: Literal
+            options:
+              route: /dummy
+              defaults:
+                handler: AnotherFakeDummy
       'fake':
         type: Literal
         options:
@@ -9,6 +20,12 @@ path_handler:
             handler: Fake
         may_terminate: true
         child_routes:
+          'inline-additionalProperties':
+            type: Literal
+            options:
+              route: /inline-additionalProperties
+              defaults:
+                handler: FakeInlineAdditionalProperties
           'jsonFormData':
             type: Literal
             options:
@@ -161,7 +178,9 @@ path_handler:
 
   handlers:
     invokables:
+      AnotherFakeDummy: App\Handler\AnotherFakeDummy
       Fake: App\Handler\Fake
+      FakeInlineAdditionalProperties: App\Handler\FakeInlineAdditionalProperties
       FakeJsonFormData: App\Handler\FakeJsonFormData
       FakeOuterBoolean: App\Handler\FakeOuterBoolean
       FakeOuterComposite: App\Handler\FakeOuterComposite

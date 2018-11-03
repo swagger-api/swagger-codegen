@@ -10,7 +10,6 @@ class NumberOnly
 {
     /**
      * @DTA\Data(field="JustNumber", nullable=true)
-     * @DTA\Validator(name="Type", options={"type":"float"})
      * @var float
      */
     public $just_number;
