@@ -245,12 +245,12 @@ class ApiClient(object):
 
         if type(klass) == str:
             if klass.startswith('list['):
-                sub_kls = re.match('list\[(.*)\]', klass).group(1)
+                sub_kls = re.match(r'list\[(.*)\]', klass).group(1)
                 return [self.__deserialize(sub_data, sub_kls)
                         for sub_data in data]
 
             if klass.startswith('dict('):
-                sub_kls = re.match('dict\(([^,]*), (.*)\)', klass).group(2)
+                sub_kls = re.match(r'dict\(([^,]*), (.*)\)', klass).group(2)
                 return {k: self.__deserialize(v, sub_kls)
                         for k, v in six.iteritems(data)}
 
@@ -614,6 +614,12 @@ class ApiClient(object):
 
         instance = klass(**kwargs)
 
+        if (isinstance(instance, dict) and
+                klass.swagger_types is not None and
+                isinstance(data, dict)):
+            for key, value in data.items():
+                if key not in klass.swagger_types:
+                    instance[key] = value
         if hasattr(instance, 'get_real_child_model'):
             klass_name = instance.get_real_child_model(data)
             if klass_name:
