@@ -24,6 +24,8 @@ services:
 {{#operations}}
     {{bundleAlias}}.controller.{{pathPrefix}}:
         class: {{controllerPackage}}\{{baseName}}Controller
+        arguments:
+          $container: '@service_container'
         calls:
          - [setSerializer, ['@{{bundleAlias}}.service.serializer']]
          - [setValidator,  ['@{{bundleAlias}}.service.validator']]
