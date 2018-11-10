@@ -13,7 +13,6 @@ import { HttpHeaders }                                       from '@angular/comm
 
 import { Observable }                                        from 'rxjs/Observable';
 
-
 import { Order } from '../model/order';
 
 
