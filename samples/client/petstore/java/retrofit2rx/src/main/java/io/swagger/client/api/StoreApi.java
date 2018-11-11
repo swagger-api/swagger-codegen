@@ -1,7 +1,6 @@
 package io.swagger.client.api;
 
 import io.swagger.client.CollectionFormats.*;
-
 import rx.Observable;
 import retrofit2.http.*;
 

@@ -302,9 +302,20 @@
             {{/withXml}}
             <dependency>
                 <groupId>com.typesafe.play</groupId>
-                <artifactId>play-java-ws_2.11</artifactId>
+{{^play26}}
+		<artifactId>play-java-ws_2.11</artifactId>
+{{/play26}}{{#play26}}
+		<artifactId>play-ws_2.12</artifactId>
+{{/play26}}
                 <version>${play-version}</version>
             </dependency>
+         {{#play26}}
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>2.0.1.Final</version>
+            </dependency>
+        {{/play26}}
         {{/usePlayWS}}
 
         {{#parcelableModel}}
@@ -341,6 +352,10 @@
                 <jackson-version>2.7.8</jackson-version>
                 <play-version>2.5.15</play-version>
             {{/play25}}
+            {{#play26}}
+                <jackson-version>2.7.8</jackson-version>
+                <play-version>2.6.12</play-version>
+            {{/play26}}
         {{/usePlayWS}}
         <retrofit-version>2.3.0</retrofit-version>
         {{#useRxJava}}
