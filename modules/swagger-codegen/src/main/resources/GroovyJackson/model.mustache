@@ -1,0 +1,7 @@
+package {{package}}
+
+{{#models}}
+    {{#model}}
+{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{>pogo}}{{/isEnum}}
+    {{/model}}
+{{/models}}

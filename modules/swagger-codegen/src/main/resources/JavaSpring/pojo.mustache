@@ -1,7 +1,7 @@
 /**
  * {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
- */{{#description}}
-@ApiModel(description = "{{{description}}}"){{/description}}
+ */{{^disableApiModelAnnotations}}{{#description}}
+@ApiModel(description = "{{{description}}}"){{/description}}{{/disableApiModelAnnotations}}
 {{#useBeanValidation}}@Validated{{/useBeanValidation}}
 {{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{>xmlAnnotation}}
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#serializableModel}}implements Serializable{{/serializableModel}} {
@@ -86,7 +86,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
  {{#vendorExtensions.extraAnnotation}}
   {{{vendorExtensions.extraAnnotation}}}
   {{/vendorExtensions.extraAnnotation}}
-  @ApiModelProperty({{#example}}example = "{{{example}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}{{#isReadOnly}}readOnly = {{{isReadOnly}}}, {{/isReadOnly}}value = "{{{description}}}")
+  {{^disableApiModelAnnotations}}@ApiModelProperty({{#example}}example = "{{{example}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}{{#isReadOnly}}readOnly = {{{isReadOnly}}}, {{/isReadOnly}}value = "{{{description}}}"){{/disableApiModelAnnotations}}
 {{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  public {{{datatypeWithEnum}}} {{#isBoolean}}is{{/isBoolean}}{{getter}}() {
     return {{name}};
   }

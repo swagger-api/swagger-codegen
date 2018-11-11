@@ -72,6 +72,7 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
                 .put(JavaClientCodegen.DATE_LIBRARY, "joda")
                 .put(JavaClientCodegen.DISABLE_HTML_ESCAPING, "false")
+                .put(JavaClientCodegen.DISABLE_APIMODEL_ANNOTATIONS, "false")
                 .put("hideGenerationTimestamp", "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                         //.put("supportJava6", "true")

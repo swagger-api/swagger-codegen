@@ -1,0 +1,38 @@
+import groovy.transform.Canonical
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
+{{#discriminator}}
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.JsonSubTypes
+{{/discriminator}}
+
+{{#models}}
+    {{#model}}
+@Canonical
+@JsonInclude(JsonInclude.Include.NON_NULL)
+{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}
+class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}} {
+    {{#vars}}
+        {{#isEnum}}
+            {{^isContainer}}
+    {{>modelInnerEnum}}
+            {{/isContainer}}
+        {{/isEnum}}
+        {{#items.isEnum}}
+            {{#items}}
+                {{^isContainer}}
+    {{>modelInnerEnum}}
+                {{/isContainer}}
+            {{/items}}
+        {{/items.isEnum}}
+    {{#description}}/* {{{description}}} */
+    {{/description}}
+
+    @JsonProperty('{{baseName}}')
+    {{{datatypeWithEnum}}} {{name}} = {{{defaultValue}}}
+    {{/vars}}
+
+}
+
+    {{/model}}
+{{/models}}

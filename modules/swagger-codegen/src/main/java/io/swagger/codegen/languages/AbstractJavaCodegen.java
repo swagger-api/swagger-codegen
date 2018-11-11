@@ -55,6 +55,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
     public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
+    public static final String DISABLE_APIMODEL_ANNOTATIONS = "disableApiModelAnnotations";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -88,6 +89,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
     protected boolean disableHtmlEscaping = false;
+    protected boolean disableApiModelAnnotations = false;
 
     public AbstractJavaCodegen() {
         super();
@@ -180,6 +182,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(java8Mode);
 
         cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
+        cliOptions.add(CliOption.newBoolean(DISABLE_APIMODEL_ANNOTATIONS, "Disable @ApiModel and @ApiModelProperty annotations on generated classes"));
     }
 
     @Override
@@ -195,6 +198,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setDisableHtmlEscaping(Boolean.valueOf(additionalProperties.get(DISABLE_HTML_ESCAPING).toString()));
         }
         additionalProperties.put(DISABLE_HTML_ESCAPING, disableHtmlEscaping);
+
+        if (additionalProperties.containsKey(DISABLE_APIMODEL_ANNOTATIONS)) {
+            this.setDisableApiModelAnnotations(Boolean.valueOf(additionalProperties.get(DISABLE_APIMODEL_ANNOTATIONS).toString()));
+        }
+        additionalProperties.put(DISABLE_APIMODEL_ANNOTATIONS, disableApiModelAnnotations);
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
@@ -452,6 +460,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else if (dateLibrary.equals("legacy")) {
             additionalProperties.put("legacyDates", "true");
         }
+
     }
 
     private void sanitizeConfig() {
@@ -880,7 +889,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
-        if(codegenModel.description != null) {
+        if(codegenModel.description != null && !disableApiModelAnnotations) {
             codegenModel.imports.add("ApiModel");
         }
         if (codegenModel.discriminator != null && additionalProperties.containsKey("jackson")) {
@@ -916,7 +925,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
         }
 
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
+        if(!BooleanUtils.toBoolean(model.isEnum) && !disableApiModelAnnotations) {
             // needed by all pojos, but not enums
             model.imports.add("ApiModelProperty");
             model.imports.add("ApiModel");
@@ -1257,6 +1266,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public void setDisableHtmlEscaping(boolean disabled) {
         this.disableHtmlEscaping = disabled;
     }
+
+    public void setDisableApiModelAnnotations(boolean disabled) {
+        this.disableApiModelAnnotations = disabled;
+    }
+
+    public Boolean isDisableApiModelAnnotations() { return this.disableApiModelAnnotations; }
 
     public void setSupportAsync(boolean enabled) {
         this.supportAsync = enabled;
