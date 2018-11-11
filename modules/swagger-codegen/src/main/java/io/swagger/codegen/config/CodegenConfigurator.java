@@ -48,6 +48,7 @@ public class CodegenConfigurator implements Serializable {
     private String templateDir;
     private String auth;
     private String apiPackage;
+    private String apiNameSuffix;
     private String modelPackage;
     private String invokerPackage;
     private String modelNamePrefix;
@@ -96,6 +97,15 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator setOutputDir(String outputDir) {
         this.outputDir = toAbsolutePathStr(outputDir);
+        return this;
+    }
+
+    public String getApiNameSuffix() {
+        return apiNameSuffix;
+    }
+
+    public CodegenConfigurator setApiNameSuffix(String apiNameSuffix) {
+        this.apiNameSuffix = apiNameSuffix;
         return this;
     }
 
@@ -402,6 +412,7 @@ public class CodegenConfigurator implements Serializable {
         config.reservedWordsMappings().putAll(reservedWordMappings);
 
         checkAndSetAdditionalProperty(apiPackage, CodegenConstants.API_PACKAGE);
+        checkAndSetAdditionalProperty(apiNameSuffix, CodegenConstants.API_NAME_SUFFIX);
         checkAndSetAdditionalProperty(modelPackage, CodegenConstants.MODEL_PACKAGE);
         checkAndSetAdditionalProperty(invokerPackage, CodegenConstants.INVOKER_PACKAGE);
         checkAndSetAdditionalProperty(groupId, CodegenConstants.GROUP_ID);

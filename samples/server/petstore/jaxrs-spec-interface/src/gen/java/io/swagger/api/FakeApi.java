@@ -84,6 +84,14 @@ public interface FakeApi {
         @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
     void testInlineAdditionalProperties(@Valid Object param);
 
+    @POST
+    @Path("/inline-additionalProperties")
+    @Consumes({ "application/json" })
+    @ApiOperation(value = "test inline additionalProperties", notes = "", tags={ "fake",  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Void.class) })
+    void testInlineAdditionalProperties(@Valid Object param) throws Exception;
+
     @GET
     @Path("/jsonFormData")
     @Consumes({ "application/json" })

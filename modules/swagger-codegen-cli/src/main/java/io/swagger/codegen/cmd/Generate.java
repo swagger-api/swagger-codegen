@@ -74,6 +74,10 @@ public class Generate implements Runnable {
             description = CodegenConstants.API_PACKAGE_DESC)
     private String apiPackage;
 
+    @Option(name = {"--api-name-suffix"}, title = "api name suffix",
+            description = CodegenConstants.API_NAME_SUFFIX_DESC)
+    private String apiNameSuffix;
+
     @Option(name = {"--model-package"}, title = "model package",
             description = CodegenConstants.MODEL_PACKAGE_DESC)
     private String modelPackage;
@@ -215,6 +219,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(apiPackage)) {
             configurator.setApiPackage(apiPackage);
+        }
+
+        if (isNotEmpty(apiNameSuffix)) {
+            configurator.setApiNameSuffix(apiNameSuffix);
         }
 
         if (isNotEmpty(modelPackage)) {

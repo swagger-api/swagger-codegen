@@ -527,7 +527,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (name.length() == 0) {
             return "DefaultApi";
         }
-        return camelize(name) + "Api";
+        return camelize(name) + apiNameSuffix;
     }
 
     @Override

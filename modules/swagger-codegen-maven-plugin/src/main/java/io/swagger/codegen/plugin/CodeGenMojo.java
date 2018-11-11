@@ -161,6 +161,12 @@ public class CodeGenMojo extends AbstractMojo {
     private String library;
 
     /**
+     * Sets the suffix for api classes
+     */
+    @Parameter(name = "apiNameSuffix", required = false)
+    private String apiNameSuffix;
+
+    /**
      * Sets the prefix for model enums and classes
      */
     @Parameter(name = "modelNamePrefix", required = false)
@@ -392,6 +398,10 @@ public class CodeGenMojo extends AbstractMojo {
 
         if (isNotEmpty(library)) {
             configurator.setLibrary(library);
+        }
+
+        if (isNotEmpty(apiNameSuffix)) {
+            configurator.setApiNameSuffix(apiNameSuffix);
         }
 
         if (isNotEmpty(modelNamePrefix)) {

@@ -218,7 +218,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends AbstractJavaCodegen
             return "DefaultApi";
         }
         computed = sanitizeName(computed);
-        return camelize(computed) + "Api";
+        return camelize(computed) + apiNameSuffix;
     }
 
     @Override
