@@ -22,14 +22,23 @@ class StoreApi extends _$StoreApiClient implements ApiClient {
     @DeleteReq(path: "/store/order/:orderId")
     Future<void> deleteOrder(
             @PathParam("orderId") String orderId
-    );
+    ) {
+        return super.deleteOrder(
+            orderId
+
+        );
+    }
 
     /// Returns pet inventories by status
     ///
     /// Returns a map of status codes to quantities
     @GetReq(path: "/store/inventory", metadata: {"auth": [ {"type": "apiKey", "name": "api_key", "keyName": "api_key", "where": "header" }]})
     Future<Map<String, int>> getInventory(
-    );
+    ) {
+        return super.getInventory(
+
+        );
+    }
 
     /// Find purchase order by ID
     ///
@@ -37,7 +46,12 @@ class StoreApi extends _$StoreApiClient implements ApiClient {
     @GetReq(path: "/store/order/:orderId")
     Future<Order> getOrderById(
             @PathParam("orderId") int orderId
-    );
+    ) {
+        return super.getOrderById(
+            orderId
+
+        );
+    }
 
     /// Place an order for a pet
     ///
@@ -46,7 +60,13 @@ class StoreApi extends _$StoreApiClient implements ApiClient {
     Future<Order> placeOrder(
         
         @AsJson() Order body
-    );
+    ) {
+        return super.placeOrder(
+
+            
+            body
+        );
+    }
 
 
 }

@@ -5,8 +5,10 @@ part 'amount.jser.dart';
 
 class Amount {
    /* some description  */
+  @Alias('value')
   final double value;
    // range from 0.01 to 1000000000000000//
+  @Alias('currency')
   final Currency currency;
   
 

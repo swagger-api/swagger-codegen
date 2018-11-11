@@ -42,10 +42,33 @@ class {{classname}} extends _${{classname}}Client implements ApiClient {
     {{/formParams}}
     {{#bodyParam}}
         {{#hasFormParams}},{{/hasFormParams}}{{^hasFormParams}}{{#hasQueryParams}},{{/hasQueryParams}}{{/hasFormParams}}{{^hasFormParams}}{{^hasQueryParams}}{{#hasHeaderParams}},{{/hasHeaderParams}}{{/hasQueryParams}}{{/hasFormParams}}{{^hasFormParams}}{{^hasQueryParams}}{{^hasHeaderParams}}{{#hasPathParams}},{{/hasPathParams}}{{/hasHeaderParams}}{{/hasQueryParams}}{{/hasFormParams}}
-        {{#isJson}}@AsJson() {{/isJson}}{{#isForm}}@AsForm() {{/isForm}}{{#isMultipart}}@AsMultipart() {{/isMultipart}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}
+        {{^isJson}}{{^isForm}}{{^isMultipart}}@AsBody(){{/isMultipart}}{{/isForm}}{{/isJson}}  {{#isJson}}@AsJson() {{/isJson}}{{#isForm}}@AsForm() {{/isForm}}{{#isMultipart}}@AsMultipart() {{/isMultipart}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}
     {{/bodyParam}}
     {{/vendorExtensions}}
-    );
+    ) {
+        return super.{{nickname}}(
+    {{#pathParams}}
+            {{paramName}}{{#hasMore}}, {{/hasMore}}
+    {{/pathParams}}
+    {{#headerParams}}
+        {{#-first}}{{#hasPathParams}},{{/hasPathParams}}{{/-first}}
+            {{paramName}}{{#hasMore}}, {{/hasMore}}
+    {{/headerParams}}
+    {{#queryParams}}
+        {{#-first}}{{#hasHeaderParams}},{{/hasHeaderParams}}{{^hasHeaderParams}}{{#hasPathParams}},{{/hasPathParams}}{{/hasHeaderParams}}{{/-first}}
+            {{paramName}}{{#hasMore}}, {{/hasMore}}
+    {{/queryParams}}
+
+        {{#formParams}}
+            {{#-first}}{{#hasQueryParams}},{{/hasQueryParams}}{{^hasQueryParams}}{{#hasHeaderParams}},{{/hasHeaderParams}}{{/hasQueryParams}}{{^hasQueryParams}}{{^hasHeaderParams}}{{#hasPathParams}},{{/hasPathParams}}{{/hasHeaderParams}}{{/hasQueryParams}}{{/-first}}
+            {{paramName}}{{#hasMore}}, {{/hasMore}}
+        {{/formParams}}
+        {{#bodyParam}}
+            {{#hasFormParams}},{{/hasFormParams}}{{^hasFormParams}}{{#hasQueryParams}},{{/hasQueryParams}}{{/hasFormParams}}{{^hasFormParams}}{{^hasQueryParams}}{{#hasHeaderParams}},{{/hasHeaderParams}}{{/hasQueryParams}}{{/hasFormParams}}{{^hasFormParams}}{{^hasQueryParams}}{{^hasHeaderParams}}{{#hasPathParams}},{{/hasPathParams}}{{/hasHeaderParams}}{{/hasQueryParams}}{{/hasFormParams}}
+            {{paramName}}{{#hasMore}}, {{/hasMore}}
+        {{/bodyParam}}
+        );
+    }
 
   {{/operation}}
 
