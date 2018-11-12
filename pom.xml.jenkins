@@ -863,6 +863,8 @@
             <modules>
                 <!-- clients -->
                 <!-- test java-related projects -->
+                <module>samples/client/petstore/elixir</module>
+                <module>samples/client/petstore/haskell-http-client</module>
                 <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/scala</module>
                 <!--<module>samples/client/petstore/scalaz</module>-->
