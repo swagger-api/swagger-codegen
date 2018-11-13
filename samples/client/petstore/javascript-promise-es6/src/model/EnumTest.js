@@ -29,15 +29,16 @@ export default class EnumTest {
     * Constructs a new <code>EnumTest</code>.
     * @alias module:model/EnumTest
     * @class
+    * @param enumStringRequired {module:model/EnumTest.EnumStringRequiredEnum} 
     */
 
-    constructor() {
+    constructor(enumStringRequired) {
         
 
         
         
 
-        
+        this['enum_string_required'] = enumStringRequired;
 
         
     }
@@ -60,6 +61,9 @@ export default class EnumTest {
             if (data.hasOwnProperty('enum_string')) {
                 obj['enum_string'] = ApiClient.convertToType(data['enum_string'], 'String');
             }
+            if (data.hasOwnProperty('enum_string_required')) {
+                obj['enum_string_required'] = ApiClient.convertToType(data['enum_string_required'], 'String');
+            }
             if (data.hasOwnProperty('enum_integer')) {
                 obj['enum_integer'] = ApiClient.convertToType(data['enum_integer'], 'Number');
             }
@@ -77,6 +81,10 @@ export default class EnumTest {
     * @member {module:model/EnumTest.EnumStringEnum} enum_string
     */
     enum_string = undefined;
+    /**
+    * @member {module:model/EnumTest.EnumStringRequiredEnum} enum_string_required
+    */
+    enum_string_required = undefined;
     /**
     * @member {module:model/EnumTest.EnumIntegerEnum} enum_integer
     */
@@ -101,6 +109,32 @@ export default class EnumTest {
     * @readonly
     */
     static EnumStringEnum = {
+    
+        /**
+         * value: "UPPER"
+         * @const
+         */
+        "UPPER": "UPPER",
+    
+        /**
+         * value: "lower"
+         * @const
+         */
+        "lower": "lower",
+    
+        /**
+         * value: ""
+         * @const
+         */
+        "empty": ""    
+    };
+
+    /**
+    * Allowed values for the <code>enum_string_required</code> property.
+    * @enum {String}
+    * @readonly
+    */
+    static EnumStringRequiredEnum = {
     
         /**
          * value: "UPPER"

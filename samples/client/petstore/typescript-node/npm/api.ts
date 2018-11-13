@@ -137,6 +137,35 @@ class ObjectSerializer {
 }
 
 /**
+* some description 
+*/
+export class Amount {
+    /**
+    * some description 
+    */
+    'value': number;
+    'currency': Currency;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "value",
+            "baseName": "value",
+            "type": "number"
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Amount.attributeTypeMap;
+    }
+}
+
+/**
 * Describes the result of uploading an image resource
 */
 export class ApiResponse {
@@ -144,7 +173,7 @@ export class ApiResponse {
     'type'?: string;
     'message'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -175,7 +204,7 @@ export class Category {
     'id'?: number;
     'name'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -195,6 +224,21 @@ export class Category {
 }
 
 /**
+* some description 
+*/
+export class Currency {
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    ];
+
+    static getAttributeTypeMap() {
+        return Currency.attributeTypeMap;
+    }
+}
+
+/**
 * An order for a pets from the pet store
 */
 export class Order {
@@ -208,7 +252,7 @@ export class Order {
     'status'?: Order.StatusEnum;
     'complete'?: boolean;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -268,7 +312,7 @@ export class Pet {
     */
     'status'?: Pet.StatusEnum;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -321,7 +365,7 @@ export class Tag {
     'id'?: number;
     'name'?: string;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -356,7 +400,7 @@ export class User {
     */
     'userStatus'?: number;
 
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -412,8 +456,10 @@ let enumsMap: {[index: string]: any} = {
 }
 
 let typeMap: {[index: string]: any} = {
+    "Amount": Amount,
     "ApiResponse": ApiResponse,
     "Category": Category,
+    "Currency": Currency,
     "Order": Order,
     "Pet": Pet,
     "Tag": Tag,
