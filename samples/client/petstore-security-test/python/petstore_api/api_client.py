@@ -592,7 +592,7 @@ class ApiClient(object):
             )
 
     def __hasattr(self, object, name):
-            return name in object.__dict__
+            return name in object.__class__.__dict__
 
     def __deserialize_model(self, data, klass):
         """Deserializes list or dict to model.
