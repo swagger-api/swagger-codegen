@@ -56,11 +56,19 @@ void Category::fromJson(web::json::value& val)
 {
     if(val.has_field(utility::conversions::to_string_t("id")))
     {
-        setId(ModelBase::int64_tFromJson(val[utility::conversions::to_string_t("id")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("id")];
+        if(!fieldValue.is_null())
+        {
+            setId(ModelBase::int64_tFromJson(fieldValue));
+        }
     }
     if(val.has_field(utility::conversions::to_string_t("name")))
     {
-        setName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("name")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("name")];
+        if(!fieldValue.is_null())
+        {
+            setName(ModelBase::stringFromJson(fieldValue));
+        }
     }
 }
 

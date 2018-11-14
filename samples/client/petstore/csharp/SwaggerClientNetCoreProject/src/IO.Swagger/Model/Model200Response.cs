@@ -31,12 +31,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Model200Response" /> class.
         /// </summary>
-        /// <param name="Name">Name.</param>
-        /// <param name="_Class">_Class.</param>
-        public Model200Response(int? Name = default(int?), string _Class = default(string))
+        /// <param name="name">name.</param>
+        /// <param name="_class">_class.</param>
+        public Model200Response(int? name = default(int?), string _class = default(string))
         {
-            this.Name = Name;
-            this._Class = _Class;
+            this.Name = name;
+            this.Class = _class;
         }
         
         /// <summary>
@@ -46,10 +46,10 @@ namespace IO.Swagger.Model
         public int? Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets _Class
+        /// Gets or Sets Class
         /// </summary>
         [DataMember(Name="class", EmitDefaultValue=false)]
-        public string _Class { get; set; }
+        public string Class { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -60,7 +60,7 @@ namespace IO.Swagger.Model
             var sb = new StringBuilder();
             sb.Append("class Model200Response {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  _Class: ").Append(_Class).Append("\n");
+            sb.Append("  Class: ").Append(Class).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -69,7 +69,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -101,9 +101,9 @@ namespace IO.Swagger.Model
                     this.Name.Equals(input.Name))
                 ) && 
                 (
-                    this._Class == input._Class ||
-                    (this._Class != null &&
-                    this._Class.Equals(input._Class))
+                    this.Class == input.Class ||
+                    (this.Class != null &&
+                    this.Class.Equals(input.Class))
                 );
         }
 
@@ -118,8 +118,8 @@ namespace IO.Swagger.Model
                 int hashCode = 41;
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this._Class != null)
-                    hashCode = hashCode * 59 + this._Class.GetHashCode();
+                if (this.Class != null)
+                    hashCode = hashCode * 59 + this.Class.GetHashCode();
                 return hashCode;
             }
         }

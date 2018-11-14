@@ -86,7 +86,7 @@ public:
     /// <remarks>
     /// 
     /// </remarks>
-    /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+    /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
     pplx::task<std::shared_ptr<User>> getUserByName(
         utility::string_t username
     );
