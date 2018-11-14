@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/swagger-api/swagger-codegen'
   s.summary = 'TestClient'
   s.source_files = 'TestClient/Classes/**/*.swift'
-  s.dependency 'Alamofire', '~> 4.5.0'
+  s.dependency 'Alamofire', '~> 4.7.0'
 end
