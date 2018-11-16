@@ -36,7 +36,7 @@ class {{classname}}(basePath: kotlin.String = "{{{basePath}}}") : ApiClient(base
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Any?{{/returnType}}>(
+        val response = request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}>(
             localVariableConfig,
             localVariableBody
         )

@@ -40,7 +40,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -78,7 +78,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -229,7 +229,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -268,7 +268,7 @@ class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCli
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
