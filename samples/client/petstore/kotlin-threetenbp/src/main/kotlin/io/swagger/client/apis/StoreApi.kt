@@ -40,7 +40,7 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
