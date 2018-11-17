@@ -25,9 +25,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class HasOnlyReadOnly {
 
   @JsonProperty("bar")
+
   private String bar = null;
 
   @JsonProperty("foo")
+
   private String foo = null;
   /**
   * Get bar

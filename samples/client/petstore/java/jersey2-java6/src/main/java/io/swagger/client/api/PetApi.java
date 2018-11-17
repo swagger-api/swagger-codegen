@@ -134,7 +134,7 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPairs("", "status", status));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
 
 
 
@@ -176,7 +176,7 @@ public class PetApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPairs("", "tags", tags));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
 
 
 
