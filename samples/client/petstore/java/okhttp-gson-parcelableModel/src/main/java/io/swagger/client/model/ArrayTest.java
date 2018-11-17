@@ -31,10 +31,13 @@ import android.os.Parcel;
  */
 
 public class ArrayTest {
+
   @SerializedName("array_of_string")
   private List<String> arrayOfString = null;
+
   @SerializedName("array_array_of_integer")
   private List<List<Long>> arrayArrayOfInteger = null;
+
   @SerializedName("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
   public ArrayTest arrayOfString(List<String> arrayOfString) {

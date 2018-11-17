@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 public class ArrayOfNumberOnly {
+
   @SerializedName("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {

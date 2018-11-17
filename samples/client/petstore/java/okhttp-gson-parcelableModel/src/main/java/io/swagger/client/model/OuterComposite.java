@@ -29,10 +29,13 @@ import android.os.Parcel;
  */
 
 public class OuterComposite {
+
   @SerializedName("my_number")
   private BigDecimal myNumber = null;
+
   @SerializedName("my_string")
   private String myString = null;
+
   @SerializedName("my_boolean")
   private Boolean myBoolean = null;
   public OuterComposite myNumber(BigDecimal myNumber) {

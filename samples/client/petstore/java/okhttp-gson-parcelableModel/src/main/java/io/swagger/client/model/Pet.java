@@ -32,14 +32,19 @@ import android.os.Parcel;
  */
 
 public class Pet {
+
   @SerializedName("id")
   private Long id = null;
+
   @SerializedName("category")
   private Category category = null;
+
   @SerializedName("name")
   private String name = null;
+
   @SerializedName("photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
+
   @SerializedName("tags")
   private List<Tag> tags = null;
   /**
@@ -84,7 +89,8 @@ public class Pet {
         return StatusEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("status")
+  }
+  @SerializedName("status")
   private StatusEnum status = null;
   public Pet id(Long id) {
     this.id = id;

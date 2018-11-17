@@ -29,6 +29,7 @@ import android.os.Parcel;
  */
 
 public class Dog extends Animal {
+
   @SerializedName("breed")
   private String breed = null;
   public Dog breed(String breed) {

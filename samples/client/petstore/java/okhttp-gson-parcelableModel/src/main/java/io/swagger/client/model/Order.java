@@ -29,12 +29,16 @@ import android.os.Parcel;
  */
 
 public class Order {
+
   @SerializedName("id")
   private Long id = null;
+
   @SerializedName("petId")
   private Long petId = null;
+
   @SerializedName("quantity")
   private Integer quantity = null;
+
   @SerializedName("shipDate")
   private OffsetDateTime shipDate = null;
   /**
@@ -79,8 +83,10 @@ public class Order {
         return StatusEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("status")
+  }
+  @SerializedName("status")
   private StatusEnum status = null;
+
   @SerializedName("complete")
   private Boolean complete = false;
   public Order id(Long id) {
