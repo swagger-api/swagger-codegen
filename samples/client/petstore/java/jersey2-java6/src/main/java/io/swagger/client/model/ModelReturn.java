@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ModelReturn {
 
   @JsonProperty("return")
+
   private Integer _return = null;
   public ModelReturn _return(Integer _return) {
     this._return = _return;
