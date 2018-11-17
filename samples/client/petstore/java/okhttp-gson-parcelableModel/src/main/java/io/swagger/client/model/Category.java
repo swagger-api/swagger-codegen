@@ -28,8 +28,10 @@ import android.os.Parcel;
  */
 
 public class Category {
+
   @SerializedName("id")
   private Long id = null;
+
   @SerializedName("name")
   private String name = null;
   public Category id(Long id) {

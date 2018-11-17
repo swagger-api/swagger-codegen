@@ -34,10 +34,13 @@ import android.os.Parcel;
  */
 
 public class MixedPropertiesAndAdditionalPropertiesClass {
+
   @SerializedName("uuid")
   private UUID uuid = null;
+
   @SerializedName("dateTime")
   private OffsetDateTime dateTime = null;
+
   @SerializedName("map")
   private Map<String, Animal> map = null;
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
