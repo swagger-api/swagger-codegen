@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Dog extends Animal {
 
   @JsonProperty("breed")
+
   private String breed = null;
   public Dog breed(String breed) {
     this.breed = breed;

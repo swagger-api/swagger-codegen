@@ -29,6 +29,7 @@ import android.os.Parcel;
  */
 
 public class NumberOnly {
+
   @SerializedName("JustNumber")
   private BigDecimal justNumber = null;
   public NumberOnly justNumber(BigDecimal justNumber) {

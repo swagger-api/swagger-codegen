@@ -28,20 +28,28 @@ import android.os.Parcel;
  */
 
 public class User {
+
   @SerializedName("id")
   private Long id = null;
+
   @SerializedName("username")
   private String username = null;
+
   @SerializedName("firstName")
   private String firstName = null;
+
   @SerializedName("lastName")
   private String lastName = null;
+
   @SerializedName("email")
   private String email = null;
+
   @SerializedName("password")
   private String password = null;
+
   @SerializedName("phone")
   private String phone = null;
+
   @SerializedName("userStatus")
   private Integer userStatus = null;
   public User id(Long id) {

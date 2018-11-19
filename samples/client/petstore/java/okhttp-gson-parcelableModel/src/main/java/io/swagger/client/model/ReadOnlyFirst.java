@@ -28,8 +28,10 @@ import android.os.Parcel;
  */
 
 public class ReadOnlyFirst {
+
   @SerializedName("bar")
   private String bar = null;
+
   @SerializedName("baz")
   private String baz = null;
   /**

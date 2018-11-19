@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 public class Client {
+
   @SerializedName("client")
   private String client = null;
   public Client client(String client) {

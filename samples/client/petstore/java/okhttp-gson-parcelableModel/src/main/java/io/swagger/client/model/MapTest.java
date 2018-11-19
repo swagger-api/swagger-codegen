@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 public class MapTest {
+
   @SerializedName("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
   /**
@@ -74,7 +75,8 @@ public class MapTest {
         return InnerEnum.fromValue(String.valueOf(value));
       }
     }
-  }  @SerializedName("map_of_enum_string")
+  }
+  @SerializedName("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
