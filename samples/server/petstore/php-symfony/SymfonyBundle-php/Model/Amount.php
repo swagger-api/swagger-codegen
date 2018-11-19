@@ -52,7 +52,7 @@ class Amount
      * @Assert\Type("double")
      * @Type("double")
      * @Assert\GreaterThanOrEqual(0.01)
-     * @Assert\LessThanOrEqual(0.01)
+     * @Assert\LessThanOrEqual(1000000000000000)
      */
     protected $value;
 
