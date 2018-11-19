@@ -29,8 +29,10 @@ import android.os.Parcel;
 
 
 public class Animal {
+
   @SerializedName("className")
   private String className = null;
+
   @SerializedName("color")
   private String color = "red";
   public Animal className(String className) {

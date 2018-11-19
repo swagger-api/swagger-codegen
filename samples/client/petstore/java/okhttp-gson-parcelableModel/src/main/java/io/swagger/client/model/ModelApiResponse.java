@@ -28,10 +28,13 @@ import android.os.Parcel;
  */
 
 public class ModelApiResponse {
+
   @SerializedName("code")
   private Integer code = null;
+
   @SerializedName("type")
   private String type = null;
+
   @SerializedName("message")
   private String message = null;
   public ModelApiResponse code(Integer code) {
