@@ -101,8 +101,10 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [IO.Swagger.Model.Amount](docs/Amount.md)
  - [IO.Swagger.Model.ApiResponse](docs/ApiResponse.md)
  - [IO.Swagger.Model.Category](docs/Category.md)
+ - [IO.Swagger.Model.Currency](docs/Currency.md)
  - [IO.Swagger.Model.Order](docs/Order.md)
  - [IO.Swagger.Model.Pet](docs/Pet.md)
  - [IO.Swagger.Model.Tag](docs/Tag.md)

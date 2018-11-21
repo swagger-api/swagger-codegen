@@ -12,6 +12,7 @@ package petstore
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
@@ -29,7 +30,6 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"context"
 	"golang.org/x/oauth2"
 )
 
@@ -47,8 +47,6 @@ type APIClient struct {
 	// API Services
 
 	AnotherFakeApi *AnotherFakeApiService
-
-	DefaultApi *DefaultApiService
 
 	FakeApi *FakeApiService
 
@@ -78,7 +76,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AnotherFakeApi = (*AnotherFakeApiService)(&c.common)
-	c.DefaultApi = (*DefaultApiService)(&c.common)
 	c.FakeApi = (*FakeApiService)(&c.common)
 	c.FakeClassnameTags123Api = (*FakeClassnameTags123ApiService)(&c.common)
 	c.PetApi = (*PetApiService)(&c.common)

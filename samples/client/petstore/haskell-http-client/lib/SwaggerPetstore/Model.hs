@@ -163,6 +163,9 @@ newtype PatternWithoutDelimiter = PatternWithoutDelimiter { unPatternWithoutDeli
 -- ** PetId
 newtype PetId = PetId { unPetId :: Integer } deriving (P.Eq, P.Show)
 
+-- ** Query
+newtype Query = Query { unQuery :: Text } deriving (P.Eq, P.Show)
+
 -- ** Status
 newtype Status = Status { unStatus :: [E'Status2] } deriving (P.Eq, P.Show)
 
@@ -572,6 +575,7 @@ mkEnumArrays =
 -- | EnumTest
 data EnumTest = EnumTest
   { enumTestEnumString :: !(Maybe E'EnumString) -- ^ "enum_string"
+  , enumTestEnumStringRequired :: !(E'EnumString) -- ^ /Required/ "enum_string_required"
   , enumTestEnumInteger :: !(Maybe E'EnumInteger) -- ^ "enum_integer"
   , enumTestEnumNumber :: !(Maybe E'EnumNumber) -- ^ "enum_number"
   , enumTestOuterEnum :: !(Maybe OuterEnum) -- ^ "outerEnum"
@@ -582,6 +586,7 @@ instance A.FromJSON EnumTest where
   parseJSON = A.withObject "EnumTest" $ \o ->
     EnumTest
       <$> (o .:? "enum_string")
+      <*> (o .:  "enum_string_required")
       <*> (o .:? "enum_integer")
       <*> (o .:? "enum_number")
       <*> (o .:? "outerEnum")
@@ -591,6 +596,7 @@ instance A.ToJSON EnumTest where
   toJSON EnumTest {..} =
    _omitNulls
       [ "enum_string" .= enumTestEnumString
+      , "enum_string_required" .= enumTestEnumStringRequired
       , "enum_integer" .= enumTestEnumInteger
       , "enum_number" .= enumTestEnumNumber
       , "outerEnum" .= enumTestOuterEnum
@@ -599,10 +605,12 @@ instance A.ToJSON EnumTest where
 
 -- | Construct a value of type 'EnumTest' (by applying it's required fields, if any)
 mkEnumTest
-  :: EnumTest
-mkEnumTest =
+  :: E'EnumString -- ^ 'enumTestEnumStringRequired' 
+  -> EnumTest
+mkEnumTest enumTestEnumStringRequired =
   EnumTest
   { enumTestEnumString = Nothing
+  , enumTestEnumStringRequired
   , enumTestEnumInteger = Nothing
   , enumTestEnumNumber = Nothing
   , enumTestOuterEnum = Nothing

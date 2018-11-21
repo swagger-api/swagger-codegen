@@ -10,6 +10,7 @@ import io.swagger.model.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -68,6 +69,17 @@ public interface FakeApi {
         method = RequestMethod.POST)
     default ResponseEntity<String> fakeOuterStringSerialize(@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body) {
         return getDelegate().fakeOuterStringSerialize(body);
+    }
+
+
+    @ApiOperation(value = "", nickname = "testBodyWithQueryParams", notes = "", tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success") })
+    @RequestMapping(value = "/fake/body-with-query-params",
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    default ResponseEntity<Void> testBodyWithQueryParams(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "query", required = true) String query) {
+        return getDelegate().testBodyWithQueryParams(body, query);
     }
 
 

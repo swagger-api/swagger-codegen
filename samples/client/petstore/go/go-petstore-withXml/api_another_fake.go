@@ -11,11 +11,11 @@
 package petstore
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -25,11 +25,14 @@ var (
 
 type AnotherFakeApiService service
 
-/* AnotherFakeApiService To test special tags
+/* 
+AnotherFakeApiService To test special tags
 To test special tags
- * @param ctx context.Context for authentication, logging, tracing, etc.
-@param body client model
-@return Client*/
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body client model
+
+@return Client
+*/
 func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client) (Client, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
@@ -76,6 +79,7 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
 	if err != nil {
 		return localVarReturnValue, localVarHttpResponse, err
 	}
@@ -95,11 +99,6 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-			if err != nil {
-				return localVarReturnValue, localVarHttpResponse, err
-			}
-
 			var v Client
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
