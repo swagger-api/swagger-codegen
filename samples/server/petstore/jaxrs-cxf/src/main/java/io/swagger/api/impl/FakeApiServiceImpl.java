@@ -6,6 +6,7 @@ import io.swagger.model.Client;
 import java.util.Date;
 import org.joda.time.LocalDate;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,6 +50,12 @@ public class FakeApiServiceImpl implements FakeApi {
         // TODO: Implement...
         
         return null;
+    }
+    
+    public void testBodyWithQueryParams(User body, String query) {
+        // TODO: Implement...
+        
+        
     }
     
     /**

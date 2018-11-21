@@ -134,6 +134,27 @@ data FakeOuterStringSerialize
 -- | /Body Param/ "body" - Input string as post body
 instance HasBodyParam FakeOuterStringSerialize OuterString 
 
+-- *** testBodyWithQueryParams
+
+-- | @PUT \/fake\/body-with-query-params@
+-- 
+testBodyWithQueryParams 
+  :: (Consumes TestBodyWithQueryParams MimeJSON, MimeRender MimeJSON User)
+  => User -- ^ "body"
+  -> Query -- ^ "query"
+  -> SwaggerPetstoreRequest TestBodyWithQueryParams MimeJSON NoContent MimeNoContent
+testBodyWithQueryParams body (Query query) =
+  _mkRequest "PUT" ["/fake/body-with-query-params"]
+    `setBodyParam` body
+    `setQuery` toQuery ("query", Just query)
+
+data TestBodyWithQueryParams 
+instance HasBodyParam TestBodyWithQueryParams User 
+
+-- | @application/json@
+instance Consumes TestBodyWithQueryParams MimeJSON
+
+
 -- *** testClientModel
 
 -- | @PATCH \/fake@

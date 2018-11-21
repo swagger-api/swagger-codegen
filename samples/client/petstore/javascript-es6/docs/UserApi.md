@@ -208,7 +208,7 @@ import SwaggerPetstore from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
-let username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
+let username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing.
 
 
 apiInstance.getUserByName(username, (error, data, response) => {
@@ -224,7 +224,7 @@ apiInstance.getUserByName(username, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **String**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 

@@ -10,6 +10,7 @@ import io.swagger.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -59,6 +60,15 @@ public interface FakeApi {
     @RequestMapping(value = "/fake/outer/string",
         method = RequestMethod.POST)
     ResponseEntity<String> fakeOuterStringSerialize(@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body);
+
+
+    @ApiOperation(value = "", nickname = "testBodyWithQueryParams", notes = "", tags={ "fake", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success") })
+    @RequestMapping(value = "/fake/body-with-query-params",
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    ResponseEntity<Void> testBodyWithQueryParams(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "query", required = true) String query);
 
 
     @ApiOperation(value = "To test \"client\" model", nickname = "testClientModel", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })

@@ -329,60 +329,6 @@ export class PetService {
     }
 
     /**
-     * Lists all the Pets
-     * Lists all the Pets
-     * @param action Action type to be passed on to the get the Pets
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public listPets(observe?: 'body', reportProgress?: boolean): Observable<Array<Pet>>;
-    public listPets(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Pet>>>;
-    public listPets(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Pet>>>;
-    public listPets(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let action = 'list';
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (action !== undefined && action !== null) {
-            queryParameters = queryParameters.set('action', <any>action);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (petstore_auth) required
-        if (this.configuration.accessToken) {
-            const accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headers = headers.set('Authorization', 'Bearer ' + accessToken);
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/xml',
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.get<Array<Pet>>(`${this.basePath}/pet`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Update an existing pet
      * 
      * @param body Pet object that needs to be added to the store

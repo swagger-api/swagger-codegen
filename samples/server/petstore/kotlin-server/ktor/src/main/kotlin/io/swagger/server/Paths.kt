@@ -89,7 +89,7 @@ object Paths {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing.  
+     * @param username The name that needs to be fetched. Use user1 for testing. 
      */
     @Location("/user/{username}") class getUserByName(val username: kotlin.String)
 
