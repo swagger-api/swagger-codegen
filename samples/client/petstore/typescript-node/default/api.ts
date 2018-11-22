@@ -137,6 +137,35 @@ class ObjectSerializer {
 }
 
 /**
+* some description 
+*/
+export class Amount {
+    /**
+    * some description 
+    */
+    'value': number;
+    'currency': Currency;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "value",
+            "baseName": "value",
+            "type": "number"
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Amount.attributeTypeMap;
+    }
+}
+
+/**
 * Describes the result of uploading an image resource
 */
 export class ApiResponse {
@@ -191,6 +220,21 @@ export class Category {
 
     static getAttributeTypeMap() {
         return Category.attributeTypeMap;
+    }
+}
+
+/**
+* some description 
+*/
+export class Currency {
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    ];
+
+    static getAttributeTypeMap() {
+        return Currency.attributeTypeMap;
     }
 }
 
@@ -412,8 +456,10 @@ let enumsMap: {[index: string]: any} = {
 }
 
 let typeMap: {[index: string]: any} = {
+    "Amount": Amount,
     "ApiResponse": ApiResponse,
     "Category": Category,
+    "Currency": Currency,
     "Order": Order,
     "Pet": Pet,
     "Tag": Tag,

@@ -7,6 +7,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.http.GenericUrl;
@@ -361,6 +362,123 @@ public class FakeApi {
 
         HttpContent content = apiClient.new JacksonJsonHttpContent(body);
         return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.POST, genericUrl, content).execute();
+    }
+
+
+  /**
+    * <p><b>200</b> - Success
+    * @param body The body parameter
+    * @param query The query parameter
+    * @throws IOException if an error occurs while attempting to invoke the API
+    **/
+    public void testBodyWithQueryParams(User body, String query) throws IOException {
+        testBodyWithQueryParamsForHttpResponse(body, query);
+    }
+
+  /**
+    * <p><b>200</b> - Success
+    * @param body The body parameter
+    * @param query The query parameter
+    * @param params Map of query params. A collection will be interpreted as passing in multiple instances of the same query param.
+    * @throws IOException if an error occurs while attempting to invoke the API
+    **/
+    public void testBodyWithQueryParams(User body, String query, Map<String, Object> params) throws IOException {
+        testBodyWithQueryParamsForHttpResponse(body, query, params);
+    }
+
+    public HttpResponse testBodyWithQueryParamsForHttpResponse(User body, String query) throws IOException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new IllegalArgumentException("Missing the required parameter 'body' when calling testBodyWithQueryParams");
+        }// verify the required parameter 'query' is set
+        if (query == null) {
+            throw new IllegalArgumentException("Missing the required parameter 'query' when calling testBodyWithQueryParams");
+        }
+        UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/body-with-query-params");
+        if (query != null) {
+            String key = "query";
+            Object value = query;
+            if (value instanceof Collection) {
+                uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+            } else if (value instanceof Object[]) {
+                uriBuilder = uriBuilder.queryParam(key, (Object[]) value);
+            } else {
+                uriBuilder = uriBuilder.queryParam(key, value);
+            }
+        }
+
+        String url = uriBuilder.build().toString();
+        GenericUrl genericUrl = new GenericUrl(url);
+
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
+        return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
+    }
+
+      public HttpResponse testBodyWithQueryParamsForHttpResponse(java.io.InputStream body, String query, String mediaType) throws IOException {
+          // verify the required parameter 'body' is set
+              if (body == null) {
+              throw new IllegalArgumentException("Missing the required parameter 'body' when calling testBodyWithQueryParams");
+              }// verify the required parameter 'query' is set
+              if (query == null) {
+              throw new IllegalArgumentException("Missing the required parameter 'query' when calling testBodyWithQueryParams");
+              }
+              UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/body-with-query-params");
+              if (query != null) {
+                  String key = "query";
+                  Object value = query;
+                  if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                  } else if (value instanceof Object[]) {
+                    uriBuilder = uriBuilder.queryParam(key, (Object[]) value);
+                  } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
+                  }
+              }
+
+              String url = uriBuilder.build().toString();
+              GenericUrl genericUrl = new GenericUrl(url);
+
+              HttpContent content = body == null ?
+                apiClient.new JacksonJsonHttpContent(null) :
+                new InputStreamContent(mediaType == null ? Json.MEDIA_TYPE : mediaType, body);
+              return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
+      }
+
+    public HttpResponse testBodyWithQueryParamsForHttpResponse(User body, String query, Map<String, Object> params) throws IOException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new IllegalArgumentException("Missing the required parameter 'body' when calling testBodyWithQueryParams");
+        }// verify the required parameter 'query' is set
+        if (query == null) {
+            throw new IllegalArgumentException("Missing the required parameter 'query' when calling testBodyWithQueryParams");
+        }
+        UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake/body-with-query-params");
+
+        // Copy the params argument if present, to allow passing in immutable maps
+        Map<String, Object> allParams = params == null ? new HashMap<String, Object>() : new HashMap<String, Object>(params);
+        // Add the required query param 'query' to the map of query params
+        allParams.put("query", query);
+
+        for (Map.Entry<String, Object> entry: allParams.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key != null && value != null) {
+                if (value instanceof Collection) {
+                    uriBuilder = uriBuilder.queryParam(key, ((Collection) value).toArray());
+                } else if (value instanceof Object[]) {
+                    uriBuilder = uriBuilder.queryParam(key, (Object[]) value);
+                } else {
+                    uriBuilder = uriBuilder.queryParam(key, value);
+                }
+            }
+        }
+
+        String url = uriBuilder.build().toString();
+        GenericUrl genericUrl = new GenericUrl(url);
+
+        HttpContent content = apiClient.new JacksonJsonHttpContent(body);
+        return apiClient.getHttpRequestFactory().buildRequest(HttpMethods.PUT, genericUrl, content).execute();
     }
 
 

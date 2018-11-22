@@ -15,15 +15,15 @@ import io.swagger.client.models.Order
 
 import io.swagger.client.infrastructure.*
 
-class StoreApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiClient(basePath) {
+class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
 
     /**
     * Delete purchase order by ID
-    * For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
     * @param orderId ID of the order that needs to be deleted 
     * @return void
     */
-    fun deleteOrder(orderId: kotlin.Long) : Unit {
+    fun deleteOrder(orderId: kotlin.String) : Unit {
         val localVariableBody: kotlin.Any? = null
         val localVariableQuery: MultiValueMap = mapOf()
         
@@ -39,7 +39,7 @@ class StoreApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : Api
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -93,7 +93,7 @@ class StoreApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : Api
 
     /**
     * Find purchase order by ID
-    * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
+    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
     * @param orderId ID of pet that needs to be fetched 
     * @return Order
     */

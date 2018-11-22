@@ -5,6 +5,7 @@ import io.swagger.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,12 @@ public interface FakeApiDelegate {
      * @see FakeApi#fakeOuterStringSerialize
      */
     ResponseEntity<String> fakeOuterStringSerialize( String  body);
+
+    /**
+     * @see FakeApi#testBodyWithQueryParams
+     */
+    ResponseEntity<Void> testBodyWithQueryParams( User  body,
+         String  query);
 
     /**
      * @see FakeApi#testClientModel

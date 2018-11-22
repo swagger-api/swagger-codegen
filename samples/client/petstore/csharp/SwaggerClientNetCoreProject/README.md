@@ -79,6 +79,7 @@ Class | Method | HTTP request | Description
 *FakeApi* | [**FakeOuterCompositeSerialize**](docs/FakeApi.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
 *FakeApi* | [**FakeOuterNumberSerialize**](docs/FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
 *FakeApi* | [**FakeOuterStringSerialize**](docs/FakeApi.md#fakeouterstringserialize) | **POST** /fake/outer/string | 
+*FakeApi* | [**TestBodyWithQueryParams**](docs/FakeApi.md#testbodywithqueryparams) | **PUT** /fake/body-with-query-params | 
 *FakeApi* | [**TestClientModel**](docs/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \"client\" model
 *FakeApi* | [**TestEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**TestEnumParameters**](docs/FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
@@ -130,7 +131,6 @@ Class | Method | HTTP request | Description
  - [Model.MixedPropertiesAndAdditionalPropertiesClass](docs/MixedPropertiesAndAdditionalPropertiesClass.md)
  - [Model.Model200Response](docs/Model200Response.md)
  - [Model.ModelClient](docs/ModelClient.md)
- - [Model.ModelReturn](docs/ModelReturn.md)
  - [Model.Name](docs/Name.md)
  - [Model.NumberOnly](docs/NumberOnly.md)
  - [Model.Order](docs/Order.md)
@@ -141,6 +141,7 @@ Class | Method | HTTP request | Description
  - [Model.OuterString](docs/OuterString.md)
  - [Model.Pet](docs/Pet.md)
  - [Model.ReadOnlyFirst](docs/ReadOnlyFirst.md)
+ - [Model.Return](docs/Return.md)
  - [Model.SpecialModelName](docs/SpecialModelName.md)
  - [Model.Tag](docs/Tag.md)
  - [Model.User](docs/User.md)

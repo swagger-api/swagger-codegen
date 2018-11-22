@@ -14,10 +14,10 @@ services:
         class: Swagger\Server\Model\ModelSerializer
 
     swagger_server.service.serializer:
-        class: %swagger_server.serializer%
+        class: "%swagger_server.serializer%"
 
     swagger_server.service.validator:
-        class: %swagger_server.validator%
+        class: "%swagger_server.validator%"
 
     swagger_server.controller.pet:
         class: Swagger\Server\Controller\PetController

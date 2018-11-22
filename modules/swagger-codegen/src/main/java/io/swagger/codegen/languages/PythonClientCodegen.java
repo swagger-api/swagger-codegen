@@ -21,8 +21,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PACKAGE_URL = "packageUrl";
     public static final String DEFAULT_LIBRARY = "urllib3";

@@ -30,5 +30,6 @@ ags="$@ generate -t modules/swagger-codegen/src/main/resources/JavaSpring/librar
 
 echo "Removing files and folders under samples/client/petstore/spring-cloud/src/main"
 rm -rf samples/client/petstore/spring-cloud/src/main
+rm -rf samples/server/petstore/spring-cloud/src/test/java/io
 find samples/client/petstore/spring-cloud -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 java $JAVA_OPTS -jar $executable $ags
