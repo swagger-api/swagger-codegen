@@ -15,8 +15,9 @@ part '{{classFilename}}.jretro.dart';
 class {{classname}} extends _${{classname}}Client implements ApiClient {
     final Route base;
     final SerializerRepo serializers;
+    final Duration timeout;
 
-    {{classname}}({this.base, this.serializers});
+    {{classname}}({this.base, this.serializers, this.timeout = const Duration(minutes: 2)});
 
     {{#operation}}
     /// {{summary}}
@@ -67,7 +68,7 @@ class {{classname}} extends _${{classname}}Client implements ApiClient {
             {{#hasFormParams}},{{/hasFormParams}}{{^hasFormParams}}{{#hasQueryParams}},{{/hasQueryParams}}{{/hasFormParams}}{{^hasFormParams}}{{^hasQueryParams}}{{#hasHeaderParams}},{{/hasHeaderParams}}{{/hasQueryParams}}{{/hasFormParams}}{{^hasFormParams}}{{^hasQueryParams}}{{^hasHeaderParams}}{{#hasPathParams}},{{/hasPathParams}}{{/hasHeaderParams}}{{/hasQueryParams}}{{/hasFormParams}}
             {{paramName}}{{#hasMore}}, {{/hasMore}}
         {{/bodyParam}}
-        );
+        ).timeout(timeout);
     }
 
   {{/operation}}
