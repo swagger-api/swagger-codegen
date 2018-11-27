@@ -53,6 +53,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public SpringCodegen() {
         super();
         outputFolder = "generated-code/javaSpring";
+        apiTestTemplateFiles.clear();
         embeddedTemplateDir = templateDir = "JavaSpring";
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
@@ -253,7 +254,6 @@ public class SpringCodegen extends AbstractJavaCodegen
                     additionalProperties.put(SINGLE_CONTENT_TYPES, "true");
                     this.setSingleContentTypes(true);
                 }
-                apiTestTemplateFiles.clear();
             } else {
                 apiTemplateFiles.put("apiController.mustache", "Controller.java");
                 supportingFiles.add(new SupportingFile("apiException.mustache",

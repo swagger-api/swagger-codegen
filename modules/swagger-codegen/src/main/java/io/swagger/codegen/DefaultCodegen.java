@@ -2332,7 +2332,8 @@ public class DefaultCodegen {
         op.isRestfulDestroy = op.isRestfulDestroy();
         op.isRestful = op.isRestful();
 
-        configureDataForTestTemplate(op);
+        // TODO: fix error with resolved yaml/json generators in order to enable this again.
+        //configureDataForTestTemplate(op);
 
         return op;
     }
