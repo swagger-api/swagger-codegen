@@ -316,20 +316,34 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
     @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
-            return "utility::conversions::to_string_t(\"\")";
+            return "utility::conversions::to_string_t(\"" +
+                    (((StringProperty) p).getDefault() !=null ? ((StringProperty) p).getDefault() : "" ) +
+                    "\")";
         } else if (p instanceof BooleanProperty) {
+            if (((BooleanProperty)p).getDefault() != null && ((BooleanProperty)p).getDefault() )
+                return "true";
             return "false";
         } else if (p instanceof DateProperty) {
             return "utility::datetime()";
         } else if (p instanceof DateTimeProperty) {
             return "utility::datetime()";
         } else if (p instanceof DoubleProperty) {
+            if (((DoubleProperty) p).getDefault() != null)
+                return ((DoubleProperty) p).getDefault().toString();
             return "0.0";
         } else if (p instanceof FloatProperty) {
+            if (((FloatProperty) p).getDefault() != null)
+                return ((FloatProperty) p).getDefault().toString() + "f";
             return "0.0f";
         } else if (p instanceof LongProperty) {
+            if(((LongProperty) p).getDefault() != null)
+                return ((LongProperty) p).getDefault().toString() + "L";
             return "0L";
-        } else if (p instanceof IntegerProperty || p instanceof BaseIntegerProperty) {
+        } else if (p instanceof IntegerProperty) {
+            if (((IntegerProperty) p).getDefault() != null)
+                return ((IntegerProperty) p).getDefault().toString();
+            return "0";
+        } else if (p instanceof BaseIntegerProperty) {
             return "0";
         } else if (p instanceof DecimalProperty) {
             return "0.0";
