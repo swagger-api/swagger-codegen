@@ -484,7 +484,7 @@ public class CodegenOperation extends CodegenObject {
     }
 
     public Boolean getIsRestfulDestroy() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_UPDATE_EXT_NAME);
+        return getBooleanValue(CodegenConstants.IS_RESTFUL_DESTROY_EXT_NAME);
     }
 
     public Boolean getIsRestful() {
