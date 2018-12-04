@@ -41,13 +41,11 @@ import java.util.ServiceLoader;
 public class GeneratorController {
 
     static Logger LOGGER = LoggerFactory.getLogger(GeneratorController.class);
-    static List<String> CLIENTS = new ArrayList<>();
-    static List<String> SERVERS = new ArrayList<>();
-    static List<String> CLIENTSV2 = new ArrayList<>();
-    static List<String> SERVERSV2 = new ArrayList<>();
+
+    static Map<CodegenType, List<String>> TYPES = new LinkedHashMap<>();
+    static Map<io.swagger.codegen.CodegenType, List<String>> TYPESV2 = new LinkedHashMap<>();
 
     private static ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
-    private static ObjectMapper jsonMapper = new ObjectMapper();
     private static HiddenOptions hiddenOptions;
     private static String HIDDEN_OPTIONS_CONFIG_FILE = "hiddenOptions.yaml";
     private static String PROP_HIDDEN_OPTIONS_PATH = "HIDDEN_OPTIONS_PATH";
@@ -59,26 +57,45 @@ public class GeneratorController {
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
 
         loader.forEach(config -> {
-            if ((config.getTag().equals(CodegenType.CLIENT) || config.getTag().equals(CodegenType.DOCUMENTATION)) && !hiddenOptions.isHiddenClientV3(config.getName()))  {
-                CLIENTS.add(config.getName());
-            } else if (config.getTag().equals(CodegenType.SERVER) && !hiddenOptions.isHiddenServerV3(config.getName())) {
-                SERVERS.add(config.getName());
+            boolean isServer = CodegenType.SERVER.equals(config.getTag());
+            boolean process = false;
+            if (isServer && !hiddenOptions.isHiddenServerV3(config.getName())) {
+                process = true;
+            } else if (!isServer && !hiddenOptions.isHiddenClientV3(config.getName())) {
+                process = true;
+            }
+            if (process) {
+                List<String> typeLanguages = TYPES.get(config.getTag());
+                if (typeLanguages == null) {
+                    typeLanguages = new ArrayList<>();
+                    TYPES.put(config.getTag(), typeLanguages);
+                }
+                typeLanguages.add(config.getName());
             }
         });
-        Collections.sort(CLIENTS, String.CASE_INSENSITIVE_ORDER);
-        Collections.sort(SERVERS, String.CASE_INSENSITIVE_ORDER);
+
+        TYPES.forEach((k, v) -> Collections.sort(v, String.CASE_INSENSITIVE_ORDER));
 
         final ServiceLoader<io.swagger.codegen.CodegenConfig> loaderV2 = ServiceLoader.load(io.swagger.codegen.CodegenConfig.class);
 
         loaderV2.forEach(config -> {
-            if ((config.getTag().equals(io.swagger.codegen.CodegenType.CLIENT) || config.getTag().equals(io.swagger.codegen.CodegenType.DOCUMENTATION)) && !hiddenOptions.isHiddenClient(config.getName())) {
-                CLIENTSV2.add(config.getName());
-            } else if (config.getTag().equals(io.swagger.codegen.CodegenType.SERVER) && !hiddenOptions.isHiddenServer(config.getName())) {
-                SERVERSV2.add(config.getName());
+            boolean isServer = io.swagger.codegen.CodegenType.SERVER.equals(config.getTag());
+            boolean process = false;
+            if (isServer && !hiddenOptions.isHiddenServer(config.getName())) {
+                process = true;
+            } else if (!isServer && !hiddenOptions.isHiddenClient(config.getName())) {
+                process = true;
+            }
+            if (process) {
+                List<String> typeLanguages = TYPESV2.get(config.getTag());
+                if (typeLanguages == null) {
+                    typeLanguages = new ArrayList<>();
+                    TYPESV2.put(config.getTag(), typeLanguages);
+                }
+                typeLanguages.add(config.getName());
             }
         });
-        Collections.sort(CLIENTSV2, String.CASE_INSENSITIVE_ORDER);
-        Collections.sort(SERVERSV2, String.CASE_INSENSITIVE_ORDER);
+        TYPESV2.forEach((k, v) -> Collections.sort(v, String.CASE_INSENSITIVE_ORDER));
     }
 
 
@@ -170,29 +187,88 @@ public class GeneratorController {
         }
     }
 
-    public ResponseContext clientLanguages(RequestContext requestContext, String version) {
+    @Deprecated
+    public ResponseContext clientLanguages(RequestContext requestContext, String version, Boolean clientOnly) {
+        List<String> clientAndDoc = new ArrayList<>();
         if ("V2".equals(version)) {
+            clientAndDoc.addAll(TYPESV2.get(io.swagger.codegen.CodegenType.CLIENT));
+            if (!Boolean.TRUE.equals(clientOnly)) {
+                clientAndDoc.addAll(TYPESV2.get(io.swagger.codegen.CodegenType.DOCUMENTATION));
+            }
+            Collections.sort(clientAndDoc, String.CASE_INSENSITIVE_ORDER);
+
             return new ResponseContext()
                     .status(Response.Status.OK.getStatusCode())
-                    .entity(CLIENTSV2);
+                    .entity(clientAndDoc);
 
         }
+        clientAndDoc.addAll(TYPES.get(CodegenType.CLIENT));
+        if (!Boolean.TRUE.equals(clientOnly)) {
+            clientAndDoc.addAll(TYPES.get(CodegenType.DOCUMENTATION));
+        }
+        Collections.sort(clientAndDoc, String.CASE_INSENSITIVE_ORDER);
+
         return new ResponseContext()
                 .status(Response.Status.OK.getStatusCode())
-                .entity(CLIENTS);
+                .entity(clientAndDoc);
 
     }
 
+    @Deprecated
     public ResponseContext serverLanguages(RequestContext requestContext, String version) {
         if ("V2".equals(version)) {
             return new ResponseContext()
                     .status(Response.Status.OK.getStatusCode())
-                    .entity(SERVERSV2);
+                    .entity(TYPESV2.get(io.swagger.codegen.CodegenType.SERVER));
 
         }
         return new ResponseContext()
                 .status(Response.Status.OK.getStatusCode())
-                .entity(SERVERS);
+                .entity(TYPES.get(CodegenType.SERVER));
+    }
+
+    @Deprecated
+    public ResponseContext documentationLanguages(RequestContext requestContext, String version) {
+        if ("V2".equals(version)) {
+            return new ResponseContext()
+                    .status(Response.Status.OK.getStatusCode())
+                    .entity(TYPESV2.get(io.swagger.codegen.CodegenType.DOCUMENTATION));
+
+        }
+        return new ResponseContext()
+                .status(Response.Status.OK.getStatusCode())
+                .entity(TYPES.get(CodegenType.DOCUMENTATION));
+    }
+
+    public ResponseContext languages(RequestContext requestContext, String type, String version) {
+        if ("V2".equals(version)) {
+            io.swagger.codegen.CodegenType codegenType = io.swagger.codegen.CodegenType.forValue(type);
+            return new ResponseContext()
+                    .status(Response.Status.OK.getStatusCode())
+                    .entity(TYPESV2.get(codegenType));
+
+        }
+        CodegenType codegenTypeV3 = CodegenType.forValue(type);
+        return new ResponseContext()
+                .status(Response.Status.OK.getStatusCode())
+                .entity(TYPES.get(codegenTypeV3));
+    }
+
+    public ResponseContext languagesMulti(RequestContext requestContext, List<String> types, String version) {
+        final List<String> languages = new ArrayList<>();
+        if ("V2".equals(version)) {
+            types.forEach(s -> languages.addAll(TYPESV2.get(io.swagger.codegen.CodegenType.forValue(s))));
+            Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
+            return new ResponseContext()
+                    .status(Response.Status.OK.getStatusCode())
+                    .entity(languages);
+
+        }
+        types.forEach(s -> languages.addAll(TYPES.get(CodegenType.forValue(s))));
+        Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
+        return new ResponseContext()
+                .status(Response.Status.OK.getStatusCode())
+                .entity(languages);
     }
 
     public ResponseContext listOptions(RequestContext requestContext, String language, String version) {
@@ -372,6 +448,33 @@ public class GeneratorController {
                     .entity(msg);
         }
         if (files.size() > 0) {
+            if (generationRequest.getType() == null) {
+                String lang = generationRequest.getLang();
+                if (GenerationRequest.CodegenVersion.V2.equals(generationRequest.getCodegenVersion())) {
+                    TYPESV2
+                            .entrySet().stream()
+                            .filter(e -> {
+                                return e.getValue().contains(lang);
+                            })
+                            .findFirst()
+                            .ifPresent(e -> {
+                                generationRequest.type(GenerationRequest.Type.fromValue(e.getKey().toValue()));
+                            });
+                } else {
+                    TYPES
+                            .entrySet().stream()
+                            .filter(e -> {
+                                return e.getValue().contains(lang);
+                            })
+                            .findFirst()
+                            .ifPresent(e -> {
+                                generationRequest.type(GenerationRequest.Type.fromValue(e.getKey().toValue()));
+                            });
+                }
+                if (generationRequest.getType() == null) {
+                    generationRequest.type(GenerationRequest.Type.CLIENT);
+                }
+            }
             return downloadFile(outputRootFolder, outputContentFolder, outputFile, generationRequest.getLang(), generationRequest.getType());
         } else {
             return new ResponseContext()

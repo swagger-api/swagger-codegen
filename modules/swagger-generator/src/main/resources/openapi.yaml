@@ -1,10 +1,10 @@
-openapi: 3.0.0
+openapi: 3.0.1
 servers:
 - url: /api
 info:
   description: 'This is an online swagger codegen server.  You can find out more at
     https://github.com/swagger-api/swagger-codegen or on [irc.freenode.net, #swagger](http://swagger.io/irc/).'
-  version: 3.0.0
+  version: 3.0.4
   title: Swagger Generator
   license:
     name: Apache 2.0
@@ -12,12 +12,16 @@ info:
 tags:
 - name: clients
 - name: servers
+- name: documentation
+- name: config
 paths:
   "/generate":
     get:
       tags:
       - clients
       - servers
+      - documentation
+      - config
       x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
       operationId: generateFromURL
       summary: Generates and download code. GenerationRequest input provided as JSON
@@ -40,6 +44,8 @@ paths:
       tags:
       - clients
       - servers
+      - documentation
+      - config
       x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
       operationId: generate
       summary: Generates and download code. GenerationRequest input provided as request
@@ -61,11 +67,19 @@ paths:
     get:
       tags:
       - clients
+      - documentation
       x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
       operationId: clientLanguages
-      summary: Gets languages supported by the client generator.
+      deprecated: true
+      summary: Deprecated, use '/{type}/{version}' instead. List generator languages of type 'client' or 'documentation' for given codegen version (defaults to V3)
       parameters:
       - "$ref": "#/components/parameters/version"
+      - name: clientOnly
+        in: query
+        description: flag to only return languages of type `client`
+        schema:
+          type: boolean
+          default: false
       responses:
         '200':
           description: successful operation
@@ -81,8 +95,80 @@ paths:
       - servers
       x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
       operationId: serverLanguages
-      summary: Gets languages supported by the server generator.
+      deprecated: true
+      summary: Deprecated, use '/{type}/{version}' instead. List generator languages of type 'server' for given codegen version (defaults to V3)
       parameters:
+      - "$ref": "#/components/parameters/version"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  "/documentation":
+    get:
+      tags:
+      - documentation
+      x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
+      operationId: documentationLanguages
+      deprecated: true
+      summary: Deprecated, use '/{type}/{version}' instead. List generator languages of type 'documentation' for given codegen version (defaults to V3)
+      parameters:
+      - "$ref": "#/components/parameters/version"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  "/{type}/{version}":
+    get:
+      tags:
+      - clients
+      - servers
+      - documentation
+      - config
+      x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
+      operationId: languages
+      summary: List generator languages of the given type and version
+      parameters:
+      - "$ref": "#/components/parameters/type"
+      - name: version
+        in: path
+        required: true
+        description: generator version used by codegen engine
+        schema:
+          type: string
+          enum:
+          - V2
+          - V3
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  "/types":
+    get:
+      tags:
+      - clients
+      - servers
+      - documentation
+      - config
+      x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
+      operationId: languagesMulti
+      summary: List generator languages of version defined in 'version parameter (defaults to V3) and type included in 'types' parameter; all languages
+      parameters:
+      - "$ref": "#/components/parameters/types"
       - "$ref": "#/components/parameters/version"
       responses:
         '200':
@@ -98,9 +184,11 @@ paths:
       tags:
       - clients
       - servers
+      - documentation
+      - config
       x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
       operationId: listOptions
-      summary: Returns options for a given language (client or server)
+      summary: Returns options for a given language and version (defaults to V3)
       parameters:
       - name: language
         in: query
@@ -128,6 +216,34 @@ components:
         enum:
         - V2
         - V3
+    type:
+      name: type
+      in: path
+      required: true
+      description: generator type
+      schema:
+        type: string
+        enum:
+        - client
+        - server
+        - documentation
+        - config
+    types:
+      name: types
+      in: query
+      style: form
+      explode: false
+      required: true
+      description: pipe-separated list of generator types
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+          - client
+          - server
+          - documentation
+          - config
   schemas:
     GenerationRequest:
       x-swagger-router-model: io.swagger.codegen.v3.service.GenerationRequest
@@ -137,7 +253,7 @@ components:
         lang:
           type: string
           title: language
-          description: client language to generate (required)
+          description: language to generate (required)
           example: java
         spec:
           type: object
@@ -147,10 +263,12 @@ components:
           description: URL of the spec in json format. Alternative to `spec`
         type:
           type: string
-          description: type of the spec (client or server)
+          description: type of the spec
           enum:
           - CLIENT
           - SERVER
+          - DOCUMENTATION
+          - CONFIG
         codegenVersion:
           type: string
           description: codegen version to use
@@ -286,7 +404,7 @@ components:
           type: string
           title: http user agent
           description: HTTP user agent, e.g. codegen_csharp_api_client, default to
-            'Swagger-Codegen/{packageVersion}}/{language}'
+                         'Swagger-Codegen/{packageVersion}}/{language}'
         reservedWordsMappings:
           type: object
           additionalProperties:
