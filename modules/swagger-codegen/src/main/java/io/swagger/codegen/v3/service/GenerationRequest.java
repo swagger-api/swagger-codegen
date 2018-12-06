@@ -9,11 +9,11 @@ public class GenerationRequest implements Serializable {
     private Object spec = null;
     private String specURL = null;
     private Options options = new Options();
-    private Type type = Type.CLIENT;
+    private Type type;
     private CodegenVersion codegenVersion = CodegenVersion.V3;
 
     public enum Type {
-        CLIENT("client"), SERVER("server");
+        CLIENT("client"), SERVER("server"), DOCUMENTATION("documentation"), CONFIG("config");
 
         private String name;
 
@@ -23,6 +23,15 @@ public class GenerationRequest implements Serializable {
 
         public String getTypeName() {
             return name;
+        }
+
+        public static Type fromValue(String name) {
+            for (Type t: Type.values()) {
+                if (name.equals(t.name)) {
+                    return t;
+                }
+            }
+            return null;
         }
     }
 
