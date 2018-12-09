@@ -585,10 +585,7 @@ public class CodeGenMojo extends AbstractMojo {
     private void addCodegenArgumentIfAbsent(String option, String type, String value, CodegenConfigurator configurator) {
          if (configurator.getCodegenArguments().stream()
                 .noneMatch(codegenArgument -> option.equals(codegenArgument.getOption()))) {
-            configurator.getCodegenArguments().add(new CodegenArgument()
-                    .option(option)
-                    .type(type)
-                    .value(value));
+            configurator.getCodegenArguments().add(new CodegenArgument().option(option).type(type).value(value));
         }
     }
 }
