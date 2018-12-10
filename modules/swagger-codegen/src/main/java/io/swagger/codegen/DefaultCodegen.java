@@ -3164,13 +3164,13 @@ public class DefaultCodegen {
                     if (model instanceof ModelImpl) {
                         ModelImpl modelImpl = (ModelImpl) model;
 
-                        if (modelImpl.getType() != null) {
-                            Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), null);
-                            cp.datatype = getSwaggerType(p);
-                        }
-
                         if(modelImpl.getEnum() != null && modelImpl.getEnum().size() > 0) {
                             cp.isEnum = true;
+
+                            if (modelImpl.getType() != null) {
+                                Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), null);
+                                cp.datatype = getSwaggerType(p);
+                            }
                         }
 
                         cp.pattern = modelImpl.getPattern();
