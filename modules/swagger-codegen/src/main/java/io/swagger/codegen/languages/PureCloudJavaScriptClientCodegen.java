@@ -89,6 +89,9 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
         supportingFiles.add(new SupportingFile("rollup-cjs-for-browserify.config.mustache", "", "rollup-cjs-for-browserify.config.js"));
         supportingFiles.add(new SupportingFile("rollup-amd.config.mustache", "", "rollup-amd.config.js"));
 
+        // Typescript
+        supportingFiles.add(new SupportingFile("index.d.ts.mustache", "", "index.d.ts"));
+
         // reference: http://www.w3schools.com/js/js_reserved.asp
         setReservedWordsLowerCase(
                 Arrays.asList(
@@ -615,6 +618,10 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
             // type is a model class, e.g. User
             //example = "new " + moduleName + "." + type + "()";
 
+            // Ensure a base type is set
+            if (p.baseType == null || p.baseType.equals(""))
+                p.baseType = p.dataType;
+
             /* API-2772
              * Since models have been removed from the SDK, the examples shouldn't reference them. This will
              * display something like
@@ -1029,6 +1036,49 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
         } else {
             return "\"" + escapeText(value) + "\"";
         }
+    }
+
+    public static String getTypeScriptResponseType(String dataType) {
+        String typeScriptType = dataType;
+
+        if (typeScriptType.startsWith("[")) {
+            // Recurse and wrap with array syntax
+            typeScriptType = "Array<" + getTypeScriptResponseType(typeScriptType.substring(1, typeScriptType.length() - 1)) + ">";
+        } else if (typeScriptType.startsWith("{String: ")) {
+            // Recurse and wrap with dictionary (key/value map) syntax
+            typeScriptType = "{ [key: string]: " + getTypeScriptResponseType(typeScriptType.substring(9, typeScriptType.length() - 1)) + "; }";
+        } else {
+            // Map JavaScript types to TypeScript types
+            switch (typeScriptType) {
+                case "Number":
+                    typeScriptType = "number";
+                    break;
+                case "Boolean":
+                    typeScriptType = "boolean";
+                    break;
+                case "String":
+                case "Date":
+                    typeScriptType = "string";
+                    break;
+                case "Object":
+                    typeScriptType = "object";
+                    break;
+                case "Void":
+                    typeScriptType = "void";
+                    break;
+                case "Null":
+                    typeScriptType = "null";
+                    break;
+                case "Undefined":
+                    typeScriptType = "undefined";
+                    break;
+                default:
+                    // This is expected to be the name of a model from swagger
+                    typeScriptType = "Models." + typeScriptType;
+            }
+        }
+
+        return typeScriptType;
     }
 
 }

@@ -1,5 +1,7 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.languages.PureCloudJavaScriptClientCodegen;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,6 +56,10 @@ public class CodegenProperty {
         this.isFloat = false;
         this.isDouble = false;
         this.isBoolean = false;
+    }
+
+    public String getTypeScriptType() {
+        return PureCloudJavaScriptClientCodegen.getTypeScriptResponseType(datatype);
     }
 
     @Override
