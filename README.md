@@ -1,7 +1,7 @@
 # Swagger Code Generator V3
 
 ## Overview
-This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Definition](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
+This is the Swagger Codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Definition](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
 - **API clients**: **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx, Google API Client Library for Java)
 - **Server stubs**: **Java** (Inflector)
@@ -50,7 +50,7 @@ Check out [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) 
 
 
 ## Compatibility
-The OpenAPI Specification has undergone 3 revisions since initial creation in 2010..  The swagger-codegen project has the following compatibilities with the OpenAPI Specification:
+The OpenAPI Specification has undergone 3 revisions since initial creation in 2010.. The Swagger Codegen project has the following compatibilities with the OpenAPI Specification:
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
@@ -345,12 +345,12 @@ Other languages have petstore samples, too:
 It's just as easy--just use the `-i` flag to point to either a server or file.
 
 ### Modifying the client library format
-Don't like the default swagger client syntax?  Want a different language supported?  No problem!  Swagger codegen processes mustache templates with the [jmustache](https://github.com/samskivert/jmustache) engine.  You can modify our templates or make your own.
+Don't like the default swagger client syntax?  Want a different language supported?  No problem!  Swagger Codegen processes mustache templates with the [jmustache](https://github.com/samskivert/jmustache) engine.  You can modify our templates or make your own.
 
 You can look at `modules/swagger-codegen/src/main/resources/${your-language}` for examples.  To make your own templates, create your own files and use the `-t` flag to specify your template folder.  It actually is that easy.
 
 ### Making your own codegen modules
-If you're starting a project with a new language and don't see what you need, swagger-codegen can help you create a project to generate your own libraries:
+If you're starting a project with a new language and don't see what you need, Swagger Codegen can help you create a project to generate your own libraries:
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar meta \
@@ -440,7 +440,7 @@ When using selective generation, _only_ the templates needed for the specific ge
 
 ### Ignore file format
 
-Swagger codegen supports a `.swagger-codegen-ignore` file, similar to `.gitignore` or `.dockerignore` you're probably already familiar with.
+Swagger Codegen supports a `.swagger-codegen-ignore` file, similar to `.gitignore` or `.dockerignore` you're probably already familiar with.
 
 The ignore file allows for better control over overwriting existing files than the `--skip-overwrite` flag. With the ignore file, you can specify individual files or directories can be ignored. This can be useful, for example if you only want a subset of the generated code.
 
@@ -621,7 +621,7 @@ Please refer to https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-
 
 ### To build the codegen library
 
-This will create the swagger-codegen library from source.
+This will create the Swagger Codegen library from source.
 
 ```sh
 mvn package
