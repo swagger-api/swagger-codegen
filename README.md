@@ -1,4 +1,4 @@
-# Swagger Code Generator V3
+# <img src="https://raw.githubusercontent.com/swagger-api/swagger.io/wordpress/images/assets/SWC-logo-clr.png" height="80">
 
 ## Overview
 This is the Swagger Codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Definition](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
@@ -776,6 +776,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
----
-<img src="http://swagger.io/wp-content/uploads/2016/02/logo.jpg"/>
