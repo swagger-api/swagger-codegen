@@ -51,6 +51,7 @@ io.swagger.codegen.languages.PureCloudJavaClientCodegen
 io.swagger.codegen.languages.PureCloudJavaGuestClientCodegen
 io.swagger.codegen.languages.PureCloudSwift4ClientCodegen
 io.swagger.codegen.languages.PureCloudJavaScriptClientCodegen
+io.swagger.codegen.languages.PureCloudJavaScriptGuestClientCodegen
 io.swagger.codegen.languages.PureCloudDotNetClientCodegen
 io.swagger.codegen.languages.PureCloudRubyClientCodegen
 io.swagger.codegen.languages.LumenServerCodegen
