@@ -16,6 +16,7 @@ public class CodegenParameter extends CodegenObject {
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
+    public boolean nullable;
 
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
@@ -106,6 +107,7 @@ public class CodegenParameter extends CodegenObject {
         output.description = this.description;
         output.unescapedDescription = this.unescapedDescription;
         output.baseType = this.baseType;
+        output.nullable = this.nullable;
         output.required = this.required;
         output.maximum = this.maximum;
         output.exclusiveMaximum = this.exclusiveMaximum;
@@ -186,6 +188,8 @@ public class CodegenParameter extends CodegenObject {
             return false;
         if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions != null)
             return false;
+        if (nullable != that.nullable)
+            return false;
         if (required != that.required)
             return false;
         if (maximum != null ? !maximum.equals(that.maximum) : that.maximum != null)
@@ -232,6 +236,7 @@ public class CodegenParameter extends CodegenObject {
         result = 31 * result + (allowableValues != null ? allowableValues.hashCode() : 0);
         result = 31 * result + (items != null ? items.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
+        result = 31 * result + (nullable ? 13:31);
         result = 31 * result + (required ? 13:31);
         result = 31 * result + (maximum != null ? maximum.hashCode() : 0);
         result = 31 * result + (exclusiveMaximum ? 13:31);
@@ -321,6 +326,10 @@ public class CodegenParameter extends CodegenObject {
 
     public CodegenProperty getItems() {
         return items;
+    }
+
+    public boolean getNullable() {
+        return nullable;
     }
 
     public boolean getRequired() {
