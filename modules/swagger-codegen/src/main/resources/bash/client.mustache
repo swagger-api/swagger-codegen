@@ -776,7 +776,7 @@ call_{{operationId}}() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
 {{#hasBodyParam}}
     local body_json_curl=""
