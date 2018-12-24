@@ -262,7 +262,8 @@ export class {{classname}} {
 {{#hasFormParams}}
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
+        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
 {{#formParams}}
@@ -277,6 +278,7 @@ export class {{classname}} {
         } else {
 {{#useHttpClient}}
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+            append = getAppender(true);
 {{/useHttpClient}}
 {{^useHttpClient}}
             // TODO: this fails if a parameter is a file, the api can't consume "multipart/form-data" and a blob is passed.
@@ -286,23 +288,22 @@ export class {{classname}} {
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
 {{/useHttpClient}}
         }
-
 {{#formParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element) => {
-                {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>element){{#useHttpClient}} || formParams{{/useHttpClient}};
+                {{#useHttpClient}}formParams = {{/useHttpClient}}append(formParams, '{{baseName}}', <any>element);
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}formParams = {{/useHttpClient}}append(formParams, '{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>{{paramName}}){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}formParams = {{/useHttpClient}}append(formParams, '{{baseName}}', <any>{{paramName}});
         }
         {{/isListContainer}}
 {{/formParams}}
@@ -354,3 +355,10 @@ export class {{classname}} {
 
 {{/operation}}}
 {{/operations}}
+
+    getAppender(useReturnValue = false) {
+        return (formParams: FormParams, param: string, value: any) =>
+            useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+    }
+
+    type FormParams = HttpParams | URLSearchParams | FormData;
