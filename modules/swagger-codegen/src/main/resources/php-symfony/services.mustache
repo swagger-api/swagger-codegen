@@ -14,10 +14,10 @@ services:
         class: {{modelPackage}}\ModelSerializer
 
     {{bundleAlias}}.service.serializer:
-        class: %{{bundleAlias}}.serializer%
+        class: '%{{bundleAlias}}.serializer%'
 
     {{bundleAlias}}.service.validator:
-        class: %{{bundleAlias}}.validator%
+        class: '%{{bundleAlias}}.validator%'
 
 {{#apiInfo}}
 {{#apis}}
@@ -29,6 +29,7 @@ services:
          - [setSerializer, ['@{{bundleAlias}}.service.serializer']]
          - [setValidator,  ['@{{bundleAlias}}.service.validator']]
          - [setApiServer,  ['@{{bundleAlias}}.api.api_server']]
+        tags: ['controller.service_arguments']
 
 {{/operations}}
 {{/apis}}
