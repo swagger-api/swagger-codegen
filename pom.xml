@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.3</version>
+    <version>3.0.3-MB</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -949,6 +949,7 @@
         </profile>
     </profiles>
     <modules>
+        <module>modules/swagger-codegen-generators</module>
         <module>modules/swagger-codegen</module>
         <module>modules/swagger-codegen-cli</module>
         <module>modules/swagger-codegen-maven-plugin</module>
@@ -986,7 +987,7 @@
     </reporting>
     <dependencyManagement>
         <dependencies>
-            <dependency>
+           <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit-version}</version>
@@ -1048,7 +1049,7 @@
         <surefire-version>2.22.0</surefire-version>
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.10</reflections-version>
-        <swagger-codegen-generators-version>1.0.3</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.3-MB</swagger-codegen-generators-version>
         <jmockit-version>1.42</jmockit-version>
     </properties>
 </project>

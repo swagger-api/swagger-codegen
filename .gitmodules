@@ -1,0 +1,3 @@
+[submodule "modules/swagger-codegen-generators"]
+	path = modules/swagger-codegen-generators
+	url = git@github.com:MBcom/swagger-codegen-generators.git
