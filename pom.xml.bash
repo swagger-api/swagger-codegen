@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.3</version>
+    <version>3.0.4-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -950,7 +950,7 @@
         <surefire-version>2.22.0</surefire-version>
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.10</reflections-version>
-        <swagger-codegen-generators-version>1.0.3</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.4-SNAPSHOT</swagger-codegen-generators-version>
         <jmockit-version>1.42</jmockit-version>
     </properties>
 </project>

@@ -1052,6 +1052,9 @@ components:
           type: string
       xml:
         name: Category
+      example:
+        id: 0
+        category: "test-category-name"
     User:
       type: object
       properties:
@@ -1077,6 +1080,15 @@ components:
           format: int32
       xml:
         name: User
+      example:
+        id: 0
+        username: "hugomario"
+        firstName: "hugo"
+        lastName: "mercado"
+        email: "hugo.mercado.aws@gmail.com"
+        password: "*****"
+        phone: "000-00000000"
+        userStatus: 1
     OuterNumber:
       type: number
     ArrayOfNumberOnly:
@@ -1086,6 +1098,19 @@ components:
           type: array
           items:
             type: number
+      example:
+        id: 0
+        ArrayNumber:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
     Capitalization:
       type: object
       properties:
@@ -1103,6 +1128,11 @@ components:
           type: string
           description: |
             Name of the pet
+      example:
+        smallCamel: "testProperty"
+        CapitalCamel: "TestProperty"
+        small_Snake: "test_property"
+        Capital_Snake: "Test_Property"
     MixedPropertiesAndAdditionalPropertiesClass:
       type: object
       properties:
@@ -1116,6 +1146,9 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Animal'
+      example:
+        uuid: "bbe4001e-f700-11e8-8eb2-f2801f1b9fd1"
+        dateTime: "2018-11-05 09:25"
     ApiResponse:
       type: object
       properties:
@@ -1488,6 +1521,21 @@ components:
           - sold
       xml:
         name: Pet
+      example:
+        photoUrls:
+        - "photoUrls"
+        - "photoUrls"
+        name: "doggie"
+        id: 0
+        category:
+          name: "name"
+          id: 6
+        tags:
+        - name: "name"
+          id: 1
+        - name: "name"
+          id: 1
+        status: "available"
     hasOnlyReadOnly:
       type: object
       properties:
