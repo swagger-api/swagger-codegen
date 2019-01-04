@@ -408,7 +408,7 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-    public {{nickname}} ({{#allParams.0}}{ {{#allParams}}{{paramName}}, {{/allParams}} }: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}; {{/allParams}} },{{/allParams.0}} additionalHeaderParams: any = {}) : Promise<{ response: http.{{#supportsES6}}IncomingMessage{{/supportsES6}}{{^supportsES6}}ClientResponse{{/supportsES6}}; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
+    public {{nickname}} ({{#allParams.0}}{ {{#allParams}}{{paramName}}, {{/allParams}} }: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}; {{/allParams}} }{{/allParams.0}}) : Promise<{ response: http.{{#supportsES6}}IncomingMessage{{/supportsES6}}{{^supportsES6}}ClientResponse{{/supportsES6}}; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
         const localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
         let localVarQueryParameters: any = {};
