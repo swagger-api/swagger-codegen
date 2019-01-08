@@ -38,18 +38,18 @@ class FakeApi(object):
 
         Test serialization of outer boolean types  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_boolean_serialize(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_boolean_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterBoolean body: Input boolean as post body
         :return: OuterBoolean
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.fake_outer_boolean_serialize_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.fake_outer_boolean_serialize_with_http_info(**kwargs)  # noqa: E501
@@ -60,11 +60,11 @@ class FakeApi(object):
 
         Test serialization of outer boolean types  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_boolean_serialize_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_boolean_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterBoolean body: Input boolean as post body
         :return: OuterBoolean
                  If the method is called asynchronously,
@@ -72,7 +72,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -114,7 +114,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type='OuterBoolean',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -125,18 +125,18 @@ class FakeApi(object):
 
         Test serialization of object with outer number type  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_composite_serialize(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_composite_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterComposite body: Input composite as post body
         :return: OuterComposite
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.fake_outer_composite_serialize_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.fake_outer_composite_serialize_with_http_info(**kwargs)  # noqa: E501
@@ -147,11 +147,11 @@ class FakeApi(object):
 
         Test serialization of object with outer number type  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_composite_serialize_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_composite_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterComposite body: Input composite as post body
         :return: OuterComposite
                  If the method is called asynchronously,
@@ -159,7 +159,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -201,7 +201,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type='OuterComposite',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -212,18 +212,18 @@ class FakeApi(object):
 
         Test serialization of outer number types  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_number_serialize(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_number_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterNumber body: Input number as post body
         :return: OuterNumber
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.fake_outer_number_serialize_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.fake_outer_number_serialize_with_http_info(**kwargs)  # noqa: E501
@@ -234,11 +234,11 @@ class FakeApi(object):
 
         Test serialization of outer number types  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_number_serialize_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_number_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterNumber body: Input number as post body
         :return: OuterNumber
                  If the method is called asynchronously,
@@ -246,7 +246,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -288,7 +288,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type='OuterNumber',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -299,18 +299,18 @@ class FakeApi(object):
 
         Test serialization of outer string types  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_string_serialize(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_string_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterString body: Input string as post body
         :return: OuterString
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.fake_outer_string_serialize_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.fake_outer_string_serialize_with_http_info(**kwargs)  # noqa: E501
@@ -321,11 +321,11 @@ class FakeApi(object):
 
         Test serialization of outer string types  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.fake_outer_string_serialize_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.fake_outer_string_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param OuterString body: Input string as post body
         :return: OuterString
                  If the method is called asynchronously,
@@ -333,7 +333,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -375,44 +375,145 @@ class FakeApi(object):
             files=local_var_files,
             response_type='OuterString',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
+            _return_http_data_only=params.get('_return_http_data_only'),
+            _preload_content=params.get('_preload_content', True),
+            _request_timeout=params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def test_body_with_query_params(self, body, query, **kwargs):  # noqa: E501
+        """test_body_with_query_params  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_body_with_query_params(body, query, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param User body: (required)
+        :param str query: (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        if kwargs.get('async_req'):
+            return self.test_body_with_query_params_with_http_info(body, query, **kwargs)  # noqa: E501
+        else:
+            (data) = self.test_body_with_query_params_with_http_info(body, query, **kwargs)  # noqa: E501
+            return data
+
+    def test_body_with_query_params_with_http_info(self, body, query, **kwargs):  # noqa: E501
+        """test_body_with_query_params  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_body_with_query_params_with_http_info(body, query, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool
+        :param User body: (required)
+        :param str query: (required)
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        all_params = ['body', 'query']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        params = locals()
+        for key, val in six.iteritems(params['kwargs']):
+            if key not in all_params:
+                raise TypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method test_body_with_query_params" % key
+                )
+            params[key] = val
+        del params['kwargs']
+        # verify the required parameter 'body' is set
+        if ('body' not in params or
+                params['body'] is None):
+            raise ValueError("Missing the required parameter `body` when calling `test_body_with_query_params`")  # noqa: E501
+        # verify the required parameter 'query' is set
+        if ('query' not in params or
+                params['query'] is None):
+            raise ValueError("Missing the required parameter `query` when calling `test_body_with_query_params`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+
+        query_params = []
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'body' in params:
+            body_params = params['body']
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = []  # noqa: E501
+
+        return self.api_client.call_api(
+            '/fake/body-with-query-params', 'PUT',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
     def test_client_model(self, body, **kwargs):  # noqa: E501
-        """To test \&quot;client\&quot; model  # noqa: E501
+        """To test \"client\" model  # noqa: E501
 
         To test \"client\" model  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_client_model(body, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_client_model(body, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.test_client_model_with_http_info(body, **kwargs)  # noqa: E501
         else:
             (data) = self.test_client_model_with_http_info(body, **kwargs)  # noqa: E501
             return data
 
     def test_client_model_with_http_info(self, body, **kwargs):  # noqa: E501
-        """To test \&quot;client\&quot; model  # noqa: E501
+        """To test \"client\" model  # noqa: E501
 
         To test \"client\" model  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_client_model_with_http_info(body, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_client_model_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
@@ -420,7 +521,7 @@ class FakeApi(object):
         """
 
         all_params = ['body']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -474,7 +575,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type='Client',  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -485,11 +586,11 @@ class FakeApi(object):
 
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param float number: None (required)
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
@@ -497,10 +598,10 @@ class FakeApi(object):
         :param int integer: None
         :param int int32: None
         :param int int64: None
-        :param float float: None
+        :param float _float: None
         :param str string: None
         :param str binary: None
-        :param date date: None
+        :param date _date: None
         :param datetime date_time: None
         :param str password: None
         :param str param_callback: None
@@ -509,7 +610,7 @@ class FakeApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, **kwargs)  # noqa: E501
         else:
             (data) = self.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, **kwargs)  # noqa: E501
@@ -520,11 +621,11 @@ class FakeApi(object):
 
         Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param float number: None (required)
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
@@ -532,10 +633,10 @@ class FakeApi(object):
         :param int integer: None
         :param int int32: None
         :param int int64: None
-        :param float float: None
+        :param float _float: None
         :param str string: None
         :param str binary: None
-        :param date date: None
+        :param date _date: None
         :param datetime date_time: None
         :param str password: None
         :param str param_callback: None
@@ -544,8 +645,8 @@ class FakeApi(object):
                  returns the request thread.
         """
 
-        all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer', 'int32', 'int64', 'float', 'string', 'binary', 'date', 'date_time', 'password', 'param_callback']  # noqa: E501
-        all_params.append('async')
+        all_params = ['number', 'double', 'pattern_without_delimiter', 'byte', 'integer', 'int32', 'int64', '_float', 'string', 'binary', '_date', 'date_time', 'password', 'param_callback']  # noqa: E501
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -584,7 +685,7 @@ class FakeApi(object):
             raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value less than or equal to `123.4`")  # noqa: E501
         if 'double' in params and params['double'] < 67.8:  # noqa: E501
             raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value greater than or equal to `67.8`")  # noqa: E501
-        if 'pattern_without_delimiter' in params and not re.search('^[A-Z].*', params['pattern_without_delimiter']):  # noqa: E501
+        if 'pattern_without_delimiter' in params and not re.search(r'^[A-Z].*', params['pattern_without_delimiter']):  # noqa: E501
             raise ValueError("Invalid value for parameter `pattern_without_delimiter` when calling `test_endpoint_parameters`, must conform to the pattern `/^[A-Z].*/`")  # noqa: E501
         if 'integer' in params and params['integer'] > 100:  # noqa: E501
             raise ValueError("Invalid value for parameter `integer` when calling `test_endpoint_parameters`, must be a value less than or equal to `100`")  # noqa: E501
@@ -594,9 +695,9 @@ class FakeApi(object):
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value less than or equal to `200`")  # noqa: E501
         if 'int32' in params and params['int32'] < 20:  # noqa: E501
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value greater than or equal to `20`")  # noqa: E501
-        if 'float' in params and params['float'] > 987.6:  # noqa: E501
-            raise ValueError("Invalid value for parameter `float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6`")  # noqa: E501
-        if 'string' in params and not re.search('[a-z]', params['string'], flags=re.IGNORECASE):  # noqa: E501
+        if '_float' in params and params['_float'] > 987.6:  # noqa: E501
+            raise ValueError("Invalid value for parameter `_float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6`")  # noqa: E501
+        if 'string' in params and not re.search(r'[a-z]', params['string'], flags=re.IGNORECASE):  # noqa: E501
             raise ValueError("Invalid value for parameter `string` when calling `test_endpoint_parameters`, must conform to the pattern `/[a-z]/i`")  # noqa: E501
         if ('password' in params and
                 len(params['password']) > 64):
@@ -622,8 +723,8 @@ class FakeApi(object):
             form_params.append(('int64', params['int64']))  # noqa: E501
         if 'number' in params:
             form_params.append(('number', params['number']))  # noqa: E501
-        if 'float' in params:
-            form_params.append(('float', params['float']))  # noqa: E501
+        if '_float' in params:
+            form_params.append(('float', params['_float']))  # noqa: E501
         if 'double' in params:
             form_params.append(('double', params['double']))  # noqa: E501
         if 'string' in params:
@@ -634,8 +735,8 @@ class FakeApi(object):
             form_params.append(('byte', params['byte']))  # noqa: E501
         if 'binary' in params:
             form_params.append(('binary', params['binary']))  # noqa: E501
-        if 'date' in params:
-            form_params.append(('date', params['date']))  # noqa: E501
+        if '_date' in params:
+            form_params.append(('date', params['_date']))  # noqa: E501
         if 'date_time' in params:
             form_params.append(('dateTime', params['date_time']))  # noqa: E501
         if 'password' in params:
@@ -665,7 +766,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -676,11 +777,11 @@ class FakeApi(object):
 
         To test enum parameters  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_enum_parameters(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_enum_parameters(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param list[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
         :param list[str] enum_header_string_array: Header parameter enum test (string array)
@@ -694,7 +795,7 @@ class FakeApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.test_enum_parameters_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.test_enum_parameters_with_http_info(**kwargs)  # noqa: E501
@@ -705,11 +806,11 @@ class FakeApi(object):
 
         To test enum parameters  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_enum_parameters_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_enum_parameters_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param list[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
         :param list[str] enum_header_string_array: Header parameter enum test (string array)
@@ -724,7 +825,7 @@ class FakeApi(object):
         """
 
         all_params = ['enum_form_string_array', 'enum_form_string', 'enum_header_string_array', 'enum_header_string', 'enum_query_string_array', 'enum_query_string', 'enum_query_integer', 'enum_query_double']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -791,7 +892,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -802,18 +903,18 @@ class FakeApi(object):
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_inline_additional_properties(param, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_inline_additional_properties(param, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param object param: request body (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.test_inline_additional_properties_with_http_info(param, **kwargs)  # noqa: E501
         else:
             (data) = self.test_inline_additional_properties_with_http_info(param, **kwargs)  # noqa: E501
@@ -824,11 +925,11 @@ class FakeApi(object):
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_inline_additional_properties_with_http_info(param, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_inline_additional_properties_with_http_info(param, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param object param: request body (required)
         :return: None
                  If the method is called asynchronously,
@@ -836,7 +937,7 @@ class FakeApi(object):
         """
 
         all_params = ['param']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -886,7 +987,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
@@ -897,11 +998,11 @@ class FakeApi(object):
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_json_form_data(param, param2, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_json_form_data(param, param2, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str param: field1 (required)
         :param str param2: field2 (required)
         :return: None
@@ -909,7 +1010,7 @@ class FakeApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.test_json_form_data_with_http_info(param, param2, **kwargs)  # noqa: E501
         else:
             (data) = self.test_json_form_data_with_http_info(param, param2, **kwargs)  # noqa: E501
@@ -920,11 +1021,11 @@ class FakeApi(object):
 
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_json_form_data_with_http_info(param, param2, async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_json_form_data_with_http_info(param, param2, async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str param: field1 (required)
         :param str param2: field2 (required)
         :return: None
@@ -933,7 +1034,7 @@ class FakeApi(object):
         """
 
         all_params = ['param', 'param2']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -989,7 +1090,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),

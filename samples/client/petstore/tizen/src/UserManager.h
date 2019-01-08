@@ -136,7 +136,7 @@ bool deleteUserAsync(char * accessToken,
 /*! \brief Get user by user name. *Synchronous*
  *
  * 
- * \param username The name that needs to be fetched. Use user1 for testing.  *Required*
+ * \param username The name that needs to be fetched. Use user1 for testing. *Required*
  * \param handler The callback function to be invoked on completion. *Required*
  * \param accessToken The Authorization token. *Required*
  * \param userData The user data to be passed to the callback function.
@@ -149,7 +149,7 @@ bool getUserByNameSync(char * accessToken,
 /*! \brief Get user by user name. *Asynchronous*
  *
  * 
- * \param username The name that needs to be fetched. Use user1 for testing.  *Required*
+ * \param username The name that needs to be fetched. Use user1 for testing. *Required*
  * \param handler The callback function to be invoked on completion. *Required*
  * \param accessToken The Authorization token. *Required*
  * \param userData The user data to be passed to the callback function.

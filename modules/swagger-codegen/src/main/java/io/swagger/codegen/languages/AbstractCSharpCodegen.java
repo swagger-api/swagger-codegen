@@ -5,13 +5,26 @@ import com.samskivert.mustache.Mustache;
 import io.swagger.codegen.*;
 import io.swagger.codegen.mustache.*;
 import io.swagger.codegen.utils.ModelUtils;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.Operation;
+import io.swagger.models.Path;
+import io.swagger.models.Response;
+import io.swagger.models.Swagger;
+import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class AbstractCSharpCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -22,6 +35,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     protected boolean useDateTimeOffsetFlag = false;
     protected boolean useCollection = false;
     protected boolean returnICollection = false;
+    protected boolean preserveNewLines = false;
     protected boolean netCoreProjectFileFlag = false;
 
     protected String modelPropertyNaming = CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.PascalCase.name();
@@ -78,7 +92,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         // fully qualified name
                         "Client", "client", "parameter",
                         // local variable names in API methods (endpoints)
-                        "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams", 
+                        "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams",
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
                         "localVarPostBody", "localVarHttpHeaderAccepts", "localVarHttpHeaderAccept",
                         "localVarHttpContentTypes", "localVarHttpContentType",
@@ -210,14 +224,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             LOGGER.warn(String.format("%s is not used by C# generators. Please use %s", CodegenConstants.INVOKER_PACKAGE, CodegenConstants.PACKAGE_NAME));
         }
-        
+
         // {{packageTitle}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_TITLE)) {
             setPackageTitle((String) additionalProperties.get(CodegenConstants.PACKAGE_TITLE));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_TITLE, packageTitle);
         }
-        
+
         // {{packageProductName}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_PRODUCTNAME)) {
             setPackageProductName((String) additionalProperties.get(CodegenConstants.PACKAGE_PRODUCTNAME));
@@ -231,14 +245,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_DESCRIPTION, packageDescription);
         }
-        
+
         // {{packageCompany}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COMPANY)) {
             setPackageCompany((String) additionalProperties.get(CodegenConstants.PACKAGE_COMPANY));
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_COMPANY, packageCompany);
         }
-        
+
         // {{packageCopyright}}
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_COPYRIGHT)) {
             setPackageCopyright((String) additionalProperties.get(CodegenConstants.PACKAGE_COPYRIGHT));
@@ -252,7 +266,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         } else {
             additionalProperties.put(CodegenConstants.PACKAGE_AUTHORS, packageAuthors);
         }
-        
+
         // {{useDateTimeOffset}}
         if (additionalProperties.containsKey(CodegenConstants.USE_DATETIME_OFFSET)) {
             useDateTimeOffset(convertPropertyToBooleanAndWriteBack(CodegenConstants.USE_DATETIME_OFFSET));
@@ -282,6 +296,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
             setNetCoreProjectFileFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.NETCORE_PROJECT_FILE));
         } else {
             additionalProperties.put(CodegenConstants.NETCORE_PROJECT_FILE, netCoreProjectFileFlag);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.PRESERVE_COMMENT_NEWLINES)) {
+            setPreserveNewLines(Boolean.valueOf(additionalProperties.get(CodegenConstants.PRESERVE_COMMENT_NEWLINES).toString()));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.INTERFACE_PREFIX)) {
@@ -626,10 +644,10 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
 
         return name;
-    }   
+    }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -864,11 +882,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setPackageVersion(String packageVersion) {
         this.packageVersion = packageVersion;
     }
-    
+
     public void setPackageTitle(String packageTitle) {
         this.packageTitle = packageTitle;
     }
-    
+
     public void setPackageProductName(String packageProductName) {
         this.packageProductName = packageProductName;
     }
@@ -876,11 +894,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setPackageDescription(String packageDescription) {
         this.packageDescription = packageDescription;
     }
-    
+
     public void setPackageCompany(String packageCompany) {
         this.packageCompany = packageCompany;
     }
-    
+
     public void setPackageCopyright(String packageCopyright) {
         this.packageCopyright = packageCopyright;
     }
@@ -888,7 +906,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public void setPackageAuthors(String packageAuthors) {
         this.packageAuthors = packageAuthors;
     }
-    
+
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }
@@ -948,6 +966,75 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         return this.packageName + ".Test";
     }
 
+    public boolean isPreserveNewLines() {
+        return preserveNewLines;
+    }
+
+    public void setPreserveNewLines(boolean preserveNewLines) {
+        this.preserveNewLines = preserveNewLines;
+    }
+
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        if (this.preserveNewLines) {
+            if (swagger.getDefinitions() != null) {
+                for (String name : swagger.getDefinitions().keySet()) {
+                    Model model = swagger.getDefinitions().get(name);
+                    if (StringUtils.isNotBlank(model.getDescription())) {
+                        model.setDescription(preserveNewlines(model.getDescription(), 1));
+                    }
+                    if (model instanceof ModelImpl) {
+                        ModelImpl impl = (ModelImpl) model;
+                        if (impl.getProperties() != null) {
+                            for (String propertyName : impl.getProperties().keySet()) {
+                                Property property = impl.getProperties().get(propertyName);
+                                if (StringUtils.isNotBlank(property.getDescription())) {
+                                    property.setDescription(preserveNewlines(property.getDescription(), 2));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (String pathname : swagger.getPaths().keySet()) {
+                Path path = swagger.getPaths().get(pathname);
+                for (Operation op : path.getOperations()) {
+                    if (StringUtils.isNotBlank(op.getDescription())) {
+                        op.setDescription(preserveNewlines(op.getDescription(), 2));
+                    }
+                    if (StringUtils.isNotBlank(op.getSummary())) {
+                        op.setSummary(preserveNewlines(op.getSummary(), 2));
+                    }
+                    if (op.getParameters() != null) {
+                        for (Parameter param : op.getParameters()) {
+                            if (StringUtils.isNotBlank(param.getDescription())) {
+                                param.setDescription(preserveNewlines(param.getDescription(), 2));
+                            }
+                        }
+                    }
+                    if (op.getResponses() != null) {
+                        for (String responseCode : op.getResponses().keySet()) {
+                            Response response = op.getResponses().get(responseCode);
+
+                            if (StringUtils.isNotBlank(response.getDescription())) {
+                                response.setDescription(preserveNewlines(response.getDescription(), 2));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public String preserveNewlines(String input, int tabstops) {
+        if (tabstops == 1) {
+            return input.replaceAll("\\n", "~~N1");
+        } else {
+            // assume 2 tabstops
+            return input.replaceAll("\\n", "~~N2");
+        }
+    }
+
     @Override
     public String escapeQuotationMark(String input) {
         // remove " to avoid code injection
@@ -956,6 +1043,11 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*").replace("--", "- -");
+        String intermediate = input.replace("*/", "*_/").replace("/*", "/_*").replace("--", "- -");
+
+        intermediate = intermediate.replaceAll("~~N1", "\n    /// ");
+        intermediate = intermediate.replaceAll("~~N2", "\n        /// ");
+
+        return intermediate;
     }
 }
