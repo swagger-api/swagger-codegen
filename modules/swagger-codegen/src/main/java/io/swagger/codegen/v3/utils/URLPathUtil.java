@@ -65,10 +65,7 @@ public class URLPathUtil {
                 serverUrl = inputURL;
                 break;
             }
-            URL url = new URL(serverUrl);
-            System.out.println(url.toString());
-
-            return url;
+            return new URL(serverUrl);
         } catch (Exception e) {
             LOGGER.warn("Not valid URL: " + server.getUrl(), e);
             return null;
