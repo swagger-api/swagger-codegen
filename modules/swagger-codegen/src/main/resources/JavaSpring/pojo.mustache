@@ -24,8 +24,9 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
     {{/items.isEnum}}
   {{#jackson}}
   @JsonProperty("{{baseName}}")
-  {{#is this 'discriminator-property'}}@JsonTypeId{{/is}}
-  {{#withXml}}@JacksonXmlProperty({{#is this 'xml-attribute'}}isAttribute = true, {{/is}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}"){{/withXml}}
+  {{#discriminator}}@JsonTypeId{{/discriminator}}
+  {{#withXml}}    @JsonProperty("{{baseName}}")
+  @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}"){{/withXml}}
   {{/jackson}}
   {{#gson}}
   @SerializedName("{{baseName}}")
