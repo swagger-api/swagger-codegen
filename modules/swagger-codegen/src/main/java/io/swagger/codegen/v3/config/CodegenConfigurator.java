@@ -486,6 +486,7 @@ public class CodegenConfigurator implements Serializable {
                 throw new IllegalArgumentException(msg);
             }
             config.setInputSpec(specContent);
+            config.setInputURL(inputSpecURL);
             ParseOptions options = new ParseOptions();
             options.setResolve(true);
             options.setFlatten(true);

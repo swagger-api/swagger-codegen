@@ -199,7 +199,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         this.templateEngine = config.getTemplateEngine();
 
-        URL url = URLPathUtil.getServerURL(openAPI);
+        URL url = URLPathUtil.getServerURL(openAPI, config);
 
         contextPath = config.escapeText(url == null ? StringUtils.EMPTY : url.getPath());
         basePath = config.escapeText(URLPathUtil.getHost(openAPI));
@@ -661,7 +661,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Map<String, Object> apis = new HashMap<>();
         apis.put("apis", allOperations);
 
-        URL url = URLPathUtil.getServerURL(openAPI);
+        URL url = URLPathUtil.getServerURL(openAPI, config);
 
         if (url != null) {
             bundle.put("host", url.getHost());
