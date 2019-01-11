@@ -76,7 +76,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(ASYNC, "use async Callable controllers"));
         cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
         cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
-        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations").defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(CliOption.newBoolean(IMPLICIT_HEADERS, "Use of @ApiImplicitParams for headers."));
         cliOptions.add(CliOption.newBoolean(SWAGGER_DOCKET_CONFIG, "Generate Spring Swagger Docket configuration class."));
         cliOptions.add(CliOption.newBoolean(USE_OPTIONAL,
@@ -182,13 +182,10 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
+        writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
 
         if (additionalProperties.containsKey(USE_OPTIONAL)) {
             this.setUseOptional(convertPropertyToBoolean(USE_OPTIONAL));
-        }
-
-        if (useBeanValidation) {
-            writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
         }
 
         if (additionalProperties.containsKey(IMPLICIT_HEADERS)) {
