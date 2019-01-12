@@ -34,35 +34,35 @@ class FakeApi(object):
         self.api_client = api_client
 
     def test_code_inject____end__rn_n_r(self, **kwargs):  # noqa: E501
-        """To test code injection */ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r  # noqa: E501
+        """To test code injection */ ' \" =end -- \\r\\n \\n \\r  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_code_inject____end__rn_n_r(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_code_inject____end__rn_n_r(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str test_code_inject____end____rn_n_r: To test code injection */ ' \" =end -- \\r\\n \\n \\r
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('async_req'):
             return self.test_code_inject____end__rn_n_r_with_http_info(**kwargs)  # noqa: E501
         else:
             (data) = self.test_code_inject____end__rn_n_r_with_http_info(**kwargs)  # noqa: E501
             return data
 
     def test_code_inject____end__rn_n_r_with_http_info(self, **kwargs):  # noqa: E501
-        """To test code injection */ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r  # noqa: E501
+        """To test code injection */ ' \" =end -- \\r\\n \\n \\r  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_code_inject____end__rn_n_r_with_http_info(async=True)
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.test_code_inject____end__rn_n_r_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param async_req bool
         :param str test_code_inject____end____rn_n_r: To test code injection */ ' \" =end -- \\r\\n \\n \\r
         :return: None
                  If the method is called asynchronously,
@@ -70,7 +70,7 @@ class FakeApi(object):
         """
 
         all_params = ['test_code_inject____end____rn_n_r']  # noqa: E501
-        all_params.append('async')
+        all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -120,7 +120,7 @@ class FakeApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async=params.get('async'),
+            async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
