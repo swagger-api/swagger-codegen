@@ -950,7 +950,7 @@
         <surefire-version>2.22.0</surefire-version>
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.10</reflections-version>
-        <swagger-codegen-generators-version>1.0.4</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.5-SNAPSHOT</swagger-codegen-generators-version>
         <jmockit-version>1.42</jmockit-version>
     </properties>
 </project>
