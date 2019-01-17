@@ -262,7 +262,22 @@ export class {{classname}} {
 {{#hasFormParams}}
         const canConsumeForm = this.canConsumeForm(consumes);
 
+        {{#useHttpClient}}
+        let formParams: FormData | HttpParams;
+        const appendFormParam = (name: string, value: any) => {
+            if (formParams instanceof HttpParams) {
+                formParams = formParams.append(name, value);
+                return;
+            }
+            formParams.append(name, value);
+        };
+        {{/useHttpClient}}
+        {{^useHttpClient}}
         let formParams: { append(param: string, value: any): void; };
+        const appendFormParam = (name: string, value: any) => {
+            formParams.append(name, value);
+        };
+        {{/useHttpClient}}
         let useForm = false;
         let convertFormParamsToString = false;
 {{#formParams}}
@@ -292,17 +307,17 @@ export class {{classname}} {
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element) => {
-                {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>element){{#useHttpClient}} || formParams{{/useHttpClient}};
+                {{#useHttpClient}}{{/useHttpClient}}appendFormParam('{{baseName}}', <any>element){{#useHttpClient}}{{/useHttpClient}};
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}{{/useHttpClient}}appendFormParam('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}}{{/useHttpClient}};
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>{{paramName}}){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}{{/useHttpClient}}appendFormParam('{{baseName}}', <any>{{paramName}}){{#useHttpClient}}{{/useHttpClient}};
         }
         {{/isListContainer}}
 {{/formParams}}

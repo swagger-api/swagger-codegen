@@ -68,6 +68,7 @@ export class PetService {
     public addPet(body: Pet, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public addPet(body: Pet, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public addPet(body: Pet, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
@@ -125,9 +126,11 @@ export class PetService {
     public deletePet(petId: number, apiKey?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public deletePet(petId: number, apiKey?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public deletePet(petId: number, apiKey?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
+
 
         let headers = this.defaultHeaders;
         if (apiKey !== undefined && apiKey !== null) {
@@ -177,6 +180,7 @@ export class PetService {
     public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Pet>>>;
     public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Pet>>>;
     public findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (status === null || status === undefined) {
             throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
@@ -232,6 +236,7 @@ export class PetService {
     public findPetsByTags(tags: Array<string>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Pet>>>;
     public findPetsByTags(tags: Array<string>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Pet>>>;
     public findPetsByTags(tags: Array<string>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (tags === null || tags === undefined) {
             throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
@@ -287,6 +292,7 @@ export class PetService {
     public getPetById(petId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Pet>>;
     public getPetById(petId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Pet>>;
     public getPetById(petId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
@@ -333,6 +339,7 @@ export class PetService {
     public updatePet(body: Pet, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public updatePet(body: Pet, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public updatePet(body: Pet, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
@@ -391,9 +398,12 @@ export class PetService {
     public updatePetWithForm(petId: number, name?: string, status?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public updatePetWithForm(petId: number, name?: string, status?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public updatePetWithForm(petId: number, name?: string, status?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
+
+
 
         let headers = this.defaultHeaders;
 
@@ -422,7 +432,14 @@ export class PetService {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormData | HttpParams;
+        const appendFormParam = (name: string, value: any) => {
+            if (formParams instanceof HttpParams) {
+                formParams = formParams.append(name, value);
+                return;
+            }
+            formParams.append(name, value);
+        };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -432,10 +449,10 @@ export class PetService {
         }
 
         if (name !== undefined) {
-            formParams = formParams.append('name', <any>name) || formParams;
+            appendFormParam('name', <any>name);
         }
         if (status !== undefined) {
-            formParams = formParams.append('status', <any>status) || formParams;
+            appendFormParam('status', <any>status);
         }
 
         return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
@@ -462,9 +479,12 @@ export class PetService {
     public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ApiResponse>>;
     public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ApiResponse>>;
     public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
+
+
 
         let headers = this.defaultHeaders;
 
@@ -492,7 +512,14 @@ export class PetService {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormData | HttpParams;
+        const appendFormParam = (name: string, value: any) => {
+            if (formParams instanceof HttpParams) {
+                formParams = formParams.append(name, value);
+                return;
+            }
+            formParams.append(name, value);
+        };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
@@ -505,10 +532,10 @@ export class PetService {
         }
 
         if (additionalMetadata !== undefined) {
-            formParams = formParams.append('additionalMetadata', <any>additionalMetadata) || formParams;
+            appendFormParam('additionalMetadata', <any>additionalMetadata);
         }
         if (file !== undefined) {
-            formParams = formParams.append('file', <any>file) || formParams;
+            appendFormParam('file', <any>file);
         }
 
         return this.httpClient.post<ApiResponse>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`,

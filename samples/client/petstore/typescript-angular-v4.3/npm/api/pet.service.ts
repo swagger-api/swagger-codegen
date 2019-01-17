@@ -432,7 +432,14 @@ export class PetService {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormData | HttpParams;
+        const appendFormParam = (name: string, value: any) => {
+            if (formParams instanceof HttpParams) {
+                formParams = formParams.append(name, value);
+                return;
+            }
+            formParams.append(name, value);
+        };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -442,10 +449,10 @@ export class PetService {
         }
 
         if (name !== undefined) {
-            formParams = formParams.append('name', <any>name) || formParams;
+            appendFormParam('name', <any>name);
         }
         if (status !== undefined) {
-            formParams = formParams.append('status', <any>status) || formParams;
+            appendFormParam('status', <any>status);
         }
 
         return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
@@ -505,7 +512,14 @@ export class PetService {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormData | HttpParams;
+        const appendFormParam = (name: string, value: any) => {
+            if (formParams instanceof HttpParams) {
+                formParams = formParams.append(name, value);
+                return;
+            }
+            formParams.append(name, value);
+        };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
@@ -518,10 +532,10 @@ export class PetService {
         }
 
         if (additionalMetadata !== undefined) {
-            formParams = formParams.append('additionalMetadata', <any>additionalMetadata) || formParams;
+            appendFormParam('additionalMetadata', <any>additionalMetadata);
         }
         if (file !== undefined) {
-            formParams = formParams.append('file', <any>file) || formParams;
+            appendFormParam('file', <any>file);
         }
 
         return this.httpClient.post<ApiResponse>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`,
