@@ -67,6 +67,7 @@ export class UserService {
     public createUser(body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public createUser(body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public createUser(body: User, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
@@ -101,7 +102,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Creates list of users with given input array
      * 
@@ -113,6 +113,7 @@ export class UserService {
     public createUsersWithArrayInput(body: Array<User>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public createUsersWithArrayInput(body: Array<User>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public createUsersWithArrayInput(body: Array<User>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
@@ -147,7 +148,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Creates list of users with given input array
      * 
@@ -159,6 +159,7 @@ export class UserService {
     public createUsersWithListInput(body: Array<User>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public createUsersWithListInput(body: Array<User>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public createUsersWithListInput(body: Array<User>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
@@ -193,7 +194,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Delete user
      * This can only be done by the logged in user.
@@ -205,6 +205,7 @@ export class UserService {
     public deleteUser(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public deleteUser(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public deleteUser(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
@@ -234,7 +235,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Get user by user name
      * 
@@ -246,6 +246,7 @@ export class UserService {
     public getUserByName(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
     public getUserByName(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
     public getUserByName(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
@@ -275,7 +276,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Logs user into the system
      * 
@@ -288,9 +288,11 @@ export class UserService {
     public loginUser(username: string, password: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
     public loginUser(username: string, password: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
     public loginUser(username: string, password: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling loginUser.');
         }
+
         if (password === null || password === undefined) {
             throw new Error('Required parameter password was null or undefined when calling loginUser.');
         }
@@ -329,7 +331,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Logs out current logged in user session
      * 
@@ -366,7 +367,6 @@ export class UserService {
             }
         );
     }
-
     /**
      * Updated user
      * This can only be done by the logged in user.
@@ -379,9 +379,11 @@ export class UserService {
     public updateUser(username: string, body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public updateUser(username: string, body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public updateUser(username: string, body: User, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
         }
@@ -416,5 +418,4 @@ export class UserService {
             }
         );
     }
-
 }

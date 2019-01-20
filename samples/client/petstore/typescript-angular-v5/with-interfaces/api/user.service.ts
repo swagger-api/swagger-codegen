@@ -103,7 +103,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Creates list of users with given input array
      * 
@@ -150,7 +149,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Creates list of users with given input array
      * 
@@ -197,7 +195,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Delete user
      * This can only be done by the logged in user.
@@ -239,7 +236,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Get user by user name
      * 
@@ -281,7 +277,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Logs user into the system
      * 
@@ -337,7 +332,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Logs out current logged in user session
      * 
@@ -374,7 +368,6 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
     /**
      * Updated user
      * This can only be done by the logged in user.
@@ -426,5 +419,4 @@ export class UserService implements UserServiceInterface {
             }
         );
     }
-
 }

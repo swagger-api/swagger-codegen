@@ -233,7 +233,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user`, requestOptions);
     }
-
     /**
      * Creates list of users with given input array
      * 
@@ -279,7 +278,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/createWithArray`, requestOptions);
     }
-
     /**
      * Creates list of users with given input array
      * 
@@ -325,7 +323,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/createWithList`, requestOptions);
     }
-
     /**
      * Delete user
      * This can only be done by the logged in user.
@@ -366,7 +363,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
     }
-
     /**
      * Get user by user name
      * 
@@ -407,7 +403,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
     }
-
     /**
      * Logs user into the system
      * 
@@ -462,7 +457,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/login`, requestOptions);
     }
-
     /**
      * Logs out current logged in user session
      * 
@@ -498,7 +492,6 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/logout`, requestOptions);
     }
-
     /**
      * Updated user
      * This can only be done by the logged in user.
@@ -549,5 +542,4 @@ export class UserService implements UserServiceInterface {
 
         return this.http.request(`${this.basePath}/user/${encodeURIComponent(String(username))}`, requestOptions);
     }
-
 }

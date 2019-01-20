@@ -97,7 +97,6 @@ export class StoreService {
             }
         );
     }
-
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
@@ -138,7 +137,6 @@ export class StoreService {
             }
         );
     }
-
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -180,7 +178,6 @@ export class StoreService {
             }
         );
     }
-
     /**
      * Place an order for a pet
      * 
@@ -227,5 +224,4 @@ export class StoreService {
             }
         );
     }
-
 }

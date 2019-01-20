@@ -248,7 +248,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet`, requestOptions);
     }
-
     /**
      * Deletes a pet
      * 
@@ -302,7 +301,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
     }
-
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
@@ -357,7 +355,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet/findByStatus`, requestOptions);
     }
-
     /**
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -412,7 +409,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet/findByTags`, requestOptions);
     }
-
     /**
      * Find pet by ID
      * Returns a single pet
@@ -458,7 +454,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
     }
-
     /**
      * Update an existing pet
      * 
@@ -514,7 +509,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet`, requestOptions);
     }
-
     /**
      * Updates a pet in the store with form data
      * 
@@ -591,7 +585,6 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
     }
-
     /**
      * uploads an image
      * 
@@ -670,5 +663,4 @@ export class PetService implements PetServiceInterface {
 
         return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`, requestOptions);
     }
-
 }

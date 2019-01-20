@@ -114,7 +114,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * Deletes a pet
      * 
@@ -169,7 +168,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
@@ -225,7 +223,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -281,7 +278,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * Find pet by ID
      * Returns a single pet
@@ -328,7 +324,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * Update an existing pet
      * 
@@ -385,7 +380,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * Updates a pet in the store with form data
      * 
@@ -459,7 +453,6 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
     /**
      * uploads an image
      * 
@@ -535,5 +528,4 @@ export class PetService implements PetServiceInterface {
             }
         );
     }
-
 }

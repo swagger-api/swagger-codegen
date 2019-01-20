@@ -161,7 +161,6 @@ export class StoreService {
 
         return this.http.request(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, requestOptions);
     }
-
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
@@ -201,7 +200,6 @@ export class StoreService {
 
         return this.http.request(`${this.basePath}/store/inventory`, requestOptions);
     }
-
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -242,7 +240,6 @@ export class StoreService {
 
         return this.http.request(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, requestOptions);
     }
-
     /**
      * Place an order for a pet
      * 
@@ -288,5 +285,4 @@ export class StoreService {
 
         return this.http.request(`${this.basePath}/store/order`, requestOptions);
     }
-
 }
