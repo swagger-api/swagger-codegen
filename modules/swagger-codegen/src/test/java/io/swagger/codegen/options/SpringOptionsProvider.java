@@ -1,16 +1,16 @@
 package io.swagger.codegen.options;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.languages.SpringCodegen;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.languages.SpringCodegen;
 
 public class SpringOptionsProvider extends JavaOptionsProvider {
     public static final String TITLE = "swagger";
     public static final String CONFIG_PACKAGE_VALUE = "configPackage";
     public static final String BASE_PACKAGE_VALUE = "basePackage";
-    public static final String LIBRARY_VALUE = "spring-mvc"; //FIXME hidding value from super class
+    public static final String LIBRARY_VALUE = "spring-mvc"; // FIXME hidding value from super class
     public static final String INTERFACE_ONLY = "true";
     public static final String DELEGATE_PATTERN = "true";
     public static final String SINGLE_CONTENT_TYPES = "true";
@@ -22,6 +22,7 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
     public static final String IMPLICIT_HEADERS = "false";
     public static final String SWAGGER_DOCKET_CONFIG = "false";
     public static final String USE_OPTIONAL = "false";
+    public static final String TARGET_OPENFEIGN = "false";
 
     @Override
     public String getLanguage() {
@@ -46,6 +47,7 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
         options.put(SpringCodegen.IMPLICIT_HEADERS, IMPLICIT_HEADERS);
         options.put(SpringCodegen.SWAGGER_DOCKET_CONFIG, SWAGGER_DOCKET_CONFIG);
         options.put(SpringCodegen.USE_OPTIONAL, USE_OPTIONAL);
+        options.put(SpringCodegen.TARGET_OPENFEIGN, TARGET_OPENFEIGN);
 
         return options;
     }
