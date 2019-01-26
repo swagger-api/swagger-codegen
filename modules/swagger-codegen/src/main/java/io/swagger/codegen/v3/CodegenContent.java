@@ -7,6 +7,15 @@ import java.util.Map;
 
 public class CodegenContent implements VendorExtendable {
 
+    private String contentType;
+
+    public CodegenContent() {
+    }
+
+    public CodegenContent(String contentType) {
+        this.contentType =  contentType;
+    }
+
     private List<CodegenParameter> parameters = new ArrayList<CodegenParameter>();
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
@@ -19,6 +28,14 @@ public class CodegenContent implements VendorExtendable {
 
     public List<CodegenParameter> getParameters() {
         return parameters;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     @Override
