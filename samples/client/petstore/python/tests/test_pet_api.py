@@ -137,9 +137,17 @@ class PetApiTests(unittest.TestCase):
         pet_api2 = petstore_api.PetApi()
         self.assertNotEqual(pet_api.api_client.configuration, pet_api2.api_client.configuration)
 
-        pet_api.api_client.configuration.host = 'somehost'
-        pet_api2.api_client.configuration.host = 'someotherhost'
+        pet_api.api_client.configuration.host = 'some_host'
+        pet_api2.api_client.configuration.host = 'some_other_host'
         self.assertNotEqual(pet_api.api_client.configuration.host, pet_api2.api_client.configuration.host)
+
+        pet_api.api_client.configuration.api_key['api_key'] = 'some_key'
+        pet_api2.api_client.configuration.api_key['api_key'] = 'some_other_key'
+        self.assertNotEqual(pet_api.api_client.configuration.api_key['api_key'], pet_api2.api_client.configuration.api_key['api_key'])
+
+        pet_api.api_client.configuration.api_key_prefix['prefix'] = 'some_prefix'
+        pet_api2.api_client.configuration.api_key_prefix['prefix'] = 'some_other_prefix'
+        self.assertNotEqual(pet_api.api_client.configuration.api_key_prefix['prefix'], pet_api2.api_client.configuration.api_key_prefix['prefix'])
 
     def test_async_request(self):
         thread = self.pet_api.add_pet(body=self.pet, async_req=True)
