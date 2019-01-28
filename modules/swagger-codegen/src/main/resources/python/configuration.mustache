@@ -22,10 +22,16 @@ class TypeWithDefault(type):
     def __call__(cls):
         if cls._default is None:
             cls._default = type.__call__(cls)
-        return copy.copy(cls._default)
+        return cls._two_level_copy(cls._default)
 
     def set_default(cls, default):
-        cls._default = copy.copy(default)
+        cls._default = cls._two_level_copy(default)
+
+    def _two_level_copy(cls, obj):
+        newone = copy.copy(obj)
+        for key in obj.__dict__.keys():
+            newone.__dict__[key] = copy.copy(obj.__dict__[key])
+        return newone
 
 
 class Configuration(six.with_metaclass(TypeWithDefault, object)):
