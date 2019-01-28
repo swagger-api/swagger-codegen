@@ -1300,10 +1300,12 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         this.supportJava6 = value;
     }
 
+    @Override
     public String toRegularExpression(String pattern) {
         return escapeText(pattern);
     }
 
+    @Override
     public boolean convertPropertyToBoolean(String propertyKey) {
         boolean booleanValue = false;
         if (additionalProperties.containsKey(propertyKey)) {
@@ -1313,10 +1315,17 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
        return booleanValue;
     }
 
+    @Override
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
     }
 
+    /**
+     * Output the partial Getter name for boolean property, e.g. Active
+     *
+     * @param name the name of the property
+     * @return partial getter name based on naming convention
+     */
     @Override
     public String toBooleanGetter(String name) {
         return getterAndSetterCapitalize(name);
