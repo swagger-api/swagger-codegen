@@ -593,6 +593,9 @@ class ApiClient(object):
                 )
             )
 
+    def __hasattr(self, object, name):
+        return name in object.__class__.__dict__
+
     def __deserialize_model(self, data, klass):
         """Deserializes list or dict to model.
 
@@ -601,8 +604,8 @@ class ApiClient(object):
         :return: model object.
         """
 
-        if not klass.swagger_types and not hasattr(klass,
-                                                   'get_real_child_model'):
+        if (not klass.swagger_types and
+                not self.__hasattr(klass, 'get_real_child_model')):
             return data
 
         kwargs = {}
@@ -622,7 +625,7 @@ class ApiClient(object):
             for key, value in data.items():
                 if key not in klass.swagger_types:
                     instance[key] = value
-        if hasattr(instance, 'get_real_child_model'):
+        if self.__hasattr(instance, 'get_real_child_model'):
             klass_name = instance.get_real_child_model(data)
             if klass_name:
                 instance = self.__deserialize(data, klass_name)

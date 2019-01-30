@@ -602,7 +602,8 @@ class ApiClient(object):
         :return: model object.
         """
 
-        if not klass.swagger_types and not self.__hasattr(klass, 'get_real_child_model'):
+        if not klass.swagger_types and not \
+                self.__hasattr(klass, 'get_real_child_model'):
             return data
 
         kwargs = {}
