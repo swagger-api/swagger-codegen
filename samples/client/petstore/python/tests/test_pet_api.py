@@ -80,6 +80,9 @@ class PetApiTests(unittest.TestCase):
         self.test_file_dir = os.path.realpath(self.test_file_dir)
         self.foo = os.path.join(self.test_file_dir, "foo.png")
 
+    def tearDown(self):
+        Configuration.set_default(None)
+
     def test_preload_content_flag(self):
         self.pet_api.add_pet(body=self.pet)
 
