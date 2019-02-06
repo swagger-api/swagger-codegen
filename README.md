@@ -47,7 +47,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
     - [Docker](#docker)
       - [Development in Docker](#development-in-docker)
       - [Run docker in Vagrant](#run-docker-in-vagrant)
-      - [Public Docker image](#public-docker-image)
+      - [Public Pre-built Docker images](#public-pre-built-docker-images)
     - [Homebrew](#homebrew)
   - [Getting Started](#getting-started)
   - Generators
@@ -192,9 +192,11 @@ cd /vagrant
 
 #### Public Pre-built Docker images
 
- - https://hub.docker.com/r/swaggerapi/swagger-generator/ (official web service)
- - https://hub.docker.com/r/swaggerapi/swagger-codegen-cli/ (official CLI)
-
+ - https://hub.docker.com/r/swaggerapi/swagger-generator/ (official web service, v2.x)
+   - https://hub.docker.com/r/swaggerapi/swagger-generator-v3 (repository for v3.x)
+   - https://hub.docker.com/r/swaggerapi/swagger-generator-v3-minimal (repository for v3.x, minimal)
+ - https://hub.docker.com/r/swaggerapi/swagger-codegen-cli/ (official CLI, v2.x)
+   - https://hub.docker.com/r/swaggerapi/swagger-codegen-cli-v3 (official CLI, v3.x)
 
 ##### Swagger Generator Docker Image
 
