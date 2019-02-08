@@ -61,7 +61,7 @@ public class UserApi {
         }
         
         String path = UriComponentsBuilder.fromPath("/user").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -94,7 +94,7 @@ public class UserApi {
         }
         
         String path = UriComponentsBuilder.fromPath("/user/createWithArray").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -127,7 +127,7 @@ public class UserApi {
         }
         
         String path = UriComponentsBuilder.fromPath("/user/createWithList").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -164,7 +164,7 @@ public class UserApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         String path = UriComponentsBuilder.fromPath("/user/{username}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -203,7 +203,7 @@ public class UserApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         String path = UriComponentsBuilder.fromPath("/user/{username}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -244,11 +244,11 @@ public class UserApi {
         }
         
         String path = UriComponentsBuilder.fromPath("/user/login").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
-        
+
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "username", username));
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "password", password));
 
@@ -274,7 +274,7 @@ public class UserApi {
         Object postBody = null;
         
         String path = UriComponentsBuilder.fromPath("/user/logout").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -317,7 +317,7 @@ public class UserApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("username", username);
         String path = UriComponentsBuilder.fromPath("/user/{username}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();

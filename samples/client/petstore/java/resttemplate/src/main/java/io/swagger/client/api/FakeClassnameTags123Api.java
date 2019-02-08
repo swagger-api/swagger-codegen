@@ -62,11 +62,11 @@ public class FakeClassnameTags123Api {
         }
         
         String path = UriComponentsBuilder.fromPath("/fake_classname_test").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
-        
+
         
 
         final String[] accepts = { 
