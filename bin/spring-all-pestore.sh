@@ -10,3 +10,4 @@
 ./bin/springboot-petstore-server-beanvalidation.sh
 ./bin/springboot-petstore-server-implicitHeaders.sh
 ./bin/springboot-petstore-server-useOptional.sh
+./bin/springboot-petstore-server-useRuntimeException.sh

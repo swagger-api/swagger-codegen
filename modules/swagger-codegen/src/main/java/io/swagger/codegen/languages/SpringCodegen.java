@@ -33,6 +33,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String SPRING_CLOUD_LIBRARY = "spring-cloud";
     public static final String IMPLICIT_HEADERS = "implicitHeaders";
     public static final String SWAGGER_DOCKET_CONFIG = "swaggerDocketConfig";
+    public static final String USE_RUNTIME_EXCEPTION = "useRuntimeException";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
@@ -49,6 +50,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean implicitHeaders = false;
     protected boolean swaggerDocketConfig = false;
     protected boolean useOptional = false;
+    protected boolean useRuntimeException = false;
 
     public SpringCodegen() {
         super();
@@ -65,6 +67,7 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         // spring uses the jackson lib
         additionalProperties.put("jackson", "true");
+        additionalProperties.put(USE_RUNTIME_EXCEPTION, useRuntimeException);
 
         cliOptions.add(new CliOption(TITLE, "server title name or client service name"));
         cliOptions.add(new CliOption(CONFIG_PACKAGE, "configuration package for generated code"));
@@ -81,6 +84,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(SWAGGER_DOCKET_CONFIG, "Generate Spring Swagger Docket configuration class."));
         cliOptions.add(CliOption.newBoolean(USE_OPTIONAL,
                 "Use Optional container for optional parameters"));
+        cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -197,6 +201,10 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         if (additionalProperties.containsKey(SWAGGER_DOCKET_CONFIG)) {
             this.setSwaggerDocketConfig(Boolean.valueOf(additionalProperties.get(SWAGGER_DOCKET_CONFIG).toString()));
+        }
+
+        if (additionalProperties.containsKey(USE_RUNTIME_EXCEPTION)) {
+            this.setUseRuntimeException(Boolean.valueOf(additionalProperties.get(USE_RUNTIME_EXCEPTION).toString()));
         }
 
         typeMapping.put("file", "Resource");
@@ -627,6 +635,10 @@ public class SpringCodegen extends AbstractJavaCodegen
 
     public void setSwaggerDocketConfig(boolean swaggerDocketConfig) {
         this.swaggerDocketConfig = swaggerDocketConfig;
+    }
+
+    public void setUseRuntimeException(boolean useRuntimeException) {
+        this.useRuntimeException = useRuntimeException;
     }
 
     @Override

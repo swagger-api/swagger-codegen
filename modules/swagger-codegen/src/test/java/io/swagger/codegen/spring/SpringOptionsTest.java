@@ -80,6 +80,8 @@ public class SpringOptionsTest extends JavaClientOptionsTest {
             clientCodegen.setUseOptional(
                     Boolean.valueOf(SpringOptionsProvider.USE_OPTIONAL));
             times = 1;
+            clientCodegen.setUseRuntimeException(Boolean.valueOf(SpringOptionsProvider.USE_RUNTIME_EXCEPTION));
+            times = 1;
         }};
     }
 }
