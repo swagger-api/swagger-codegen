@@ -924,11 +924,11 @@
         <swagger-parser-version>1.0.42-SNAPSHOT</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.5.21</swagger-core-version>
+        <swagger-core-version>1.5.22-SNAPSHOT</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
         <junit-version>4.8.1</junit-version>
-        <jackson-version>2.8.9</jackson-version>
+        <jackson-version>2.9.8</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.12</slf4j-version>
@@ -937,6 +937,6 @@
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.19.1</surefire-version>
         <jmockit-version>1.25</jmockit-version>
-        <reflections-version>0.9.10</reflections-version>
+        <reflections-version>0.9.11</reflections-version>
     </properties>
 </project>
