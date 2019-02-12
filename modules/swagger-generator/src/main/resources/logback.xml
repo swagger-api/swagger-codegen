@@ -8,6 +8,12 @@
     <logger name="io.swagger" level="ERROR"/>
     <logger name="org.eclipse.jetty.server" level="INFO"/>
     <logger name="io.swagger.v3.generator.online" level="DEBUG"/>
+<!--
+    <logger name="io.swagger.codegen.v3.service" level="DEBUG"/>
+    <logger name="io.swagger.codegen.v3.config" level="DEBUG"/>
+    <logger name="io.swagger.codegen.v3.generators.DefaultCodegenConfig" level="TRACE"/>
+-->
+
     <root level="WARN">
         <appender-ref ref="STDOUT"/>
     </root>
