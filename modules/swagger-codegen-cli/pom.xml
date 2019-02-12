@@ -85,14 +85,8 @@
             <version>${swagger-codegen-generators-version}</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-core</artifactId>
-            <version>${swagger-core-version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.swagger.parser.v3</groupId>
             <artifactId>swagger-parser-v3</artifactId>
-            <version>${swagger-parser-version}</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.argparse4j</groupId>
