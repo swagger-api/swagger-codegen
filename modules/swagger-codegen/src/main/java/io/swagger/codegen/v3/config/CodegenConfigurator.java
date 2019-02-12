@@ -437,7 +437,7 @@ public class CodegenConfigurator implements Serializable {
                     data = ClasspathHelper.loadFileFromClasspath(location);
                 }
             }
-            LOGGER.debug("Loaded raw data: {}", data);
+            LOGGER.trace("Loaded raw data: {}", data);
             return data;
     }
 
@@ -470,6 +470,7 @@ public class CodegenConfigurator implements Serializable {
             input.opts(new ClientOpts())
                     .openAPI(openAPI);
 
+            LOGGER.debug("getClientOptInput - parsed inputSpec");
         } else {
             String specContent = null;
             try {
@@ -492,7 +493,7 @@ public class CodegenConfigurator implements Serializable {
             options.setFlatten(true);
             SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
-
+            LOGGER.debug("getClientOptInput - parsed inputSpecURL " + inputSpecURL);
             input.opts(new ClientOpts())
                     .openAPI(openAPI);
         }
