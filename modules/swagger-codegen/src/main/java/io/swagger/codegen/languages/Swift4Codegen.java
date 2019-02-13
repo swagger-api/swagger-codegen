@@ -205,7 +205,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("float", "Float");
         typeMapping.put("number", "Double");
         typeMapping.put("double", "Double");
-        typeMapping.put("object", "Any");
+        typeMapping.put("object", "Data");
         typeMapping.put("file", "URL");
         typeMapping.put("binary", "Data");
         typeMapping.put("ByteArray", "Data");
