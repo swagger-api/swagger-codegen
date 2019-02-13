@@ -8,7 +8,9 @@ import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
@@ -205,7 +207,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("float", "Float");
         typeMapping.put("number", "Double");
         typeMapping.put("double", "Double");
-        typeMapping.put("object", "Any");
+        typeMapping.put("object", "Data");
         typeMapping.put("file", "URL");
         typeMapping.put("binary", "Data");
         typeMapping.put("ByteArray", "Data");
@@ -664,6 +666,11 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
             return varName;
         }
 
+        // Check for minus sign at the beginning of the variable name
+        if (name.startsWith("-")) {
+            name = name.replaceFirst("-", "minus_");
+        }
+
         // If we have already camelized the word, don't progress
         // any further
         if (camelized) {
@@ -818,4 +825,19 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
 
         return codegenModel;
     }
+
+    @Override
+    public CodegenOperation fromOperation(String path,
+                                          String httpMethod,
+                                          Operation operation,
+                                          Map<String, Model> definitions,
+                                          Swagger swagger) {
+                                              CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+                                              for (CodegenResponse response: op.responses) {
+                                                  if (response.code == "204" || response.code == "302" || response.code == "303") {
+                                                    op.returnType = "Empty";
+                                                }
+                                              }
+                                              return op;
+                                          }
 }
