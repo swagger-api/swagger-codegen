@@ -666,6 +666,11 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
             return varName;
         }
 
+        // Check for minus sign at the beginning of the variable name
+        if (name.startsWith("-")) {
+            name = name.replaceFirst("-", "minus_");
+        }
+
         // If we have already camelized the word, don't progress
         // any further
         if (camelized) {
