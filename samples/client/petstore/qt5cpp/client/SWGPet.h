@@ -34,15 +34,15 @@ namespace Swagger {
 class SWGPet: public SWGObject {
 public:
     SWGPet();
-    SWGPet(QString* json);
-    virtual ~SWGPet();
+    SWGPet(QString json);
+    ~SWGPet();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    SWGPet* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    SWGPet* fromJson(QString jsonString) override;
 
     qint64 getId();
     void setId(qint64 id);

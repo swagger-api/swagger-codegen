@@ -60,8 +60,10 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [io.swagger.client.models.Amount](docs/Amount.md)
  - [io.swagger.client.models.ApiResponse](docs/ApiResponse.md)
  - [io.swagger.client.models.Category](docs/Category.md)
+ - [io.swagger.client.models.Currency](docs/Currency.md)
  - [io.swagger.client.models.Order](docs/Order.md)
  - [io.swagger.client.models.Pet](docs/Pet.md)
  - [io.swagger.client.models.Tag](docs/Tag.md)

@@ -4,11 +4,26 @@
 import localVarRequest = require('request');
 import http = require('http');
 import Promise = require('bluebird');
+export declare class Amount {
+    'value': number;
+    'currency': Currency;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
 export declare class ApiResponse {
-    'code': number;
-    'type': string;
-    'message': string;
-    static discriminator: undefined;
+    'code'?: number;
+    'type'?: string;
+    'message'?: string;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -21,9 +36,22 @@ export declare class ApiResponse {
     }[];
 }
 export declare class Category {
-    'id': number;
-    'name': string;
-    static discriminator: undefined;
+    'id'?: number;
+    'name'?: string;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare class Currency {
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -36,13 +64,13 @@ export declare class Category {
     }[];
 }
 export declare class Order {
-    'id': number;
-    'petId': number;
-    'quantity': number;
-    'shipDate': Date;
-    'status': Order.StatusEnum;
-    'complete': boolean;
-    static discriminator: undefined;
+    'id'?: number;
+    'petId'?: number;
+    'quantity'?: number;
+    'shipDate'?: Date;
+    'status'?: Order.StatusEnum;
+    'complete'?: boolean;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -62,13 +90,13 @@ export declare namespace Order {
     }
 }
 export declare class Pet {
-    'id': number;
-    'category': Category;
+    'id'?: number;
+    'category'?: Category;
     'name': string;
     'photoUrls': Array<string>;
-    'tags': Array<Tag>;
-    'status': Pet.StatusEnum;
-    static discriminator: undefined;
+    'tags'?: Array<Tag>;
+    'status'?: Pet.StatusEnum;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -88,9 +116,9 @@ export declare namespace Pet {
     }
 }
 export declare class Tag {
-    'id': number;
-    'name': string;
-    static discriminator: undefined;
+    'id'?: number;
+    'name'?: string;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -103,15 +131,15 @@ export declare class Tag {
     }[];
 }
 export declare class User {
-    'id': number;
-    'username': string;
-    'firstName': string;
-    'lastName': string;
-    'email': string;
-    'password': string;
-    'phone': string;
-    'userStatus': number;
-    static discriminator: undefined;
+    'id'?: number;
+    'username'?: string;
+    'firstName'?: string;
+    'lastName'?: string;
+    'email'?: string;
+    'password'?: string;
+    'phone'?: string;
+    'userStatus'?: number;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -173,7 +201,7 @@ export declare class PetApi {
         response: http.ClientResponse;
         body?: any;
     }>;
-    findPetsByStatus(status: Array<string>): Promise<{
+    findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>): Promise<{
         response: http.ClientResponse;
         body: Array<Pet>;
     }>;

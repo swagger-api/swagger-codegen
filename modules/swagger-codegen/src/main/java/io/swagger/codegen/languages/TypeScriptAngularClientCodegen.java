@@ -30,6 +30,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     public static final String WITH_INTERFACES = "withInterfaces";
     public static final String TAGGED_UNIONS ="taggedUnions";
     public static final String NG_VERSION = "ngVersion";
+    public static final String PROVIDED_IN_ROOT ="providedInRoot";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
@@ -49,8 +50,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         apiPackage = "api";
         modelPackage = "model";
 
-        this.cliOptions.add(new CliOption(NPM_NAME, "The name under which you want to publish generated npm package"));
-        this.cliOptions.add(new CliOption(NPM_VERSION, "The version of your npm package"));
+        this.cliOptions.add(new CliOption(NPM_NAME, "The name under which you want to publish generated npm package." +
+                " Required to generate a full angular package"));
+        this.cliOptions.add(new CliOption(NPM_VERSION, "The version of your npm package. Default is '1.0.0'"));
         this.cliOptions.add(new CliOption(NPM_REPOSITORY,
                 "Use this property to set an url your private npmRepo in the package.json"));
         this.cliOptions.add(new CliOption(SNAPSHOT,
@@ -61,6 +63,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                 BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(TAGGED_UNIONS,
             "Use discriminators to create tagged unions instead of extending interfaces.",
+            BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
+        this.cliOptions.add(new CliOption(PROVIDED_IN_ROOT,
+            "Use this property to provide Injectables in root (it is only valid in angular version greater or equal to 6.0.0).",
             BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(NG_VERSION, "The version of Angular. Default is '4.3'"));
     }
@@ -78,7 +83,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String getHelp() {
-        return "Generates a TypeScript Angular (2.x or 4.x) client library.";
+        return "Generates a TypeScript Angular (2.x - 5.x) client library.";
     }
 
     @Override
@@ -97,8 +102,18 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("README.mustache", getIndexDirectory(), "README.md"));
 
+        // determine NG version
+        SemVer ngVersion;
+        if (additionalProperties.containsKey(NG_VERSION)) {
+            ngVersion = new SemVer(additionalProperties.get(NG_VERSION).toString());
+        } else {
+            ngVersion = new SemVer("4.3.0");
+            LOGGER.info("generating code for Angular {} ...", ngVersion);
+            LOGGER.info("  (you can select the angular version by setting the additionalProperty ngVersion)");
+        }
+
         if (additionalProperties.containsKey(NPM_NAME)) {
-            addNpmPackageGeneration();
+            addNpmPackageGeneration(ngVersion);
         }
 
         if (additionalProperties.containsKey(WITH_INTERFACES)) {
@@ -112,25 +127,22 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             taggedUnions = Boolean.parseBoolean(additionalProperties.get(TAGGED_UNIONS).toString());
         }
 
-        // determine NG version
-        SemVer ngVersion;
-        if (additionalProperties.containsKey(NG_VERSION)) {
-            ngVersion = new SemVer(additionalProperties.get(NG_VERSION).toString());
-        } else {
-            ngVersion = new SemVer("4.3.0");
-            LOGGER.info("generating code for Angular {} ...", ngVersion);
-            LOGGER.info("  (you can select the angular version by setting the additionalProperty ngVersion)");
+        if (additionalProperties.containsKey(PROVIDED_IN_ROOT) && !ngVersion.atLeast("6.0.0")) {
+            additionalProperties.put(PROVIDED_IN_ROOT,false);
         }
+
         additionalProperties.put(NG_VERSION, ngVersion);
         additionalProperties.put("injectionToken", ngVersion.atLeast("4.0.0") ? "InjectionToken" : "OpaqueToken");
         additionalProperties.put("injectionTokenTyped", ngVersion.atLeast("4.0.0"));
         additionalProperties.put("useHttpClient", ngVersion.atLeast("4.3.0"));
+        additionalProperties.put("useRxJS6", ngVersion.atLeast("6.0.0"));
         if (!ngVersion.atLeast("4.3.0")) {
             supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         }
     }
 
-    private void addNpmPackageGeneration() {
+    private void addNpmPackageGeneration(SemVer ngVersion) {
+
         if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
@@ -148,6 +160,20 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (additionalProperties.containsKey(NPM_REPOSITORY)) {
             this.setNpmRepository(additionalProperties.get(NPM_REPOSITORY).toString());
         }
+
+        // for Angular 2 AOT support we will use good-old ngc,
+        // Angular Package format wasn't invented at this time and building was much more easier
+        if (!ngVersion.atLeast("4.0.0")) {
+            LOGGER.warn("Please update your legacy Angular " + ngVersion + " project to benefit from 'Angular Package Format' support.");
+            additionalProperties.put("useNgPackagr", false);
+        } else {
+            additionalProperties.put("useNgPackagr", true);
+            supportingFiles.add(new SupportingFile("ng-package.mustache", getIndexDirectory(), "ng-package.json"));
+        }
+
+        // Libraries generated with v1.x of ng-packagr will ship with AoT metadata in v3, which is intended for Angular v4.
+        // Libraries generated with v2.x of ng-packagr will ship with AoT metadata in v4, which is intended for Angular v5 (and Angular v6).
+        additionalProperties.put("useOldNgPackagr", !ngVersion.atLeast("5.0.0"));
 
         //Files for building our lib
         supportingFiles.add(new SupportingFile("package.mustache", getIndexDirectory(), "package.json"));
@@ -274,15 +300,20 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
                     insideCurly--;
 
                     // Add the more complicated component instead of just the brace.
+                    CodegenParameter parameter = findPathParameterByName(op, parameterName.toString());
                     pathBuffer.append(toVarName(parameterName.toString()));
+                    if (parameter != null && parameter.isDateTime) {
+                        pathBuffer.append(".toISOString()");
+                    }
                     pathBuffer.append("))}");
                     parameterName.setLength(0);
                     break;
                 default:
+                    char nextChar = op.path.charAt(i);
                     if (insideCurly > 0) {
-                        parameterName.append(op.path.charAt(i));
+                        parameterName.append(nextChar);
                     } else {
-                        pathBuffer.append(op.path.charAt(i));
+                        pathBuffer.append(nextChar);
                     }
                     break;
                 }
@@ -300,6 +331,21 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         }
 
         return operations;
+    }
+
+    /**
+     * Finds and returns a path parameter of an operation by its name
+     * @param operation
+     * @param parameterName
+     * @return
+     */
+    private CodegenParameter findPathParameterByName(CodegenOperation operation, String parameterName) {
+        for(CodegenParameter param : operation.pathParams) {
+            if (param.baseName.equals(parameterName)) {
+                return param;
+            }
+        }
+        return null;
     }
 
     @Override

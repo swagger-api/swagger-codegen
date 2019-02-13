@@ -53,7 +53,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -105,7 +106,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -157,7 +159,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'List<Pet>') as List<Pet> ;
+      return 
+        (apiClient.deserialize(response.body, 'List<Pet>') as List).map((item) => item as Pet).toList();
     } else {
       return null;
     }
@@ -209,7 +212,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'List<Pet>') as List<Pet> ;
+      return 
+        (apiClient.deserialize(response.body, 'List<Pet>') as List).map((item) => item as Pet).toList();
     } else {
       return null;
     }
@@ -260,7 +264,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Pet') as Pet ;
+      return 
+          apiClient.deserialize(response.body, 'Pet') as Pet ;
     } else {
       return null;
     }
@@ -311,7 +316,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -376,7 +382,8 @@ if (status != null)
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return 
+          ;
     } else {
       return ;
     }
@@ -441,7 +448,8 @@ if (status != null)
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
+      return 
+          apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
     } else {
       return null;
     }

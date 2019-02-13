@@ -195,6 +195,60 @@ module Petstore
       end
       return data, status_code, headers
     end
+    # @param body 
+    # @param query 
+    # @param [Hash] opts the optional parameters
+    # @return [nil]
+    def test_body_with_query_params(body, query, opts = {})
+      test_body_with_query_params_with_http_info(body, query, opts)
+      nil
+    end
+
+    # @param body 
+    # @param query 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
+    def test_body_with_query_params_with_http_info(body, query, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: FakeApi.test_body_with_query_params ...'
+      end
+      # verify the required parameter 'body' is set
+      if @api_client.config.client_side_validation && body.nil?
+        fail ArgumentError, "Missing the required parameter 'body' when calling FakeApi.test_body_with_query_params"
+      end
+      # verify the required parameter 'query' is set
+      if @api_client.config.client_side_validation && query.nil?
+        fail ArgumentError, "Missing the required parameter 'query' when calling FakeApi.test_body_with_query_params"
+      end
+      # resource path
+      local_var_path = '/fake/body-with-query-params'
+
+      # query parameters
+      query_params = {}
+      query_params[:'query'] = query
+
+      # header parameters
+      header_params = {}
+      # HTTP header 'Content-Type'
+      header_params['Content-Type'] = @api_client.select_header_content_type(['application/json'])
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = @api_client.object_to_http_body(body)
+      auth_names = []
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: FakeApi#test_body_with_query_params\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
     # To test \"client\" model
     # To test \"client\" model
     # @param body client model

@@ -53,7 +53,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public SpringCodegen() {
         super();
         outputFolder = "generated-code/javaSpring";
-        apiTestTemplateFiles.clear(); // TODO: add test template
+        apiTestTemplateFiles.clear();
         embeddedTemplateDir = templateDir = "JavaSpring";
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
@@ -217,9 +217,10 @@ public class SpringCodegen extends AbstractJavaCodegen
             }
         }
 
+        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+
         if (!this.interfaceOnly) {
-            supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
-            supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
             if (library.equals(DEFAULT_LIBRARY)) {
                 supportingFiles.add(new SupportingFile("homeController.mustache",
@@ -554,6 +555,14 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
         name = sanitizeName(name);
         return camelize(name) + "Api";
+    }
+
+    @Override
+    public String toApiTestFilename(String name) {
+        if(library.equals(SPRING_MVC_LIBRARY)) {
+            return toApiName(name) + "ControllerIT";
+        }
+        return toApiName(name) + "ControllerIntegrationTest";
     }
 
     @Override

@@ -1,7 +1,9 @@
 {{>licenseInfo}}
 package {{apiPackage}}
 
+{{#models.0}}
 import {{modelPackage}}._
+{{/models.0}}
 import org.json4s._
 import scala.reflect.ClassTag
 

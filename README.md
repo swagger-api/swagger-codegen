@@ -1,13 +1,13 @@
-# Swagger Code Generator
+# <img src="https://raw.githubusercontent.com/swagger-api/swagger.io/wordpress/images/assets/SWC-logo-clr.png" height="80">
 
-- Master (2.4.0): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
-[![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
-[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
-[![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
+[![Build Status](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-core-master-java-8.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-core-master-java-8)
+
+- Master (2.4.1): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+[![Java Test](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
+[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 - 3.0.0:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
-[![Run Status](https://img.shields.io/shippable/5782588a3be4f4faa56c5bea/3.0.0.svg?label=Mustache%20Template%20Test)](https://app.shippable.com/projects/5782588a3be4f4faa56c5bea)
-[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=3.0.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/WilliamCheng/swagger-codegen-wh2wu)
-[![Java Test](https://circleci.com/gh/swagger-api/swagger-codegen/tree/3.0.0.svg?style=shield)](https://circleci.com/gh/swagger-api/swagger-codegen)
+[![Java Test](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
+[![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=3.0.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/io.swagger/swagger-codegen-project)
@@ -21,10 +21,10 @@
 
 :rocket: ProductHunt: https://producthunt.com/posts/swagger-codegen :rocket:
 
-:notebook_with_decorative_cover: The eBook [A Beginner's Guide to Code Generation for REST APIs](https://gumroad.com/l/swagger_codegen_beginner) is a good starting point for begineers.
+:notebook_with_decorative_cover: The eBook [A Beginner's Guide to Code Generation for REST APIs](https://gumroad.com/l/swagger_codegen_beginner) is a good starting point for beginners.
 
 ## Overview
-This is the swagger codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
+This is the Swagger Codegen project, which allows generation of API client libraries (SDK generation), server stubs and documentation automatically given an [OpenAPI Spec](https://github.com/OAI/OpenAPI-Specification). Currently, the following languages/frameworks are supported:
 
 - **API clients**: **ActionScript**, **Ada**, **Apex**, **Bash**, **C#** (.net 2.0, 3.5 or later), **C++** (cpprest, Qt5, Tizen), **Clojure**, **Dart**, **Elixir**, **Elm**, **Eiffel**, **Erlang**, **Go**, **Groovy**, **Haskell** (http-client, Servant), **Java** (Jersey1.x, Jersey2.x, OkHttp, Retrofit1.x, Retrofit2.x, Feign, RestTemplate, RESTEasy, Vertx, Google API Client Library for Java, Rest-assured), **Kotlin**, **Lua**, **Node.js** (ES5, ES6, AngularJS with Google Closure Compiler annotations) **Objective-C**, **Perl**, **PHP**, **PowerShell**, **Python**, **R**, **Ruby**, **Rust** (rust, rust-server), **Scala** (akka, http4s, swagger-async-httpclient), **Swift** (2.x, 3.x, 4.x), **Typescript** (Angular1.x, Angular2.x, Fetch, jQuery, Node)
 - **Server stubs**: **Ada**, **C#** (ASP.NET Core, NancyFx), **C++** (Pistache, Restbed), **Erlang**, **Go**, **Haskell** (Servant), **Java** (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, RestEasy, Play Framework, [PKMST](https://github.com/ProKarma-Inc/pkmst-getting-started-examples)), **Kotlin**, **PHP** (Lumen, Slim, Silex, [Symfony](https://symfony.com/), [Zend Expressive](https://github.com/zendframework/zend-expressive)), **Python** (Flask), **NodeJS**, **Ruby** (Sinatra, Rails5), **Rust** (rust-server), **Scala** ([Finch](https://github.com/finagle/finch), [Lagom](https://github.com/lagom/lagom), Scalatra)
@@ -77,13 +77,20 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
 
 
 ## Compatibility
-The OpenAPI Specification has undergone 3 revisions since initial creation in 2010.  The swagger-codegen project has the following compatibilities with the OpenAPI Specification:
+The OpenAPI Specification has undergone 3 revisions since initial creation in 2010.  The Swagger Codegen project has the following compatibilities with the OpenAPI Specification:
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-3.0.0 (upcoming major release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/3.0.0-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
-2.4.0 (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.0-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release with breaking changes
-[2.3.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.1) (**current stable**) | 2018-01-17   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.1](https://github.com/swagger-api/swagger-codegen/tree/v2.3.1)
+3.0.5-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.5-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.4](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.4) (**current stable**) | 2019-01-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.4](https://github.com/swagger-api/swagger-codegen/tree/v3.0.4)
+[3.0.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.3) | 2018-11-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.3](https://github.com/swagger-api/swagger-codegen/tree/v3.0.3)
+[3.0.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.2)| 2018-10-19 | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.1)| 2018-10-05 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
+[3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)| 2018-09-06 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
+2.4.2-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.2-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release
+[2.4.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.1) (**current stable**) | 2019-01-16   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.1](https://github.com/swagger-api/swagger-codegen/tree/v2.4.1)
+[2.4.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.0) | 2018-11-30   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.0](https://github.com/swagger-api/swagger-codegen/tree/v2.4.0)
+[2.3.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.1) | 2018-01-17   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.1](https://github.com/swagger-api/swagger-codegen/tree/v2.3.1)
 [2.3.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.0) | 2017-12-21   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.0](https://github.com/swagger-api/swagger-codegen/tree/v2.3.0)
 [2.2.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.3) | 2017-07-15   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.3](https://github.com/swagger-api/swagger-codegen/tree/v2.2.3)
 [2.2.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.2.2) | 2017-03-01   | 1.0, 1.1, 1.2, 2.0   | [tag v2.2.2](https://github.com/swagger-api/swagger-codegen/tree/v2.2.2)
@@ -229,6 +236,8 @@ docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
     -o /local/out/go
 ```
 
+(On Windows replace `${PWD}` with `%CD%`)
+
 The generated code will be located under `./out/go` in the current directory.
 
 ## Getting Started
@@ -335,12 +344,12 @@ Other languages have petstore samples, too:
 It's just as easy--just use the `-i` flag to point to either a server or file.
 
 ### Modifying the client library format
-Don't like the default swagger client syntax?  Want a different language supported?  No problem!  Swagger codegen processes mustache templates with the [jmustache](https://github.com/samskivert/jmustache) engine.  You can modify our templates or make your own.
+Don't like the default swagger client syntax?  Want a different language supported?  No problem!  Swagger Codegen processes mustache templates with the [jmustache](https://github.com/samskivert/jmustache) engine.  You can modify our templates or make your own.
 
 You can look at `modules/swagger-codegen/src/main/resources/${your-language}` for examples.  To make your own templates, create your own files and use the `-t` flag to specify your template folder.  It actually is that easy.
 
 ### Making your own codegen modules
-If you're starting a project with a new language and don't see what you need, swagger-codegen can help you create a project to generate your own libraries:
+If you're starting a project with a new language and don't see what you need, Swagger Codegen can help you create a project to generate your own libraries:
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar meta \
@@ -437,7 +446,7 @@ When using selective generation, _only_ the templates needed for the specific ge
 
 ### Ignore file format
 
-Swagger codegen supports a `.swagger-codegen-ignore` file, similar to `.gitignore` or `.dockerignore` you're probably already familiar with.
+Swagger Codegen supports a `.swagger-codegen-ignore` file, similar to `.gitignore` or `.dockerignore` you're probably already familiar with.
 
 The ignore file allows for better control over overwriting existing files than the `--skip-overwrite` flag. With the ignore file, you can specify individual files or directories can be ignored. This can be useful, for example if you only want a subset of the generated code.
 
@@ -507,7 +516,7 @@ and `config.json` contains the following as an example:
 ```
 
 Supported config options can be different per language. Running `config-help -l {lang}` will show available options.
-**These options are applied via configuration file (e.g. config.json) or by passing them with `-D{optionName}={optionValue}`**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
+**These options are applied via configuration file (e.g. config.json) or by passing them with `java -jar swagger-codegen-cli.jar -D{optionName}={optionValue}`**. (If `-D{optionName}` does not work, please open a [ticket](https://github.com/swagger-api/swagger-codegen/issues/new) and we'll look into it)
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
@@ -532,7 +541,7 @@ CONFIG OPTIONS
 	    retrofit - HTTP client: OkHttp 2.4.0. JSON processing: Gson 2.3.1 (Retrofit 1.9.0)
         retrofit2 - HTTP client: OkHttp 2.5.0. JSON processing: Gson 2.4 (Retrofit 2.0.0-beta2)
         google-api-client - HTTP client: google-api-client 1.23.0. JSON processing: Jackson 2.8.9
-        rest-assured - HTTP client: rest-assured : 3.0.6. JSON processing: Gson 2.6.1. Only for Java8 
+        rest-assured - HTTP client: rest-assured : 3.1.0. JSON processing: Gson 2.6.1. Only for Java8
 ```
 
 Your config file for Java can look like
@@ -629,7 +638,7 @@ Please refer to https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-
 
 ### To build the codegen library
 
-This will create the swagger-codegen library from source.
+This will create the Swagger Codegen library from source.
 
 ```sh
 mvn package
@@ -657,7 +666,7 @@ To push the auto-generated SDK to GitHub, we provide `git_push.sh` to streamline
 ```sh
  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
  -i modules/swagger-codegen/src/test/resources/2_0/petstore.json -l perl \
- --git-user-id "wing328" \
+ --git-user-id "swaggerapi" \
  --git-repo-id "petstore-perl" \
  --release-note "Github integration demo" \
  -o /var/tmp/perl/petstore
@@ -747,8 +756,11 @@ Please refer to this [page](https://github.com/swagger-api/swagger-codegen/blob/
 Companies/Projects using Swagger Codegen
 ----------------------------------------
 Here are some companies/projects using Swagger Codegen in production. To add your company/project to the list, please visit [README.md](https://github.com/swagger-api/swagger-codegen/blob/master/README.md) and click on the icon to edit the page.
+- [Acando](https://www.acando.de/)
 - [Accengage](https://www.accengage.com/)
+- [Accruent](https://www.accruent.com/)
 - [Activehours](https://www.activehours.com/)
+- [Actonica](https://www.actonica.com)
 - [Acunetix](https://www.acunetix.com/)
 - [Atlassian](https://www.atlassian.com/)
 - [Autodesk](http://www.autodesk.com/)
@@ -762,6 +774,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Bufferfly Network](https://www.butterflynetinc.com/)
 - [Cachet Financial](http://www.cachetfinancial.com/)
 - [carpolo](http://www.carpolo.co/)
+- [Carus](https://www.carus.com/)
 - [Cisco](http://www.cisco.com/)
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Cloudsmith](https://cloudsmith.io/)
@@ -778,6 +791,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [eureka](http://eure.jp/)
 - [everystory.us](http://everystory.us)
 - [Expected Behavior](http://www.expectedbehavior.com/)
+- [fashionTrade](https://www.fashiontrade.com/)
 - [Fastly](https://www.fastly.com/)
 - [FINRA](https://github.com/FINRAOS/herd/)
 - [Flat](https://flat.io)
@@ -799,7 +813,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Hewlett Packard Enterprise](https://hpe.com)
 - [High Technologies Center](http://htc-cs.com)
 - [Hootsuite](https://hootsuite.com/)
-- [Huawei Cloud](http://www.huaweicloud.com/en-us/product/cs.html) 
+- [Huawei Cloud](http://www.huaweicloud.com/en-us/product/cs.html)
 - [Husbanken](https://www.husbanken.no)
 - [IBM](https://www.ibm.com)
 - [IMS Health](http://www.imshealth.com/en/solution-areas/technology-and-applications)
@@ -945,16 +959,15 @@ Presentations/Videos/Tutorials/Books
 - 2018/01/11 - [Swagger 工具箱介绍及代码自动生成示例](https://github.com/qct/swagger-example) by [qct](https://github.com/qct)
 - 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
 - 2018/02/03 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada) by [Stephane Carrez](https://github.com/stcarrez) at [FOSDEM 2018](https://fosdem.org/2018)
-
+- 2018/02/28 - [OpenAPI–An eBay Perspective](https://www.ebayinc.com/stories/blogs/tech/openapi-an-ebay-perspective/) by Shekhar Banerjee (eBay)
+- 2018/03/16 - [REST APIのためのコード生成入門](https://gumroad.com/l/swagger_codegen_beginner_jp) by [William Cheng](https://github.com/wing328), [中野暁人](https://github.com/ackintosh), [和田拓朗](https://github.com/taxpon)
 
 # Swagger Codegen Core Team
 
 Swagger Codegen core team members are contributors who have been making significant contributions (review issues, fix bugs, make enhancements, etc) to the project on a regular basis.
 
 ## Core Team Members
-* [@jimschubert](https://github.com/jimschubert)
-* [@cbornet](https://github.com/cbornet)
-* [@jaz-ah](https://github.com/jaz-ah)
+
 
 ## Template Creator
 Here is a list of template creators:
@@ -1050,8 +1063,6 @@ Here are the requirements to become a core team member:
   - about 3 hours per week
   - for contribution, it can be addressing issues, reviewing PRs submitted by others, submitting PR to fix bugs or make enhancements, etc
 
- To join the core team, please reach out to wing328hk@gmail.com (@wing328) for more information.
-
  To become a Template Creator, simply submit a PR for new API client (e.g. Rust, Elixir) or server stub (e.g. Ruby Grape) generator.
 
 # Swagger Codegen Technical Committee
@@ -1065,41 +1076,40 @@ Members of the Swagger Codegen technical committee shoulder the following respon
 
 Who is eligible? Those who want to join must have at least 3 PRs merged into a generator. (Exceptions can be granted to template creators or contributors who have made a lot of code changes with less than 3 merged PRs)
 
-If you want to join the committee, please kindly apply by sending an email to wing328hk@gmail.com ([@wing328](https://github.com/wing328)) with your Github ID.
-
 ## Members of Technical Committee
 
 | Languages     | Member (join date) |
 |:-------------|:-------------|
 | ActionScript |      |
-| Android | @jaz-ah (2017/09) |
+| Ada | @stcarrez (2018/02) |
+| Android |  |
 | Apex  |     |
-| Bash  | @frol (2017/07) @bkryza (2017/08) @kenjones-cisco (2017/09) |
-| C++      | @ravinikam (2017/07) @stkrwork (2017/07) @fvarose (2017/11) |
-| C#        | @mandrean (2017/08) @jimschubert (2017/09) |
+| Bash  | @kenjones-cisco (2017/09) |
+| C++      | @fvarose (2017/11) |
+| C#        | @mandrean (2017/08) |
 | Clojure   |  |
 | Dart      | @ircecho (2017/07) |
-| Eiffel    | @jvelilla (2017/09) |
+| Eiffel    | |
 | Elixir    |  |
 | Elm       |  |
-| Erlang    | @tsloughter (2017/11) |
+| Erlang    | |
 | Groovy    |  |
-| Go        | @antihax (2017/11) @bvwells (2017/12) |
+| Go        | |
 | Haskell   | |
-| Java      | @bbdouglas (2017/07) @JFCote (2017/08) @sreeshas (2017/08) @jfiala (2017/08) @lukoyanov (2017/09) @cbornet (2017/09) @jeff9finger (2018/01) |
-| Kotlin     | @jimschubert (2017/09) |
-| Lua     | @daurnimator (2017/08) |
-| NodeJS/Javascript | @CodeNinjai (2017/07) @frol (2017/07) @cliffano (2017/07) |
+| Java      | |
+| Kotlin     | |
+| Lua     | |
+| NodeJS/Javascript | @CodeNinjai (2017/07) |
 | ObjC      |  |
-| Perl      | @wing328 (2017/07) |
-| PHP      | @jebentier (2017/07) @dkarlovi (2017/07) @mandrean (2017/08) @jfastnacht (2017/09) @ackintosh (2017/09) |
-| Python   | @taxpon (2017/07) @frol (2017/07) @mbohlool (2017/07) @cbornet (2017/09) @kenjones-cisco (2017/11)|
+| Perl      | |
+| PHP      | @dkarlovi (2017/07) @mandrean (2017/08) |
+| Python   | @kenjones-cisco (2017/11)|
 | R        |  |
-| Ruby      | @cliffano (2017/07) @zlx (2017/09) |
-| Rust      | @frol (2017/07) @farcaller (2017/08) @bjgill (2017/12) |
-| Scala     | @clasnake (2017/07) @jimschubert (2017/09) @shijinkui  (2018/01) |
-| Swift     | @jgavris (2017/07) @ehyche (2017/08) @Edubits (2017/09) @jaz-ah (2017/09) |
-| TypeScript | @TiFu (2017/07) @taxpon (2017/07) @sebastianhaas (2017/07) @kenisteward (2017/07) @Vrolijkx (2017/09) @macjohnny (2018/01) |
+| Ruby      | @zlx (2017/09) |
+| Rust      | |
+| Scala     | |
+| Swift     | @ehyche (2017/08) |
+| TypeScript | |
 
 
 # License information on Generated Code
@@ -1110,7 +1120,7 @@ The Swagger Codegen project is intended as a benefit for users of the Swagger / 
 * Generated code is intentionally _not_ subject to the parent project license
 
 When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties--expressed or implied--for generated code.  You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
- 
+
 License
 -------
 
@@ -1125,7 +1135,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
----
-<img src="http://swagger.io/wp-content/uploads/2016/02/logo.jpg"/>
-

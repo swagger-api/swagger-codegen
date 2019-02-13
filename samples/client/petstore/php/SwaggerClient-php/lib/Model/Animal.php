@@ -186,7 +186,7 @@ class Animal implements ModelInterface, ArrayAccess
         $this->container['color'] = isset($data['color']) ? $data['color'] : 'red';
 
         // Initialize discriminator property with the model name.
-        $discriminator = array_search('className', self::$attributeMap);
+        $discriminator = array_search('className', self::$attributeMap, true);
         $this->container[$discriminator] = static::$swaggerModelName;
     }
 
@@ -213,11 +213,7 @@ class Animal implements ModelInterface, ArrayAccess
      */
     public function valid()
     {
-
-        if ($this->container['class_name'] === null) {
-            return false;
-        }
-        return true;
+        return count($this->listInvalidProperties()) === 0;
     }
 
 

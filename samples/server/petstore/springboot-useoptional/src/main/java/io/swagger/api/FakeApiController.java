@@ -5,6 +5,7 @@ import io.swagger.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -95,6 +96,11 @@ public class FakeApiController implements FakeApi {
         }
 
         return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<Void> testBodyWithQueryParams(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "query", required = true) String query) {
+        String accept = request.getHeader("Accept");
+        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {

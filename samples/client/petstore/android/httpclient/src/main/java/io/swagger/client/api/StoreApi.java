@@ -139,7 +139,7 @@ public class StoreApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI(basePath, localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarContentType);
       if(localVarResponse != null){
-        return (Map<String, Integer>) ApiInvoker.deserialize(localVarResponse, "map", Map.class);
+        return (Map<String, Integer>) ApiInvoker.deserialize(localVarResponse, "map", Integer.class);
       }
       else {
         return null;

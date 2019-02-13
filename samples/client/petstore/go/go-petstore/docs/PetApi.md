@@ -24,7 +24,7 @@ Add a new pet to the store
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
@@ -52,17 +52,17 @@ Deletes a pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| Pet id to delete | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***DeletePetOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a DeletePetOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **int64**| Pet id to delete | 
- **apiKey** | **string**|  | 
+
+ **apiKey** | **optional.String**|  | 
 
 ### Return type
 
@@ -89,7 +89,7 @@ Multiple status values can be provided with comma separated strings
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **status** | [**[]string**](string.md)| Status values that need to be considered for filter | 
 
 ### Return type
@@ -117,7 +117,7 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **tags** | [**[]string**](string.md)| Tags to filter by | 
 
 ### Return type
@@ -145,7 +145,7 @@ Returns a single pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| ID of pet to return | 
 
 ### Return type
@@ -173,7 +173,7 @@ Update an existing pet
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**Pet**](Pet.md)| Pet object that needs to be added to the store | 
 
 ### Return type
@@ -201,18 +201,18 @@ Updates a pet in the store with form data
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| ID of pet that needs to be updated | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***UpdatePetWithFormOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a UpdatePetWithFormOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **int64**| ID of pet that needs to be updated | 
- **name** | **string**| Updated name of the pet | 
- **status** | **string**| Updated status of the pet | 
+
+ **name** | **optional.String**| Updated name of the pet | 
+ **status** | **optional.String**| Updated status of the pet | 
 
 ### Return type
 
@@ -239,18 +239,18 @@ uploads an image
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| ID of pet to update | 
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+ **optional** | ***UploadFileOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
+Optional parameters are passed through a pointer to a UploadFileOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | **int64**| ID of pet to update | 
- **additionalMetadata** | **string**| Additional data to pass to server | 
- **file** | ***os.File**| file to upload | 
+
+ **additionalMetadata** | **optional.String**| Additional data to pass to server | 
+ **file** | **optional.Interface of *os.File**| file to upload | 
 
 ### Return type
 

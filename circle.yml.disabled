@@ -1,0 +1,56 @@
+# Java-related client, server tests
+machine:
+  java:
+    version: openjdk8
+  services:
+    - docker
+  # Override /etc/hosts
+  hosts:
+    petstore.swagger.io: 127.0.0.1
+  environment:
+    DOCKER_GENERATOR_IMAGE_NAME: swaggerapi/swagger-generator
+    DOCKER_CODEGEN_CLI_IMAGE_NAME: swaggerapi/swagger-codegen-cli
+
+dependencies:
+  cache_directories:
+    - "~/.m2"
+    - "~/.sbt"
+    - "~/.ivy2"
+
+  pre:
+    - sudo add-apt-repository ppa:duggan/bats --yes
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq bats
+    - sudo apt-get install -qq curl
+    - wget -q https://dl.bintray.com/sbt/debian/sbt-0.13.15.deb
+    - sudo dpkg -i sbt-0.13.15.deb
+    # to run petstore server locally via docker
+    - docker pull swaggerapi/petstore
+    - docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
+    - docker ps -a
+    # show host table to confirm petstore.swagger.io is mapped to localhost
+    - cat /etc/hosts
+  override:
+    - cp pom.xml.circleci pom.xml
+
+test:
+  override:
+    ## test with jdk8
+    - java -version
+    - mvn clean install
+    - mvn -q verify -Psamples
+    # skip the rest if previous mvn task fails
+    - if [ $? -ne 0 ]; then exit 1; fi
+    ## test with jdk7
+    - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+    - java -version
+    - cp pom.xml.circleci.java7 pom.xml # use jdk7 pom
+    - mvn clean install
+    - mvn -q verify -Psamples
+    # skip the rest if previous mvn task fails
+    - if [ $? -ne 0 ]; then exit 1; fi
+    ## docker: build generator image and push to Docker Hub
+    ## 16/07/2018, commented out as it's causing timeout on circleCI, for the time being build and push manually
+    #- ./bin/docker/build_and_push_docker:
+    #    timeout: 60m
+
