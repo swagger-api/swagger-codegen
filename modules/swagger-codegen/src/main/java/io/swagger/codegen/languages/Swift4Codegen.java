@@ -518,6 +518,11 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
+    protected String defaultSanitizedName() {
+        return "Empty";
+    }
+
+    @Override
     public String toVarName(String name) {
         // sanitize name
         name = sanitizeName(name);

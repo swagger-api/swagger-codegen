@@ -3539,6 +3539,11 @@ public class DefaultCodegen {
         return new CliOption("library", sb.toString());
     }
 
+    protected String defaultSanitizedName() {
+        LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
+        return "ERROR_UNKNOWN";
+    }
+
     /**
      * Sanitize name (parameter, property, method, etc)
      *
@@ -3554,8 +3559,7 @@ public class DefaultCodegen {
 
         // better error handling when map/array type is invalid
         if (name == null) {
-            LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
-            return "ERROR_UNKNOWN";
+            return defaultSanitizedName();
         }
 
         // if the name is just '$', map it to 'value' for the time being.
