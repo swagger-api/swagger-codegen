@@ -825,19 +825,4 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
 
         return codegenModel;
     }
-
-    @Override
-    public CodegenOperation fromOperation(String path,
-                                          String httpMethod,
-                                          Operation operation,
-                                          Map<String, Model> definitions,
-                                          Swagger swagger) {
-                                              CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
-                                              for (CodegenResponse response: op.responses) {
-                                                  if (response.code == "204" || response.code == "302" || response.code == "303") {
-                                                    op.returnType = "Empty";
-                                                }
-                                              }
-                                              return op;
-                                          }
 }
