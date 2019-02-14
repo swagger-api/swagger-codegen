@@ -15,64 +15,58 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 
 /**
- * Animal
+ * Body1
  */
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "className", visible = true )
-@JsonSubTypes({
-  @JsonSubTypes.Type(value = Dog.class, name = "Dog"),
-  @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
-})
-public class Animal {
+public class Body1 {
 
-  @JsonProperty("className")
+  @JsonProperty("additionalMetadata")
 
-  private String className = null;
+  private String additionalMetadata = null;
 
-  @JsonProperty("color")
+  @JsonProperty("file")
 
-  private String color = "red";
-  public Animal className(String className) {
-    this.className = className;
+  private File file = null;
+  public Body1 additionalMetadata(String additionalMetadata) {
+    this.additionalMetadata = additionalMetadata;
     return this;
   }
 
   
 
   /**
-  * Get className
-  * @return className
+  * Additional data to pass to server
+  * @return additionalMetadata
   **/
-  @Schema(required = true, description = "")
-  public String getClassName() {
-    return className;
+  @Schema(description = "Additional data to pass to server")
+  public String getAdditionalMetadata() {
+    return additionalMetadata;
   }
-  public void setClassName(String className) {
-    this.className = className;
+  public void setAdditionalMetadata(String additionalMetadata) {
+    this.additionalMetadata = additionalMetadata;
   }
-  public Animal color(String color) {
-    this.color = color;
+  public Body1 file(File file) {
+    this.file = file;
     return this;
   }
 
   
 
   /**
-  * Get color
-  * @return color
+  * file to upload
+  * @return file
   **/
-  @Schema(description = "")
-  public String getColor() {
-    return color;
+  @Schema(description = "file to upload")
+  public File getFile() {
+    return file;
   }
-  public void setColor(String color) {
-    this.color = color;
+  public void setFile(File file) {
+    this.file = file;
   }
   @Override
   public boolean equals(java.lang.Object o) {
@@ -82,23 +76,23 @@ public class Animal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Animal animal = (Animal) o;
-    return Objects.equals(this.className, animal.className) &&
-        Objects.equals(this.color, animal.color);
+    Body1 body1 = (Body1) o;
+    return Objects.equals(this.additionalMetadata, body1.additionalMetadata) &&
+        Objects.equals(this.file, body1.file);
   }
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(className, color);
+    return java.util.Objects.hash(additionalMetadata, file);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Animal {\n");
+    sb.append("class Body1 {\n");
     
-    sb.append("    className: ").append(toIndentedString(className)).append("\n");
-    sb.append("    color: ").append(toIndentedString(color)).append("\n");
+    sb.append("    additionalMetadata: ").append(toIndentedString(additionalMetadata)).append("\n");
+    sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("}");
     return sb.toString();
   }
