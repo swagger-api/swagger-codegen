@@ -15,64 +15,57 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * Animal
+ * Body5
  */
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "className", visible = true )
-@JsonSubTypes({
-  @JsonSubTypes.Type(value = Dog.class, name = "Dog"),
-  @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
-})
-public class Animal {
+public class Body5 {
 
-  @JsonProperty("className")
+  @JsonProperty("param")
 
-  private String className = null;
+  private String param = null;
 
-  @JsonProperty("color")
+  @JsonProperty("param2")
 
-  private String color = "red";
-  public Animal className(String className) {
-    this.className = className;
+  private String param2 = null;
+  public Body5 param(String param) {
+    this.param = param;
     return this;
   }
 
   
 
   /**
-  * Get className
-  * @return className
+  * field1
+  * @return param
   **/
-  @Schema(required = true, description = "")
-  public String getClassName() {
-    return className;
+  @Schema(required = true, description = "field1")
+  public String getParam() {
+    return param;
   }
-  public void setClassName(String className) {
-    this.className = className;
+  public void setParam(String param) {
+    this.param = param;
   }
-  public Animal color(String color) {
-    this.color = color;
+  public Body5 param2(String param2) {
+    this.param2 = param2;
     return this;
   }
 
   
 
   /**
-  * Get color
-  * @return color
+  * field2
+  * @return param2
   **/
-  @Schema(description = "")
-  public String getColor() {
-    return color;
+  @Schema(required = true, description = "field2")
+  public String getParam2() {
+    return param2;
   }
-  public void setColor(String color) {
-    this.color = color;
+  public void setParam2(String param2) {
+    this.param2 = param2;
   }
   @Override
   public boolean equals(java.lang.Object o) {
@@ -82,23 +75,23 @@ public class Animal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Animal animal = (Animal) o;
-    return Objects.equals(this.className, animal.className) &&
-        Objects.equals(this.color, animal.color);
+    Body5 body5 = (Body5) o;
+    return Objects.equals(this.param, body5.param) &&
+        Objects.equals(this.param2, body5.param2);
   }
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(className, color);
+    return java.util.Objects.hash(param, param2);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Animal {\n");
+    sb.append("class Body5 {\n");
     
-    sb.append("    className: ").append(toIndentedString(className)).append("\n");
-    sb.append("    color: ").append(toIndentedString(color)).append("\n");
+    sb.append("    param: ").append(toIndentedString(param)).append("\n");
+    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
     sb.append("}");
     return sb.toString();
   }
