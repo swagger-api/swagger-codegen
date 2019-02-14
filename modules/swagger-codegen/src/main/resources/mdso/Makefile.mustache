@@ -1,0 +1,49 @@
+HIDE ?= @
+PACKAGE := {{packageName}}
+RELEASE := {{packageVersion}}
+VENV := env
+PYPI ?= 'https://pypi.blueplanet.com/simple'
+
+RELEASE ?= $(shell solmaker version fig.yml)
+PWD ?= $(shell pwd)
+
+# Solution
+VENDOR ?= pathToYourRepo
+SOLUTION_RELEASE ?= $(shell solmaker version solution/fig.yml)
+SOLUTION_NAME ?= $(shell solmaker name solution/fig.yml)
+SOLUTION_IMAGE := $(VENDOR)/solution-$(SOLUTION_NAME)
+
+DOCKER_BUILD := docker build
+DOCKER_IMAGE ?= $(VENDOR)/$(PACKAGE)
+REGISTRY ?= registry.blueplanet.com
+REMOTE_SERVER ?= bpadmin@10.10.10.10
+
+SOLUTION := $(REGISTRY).$(VENDOR).$(SOLUTION_NAME):$(SOLUTION_RELEASE)
+
+app: image
+
+app-image: image
+
+image:
+	$(DOCKER_BUILD) -t $(REGISTRY)/$(DOCKER_IMAGE):$(RELEASE) -f app/Dockerfile ./app
+
+remote:
+	docker save $(REGISTRY)/$(DOCKER_IMAGE):$(RELEASE) | bzip2 | pv | ssh $(REMOTE_SERVER) 'bunzip2 | docker load'
+	docker save $(REGISTRY)/$(SOLUTION_IMAGE):$(SOLUTION_RELEASE) | bzip2 | pv | ssh $(REMOTE_SERVER) 'bunzip2 | docker load'
+
+push:
+	docker push $(REGISTRY)/$(DOCKER_IMAGE):$(RELEASE)
+	docker push $(REGISTRY)/$(SOLUTION_IMAGE):$(SOLUTION_RELEASE)
+
+solution-image:
+	$(docker rmi $(REGISTRY)/$(SOLUTION_IMAGE):$(SOLUTION_RELEASE) && true)
+	solmaker build solution/fig.yml --vendor=$(VENDOR) --tag=$(SOLUTION_RELEASE)
+
+upload-solution:
+	docker save $(REGISTRY)/$(SOLUTION_IMAGE):$(SOLUTION_RELEASE) | bzip2 | pv | ssh $(REMOTE_SERVER) 'bunzip2 | docker load'
+
+update: image solution-image
+	-ssh $(REMOTE_SERVER) 'solman "solution_purge -y $(SOLUTION)"'
+	docker save $(REGISTRY)/$(DOCKER_IMAGE):$(RELEASE) | bzip2 | pv | ssh $(REMOTE_SERVER) 'bunzip2 | docker load'
+	docker save $(REGISTRY)/$(SOLUTION_IMAGE):$(SOLUTION_RELEASE) | bzip2 | pv | ssh $(REMOTE_SERVER) 'bunzip2 | docker load'
+	-ssh $(REMOTE_SERVER) 'solman "solution_deploy $(SOLUTION)"'
