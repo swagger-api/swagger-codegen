@@ -15,6 +15,9 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import java.math.BigDecimal;
+
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
@@ -138,7 +141,7 @@ public class FakeApiTest {
     @Test
     public void testEndpointParametersTest() throws ApiException {
         
-        Object body = null;
+        Body2 body = null;
         
         api.testEndpointParameters(body);
 
@@ -155,9 +158,6 @@ public class FakeApiTest {
      */
     @Test
     public void testEnumParametersTest() throws ApiException {
-        
-        Object body = null;
-        
         List<String> enumHeaderStringArray = null;
         
         String enumHeaderString = null;
@@ -168,7 +168,7 @@ public class FakeApiTest {
         
         Integer enumQueryInteger = null;
         
-        api.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+        api.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
 
         // TODO: test validations
     }
@@ -202,7 +202,7 @@ public class FakeApiTest {
     @Test
     public void testJsonFormDataTest() throws ApiException {
         
-        Object body = null;
+        Body5 body = null;
         
         api.testJsonFormData(body);
 
