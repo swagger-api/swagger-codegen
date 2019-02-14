@@ -15,64 +15,57 @@ package io.swagger.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * Animal
+ * Body
  */
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "className", visible = true )
-@JsonSubTypes({
-  @JsonSubTypes.Type(value = Dog.class, name = "Dog"),
-  @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
-})
-public class Animal {
+public class Body {
 
-  @JsonProperty("className")
+  @JsonProperty("name")
 
-  private String className = null;
+  private String name = null;
 
-  @JsonProperty("color")
+  @JsonProperty("status")
 
-  private String color = "red";
-  public Animal className(String className) {
-    this.className = className;
+  private String status = null;
+  public Body name(String name) {
+    this.name = name;
     return this;
   }
 
   
 
   /**
-  * Get className
-  * @return className
+  * Updated name of the pet
+  * @return name
   **/
-  @Schema(required = true, description = "")
-  public String getClassName() {
-    return className;
+  @Schema(description = "Updated name of the pet")
+  public String getName() {
+    return name;
   }
-  public void setClassName(String className) {
-    this.className = className;
+  public void setName(String name) {
+    this.name = name;
   }
-  public Animal color(String color) {
-    this.color = color;
+  public Body status(String status) {
+    this.status = status;
     return this;
   }
 
   
 
   /**
-  * Get color
-  * @return color
+  * Updated status of the pet
+  * @return status
   **/
-  @Schema(description = "")
-  public String getColor() {
-    return color;
+  @Schema(description = "Updated status of the pet")
+  public String getStatus() {
+    return status;
   }
-  public void setColor(String color) {
-    this.color = color;
+  public void setStatus(String status) {
+    this.status = status;
   }
   @Override
   public boolean equals(java.lang.Object o) {
@@ -82,23 +75,23 @@ public class Animal {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Animal animal = (Animal) o;
-    return Objects.equals(this.className, animal.className) &&
-        Objects.equals(this.color, animal.color);
+    Body body = (Body) o;
+    return Objects.equals(this.name, body.name) &&
+        Objects.equals(this.status, body.status);
   }
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(className, color);
+    return java.util.Objects.hash(name, status);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Animal {\n");
+    sb.append("class Body {\n");
     
-    sb.append("    className: ").append(toIndentedString(className)).append("\n");
-    sb.append("    color: ").append(toIndentedString(color)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }
