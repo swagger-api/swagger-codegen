@@ -66,7 +66,7 @@ public class PetApiTest {
     @Test
     public void deletePetTest() throws ApiException {
         
-        Integer petId = null;
+        Long petId = null;
         
         String apiKey = null;
         
@@ -122,7 +122,7 @@ public class PetApiTest {
     @Test
     public void getPetByIdTest() throws ApiException {
         
-        Integer petId = null;
+        Long petId = null;
         
         Pet response = api.getPetById(petId);
 
@@ -158,7 +158,7 @@ public class PetApiTest {
     @Test
     public void updatePetWithFormTest() throws ApiException {
         
-        Integer petId = null;
+        Long petId = null;
         
         String name = null;
 
@@ -179,8 +179,8 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileTest() throws ApiException {
-        
-        Integer petId = null;
+
+        Long petId = null;
         
         String additionalMetadata = null;
 
