@@ -13,7 +13,6 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-    // i am in EA
 public class StoreApiServiceImpl implements StoreApi {
       public Response deleteOrder(String orderId,SecurityContext securityContext) {
       // do some magic!
