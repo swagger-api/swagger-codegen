@@ -8,13 +8,16 @@ import javax.validation.Valid;
 /**
  * Model for testing model name same as property name
  **/
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model name same as property name")
 
 public class Name  implements Serializable {
-  private @Valid Integer name = null;  private @Valid Integer snakeCase = null;  private @Valid String property = null;  private @Valid Integer _123Number = null;
+  private @Valid Integer name = null;
+  private @Valid Integer snakeCase = null;
+  private @Valid String property = null;
+  private @Valid Integer _123Number = null;
 
   /**
    **/
@@ -24,9 +27,10 @@ public class Name  implements Serializable {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("name")
   @NotNull
+
   public Integer getName() {
     return name;
   }
@@ -42,8 +46,9 @@ public class Name  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("snake_case")
+
   public Integer getSnakeCase() {
     return snakeCase;
   }
@@ -59,8 +64,9 @@ public class Name  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("property")
+
   public String getProperty() {
     return property;
   }
@@ -76,8 +82,9 @@ public class Name  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("123Number")
+
   public Integer get123Number() {
     return _123Number;
   }

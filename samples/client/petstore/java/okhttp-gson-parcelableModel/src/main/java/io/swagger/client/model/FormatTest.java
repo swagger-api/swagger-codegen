@@ -19,6 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -55,10 +56,10 @@ public class FormatTest {
   private String string = null;
 
   @SerializedName("byte")
-  private String _byte = null;
+  private byte[] _byte = null;
 
   @SerializedName("binary")
-  private String binary = null;
+  private File binary = null;
 
   @SerializedName("date")
   private LocalDate date = null;
@@ -207,7 +208,7 @@ public class FormatTest {
   public void setString(String string) {
     this.string = string;
   }
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -219,13 +220,13 @@ public class FormatTest {
   * @return _byte
   **/
   @Schema(required = true, description = "")
-  public String getByte() {
+  public byte[] getByte() {
     return _byte;
   }
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
-  public FormatTest binary(String binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -237,10 +238,10 @@ public class FormatTest {
   * @return binary
   **/
   @Schema(description = "")
-  public String getBinary() {
+  public File getBinary() {
     return binary;
   }
-  public void setBinary(String binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
   public FormatTest date(LocalDate date) {
@@ -414,10 +415,10 @@ public class FormatTest {
     
     string = (String)in.readValue(null);
     
-    _byte = (String)in.readValue(null);
+    _byte = (byte[])in.readValue(null);
     
-    binary = (String)in.readValue(null);
     
+    binary = (File)in.readValue(File.class.getClassLoader());
     
     date = (LocalDate)in.readValue(LocalDate.class.getClassLoader());
     

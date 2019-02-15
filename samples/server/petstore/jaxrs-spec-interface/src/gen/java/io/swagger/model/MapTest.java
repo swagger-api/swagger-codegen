@@ -7,43 +7,45 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class MapTest   {
-  private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();public enum InnerEnum {
+  private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
 
-    UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
-
-
-    private String value;
-
-    InnerEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static InnerEnum fromValue(String v) {
-        for (InnerEnum b : InnerEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
-        }
-        return null;
-    }
-}
+  public enum InnerEnum {
+  
+      UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
+  
+  
+      private String value;
+  
+      InnerEnum (String v) {
+          value = v;
+      }
+  
+      public String value() {
+          return value;
+      }
+  
+      @Override
+      @JsonValue
+      public String toString() {
+          return String.valueOf(value);
+      }
+  
+      @JsonCreator
+      public static InnerEnum fromValue(String v) {
+          for (InnerEnum b : InnerEnum.values()) {
+              if (String.valueOf(b.value).equals(v)) {
+                  return b;
+              }
+          }
+          return null;
+      }
+  }
   private @Valid Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
 
   /**
@@ -54,8 +56,9 @@ public class MapTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map_map_of_string")
+
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -71,8 +74,9 @@ public class MapTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map_of_enum_string")
+
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

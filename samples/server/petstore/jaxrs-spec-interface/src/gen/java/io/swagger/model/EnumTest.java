@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -42,7 +42,8 @@ public enum EnumStringEnum {
         return null;
     }
 }
-  private @Valid EnumStringEnum enumString = null;public enum EnumIntegerEnum {
+  private @Valid EnumStringEnum enumString = null;
+public enum EnumIntegerEnum {
 
     NUMBER_1(Integer.valueOf(1)), NUMBER_MINUS_1(Integer.valueOf(-1));
 
@@ -73,7 +74,8 @@ public enum EnumStringEnum {
         return null;
     }
 }
-  private @Valid EnumIntegerEnum enumInteger = null;public enum EnumNumberEnum {
+  private @Valid EnumIntegerEnum enumInteger = null;
+public enum EnumNumberEnum {
 
     NUMBER_1_DOT_1(Double.valueOf(1.1)), NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
 
@@ -104,7 +106,8 @@ public enum EnumStringEnum {
         return null;
     }
 }
-  private @Valid EnumNumberEnum enumNumber = null;  private @Valid OuterEnum outerEnum = null;
+  private @Valid EnumNumberEnum enumNumber = null;
+  private @Valid OuterEnum outerEnum = null;
 
   /**
    **/
@@ -114,8 +117,9 @@ public enum EnumStringEnum {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("enum_string")
+
   public EnumStringEnum getEnumString() {
     return enumString;
   }
@@ -131,8 +135,9 @@ public enum EnumStringEnum {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("enum_integer")
+
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -148,8 +153,9 @@ public enum EnumStringEnum {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("enum_number")
+
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
@@ -165,8 +171,9 @@ public enum EnumStringEnum {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("outerEnum")
+
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

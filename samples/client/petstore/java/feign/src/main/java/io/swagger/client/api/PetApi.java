@@ -34,11 +34,10 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /pet/{petId}")
   @Headers({
-      "Content-Type: application/json",
       "Accept: */*",
     "api_key: {apiKey}"
   })
-  void deletePet(@Param("petId") Integer petId, @Param("apiKey") String apiKey);
+  void deletePet(@Param("petId") Long petId, @Param("apiKey") String apiKey);
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
@@ -92,7 +91,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByTags?tags={tags}")
   @Headers({
-      "Accept: application/json",
+      "Accept: */*",
   })
   List<Pet> findPetsByTags(@Param("tags") List<String> tags);
 
@@ -137,9 +136,9 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/{petId}")
   @Headers({
-      "Accept: application/json",
+      "Accept: */*",
   })
-  Pet getPetById(@Param("petId") Integer petId);
+  Pet getPetById(@Param("petId") Long petId);
   /**
    * Update an existing pet
    * 
@@ -160,10 +159,9 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet/{petId}")
   @Headers({
-      "Content-Type: application/x-www-form-urlencoded",
       "Accept: */*",
   })
-  void updatePetWithForm(@Param("petId") Integer petId, @Param("name") String name, @Param("status") String status);
+  void updatePetWithForm(@Param("petId") Long petId, @Param("name") String name, @Param("status") String status);
   /**
    * uploads an image
    * 
@@ -174,8 +172,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet/{petId}/uploadImage")
   @Headers({
-      "Content-Type: multipart/form-data",
-      "Accept: application/json",
+      "Accept: */*",
   })
-  ModelApiResponse uploadFile(@Param("petId") Integer petId, @Param("additionalMetadata") String additionalMetadata, @Param("file") File file);
+  ModelApiResponse uploadFile(@Param("petId") Long petId, @Param("additionalMetadata") String additionalMetadata, @Param("file") File file);
 }

@@ -308,7 +308,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/xml; charset=utf-8application/json; charset=utf-8
+ - **Content-Type**: application/xml; charset=utf-8, application/json; charset=utf-8
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)

@@ -6,13 +6,15 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class OuterComposite  implements Serializable {
-  private @Valid BigDecimal myNumber = null;  private @Valid String myString = null;  private @Valid Boolean myBoolean = null;
+  private @Valid BigDecimal myNumber = null;
+  private @Valid String myString = null;
+  private @Valid Boolean myBoolean = null;
 
   /**
    **/
@@ -22,8 +24,9 @@ public class OuterComposite  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("my_number")
+
   public BigDecimal getMyNumber() {
     return myNumber;
   }
@@ -39,8 +42,9 @@ public class OuterComposite  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("my_string")
+
   public String getMyString() {
     return myString;
   }
@@ -56,8 +60,9 @@ public class OuterComposite  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("my_boolean")
+
   public Boolean getMyBoolean() {
     return myBoolean;
   }
