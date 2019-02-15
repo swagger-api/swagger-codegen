@@ -38,6 +38,9 @@ packages/
 /generated-files
 nbactions.xml
 
+# scala
+samples/client/petstore-security-test/scala/bin/
+
 # scalatra
 samples/server-generator/scalatra/output
 samples/server-generator/scalatra/target
@@ -175,6 +178,10 @@ effective.pom
 # kotlin
 samples/client/petstore/kotlin/src/main/kotlin/test/
 \?
+samples/client/petstore/kotlin/bin/
+
+# scala-gatling
+samples/client/petstore/scala-gatling/bin/
 
 # haskell
 .stack-work
