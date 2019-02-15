@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**uuid** | [**string**](.md) |  | [optional] 
+**uuid** | **string** |  | [optional] 
 **date_time** | [**\DateTime**](\DateTime.md) |  | [optional] 
 **map** | [**map[string,\Swagger\Client\Model\Animal]**](Animal.md) |  | [optional] 
 
