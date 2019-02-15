@@ -42,9 +42,9 @@ public interface StoreApi extends ApiClient.Api {
    */
   @RequestLine("GET /store/order/{orderId}")
   @Headers({
-      "Accept: application/json",
+      "Accept: */*",
   })
-  Order getOrderById(@Param("orderId") Integer orderId);
+  Order getOrderById(@Param("orderId") Long orderId);
   /**
    * Place an order for a pet
    * 

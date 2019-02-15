@@ -96,7 +96,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/json
 
 <a name="getOrderById"></a>
 # **getOrderById**
@@ -143,7 +143,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/xml, application/json
 
 <a name="placeOrder"></a>
 # **placeOrder**
@@ -187,6 +187,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: 
- - **Accept**: 
+ - **Content-Type**: */*
+ - **Accept**: application/xml, application/json
 

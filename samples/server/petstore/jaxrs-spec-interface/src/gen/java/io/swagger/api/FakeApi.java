@@ -23,46 +23,59 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:42:18.406-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:02:53.126-05:00[America/Bogota]")
 public interface FakeApi {
 
     @POST
     @Path("/outer/boolean")
-    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class))) })
     Boolean fakeOuterBooleanSerialize(@Valid Boolean body);
     @POST
     @Path("/outer/composite")
-    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class))) })
     OuterComposite fakeOuterCompositeSerialize(@Valid OuterComposite body);
     @POST
     @Path("/outer/number")
-    @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of outer number types", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class))) })
     BigDecimal fakeOuterNumberSerialize(@Valid BigDecimal body);
     @POST
     @Path("/outer/string")
-    @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of outer string types", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class))) })
     String fakeOuterStringSerialize(@Valid String body);
     @PATCH
-    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
     Client testClientModel(@Valid Client body);
     @POST
-    @Operation(summary = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", description = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", tags={ "fake" })
+    @Consumes({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
+    @Operation(summary = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", description = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", security = {
+        @SecurityRequirement(name = "http_basic_test")    }, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
     void testEndpointParameters(@Valid Object body);
     @GET
-    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
+    @Consumes({ "*/*" })
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found") })
@@ -84,13 +97,15 @@ public interface FakeApi {
 );
     @POST
     @Path("/inline-additionalProperties")
-    @Operation(summary = "test inline additionalProperties", description = "", tags={ "fake" })
+    @Consumes({ "application/json" })
+    @Operation(summary = "test inline additionalProperties", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     void testInlineAdditionalProperties(@Valid Map<String, String> body);
     @GET
     @Path("/jsonFormData")
-    @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
+    @Consumes({ "application/json" })
+    @Operation(summary = "test json serialization of form data", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     void testJsonFormData(@Valid Object body);}

@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**array_of_string** | [**string[]**](.md) |  | [optional] 
+**array_of_string** | **string[]** |  | [optional] 
 **array_array_of_integer** | [**int[][]**](array.md) |  | [optional] 
 **array_array_of_model** | [**\Swagger\Client\Model\ReadOnlyFirst[][]**](array.md) |  | [optional] 
 

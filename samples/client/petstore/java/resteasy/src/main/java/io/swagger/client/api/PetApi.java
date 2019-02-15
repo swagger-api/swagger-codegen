@@ -79,7 +79,7 @@ public class PetApi {
    * @param apiKey  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void deletePet(Integer petId, String apiKey) throws ApiException {
+  public void deletePet(Long petId, String apiKey) throws ApiException {
     Object localVarPostBody = null;
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -202,7 +202,7 @@ public class PetApi {
    * @return Pet
    * @throws ApiException if fails to make API call
    */
-  public Pet getPetById(Integer petId) throws ApiException {
+  public Pet getPetById(Long petId) throws ApiException {
     Object localVarPostBody = null;
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -280,7 +280,7 @@ public class PetApi {
    * @param status  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void updatePetWithForm(Integer petId, String name, String status) throws ApiException {
+  public void updatePetWithForm(Long petId, String name, String status) throws ApiException {
     Object localVarPostBody = null;
     // verify the required parameter 'petId' is set
     if (petId == null) {
@@ -325,7 +325,7 @@ if (status != null)
    * @return ModelApiResponse
    * @throws ApiException if fails to make API call
    */
-  public ModelApiResponse uploadFile(Integer petId, String additionalMetadata, File file) throws ApiException {
+  public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws ApiException {
     Object localVarPostBody = null;
     // verify the required parameter 'petId' is set
     if (petId == null) {

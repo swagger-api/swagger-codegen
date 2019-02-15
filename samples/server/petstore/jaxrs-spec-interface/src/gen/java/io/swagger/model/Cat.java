@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,8 +21,9 @@ public class Cat extends Animal  {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("declawed")
+
   public Boolean isisDeclawed() {
     return declawed;
   }

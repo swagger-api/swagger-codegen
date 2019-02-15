@@ -54,7 +54,7 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: application/json, application/xml
  - **Accept**: Not defined
 
 <a name="deletePet"></a>
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/xml, application/json
 
 <a name="findPetsByTags"></a>
 # **findPetsByTags**
@@ -195,7 +195,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/xml, application/json
 
 <a name="getPetById"></a>
 # **getPetById**
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/xml, application/json
 
 <a name="updatePet"></a>
 # **updatePet**
@@ -285,7 +285,7 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: application/json, application/xml
  - **Accept**: Not defined
 
 <a name="updatePetWithForm"></a>
@@ -333,7 +333,7 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: application/x-www-form-urlencoded
  - **Accept**: Not defined
 
 <a name="uploadFile"></a>
@@ -382,6 +382,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: 
- - **Accept**: 
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
 

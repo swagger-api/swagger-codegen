@@ -21,41 +21,44 @@ import javax.validation.Valid;
 
 @Path("/user")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:45:22.616-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
 public class UserApi {
 
     @POST
-    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @Consumes({ "*/*" })
+    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation") 
+        @ApiResponse(responseCode = "200", description = "successful operation")
     })
     public Response createUser(@Valid User body) {
         return Response.ok().entity("magic!").build();
     }
     @POST
     @Path("/createWithArray")
-    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @Consumes({ "*/*" })
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation") 
+        @ApiResponse(responseCode = "200", description = "successful operation")
     })
     public Response createUsersWithArrayInput(@Valid List<User> body) {
         return Response.ok().entity("magic!").build();
     }
     @POST
     @Path("/createWithList")
-    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @Consumes({ "*/*" })
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation") 
+        @ApiResponse(responseCode = "200", description = "successful operation")
     })
     public Response createUsersWithListInput(@Valid List<User> body) {
         return Response.ok().entity("magic!").build();
     }
     @DELETE
     @Path("/{username}")
-    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
-        @ApiResponse(responseCode = "404", description = "User not found") 
+        @ApiResponse(responseCode = "404", description = "User not found")
     })
     public Response deleteUser( @PathParam("username")
 
@@ -65,11 +68,12 @@ public class UserApi {
     }
     @GET
     @Path("/{username}")
-    @Operation(summary = "Get user by user name", description = "", tags={ "user" })
+    @Produces({ "application/xml", "application/json" })
+    @Operation(summary = "Get user by user name", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
-        @ApiResponse(responseCode = "404", description = "User not found") 
+        @ApiResponse(responseCode = "404", description = "User not found")
     })
     public Response getUserByName( @PathParam("username")
 
@@ -79,10 +83,11 @@ public class UserApi {
     }
     @GET
     @Path("/login")
-    @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
+    @Produces({ "application/xml", "application/json" })
+    @Operation(summary = "Logs user into the system", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
-        @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") 
+        @ApiResponse(responseCode = "400", description = "Invalid username/password supplied")
     })
     public Response loginUser( @NotNull  @QueryParam("username") 
 
@@ -95,19 +100,20 @@ public class UserApi {
     }
     @GET
     @Path("/logout")
-    @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
+    @Operation(summary = "Logs out current logged in user session", description = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation") 
+        @ApiResponse(responseCode = "200", description = "successful operation")
     })
     public Response logoutUser() {
         return Response.ok().entity("magic!").build();
     }
     @PUT
     @Path("/{username}")
-    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @Consumes({ "*/*" })
+    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
-        @ApiResponse(responseCode = "404", description = "User not found") 
+        @ApiResponse(responseCode = "404", description = "User not found")
     })
     public Response updateUser(@Valid User body, @PathParam("username")
 

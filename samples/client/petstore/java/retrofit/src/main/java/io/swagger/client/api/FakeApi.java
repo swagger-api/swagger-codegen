@@ -7,6 +7,10 @@ import retrofit.http.*;
 import retrofit.mime.*;
 
 import java.math.BigDecimal;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.Body3;
+import io.swagger.client.model.Body4;
+import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 import java.util.ArrayList;
@@ -134,7 +138,7 @@ public interface FakeApi {
    */
   @POST("/fake")
   Void testEndpointParameters(
-    @retrofit.http.Body Object body
+    @retrofit.http.Body Body2 body
   );
 
   /**
@@ -145,13 +149,12 @@ public interface FakeApi {
    */
   @POST("/fake")
   void testEndpointParameters(
-    @retrofit.http.Body Object body, Callback<Void> cb
+    @retrofit.http.Body Body2 body, Callback<Void> cb
   );
   /**
    * To test enum parameters
    * Sync method
    * To test enum parameters
-   * @param body  (optional)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
    * @param enumHeaderString Header parameter enum test (string) (optional)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
@@ -161,13 +164,12 @@ public interface FakeApi {
    */
   @GET("/fake")
   Void testEnumParameters(
-    @retrofit.http.Body Object body, @retrofit.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit.http.Header("enum_header_string") String enumHeaderString, @retrofit.http.Query("enum_query_string_array") List<String> enumQueryStringArray, @retrofit.http.Query("enum_query_string") String enumQueryString, @retrofit.http.Query("enum_query_integer") Integer enumQueryInteger
+    @retrofit.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit.http.Header("enum_header_string") String enumHeaderString, @retrofit.http.Query("enum_query_string_array") List<String> enumQueryStringArray, @retrofit.http.Query("enum_query_string") String enumQueryString, @retrofit.http.Query("enum_query_integer") Integer enumQueryInteger
   );
 
   /**
    * To test enum parameters
    * Async method
-   * @param body  (optional)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
    * @param enumHeaderString Header parameter enum test (string) (optional)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
@@ -177,7 +179,29 @@ public interface FakeApi {
    */
   @GET("/fake")
   void testEnumParameters(
-    @retrofit.http.Body Object body, @retrofit.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit.http.Header("enum_header_string") String enumHeaderString, @retrofit.http.Query("enum_query_string_array") List<String> enumQueryStringArray, @retrofit.http.Query("enum_query_string") String enumQueryString, @retrofit.http.Query("enum_query_integer") Integer enumQueryInteger, Callback<Void> cb
+    @retrofit.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit.http.Header("enum_header_string") String enumHeaderString, @retrofit.http.Query("enum_query_string_array") List<String> enumQueryStringArray, @retrofit.http.Query("enum_query_string") String enumQueryString, @retrofit.http.Query("enum_query_integer") Integer enumQueryInteger, Callback<Void> cb
+  );
+  /**
+   * To test enum parameters
+   * Sync method
+   * To test enum parameters
+   * @param body  (optional)
+   * @return Void
+   */
+  @POST("/fake/enum/form")
+  Void testEnumRequestBody(
+    @retrofit.http.Body Body4 body
+  );
+
+  /**
+   * To test enum parameters
+   * Async method
+   * @param body  (optional)
+   * @param cb callback method
+   */
+  @POST("/fake/enum/form")
+  void testEnumRequestBody(
+    @retrofit.http.Body Body4 body, Callback<Void> cb
   );
   /**
    * test inline additionalProperties
@@ -208,9 +232,9 @@ public interface FakeApi {
    * @param body  (required)
    * @return Void
    */
-  @GET("/fake/jsonFormData")
+  @POST("/fake/jsonFormData")
   Void testJsonFormData(
-    @retrofit.http.Body Object body
+    @retrofit.http.Body Body5 body
   );
 
   /**
@@ -219,8 +243,8 @@ public interface FakeApi {
    * @param body  (required)
    * @param cb callback method
    */
-  @GET("/fake/jsonFormData")
+  @POST("/fake/jsonFormData")
   void testJsonFormData(
-    @retrofit.http.Body Object body, Callback<Void> cb
+    @retrofit.http.Body Body5 body, Callback<Void> cb
   );
 }

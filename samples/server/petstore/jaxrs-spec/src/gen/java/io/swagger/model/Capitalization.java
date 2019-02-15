@@ -5,13 +5,18 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Capitalization  implements Serializable {
-  private @Valid String smallCamel = null;  private @Valid String capitalCamel = null;  private @Valid String smallSnake = null;  private @Valid String capitalSnake = null;  private @Valid String scAETHFlowPoints = null;  private @Valid String ATT_NAME = null;
+  private @Valid String smallCamel = null;
+  private @Valid String capitalCamel = null;
+  private @Valid String smallSnake = null;
+  private @Valid String capitalSnake = null;
+  private @Valid String scAETHFlowPoints = null;
+  private @Valid String ATT_NAME = null;
 
   /**
    **/
@@ -21,8 +26,9 @@ public class Capitalization  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("smallCamel")
+
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -38,8 +44,9 @@ public class Capitalization  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("CapitalCamel")
+
   public String getCapitalCamel() {
     return capitalCamel;
   }
@@ -55,8 +62,9 @@ public class Capitalization  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("small_Snake")
+
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -72,8 +80,9 @@ public class Capitalization  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("Capital_Snake")
+
   public String getCapitalSnake() {
     return capitalSnake;
   }
@@ -89,8 +98,9 @@ public class Capitalization  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("SCA_ETH_Flow_Points")
+
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -107,8 +117,9 @@ public class Capitalization  implements Serializable {
   }
 
   
-  @Schema(description = "Name of the pet ")
+  @ApiModelProperty(value = "Name of the pet ")
   @JsonProperty("ATT_NAME")
+
   public String getATTNAME() {
     return ATT_NAME;
   }

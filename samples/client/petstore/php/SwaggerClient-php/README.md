@@ -174,11 +174,10 @@ Class | Method | HTTP request | Description
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
-
- - **write:pets**: modify pets in your account
- - **read:pets**: read your pets
+ - ****: 
 
 
 ## Author
 
+apiteam@swagger.io
 

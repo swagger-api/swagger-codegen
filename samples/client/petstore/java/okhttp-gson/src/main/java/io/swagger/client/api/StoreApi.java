@@ -298,7 +298,7 @@ public class StoreApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getOrderByIdCall(Integer orderId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getOrderByIdCall(Long orderId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -341,7 +341,7 @@ public class StoreApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getOrderByIdValidateBeforeCall(Integer orderId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getOrderByIdValidateBeforeCall(Long orderId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'orderId' is set
         if (orderId == null) {
             throw new ApiException("Missing the required parameter 'orderId' when calling getOrderById(Async)");
@@ -363,7 +363,7 @@ public class StoreApi {
      * @return Order
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Order getOrderById(Integer orderId) throws ApiException {
+    public Order getOrderById(Long orderId) throws ApiException {
         ApiResponse<Order> resp = getOrderByIdWithHttpInfo(orderId);
         return resp.getData();
     }
@@ -375,7 +375,7 @@ public class StoreApi {
      * @return ApiResponse&lt;Order&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Order> getOrderByIdWithHttpInfo(Integer orderId) throws ApiException {
+    public ApiResponse<Order> getOrderByIdWithHttpInfo(Long orderId) throws ApiException {
         com.squareup.okhttp.Call call = getOrderByIdValidateBeforeCall(orderId, null, null);
         Type localVarReturnType = new TypeToken<Order>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -389,7 +389,7 @@ public class StoreApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getOrderByIdAsync(Integer orderId, final ApiCallback<Order> callback) throws ApiException {
+    public com.squareup.okhttp.Call getOrderByIdAsync(Long orderId, final ApiCallback<Order> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
