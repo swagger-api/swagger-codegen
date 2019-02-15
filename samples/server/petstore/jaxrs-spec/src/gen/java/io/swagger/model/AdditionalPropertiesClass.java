@@ -8,13 +8,14 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class AdditionalPropertiesClass  implements Serializable {
-  private @Valid Map<String, String> mapProperty = new HashMap<String, String>();  private @Valid Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
+  private @Valid Map<String, String> mapProperty = new HashMap<String, String>();
+  private @Valid Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
 
   /**
    **/
@@ -24,8 +25,9 @@ public class AdditionalPropertiesClass  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map_property")
+
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
@@ -41,8 +43,9 @@ public class AdditionalPropertiesClass  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map_of_map_property")
+
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }

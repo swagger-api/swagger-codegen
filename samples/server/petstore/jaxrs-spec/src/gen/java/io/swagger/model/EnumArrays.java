@@ -7,7 +7,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -44,37 +44,39 @@ public enum JustSymbolEnum {
         return null;
     }
 }
-  private @Valid JustSymbolEnum justSymbol = null;public enum ArrayEnumEnum {
+  private @Valid JustSymbolEnum justSymbol = null;
 
-    FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
-
-
-    private String value;
-
-    ArrayEnumEnum (String v) {
-        value = v;
-    }
-
-    public String value() {
-        return value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static ArrayEnumEnum fromValue(String v) {
-        for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
-        }
-        return null;
-    }
-}
+  public enum ArrayEnumEnum {
+  
+      FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
+  
+  
+      private String value;
+  
+      ArrayEnumEnum (String v) {
+          value = v;
+      }
+  
+      public String value() {
+          return value;
+      }
+  
+      @Override
+      @JsonValue
+      public String toString() {
+          return String.valueOf(value);
+      }
+  
+      @JsonCreator
+      public static ArrayEnumEnum fromValue(String v) {
+          for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
+              if (String.valueOf(b.value).equals(v)) {
+                  return b;
+              }
+          }
+          return null;
+      }
+  }
   private @Valid List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
   /**
@@ -85,8 +87,9 @@ public enum JustSymbolEnum {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("just_symbol")
+
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
@@ -102,8 +105,9 @@ public enum JustSymbolEnum {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("array_enum")
+
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }

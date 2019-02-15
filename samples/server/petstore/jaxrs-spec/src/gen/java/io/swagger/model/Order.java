@@ -6,13 +6,17 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Order  implements Serializable {
-  private @Valid Long id = null;  private @Valid Long petId = null;  private @Valid Integer quantity = null;  private @Valid Date shipDate = null;public enum StatusEnum {
+  private @Valid Long id = null;
+  private @Valid Long petId = null;
+  private @Valid Integer quantity = null;
+  private @Valid Date shipDate = null;
+public enum StatusEnum {
 
     PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
 
@@ -43,7 +47,8 @@ public class Order  implements Serializable {
         return null;
     }
 }
-  private @Valid StatusEnum status = null;  private @Valid Boolean complete = false;
+  private @Valid StatusEnum status = null;
+  private @Valid Boolean complete = false;
 
   /**
    **/
@@ -53,8 +58,9 @@ public class Order  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -70,8 +76,9 @@ public class Order  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("petId")
+
   public Long getPetId() {
     return petId;
   }
@@ -87,8 +94,9 @@ public class Order  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("quantity")
+
   public Integer getQuantity() {
     return quantity;
   }
@@ -104,8 +112,9 @@ public class Order  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
+
   public Date getShipDate() {
     return shipDate;
   }
@@ -122,8 +131,9 @@ public class Order  implements Serializable {
   }
 
   
-  @Schema(description = "Order Status")
+  @ApiModelProperty(value = "Order Status")
   @JsonProperty("status")
+
   public StatusEnum getStatus() {
     return status;
   }
@@ -139,8 +149,9 @@ public class Order  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("complete")
+
   public Boolean isisComplete() {
     return complete;
   }

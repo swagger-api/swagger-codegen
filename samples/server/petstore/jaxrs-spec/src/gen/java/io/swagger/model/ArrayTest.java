@@ -8,13 +8,15 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ArrayTest  implements Serializable {
-  private @Valid List<String> arrayOfString = new ArrayList<String>();  private @Valid List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();  private @Valid List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
+  private @Valid List<String> arrayOfString = new ArrayList<String>();
+  private @Valid List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
+  private @Valid List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
 
   /**
    **/
@@ -24,8 +26,9 @@ public class ArrayTest  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("array_of_string")
+
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
@@ -41,8 +44,9 @@ public class ArrayTest  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("array_array_of_integer")
+
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -58,8 +62,9 @@ public class ArrayTest  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("array_array_of_model")
+
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
