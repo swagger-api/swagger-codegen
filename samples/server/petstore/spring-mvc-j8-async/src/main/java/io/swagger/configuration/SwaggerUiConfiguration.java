@@ -17,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 
-
 @Configuration
 @ComponentScan(basePackages = "io.swagger.api")
 @EnableWebMvc
