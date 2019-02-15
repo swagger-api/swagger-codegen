@@ -17,10 +17,10 @@ def {{operationId}}({{#allParams}}{{paramName}}{{^required}}=None{{/required}}{{
     :param {{paramName}}: {{description}}
         {{^isContainer}}
             {{#isPrimitiveType}}
-    :type {{paramName}}: {{>param_type}}
+    :type {{paramName}}: {{#isString}}str{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isLong}}int{{/isLong}}{{#isFloat}}float{{/isFloat}}{{#isDouble}}float{{/isDouble}}{{#isByteArray}}str{{/isByteArray}}{{#isBinary}}str{{/isBinary}}{{#isBoolean}}bool{{/isBoolean}}{{#isDate}}str{{/isDate}}{{#isDateTime}}str{{/isDateTime}}
             {{/isPrimitiveType}}
             {{#isUuid}}
-    :type {{paramName}}: {{>param_type}}
+    :type {{paramName}}: {{#isString}}str{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isLong}}int{{/isLong}}{{#isFloat}}float{{/isFloat}}{{#isDouble}}float{{/isDouble}}{{#isByteArray}}str{{/isByteArray}}{{#isBinary}}str{{/isBinary}}{{#isBoolean}}bool{{/isBoolean}}{{#isDate}}str{{/isDate}}{{#isDateTime}}str{{/isDateTime}}
             {{/isUuid}}
             {{^isPrimitiveType}}
                 {{#isFile}}
@@ -36,7 +36,7 @@ def {{operationId}}({{#allParams}}{{paramName}}{{^required}}=None{{/required}}{{
         {{#isListContainer}}
             {{#items}}
                 {{#isPrimitiveType}}
-    :type {{paramName}}: List[{{>param_type}}]
+    :type {{paramName}}: List[{{#isString}}str{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isLong}}int{{/isLong}}{{#isFloat}}float{{/isFloat}}{{#isDouble}}float{{/isDouble}}{{#isByteArray}}str{{/isByteArray}}{{#isBinary}}str{{/isBinary}}{{#isBoolean}}bool{{/isBoolean}}{{#isDate}}str{{/isDate}}{{#isDateTime}}str{{/isDateTime}}]
                 {{/isPrimitiveType}}
                 {{^isPrimitiveType}}
     :type {{paramName}}: list | bytes
@@ -46,7 +46,7 @@ def {{operationId}}({{#allParams}}{{paramName}}{{^required}}=None{{/required}}{{
         {{#isMapContainer}}
             {{#items}}
                 {{#isPrimitiveType}}
-    :type {{paramName}}: Dict[str, {{>param_type}}]
+    :type {{paramName}}: Dict[str, {{#isString}}str{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isLong}}int{{/isLong}}{{#isFloat}}float{{/isFloat}}{{#isDouble}}float{{/isDouble}}{{#isByteArray}}str{{/isByteArray}}{{#isBinary}}str{{/isBinary}}{{#isBoolean}}bool{{/isBoolean}}{{#isDate}}str{{/isDate}}{{#isDateTime}}str{{/isDateTime}}]
                 {{/isPrimitiveType}}
                 {{^isPrimitiveType}}
     :type {{paramName}}: dict | bytes

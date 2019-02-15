@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements CodegenConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FlaskConnexionMDSOCodegen.class);
-    private static final String APP_PATH = "app" + File.separatorChar;
 
     public static final String CONTROLLER_PACKAGE = "controllerPackage";
     public static final String DEFAULT_CONTROLLER = "defaultController";
@@ -39,8 +38,6 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
 
     public FlaskConnexionMDSOCodegen() {
         super();
-        modelPackage = "models";
-        testPackage = "test";
 
         languageSpecificPrimitives.clear();
         languageSpecificPrimitives.add("int");
@@ -101,21 +98,6 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
          */
         additionalProperties.put("serverPort", serverPort);
 
-        /*
-         * Supporting Files.  You can write single files for the generator with the
-         * entire object tree available.  If the input file has a suffix of `.mustache
-         * it will be processed by the template engine.  Otherwise, it will be copied
-         */
-        supportingFiles.add(new SupportingFile("README.mustache", APP_PATH, "README.md"));
-        supportingFiles.add(new SupportingFile("setup.mustache", APP_PATH, "setup.py"));
-        supportingFiles.add(new SupportingFile("tox.mustache", APP_PATH, "tox.ini"));
-        supportingFiles.add(new SupportingFile("test-requirements.mustache", APP_PATH, "test-requirements.txt"));
-        supportingFiles.add(new SupportingFile("requirements.mustache", APP_PATH, "requirements.txt"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", APP_PATH, ".gitignore"));
-        supportingFiles.add(new SupportingFile("travis.mustache", APP_PATH, ".travis.yml"));
-        supportingFiles.add(new SupportingFile("Dockerfile.mustache", APP_PATH, "Dockerfile"));
-        supportingFiles.add(new SupportingFile("dockerignore.mustache", APP_PATH, ".dockerignore"));
-
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IGNORECASE");
         regexModifiers.put('l', "LOCALE");
@@ -125,7 +107,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
         regexModifiers.put('x', "VERBOSE");
 
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "python package name (convention: snake_case).")
-                .defaultValue("swagger_server"));
+                .defaultValue("swagger_microservice"));
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_VERSION, "python package version.")
                 .defaultValue("1.0.0"));
         cliOptions.add(new CliOption(CONTROLLER_PACKAGE, "controller package").
@@ -146,7 +128,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
         } else {
-            setPackageName("swagger_server");
+            setPackageName("swagger_microservice");
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, this.packageName);
         }
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_VERSION)) {
@@ -171,20 +153,53 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
             additionalProperties.put(SUPPORT_PYTHON2, Boolean.TRUE);
             typeMapping.put("long", "long");
         }
-        String packagePath = APP_PATH + packageName;
-        supportingFiles.add(new SupportingFile("__init__.mustache", packagePath, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__main__.mustache", packagePath, "__main__.py"));
-        supportingFiles.add(new SupportingFile("encoder.mustache", packagePath, "encoder.py"));
-        supportingFiles.add(new SupportingFile("util.mustache", packagePath, "util.py"));
-        supportingFiles.add(new SupportingFile("__init__.mustache", packagePath + File.separatorChar + controllerPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__model.mustache", packagePath + File.separatorChar + modelPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("base_model_.mustache", packagePath + File.separatorChar + modelPackage, "base_model_.py"));
-        supportingFiles.add(new SupportingFile("__init__test.mustache", packagePath + File.separatorChar + testPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("swagger.mustache", packagePath + File.separatorChar + "swagger", "swagger.yaml"));
 
-        modelPackage = packageName + "." + modelPackage;
-        controllerPackage = packageName + "." + controllerPackage;
-        testPackage = packageName + "." + testPackage;
+        String APP_PATH = "app" + File.separatorChar;
+        String APP_PACKAGE_PATH = APP_PATH + packageName;
+        String TEST_PATH = APP_PACKAGE_PATH + File.separatorChar + "test";
+        String MODEL_PATH = APP_PACKAGE_PATH + File.separatorChar + "models";
+        String CONTROLLER_PATH = APP_PACKAGE_PATH + File.separatorChar + "controllers";
+        String SOLUTION_PATH = "solution" + File.separatorChar;
+
+        // modelPackage = packageName + "." + modelPackage;
+        // controllerPackage = packageName + "." + controllerPackage;
+        // testPackage = packageName + "." + testPackage;
+
+        // make solution and app src path available in mustache template
+        additionalProperties.put("appSrcPath", APP_PATH);
+        additionalProperties.put("solutionSrcPath", SOLUTION_PATH);
+
+        /*
+         * Supporting Files.  You can write single files for the generator with the
+         * entire object tree available.  If the input file has a suffix of `.mustache
+         * it will be processed by the template engine.  Otherwise, it will be copied
+         */
+        supportingFiles.add(new SupportingFile("README.mustache", APP_PATH, "README.md"));
+        supportingFiles.add(new SupportingFile("setup.mustache", APP_PATH, "setup.py"));
+        supportingFiles.add(new SupportingFile("tox.mustache", APP_PATH, "tox.ini"));
+        supportingFiles.add(new SupportingFile("test-requirements.mustache", APP_PATH, "test-requirements.txt"));
+        supportingFiles.add(new SupportingFile("requirements.mustache", APP_PATH, "requirements.txt"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", APP_PATH, ".gitignore"));
+        supportingFiles.add(new SupportingFile("Dockerfile.mustache", APP_PATH, "Dockerfile"));
+        supportingFiles.add(new SupportingFile("dockerignore.mustache", APP_PATH, ".dockerignore"));
+
+        supportingFiles.add(new SupportingFile("__init__.mustache", APP_PACKAGE_PATH, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__main__.mustache", APP_PACKAGE_PATH, "__main__.py"));
+        supportingFiles.add(new SupportingFile("encoder.mustache", APP_PACKAGE_PATH, "encoder.py"));
+        supportingFiles.add(new SupportingFile("util.mustache", APP_PACKAGE_PATH, "util.py"));
+
+        supportingFiles.add(new SupportingFile("__init__.mustache", CONTROLLER_PATH, "__init__.py"));
+
+        supportingFiles.add(new SupportingFile("__init__model.mustache", MODEL_PATH, "__init__.py"));
+        supportingFiles.add(new SupportingFile("base_model_.mustache", MODEL_PATH, "base_model_.py"));
+
+        supportingFiles.add(new SupportingFile("__init__test.mustache", TEST_PATH, "__init__.py"));
+
+        supportingFiles.add(new SupportingFile("swagger.mustache", APP_PACKAGE_PATH + File.separatorChar + "swagger", "swagger.yaml"));
+
+        modelPackage = "app." + packageName + ".models";
+        controllerPackage = "app." + packageName + ".controllers";
+        testPackage = "app." + packageName + ".test";
     }
 
     private static String dropDots(String str) {
@@ -325,7 +340,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
                         if(operation.getVendorExtensions().get("x-swagger-router-controller") == null) {
                             operation.getVendorExtensions().put(
                                     "x-swagger-router-controller",
-                                    controllerPackage + "." + toApiFilename(tag)
+                                    controllerPackage.replace("app.", "") + "." + toApiFilename(tag)
                             );
                         }
                         for (Parameter param: operation.getParameters()) {
