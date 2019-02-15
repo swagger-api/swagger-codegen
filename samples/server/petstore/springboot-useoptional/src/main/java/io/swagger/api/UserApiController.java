@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 @Controller
 public class UserApiController implements UserApi {
 
