@@ -22,12 +22,37 @@ open class CodableHelper {
             decoder.dateDecodingStrategy = .formatted(df)
         } else {
             decoder.dataDecodingStrategy = .base64
-            let formatter = DateFormatter()
-            formatter.calendar = Calendar(identifier: .iso8601)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-            decoder.dateDecodingStrategy = .formatted(formatter)
+            decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
+                let container = try decoder.singleValueContainer()
+                let dateStr = try container.decode(String.self)
+                
+                let formatter = DateFormatter()
+                formatter.calendar = Calendar(identifier: .iso8601)
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.timeZone = TimeZone(secondsFromGMT: 0)
+                
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+                if let date = formatter.date(from: dateStr) {
+                    return date
+                }
+                
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+                if let date = formatter.date(from: dateStr) {
+                    return date
+                }
+                
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
+                if let date = formatter.date(from: dateStr) {
+                    return date
+                }
+                
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                if let date = formatter.date(from: dateStr) {
+                    return date
+                }
+                
+                throw DateError.invalidDate
+            })
         }
 
         do {
