@@ -8,13 +8,18 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Pet   {
-  private @Valid Long id = null;  private @Valid Category category = null;  private @Valid String name = null;  private @Valid List<String> photoUrls = new ArrayList<String>();  private @Valid List<Tag> tags = new ArrayList<Tag>();public enum StatusEnum {
+  private @Valid Long id = null;
+  private @Valid Category category = null;
+  private @Valid String name = null;
+  private @Valid List<String> photoUrls = new ArrayList<String>();
+  private @Valid List<Tag> tags = new ArrayList<Tag>();
+public enum StatusEnum {
 
     AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
 
@@ -55,8 +60,9 @@ public class Pet   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -72,8 +78,9 @@ public class Pet   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("category")
+
   public Category getCategory() {
     return category;
   }
@@ -89,9 +96,10 @@ public class Pet   {
   }
 
   
-  @Schema(example = "doggie", required = true, description = "")
+  @ApiModelProperty(example = "doggie", required = true, value = "")
   @JsonProperty("name")
   @NotNull
+
   public String getName() {
     return name;
   }
@@ -107,9 +115,10 @@ public class Pet   {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("photoUrls")
   @NotNull
+
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -125,8 +134,9 @@ public class Pet   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("tags")
+
   public List<Tag> getTags() {
     return tags;
   }
@@ -143,8 +153,9 @@ public class Pet   {
   }
 
   
-  @Schema(description = "pet status in the store")
+  @ApiModelProperty(value = "pet status in the store")
   @JsonProperty("status")
+
   public StatusEnum getStatus() {
     return status;
   }
