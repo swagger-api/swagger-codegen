@@ -174,7 +174,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**String**](.md)| The name that needs to be deleted |
+ **username** | **String**| The name that needs to be deleted |
 
 ### Return type
 
@@ -217,7 +217,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**String**](.md)| The name that needs to be fetched. Use user1 for testing.  |
+ **username** | **String**| The name that needs to be fetched. Use user1 for testing.  |
 
 ### Return type
 
@@ -261,8 +261,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**String**](.md)| The user name for login |
- **password** | [**String**](.md)| The password for login in clear text |
+ **username** | **String**| The user name for login |
+ **password** | **String**| The password for login in clear text |
 
 ### Return type
 
@@ -348,7 +348,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**User**](User.md)| Updated user object |
- **username** | [**String**](.md)| name that need to be deleted |
+ **username** | **String**| name that need to be deleted |
 
 ### Return type
 
