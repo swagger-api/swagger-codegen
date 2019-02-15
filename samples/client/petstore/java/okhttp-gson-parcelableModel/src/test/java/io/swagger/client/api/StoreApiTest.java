@@ -80,7 +80,7 @@ public class StoreApiTest {
     @Test
     public void getOrderByIdTest() throws ApiException {
         
-        Integer orderId = null;
+        Long orderId = null;
         
         Order response = api.getOrderById(orderId);
 
