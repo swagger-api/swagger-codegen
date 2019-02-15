@@ -19,19 +19,18 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.UUID;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 
 /**
- * FormatTest
+ * Body2
  */
 
-@XmlRootElement(name = "FormatTest")
+@XmlRootElement(name = "Body2")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "FormatTest")public class FormatTest {
+@JacksonXmlRootElement(localName = "Body2")public class Body2 {
 
   @JsonProperty("integer")
   @JacksonXmlProperty(localName = "integer")
@@ -75,6 +74,12 @@ import javax.xml.bind.annotation.*;
 
   private String string = null;
 
+  @JsonProperty("pattern_without_delimiter")
+  @JacksonXmlProperty(localName = "pattern_without_delimiter")
+  @XmlElement(name="pattern_without_delimiter")
+
+  private String patternWithoutDelimiter = null;
+
   @JsonProperty("byte")
   @JacksonXmlProperty(localName = "byte")
   @XmlElement(name="byte")
@@ -99,18 +104,18 @@ import javax.xml.bind.annotation.*;
 
   private OffsetDateTime dateTime = null;
 
-  @JsonProperty("uuid")
-  @JacksonXmlProperty(localName = "uuid")
-  @XmlElement(name="uuid")
-
-  private UUID uuid = null;
-
   @JsonProperty("password")
   @JacksonXmlProperty(localName = "password")
   @XmlElement(name="password")
 
   private String password = null;
-  public FormatTest integer(Integer integer) {
+
+  @JsonProperty("callback")
+  @JacksonXmlProperty(localName = "callback")
+  @XmlElement(name="callback")
+
+  private String callback = null;
+  public Body2 integer(Integer integer) {
     this.integer = integer;
     return this;
   }
@@ -118,19 +123,19 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get integer
+  * None
   * minimum: 10
   * maximum: 100
   * @return integer
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public Integer getInteger() {
     return integer;
   }
   public void setInteger(Integer integer) {
     this.integer = integer;
   }
-  public FormatTest int32(Integer int32) {
+  public Body2 int32(Integer int32) {
     this.int32 = int32;
     return this;
   }
@@ -138,19 +143,19 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get int32
+  * None
   * minimum: 20
   * maximum: 200
   * @return int32
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public Integer getInt32() {
     return int32;
   }
   public void setInt32(Integer int32) {
     this.int32 = int32;
   }
-  public FormatTest int64(Long int64) {
+  public Body2 int64(Long int64) {
     this.int64 = int64;
     return this;
   }
@@ -158,17 +163,17 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get int64
+  * None
   * @return int64
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public Long getInt64() {
     return int64;
   }
   public void setInt64(Long int64) {
     this.int64 = int64;
   }
-  public FormatTest number(BigDecimal number) {
+  public Body2 number(BigDecimal number) {
     this.number = number;
     return this;
   }
@@ -176,19 +181,19 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get number
+  * None
   * minimum: 32
   * maximum: 543
   * @return number
   **/
-  @Schema(required = true, description = "")
+  @Schema(required = true, description = "None")
   public BigDecimal getNumber() {
     return number;
   }
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
-  public FormatTest _float(Float _float) {
+  public Body2 _float(Float _float) {
     this._float = _float;
     return this;
   }
@@ -196,19 +201,18 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get _float
-  * minimum: 54
+  * None
   * maximum: 987
   * @return _float
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public Float getFloat() {
     return _float;
   }
   public void setFloat(Float _float) {
     this._float = _float;
   }
-  public FormatTest _double(Double _double) {
+  public Body2 _double(Double _double) {
     this._double = _double;
     return this;
   }
@@ -216,19 +220,19 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get _double
+  * None
   * minimum: 67
   * maximum: 123
   * @return _double
   **/
-  @Schema(description = "")
+  @Schema(required = true, description = "None")
   public Double getDouble() {
     return _double;
   }
   public void setDouble(Double _double) {
     this._double = _double;
   }
-  public FormatTest string(String string) {
+  public Body2 string(String string) {
     this.string = string;
     return this;
   }
@@ -236,17 +240,35 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get string
+  * None
   * @return string
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public String getString() {
     return string;
   }
   public void setString(String string) {
     this.string = string;
   }
-  public FormatTest _byte(byte[] _byte) {
+  public Body2 patternWithoutDelimiter(String patternWithoutDelimiter) {
+    this.patternWithoutDelimiter = patternWithoutDelimiter;
+    return this;
+  }
+
+  
+
+  /**
+  * None
+  * @return patternWithoutDelimiter
+  **/
+  @Schema(required = true, description = "None")
+  public String getPatternWithoutDelimiter() {
+    return patternWithoutDelimiter;
+  }
+  public void setPatternWithoutDelimiter(String patternWithoutDelimiter) {
+    this.patternWithoutDelimiter = patternWithoutDelimiter;
+  }
+  public Body2 _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -254,17 +276,17 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get _byte
+  * None
   * @return _byte
   **/
-  @Schema(required = true, description = "")
+  @Schema(required = true, description = "None")
   public byte[] getByte() {
     return _byte;
   }
   public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
-  public FormatTest binary(File binary) {
+  public Body2 binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -272,17 +294,17 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get binary
+  * None
   * @return binary
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public File getBinary() {
     return binary;
   }
   public void setBinary(File binary) {
     this.binary = binary;
   }
-  public FormatTest date(LocalDate date) {
+  public Body2 date(LocalDate date) {
     this.date = date;
     return this;
   }
@@ -290,17 +312,17 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get date
+  * None
   * @return date
   **/
-  @Schema(required = true, description = "")
+  @Schema(description = "None")
   public LocalDate getDate() {
     return date;
   }
   public void setDate(LocalDate date) {
     this.date = date;
   }
-  public FormatTest dateTime(OffsetDateTime dateTime) {
+  public Body2 dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -308,35 +330,17 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get dateTime
+  * None
   * @return dateTime
   **/
-  @Schema(description = "")
+  @Schema(description = "None")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
-  public FormatTest uuid(UUID uuid) {
-    this.uuid = uuid;
-    return this;
-  }
-
-  
-
-  /**
-  * Get uuid
-  * @return uuid
-  **/
-  @Schema(description = "")
-  public UUID getUuid() {
-    return uuid;
-  }
-  public void setUuid(UUID uuid) {
-    this.uuid = uuid;
-  }
-  public FormatTest password(String password) {
+  public Body2 password(String password) {
     this.password = password;
     return this;
   }
@@ -344,15 +348,33 @@ import javax.xml.bind.annotation.*;
   
 
   /**
-  * Get password
+  * None
   * @return password
   **/
-  @Schema(required = true, description = "")
+  @Schema(description = "None")
   public String getPassword() {
     return password;
   }
   public void setPassword(String password) {
     this.password = password;
+  }
+  public Body2 callback(String callback) {
+    this.callback = callback;
+    return this;
+  }
+
+  
+
+  /**
+  * None
+  * @return callback
+  **/
+  @Schema(description = "None")
+  public String getCallback() {
+    return callback;
+  }
+  public void setCallback(String callback) {
+    this.callback = callback;
   }
   @Override
   public boolean equals(java.lang.Object o) {
@@ -362,31 +384,32 @@ import javax.xml.bind.annotation.*;
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FormatTest formatTest = (FormatTest) o;
-    return Objects.equals(this.integer, formatTest.integer) &&
-        Objects.equals(this.int32, formatTest.int32) &&
-        Objects.equals(this.int64, formatTest.int64) &&
-        Objects.equals(this.number, formatTest.number) &&
-        Objects.equals(this._float, formatTest._float) &&
-        Objects.equals(this._double, formatTest._double) &&
-        Objects.equals(this.string, formatTest.string) &&
-        Objects.equals(this._byte, formatTest._byte) &&
-        Objects.equals(this.binary, formatTest.binary) &&
-        Objects.equals(this.date, formatTest.date) &&
-        Objects.equals(this.dateTime, formatTest.dateTime) &&
-        Objects.equals(this.uuid, formatTest.uuid) &&
-        Objects.equals(this.password, formatTest.password);
+    Body2 body2 = (Body2) o;
+    return Objects.equals(this.integer, body2.integer) &&
+        Objects.equals(this.int32, body2.int32) &&
+        Objects.equals(this.int64, body2.int64) &&
+        Objects.equals(this.number, body2.number) &&
+        Objects.equals(this._float, body2._float) &&
+        Objects.equals(this._double, body2._double) &&
+        Objects.equals(this.string, body2.string) &&
+        Objects.equals(this.patternWithoutDelimiter, body2.patternWithoutDelimiter) &&
+        Objects.equals(this._byte, body2._byte) &&
+        Objects.equals(this.binary, body2.binary) &&
+        Objects.equals(this.date, body2.date) &&
+        Objects.equals(this.dateTime, body2.dateTime) &&
+        Objects.equals(this.password, body2.password) &&
+        Objects.equals(this.callback, body2.callback);
   }
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
+    return java.util.Objects.hash(integer, int32, int64, number, _float, _double, string, patternWithoutDelimiter, _byte, binary, date, dateTime, password, callback);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FormatTest {\n");
+    sb.append("class Body2 {\n");
     
     sb.append("    integer: ").append(toIndentedString(integer)).append("\n");
     sb.append("    int32: ").append(toIndentedString(int32)).append("\n");
@@ -395,12 +418,13 @@ import javax.xml.bind.annotation.*;
     sb.append("    _float: ").append(toIndentedString(_float)).append("\n");
     sb.append("    _double: ").append(toIndentedString(_double)).append("\n");
     sb.append("    string: ").append(toIndentedString(string)).append("\n");
+    sb.append("    patternWithoutDelimiter: ").append(toIndentedString(patternWithoutDelimiter)).append("\n");
     sb.append("    _byte: ").append(toIndentedString(_byte)).append("\n");
     sb.append("    binary: ").append(toIndentedString(binary)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    dateTime: ").append(toIndentedString(dateTime)).append("\n");
-    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    callback: ").append(toIndentedString(callback)).append("\n");
     sb.append("}");
     return sb.toString();
   }
