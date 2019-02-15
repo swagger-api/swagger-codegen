@@ -85,7 +85,7 @@ OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
 petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
-Integer petId = 56; // Integer | Pet id to delete
+Long petId = 789L; // Long | Pet id to delete
 String apiKey = "apiKey_example"; // String | 
 try {
     apiInstance.deletePet(petId, apiKey);
@@ -99,8 +99,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**Integer**](.md)| Pet id to delete |
- **apiKey** | [**String**](.md)|  | [optional]
+ **petId** | **Long**| Pet id to delete |
+ **apiKey** | **String**|  | [optional]
 
 ### Return type
 
@@ -247,7 +247,7 @@ api_key.setApiKey("YOUR API KEY");
 //api_key.setApiKeyPrefix("Token");
 
 PetApi apiInstance = new PetApi();
-Integer petId = 56; // Integer | ID of pet to return
+Long petId = 789L; // Long | ID of pet to return
 try {
     Pet result = apiInstance.getPetById(petId);
     System.out.println(result);
@@ -261,7 +261,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**Integer**](.md)| ID of pet to return |
+ **petId** | **Long**| ID of pet to return |
 
 ### Return type
 
@@ -348,7 +348,7 @@ OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
 petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
-Integer petId = 56; // Integer | ID of pet that needs to be updated
+Long petId = 789L; // Long | ID of pet that needs to be updated
 String name = "name_example"; // String | 
 String status = "status_example"; // String | 
 try {
@@ -363,9 +363,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**Integer**](.md)| ID of pet that needs to be updated |
- **name** | [**String**](.md)|  | [optional]
- **status** | [**String**](.md)|  | [optional]
+ **petId** | **Long**| ID of pet that needs to be updated |
+ **name** | **String**|  | [optional]
+ **status** | **String**|  | [optional]
 
 ### Return type
 
@@ -402,7 +402,7 @@ OAuth petstore_auth = (OAuth) defaultClient.getAuthentication("petstore_auth");
 petstore_auth.setAccessToken("YOUR ACCESS TOKEN");
 
 PetApi apiInstance = new PetApi();
-Integer petId = 56; // Integer | ID of pet to update
+Long petId = 789L; // Long | ID of pet to update
 String additionalMetadata = "additionalMetadata_example"; // String | 
 File file = new File("file_example"); // File | 
 try {
@@ -418,8 +418,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**Integer**](.md)| ID of pet to update |
- **additionalMetadata** | [**String**](.md)|  | [optional]
+ **petId** | **Long**| ID of pet to update |
+ **additionalMetadata** | **String**|  | [optional]
  **file** | **File**|  | [optional]
 
 ### Return type
