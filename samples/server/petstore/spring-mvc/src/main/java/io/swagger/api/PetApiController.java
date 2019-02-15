@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 @Controller
 public class PetApiController implements PetApi {
 
