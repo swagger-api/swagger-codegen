@@ -35,6 +35,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
     protected String controllerPackage;
     protected String defaultController;
     protected Map<Character, String> regexModifiers;
+    protected String modelDocPath = "model-defintions" + File.separatorChar + "types";
 
     public FlaskConnexionMDSOCodegen() {
         super();
@@ -80,11 +81,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
                     "float", "int", "str", "date", "datetime"));
 
         // set the output folder here
-        outputFolder = "generated-code/connexion";
-
-        apiTemplateFiles.put("controller.mustache", ".py");
-        modelTemplateFiles.put("model.mustache", ".py");
-        apiTestTemplateFiles().put("controller_test.mustache", ".py");
+        outputFolder = "generated-code/bluePlanet";
 
         /*
          * Template Location.  This is the location which templates will be read from.  The generator
@@ -160,46 +157,59 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
         String MODEL_PATH = APP_PACKAGE_PATH + File.separatorChar + "models";
         String CONTROLLER_PATH = APP_PACKAGE_PATH + File.separatorChar + "controllers";
         String SOLUTION_PATH = "solution" + File.separatorChar;
-
-        // modelPackage = packageName + "." + modelPackage;
-        // controllerPackage = packageName + "." + controllerPackage;
-        // testPackage = packageName + "." + testPackage;
+        String SWAGGER_PATH = APP_PACKAGE_PATH + File.separatorChar + "swagger";
 
         // make solution and app src path available in mustache template
         additionalProperties.put("appSrcPath", APP_PATH);
         additionalProperties.put("solutionSrcPath", SOLUTION_PATH);
+        additionalProperties.put("modelDefinitionsSrcPath", modelDocPath);
 
         /*
          * Supporting Files.  You can write single files for the generator with the
          * entire object tree available.  If the input file has a suffix of `.mustache
          * it will be processed by the template engine.  Otherwise, it will be copied
          */
-        supportingFiles.add(new SupportingFile("README.mustache", APP_PATH, "README.md"));
-        supportingFiles.add(new SupportingFile("setup.mustache", APP_PATH, "setup.py"));
-        supportingFiles.add(new SupportingFile("tox.mustache", APP_PATH, "tox.ini"));
-        supportingFiles.add(new SupportingFile("test-requirements.mustache", APP_PATH, "test-requirements.txt"));
-        supportingFiles.add(new SupportingFile("requirements.mustache", APP_PATH, "requirements.txt"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", APP_PATH, ".gitignore"));
-        supportingFiles.add(new SupportingFile("Dockerfile.mustache", APP_PATH, "Dockerfile"));
-        supportingFiles.add(new SupportingFile("dockerignore.mustache", APP_PATH, ".dockerignore"));
 
-        supportingFiles.add(new SupportingFile("__init__.mustache", APP_PACKAGE_PATH, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__main__.mustache", APP_PACKAGE_PATH, "__main__.py"));
-        supportingFiles.add(new SupportingFile("encoder.mustache", APP_PACKAGE_PATH, "encoder.py"));
-        supportingFiles.add(new SupportingFile("util.mustache", APP_PACKAGE_PATH, "util.py"));
+        // Root Directory
+        supportingFiles.add(new SupportingFile("Makefile.mustache", "", "Makefile"));
 
-        supportingFiles.add(new SupportingFile("__init__.mustache", CONTROLLER_PATH, "__init__.py"));
+        // App Directory
+        supportingFiles.add(new SupportingFile("app/Dockerfile.mustache", APP_PATH, "Dockerfile"));
+        supportingFiles.add(new SupportingFile("app/dockerignore.mustache", APP_PATH, ".dockerignore"));
+        supportingFiles.add(new SupportingFile("app/gitignore.mustache", APP_PATH, ".gitignore"));
+        supportingFiles.add(new SupportingFile("app/README.mustache", APP_PATH, "README.md"));
+        supportingFiles.add(new SupportingFile("app/requirements.mustache", APP_PATH, "requirements.txt"));
+        supportingFiles.add(new SupportingFile("app/setup.mustache", APP_PATH, "setup.py"));
+        supportingFiles.add(new SupportingFile("app/tox.mustache", APP_PATH, "tox.ini"));
+        supportingFiles.add(new SupportingFile("app/test-requirements.mustache", APP_PATH, "test-requirements.txt"));
 
-        supportingFiles.add(new SupportingFile("__init__model.mustache", MODEL_PATH, "__init__.py"));
-        supportingFiles.add(new SupportingFile("base_model_.mustache", MODEL_PATH, "base_model_.py"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/__init__.mustache", APP_PACKAGE_PATH, "__init__.py"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/__main__.mustache", APP_PACKAGE_PATH, "__main__.py"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/encoder.mustache", APP_PACKAGE_PATH, "encoder.py"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/util.mustache", APP_PACKAGE_PATH, "util.py"));
 
-        supportingFiles.add(new SupportingFile("__init__test.mustache", TEST_PATH, "__init__.py"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/controllers/__init__.mustache", CONTROLLER_PATH, "__init__.py"));
 
-        supportingFiles.add(new SupportingFile("swagger.mustache", APP_PACKAGE_PATH + File.separatorChar + "swagger", "swagger.yaml"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/models/__init__.mustache", MODEL_PATH, "__init__.py"));
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/models/base_model_.mustache", MODEL_PATH, "base_model_.py"));
 
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/test/__init__.mustache", TEST_PATH, "__init__.py"));
+
+        supportingFiles.add(new SupportingFile("app/{{packageName}}/swagger/swagger.mustache", SWAGGER_PATH, "swagger.yaml"));
+
+        // Solution Directory
+        supportingFiles.add(new SupportingFile("solution/fig.mustache", SOLUTION_PATH, "fig.yml"));
+
+        // Dynamically generated file definitions
         modelPackage = "app." + packageName + ".models";
         controllerPackage = "app." + packageName + ".controllers";
         testPackage = "app." + packageName + ".test";
+
+        apiTemplateFiles.put("app/{{packageName}}/controllers/controller.mustache", ".py");
+        modelTemplateFiles.put("app/{{packageName}}/models/model.mustache", ".py");
+        // Use ModelTest to generate tosca files
+        modelDocTemplateFiles.put("model-definitions/types/ResourceType.mustache", ".tosca");
+        apiTestTemplateFiles.put("app/{{packageName}}/test/controller_test.mustache", ".py");
     }
 
     private static String dropDots(String str) {
@@ -211,6 +221,10 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
         return controllerPackage;
     }
 
+    @Override
+    public String modelDocFileFolder() {
+        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
+    }
 
     /**
      * Configures the type of generator.
@@ -484,7 +498,6 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
         }
 
         // camelize the model name
-        // phone_number => PhoneNumber
         return camelize(name);
     }
 
