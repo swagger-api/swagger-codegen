@@ -19,7 +19,6 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "A pet for sale in the pet store")
 @Validated
-
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;
@@ -70,7 +69,6 @@ public class Pet   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -84,7 +82,6 @@ public class Pet   {
    * @return id
   **/
   @ApiModelProperty(value = "")
-
 
   public Long getId() {
     return id;
@@ -106,7 +103,6 @@ public class Pet   {
   @ApiModelProperty(value = "")
 
   @Valid
-
   public Category getCategory() {
     return category;
   }
@@ -126,7 +122,6 @@ public class Pet   {
   **/
   @ApiModelProperty(example = "doggie", required = true, value = "")
   @NotNull
-
 
   public String getName() {
     return name;
@@ -152,7 +147,6 @@ public class Pet   {
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
 
   public List<String> getPhotoUrls() {
     return photoUrls;
@@ -180,9 +174,7 @@ public class Pet   {
    * @return tags
   **/
   @ApiModelProperty(value = "")
-
   @Valid
-
   public List<Tag> getTags() {
     return tags;
   }
@@ -201,7 +193,6 @@ public class Pet   {
    * @return status
   **/
   @ApiModelProperty(value = "pet status in the store")
-
 
   public StatusEnum getStatus() {
     return status;
@@ -260,4 +251,3 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
