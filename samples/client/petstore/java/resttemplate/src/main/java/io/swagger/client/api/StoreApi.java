@@ -112,7 +112,7 @@ public class StoreApi {
      * @return Order
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Order getOrderById(Integer orderId) throws RestClientException {
+    public Order getOrderById(Long orderId) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'orderId' is set
         if (orderId == null) {
