@@ -5,13 +5,15 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ModelApiResponse  implements Serializable {
-  private @Valid Integer code = null;  private @Valid String type = null;  private @Valid String message = null;
+  private @Valid Integer code = null;
+  private @Valid String type = null;
+  private @Valid String message = null;
 
   /**
    **/
@@ -21,8 +23,9 @@ public class ModelApiResponse  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("code")
+
   public Integer getCode() {
     return code;
   }
@@ -38,8 +41,9 @@ public class ModelApiResponse  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("type")
+
   public String getType() {
     return type;
   }
@@ -55,8 +59,9 @@ public class ModelApiResponse  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("message")
+
   public String getMessage() {
     return message;
   }
