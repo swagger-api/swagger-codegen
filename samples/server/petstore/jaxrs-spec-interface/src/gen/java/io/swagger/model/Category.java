@@ -4,13 +4,14 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Category   {
-  private @Valid Long id = null;  private @Valid String name = null;
+  private @Valid Long id = null;
+  private @Valid String name = null;
 
   /**
    **/
@@ -20,8 +21,9 @@ public class Category   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("id")
+
   public Long getId() {
     return id;
   }
@@ -37,8 +39,9 @@ public class Category   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("name")
+
   public String getName() {
     return name;
   }

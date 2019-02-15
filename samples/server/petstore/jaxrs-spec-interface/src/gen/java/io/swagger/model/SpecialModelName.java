@@ -4,7 +4,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,8 +20,9 @@ public class SpecialModelName   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("$special[property.name]")
+
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }

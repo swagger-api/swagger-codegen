@@ -7,7 +7,7 @@ import javax.validation.Valid;
 /**
  * Model for testing reserved words
  **/
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing reserved words")
@@ -23,8 +23,9 @@ public class ModelReturn   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("return")
+
   public Integer getReturn() {
     return _return;
   }
