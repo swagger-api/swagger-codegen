@@ -1070,7 +1070,6 @@ components:
           type: string
         123Number:
           type: integer
-          format: int32
           readOnly: true
       description: Model for testing model name same as property name
       xml:
@@ -1259,7 +1258,6 @@ components:
           maximum: 100.0
           minimum: 10.0
           type: integer
-          format: int32
         int32:
           maximum: 200.0
           minimum: 20.0
@@ -1471,7 +1469,6 @@ components:
           minimum: 10
           type: integer
           description: None
-          format: int32
         int32:
           maximum: 200
           minimum: 20
@@ -1543,7 +1540,6 @@ components:
           minimum: 10
           type: integer
           description: None
-          format: int32
         int32:
           maximum: 200
           minimum: 20

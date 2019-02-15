@@ -112,7 +112,7 @@ exports.logoutUser = function() {
  * username String name that need to be deleted
  * no response value expected for this operation
  **/
-exports.updateUser = function(bodyusername) {
+exports.updateUser = function(body,username) {
   return new Promise(function(resolve, reject) {
     resolve();
   });
