@@ -11,6 +11,7 @@ public class TypeScriptAureliaClientOptionsProvider implements OptionsProvider {
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final Boolean SUPPORTS_ES6_VALUE = false;
     public static final String MODEL_PROPERTY_NAMING_VALUE = "camelCase";
+    public static final String ENUM_PROPERTY_NAMING_VALUE = "snake_case";
     private static final String NMP_NAME = "npmName";
     private static final String NMP_VERSION = "1.0.0";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
@@ -27,6 +28,7 @@ public class TypeScriptAureliaClientOptionsProvider implements OptionsProvider {
         return builder.put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, SORT_PARAMS_VALUE)
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(CodegenConstants.MODEL_PROPERTY_NAMING, MODEL_PROPERTY_NAMING_VALUE)
+                .put(CodegenConstants.ENUM_PROPERTY_NAMING, ENUM_PROPERTY_NAMING_VALUE)
                 .put(CodegenConstants.SUPPORTS_ES6, String.valueOf(SUPPORTS_ES6_VALUE))
                 .put(TypeScriptAureliaClientCodegen.NPM_NAME, NMP_NAME)
                 .put(TypeScriptAureliaClientCodegen.NPM_VERSION, NMP_VERSION)

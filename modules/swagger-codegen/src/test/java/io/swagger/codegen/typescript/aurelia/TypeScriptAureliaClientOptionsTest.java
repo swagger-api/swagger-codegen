@@ -29,6 +29,8 @@ public class TypeScriptAureliaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setModelPropertyNaming(TypeScriptAureliaClientOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
+            clientCodegen.setEnumPropertyNaming(TypeScriptAureliaClientOptionsProvider.ENUM_PROPERTY_NAMING_VALUE);
+            times = 1;
             clientCodegen.setSupportsES6(TypeScriptAureliaClientOptionsProvider.SUPPORTS_ES6_VALUE);
             times = 1;
         }};

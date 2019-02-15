@@ -30,6 +30,8 @@ public class TypeScriptAngularJsClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setModelPropertyNaming(TypeScriptAngularJsClientOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
+            clientCodegen.setEnumPropertyNaming(TypeScriptAngularJsClientOptionsProvider.ENUM_PROPERTY_NAMING_VALUE);
+            times = 1;
             clientCodegen.setSupportsES6(Boolean.valueOf(TypeScriptAngularJsClientOptionsProvider.SUPPORTS_ES6_VALUE));
             times = 1;
         }};
