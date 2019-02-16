@@ -10,6 +10,11 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt /usr/src/app/
 
+RUN mkdir /bp2 \
+ && mkdir /bp2/data \
+ && mkdir /bp2/log \
+ && mkdir /bp2/src
+
 {{#supportPython2}}
 RUN pip install --no-cache-dir -r requirements.txt
 {{/supportPython2}}
@@ -18,6 +23,10 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 {{/supportPython2}}
 
 COPY . /usr/src/app
+
+ENV SBIS=bpocore \
+    SBI_bpocore_southbound-update=update_etc_hosts_multi_provider \
+    CONFIG_RELOAD_INTERVAL=3600
 
 EXPOSE {{serverPort}}
 

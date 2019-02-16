@@ -21,9 +21,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements CodegenConfig {
+public class BluePlanetCodegen extends DefaultCodegen implements CodegenConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlaskConnexionMDSOCodegen.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BluePlanetCodegen.class);
 
     public static final String CONTROLLER_PACKAGE = "controllerPackage";
     public static final String DEFAULT_CONTROLLER = "defaultController";
@@ -35,9 +35,10 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
     protected String controllerPackage;
     protected String defaultController;
     protected Map<Character, String> regexModifiers;
-    protected String modelDocPath = "model-defintions" + File.separatorChar + "types";
+    protected String modelDocPath = "";
+    protected String modelTestPath = "";
 
-    public FlaskConnexionMDSOCodegen() {
+    public BluePlanetCodegen() {
         super();
 
         languageSpecificPrimitives.clear();
@@ -87,7 +88,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
          * Template Location.  This is the location which templates will be read from.  The generator
          * will use the resource stream to attempt to read the templates.
          */
-        embeddedTemplateDir = templateDir = "mdso";
+        embeddedTemplateDir = templateDir = "bluePlanet";
 
         /*
          * Additional Properties.  These values can be passed to the templates and
@@ -201,15 +202,24 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
         supportingFiles.add(new SupportingFile("solution/fig.mustache", SOLUTION_PATH, "fig.yml"));
 
         // Dynamically generated file definitions
+        modelTemplateFiles.put("app/{{packageName}}/models/model.mustache", ".py");
         modelPackage = "app." + packageName + ".models";
-        controllerPackage = "app." + packageName + ".controllers";
-        testPackage = "app." + packageName + ".test";
 
         apiTemplateFiles.put("app/{{packageName}}/controllers/controller.mustache", ".py");
-        modelTemplateFiles.put("app/{{packageName}}/models/model.mustache", ".py");
-        // Use ModelTest to generate tosca files
-        modelDocTemplateFiles.put("model-definitions/types/ResourceType.mustache", ".tosca");
+        controllerPackage = "app." + packageName + ".controllers";
+
         apiTestTemplateFiles.put("app/{{packageName}}/test/controller_test.mustache", ".py");
+        testPackage = "app." + packageName + ".test";
+
+        // hack: Use ModelDoc to generate tosca files  TODO: implement new Java class
+        modelDocPath = "model-definitions.types.tosca." + packageName;
+        modelDocTemplateFiles.put("model-definitions/types/tosca/{{packageName}}/{{model}}.mustache", ".tosca");
+
+        // hack: Use ModelTest to generate ui files  TODO: implement new Java class
+        modelTestTemplateFiles.put("model-definitions/types/ddui-views/{{packageName}}.resourceTypes.{{model}}/create.mustache", "create.json");
+        modelTestTemplateFiles.put("model-definitions/types/ddui-views/{{packageName}}.resourceTypes.{{model}}/high.mustache", "high.json");
+        modelTestTemplateFiles.put("model-definitions/types/ddui-views/{{packageName}}.resourceTypes.{{model}}/low.mustache", "low.json");
+        modelTestPath = "model-definitions" + File.separator + "types";
     }
 
     private static String dropDots(String str) {
@@ -223,7 +233,23 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
 
     @Override
     public String modelDocFileFolder() {
-        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
+        return (outputFolder + File.separator + modelDocPath).replace('.', File.separatorChar);
+    }
+
+    @Override
+    public String toModelDocFilename( String name ) {
+        return toModelName( name ) + "_ResourceType";
+    }
+
+    @Override
+    public String modelTestFileFolder() {
+        return outputFolder + File.separator + modelTestPath + File.separator + "ddui-views";
+    }
+
+    @Override
+    public String toModelTestFilename(String name) {
+        String resourceTypeFolder = packageName + ".resourceTypes." + toModelName(name) + File.separator;
+        return resourceTypeFolder;
     }
 
     /**
@@ -245,7 +271,7 @@ public class FlaskConnexionMDSOCodegen extends DefaultCodegen implements Codegen
      */
     @Override
     public String getName() {
-        return "mdso";
+        return "bluePlanet";
     }
 
     /**
