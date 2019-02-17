@@ -173,6 +173,8 @@ public class BluePlanetCodegen extends DefaultCodegen implements CodegenConfig {
 
         // Root Directory
         supportingFiles.add(new SupportingFile("Makefile.mustache", "", "Makefile"));
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
 
         // App Directory
         supportingFiles.add(new SupportingFile("app/Dockerfile.mustache", APP_PATH, "Dockerfile"));
