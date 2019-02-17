@@ -5,6 +5,8 @@ FROM python:2-alpine
 FROM python:3-alpine
 {{/supportPython2}}
 
+ARG GLTOKEN
+
 RUN apk add curl bash
 ENV SHELL /bin/bash
 
@@ -18,10 +20,10 @@ WORKDIR /bp2/src
 COPY requirements.txt /bp2/src
 
 {{#supportPython2}}
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --extra-index-url https://GLTOKEN:$GLTOKEN@pypi.blueplanet.com/simple --no-cache-dir -r requirements.txt
 {{/supportPython2}}
 {{^supportPython2}}
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --extra-index-url https://GLTOKEN:$GLTOKEN@pypi.blueplanet.com/simple --no-cache-dir -r requirements.txt
 {{/supportPython2}}
 
 COPY . /bp2/src
