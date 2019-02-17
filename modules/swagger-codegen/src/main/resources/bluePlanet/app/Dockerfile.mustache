@@ -5,15 +5,17 @@ FROM python:2-alpine
 FROM python:3-alpine
 {{/supportPython2}}
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-COPY requirements.txt /usr/src/app/
+RUN apk add curl bash
+ENV SHELL /bin/bash
 
 RUN mkdir /bp2 \
  && mkdir /bp2/data \
  && mkdir /bp2/log \
- && mkdir /bp2/src
+ && mkdir /bp2/src \
+ && echo 'alias ll="ls -l"' >> ~/.bashrc
+WORKDIR /bp2/src
+
+COPY requirements.txt /bp2/src
 
 {{#supportPython2}}
 RUN pip install --no-cache-dir -r requirements.txt
@@ -22,11 +24,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 {{/supportPython2}}
 
-COPY . /usr/src/app
+COPY . /bp2/src
 
 ENV SBIS=bpocore \
-    SBI_bpocore_southbound-update=update_etc_hosts_multi_provider \
-    CONFIG_RELOAD_INTERVAL=3600
+    SBI_bpocore_southbound-update=update_etc_hosts_multi_provider
 
 EXPOSE {{serverPort}}
 
@@ -37,4 +38,4 @@ ENTRYPOINT ["python"]
 ENTRYPOINT ["python3"]
 {{/supportPython2}}
 
-CMD ["-m", "{{packageName}}"]
+CMD ["-B", "-m", "{{packageName}}"]
