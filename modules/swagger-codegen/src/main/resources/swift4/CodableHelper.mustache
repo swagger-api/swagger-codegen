@@ -9,6 +9,10 @@ import Foundation
 
 public typealias EncodeResult = (data: Data?, error: Error?)
 
+enum DateError: String, Error {
+    case invalidDate
+}
+
 open class CodableHelper {
 
     open static var dateformatter: DateFormatter?
