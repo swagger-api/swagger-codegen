@@ -234,7 +234,7 @@ components:
       style: form
       explode: false
       required: true
-      description: pipe-separated list of generator types
+      description: comma-separated list of generator types
       schema:
         type: array
         items:
