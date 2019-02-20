@@ -257,14 +257,24 @@ public class GeneratorController {
     public ResponseContext languagesMulti(RequestContext requestContext, List<String> types, String version) {
         final List<String> languages = new ArrayList<>();
         if ("V2".equals(version)) {
-            types.forEach(s -> languages.addAll(TYPESV2.get(io.swagger.codegen.CodegenType.forValue(s))));
+            types.forEach(s -> {
+                List<String> typeLanguages = TYPESV2.get(io.swagger.codegen.CodegenType.forValue(s));
+                if (typeLanguages != null) {
+                    languages.addAll(typeLanguages);
+                }
+            });
             Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
             return new ResponseContext()
                     .status(Response.Status.OK.getStatusCode())
                     .entity(languages);
 
         }
-        types.forEach(s -> languages.addAll(TYPES.get(CodegenType.forValue(s))));
+        types.forEach(s -> {
+            List<String> typeLanguages = TYPES.get(CodegenType.forValue(s));
+            if (typeLanguages != null) {
+                languages.addAll(typeLanguages);
+            }
+        });
         Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
         return new ResponseContext()
                 .status(Response.Status.OK.getStatusCode())
