@@ -22,6 +22,8 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
     public static final String IMPLICIT_HEADERS = "false";
     public static final String SWAGGER_DOCKET_CONFIG = "false";
     public static final String USE_OPTIONAL = "false";
+    public static final String COLLECTION_FLUENT_PATTERN = "true";
+    public static final String SIMPLE_FLUENT_PATTERN = "true";
 
     @Override
     public String getLanguage() {
@@ -46,6 +48,8 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
         options.put(SpringCodegen.IMPLICIT_HEADERS, IMPLICIT_HEADERS);
         options.put(SpringCodegen.SWAGGER_DOCKET_CONFIG, SWAGGER_DOCKET_CONFIG);
         options.put(SpringCodegen.USE_OPTIONAL, USE_OPTIONAL);
+        options.put(SpringCodegen.SIMPLE_FLUENT_PATTERN, SIMPLE_FLUENT_PATTERN);
+        options.put(SpringCodegen.COLLECTION_FLUENT_PATTERN, COLLECTION_FLUENT_PATTERN);
 
         return options;
     }

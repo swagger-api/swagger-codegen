@@ -33,6 +33,8 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String SPRING_CLOUD_LIBRARY = "spring-cloud";
     public static final String IMPLICIT_HEADERS = "implicitHeaders";
     public static final String SWAGGER_DOCKET_CONFIG = "swaggerDocketConfig";
+    public static final String COLLECTION_FLUENT_PATTERN = "collectionFluentPattern";
+    public static final String SIMPLE_FLUENT_PATTERN = "simpleFluentPattern";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
@@ -46,6 +48,8 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected String responseWrapper = "";
     protected boolean useTags = false;
     protected boolean useBeanValidation = true;
+    protected boolean simpleFluentPattern = true;
+    protected boolean collectionFluentPattern = true;
     protected boolean implicitHeaders = false;
     protected boolean swaggerDocketConfig = false;
     protected boolean useOptional = false;
@@ -77,6 +81,8 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
         cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
+        cliOptions.add(CliOption.newBoolean(COLLECTION_FLUENT_PATTERN, "Use Fluent Pattern for collection item setters"));
+        cliOptions.add(CliOption.newBoolean(SIMPLE_FLUENT_PATTERN, "Use Fluent Pattern for setters"));
         cliOptions.add(CliOption.newBoolean(IMPLICIT_HEADERS, "Use of @ApiImplicitParams for headers."));
         cliOptions.add(CliOption.newBoolean(SWAGGER_DOCKET_CONFIG, "Generate Spring Swagger Docket configuration class."));
         cliOptions.add(CliOption.newBoolean(USE_OPTIONAL,
@@ -182,13 +188,26 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
-
+        if (additionalProperties.containsKey(COLLECTION_FLUENT_PATTERN)) {
+            this.setCollectionFluentPattern(convertPropertyToBoolean(COLLECTION_FLUENT_PATTERN));
+        }
+        if (additionalProperties.containsKey(SIMPLE_FLUENT_PATTERN)) {
+            this.setSimpleFluentPattern(convertPropertyToBoolean(SIMPLE_FLUENT_PATTERN));
+        }
         if (additionalProperties.containsKey(USE_OPTIONAL)) {
             this.setUseOptional(convertPropertyToBoolean(USE_OPTIONAL));
         }
 
         if (useBeanValidation) {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
+        }
+        
+        if (!collectionFluentPattern) {
+            writePropertyBack(COLLECTION_FLUENT_PATTERN, collectionFluentPattern);
+        }
+        
+        if (!simpleFluentPattern) {
+            writePropertyBack(SIMPLE_FLUENT_PATTERN, simpleFluentPattern);
         }
 
         if (additionalProperties.containsKey(IMPLICIT_HEADERS)) {
@@ -285,6 +304,12 @@ public class SpringCodegen extends AbstractJavaCodegen
             additionalProperties.put("jdk8-no-delegate", true);
         }
 
+        if (this.collectionFluentPattern) {
+            additionalProperties.put("collectionFluentPattern", "true");
+        }
+        if (this.simpleFluentPattern) {
+            additionalProperties.put("simpleFluentPattern", "true");
+        }
 
         if (this.delegatePattern && !this.delegateMethod) {
             additionalProperties.put("isDelegate", "true");
@@ -676,6 +701,14 @@ public class SpringCodegen extends AbstractJavaCodegen
     
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
+    }
+    
+    public void setSimpleFluentPattern(boolean simpleFluentPattern) {
+        this.simpleFluentPattern = simpleFluentPattern;
+    }
+    
+    public void setCollectionFluentPattern(boolean collectionFluentPattern) {
+        this.collectionFluentPattern = collectionFluentPattern;
     }
 
     @Override

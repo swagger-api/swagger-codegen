@@ -39,10 +39,13 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
 
   {{/vars}}
   {{#vars}}
+  {{#simpleFluentPattern}}
   public {{classname}} {{name}}({{{datatypeWithEnum}}} {{name}}) {
     this.{{name}} = {{name}};
     return this;
   }
+  {{/simpleFluentPattern}}
+  {{#collectionFluentPattern}}
   {{#isListContainer}}
 
   public {{classname}} add{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
@@ -67,6 +70,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#seriali
     return this;
   }
   {{/isMapContainer}}
+  {{/collectionFluentPattern}}
 
   /**
   {{#description}}
