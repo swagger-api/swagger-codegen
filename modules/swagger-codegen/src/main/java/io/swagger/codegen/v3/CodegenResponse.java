@@ -7,6 +7,7 @@ import java.util.Map;
 public class CodegenResponse extends CodegenObject {
     public final List<CodegenProperty> headers = new ArrayList<CodegenProperty>();
     public String code, message;
+    public List<CodegenContent> contents = new ArrayList<>();
     public List<Map<String, Object>> examples;
     public String dataType, baseType, containerType;
     public Object schema;
@@ -54,6 +55,8 @@ public class CodegenResponse extends CodegenObject {
             return false;
         if (vendorExtensions != null ? !vendorExtensions.equals(that.vendorExtensions) : that.vendorExtensions != null)
             return false;
+        if (contents != null ? !contents.equals(that.contents) : that.contents != null)
+            return false;
         return jsonSchema != null ? jsonSchema.equals(that.jsonSchema) : that.jsonSchema == null;
     }
 
@@ -69,6 +72,7 @@ public class CodegenResponse extends CodegenObject {
         result = 31 * result + (schema != null ? schema.hashCode() : 0);
         result = 31 * result + (jsonSchema != null ? jsonSchema.hashCode() : 0);
         result = 31 * result + (vendorExtensions != null ? vendorExtensions.hashCode() : 0);
+        result = 31 * result + (contents != null ? contents.hashCode() : 0);
         return result;
     }
 
@@ -106,5 +110,9 @@ public class CodegenResponse extends CodegenObject {
 
     public String getJsonSchema() {
         return jsonSchema;
+    }
+
+    public List<CodegenContent> getContents() {
+        return contents;
     }
 }
