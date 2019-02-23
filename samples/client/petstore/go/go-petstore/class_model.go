@@ -10,6 +10,7 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+// Model for testing model with \"_class\" property
+type ClassModel struct {
+	Class string `json:"_class,omitempty"`
 }

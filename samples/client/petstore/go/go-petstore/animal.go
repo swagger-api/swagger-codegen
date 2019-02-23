@@ -10,6 +10,7 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type Animal struct {
+	ClassName string `json:"className"`
+	Color string `json:"color,omitempty"`
 }

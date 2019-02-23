@@ -10,6 +10,6 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type SpecialModelName struct {
+	SpecialPropertyName int64 `json:"$special[property.name],omitempty"`
 }

@@ -237,16 +237,16 @@ Name | Type | Description  | Notes
 
 
 
- **integer** | **optional.Int32**| None | 
- **int32_** | **optional.Int32**| None | 
- **int64_** | **optional.Int64**| None | 
- **float** | **optional.Float32**| None | 
- **string_** | **optional.String**| None | 
- **binary** | **optional.String**| None | 
- **date** | **optional.String**| None | 
- **dateTime** | **optional.Time**| None | 
- **password** | **optional.String**| None | 
- **callback** | **optional.String**| None | 
+ **integer** | **optional.**| None | 
+ **int32_** | **optional.**| None | 
+ **int64_** | **optional.**| None | 
+ **float** | **optional.**| None | 
+ **string_** | **optional.**| None | 
+ **binary** | **optional.**| None | 
+ **date** | **optional.**| None | 
+ **dateTime** | **optional.**| None | 
+ **password** | **optional.**| None | 
+ **callback** | **optional.**| None | 
 
 ### Return type
 
@@ -282,13 +282,13 @@ Optional parameters are passed through a pointer to a TestEnumParametersOpts str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **enumFormStringArray** | [**optional.Interface of []string**](string.md)| Form parameter enum test (string array) | 
- **enumFormString** | **optional.String**| Form parameter enum test (string) | [default to -efg]
+ **enumFormString** | **optional.**| Form parameter enum test (string) | [default to -efg]
  **enumHeaderStringArray** | [**optional.Interface of []string**](string.md)| Header parameter enum test (string array) | 
- **enumHeaderString** | **optional.String**| Header parameter enum test (string) | [default to -efg]
+ **enumHeaderString** | **optional.**| Header parameter enum test (string) | [default to -efg]
  **enumQueryStringArray** | [**optional.Interface of []string**](string.md)| Query parameter enum test (string array) | 
- **enumQueryString** | **optional.String**| Query parameter enum test (string) | [default to -efg]
- **enumQueryInteger** | **optional.Int32**| Query parameter enum test (double) | 
- **enumQueryDouble** | **optional.Float64**| Query parameter enum test (double) | 
+ **enumQueryString** | **optional.**| Query parameter enum test (string) | [default to -efg]
+ **enumQueryInteger** | **optional.**| Query parameter enum test (double) | 
+ **enumQueryDouble** | **optional.**| Query parameter enum test (double) | 
 
 ### Return type
 

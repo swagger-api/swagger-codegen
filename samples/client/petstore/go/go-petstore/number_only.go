@@ -10,6 +10,6 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type NumberOnly struct {
+	JustNumber float32 `json:"JustNumber,omitempty"`
 }

@@ -10,6 +10,6 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type ArrayOfArrayOfNumberOnly struct {
+	ArrayArrayNumber [][]float32 `json:"ArrayArrayNumber,omitempty"`
 }

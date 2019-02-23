@@ -10,6 +10,7 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type ReadOnlyFirst struct {
+	Bar string `json:"bar,omitempty"`
+	Baz string `json:"baz,omitempty"`
 }
