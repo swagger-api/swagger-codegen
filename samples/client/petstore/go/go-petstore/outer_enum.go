@@ -10,6 +10,11 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
-}
+type OuterEnum string
+
+// List of OuterEnum
+const (
+	PLACED_OuterEnum OuterEnum = "placed"
+	APPROVED_OuterEnum OuterEnum = "approved"
+	DELIVERED_OuterEnum OuterEnum = "delivered"
+)

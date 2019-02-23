@@ -10,6 +10,10 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type EnumTest struct {
+	EnumString string `json:"enum_string,omitempty"`
+	EnumStringRequired string `json:"enum_string_required"`
+	EnumInteger int32 `json:"enum_integer,omitempty"`
+	EnumNumber float64 `json:"enum_number,omitempty"`
+	OuterEnum *OuterEnum `json:"outerEnum,omitempty"`
 }

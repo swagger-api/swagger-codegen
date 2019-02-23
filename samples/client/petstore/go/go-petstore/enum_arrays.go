@@ -10,6 +10,7 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type EnumArrays struct {
+	JustSymbol string `json:"just_symbol,omitempty"`
+	ArrayEnum []string `json:"array_enum,omitempty"`
 }

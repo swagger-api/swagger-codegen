@@ -10,6 +10,11 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
-}
+type EnumClass string
+
+// List of EnumClass
+const (
+	ABC_EnumClass EnumClass = "_abc"
+	EFG_EnumClass EnumClass = "-efg"
+	XYZ_EnumClass EnumClass = "(xyz)"
+)

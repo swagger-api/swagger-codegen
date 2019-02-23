@@ -10,6 +10,6 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type List struct {
+	Var123List string `json:"123-list,omitempty"`
 }

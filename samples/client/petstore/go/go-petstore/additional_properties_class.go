@@ -10,6 +10,7 @@
 
 package petstore
 
-type Client struct {
-	Client string `json:"client,omitempty"`
+type AdditionalPropertiesClass struct {
+	MapProperty map[string]string `json:"map_property,omitempty"`
+	MapOfMapProperty map[string]map[string]string `json:"map_of_map_property,omitempty"`
 }
