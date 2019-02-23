@@ -1472,7 +1472,7 @@ call_testSpecialTags() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1550,7 +1550,7 @@ call_fakeOuterBooleanSerialize() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1619,7 +1619,7 @@ call_fakeOuterCompositeSerialize() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1688,7 +1688,7 @@ call_fakeOuterNumberSerialize() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1757,7 +1757,7 @@ call_fakeOuterStringSerialize() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1826,7 +1826,7 @@ call_testBodyWithQueryParams() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1904,7 +1904,7 @@ call_testClientModel() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -1982,7 +1982,7 @@ call_testEndpointParameters() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2018,7 +2018,7 @@ call_testEnumParameters() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2054,7 +2054,7 @@ call_testInlineAdditionalProperties() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2132,7 +2132,7 @@ call_testJsonFormData() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2168,7 +2168,7 @@ call_testClassname() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2246,7 +2246,7 @@ call_addPet() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2322,7 +2322,7 @@ call_deletePet() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2358,7 +2358,7 @@ call_findPetsByStatus() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2394,7 +2394,7 @@ call_findPetsByTags() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2430,7 +2430,7 @@ call_getPetById() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2466,7 +2466,7 @@ call_updatePet() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2542,7 +2542,7 @@ call_updatePetWithForm() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2578,7 +2578,7 @@ call_uploadFile() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2614,7 +2614,7 @@ call_deleteOrder() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2650,7 +2650,7 @@ call_getInventory() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2686,7 +2686,7 @@ call_getOrderById() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -2722,7 +2722,7 @@ call_placeOrder() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2791,7 +2791,7 @@ call_createUser() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2860,7 +2860,7 @@ call_createUsersWithArrayInput() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2929,7 +2929,7 @@ call_createUsersWithListInput() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
@@ -2998,7 +2998,7 @@ call_deleteUser() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -3034,7 +3034,7 @@ call_getUserByName() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -3070,7 +3070,7 @@ call_loginUser() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -3106,7 +3106,7 @@ call_logoutUser() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     if [[ "$print_curl" = true ]]; then
         echo "curl ${basic_auth_option} ${curl_arguments} ${headers_curl} -X ${method} \"${host}${path}\""
@@ -3142,7 +3142,7 @@ call_updateUser() {
 
     local basic_auth_option=""
     if [[ -n $basic_auth_credential ]]; then
-        basic_auth_option="-u ${basic_auth_credential}"
+        basic_auth_option="-u '${basic_auth_credential}'"
     fi
     local body_json_curl=""
 
