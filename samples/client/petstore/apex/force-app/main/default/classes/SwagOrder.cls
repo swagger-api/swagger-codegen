@@ -65,17 +65,17 @@ public class SwagOrder {
 
     public static SwagOrder getExample() {
         SwagOrder order = new SwagOrder();
-        order.id = 123456789L;
-        order.petId = 123456789L;
-        order.quantity = 123;
-        order.shipDate = Datetime.newInstanceGmt(2000, 1, 23, 4, 56, 7);
-        order.status = StatusEnum.PLACED;
-        order.complete = true;
+          order.id = 123456789L;
+          order.petId = 123456789L;
+          order.quantity = 0;
+          order.shipDate = Datetime.newInstanceGmt(2000, 1, 23, 4, 56, 7);
+          order.status = StatusEnum.PLACED;
+          order.complete = true;
         return order;
     }
 
     public Boolean equals(Object obj) {
-        if (obj instanceof SwagOrder) {
+        if (obj instanceof SwagOrder) {           
             SwagOrder order = (SwagOrder) obj;
             return this.id == order.id
                 && this.petId == order.petId

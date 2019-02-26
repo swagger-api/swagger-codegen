@@ -28,13 +28,13 @@ public class SwagTag {
 
     public static SwagTag getExample() {
         SwagTag tag = new SwagTag();
-        tag.id = 123456789L;
-        tag.name = 'aeiou';
+          tag.id = 123456789L;
+          tag.name = '';
         return tag;
     }
 
     public Boolean equals(Object obj) {
-        if (obj instanceof SwagTag) {
+        if (obj instanceof SwagTag) {           
             SwagTag tag = (SwagTag) obj;
             return this.id == tag.id
                 && this.name == tag.name;

@@ -42,14 +42,14 @@ public class SwagApiResponse implements Swagger.MappedProperties {
 
     public static SwagApiResponse getExample() {
         SwagApiResponse apiResponse = new SwagApiResponse();
-        apiResponse.code = 123;
-        apiResponse.r_type = 'aeiou';
-        apiResponse.message = 'aeiou';
+          apiResponse.code = 0;
+          apiResponse.r_type = '';
+          apiResponse.message = '';
         return apiResponse;
     }
 
     public Boolean equals(Object obj) {
-        if (obj instanceof SwagApiResponse) {
+        if (obj instanceof SwagApiResponse) {           
             SwagApiResponse apiResponse = (SwagApiResponse) obj;
             return this.code == apiResponse.code
                 && this.r_type == apiResponse.r_type
