@@ -27,7 +27,7 @@ REQUIRES = [
 REQUIRES.append("aiohttp")
 {{/asyncio}}
 {{#tornado}}
-REQUIRES.append("tornado")
+REQUIRES.append("tornado>=4.2,<5")
 {{/tornado}}
 
 setup(
