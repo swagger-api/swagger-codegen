@@ -21,8 +21,7 @@ public interface AnotherFakeApi extends ApiClient.Api {
    */
   @RequestLine("PATCH /another-fake/dummy")
   @Headers({
-      "Content-Type: application/json",
-      "Accept: application/json",
+      "Accept: */*",
   })
   Client testSpecialTags(Client body);
 }
