@@ -38,7 +38,7 @@ public interface StoreApi  {
      */
     @DELETE
     @Path("/store/order/{orderId}")
-    @Operation(summary = "Delete purchase order by ID", tags={ "store" })
+    @Operation(summary = "Delete purchase order by ID", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
@@ -53,7 +53,7 @@ public interface StoreApi  {
     @GET
     @Path("/store/inventory")
     @Produces({ "application/json" })
-    @Operation(summary = "Returns pet inventories by status", tags={ "store" })
+    @Operation(summary = "Returns pet inventories by status", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Map<String, Integer> getInventory();
@@ -67,7 +67,7 @@ public interface StoreApi  {
     @GET
     @Path("/store/order/{orderId}")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", tags={ "store" })
+    @Operation(summary = "Find purchase order by ID", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
@@ -82,7 +82,7 @@ public interface StoreApi  {
     @Path("/store/order")
     @Consumes({ "*/*" })
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Place an order for a pet", tags={ "store" })
+    @Operation(summary = "Place an order for a pet", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
