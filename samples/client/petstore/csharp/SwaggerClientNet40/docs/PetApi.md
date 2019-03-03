@@ -73,7 +73,6 @@ void (empty response body)
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="deletepet"></a>
 # **DeletePet**
 > void DeletePet (int? petId, string apiKey = null)
@@ -136,7 +135,6 @@ void (empty response body)
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="findpetsbystatus"></a>
 # **FindPetsByStatus**
 > List<Pet> FindPetsByStatus (List<string> status)
@@ -200,7 +198,6 @@ Name | Type | Description  | Notes
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="findpetsbytags"></a>
 # **FindPetsByTags**
 > List<Pet> FindPetsByTags (List<string> tags)
@@ -264,7 +261,6 @@ Name | Type | Description  | Notes
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="getpetbyid"></a>
 # **GetPetById**
 > Pet GetPetById (int? petId)
@@ -330,7 +326,6 @@ Name | Type | Description  | Notes
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="updatepet"></a>
 # **UpdatePet**
 > void UpdatePet (Pet body)
@@ -391,7 +386,6 @@ void (empty response body)
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="updatepetwithform"></a>
 # **UpdatePetWithForm**
 > void UpdatePetWithForm (int? petId, string name = null, string status = null)
@@ -456,7 +450,6 @@ void (empty response body)
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="uploadfile"></a>
 # **UploadFile**
 > ApiResponse UploadFile (int? petId, string additionalMetadata = null, System.IO.Stream file = null)
@@ -522,4 +515,3 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
