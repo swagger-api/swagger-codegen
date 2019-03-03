@@ -68,7 +68,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="getinventory"></a>
 # **GetInventory**
 > Dictionary<string, int?> GetInventory ()
@@ -130,7 +129,6 @@ This endpoint does not need any parameter.
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="getorderbyid"></a>
 # **GetOrderById**
 > Order GetOrderById (int? orderId)
@@ -191,7 +189,6 @@ No authorization required
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="placeorder"></a>
 # **PlaceOrder**
 > Order PlaceOrder (Order body)
@@ -250,4 +247,3 @@ No authorization required
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
