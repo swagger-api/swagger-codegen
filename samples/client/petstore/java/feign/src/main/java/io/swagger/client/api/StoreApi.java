@@ -20,7 +20,6 @@ public interface StoreApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /store/order/{orderId}")
   @Headers({
-      "Content-Type: application/json",
       "Accept: */*",
   })
   void deleteOrder(@Param("orderId") String orderId);
@@ -31,7 +30,7 @@ public interface StoreApi extends ApiClient.Api {
    */
   @RequestLine("GET /store/inventory")
   @Headers({
-      "Accept: application/json",
+      "Accept: */*",
   })
   Map<String, Integer> getInventory();
   /**
@@ -53,8 +52,7 @@ public interface StoreApi extends ApiClient.Api {
    */
   @RequestLine("POST /store/order")
   @Headers({
-      "Content-Type: */*",
-      "Accept: application/json",
+      "Accept: */*",
   })
   Order placeOrder(Order body);
 }

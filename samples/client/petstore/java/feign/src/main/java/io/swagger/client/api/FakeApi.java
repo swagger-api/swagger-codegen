@@ -27,7 +27,6 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/boolean")
   @Headers({
-      "Content-Type: */*",
       "Accept: */*",
   })
   Boolean fakeOuterBooleanSerialize(Boolean body);
@@ -39,7 +38,6 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/composite")
   @Headers({
-      "Content-Type: */*",
       "Accept: */*",
   })
   OuterComposite fakeOuterCompositeSerialize(OuterComposite body);
@@ -51,7 +49,6 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/number")
   @Headers({
-      "Content-Type: */*",
       "Accept: */*",
   })
   BigDecimal fakeOuterNumberSerialize(BigDecimal body);
@@ -63,7 +60,6 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/string")
   @Headers({
-      "Content-Type: */*",
       "Accept: */*",
   })
   String fakeOuterStringSerialize(String body);
@@ -75,8 +71,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("PATCH /fake")
   @Headers({
-      "Content-Type: application/json",
-      "Accept: application/json",
+      "Accept: */*",
   })
   Client testClientModel(Client body);
   /**
@@ -139,7 +134,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   public static class TestEnumParametersQueryParams extends HashMap<String, Object> {
     public TestEnumParametersQueryParams enumQueryStringArray(final List<String> value) {
-      put("enum_query_string_array", EncodingUtils.encodeCollection(value, "multi"));
+      put("enum_query_string_array", EncodingUtils.encodeCollection(value, "csv"));
       return this;
     }
     public TestEnumParametersQueryParams enumQueryString(final String value) {
@@ -168,7 +163,6 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/inline-additionalProperties")
   @Headers({
-      "Content-Type: application/json",
       "Accept: */*",
   })
   void testInlineAdditionalProperties(Map<String, String> body);

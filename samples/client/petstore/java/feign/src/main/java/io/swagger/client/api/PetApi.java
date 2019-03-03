@@ -22,7 +22,6 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet")
   @Headers({
-      "Content-Type: application/json",
       "Accept: */*",
   })
   void addPet(Pet body);
@@ -46,7 +45,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByStatus?status={status}")
   @Headers({
-      "Accept: application/json",
+      "Accept: */*",
   })
   List<Pet> findPetsByStatus(@Param("status") List<String> status);
 
@@ -69,7 +68,6 @@ public interface PetApi extends ApiClient.Api {
   @RequestLine("GET /pet/findByStatus?status={status}")
   @Headers({
       "Content-Type: */*",
-      "Accept: application/json",
   })
   List<Pet> findPetsByStatus(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
@@ -79,7 +77,7 @@ public interface PetApi extends ApiClient.Api {
    */
   public static class FindPetsByStatusQueryParams extends HashMap<String, Object> {
     public FindPetsByStatusQueryParams status(final List<String> value) {
-      put("status", EncodingUtils.encodeCollection(value, "multi"));
+      put("status", EncodingUtils.encodeCollection(value, "csv"));
       return this;
     }
   }
@@ -114,7 +112,6 @@ public interface PetApi extends ApiClient.Api {
   @RequestLine("GET /pet/findByTags?tags={tags}")
   @Headers({
       "Content-Type: */*",
-      "Accept: application/json",
   })
   List<Pet> findPetsByTags(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
@@ -124,7 +121,7 @@ public interface PetApi extends ApiClient.Api {
    */
   public static class FindPetsByTagsQueryParams extends HashMap<String, Object> {
     public FindPetsByTagsQueryParams tags(final List<String> value) {
-      put("tags", EncodingUtils.encodeCollection(value, "multi"));
+      put("tags", EncodingUtils.encodeCollection(value, "csv"));
       return this;
     }
   }
@@ -146,7 +143,6 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("PUT /pet")
   @Headers({
-      "Content-Type: application/json",
       "Accept: */*",
   })
   void updatePet(Pet body);

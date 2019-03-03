@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-public class PetApi {//soy sho...
+public class PetApi {
   private ApiClient apiClient;
 
   public PetApi() {
@@ -147,7 +147,7 @@ public class PetApi {//soy sho...
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
+    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "status", status));
 
     
     
@@ -190,7 +190,7 @@ public class PetApi {//soy sho...
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
+    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "tags", tags));
 
     
     
