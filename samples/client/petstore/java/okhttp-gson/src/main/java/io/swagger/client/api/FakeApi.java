@@ -804,7 +804,7 @@ public class FakeApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (enumQueryStringArray != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "enum_query_string_array", enumQueryStringArray));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "enum_query_string_array", enumQueryStringArray));
         if (enumQueryString != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("enum_query_string", enumQueryString));
         if (enumQueryInteger != null)
