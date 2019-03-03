@@ -319,7 +319,7 @@ public class PetApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (status != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "status", status));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -445,7 +445,7 @@ public class PetApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (tags != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "tags", tags));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
