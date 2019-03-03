@@ -122,8 +122,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Add a new pet to the store 
         /// </summary>
-        /// <param name="body">Pet object that needs to be added to the store</param> 
-        /// <returns></returns>            
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns></returns>
         public void AddPet (Pet body)
         {
             // verify the required parameter 'body' is set
@@ -157,9 +157,9 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Deletes a pet 
         /// </summary>
-        /// <param name="petId">Pet id to delete</param> 
-        /// <param name="apiKey"></param> 
-        /// <returns></returns>            
+        /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
         public void DeletePet (int? petId, string apiKey)
         {
             // verify the required parameter 'petId' is set
@@ -194,8 +194,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
         /// </summary>
-        /// <param name="status">Status values that need to be considered for filter</param> 
-        /// <returns>List&lt;Pet&gt;</returns>            
+        /// <param name="status">Status values that need to be considered for filter</param>
+        /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByStatus (List<string> status)
         {
             // verify the required parameter 'status' is set
@@ -229,8 +229,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
         /// </summary>
-        /// <param name="tags">Tags to filter by</param> 
-        /// <returns>List&lt;Pet&gt;</returns>            
+        /// <param name="tags">Tags to filter by</param>
+        /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByTags (List<string> tags)
         {
             // verify the required parameter 'tags' is set
@@ -264,8 +264,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
-        /// <param name="petId">ID of pet to return</param> 
-        /// <returns>Pet</returns>            
+        /// <param name="petId">ID of pet to return</param>
+        /// <returns>Pet</returns>
         public Pet GetPetById (int? petId)
         {
             // verify the required parameter 'petId' is set
@@ -299,8 +299,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Update an existing pet 
         /// </summary>
-        /// <param name="body">Pet object that needs to be added to the store</param> 
-        /// <returns></returns>            
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns></returns>
         public void UpdatePet (Pet body)
         {
             // verify the required parameter 'body' is set
@@ -334,10 +334,10 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Updates a pet in the store with form data 
         /// </summary>
-        /// <param name="petId">ID of pet that needs to be updated</param> 
-        /// <param name="name"></param> 
-        /// <param name="status"></param> 
-        /// <returns></returns>            
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public void UpdatePetWithForm (int? petId, string name, string status)
         {
             // verify the required parameter 'petId' is set
@@ -373,10 +373,10 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
         /// <summary>
         /// uploads an image 
         /// </summary>
-        /// <param name="petId">ID of pet to update</param> 
-        /// <param name="additionalMetadata"></param> 
-        /// <param name="file"></param> 
-        /// <returns>ApiResponse</returns>            
+        /// <param name="petId">ID of pet to update</param>
+        /// <param name="additionalMetadata"></param>
+        /// <param name="file"></param>
+        /// <returns>ApiResponse</returns>
         public ApiResponse UploadFile (int? petId, string additionalMetadata, System.IO.Stream file)
         {
             // verify the required parameter 'petId' is set
