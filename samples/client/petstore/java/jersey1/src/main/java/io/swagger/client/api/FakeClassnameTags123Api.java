@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-public class FakeClassnameTags123Api {//soy sho...
+public class FakeClassnameTags123Api {
   private ApiClient apiClient;
 
   public FakeClassnameTags123Api() {
