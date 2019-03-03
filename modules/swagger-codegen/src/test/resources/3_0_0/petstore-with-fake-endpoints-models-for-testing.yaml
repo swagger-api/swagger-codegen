@@ -1040,6 +1040,257 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
+  /animal:
+    put:
+      tags:
+      - animal
+      summary: Update an existing animal
+      operationId: updateAnimal
+      requestBody:
+        description: Animal object that needs to be added.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Animal'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Animal not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+    post:
+      tags:
+      - animal
+      summary: Add a new animal to the store
+      operationId: addAnimal
+      requestBody:
+        description: Animal object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Animal'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Animal'
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+  /animal/{animalId}:
+    get:
+      tags:
+      - animal
+      summary: Find animal by ID
+      description: Returns a single animal
+      operationId: getAnimalById
+      parameters:
+      - name: animalId
+        in: path
+        description: ID of pet to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Animal'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Animal'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Pet not found
+          content: {}
+    post:
+      tags:
+      - animal
+      summary: Updates a animal
+      operationId: updateAnimalWithForm
+      parameters:
+      - name: animalId
+        in: path
+        description: ID of animal that needs to be updated
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                name:
+                  type: string
+                  description: Updated name of the animal
+                status:
+                  type: string
+                  description: Updated status of the animal
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+    delete:
+      tags:
+      - animal
+      summary: Deletes a animal
+      operationId: deleteAnimal
+      parameters:
+      - name: api_key
+        in: header
+        schema:
+          type: string
+      - name: animalId
+        in: path
+        description: Animal id to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        400:
+          description: Invalid animal value
+          content: {}
+  /dog:
+    put:
+      tags:
+      - dog
+      summary: Update an existing dog
+      operationId: updateDog
+      requestBody:
+        description: Dog object that needs to be added.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dog'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Dog'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Animal not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+    post:
+      tags:
+      - dog
+      summary: Add a new dog to the store
+      operationId: addDog
+      requestBody:
+        description: Dog object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dog'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Dog'
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+  /dog/{dogId}:
+    get:
+      tags:
+      - dog
+      summary: Find dog by ID
+      description: Returns a single dog
+      operationId: getDogById
+      parameters:
+      - name: dogId
+        in: path
+        description: ID of dog to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Dog'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dog'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Pet not found
+          content: {}
+    post:
+      tags:
+      - dog
+      summary: Updates a dog
+      operationId: updateDogWithForm
+      parameters:
+      - name: animalId
+        in: path
+        description: ID of dog that needs to be updated
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                name:
+                  type: string
+                  description: Updated name of the dog
+                status:
+                  type: string
+                  description: Updated status of the dog
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+    delete:
+      tags:
+      - dog
+      summary: Deletes a dog
+      operationId: deleteDog
+      parameters:
+      - name: api_key
+        in: header
+        schema:
+          type: string
+      - name: dogId
+        in: path
+        description: Dog id to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        400:
+          description: Invalid dog value
+          content: {}
+
 components:
   schemas:
     Category:
