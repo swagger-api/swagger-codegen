@@ -4,6 +4,8 @@ import io.swagger.model.OuterEnum;
 import java.io.Serializable;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 
 import io.swagger.annotations.*;
