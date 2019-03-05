@@ -72,7 +72,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="createuserswitharrayinput"></a>
 # **CreateUsersWithArrayInput**
 > void CreateUsersWithArrayInput (List<User> body)
@@ -130,7 +129,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="createuserswithlistinput"></a>
 # **CreateUsersWithListInput**
 > void CreateUsersWithListInput (List<User> body)
@@ -188,7 +186,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="deleteuser"></a>
 # **DeleteUser**
 > void DeleteUser (string username)
@@ -248,7 +245,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="getuserbyname"></a>
 # **GetUserByName**
 > User GetUserByName (string username)
@@ -307,7 +303,6 @@ No authorization required
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="loginuser"></a>
 # **LoginUser**
 > string LoginUser (string username, string password)
@@ -368,7 +363,6 @@ No authorization required
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="logoutuser"></a>
 # **LogoutUser**
 > void LogoutUser ()
@@ -422,7 +416,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="updateuser"></a>
 # **UpdateUser**
 > void UpdateUser (User body, string username)
@@ -484,4 +477,3 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

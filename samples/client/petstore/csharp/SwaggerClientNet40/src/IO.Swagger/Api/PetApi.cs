@@ -499,7 +499,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "status", status)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("csv", "status", status)); // query parameter
 
             // authentication (petstore_auth) required
             // oauth required
@@ -572,7 +572,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (tags != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "tags", tags)); // query parameter
+            if (tags != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("csv", "tags", tags)); // query parameter
 
             // authentication (petstore_auth) required
             // oauth required

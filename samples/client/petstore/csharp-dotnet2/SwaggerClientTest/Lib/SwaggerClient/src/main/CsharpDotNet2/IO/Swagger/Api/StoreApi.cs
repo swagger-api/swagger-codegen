@@ -92,8 +92,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Delete purchase order by ID For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
         /// </summary>
-        /// <param name="orderId">ID of the order that needs to be deleted</param> 
-        /// <returns></returns>            
+        /// <param name="orderId">ID of the order that needs to be deleted</param>
+        /// <returns></returns>
         public void DeleteOrder (string orderId)
         {
             // verify the required parameter 'orderId' is set
@@ -127,7 +127,7 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Returns pet inventories by status Returns a map of status codes to quantities
         /// </summary>
-        /// <returns>Dictionary&lt;string, int?&gt;</returns>            
+        /// <returns>Dictionary&lt;string, int?&gt;</returns>
         public Dictionary<string, int?> GetInventory ()
         {
     
@@ -158,8 +158,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Find purchase order by ID For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
         /// </summary>
-        /// <param name="orderId">ID of pet that needs to be fetched</param> 
-        /// <returns>Order</returns>            
+        /// <param name="orderId">ID of pet that needs to be fetched</param>
+        /// <returns>Order</returns>
         public Order GetOrderById (int? orderId)
         {
             // verify the required parameter 'orderId' is set
@@ -193,8 +193,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Place an order for a pet 
         /// </summary>
-        /// <param name="body">order placed for purchasing the pet</param> 
-        /// <returns>Order</returns>            
+        /// <param name="body">order placed for purchasing the pet</param>
+        /// <returns>Order</returns>
         public Order PlaceOrder (Order body)
         {
             // verify the required parameter 'body' is set
