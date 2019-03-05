@@ -26,7 +26,7 @@ namespace IO.Swagger.Model
     /// Animal
     /// </summary>
     [DataContract]
-    [JsonConverter(typeof(JsonSubtypes), "Discriminator{propertyName&#x3D;&#x27;className&#x27;, mapping&#x3D;null}")]
+    [JsonConverter(typeof(JsonSubtypes), "className")]
     [JsonSubtypes.KnownSubType(typeof(Dog), "Dog")]
     [JsonSubtypes.KnownSubType(typeof(Cat), "Cat")]
         public partial class Animal :  IEquatable<Animal>

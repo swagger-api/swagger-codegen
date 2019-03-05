@@ -38,7 +38,7 @@ public interface PetApi  {
     @POST
     @Path("/pet")
     @Consumes({ "application/json", "application/xml" })
-    @Operation(summary = "Add a new pet to the store", tags={ "pet" })
+    @Operation(summary = "Add a new pet to the store", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public void addPet(@Valid Pet body);
@@ -49,7 +49,7 @@ public interface PetApi  {
      */
     @DELETE
     @Path("/pet/{petId}")
-    @Operation(summary = "Deletes a pet", tags={ "pet" })
+    @Operation(summary = "Deletes a pet", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
     public void deletePet(@PathParam("petId") Integer petId, @HeaderParam("api_key") String apiKey);
@@ -63,7 +63,7 @@ public interface PetApi  {
     @GET
     @Path("/pet/findByStatus")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by status", tags={ "pet" })
+    @Operation(summary = "Finds Pets by status", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         @ApiResponse(responseCode = "400", description = "Invalid status value") })
@@ -78,7 +78,7 @@ public interface PetApi  {
     @GET
     @Path("/pet/findByTags")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by tags", tags={ "pet" })
+    @Operation(summary = "Finds Pets by tags", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         @ApiResponse(responseCode = "400", description = "Invalid tag value") })
@@ -93,7 +93,7 @@ public interface PetApi  {
     @GET
     @Path("/pet/{petId}")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find pet by ID", tags={ "pet" })
+    @Operation(summary = "Find pet by ID", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Pet.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
@@ -107,7 +107,7 @@ public interface PetApi  {
     @PUT
     @Path("/pet")
     @Consumes({ "application/json", "application/xml" })
-    @Operation(summary = "Update an existing pet", tags={ "pet" })
+    @Operation(summary = "Update an existing pet", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found"),
@@ -121,7 +121,7 @@ public interface PetApi  {
     @POST
     @Path("/pet/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
-    @Operation(summary = "Updates a pet in the store with form data", tags={ "pet" })
+    @Operation(summary = "Updates a pet in the store with form data", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public void updatePetWithForm(@PathParam("petId") Integer petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
@@ -134,7 +134,7 @@ public interface PetApi  {
     @Path("/pet/{petId}/uploadImage")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
-    @Operation(summary = "uploads an image", tags={ "pet" })
+    @Operation(summary = "uploads an image", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
     public ModelApiResponse uploadFile(@PathParam("petId") Integer petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file" , required = false) Attachment fileDetail);

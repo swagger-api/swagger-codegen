@@ -73,7 +73,6 @@ No authorization required
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="fakeoutercompositeserialize"></a>
 # **FakeOuterCompositeSerialize**
 > OuterComposite FakeOuterCompositeSerialize (OuterComposite body = null)
@@ -133,7 +132,6 @@ No authorization required
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="fakeouternumberserialize"></a>
 # **FakeOuterNumberSerialize**
 > OuterNumber FakeOuterNumberSerialize (BigDecimal body = null)
@@ -193,7 +191,6 @@ No authorization required
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="fakeouterstringserialize"></a>
 # **FakeOuterStringSerialize**
 > OuterString FakeOuterStringSerialize (string body = null)
@@ -253,7 +250,6 @@ No authorization required
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="testclientmodel"></a>
 # **TestClientModel**
 > Client TestClientModel (Client body)
@@ -314,7 +310,6 @@ No authorization required
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="testendpointparameters"></a>
 # **TestEndpointParameters**
 > void TestEndpointParameters ( body)
@@ -378,7 +373,6 @@ void (empty response body)
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="testenumparameters"></a>
 # **TestEnumParameters**
 > void TestEnumParameters ( body = null, List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null)
@@ -448,7 +442,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="testinlineadditionalproperties"></a>
 # **TestInlineAdditionalProperties**
 > void TestInlineAdditionalProperties (Dictionary<string, string> body)
@@ -506,7 +499,6 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="testjsonformdata"></a>
 # **TestJsonFormData**
 > void TestJsonFormData ( body)
@@ -564,4 +556,3 @@ No authorization required
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
