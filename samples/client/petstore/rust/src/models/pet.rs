@@ -18,13 +18,13 @@ pub struct Pet {
   #[serde(rename = "id")]
   id: Option<i64>,
   #[serde(rename = "category")]
-  category: Option<::models::Category>,
+  category: Option<crate::models::Category>,
   #[serde(rename = "name")]
   name: String,
   #[serde(rename = "photoUrls")]
   photo_urls: Vec<String>,
   #[serde(rename = "tags")]
-  tags: Option<Vec<::models::Tag>>,
+  tags: Option<Vec<crate::models::Tag>>,
   /// pet status in the store
   #[serde(rename = "status")]
   status: Option<String>
@@ -60,16 +60,16 @@ impl Pet {
     self.id = None;
   }
 
-  pub fn set_category(&mut self, category: ::models::Category) {
+  pub fn set_category(&mut self, category: crate::models::Category) {
     self.category = Some(category);
   }
 
-  pub fn with_category(mut self, category: ::models::Category) -> Pet {
+  pub fn with_category(mut self, category: crate::models::Category) -> Pet {
     self.category = Some(category);
     self
   }
 
-  pub fn category(&self) -> Option<&::models::Category> {
+  pub fn category(&self) -> Option<&crate::models::Category> {
     self.category.as_ref()
   }
 
@@ -105,16 +105,16 @@ impl Pet {
   }
 
 
-  pub fn set_tags(&mut self, tags: Vec<::models::Tag>) {
+  pub fn set_tags(&mut self, tags: Vec<crate::models::Tag>) {
     self.tags = Some(tags);
   }
 
-  pub fn with_tags(mut self, tags: Vec<::models::Tag>) -> Pet {
+  pub fn with_tags(mut self, tags: Vec<crate::models::Tag>) -> Pet {
     self.tags = Some(tags);
     self
   }
 
-  pub fn tags(&self) -> Option<&Vec<::models::Tag>> {
+  pub fn tags(&self) -> Option<&Vec<crate::models::Tag>> {
     self.tags.as_ref()
   }
 
@@ -140,6 +140,4 @@ impl Pet {
   }
 
 }
-
-
 

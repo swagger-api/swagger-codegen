@@ -296,7 +296,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // return fully-qualified model name
         // ::models::{{classnameFile}}::{{classname}}
-        return "::models::" + toModelName(swaggerType);
+        return "crate::models::" + toModelName(swaggerType);
     }
 
     @Override
