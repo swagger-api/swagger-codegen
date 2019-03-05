@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
 
 public class GoServerCodegen extends AbstractGoCodegen {
 
-    protected String apiVersion = "1.0.0";
-    protected int serverPort = 8080;
-    protected String projectName = "swagger-server";
-    protected String apiPath = "go";
-
     public GoServerCodegen() {
         super();
 
@@ -82,15 +77,6 @@ public class GoServerCodegen extends AbstractGoCodegen {
             setPackageName("swagger");
         }
 
-        /*
-         * Additional Properties.  These values can be passed to the templates and
-         * are available in models, apis, and supporting files
-         */
-        additionalProperties.put("apiVersion", apiVersion);
-        additionalProperties.put("serverPort", serverPort);
-        additionalProperties.put("apiPath", apiPath);
-        additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
-
         modelPackage = packageName;
         apiPackage = packageName;
 
@@ -101,14 +87,15 @@ public class GoServerCodegen extends AbstractGoCodegen {
          */
         supportingFiles.add(new SupportingFile("swagger.mustache", "api", "swagger.yaml"));
         supportingFiles.add(new SupportingFile("main.mustache", "", "main.go"));
-        supportingFiles.add(new SupportingFile("routers.mustache", apiPath, "routers.go"));
-        supportingFiles.add(new SupportingFile("logger.mustache", apiPath, "logger.go"));
-        writeOptional(outputFolder, new SupportingFile("README.mustache", apiPath, "README.md"));
+        supportingFiles.add(new SupportingFile("routers.mustache", ((String) additionalProperties.get(CodegenConstants.API_PATH)), "routers.go"));
+        supportingFiles.add(new SupportingFile("logger.mustache",  ((String) additionalProperties.get(CodegenConstants.API_PATH)), "logger.go"));
+        supportingFiles.add(new SupportingFile("go-mod.mustache",  "go.mod"));
+        writeOptional(outputFolder, new SupportingFile("README.mustache", ((String) additionalProperties.get(CodegenConstants.API_PATH)), "README.md"));
     }
 
     @Override
     public String apiPackage() {
-        return apiPath;
+        return ((String) additionalProperties.get(CodegenConstants.API_PATH));
     }
 
     /**
