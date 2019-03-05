@@ -1111,6 +1111,12 @@
                 <artifactId>jackson-datatype-joda</artifactId>
                 <version>${jackson-version}</version>
             </dependency>
+            <!-- snakeyaml -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
             <!-- tests -->
             <dependency>
                 <groupId>junit</groupId>
@@ -1177,5 +1183,6 @@
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
+        <snakeyaml-version>1.23</snakeyaml-version>
     </properties>
 </project>
