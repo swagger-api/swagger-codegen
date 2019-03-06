@@ -66,7 +66,8 @@ class ApiClient(object):
             configuration = Configuration()
         self.configuration = configuration
 
-        self._pool = None  # Use the pool property to lazily initialize the ThreadPool.
+        # Use the pool property to lazily initialize the ThreadPool.
+        self._pool = None
         self.rest_client = rest.RESTClientObject(configuration)
         self.default_headers = {}
         if header_name is not None:
