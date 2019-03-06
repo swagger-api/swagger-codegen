@@ -70,7 +70,7 @@ public class {{classname}} {
         {{/required}}{{/allParams}}{{#hasPathParams}}
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();{{#pathParams}}
-        uriVariables.put("{{baseName}}", {{{paramName}}});{{/pathParams}}{{/hasPathParams}}
+        uriVariables.put("{{baseName}}", {{#collectionFormat}}ApiClient.CollectionFormat.valueOf("{{{collectionFormat}}}".toUpperCase()).collectionToString({{{paramName}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}});{{/pathParams}}{{/hasPathParams}}
         String {{localVariablePrefix}}path = UriComponentsBuilder.fromPath("{{{path}}}"){{#hasPathParams}}.buildAndExpand(uriVariables){{/hasPathParams}}{{^hasPathParams}}.build(){{/hasPathParams}}.toUriString();
         
         final MultiValueMap<String, String> {{localVariablePrefix}}queryParams = new LinkedMultiValueMap<String, String>();
