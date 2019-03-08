@@ -688,10 +688,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         if(pattern != null) {
             int i = pattern.lastIndexOf('/');
 
-            //Must follow Perl /pattern/modifiers convention
             if(pattern.charAt(0) != '/' || i < 2) {
-                throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+                pattern = String.format("/%s/", pattern);
             }
 
             String regex = pattern.substring(1, i).replace("'", "\\'");
