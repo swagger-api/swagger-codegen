@@ -764,6 +764,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Activehours](https://www.activehours.com/)
 - [Actonica](https://www.actonica.com)
 - [Acunetix](https://www.acunetix.com/)
+- [Adaptant](https://www.adaptant.io/)
 - [Atlassian](https://www.atlassian.com/)
 - [Autodesk](http://www.autodesk.com/)
 - [Avenida Compras S.A.](https://www.avenida.com.ar)
