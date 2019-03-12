@@ -504,7 +504,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
         if (allDefinitions != null && codegenModel != null && codegenModel.parent != null) {
             final Model parentModel = allDefinitions.get(toModelName(codegenModel.parent));
             if (parentModel != null) {
-                final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
+                final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel, allDefinitions);
                 if (codegenModel.hasEnums) {
                     codegenModel = this.reconcileInlineEnums(codegenModel, parentCodegenModel);
                 }
@@ -521,15 +521,17 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 }
 
                 CodegenProperty last = null;
-                for (final CodegenProperty property : parentCodegenModel.vars) {
+                Map<String, CodegenProperty> parentVarHash = new HashMap<>(parentCodegenModel.readWriteVars.size());
+                for (final CodegenProperty property : parentCodegenModel.readWriteVars) {
                     // helper list of parentVars simplifies templating
-                    if (!propertyHash.containsKey(property.name)) {
+                    if (!propertyHash.containsKey(property.name) && !parentVarHash.containsKey(property.name)) {
                         final CodegenProperty parentVar = property.clone();
                         parentVar.isInherited = true;
                         parentVar.hasMore = true;
                         last = parentVar;
                         LOGGER.info("adding parent variable {}", property.name);
                         codegenModel.parentVars.add(parentVar);
+                        parentVarHash.put(parentVar.name, parentVar);
                     }
                 }
 
