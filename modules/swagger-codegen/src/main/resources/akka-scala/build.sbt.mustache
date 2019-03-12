@@ -1,16 +1,16 @@
 version := "{{artifactVersion}}"
 name := "{{artifactId}}"
 organization := "{{groupId}}"
-scalaVersion := "2.11.12"
+scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.3.2",
-  "com.typesafe.akka" %% "akka-actor" % "2.5.8",
-  "io.spray" % "spray-client" % "1.3.1",
-  "joda-time" % "joda-time" % "2.9.9",
+  "com.typesafe.akka" %% "akka-actor" % "2.5.21",
+  "io.spray" % "spray-client" % "1.3.4",
+  "joda-time" % "joda-time" % "2.10.1",
   "org.json4s" %% "json4s-jackson" % "3.5.3",
   // test dependencies
-  "org.scalatest" %% "scalatest" % "3.0.4" % "test",
+  "org.scalatest" %% "scalatest" % "3.0.5" % "test",
   "junit" % "junit" % "4.12" % "test"
 )
 
