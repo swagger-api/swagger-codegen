@@ -720,11 +720,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         addPet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).addPet(body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -740,11 +749,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deletePet(petId: number, apiKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).deletePet(petId, apiKey, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -759,11 +777,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -778,11 +805,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         findPetsByTags(tags: Array<string>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Pet>> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByTags(tags, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -797,11 +833,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getPetById(petId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Pet> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).getPetById(petId, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -816,11 +861,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         updatePet(body: Pet, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePet(body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -837,11 +891,20 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         updatePetWithForm(petId: number, name?: string, status?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePetWithForm(petId, name, status, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -858,11 +921,19 @@ export const PetApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         uploadFile(petId: number, additionalMetadata?: string, file?: any, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ApiResponse> {
+            const producesMediaTypes: string[] = [
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).uploadFile(petId, additionalMetadata, file, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -1220,11 +1291,20 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deleteOrder(orderId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).deleteOrder(orderId, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -1238,11 +1318,19 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getInventory(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: number; }> {
+            const producesMediaTypes: string[] = [
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getInventory(options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -1257,11 +1345,20 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getOrderById(orderId: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getOrderById(orderId, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -1276,11 +1373,20 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         placeOrder(body: Order, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Order> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).placeOrder(body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -1673,11 +1779,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createUser(body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUser(body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -1692,11 +1807,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createUsersWithArrayInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithArrayInput(body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -1711,11 +1835,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createUsersWithListInput(body: Array<User>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithListInput(body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -1730,11 +1863,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deleteUser(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).deleteUser(username, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -1749,11 +1891,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getUserByName(username: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<User> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).getUserByName(username, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -1769,11 +1920,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         loginUser(username: string, password: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<string> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).loginUser(username, password, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        
+                        return producesPlainText ? response.text() : response.json();
                     } else {
                         throw response;
                     }
@@ -1787,11 +1947,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         logoutUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).logoutUser(options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
@@ -1807,11 +1976,20 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         updateUser(username: string, body: User, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const producesMediaTypes: string[] = [
+                'application/xml',
+                'application/json'
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).updateUser(username, body, options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
+                        
                     } else {
                         throw response;
                     }
