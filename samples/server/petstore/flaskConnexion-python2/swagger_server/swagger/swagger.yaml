@@ -59,6 +59,7 @@ paths:
         - "write:pets"
         - "read:pets"
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-post-method: true
     put:
       tags:
       - "pet"
@@ -90,6 +91,7 @@ paths:
         - "write:pets"
         - "read:pets"
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-put-method: true
   /pet/findByStatus:
     get:
       tags:
@@ -108,11 +110,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
       responses:
         200:
@@ -128,6 +130,7 @@ paths:
         - "write:pets"
         - "read:pets"
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-get-method: true
   /pet/findByTags:
     get:
       tags:
@@ -163,6 +166,7 @@ paths:
         - "read:pets"
       deprecated: true
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-get-method: true
   /pet/{petId}:
     get:
       tags:
@@ -192,6 +196,7 @@ paths:
       security:
       - api_key: []
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-get-method: true
     post:
       tags:
       - "pet"
@@ -228,6 +233,7 @@ paths:
         - "write:pets"
         - "read:pets"
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-post-method: true
     delete:
       tags:
       - "pet"
@@ -256,6 +262,7 @@ paths:
         - "write:pets"
         - "read:pets"
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-delete-method: true
   /pet/{petId}/uploadImage:
     post:
       tags:
@@ -294,6 +301,7 @@ paths:
         - "write:pets"
         - "read:pets"
       x-swagger-router-controller: "swagger_server.controllers.pet_controller"
+      x-is-post-method: true
   /store/inventory:
     get:
       tags:
@@ -315,6 +323,7 @@ paths:
       security:
       - api_key: []
       x-swagger-router-controller: "swagger_server.controllers.store_controller"
+      x-is-get-method: true
   /store/order:
     post:
       tags:
@@ -340,6 +349,7 @@ paths:
         400:
           description: "Invalid Order"
       x-swagger-router-controller: "swagger_server.controllers.store_controller"
+      x-is-post-method: true
   /store/order/{orderId}:
     get:
       tags:
@@ -370,6 +380,7 @@ paths:
         404:
           description: "Order not found"
       x-swagger-router-controller: "swagger_server.controllers.store_controller"
+      x-is-get-method: true
     delete:
       tags:
       - "store"
@@ -392,6 +403,7 @@ paths:
         404:
           description: "Order not found"
       x-swagger-router-controller: "swagger_server.controllers.store_controller"
+      x-is-delete-method: true
   /user:
     post:
       tags:
@@ -413,6 +425,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-post-method: true
   /user/createWithArray:
     post:
       tags:
@@ -436,6 +449,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-post-method: true
   /user/createWithList:
     post:
       tags:
@@ -459,6 +473,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-post-method: true
   /user/login:
     get:
       tags:
@@ -497,6 +512,7 @@ paths:
         400:
           description: "Invalid username/password supplied"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-get-method: true
   /user/logout:
     get:
       tags:
@@ -512,6 +528,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-get-method: true
   /user/{username}:
     get:
       tags:
@@ -538,6 +555,7 @@ paths:
         404:
           description: "User not found"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-get-method: true
     put:
       tags:
       - "user"
@@ -565,6 +583,7 @@ paths:
         404:
           description: "User not found"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-put-method: true
     delete:
       tags:
       - "user"
@@ -586,6 +605,7 @@ paths:
         404:
           description: "User not found"
       x-swagger-router-controller: "swagger_server.controllers.user_controller"
+      x-is-delete-method: true
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
