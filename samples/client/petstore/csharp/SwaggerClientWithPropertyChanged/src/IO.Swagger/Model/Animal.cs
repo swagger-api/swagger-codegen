@@ -31,7 +31,7 @@ namespace IO.Swagger.Model
     /// Animal
     /// </summary>
     [DataContract]
-    [JsonConverter(typeof(JsonSubtypes), "className")]
+    [Client.SerializableJsonSubtypes(typeof(Animal), "className")]
     [JsonSubtypes.KnownSubType(typeof(Dog), "Dog")]
     [JsonSubtypes.KnownSubType(typeof(Cat), "Cat")]
     [ImplementPropertyChanged]

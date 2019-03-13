@@ -28,10 +28,24 @@ namespace IO.Swagger.Client
     /// </summary>
     public partial class ApiClient
     {
-        private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
+        public static JsonSerializerSettings GetSerializerSettings(Type objectType)
         {
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
-        };
+            var settings = new JsonSerializerSettings
+            {
+                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+            };
+            var attributes = objectType.GetCustomAttributes(true);
+            foreach (var attr in attributes)
+            {
+                if (attr is SerializableJsonSubtypes)
+                {
+                    var converter = ((SerializableJsonSubtypes)attr).GetCustomConverter();
+                    settings.Converters.Add(converter);
+                    break;
+                }
+            }
+            return settings;
+        }
 
         /// <summary>
         /// Allows for extending request processing for <see cref="ApiClient"/> generated code.
@@ -324,7 +338,7 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                return JsonConvert.DeserializeObject(response.Content, type, ApiClient.GetSerializerSettings(type));
             }
             catch (Exception e)
             {
@@ -341,7 +355,7 @@ namespace IO.Swagger.Client
         {
             try
             {
-                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+                return obj != null ? JsonConvert.SerializeObject(obj, ApiClient.GetSerializerSettings(obj.GetType())) : null;
             }
             catch (Exception e)
             {
@@ -530,6 +544,48 @@ namespace IO.Swagger.Client
         private static bool IsCollection(object value)
         {
             return value is IList || value is ICollection;
+        }
+    }
+
+    public class SerializableJsonSubtypes : Attribute
+    {
+        public Type BaseType { get; set; }
+        public String DiscriminatorProperty { get; set; }
+        public bool SerializeDiscriminatorProperty { get; set; }
+        public bool AddDiscriminatorPropertyFirst { get; set; }
+
+        public SerializableJsonSubtypes()
+        {
+        }
+
+        public SerializableJsonSubtypes(Type baseType, string jsonDiscriminatorPropertyName) : this(baseType, jsonDiscriminatorPropertyName, true, true)
+        {
+
+        }
+
+        public SerializableJsonSubtypes(Type baseType, string jsonDiscriminatorPropertyName, bool serializeDiscriminatorProperty, bool addDiscriminatorPropertyFirst)
+        {
+            BaseType = baseType;
+            DiscriminatorProperty = jsonDiscriminatorPropertyName;
+            SerializeDiscriminatorProperty = serializeDiscriminatorProperty;
+            AddDiscriminatorPropertyFirst = addDiscriminatorPropertyFirst;
+        }
+
+        public JsonConverter GetCustomConverter()
+        {
+            JsonSubTypes.JsonSubtypesConverterBuilder b = JsonSubTypes.JsonSubtypesConverterBuilder.Of(BaseType, DiscriminatorProperty);
+            var attributes = BaseType.GetCustomAttributes(false);
+            foreach(var attr in attributes)
+            {
+                if(attr is JsonSubTypes.JsonSubtypes.KnownSubTypeAttribute)
+                {
+                    var subtypeAttr = attr as JsonSubTypes.JsonSubtypes.KnownSubTypeAttribute;
+                    b.RegisterSubtype(subtypeAttr.SubType, subtypeAttr.AssociatedValue);
+                }
+            }
+            if(SerializeDiscriminatorProperty)
+                b.SerializeDiscriminatorProperty(AddDiscriminatorPropertyFirst);
+            return b.Build();
         }
     }
 }
