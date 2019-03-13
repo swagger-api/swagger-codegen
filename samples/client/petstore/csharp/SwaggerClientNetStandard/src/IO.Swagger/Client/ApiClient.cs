@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Reflection;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -28,23 +29,38 @@ namespace IO.Swagger.Client
     /// </summary>
     public partial class ApiClient
     {
-        public static JsonSerializerSettings GetSerializerSettings(Type objectType)
+        private static JsonSerializerSettings _settings = null;
+        public static JsonSerializerSettings SerializerSettings
         {
-            var settings = new JsonSerializerSettings
+            get
             {
-                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
-            };
-            var attributes = objectType.GetCustomAttributes(true);
-            foreach (var attr in attributes)
-            {
-                if (attr is SerializableJsonSubtypes)
+                if (_settings == null)
                 {
-                    var converter = ((SerializableJsonSubtypes)attr).GetCustomConverter();
-                    settings.Converters.Add(converter);
-                    break;
+                    _settings = new JsonSerializerSettings
+                    {
+                        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+                    };
+
+                    var modelTypes = from t in Assembly.GetAssembly(typeof(ApiClient)).GetTypes()
+                                     where t.IsClass && t.Namespace == "IO.Swagger.Model"
+                                     select t;
+                    foreach (var modelType in modelTypes)
+                    {
+                        var attributes = modelType.GetCustomAttributes(false);
+                        foreach (var attr in attributes)
+                        {
+                            if (attr is SerializableJsonSubtypes)
+                            {
+                                var converter = ((SerializableJsonSubtypes)attr).GetCustomConverter();
+                                _settings.Converters.Add(converter);
+                                break;
+                            }
+                        }
+                    }
                 }
+
+                return _settings;
             }
-            return settings;
         }
 
         /// <summary>
@@ -338,7 +354,7 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, ApiClient.GetSerializerSettings(type));
+                return JsonConvert.DeserializeObject(response.Content, type, ApiClient.SerializerSettings);
             }
             catch (Exception e)
             {
@@ -355,7 +371,7 @@ namespace IO.Swagger.Client
         {
             try
             {
-                return obj != null ? JsonConvert.SerializeObject(obj, ApiClient.GetSerializerSettings(obj.GetType())) : null;
+                return obj != null ? JsonConvert.SerializeObject(obj, ApiClient.SerializerSettings) : null;
             }
             catch (Exception e)
             {
