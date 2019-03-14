@@ -1,0 +1,43 @@
+package {{package}}
+
+import javax.inject.{Inject, Singleton}
+import play.api.mvc._{{#apiFutures}}
+import scala.concurrent.{ExecutionContext, Future}{{/apiFutures}}{{#imports}}
+import {{import}}{{/imports}}
+{{#operations}}
+
+{{>generatedAnnotation}}@Singleton
+class {{classname}}Controller @Inject()(cc: ControllerComponents, api: {{classname}}){{#apiFutures}}(implicit executionContext: ExecutionContext){{/apiFutures}} extends AbstractController(cc) {
+  {{#operation}}
+  /**
+    * {{httpMethod}} {{path}}{{#queryParams.0}}?{{/queryParams.0}}{{#queryParams}}{{paramName}}=[value]{{#hasMore}}&{{/hasMore}}{{/queryParams}} {{#pathParams}}{{#description}}
+    * @param {{paramName}} {{description}}{{/description}}{{/pathParams}}
+    */
+  def {{operationId}}({{#pathParams}}{{paramName}}: {{dataType}}{{#hasMore}}, {{/hasMore}}{{/pathParams}}): Action[AnyContent] = Action{{#apiFutures}}.async{{/apiFutures}} { request =>
+    {{#bodyParams}}
+    val {{paramName}} = request.body.asJson.map(_.as[{{dataType}}]).getOrElse {
+      throw new IllegalArgumentException("Missing body parameter `{{paramName}}`.")
+    }
+    {{/bodyParams}}
+    {{#headerParams}}
+    val {{paramName}} = request.headers.get("{{baseName}}").getOrElse {
+      throw new IllegalArgumentException("Missing header `{{baseName}}`.")
+    }
+    {{/headerParams}}
+    {{#queryParams}}
+    val {{paramName}}: {{dataType}} = null // TODO [query]
+    {{/queryParams}}
+    {{#formParams}}
+    val {{paramName}}: {{dataType}} = null // TODO [form]
+    {{/formParams}}
+
+    api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}){{#apiFutures}}
+      .map({{#returnType}}result => Ok(result){{/returnType}}{{^returnType}}_ => Ok{{/returnType}})
+    {{/apiFutures}}
+  }{{#hasMore}}
+
+  {{/hasMore}}
+  {{/operation}}
+
+}
+{{/operations}}

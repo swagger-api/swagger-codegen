@@ -89,3 +89,5 @@ io.swagger.codegen.languages.TypeScriptNodeClientCodegen
 io.swagger.codegen.languages.UndertowCodegen
 io.swagger.codegen.languages.ZendExpressivePathHandlerServerCodegen
 io.swagger.codegen.languages.KotlinServerCodegen
+
+io.swagger.codegen.languages.ScalaPlayFrameworkServerCodegen

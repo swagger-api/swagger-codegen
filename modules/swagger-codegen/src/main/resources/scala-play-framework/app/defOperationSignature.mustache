@@ -1,0 +1,1 @@
+def {{operationId}}({{#allParams}}{{paramName}}: {{dataType}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): {{#apiFutures}}Future[{{/apiFutures}}{{^returnType}}Unit{{/returnType}}{{#returnType}}{{returnType}}{{/returnType}}{{#apiFutures}}]{{/apiFutures}}
