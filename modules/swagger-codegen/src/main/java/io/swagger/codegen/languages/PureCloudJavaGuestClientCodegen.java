@@ -13,6 +13,10 @@ public class PureCloudJavaGuestClientCodegen extends PureCloudJavaClientCodegen 
         // Custom mappings for swagger type -> java type
         // Override the standard sdk's type
         importMapping.replace("PagedResource", "com.mypurecloud.sdk.v2.guest.PagedResource");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+
+        // Type overrides
+        typeMapping.put("date", "LocalDate");
     }
 
     @Override
