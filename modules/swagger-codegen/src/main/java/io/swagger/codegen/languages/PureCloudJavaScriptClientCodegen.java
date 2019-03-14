@@ -133,7 +133,7 @@ public class PureCloudJavaScriptClientCodegen extends DefaultCodegen implements 
         typeMapping.put("number", "Number");
         typeMapping.put("DateTime", "Date");
         typeMapping.put("LocalDateTime", "Date");
-        typeMapping.put("date", "Date");
+        typeMapping.put("date", "String");
         typeMapping.put("long", "Number");
         typeMapping.put("short", "Number");
         typeMapping.put("char", "String");
