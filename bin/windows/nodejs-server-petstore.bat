@@ -5,6 +5,6 @@ If Not Exist %executable% (
 )
 
 REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M -DloggerPath=conf/log4j.properties
-set ags=generate  --artifact-id "kotlin-petstore-server" -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l nodejs-server -o samples\server\petstore\nodejs
+set ags=generate  --artifact-id "nodejs-petstore-server" -i modules\swagger-codegen\src\test\resources\2_0\petstore.yaml -l nodejs-server -o samples\server\petstore\nodejs
 
 java %JAVA_OPTS% -jar %executable% %ags%
