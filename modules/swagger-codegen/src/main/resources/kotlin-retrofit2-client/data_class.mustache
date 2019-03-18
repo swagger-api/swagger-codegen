@@ -1,0 +1,25 @@
+import com.google.gson.annotations.SerializedName
+
+/**
+ * {{{description}}}
+{{#vars}}
+ * @param {{name}} {{{description}}} {{#required}}(required){{/required}}
+{{/vars}}
+ */
+data class {{classname}} (
+{{#vars}}
+{{#required}}{{>data_class_req_var}}{{^-last}},
+{{/-last}}{{/required}}{{^required}}{{>data_class_opt_var}}{{^-last}},
+{{/-last}}{{/required}}
+{{/vars}}
+) {
+{{#hasEnums}}{{#vars}}{{#isEnum}}
+
+    enum class {{enumName}}(val value: String) {
+    {{#allowableValues}}{{#enumVars}}
+        @SerializedName({{{value}}})
+        {{name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}}{{/-last}}
+    {{/enumVars}}{{/allowableValues}}
+    }
+{{/isEnum}}{{/vars}}{{/hasEnums}}
+}

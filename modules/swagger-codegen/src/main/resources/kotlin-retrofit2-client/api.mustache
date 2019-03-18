@@ -1,0 +1,46 @@
+{{>licenseInfo}}
+package {{apiPackage}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+import io.reactivex.Observable
+import retrofit2.http.*
+
+{{#operations}}
+interface {{classname}} {
+
+  {{#operation}}
+  /**
+   * {{summary}}
+   * {{notes}}
+{{#allParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+{{/allParams}}
+   * @return Observable&lt;{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}retrofit2.Response&lt;okhttp3.ResponseBody&gt;{{/returnType}}&gt;
+{{#externalDocs}}
+   * {{description}}
+   * @see <a href="{{url}}">{{summary}} Documentation</a>
+{{/externalDocs}}
+   */
+  {{#formParams}}
+  {{#-first}}
+  {{#isMultipart}}@retrofit2.http.Multipart{{/isMultipart}}{{^isMultipart}}@retrofit2.http.FormUrlEncoded{{/isMultipart}}
+  {{/-first}}
+  {{/formParams}}
+  {{^formParams}}
+  {{#prioritizedContentTypes}}
+  {{#-first}}
+  @Headers({
+    "Content-Type:{{mediaType}}"
+  })
+  {{/-first}}
+  {{/prioritizedContentTypes}}
+  {{/formParams}}  
+  @{{httpMethod}}("{{{path}}}")
+  fun {{operationId}}({{^allParams}}){{/allParams}}{{#allParams}}{{>libraries/retrofit2-kotlin/queryParams}}{{>libraries/retrofit2-kotlin/pathParams}}{{>libraries/retrofit2-kotlin/headerParams}}{{>libraries/retrofit2-kotlin/bodyParams}}{{>libraries/retrofit2-kotlin/formParams}}{{^-last}},
+  {{/-last}}{{#-last}}):{{/-last}}{{/allParams}} Observable<{{#isResponseFile}}ResponseBody{{/isResponseFile}}{{^isResponseFile}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}retrofit2.Response<okhttp3.ResponseBody>{{/returnType}}{{/isResponseFile}}>
+
+  {{/operation}}
+}
+{{/operations}}
