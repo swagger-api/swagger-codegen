@@ -1061,8 +1061,8 @@
         <swagger-codegen-generators-version>1.0.6-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.0.7</swagger-core-version>
         <swagger-core-version-v1>1.5.22</swagger-core-version-v1>
-        <swagger-parser-version>2.0.9</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.42</swagger-parser-version-v1>
+        <swagger-parser-version>2.0.10-SNAPSHOT</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.43-SNAPSHOT</swagger-parser-version-v1>
         <jackson-version>2.9.8</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
