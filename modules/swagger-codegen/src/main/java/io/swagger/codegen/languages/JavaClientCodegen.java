@@ -3,10 +3,16 @@ package io.swagger.codegen.languages;
 import static java.util.Collections.sort;
 
 import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Lists;
+
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
+import io.swagger.codegen.utils.Combinator;
+import io.swagger.codegen.utils.Combinator.Combination;
+import io.swagger.codegen.utils.mappers.OperationMapper;
+import io.swagger.models.parameters.Parameter;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +39,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String PLAY_VERSION = "playVersion";
     public static final String PARCELABLE_MODEL = "parcelableModel";
     public static final String USE_RUNTIME_EXCEPTION = "useRuntimeException";
+    public static final String USE_OVERLOADING = "useOverloading";
 
     public static final String PLAY_24 = "play24";
     public static final String PLAY_25 = "play25";
@@ -52,6 +59,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean performBeanValidation = false;
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
+    protected boolean useOverloading = false;
 
 
     public JavaClientCodegen() {
@@ -156,6 +164,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_RUNTIME_EXCEPTION)) {
             this.setUseRuntimeException(convertPropertyToBooleanAndWriteBack(USE_RUNTIME_EXCEPTION));
         }
+        
+        if (additionalProperties.containsKey(USE_OVERLOADING)) {
+            this.setUseOverloading(Boolean.valueOf(additionalProperties.get(USE_OVERLOADING).toString()));
+        }
+        additionalProperties.put(USE_OVERLOADING, true);//useOverloading);
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -322,6 +335,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
+        
+        if (useOverloading) {
+        	Map<String, Object> operationsMap = (Map<String, Object>) objs.get("operations");
+        	List<CodegenOperation> codegenOperations = (List<CodegenOperation>) operationsMap.get("operation");
+        	List<CodegenOperation> overloadedCodegenOperations = transformToMapOfOverloadedOperations(codegenOperations);
+        	operationsMap.put("operation", overloadedCodegenOperations);
+        }
+        
         if (usesAnyRetrofitLibrary()) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
@@ -387,7 +408,53 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         return objs;
     }
 
-    @Override
+    private List<CodegenOperation> transformToMapOfOverloadedOperations(List<CodegenOperation> codegenOperations) {
+    	List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    	for (CodegenOperation codegenOperation: codegenOperations) {
+    		overloadedCodegenOperations.addAll(createListOfOverloadedCodegenOperations(codegenOperation));
+		}
+    	return overloadedCodegenOperations;
+    	
+    	
+	}
+
+	private Collection<? extends CodegenOperation> createListOfOverloadedCodegenOperations(CodegenOperation codegenOperation) {
+		List<CodegenParameter> optionalParameters = Lists.newArrayList();
+		List<CodegenParameter> requiredParameters = Lists.newArrayList();
+		if (codegenOperation.hasOptionalParams) {
+			for (CodegenParameter codegenParam : codegenOperation.allParams) {
+				if (codegenParam.required) {
+					requiredParameters.add(codegenParam);
+				} else {
+					optionalParameters.add(codegenParam);
+				}
+			}
+		}
+    	List<Combination<CodegenParameter>> combinationsOfOptionalParameters = Combinator.getCombinations(optionalParameters);
+    	
+    	List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+		for (Combination<CodegenParameter> combination: combinationsOfOptionalParameters) {
+			List<CodegenParameter> parametersForOverloadedMethod = Lists.newArrayList();
+			parametersForOverloadedMethod.addAll(requiredParameters);
+			parametersForOverloadedMethod.addAll(combination);
+			CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, parametersForOverloadedMethod);
+			overloadedCodegenOperations.add(overloadedOperation);
+		}
+		return overloadedCodegenOperations;
+	}
+	
+	public CodegenOperation mapAndSetParameters(CodegenOperation codegenOperation, List<CodegenParameter> codegenParameters) {
+		CodegenOperation newOperation = OperationMapper.INSTANCE.map(codegenOperation);
+		List<Parameter> parameters = Lists.newArrayList();
+		for (CodegenParameter codegenParameter: codegenParameters) {
+			parameters.add(codegenParameter.parameter);
+		}
+		newOperation.hasOptionalParams = false;
+		setParameterFields(newOperation.httpMethod, parameters, null, newOperation, newOperation.imports, null, newOperation.externalDocs);
+		return newOperation;
+	}
+
+	@Override
     public String apiFilename(String templateName, String tag) {
         if("vertx".equals(getLibrary())) {
             String suffix = apiTemplateFiles().get(templateName);
@@ -585,6 +652,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
     public void setUseRuntimeException(boolean useRuntimeException) {
         this.useRuntimeException = useRuntimeException;
+    }
+    
+    public void setUseOverloading(boolean useOverloading) {
+        this.useOverloading = useOverloading;
     }
 
     final private static Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application\\/json(;.*)?");

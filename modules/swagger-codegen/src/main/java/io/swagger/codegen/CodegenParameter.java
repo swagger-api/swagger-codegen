@@ -3,6 +3,9 @@ package io.swagger.codegen;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.swagger.models.parameters.Parameter;
+
 import java.util.List;
 
 public class CodegenParameter {
@@ -24,6 +27,10 @@ public class CodegenParameter {
     public CodegenProperty items;
     public Map<String, Object> vendorExtensions;
     public boolean hasValidation;
+    /**
+     * The parameter from which this {@link CodegenParameter} is created.
+     */
+    public Parameter parameter;
 
     /**
      * Determines whether this parameter is mandatory. If the parameter is in "path",
