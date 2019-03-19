@@ -79,6 +79,7 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
         try {
             final ObjectMapper mapper = new ObjectMapper(new YAMLFactory()
                     .configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true)
+                    .configure(YAMLGenerator.Feature.SPLIT_LINES, false)
                     .configure(YAMLGenerator.Feature.ALWAYS_QUOTE_NUMBERS_AS_STRINGS, true));
             configureMapper(mapper);
             String swaggerString = mapper.writeValueAsString(swagger);

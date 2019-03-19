@@ -880,6 +880,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit-version}</version>
@@ -909,7 +914,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.42</swagger-parser-version>
+        <swagger-parser-version>1.0.43-SNAPSHOT</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <swagger-core-version>1.5.22</swagger-core-version>
@@ -926,5 +931,6 @@
         <surefire-version>2.19.1</surefire-version>
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
+        <snakeyaml-version>1.23</snakeyaml-version>
     </properties>
 </project>
