@@ -184,6 +184,35 @@ class FakeApi extends Controller
         return response('How about implementing testEnumParameters as a get method ?');
     }
     /**
+     * Operation testBodyWithQueryParams
+     *
+     * .
+     *
+     *
+     * @return Http response
+     */
+    public function testBodyWithQueryParams()
+    {
+        $input = Request::all();
+
+        //path params validation
+
+
+        //not path params validation
+        if (!isset($input['body'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $body when calling testBodyWithQueryParams');
+        }
+        $body = $input['body'];
+
+        if (!isset($input['query'])) {
+            throw new \InvalidArgumentException('Missing the required parameter $query when calling testBodyWithQueryParams');
+        }
+        $query = $input['query'];
+
+
+        return response('How about implementing testBodyWithQueryParams as a put method ?');
+    }
+    /**
      * Operation testInlineAdditionalProperties
      *
      * test inline additionalProperties.
