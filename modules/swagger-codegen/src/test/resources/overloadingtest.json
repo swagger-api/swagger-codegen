@@ -44,6 +44,35 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+      	"tags": [
+          "foo"
+        ],
+        "operationId": "deleteBar",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "barId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
   }

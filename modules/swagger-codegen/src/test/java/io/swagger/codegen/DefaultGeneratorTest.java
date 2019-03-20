@@ -226,8 +226,10 @@ public class DefaultGeneratorTest {
         
         //Assert that the overloaded methods have been created
         String fooApiAsString = FileUtils.readFileToString(fooApi, StandardCharsets.UTF_8);
-        assertTrue(fooApiAsString.contains("getBar1()"));
-        assertTrue(fooApiAsString.contains("getBar2(String type)"));
+        assertTrue(fooApiAsString.contains("getBar()"));
+        assertTrue(fooApiAsString.contains("getBar(String type)"));
+        assertTrue(fooApiAsString.contains("deleteBar(Long barId)"));
+        assertTrue(fooApiAsString.contains("deleteBar(Long barId, String type)"));
     }
 
     private boolean containsOverloadedComments(File file, String ...search) throws IOException {
