@@ -81,6 +81,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
         cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
+        cliOptions.add(CliOption.newBoolean(USE_OVERLOADING, "Create overloaded methods when encountering optional query parameters"));
 
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.8.9. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.8.9");
@@ -166,9 +167,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         }
         
         if (additionalProperties.containsKey(USE_OVERLOADING)) {
-            this.setUseOverloading(Boolean.valueOf(additionalProperties.get(USE_OVERLOADING).toString()));
+            this.setUseOverloading(convertPropertyToBooleanAndWriteBack(USE_OVERLOADING));
         }
-        additionalProperties.put(USE_OVERLOADING, true);//useOverloading);
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -433,11 +433,17 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     	List<Combination<CodegenParameter>> combinationsOfOptionalParameters = Combinator.getCombinations(optionalParameters);
     	
     	List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    	int count = 0;
 		for (Combination<CodegenParameter> combination: combinationsOfOptionalParameters) {
+			count++;
 			List<CodegenParameter> parametersForOverloadedMethod = Lists.newArrayList();
 			parametersForOverloadedMethod.addAll(requiredParameters);
 			parametersForOverloadedMethod.addAll(combination);
 			CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, parametersForOverloadedMethod);
+			overloadedOperation.operationId += count;
+			overloadedOperation.operationIdCamelCase += count;
+			overloadedOperation.operationIdLowerCase += count;
+			overloadedOperation.operationIdSnakeCase += count;
 			overloadedCodegenOperations.add(overloadedOperation);
 		}
 		return overloadedCodegenOperations;
