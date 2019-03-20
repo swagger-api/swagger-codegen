@@ -5,8 +5,10 @@ import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import io.swagger.util.Json;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.testng.AssertJUnit.*;
@@ -988,5 +990,24 @@ public class InlineModelResolverTest {
         assertTrue(inlineProp instanceof ObjectProperty);
         ObjectProperty op = (ObjectProperty) inlineProp;
         assertNull(op.getProperties());
-    }    
+    }
+
+    @Test
+    public void testEmptyExampleOnStrinngTypeModels() {
+        Swagger swagger = new Swagger();
+
+        RefProperty refProperty = new RefProperty();
+        refProperty.set$ref("#/definitions/Test");
+
+        swagger.path("/hello", new Path()
+                .get(new Operation()
+                        .response(200, new Response()
+                                .schema(new ArrayProperty()
+                                        .items(refProperty)))));
+
+        swagger.addDefinition("Test", new ModelImpl()
+                .example(StringUtils.EMPTY)
+                .type("string"));
+        new InlineModelResolver().flatten(swagger);
+    }
 }

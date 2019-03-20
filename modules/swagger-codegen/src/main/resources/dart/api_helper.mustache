@@ -42,7 +42,7 @@ String parameterToString(dynamic value) {
     {{#model}}
       {{#isEnum}}
   } else if (value is {{classname}}) {
-    return new {{classname}}TypeTransformer().encode(value).toString();
+    return {{classname}}.encode(value).toString();
       {{/isEnum}}
     {{/model}}
   {{/models}}

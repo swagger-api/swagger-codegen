@@ -1,6 +1,6 @@
 # USER_API
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Feature | HTTP request | Description
 ------------- | ------------- | -------------
@@ -236,7 +236,7 @@ Get user by user name
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **STRING_32**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **STRING_32**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 

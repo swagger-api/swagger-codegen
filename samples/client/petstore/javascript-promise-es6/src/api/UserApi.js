@@ -239,7 +239,7 @@ export default class UserApi {
     /**
      * Get user by user name
      * 
-     * @param {String} username The name that needs to be fetched. Use user1 for testing. 
+     * @param {String} username The name that needs to be fetched. Use user1 for testing.
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/User} and HTTP response
      */
     getUserByNameWithHttpInfo(username) {
@@ -276,7 +276,7 @@ export default class UserApi {
     /**
      * Get user by user name
      * 
-     * @param {String} username The name that needs to be fetched. Use user1 for testing. 
+     * @param {String} username The name that needs to be fetched. Use user1 for testing.
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/User}
      */
     getUserByName(username) {
