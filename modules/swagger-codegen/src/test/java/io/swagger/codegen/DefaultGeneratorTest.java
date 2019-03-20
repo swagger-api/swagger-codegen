@@ -168,7 +168,7 @@ public class DefaultGeneratorTest {
 
     @Test
     public void testSkipOverwrite() throws Exception {
-        final File output = Files.createTempDirectory("testagh").toFile();//folder.getRoot();
+        final File output = folder.getRoot();
 
         final Swagger swagger = new SwaggerParser().read("src/test/resources/petstore.json");
         CodegenConfig codegenConfig = new JavaClientCodegen();
@@ -208,8 +208,8 @@ public class DefaultGeneratorTest {
     }
     
     @Test
-    public void testUseOverloading() throws Exception {
-        final File output = Files.createTempDirectory("tempagh").toFile();//folder.getRoot();
+    public void testJavaClientGeneration_useOverloading() throws Exception {
+        final File output = folder.getRoot();
 
         final Swagger swagger = new SwaggerParser().read("src/test/resources/overloadingtest.json");
         JavaClientCodegen codegenConfig = new JavaClientCodegen();
@@ -229,6 +229,30 @@ public class DefaultGeneratorTest {
         assertTrue(fooApiAsString.contains("getBar()"));
         assertTrue(fooApiAsString.contains("getBar(String type)"));
         assertTrue(fooApiAsString.contains("deleteBar(Long barId)"));
+        assertTrue(fooApiAsString.contains("deleteBar(Long barId, String type)"));
+    }
+    
+    @Test
+    public void testJavaClientGeneration_dontUseOverloading() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/overloadingtest.json");
+        JavaClientCodegen codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("resttemplate");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate content first time without skipOverwrite flag, so all generated files should be recorded
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File fooApi = new File(output, FOO_API_FILE);
+        assertTrue(fooApi.exists());
+        
+        //Assert that the overloaded methods have been created
+        String fooApiAsString = FileUtils.readFileToString(fooApi, StandardCharsets.UTF_8);
+        assertFalse(fooApiAsString.contains("getBar()"));
+        assertTrue(fooApiAsString.contains("getBar(String type)"));
+        assertFalse(fooApiAsString.contains("deleteBar(Long barId)"));
         assertTrue(fooApiAsString.contains("deleteBar(Long barId, String type)"));
     }
 
