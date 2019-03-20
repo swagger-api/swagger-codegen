@@ -6,8 +6,22 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 
+/**
+ * Note that the intended usage of this utility class is to construct combinations of operation parameters with
+ * the goal of creating overloaded methods. As such: If the swagger doc adds an optional parameter to the end
+ * of the list of parameters for a given operation, the new combinations that arise from this
+ * will appear *in the end* of the list of combinations created from the combinator.
+ *  
+ * @author M83522
+ *
+ */
 public class Combinator {
 
+	public static class Combination<E> extends ArrayList<E> {
+		private static final long serialVersionUID = -5267569151809451656L;
+	}
+	
+	
 	/**
 	 * Below method is a slightly modified version of the iterative approach presented on this blog:
 	 * <br>
@@ -28,14 +42,10 @@ public class Combinator {
 	                combination.add(elems.get(ndx));
 	            }
 	        }
-	        System.out.println(combination);
 	        combinations.add(combination);
 	    }
 	    return combinations;
 	}
 	
-	public static class Combination<E> extends ArrayList<E> {
-		private static final long serialVersionUID = -5267569151809451656L;
-	}
 	
 }

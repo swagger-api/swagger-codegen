@@ -421,25 +421,30 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 	private Collection<? extends CodegenOperation> createListOfOverloadedCodegenOperations(CodegenOperation codegenOperation) {
 		List<CodegenParameter> optionalParameters = Lists.newArrayList();
 		List<CodegenParameter> requiredParameters = Lists.newArrayList();
-		if (codegenOperation.hasOptionalParams) {
-			for (CodegenParameter codegenParam : codegenOperation.allParams) {
-				if (codegenParam.required) {
-					requiredParameters.add(codegenParam);
-				} else {
-					optionalParameters.add(codegenParam);
-				}
+		for (CodegenParameter codegenParam : codegenOperation.allParams) {
+			if (codegenParam.required) {
+				requiredParameters.add(codegenParam);
+			} else {
+				optionalParameters.add(codegenParam);
 			}
 		}
-    	List<Combination<CodegenParameter>> combinationsOfOptionalParameters = Combinator.getCombinations(optionalParameters);
-    	
-    	List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    	List<Combination<CodegenParameter>> combinationsOfParameters = combineParameters(optionalParameters, requiredParameters);
+//		List<List<CodegenParameter>> combinationsOfParameters = Lists.newArrayList();
+//		for (int i=0; i<optionalParameters.size(); i++) {
+//			List<CodegenParameter> parameterCombination = Lists.newArrayList(requiredParameters);
+//			parameterCombination.addAll(optionalParameters.subList(0, i));
+//			combinationsOfParameters.add(parameterCombination);
+//    	}
+    	return createOverloadedCodegenOperations(codegenOperation, requiredParameters, combinationsOfParameters);
+	}
+
+	private Collection<? extends CodegenOperation> createOverloadedCodegenOperations(CodegenOperation codegenOperation, List<CodegenParameter> requiredParameters, List<Combination<CodegenParameter>> combinationsOfParameters) {
+		List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
     	int count = 0;
-		for (Combination<CodegenParameter> combination: combinationsOfOptionalParameters) {
+		for (Combination<CodegenParameter> combination: combinationsOfParameters) {
 			count++;
-			List<CodegenParameter> parametersForOverloadedMethod = Lists.newArrayList();
-			parametersForOverloadedMethod.addAll(requiredParameters);
-			parametersForOverloadedMethod.addAll(combination);
-			CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, parametersForOverloadedMethod);
+			CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, combination);
+			//Let's give the overloaded codegenoperation id a suffix so that we do not get compile errors in generated code for similar signatures (fx: an operation with two optional boolean query params would without the suffix result in the same signature)
 			overloadedOperation.operationId += count;
 			overloadedOperation.operationIdCamelCase += count;
 			overloadedOperation.operationIdLowerCase += count;
@@ -447,6 +452,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 			overloadedCodegenOperations.add(overloadedOperation);
 		}
 		return overloadedCodegenOperations;
+	}
+
+	private List<Combination<CodegenParameter>> combineParameters(List<CodegenParameter> optionalParameters, List<CodegenParameter> requiredParameters) {
+		List<Combination<CodegenParameter>> combinationsOfParameters = Combinator.getCombinations(optionalParameters);
+    	
+    	//Add the required args to the beginning of each combination
+    	for (Combination<CodegenParameter> combination: combinationsOfParameters) {
+    		for (int i=0; i<requiredParameters.size(); i++) {
+    			combination.add(i, requiredParameters.get(i));
+    		}
+    	}
+		return combinationsOfParameters;
 	}
 	
 	public CodegenOperation mapAndSetParameters(CodegenOperation codegenOperation, List<CodegenParameter> codegenParameters) {

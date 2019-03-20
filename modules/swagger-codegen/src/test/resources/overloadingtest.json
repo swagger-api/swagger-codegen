@@ -1,0 +1,50 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "identity",
+    "version": "Unknown"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "parameters": {
+    "typeParam": {
+      "name": "type",
+      "in": "query",
+      "required": false,
+      "allowEmptyValue": true,
+      "default": "basic",
+      "type": "string",
+      "enum": [
+        "basic",
+        "advanced"
+      ]
+    }
+  },
+  "paths": {
+    "/foo": {
+      "get": {
+      	"tags": [
+          "foo"
+        ],
+        "operationId": "getBar",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/typeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

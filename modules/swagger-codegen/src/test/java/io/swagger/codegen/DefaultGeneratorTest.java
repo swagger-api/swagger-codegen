@@ -32,6 +32,7 @@ public class DefaultGeneratorTest {
     private static final String POM_FILE = "pom.xml";
     private static final String MODEL_ORDER_FILE = "/src/main/java/io/swagger/client/model/Order.java";
     private static final String API_CLIENT_FILE = "/src/main/java/io/swagger/client/ApiClient.java";
+    private static final String FOO_API_FILE = "/src/main/java/io/swagger/client/api/FooApi.java";
     private static final String BUILD_GRADLE_FILE = "build.gradle";
 
     private static final String LIBRARY_COMMENT = "//overloaded template file within library folder to add this comment";
@@ -167,7 +168,7 @@ public class DefaultGeneratorTest {
 
     @Test
     public void testSkipOverwrite() throws Exception {
-        final File output = folder.getRoot();
+        final File output = Files.createTempDirectory("testagh").toFile();//folder.getRoot();
 
         final Swagger swagger = new SwaggerParser().read("src/test/resources/petstore.json");
         CodegenConfig codegenConfig = new JavaClientCodegen();
@@ -204,6 +205,29 @@ public class DefaultGeneratorTest {
         assertEquals(FileUtils.readFileToString(order, StandardCharsets.UTF_8), TEST_SKIP_OVERWRITE);
         // Disabling this check, it's not valid with the DefaultCodegen.writeOptional(...) arg
 //        assertTrue(pom.exists());
+    }
+    
+    @Test
+    public void testUseOverloading() throws Exception {
+        final File output = Files.createTempDirectory("tempagh").toFile();//folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/overloadingtest.json");
+        JavaClientCodegen codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("resttemplate");
+        codegenConfig.setUseOverloading(true);
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate content first time without skipOverwrite flag, so all generated files should be recorded
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File fooApi = new File(output, FOO_API_FILE);
+        assertTrue(fooApi.exists());
+        
+        //Assert that the overloaded methods have been created
+        String fooApiAsString = FileUtils.readFileToString(fooApi, StandardCharsets.UTF_8);
+        assertTrue(fooApiAsString.contains("getBar1()"));
+        assertTrue(fooApiAsString.contains("getBar2(String type)"));
     }
 
     private boolean containsOverloadedComments(File file, String ...search) throws IOException {
