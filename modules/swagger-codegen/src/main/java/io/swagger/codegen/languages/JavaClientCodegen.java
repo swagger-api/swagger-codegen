@@ -2,6 +2,7 @@ package io.swagger.codegen.languages;
 
 import static java.util.Collections.sort;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Lists;
 
@@ -9,6 +10,7 @@ import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
+import io.swagger.codegen.languages.features.SignatureFeatures;
 import io.swagger.codegen.utils.mappers.OperationMapper;
 import io.swagger.models.parameters.Parameter;
 
@@ -23,7 +25,7 @@ import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, PerformBeanValidationFeatures,
-                   GzipFeatures
+                   GzipFeatures, SignatureFeatures
 {
     static final String MEDIA_TYPE = "mediaType";
 
@@ -37,7 +39,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String PLAY_VERSION = "playVersion";
     public static final String PARCELABLE_MODEL = "parcelableModel";
     public static final String USE_RUNTIME_EXCEPTION = "useRuntimeException";
-    public static final String USE_OVERLOADING = "useOverloading";
 
     public static final String PLAY_24 = "play24";
     public static final String PLAY_25 = "play25";
@@ -57,8 +58,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean performBeanValidation = false;
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
-    protected boolean useOverloading = false;
-
+    protected MethodsPerHttpRequestStrategy methodsPerHttpRequestStrategy = MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
 
     public JavaClientCodegen() {
         super();
@@ -79,7 +79,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
         cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
-        cliOptions.add(CliOption.newBoolean(USE_OVERLOADING, "Create overloaded methods when encountering optional query parameters"));
+        cliOptions.add(CliOption.newBoolean(METHODS_TO_HTTP_REQUEST_STRATEGY, "Specify a strategy for creating methods from the swagger doc http request methods. Valid values: " + Joiner.on(";").join(MethodsPerHttpRequestStrategy.values())));
 
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.8.9. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.8.9");
@@ -164,9 +164,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             this.setUseRuntimeException(convertPropertyToBooleanAndWriteBack(USE_RUNTIME_EXCEPTION));
         }
         
-        if (additionalProperties.containsKey(USE_OVERLOADING)) {
-            this.setUseOverloading(convertPropertyToBooleanAndWriteBack(USE_OVERLOADING));
+        if (additionalProperties.containsKey(METHODS_TO_HTTP_REQUEST_STRATEGY)) {
+        	Object value = additionalProperties.get(METHODS_TO_HTTP_REQUEST_STRATEGY);
+        	MethodsPerHttpRequestStrategy localMethodsPerHttpRequestStrategy = (value!=null && value instanceof String)
+        			? MethodsPerHttpRequestStrategy.fromString((String)value)
+        		    : MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
+        	this.setMethodsPerHttpRequestStrategy(localMethodsPerHttpRequestStrategy);
         }
+        additionalProperties.put(METHODS_TO_HTTP_REQUEST_STRATEGY, methodsPerHttpRequestStrategy);
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -334,11 +339,19 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
         
-        if (useOverloading) {
-        	Map<String, Object> operationsMap = (Map<String, Object>) objs.get("operations");
+        switch (methodsPerHttpRequestStrategy) {
+		case OVERLOADING:
+			//Let's expand the List of CodegenOperations with some overloaded variants chosen to protect generated client code from compilation errors when the swagger doc adds a new optional query parameter to an endpoint
+			Map<String, Object> operationsMap = (Map<String, Object>) objs.get("operations");
         	List<CodegenOperation> codegenOperations = (List<CodegenOperation>) operationsMap.get("operation");
         	List<CodegenOperation> overloadedCodegenOperations = transformToMapOfOverloadedOperations(codegenOperations);
         	operationsMap.put("operation", overloadedCodegenOperations);
+			break;
+		case ONE_PER_HTTP_REQUST_METHOD:
+			//Do nothing since this is the option to use the list of CodegenOperations that has already been created (and which are contained within the passed Map)
+			break;
+		default:
+			break;
         }
         
         if (usesAnyRetrofitLibrary()) {
@@ -412,8 +425,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     		overloadedCodegenOperations.addAll(createListOfOverloadedCodegenOperations(codegenOperation));
 		}
     	return overloadedCodegenOperations;
-    	
-    	
 	}
 
 	private Collection<? extends CodegenOperation> createListOfOverloadedCodegenOperations(CodegenOperation codegenOperation) {
@@ -426,7 +437,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 				optionalParameters.add(codegenParam);
 			}
 		}
-    	
 		List<List<CodegenParameter>> combinationsOfParameters = createParameterCombinations(optionalParameters, requiredParameters);
     	return createOverloadedCodegenOperations(codegenOperation, requiredParameters, combinationsOfParameters);
 	}
@@ -679,9 +689,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public void setUseRuntimeException(boolean useRuntimeException) {
         this.useRuntimeException = useRuntimeException;
     }
-    
-    public void setUseOverloading(boolean useOverloading) {
-        this.useOverloading = useOverloading;
+
+    @Override
+    public void setMethodsPerHttpRequestStrategy(MethodsPerHttpRequestStrategy methodsPerHttpRequestStrategy) {
+        this.methodsPerHttpRequestStrategy = methodsPerHttpRequestStrategy;
     }
 
     final private static Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application\\/json(;.*)?");

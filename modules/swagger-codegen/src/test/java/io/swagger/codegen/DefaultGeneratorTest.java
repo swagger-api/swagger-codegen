@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.features.SignatureFeatures.MethodsPerHttpRequestStrategy;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
@@ -214,7 +215,7 @@ public class DefaultGeneratorTest {
         final Swagger swagger = new SwaggerParser().read("src/test/resources/overloadingtest.json");
         JavaClientCodegen codegenConfig = new JavaClientCodegen();
         codegenConfig.setLibrary("resttemplate");
-        codegenConfig.setUseOverloading(true);
+        codegenConfig.setMethodsPerHttpRequestStrategy(MethodsPerHttpRequestStrategy.OVERLOADING);
         codegenConfig.setOutputDir(output.getAbsolutePath());
 
         ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
