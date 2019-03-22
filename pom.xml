@@ -951,11 +951,6 @@
                 <version>${jmockit-version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-	            <groupId>org.mapstruct</groupId>
-	            <artifactId>mapstruct</artifactId>
-	            <version>${org.mapstruct.version}</version>
-	        </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
