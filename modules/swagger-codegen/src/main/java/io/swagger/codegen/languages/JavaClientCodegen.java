@@ -167,8 +167,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(METHODS_TO_HTTP_REQUEST_STRATEGY)) {
         	Object value = additionalProperties.get(METHODS_TO_HTTP_REQUEST_STRATEGY);
         	MethodsPerHttpRequestStrategy localMethodsPerHttpRequestStrategy = (value!=null && value instanceof String)
-        			? MethodsPerHttpRequestStrategy.fromString((String)value)
-        		    : MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
+        	    ? MethodsPerHttpRequestStrategy.fromString((String)value)
+        	    : MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
         	this.setMethodsPerHttpRequestStrategy(localMethodsPerHttpRequestStrategy);
         }
         additionalProperties.put(METHODS_TO_HTTP_REQUEST_STRATEGY, methodsPerHttpRequestStrategy);
@@ -340,18 +340,25 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         super.postProcessOperations(objs);
         
         switch (methodsPerHttpRequestStrategy) {
-		case OVERLOADING:
-			//Let's expand the List of CodegenOperations with some overloaded variants chosen to protect generated client code from compilation errors when the swagger doc adds a new optional query parameter to an endpoint
-			Map<String, Object> operationsMap = (Map<String, Object>) objs.get("operations");
-        	List<CodegenOperation> codegenOperations = (List<CodegenOperation>) operationsMap.get("operation");
-        	List<CodegenOperation> overloadedCodegenOperations = transformToMapOfOverloadedOperations(codegenOperations);
-        	operationsMap.put("operation", overloadedCodegenOperations);
-			break;
-		case ONE_PER_HTTP_REQUST_METHOD:
-			//Do nothing since this is the option to use the list of CodegenOperations that has already been created (and which are contained within the passed Map)
-			break;
-		default:
-			break;
+        case OVERLOADING:
+          /**
+           * Let's expand the List of CodegenOperations with some overloaded variants
+           * chosen to protect generated client code from compilation errors when the
+           * swagger doc adds a new optional query parameter to an endpoint
+           */
+          Map<String, Object> operationsMap = (Map<String, Object>) objs.get("operations");
+          List<CodegenOperation> codegenOperations = (List<CodegenOperation>) operationsMap.get("operation");
+          List<CodegenOperation> overloadedCodegenOperations = transformToMapOfOverloadedOperations(codegenOperations);
+          operationsMap.put("operation", overloadedCodegenOperations);
+          break;
+        case ONE_PER_HTTP_REQUST_METHOD:
+          /**
+           * Do nothing since this is the option to use the list of CodegenOperations that
+           * has already been created (and which are contained within the passed Map)
+           */
+          break;
+        default:
+          break;
         }
         
         if (usesAnyRetrofitLibrary()) {
@@ -419,27 +426,27 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         return objs;
     }
 
-    private List<CodegenOperation> transformToMapOfOverloadedOperations(List<CodegenOperation> codegenOperations) {
-    	List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
-    	for (CodegenOperation codegenOperation: codegenOperations) {
-    		overloadedCodegenOperations.addAll(createListOfOverloadedCodegenOperations(codegenOperation));
-		}
-    	return overloadedCodegenOperations;
-	}
+  private List<CodegenOperation> transformToMapOfOverloadedOperations(List<CodegenOperation> codegenOperations) {
+    List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    for (CodegenOperation codegenOperation : codegenOperations) {
+      overloadedCodegenOperations.addAll(createListOfOverloadedCodegenOperations(codegenOperation));
+    }
+    return overloadedCodegenOperations;
+  }
 
-	private Collection<? extends CodegenOperation> createListOfOverloadedCodegenOperations(CodegenOperation codegenOperation) {
-		List<CodegenParameter> optionalParameters = Lists.newArrayList();
-		List<CodegenParameter> requiredParameters = Lists.newArrayList();
-		for (CodegenParameter codegenParam : codegenOperation.allParams) {
-			if (codegenParam.required) {
-				requiredParameters.add(codegenParam);
-			} else {
-				optionalParameters.add(codegenParam);
-			}
-		}
-		List<List<CodegenParameter>> combinationsOfParameters = createParameterCombinations(optionalParameters, requiredParameters);
-    	return createOverloadedCodegenOperations(codegenOperation, requiredParameters, combinationsOfParameters);
-	}
+  private Collection<? extends CodegenOperation> createListOfOverloadedCodegenOperations(CodegenOperation codegenOperation) {
+    List<CodegenParameter> optionalParameters = Lists.newArrayList();
+    List<CodegenParameter> requiredParameters = Lists.newArrayList();
+    for (CodegenParameter codegenParam : codegenOperation.allParams) {
+      if (codegenParam.required) {
+        requiredParameters.add(codegenParam);
+      } else {
+        optionalParameters.add(codegenParam);
+      }
+    }
+    List<List<CodegenParameter>> combinationsOfParameters = createParameterCombinations(optionalParameters, requiredParameters);
+    return createOverloadedCodegenOperations(codegenOperation, requiredParameters, combinationsOfParameters);
+  }
 
 	/**
 	 * Note that this method does not create the full set of 'combinations' in the formal mathematical sense of the word (See <a href="https://en.wikipedia.org/wiki/Combination">https://en.wikipedia.org/wiki/Combination</a>))
@@ -458,37 +465,39 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 	 * @param requiredParameters
 	 * @return
 	 */
-	private List<List<CodegenParameter>> createParameterCombinations(List<CodegenParameter> optionalParameters, List<CodegenParameter> requiredParameters) {
-		List<List<CodegenParameter>> combinationsOfParameters = Lists.newArrayList();
-		//Add first combination of parameters. Note that we do not care about whether or nor the list is empty.
-		combinationsOfParameters.add(requiredParameters);
-		for (int i=0; i<optionalParameters.size(); i++) {
-			List<CodegenParameter> parameterCombination = Lists.newArrayList(requiredParameters);
-			parameterCombination.addAll(optionalParameters.subList(0, i+1));
-			combinationsOfParameters.add(parameterCombination);
-    	}
-		return combinationsOfParameters;
-	}
+  private List<List<CodegenParameter>> createParameterCombinations(List<CodegenParameter> optionalParameters, List<CodegenParameter> requiredParameters) {
+    List<List<CodegenParameter>> combinationsOfParameters = Lists.newArrayList();
+    /**
+     * Add first combination of parameters (We do not care about whether or nor the list is empty)
+     */
+    combinationsOfParameters.add(requiredParameters);
+    for (int i = 0; i < optionalParameters.size(); i++) {
+      List<CodegenParameter> parameterCombination = Lists.newArrayList(requiredParameters);
+      parameterCombination.addAll(optionalParameters.subList(0, i + 1));
+      combinationsOfParameters.add(parameterCombination);
+    }
+    return combinationsOfParameters;
+  }
 
-	private Collection<? extends CodegenOperation> createOverloadedCodegenOperations(CodegenOperation codegenOperation, List<CodegenParameter> requiredParameters, List<List<CodegenParameter>> combinationsOfParameters) {
-		List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
-		for (List<CodegenParameter> combination: combinationsOfParameters) {
-			CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, combination);
-			overloadedCodegenOperations.add(overloadedOperation);
-		}
-		return overloadedCodegenOperations;
-	}
+  private Collection<? extends CodegenOperation> createOverloadedCodegenOperations(CodegenOperation codegenOperation, List<CodegenParameter> requiredParameters, List<List<CodegenParameter>> combinationsOfParameters) {
+    List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    for (List<CodegenParameter> combination : combinationsOfParameters) {
+      CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, combination);
+      overloadedCodegenOperations.add(overloadedOperation);
+    }
+    return overloadedCodegenOperations;
+  }
 	
-	public CodegenOperation mapAndSetParameters(CodegenOperation codegenOperation, List<CodegenParameter> codegenParameters) {
-		CodegenOperation newOperation = OperationMapper.INSTANCE.map(codegenOperation);
-		List<Parameter> parameters = Lists.newArrayList();
-		for (CodegenParameter codegenParameter: codegenParameters) {
-			parameters.add(codegenParameter.parameter);
-		}
-		newOperation.hasOptionalParams = false;
-		setParameterFields(newOperation.httpMethod, parameters, null, newOperation, newOperation.imports, null, newOperation.externalDocs);
-		return newOperation;
-	}
+  public CodegenOperation mapAndSetParameters(CodegenOperation codegenOperation, List<CodegenParameter> codegenParameters) {
+    CodegenOperation newOperation = OperationMapper.INSTANCE.map(codegenOperation);
+    List<Parameter> parameters = Lists.newArrayList();
+    for (CodegenParameter codegenParameter : codegenParameters) {
+      parameters.add(codegenParameter.parameter);
+    }
+    newOperation.hasOptionalParams = false;
+    setParameterFields(newOperation.httpMethod, parameters, null, newOperation, newOperation.imports, null, newOperation.externalDocs);
+    return newOperation;
+  }
 
 	@Override
     public String apiFilename(String templateName, String tag) {

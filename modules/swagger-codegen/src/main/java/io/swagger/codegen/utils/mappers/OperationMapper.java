@@ -8,8 +8,8 @@ import io.swagger.codegen.CodegenOperation;
 @Mapper
 public interface OperationMapper {
 
-	public static OperationMapper INSTANCE = Mappers.getMapper(OperationMapper.class);
-	
-	CodegenOperation map(CodegenOperation operation);
-	
+  public static OperationMapper INSTANCE = Mappers.getMapper(OperationMapper.class);
+
+  CodegenOperation map(CodegenOperation operation);
+
 }
