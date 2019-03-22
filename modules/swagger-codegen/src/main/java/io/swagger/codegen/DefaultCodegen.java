@@ -2247,7 +2247,7 @@ public class DefaultCodegen {
         return op;
     }
 
-	public void setParameterFields(String httpMethod, List<Parameter> parameters, Map<String, Model> definitions, CodegenOperation op, Set<String> imports, List<String> consumes, ExternalDocs externalDocs) {
+    public void setParameterFields(String httpMethod, List<Parameter> parameters, Map<String, Model> definitions, CodegenOperation op, Set<String> imports, List<String> consumes, ExternalDocs externalDocs) {
         CodegenParameter bodyParam = null;
         List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();
         List<CodegenParameter> bodyParams = new ArrayList<CodegenParameter>();
