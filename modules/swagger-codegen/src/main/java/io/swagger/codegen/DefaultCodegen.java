@@ -2343,7 +2343,7 @@ public class DefaultCodegen {
 
         op.hasParams = op.allParams.size() > 0;
         op.hasRequiredParams = op.requiredParams.size() > 0;
-	}
+    }
 
     /**
      * Convert Swagger Response object to Codegen Response object
