@@ -11,11 +11,14 @@ import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 import io.swagger.codegen.languages.features.SignatureFeatures;
-import io.swagger.codegen.utils.mappers.OperationMapper;
 import io.swagger.models.parameters.Parameter;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.config.Configuration.AccessLevel;
+import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +63,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean useRuntimeException = false;
     protected MethodsPerHttpRequestStrategy methodsPerHttpRequestStrategy = MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
 
+    private final ModelMapper modelMapper;
+    
     public JavaClientCodegen() {
         super();
         outputFolder = "generated-code" + File.separator + "java";
@@ -100,6 +105,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(libraryOption);
         setLibrary("okhttp-gson");
 
+        modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+            .setMatchingStrategy(MatchingStrategies.STRICT)
+            .setDeepCopyEnabled(true)
+            .setFieldMatchingEnabled(true)
+            .setFieldAccessLevel(AccessLevel.PRIVATE);
+            modelMapper.addMappings(new PropertyMap<CodegenParameter, CodegenParameter>() {
+              @Override
+              protected void configure() {
+                  skip(destination.parameter);
+              }
+          });
     }
 
     @Override
@@ -495,7 +512,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
   }
 
   public CodegenOperation mapAndSetParameters(CodegenOperation codegenOperation, List<CodegenParameter> codegenParameters) {
-    CodegenOperation newOperation = OperationMapper.INSTANCE.map(codegenOperation);
+    CodegenOperation newOperation = modelMapper.map(codegenOperation, CodegenOperation.class);
     List<Parameter> parameters = Lists.newArrayList();
     for (CodegenParameter codegenParameter : codegenParameters) {
       parameters.add(codegenParameter.parameter);
