@@ -35,7 +35,9 @@ addons:
 
 before_install:
   # required when sudo: required for the Ruby petstore tests
-  - gem install bundler
+  - gem install bundler -v '< 2'
+  - gem update --system 2.7.8
+  - gem --version
   - npm install -g typescript
   - npm install -g npm
   - npm config set registry http://registry.npmjs.org/
