@@ -26,6 +26,12 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 import { UserServiceInterface }                            from './user.serviceInterface';
 
+type FormParams = HttpParams | URLSearchParams | FormData;
+
+function getAppender(useReturnValue = false) {
+    return (formParams: FormParams, param: string, value: any) =>
+    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+}
 
 @Injectable()
 export class UserService implements UserServiceInterface {
@@ -551,10 +557,3 @@ export class UserService implements UserServiceInterface {
     }
 
 }
-
-    getAppender(useReturnValue = false) {
-        return (formParams: FormParams, param: string, value: any) =>
-            useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
-    }
-
-    type FormParams = HttpParams | URLSearchParams | FormData;

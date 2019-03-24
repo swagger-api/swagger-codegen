@@ -22,12 +22,17 @@ import { Observable }                                        from 'rxjs/Observab
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
-type FormParams = HttpParams | URLSearchParams | FormData;
+    import { HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent }                           from '@angular/common/http';
+    import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-function getAppender(useReturnValue = false) {
-    return (formParams: FormParams, param: string, value: any) =>
-    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
-}
+
+type FormParams = URLSearchParams | FormData | HttpParams;
+
+function append(formParams: FormParams, param: string, value: any) {
+    return formParams.append(param, value)
+};
+
 
 @Injectable()
 export class FakeService {
@@ -95,14 +100,12 @@ export class FakeService {
         const canConsumeForm = this.canConsumeForm(consumes);
 
         let formParams: FormParams;
-        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-            append = getAppender(true);
         }
         if (testCodeInjectEndRnNR !== undefined) {
             formParams = append(formParams, 'test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', <any>testCodeInjectEndRnNR);
