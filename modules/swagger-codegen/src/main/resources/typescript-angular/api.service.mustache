@@ -34,6 +34,12 @@ import { Configuration }                                     from '../configurat
 import { {{classname}}Interface }                            from './{{classFilename}}Interface';
 {{/withInterfaces}}
 
+type FormParams = HttpParams | URLSearchParams | FormData;
+
+function getAppender(useReturnValue = false) {
+    return (formParams: FormParams, param: string, value: any) =>
+    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+}
 {{#operations}}
 
 {{#description}}
@@ -355,10 +361,3 @@ export class {{classname}} {
 
 {{/operation}}}
 {{/operations}}
-
-    getAppender(useReturnValue = false) {
-        return (formParams: FormParams, param: string, value: any) =>
-            useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
-    }
-
-    type FormParams = HttpParams | URLSearchParams | FormData;
