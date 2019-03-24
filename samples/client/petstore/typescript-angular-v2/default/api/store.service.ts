@@ -290,3 +290,10 @@ export class StoreService {
     }
 
 }
+
+    getAppender(useReturnValue = false) {
+        return (formParams: FormParams, param: string, value: any) =>
+            useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+    }
+
+    type FormParams = HttpParams | URLSearchParams | FormData;

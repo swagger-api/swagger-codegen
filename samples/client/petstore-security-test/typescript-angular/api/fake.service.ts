@@ -46,7 +46,7 @@ export class FakeService {
      */
     private canConsumeForm(consumes: string[]): boolean {
         const form = 'multipart/form-data';
-        for (let consume of consumes) {
+        for (const consume of consumes) {
             if (form === consume) {
                 return true;
             }
@@ -67,6 +67,7 @@ export class FakeService {
     public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
@@ -74,30 +75,31 @@ export class FakeService {
             'application/json',
             '*_/   =end --       '
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
             'application/json',
             '*_/   =end --       '
         ];
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
+        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+            append = getAppender(true);
         }
-
         if (testCodeInjectEndRnNR !== undefined) {
-            formParams = formParams.append('test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', <any>testCodeInjectEndRnNR) || formParams;
+            formParams = append(formParams, 'test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r', <any>testCodeInjectEndRnNR);
         }
 
         return this.httpClient.put<any>(`${this.basePath}/fake`,
@@ -112,3 +114,10 @@ export class FakeService {
     }
 
 }
+
+    getAppender(useReturnValue = false) {
+        return (formParams: FormParams, param: string, value: any) =>
+            useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+    }
+
+    type FormParams = HttpParams | URLSearchParams | FormData;

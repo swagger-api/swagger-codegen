@@ -433,20 +433,21 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
+        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+            append = getAppender(true);
         }
-
         if (name !== undefined) {
-            formParams = formParams.append('name', <any>name) || formParams;
+            formParams = append(formParams, 'name', <any>name);
         }
         if (status !== undefined) {
-            formParams = formParams.append('status', <any>status) || formParams;
+            formParams = append(formParams, 'status', <any>status);
         }
 
         return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
@@ -506,7 +507,8 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
+        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
@@ -516,13 +518,13 @@ export class PetService implements PetServiceInterface {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+            append = getAppender(true);
         }
-
         if (additionalMetadata !== undefined) {
-            formParams = formParams.append('additionalMetadata', <any>additionalMetadata) || formParams;
+            formParams = append(formParams, 'additionalMetadata', <any>additionalMetadata);
         }
         if (file !== undefined) {
-            formParams = formParams.append('file', <any>file) || formParams;
+            formParams = append(formParams, 'file', <any>file);
         }
 
         return this.httpClient.post<ApiResponse>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`,
@@ -537,3 +539,10 @@ export class PetService implements PetServiceInterface {
     }
 
 }
+
+    getAppender(useReturnValue = false) {
+        return (formParams: FormParams, param: string, value: any) =>
+            useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+    }
+
+    type FormParams = HttpParams | URLSearchParams | FormData;
