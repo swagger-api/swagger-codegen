@@ -464,6 +464,7 @@ public class CodegenConfigurator implements Serializable {
             ParseOptions options = new ParseOptions();
             options.setResolve(true);
             options.setFlatten(true);
+            options.setResolveFully(true);
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
 
@@ -491,6 +492,7 @@ public class CodegenConfigurator implements Serializable {
             ParseOptions options = new ParseOptions();
             options.setResolve(true);
             options.setFlatten(true);
+            options.setResolveFully(true);
             SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
             LOGGER.debug("getClientOptInput - parsed inputSpecURL " + inputSpecURL);
