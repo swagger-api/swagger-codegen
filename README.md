@@ -54,15 +54,17 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-3.0.6-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.6-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.5](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.5) (**current stable**) | 2019-02-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.5](https://github.com/swagger-api/swagger-codegen/tree/v3.0.5)
+3.0.7-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.7-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.6](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.6) (**current stable**) | 2019-03-25   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.6](https://github.com/swagger-api/swagger-codegen/tree/v3.0.6)
+[3.0.5](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.5) | 2019-02-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.5](https://github.com/swagger-api/swagger-codegen/tree/v3.0.5)
 [3.0.4](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.4) | 2019-01-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.4](https://github.com/swagger-api/swagger-codegen/tree/v3.0.4)
 [3.0.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.3) | 2018-11-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.3](https://github.com/swagger-api/swagger-codegen/tree/v3.0.3)
 [3.0.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.2)| 2018-10-19 | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
 [3.0.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.1)| 2018-10-05 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
 [3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)| 2018-09-06 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
-2.4.3-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.3-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release
-[2.4.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.2) (**current stable**) | 2019-02-18   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.2](https://github.com/swagger-api/swagger-codegen/tree/v2.4.2)
+2.4.4-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.4-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release
+[2.4.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.3) (**current stable**) | 2019-03-25   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.3](https://github.com/swagger-api/swagger-codegen/tree/v2.4.3)
+[2.4.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.2) | 2019-02-18   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.2](https://github.com/swagger-api/swagger-codegen/tree/v2.4.2)
 [2.4.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.1) | 2019-01-16   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.1](https://github.com/swagger-api/swagger-codegen/tree/v2.4.1)
 [2.4.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.0) | 2018-11-30   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.0](https://github.com/swagger-api/swagger-codegen/tree/v2.4.0)
 [2.3.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.3.1) | 2018-01-17   | 1.0, 1.1, 1.2, 2.0   | [tag v2.3.1](https://github.com/swagger-api/swagger-codegen/tree/v2.3.1)
@@ -98,6 +100,7 @@ To build from source, you need the following installed and available in your $PA
 * [Apache maven 3.3.3 or greater](http://maven.apache.org/)
 
 #### OS X Users
+
 Don't forget to install Java 8. You probably have 1.6 or 1.7.
 
 Export JAVA_HOME in order to use the supported Java version:
