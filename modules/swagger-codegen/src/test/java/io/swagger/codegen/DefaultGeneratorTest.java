@@ -31,6 +31,7 @@ public class DefaultGeneratorTest {
     private static final String TEST_SKIP_OVERWRITE = "testSkipOverwrite";
     private static final String POM_FILE = "pom.xml";
     private static final String MODEL_ORDER_FILE = "/src/main/java/io/swagger/client/model/Order.java";
+    private static final String MODEL_DEFAULT_API_FILE = "/src/main/java/io/swagger/client/api/DefaultApi.java";
     private static final String API_CLIENT_FILE = "/src/main/java/io/swagger/client/ApiClient.java";
     private static final String BUILD_GRADLE_FILE = "build.gradle";
 
@@ -204,6 +205,24 @@ public class DefaultGeneratorTest {
         assertEquals(FileUtils.readFileToString(order, StandardCharsets.UTF_8), TEST_SKIP_OVERWRITE);
         // Disabling this check, it's not valid with the DefaultCodegen.writeOptional(...) arg
 //        assertTrue(pom.exists());
+    }
+
+    @Test
+    public void testIssue9132() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/issue9132.yaml");
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("jersey1");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, MODEL_DEFAULT_API_FILE);
+        assertTrue(defaultApi.exists());
+
     }
 
     private boolean containsOverloadedComments(File file, String ...search) throws IOException {
