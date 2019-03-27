@@ -92,7 +92,7 @@ public class GeneratorServiceTest {
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.CLIENT)
                 .lang("java")
-                .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
+                .specURL("src/test/resources/3_0_0/petstore.json")
                 .options(
                         new Options()
                             .outputDir(getTmpFolder().getAbsolutePath())

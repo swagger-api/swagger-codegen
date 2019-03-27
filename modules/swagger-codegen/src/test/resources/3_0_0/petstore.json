@@ -776,12 +776,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "./ext_user.json#/ext_user"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "./ext_user.json#/ext_user"
               }
             }
           },
