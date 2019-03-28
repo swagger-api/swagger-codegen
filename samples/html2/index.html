@@ -696,7 +696,7 @@ margin-bottom: 20px;
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-            defs.Amount = {
+        defs["Amount"] = {
   "type" : "object",
   "required" : [ "currency", "value" ],
   "properties" : {
@@ -713,7 +713,7 @@ margin-bottom: 20px;
   },
   "description" : "some description\n"
 };
-            defs.ApiResponse = {
+        defs["ApiResponse"] = {
   "type" : "object",
   "properties" : {
     "code" : {
@@ -730,7 +730,7 @@ margin-bottom: 20px;
   "title" : "An uploaded response",
   "description" : "Describes the result of uploading an image resource"
 };
-            defs.Category = {
+        defs["Category"] = {
   "type" : "object",
   "properties" : {
     "id" : {
@@ -747,12 +747,12 @@ margin-bottom: 20px;
   },
   "description" : "A category for a pet"
 };
-            defs.Currency = {
+        defs["Currency"] = {
   "type" : "string",
   "pattern" : "^[A-Z]{3,3}$",
   "description" : "some description\n"
 };
-            defs.Order = {
+        defs["Order"] = {
   "type" : "object",
   "properties" : {
     "id" : {
@@ -787,7 +787,7 @@ margin-bottom: 20px;
   },
   "description" : "An order for a pets from the pet store"
 };
-            defs.Pet = {
+        defs["Pet"] = {
   "type" : "object",
   "required" : [ "name", "photoUrls" ],
   "properties" : {
@@ -834,7 +834,7 @@ margin-bottom: 20px;
   },
   "description" : "A pet for sale in the pet store"
 };
-            defs.Tag = {
+        defs["Tag"] = {
   "type" : "object",
   "properties" : {
     "id" : {
@@ -851,7 +851,7 @@ margin-bottom: 20px;
   },
   "description" : "A tag for a pet"
 };
-            defs.User = {
+        defs["User"] = {
   "type" : "object",
   "properties" : {
     "id" : {
