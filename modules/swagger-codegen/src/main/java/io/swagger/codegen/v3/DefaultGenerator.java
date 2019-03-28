@@ -416,6 +416,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (!generateApis) {
             return;
         }
+        boolean hasModel = true;
+        if (allModels == null || allModels.isEmpty()) {
+            hasModel = false;
+        }
+
         Map<String, List<CodegenOperation>> paths = processPaths(this.openAPI.getPaths());
         Set<String> apisToGenerate = null;
         String apiNames = System.getProperty("apis");
@@ -463,6 +468,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     sortParamsByRequiredFlag = Boolean.valueOf(this.config.additionalProperties().get(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG).toString());
                 }
                 operation.put("sortParamsByRequiredFlag", sortParamsByRequiredFlag);
+
+                operation.put("hasModel", hasModel);
+
 
                 allOperations.add(new HashMap<>(operation));
                 for (int i = 0; i < allOperations.size(); i++) {
