@@ -193,7 +193,7 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             }
         }
 {{^netStandard}}
-
+{{^parent}}
 {{#generatePropertyChanged}}
         /// <summary>
         /// Property changed event handler
@@ -216,6 +216,8 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         }
 
 {{/generatePropertyChanged}}
+{{/parent}}
+
 {{#validatable}}
 {{#discriminator}}
         /// <summary>
