@@ -108,7 +108,7 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true if act as Restful index method, false otherwise
      */
-    public boolean isRestfulIndex() {
+    public boolean getIsRestfulIndex() {
         return "GET".equals(httpMethod) && "".equals(pathWithoutBaseName());
     }
 
@@ -117,7 +117,7 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true if act as Restful show method, false otherwise
      */
-    public boolean isRestfulShow() {
+    public boolean getIsRestfulShow() {
         return "GET".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
@@ -126,7 +126,7 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true if act as Restful create method, false otherwise
      */
-    public boolean isRestfulCreate() {
+    public boolean getIsRestfulCreate() {
         return "POST".equalsIgnoreCase(httpMethod) && "".equals(pathWithoutBaseName());
     }
 
@@ -135,7 +135,7 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true if act as Restful update method, false otherwise
      */
-    public boolean isRestfulUpdate() {
+    public boolean getIsRestfulUpdate() {
         return Arrays.asList("PUT", "PATCH").contains(httpMethod.toUpperCase()) && isMemberPath();
     }
 
@@ -144,7 +144,7 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true request method is PUT, PATCH or POST; false otherwise
      */
-    public boolean isBodyAllowed() {
+    public boolean getIsBodyAllowed() {
         return Arrays.asList("PUT", "PATCH", "POST").contains(httpMethod.toUpperCase());
     }
 
@@ -153,7 +153,7 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true if act as Restful destroy method, false otherwise
      */
-    public boolean isRestfulDestroy() {
+    public boolean getIsRestfulDestroy() {
         return "DELETE".equalsIgnoreCase(httpMethod) && isMemberPath();
     }
 
@@ -162,8 +162,8 @@ public class CodegenOperation extends CodegenObject {
      *
      * @return true if Restful-style, false otherwise
      */
-    public boolean isRestful() {
-        return isRestfulIndex() || isRestfulShow() || isRestfulCreate() || isRestfulUpdate() || isRestfulDestroy();
+    public boolean getIsRestful() {
+        return getIsRestfulIndex() || getIsRestfulShow() || getIsRestfulCreate() || getIsRestfulUpdate() || getIsRestfulDestroy();
     }
 
     /**
@@ -465,30 +465,6 @@ public class CodegenOperation extends CodegenObject {
 
     public String getOperationIdSnakeCase() {
         return operationIdSnakeCase;
-    }
-
-    public Boolean getIsRestfulIndex() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_INDEX_EXT_NAME);
-    }
-
-    public Boolean getIsRestfulShow() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_SHOW_EXT_NAME);
-    }
-
-    public Boolean getIsRestfulCreate() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_CREATE_EXT_NAME);
-    }
-
-    public Boolean getIsRestfulUpdate() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_UPDATE_EXT_NAME);
-    }
-
-    public Boolean getIsRestfulDestroy() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_DESTROY_EXT_NAME);
-    }
-
-    public Boolean getIsRestful() {
-        return getBooleanValue(CodegenConstants.IS_RESTFUL_EXT_NAME);
     }
 
     public Boolean getIsDeprecated() {
