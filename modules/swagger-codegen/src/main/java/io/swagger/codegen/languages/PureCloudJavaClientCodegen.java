@@ -34,6 +34,7 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
 
         // Add special reserved words
         reservedWords.add("null");
+        reservedWords.add("request");
 
         operationTemplateFiles.put("requestBuilder.mustache", ".java");
         supportingFiles.add(new SupportingFile("testng.mustache", "", "testng.xml"));
