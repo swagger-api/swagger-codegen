@@ -342,7 +342,6 @@ namespace IO.Swagger.Model
                 return hashCode;
             }
         }
-
         /// <summary>
         /// Property changed event handler
         /// </summary>
@@ -362,6 +361,7 @@ namespace IO.Swagger.Model
                 propertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
 
         /// <summary>
         /// To validate all properties of the instance

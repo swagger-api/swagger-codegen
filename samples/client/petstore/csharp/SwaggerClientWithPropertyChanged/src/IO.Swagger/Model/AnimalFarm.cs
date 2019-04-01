@@ -100,26 +100,6 @@ namespace IO.Swagger.Model
         }
 
         /// <summary>
-        /// Property changed event handler
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Trigger when a property changed
-        /// </summary>
-        /// <param name="propertyName">Property Name</param>
-        public virtual void OnPropertyChanged(string propertyName)
-        {
-            // NOTE: property changed is handled via "code weaving" using Fody.
-            // Properties with setters are modified at compile time to notify of changes.
-            var propertyChanged = PropertyChanged;
-            if (propertyChanged != null)
-            {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        /// <summary>
         /// To validate all properties of the instance
         /// </summary>
         /// <param name="validationContext">Validation context</param>

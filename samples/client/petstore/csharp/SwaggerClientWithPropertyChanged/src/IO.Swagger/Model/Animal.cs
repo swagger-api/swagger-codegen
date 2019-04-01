@@ -31,7 +31,7 @@ namespace IO.Swagger.Model
     /// Animal
     /// </summary>
     [DataContract]
-    [JsonConverter(typeof(JsonSubtypes), "className")]
+    [Client.SerializableJsonSubtypes(typeof(Animal), "className")]
     [JsonSubtypes.KnownSubType(typeof(Dog), "Dog")]
     [JsonSubtypes.KnownSubType(typeof(Cat), "Cat")]
     [ImplementPropertyChanged]
@@ -153,7 +153,6 @@ namespace IO.Swagger.Model
                 return hashCode;
             }
         }
-
         /// <summary>
         /// Property changed event handler
         /// </summary>
@@ -173,6 +172,7 @@ namespace IO.Swagger.Model
                 propertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
 
         /// <summary>
         /// To validate all properties of the instance

@@ -3,13 +3,13 @@
     /// </summary>
     [DataContract]
     {{#discriminator}}
-    [JsonConverter(typeof(JsonSubtypes), "{{discriminator}}")]{{#children}}
+    [Client.SerializableJsonSubtypes(typeof({{classname}}), "{{discriminator}}")]{{#children}}
     [JsonSubtypes.KnownSubType(typeof({{classname}}), "{{^vendorExtensions.x-discriminator-value}}{{name}}{{/vendorExtensions.x-discriminator-value}}{{#vendorExtensions.x-discriminator-value}}{{{vendorExtensions.x-discriminator-value}}}{{/vendorExtensions.x-discriminator-value}}")]{{/children}}
     {{/discriminator}}
     {{#generatePropertyChanged}}
     [ImplementPropertyChanged]
     {{/generatePropertyChanged}}
-    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}
+    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}{{#generatePropertyChanged}}, INotifyPropertyChanged{{/generatePropertyChanged}}
     {
         {{#vars}}
         {{#items.isEnum}}
@@ -193,7 +193,7 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
             }
         }
 {{^netStandard}}
-
+{{^parent}}
 {{#generatePropertyChanged}}
         /// <summary>
         /// Property changed event handler
@@ -216,6 +216,8 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         }
 
 {{/generatePropertyChanged}}
+{{/parent}}
+
 {{#validatable}}
 {{#discriminator}}
         /// <summary>
