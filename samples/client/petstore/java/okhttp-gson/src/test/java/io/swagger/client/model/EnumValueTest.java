@@ -43,7 +43,6 @@ public class EnumValueTest {
         Gson gson = new Gson();
         String json = gson.toJson(enumTest);
         assertEquals(json, "{\"enum_string\":\"lower\",\"enum_integer\":1,\"enum_number\":1.1}");
-
         // test deserialization
         EnumTest fromString = gson.fromJson(json, EnumTest.class);
         assertEquals(fromString.getEnumString().toString(), "lower");

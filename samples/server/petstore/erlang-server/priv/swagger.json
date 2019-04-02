@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "enum" : [ "available", "pending", "sold" ],
-            "default" : "available"
+            "default" : "available",
+            "enum" : [ "available", "pending", "sold" ]
           },
           "collectionFormat" : "csv"
         } ],
@@ -516,9 +516,6 @@
         "responses" : {
           "200" : {
             "description" : "successful operation",
-            "schema" : {
-              "type" : "string"
-            },
             "headers" : {
               "X-Rate-Limit" : {
                 "type" : "integer",
@@ -530,6 +527,9 @@
                 "format" : "date-time",
                 "description" : "date in UTC when toekn expires"
               }
+            },
+            "schema" : {
+              "type" : "string"
             }
           },
           "400" : {
@@ -563,7 +563,7 @@
         "parameters" : [ {
           "name" : "username",
           "in" : "path",
-          "description" : "The name that needs to be fetched. Use user1 for testing. ",
+          "description" : "The name that needs to be fetched. Use user1 for testing.",
           "required" : true,
           "type" : "string"
         } ],
@@ -683,9 +683,17 @@
         }
       },
       "title" : "Pet Order",
-      "description" : "An order for a pets from the pet store",
       "xml" : {
         "name" : "Order"
+      },
+      "description" : "An order for a pets from the pet store",
+      "example" : {
+        "petId" : 6,
+        "quantity" : 1,
+        "id" : 0,
+        "shipDate" : "2000-01-23T04:56:07.000+00:00",
+        "complete" : false,
+        "status" : "placed"
       }
     },
     "Category" : {
@@ -700,9 +708,13 @@
         }
       },
       "title" : "Pet category",
-      "description" : "A category for a pet",
       "xml" : {
         "name" : "Category"
+      },
+      "description" : "A category for a pet",
+      "example" : {
+        "name" : "name",
+        "id" : 6
       }
     },
     "User" : {
@@ -737,9 +749,19 @@
         }
       },
       "title" : "a User",
-      "description" : "A User who is purchasing from the pet store",
       "xml" : {
         "name" : "User"
+      },
+      "description" : "A User who is purchasing from the pet store",
+      "example" : {
+        "firstName" : "firstName",
+        "lastName" : "lastName",
+        "password" : "password",
+        "userStatus" : 6,
+        "phone" : "phone",
+        "id" : 0,
+        "email" : "email",
+        "username" : "username"
       }
     },
     "Tag" : {
@@ -754,9 +776,13 @@
         }
       },
       "title" : "Pet Tag",
-      "description" : "A tag for a pet",
       "xml" : {
         "name" : "Tag"
+      },
+      "description" : "A tag for a pet",
+      "example" : {
+        "name" : "name",
+        "id" : 1
       }
     },
     "Pet" : {
@@ -801,9 +827,26 @@
         }
       },
       "title" : "a Pet",
-      "description" : "A pet for sale in the pet store",
       "xml" : {
         "name" : "Pet"
+      },
+      "description" : "A pet for sale in the pet store",
+      "example" : {
+        "photoUrls" : [ "photoUrls", "photoUrls" ],
+        "name" : "doggie",
+        "id" : 0,
+        "category" : {
+          "name" : "name",
+          "id" : 6
+        },
+        "tags" : [ {
+          "name" : "name",
+          "id" : 1
+        }, {
+          "name" : "name",
+          "id" : 1
+        } ],
+        "status" : "available"
       }
     },
     "ApiResponse" : {
@@ -821,7 +864,34 @@
         }
       },
       "title" : "An uploaded response",
-      "description" : "Describes the result of uploading an image resource"
+      "description" : "Describes the result of uploading an image resource",
+      "example" : {
+        "code" : 0,
+        "type" : "type",
+        "message" : "message"
+      }
+    },
+    "Amount" : {
+      "type" : "object",
+      "required" : [ "currency", "value" ],
+      "properties" : {
+        "value" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "some description\n",
+          "minimum" : 0.01,
+          "maximum" : 1000000000000000
+        },
+        "currency" : {
+          "$ref" : "#/definitions/Currency"
+        }
+      },
+      "description" : "some description\n"
+    },
+    "Currency" : {
+      "type" : "string",
+      "pattern" : "^[A-Z]{3,3}$",
+      "description" : "some description\n"
     }
   },
   "externalDocs" : {

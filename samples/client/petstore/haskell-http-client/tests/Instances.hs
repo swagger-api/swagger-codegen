@@ -166,6 +166,7 @@ instance Arbitrary EnumTest where
   arbitrary =
     EnumTest
       <$> arbitrary -- enumTestEnumString :: Maybe Text
+      <*> arbitrary -- enumTestEnumStringRequired :: Text
       <*> arbitrary -- enumTestEnumInteger :: Maybe Int
       <*> arbitrary -- enumTestEnumNumber :: Maybe Double
       <*> arbitrary -- enumTestOuterEnum :: Maybe OuterEnum

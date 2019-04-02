@@ -14,23 +14,27 @@
 package io.swagger.client.api;
 
 import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.Pet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
-import io.swagger.client.model.ModelApiResponse;
-import io.swagger.client.model.Pet;
 
-import java.io.File;
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.restassured.http.Method.DELETE;
-import static io.restassured.http.Method.GET;
-import static io.restassured.http.Method.POST;
-import static io.restassured.http.Method.PUT;
+import static io.restassured.http.Method.*;
 
 public class PetApi {
 

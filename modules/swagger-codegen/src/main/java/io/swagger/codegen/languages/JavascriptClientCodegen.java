@@ -655,12 +655,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @Override
     public String toDefaultValueWithParam(String name, Property p) {
-        String type = normalizeType(getTypeDeclaration(p));
-        if (p instanceof RefProperty) {
+        String typeDeclaration = getTypeDeclaration(p);
+        String type = normalizeType(typeDeclaration);
+        if (p instanceof RefProperty && !isPrimitiveType(typeDeclaration.toLowerCase())) {
             return " = " + type + ".constructFromObject(data['" + name + "']);";
-        } else {
-          return " = ApiClient.convertToType(data['" + name + "'], " + type + ");";
         }
+        return " = ApiClient.convertToType(data['" + name + "'], " + type + ");";
     }
 
     @Override
