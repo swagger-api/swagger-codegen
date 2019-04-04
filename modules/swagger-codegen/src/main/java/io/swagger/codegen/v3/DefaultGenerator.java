@@ -682,6 +682,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("contextPath", contextPath);
         bundle.put("apiInfo", apis);
         bundle.put("models", allModels);
+        boolean hasModel = true;
+        if (allModels == null || allModels.isEmpty()) {
+            hasModel = false;
+        }
+        bundle.put("hasModel", hasModel);
         bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
         bundle.put("modelPackage", config.modelPackage());
 
