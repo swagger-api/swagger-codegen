@@ -29,7 +29,7 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class StoreApiController : Controller
+    public partial class StoreApiController : Controller
     { 
         /// <summary>
         /// Delete purchase order by ID
@@ -50,8 +50,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
 
+            return DeleteOrderImpl(orderId);
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -69,14 +69,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(Dictionary<string, int?>));
 
-            string exampleJson = null;
-            exampleJson = "{\n  \"key\" : 0\n}";
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<Dictionary<string, int?>>(exampleJson)
-            : default(Dictionary<string, int?>);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            return GetInventoryImpl();
+
         }
 
         /// <summary>
@@ -103,15 +97,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
 
-            string exampleJson = null;
-            exampleJson = "<Order>\n  <id>123456789</id>\n  <petId>123456789</petId>\n  <quantity>123</quantity>\n  <shipDate>2000-01-23T04:56:07.000Z</shipDate>\n  <status>aeiou</status>\n  <complete>true</complete>\n</Order>";
-            exampleJson = "{\n  \"petId\" : 6,\n  \"quantity\" : 1,\n  \"id\" : 0,\n  \"shipDate\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"complete\" : false,\n  \"status\" : \"placed\"\n}";
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<Order>(exampleJson)
-            : default(Order);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            return GetOrderByIdImpl(orderId);
+
         }
 
         /// <summary>
@@ -134,15 +121,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
 
-            string exampleJson = null;
-            exampleJson = "<Order>\n  <id>123456789</id>\n  <petId>123456789</petId>\n  <quantity>123</quantity>\n  <shipDate>2000-01-23T04:56:07.000Z</shipDate>\n  <status>aeiou</status>\n  <complete>true</complete>\n</Order>";
-            exampleJson = "{\n  \"petId\" : 6,\n  \"quantity\" : 1,\n  \"id\" : 0,\n  \"shipDate\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"complete\" : false,\n  \"status\" : \"placed\"\n}";
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<Order>(exampleJson)
-            : default(Order);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            return PlaceOrderImpl(body);
+
         }
     }
 }
