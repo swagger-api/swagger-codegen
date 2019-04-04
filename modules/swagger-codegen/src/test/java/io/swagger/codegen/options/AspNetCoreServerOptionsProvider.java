@@ -29,6 +29,7 @@ public class AspNetCoreServerOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.USE_DATETIME_OFFSET, "true")
                 .put(CodegenConstants.USE_COLLECTION, "false")
                 .put(CodegenConstants.RETURN_ICOLLECTION, "false")
+                .put(CodegenConstants.PARTIAL_CONTROLLER, "false")
                 .build();
     }
 
