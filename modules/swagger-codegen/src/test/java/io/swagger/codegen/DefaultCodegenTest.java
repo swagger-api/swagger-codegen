@@ -1,7 +1,13 @@
 package io.swagger.codegen;
 
+import io.swagger.models.properties.ComposedProperty;
+import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultCodegenTest {
 
@@ -32,5 +38,19 @@ public class DefaultCodegenTest {
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+    }
+
+    @Test(description = "datatype for complex ref property")
+    public void complexRefPropertyTest() throws Exception {
+        final ComposedProperty composed = new ComposedProperty();
+        final List<Property> innerProperties = new ArrayList<>();
+        innerProperties.add(new RefProperty("#/definitions/Category"));
+        composed.setAllOf(innerProperties);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        String datatype = codegen.getSwaggerType(composed);
+
+        Assert.assertEquals(datatype, "Category");
     }
 }

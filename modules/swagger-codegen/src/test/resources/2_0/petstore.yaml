@@ -663,7 +663,9 @@ definitions:
         type: integer
         format: int64
       category:
-        $ref: '#/definitions/Category'
+        readOnly: true
+        allOf:
+          - $ref: '#/definitions/Category'
       name:
         type: string
         example: doggie
