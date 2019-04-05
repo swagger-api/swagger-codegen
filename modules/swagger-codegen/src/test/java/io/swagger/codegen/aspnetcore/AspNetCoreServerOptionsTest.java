@@ -41,6 +41,8 @@ public class AspNetCoreServerOptionsTest extends AbstractOptionsTest {
             times = 1;
             serverCodegen.setReturnICollection(false);
             times = 1;
+            serverCodegen.setPartialController(false);
+            times = 1;
         }};
     }
 }
