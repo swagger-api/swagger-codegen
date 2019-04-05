@@ -45,6 +45,7 @@ import io.swagger.models.properties.BaseIntegerProperty;
 import io.swagger.models.properties.BinaryProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.ByteArrayProperty;
+import io.swagger.models.properties.ComposedProperty;
 import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.DecimalProperty;
@@ -1168,6 +1169,15 @@ public class DefaultCodegen {
             }
         } else if (p instanceof StringProperty) {
             datatype = "string";
+        } else if (p instanceof ComposedProperty) { // property type may be declared like allof: -ref
+            ComposedProperty cp = (ComposedProperty) p;
+            String innerType = datatype;
+            for (Property inner : cp.getAllOf()) {
+                if (inner instanceof RefProperty) {
+                    innerType = getSwaggerType(inner);
+                }
+            }
+            datatype = innerType;
         } else {
             if (p != null) {
                 datatype = p.getType();
