@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -1168,6 +1169,8 @@ public class DefaultCodegen {
             }
         } else if (p instanceof StringProperty) {
             datatype = "string";
+        } else if(p instanceof UntypedProperty){
+            datatype = "object";
         } else {
             if (p != null) {
                 datatype = p.getType();
