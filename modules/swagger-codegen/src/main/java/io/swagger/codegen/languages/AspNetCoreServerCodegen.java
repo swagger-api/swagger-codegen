@@ -21,7 +21,9 @@ import static java.util.UUID.randomUUID;
 public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
 
     private String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
-
+    
+    protected boolean partialController = false;
+    
     @SuppressWarnings("hiding")
     protected Logger LOGGER = LoggerFactory.getLogger(AspNetCoreServerCodegen.class);
 
@@ -79,6 +81,10 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         addSwitch(CodegenConstants.RETURN_ICOLLECTION,
                 CodegenConstants.RETURN_ICOLLECTION_DESC,
                 this.returnICollection);
+                
+        addSwitch(CodegenConstants.PARTIAL_CONTROLLER,
+                CodegenConstants.PARTIAL_CONTROLLER_DESC,
+                this.partialController);
     }
 
     @Override
@@ -106,6 +112,19 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         additionalProperties.put("packageGuid", packageGuid);
         
         additionalProperties.put("dockerTag", this.packageName.toLowerCase());
+
+        if (additionalProperties.containsKey(CodegenConstants.PARTIAL_CONTROLLER)) {
+            setPartialController(convertPropertyToBooleanAndWriteBack(CodegenConstants.PARTIAL_CONTROLLER));
+        } else {
+            additionalProperties.put(CodegenConstants.PARTIAL_CONTROLLER, partialController);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.PARTIAL_CONTROLLER_NOT_SET)) {
+            additionalProperties.replace(CodegenConstants.PARTIAL_CONTROLLER_NOT_SET, !partialController);
+        } else {
+            additionalProperties.put(CodegenConstants.PARTIAL_CONTROLLER_NOT_SET, !partialController);
+        }
+
 
         apiPackage = packageName + ".Controllers";
         modelPackage = packageName + ".Models";
@@ -203,5 +222,9 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
     public Mustache.Compiler processCompiler(Mustache.Compiler compiler) {
         // To avoid unexpected behaviors when options are passed programmatically such as { "useCollection": "" }
         return super.processCompiler(compiler).emptyStringIsFalse(true);
+    }
+    
+    public void setPartialController(boolean partialController) {
+        this.partialController = partialController;
     }
 }

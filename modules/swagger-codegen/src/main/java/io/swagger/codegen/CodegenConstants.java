@@ -145,6 +145,12 @@ public class CodegenConstants {
     public static final String RETURN_ICOLLECTION = "returnICollection";
     public static final String RETURN_ICOLLECTION_DESC = "Return ICollection<T> instead of the concrete type.";
 
+    public static final String PARTIAL_CONTROLLER = "partialController";
+    public static final String PARTIAL_CONTROLLER_DESC = "Declare controller as partial class (boolean)";
+    
+    public static final String PARTIAL_CONTROLLER_NOT_SET = "partialControllerNotSet";
+    public static final String PARTIAL_CONTROLLER_NOT_SET_DESC = "inversion of partialController option. This option is set automatically";
+    
     public static final String OPTIONAL_PROJECT_FILE = "optionalProjectFile";
     public static final String OPTIONAL_PROJECT_FILE_DESC = "Generate {PackageName}.csproj.";
 

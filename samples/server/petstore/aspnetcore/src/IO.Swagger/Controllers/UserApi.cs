@@ -29,7 +29,7 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class UserApiController : Controller
+    public partial class UserApiController : Controller
     { 
         /// <summary>
         /// Create user
@@ -46,8 +46,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
+            return CreateUserImpl(body);
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
+            return CreateUsersWithArrayInputImpl(body);
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
+            return CreateUsersWithListInputImpl(body);
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
 
+            return DeleteUserImpl(username);
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -135,15 +135,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
 
-            string exampleJson = null;
-            exampleJson = "<User>\n  <id>123456789</id>\n  <username>aeiou</username>\n  <firstName>aeiou</firstName>\n  <lastName>aeiou</lastName>\n  <email>aeiou</email>\n  <password>aeiou</password>\n  <phone>aeiou</phone>\n  <userStatus>123</userStatus>\n</User>";
-            exampleJson = "{\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"userStatus\" : 6,\n  \"phone\" : \"phone\",\n  \"id\" : 0,\n  \"email\" : \"email\",\n  \"username\" : \"username\"\n}";
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<User>(exampleJson)
-            : default(User);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            return GetUserByNameImpl(username);
+
         }
 
         /// <summary>
@@ -167,15 +160,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
 
-            string exampleJson = null;
-            exampleJson = "aeiou";
-            exampleJson = "\"\"";
-            
-            var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<string>(exampleJson)
-            : default(string);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            return LoginUserImpl(username, password);
+
         }
 
         /// <summary>
@@ -192,8 +178,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
+            return LogoutUserImpl();
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -216,8 +202,8 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
 
+            return UpdateUserImpl(username, body);
 
-            throw new NotImplementedException();
         }
     }
 }
