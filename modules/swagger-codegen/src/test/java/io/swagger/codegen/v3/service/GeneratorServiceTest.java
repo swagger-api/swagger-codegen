@@ -6,6 +6,7 @@ import io.swagger.util.Yaml;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import io.swagger.v3.parser.core.models.ParseOptions;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -31,6 +32,34 @@ public class GeneratorServiceTest {
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
         Assert.assertFalse(files.isEmpty());
+    }
+
+    @Test
+    public void testNoModel() throws Exception{
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-jersey")
+                .spec(loadSpecAsNode("3_0_0/noModel.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        System.out.println(path);
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/impl/FooApiServiceImpl.java".equals(relPath) ||
+                    "/src/gen/java/io/swagger/api/FooApiService.java".equals(relPath) ||
+                    "/src/gen/java/io/swagger/api/FooApi.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("import io.swagger.model"));
+            }
+        }
+
     }
 
     @Test(description = "test generator service with java 2.0")
