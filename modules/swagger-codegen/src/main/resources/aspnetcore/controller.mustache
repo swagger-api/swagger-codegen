@@ -44,9 +44,7 @@ namespace {{packageName}}.Controllers
             //TODO: Uncomment the next line to return response {{code}} or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode({{code}});
 {{/dataType}}{{/responses}}
-            {{#partialController}}return {{operationId}}Impl({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/partialController}}
-{{#partialControllerNotSet}}
-{{#returnType}}
+            {{#partialController}}return {{operationId}}Impl({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{/partialController}}{{^partialController}}{{#returnType}}
             string exampleJson = null;
             {{#examples}}
             exampleJson = "{{{example}}}";
@@ -55,7 +53,7 @@ namespace {{packageName}}.Controllers
             {{!TODO: defaultResponse, examples, auth, consumes, produces, nickname, externalDocs, imports, security}}
             //TODO: Change the data returned
             return new ObjectResult(example);{{/returnType}}{{^returnType}}
-            throw new NotImplementedException();{{/returnType}}{{/partialControllerNotSet}}
+            throw new NotImplementedException();{{/returnType}}{{/partialController}}
         }
         {{/operation}}
     }

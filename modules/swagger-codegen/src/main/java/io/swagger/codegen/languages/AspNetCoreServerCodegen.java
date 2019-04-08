@@ -119,13 +119,6 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
             additionalProperties.put(CodegenConstants.PARTIAL_CONTROLLER, partialController);
         }
 
-        if (additionalProperties.containsKey(CodegenConstants.PARTIAL_CONTROLLER_NOT_SET)) {
-            additionalProperties.replace(CodegenConstants.PARTIAL_CONTROLLER_NOT_SET, !partialController);
-        } else {
-            additionalProperties.put(CodegenConstants.PARTIAL_CONTROLLER_NOT_SET, !partialController);
-        }
-
-
         apiPackage = packageName + ".Controllers";
         modelPackage = packageName + ".Models";
 
