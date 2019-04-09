@@ -32,19 +32,6 @@ import { Configuration }                                     from '../configurat
 import { {{classname}}Interface }                            from './{{classFilename}}Interface';
 {{/withInterfaces}}
 
-{{#useHttpClient}}
-    import { HttpClient, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent }                           from '@angular/common/http';
-    import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-{{/useHttpClient}}
-{{^useHttpClient}}
-    import { Http, Headers, URLSearchParams }                    from '@angular/http';
-    import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
-    import { Response, ResponseContentType }                     from '@angular/http';
-    import { CustomQueryEncoderHelper }                          from '../encoder';
-{{/useHttpClient}}
-
-
 type FormParams = URLSearchParams | FormData{{#useHttpClient}} | HttpParams{{/useHttpClient}};
 
 function append(formParams: FormParams, param: string, value: any) {
