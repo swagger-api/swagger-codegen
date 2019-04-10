@@ -35,7 +35,19 @@ import { {{classname}}Interface }                            from './{{classFile
 type FormParams = URLSearchParams | FormData{{#useHttpClient}} | HttpParams{{/useHttpClient}};
 
 function append(formParams: FormParams, param: string, value: any) {
-    return {{#useHttpClient}}formParams.append(param, value){{/useHttpClient}}{{^useHttpClient}}formParams.append(param, value), formParams{{/useHttpClient}}
+    if (formParams instanceof FormData)
+    {
+        formParams.append(param, value);
+        return formParams;
+    }
+    {{#useHttpClient}}
+    else if (formParams instanceof HttpParams)
+    {
+        return formParams.append(param, value);        
+    }
+    {{/useHttpClient}}
+    formParams.append(param, value);
+    return formParams;    
 };
 
 {{#operations}}
