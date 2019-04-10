@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>{{clientPackage}}</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Nuget Package Metadata -->
+    <PackageId>{{packageName}}</PackageId>
+    <PackageVersion>{{packageVersion}}</PackageVersion>
+    <Authors>{{packageAuthors}}</Authors>
+    <Owners>{{packageCompany}}</Owners>
+    <Title>{{packageTitle}}</Title>
+    <Description>{{packageDescription}}</Description>
+    <Copyright>{{packageCopyright}}</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="RestSharp" Version="105.0.1" />
+  </ItemGroup>
+</Project>

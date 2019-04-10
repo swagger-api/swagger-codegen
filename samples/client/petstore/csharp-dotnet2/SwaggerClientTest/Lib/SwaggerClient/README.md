@@ -22,9 +22,13 @@ Note: NuGet is downloaded by the mono compilation script and packages are instal
 
 <a name="installation"></a>
 ## Installation
-Run the following command to generate the DLL
+Run the following command to generate the DLL.
+
+Using Mono
 - [Mac/Linux] `/bin/sh compile-mono.sh`
-- [Windows] TODO
+
+Using .NET Core SDK
+- [Mac/Linux/Windows] `dotnet publish -c Release -o bin`
 
 Then include the DLL (under the `bin` folder) in the C# project, and use the namespaces:
 ```csharp

@@ -67,6 +67,7 @@ public class CsharpDotNet2ClientCodegen extends AbstractCSharpCodegen {
                 sourceFolder + File.separator + clientPackagePath, "ApiException.cs"));
         supportingFiles.add(new SupportingFile("packages.config.mustache", "vendor", "packages.config"));
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "compile-mono.sh"));
+        supportingFiles.add(new SupportingFile("csproj.mustache", "", clientPackage + ".csproj"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
     }

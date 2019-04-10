@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>IO.Swagger.Client</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Nuget Package Metadata -->
+    <PackageId>IO.Swagger</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Swagger</Authors>
+    <Owners>Swagger</Owners>
+    <Title>Swagger Library</Title>
+    <Description>A library generated from a Swagger doc</Description>
+    <Copyright>No Copyright</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="RestSharp" Version="105.0.1" />
+  </ItemGroup>
+</Project>
