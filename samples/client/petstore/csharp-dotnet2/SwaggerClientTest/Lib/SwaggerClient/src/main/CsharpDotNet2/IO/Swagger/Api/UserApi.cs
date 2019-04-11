@@ -118,8 +118,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Create user This can only be done by the logged in user.
         /// </summary>
-        /// <param name="body">Created user object</param> 
-        /// <returns></returns>            
+        /// <param name="body">Created user object</param>
+        /// <returns></returns>
         public void CreateUser (User body)
         {
             // verify the required parameter 'body' is set
@@ -153,8 +153,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Creates list of users with given input array 
         /// </summary>
-        /// <param name="body">List of user object</param> 
-        /// <returns></returns>            
+        /// <param name="body">List of user object</param>
+        /// <returns></returns>
         public void CreateUsersWithArrayInput (List<User> body)
         {
             // verify the required parameter 'body' is set
@@ -188,8 +188,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Creates list of users with given input array 
         /// </summary>
-        /// <param name="body">List of user object</param> 
-        /// <returns></returns>            
+        /// <param name="body">List of user object</param>
+        /// <returns></returns>
         public void CreateUsersWithListInput (List<User> body)
         {
             // verify the required parameter 'body' is set
@@ -223,8 +223,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Delete user This can only be done by the logged in user.
         /// </summary>
-        /// <param name="username">The name that needs to be deleted</param> 
-        /// <returns></returns>            
+        /// <param name="username">The name that needs to be deleted</param>
+        /// <returns></returns>
         public void DeleteUser (string username)
         {
             // verify the required parameter 'username' is set
@@ -258,8 +258,8 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Get user by user name 
         /// </summary>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param> 
-        /// <returns>User</returns>            
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <returns>User</returns>
         public User GetUserByName (string username)
         {
             // verify the required parameter 'username' is set
@@ -293,9 +293,9 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Logs user into the system 
         /// </summary>
-        /// <param name="username">The user name for login</param> 
-        /// <param name="password">The password for login in clear text</param> 
-        /// <returns>string</returns>            
+        /// <param name="username">The user name for login</param>
+        /// <param name="password">The password for login in clear text</param>
+        /// <returns>string</returns>
         public string LoginUser (string username, string password)
         {
             // verify the required parameter 'username' is set
@@ -332,7 +332,7 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Logs out current logged in user session 
         /// </summary>
-        /// <returns></returns>            
+        /// <returns></returns>
         public void LogoutUser ()
         {
     
@@ -363,9 +363,9 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Updated user This can only be done by the logged in user.
         /// </summary>
-        /// <param name="body">Updated user object</param> 
-        /// <param name="username">name that need to be deleted</param> 
-        /// <returns></returns>            
+        /// <param name="body">Updated user object</param>
+        /// <param name="username">name that need to be deleted</param>
+        /// <returns></returns>
         public void UpdateUser (User body, string username)
         {
             // verify the required parameter 'body' is set

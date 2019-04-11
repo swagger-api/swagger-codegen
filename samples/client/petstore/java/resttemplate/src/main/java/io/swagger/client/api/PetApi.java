@@ -83,7 +83,7 @@ public class PetApi {
      * @param apiKey The apiKey parameter
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deletePet(Integer petId, String apiKey) throws RestClientException {
+    public void deletePet(Long petId, String apiKey) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'petId' is set
         if (petId == null) {
@@ -130,7 +130,7 @@ public class PetApi {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase()), "status", status));
+        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("csv".toUpperCase()), "status", status));
 
         final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
@@ -162,7 +162,7 @@ public class PetApi {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase()), "tags", tags));
+        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("csv".toUpperCase()), "tags", tags));
 
         final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
@@ -184,7 +184,7 @@ public class PetApi {
      * @return Pet
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Pet getPetById(Integer petId) throws RestClientException {
+    public Pet getPetById(Long petId) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'petId' is set
         if (petId == null) {
@@ -249,7 +249,7 @@ public class PetApi {
      * @param status The status parameter
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void updatePetWithForm(Integer petId, String name, String status) throws RestClientException {
+    public void updatePetWithForm(Long petId, String name, String status) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'petId' is set
         if (petId == null) {
@@ -288,7 +288,7 @@ public class PetApi {
      * @return ModelApiResponse
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ModelApiResponse uploadFile(Integer petId, String additionalMetadata, File file) throws RestClientException {
+    public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'petId' is set
         if (petId == null) {
@@ -305,7 +305,7 @@ public class PetApi {
         if (additionalMetadata != null)
             formParams.add("additionalMetadata", additionalMetadata);
         if (file != null)
-            formParams.add("file", new FileSystemResource(file));
+            formParams.add("file", file);
 
         final String[] accepts = {  };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);

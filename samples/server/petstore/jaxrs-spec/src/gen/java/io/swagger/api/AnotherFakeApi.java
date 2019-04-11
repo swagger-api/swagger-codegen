@@ -21,14 +21,16 @@ import javax.validation.Valid;
 
 @Path("/another-fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:45:22.616-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
 public class AnotherFakeApi {
 
     @PATCH
     @Path("/dummy")
-    @Operation(summary = "To test special tags", description = "To test special tags", tags={ "$another-fake?" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "To test special tags", description = "To test special tags", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class)))
     })
     public Response testSpecialTags(@Valid Client body) {
         return Response.ok().entity("magic!").build();

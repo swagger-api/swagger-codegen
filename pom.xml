@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.4-SNAPSHOT</version>
+    <version>3.0.8-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -986,6 +986,138 @@
     </reporting>
     <dependencyManagement>
         <dependencies>
+            <!-- swagger-core v2 -->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-jaxrs2</artifactId>
+                <version>${swagger-core-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-core</artifactId>
+                <version>${swagger-core-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-core-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-core-version}</version>
+            </dependency>
+            <!-- swagger-core v1 -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-core</artifactId>
+                <version>${swagger-core-version-v1}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-core-version-v1}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagge</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-core-version-v1}</version>
+            </dependency>
+            <!-- swagger-parser v2 -->
+            <dependency>
+                <groupId>io.swagger.parser.v3</groupId>
+                <artifactId>swagger-parser</artifactId>
+                <version>${swagger-parser-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.parser.v3</groupId>
+                <artifactId>swagger-parser-core</artifactId>
+                <version>${swagger-parser-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.parser.v3</groupId>
+                <artifactId>swagger-parser-v3</artifactId>
+                <version>${swagger-parser-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.parser.v3</groupId>
+                <artifactId>swagger-parser-v2-converter</artifactId>
+                <version>${swagger-parser-version}</version>
+            </dependency>
+            <!-- swagger-parser v1 -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-parser</artifactId>
+                <version>${swagger-parser-version-v1}</version>
+            </dependency>
+            <!-- generators -->
+            <dependency>
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-generators</artifactId>
+                <version>${swagger-codegen-generators-version}</version>
+            </dependency>
+            <!-- jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-jaxb-annotations</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-base</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-json-provider</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-xml-provider</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <!-- snakeyaml -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
+            <!-- tests -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -1029,15 +1161,17 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>2.0.7</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.40</swagger-parser-version-v1>
+        <swagger-codegen-generators-version>1.0.8-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.0.7</swagger-core-version>
+        <swagger-core-version-v1>1.5.22</swagger-core-version-v1>
+        <swagger-parser-version>2.0.11</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.44</swagger-parser-version-v1>
+        <jackson-version>2.9.8</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>2.0.6</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
         <junit-version>4.8.1</junit-version>
-        <jackson-version>2.8.9</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.25</slf4j-version>
@@ -1047,8 +1181,8 @@
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.22.0</surefire-version>
         <jmockit-version>1.25</jmockit-version>
-        <reflections-version>0.9.10</reflections-version>
-        <swagger-codegen-generators-version>1.0.4-SNAPSHOT</swagger-codegen-generators-version>
+        <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
+        <snakeyaml-version>1.23</snakeyaml-version>
     </properties>
 </project>

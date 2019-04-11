@@ -8,6 +8,10 @@ import io.swagger.client.Pair;
 import javax.ws.rs.core.GenericType;
 
 import java.math.BigDecimal;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.Body3;
+import io.swagger.client.model.Body4;
+import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
@@ -220,7 +224,7 @@ public class FakeApi {
    * @param body  (required)
    * @throws ApiException if fails to make API call
    */
-  public void testEndpointParameters(Object body) throws ApiException {
+  public void testEndpointParameters(Body2 body) throws ApiException {
     Object localVarPostBody = body;
     // verify the required parameter 'body' is set
     if (body == null) {
@@ -254,7 +258,6 @@ public class FakeApi {
   /**
    * To test enum parameters
    * To test enum parameters
-   * @param body  (optional)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
    * @param enumHeaderString Header parameter enum test (string) (optional)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
@@ -262,8 +265,8 @@ public class FakeApi {
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @throws ApiException if fails to make API call
    */
-  public void testEnumParameters(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
-    Object localVarPostBody = body;
+  public void testEnumParameters(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
+    Object localVarPostBody = null;
     // create path and map variables
     String localVarPath = "/fake".replaceAll("\\{format\\}","json");
 
@@ -272,7 +275,7 @@ public class FakeApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "enum_query_string_array", enumQueryStringArray));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "enum_query_string_array", enumQueryStringArray));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "enum_query_string", enumQueryString));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "enum_query_integer", enumQueryInteger));
 
@@ -288,13 +291,46 @@ if (enumHeaderString != null)
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "*/*"
+      
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
     String[] localVarAuthNames = new String[] {  };
 
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * To test enum parameters
+   * To test enum parameters
+   * @param body  (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void testEnumRequestBody(Body4 body) throws ApiException {
+    Object localVarPostBody = body;
+    // create path and map variables
+    String localVarPath = "/fake/enum/form".replaceAll("\\{format\\}","json");
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "*/*"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
    * test inline additionalProperties
@@ -339,7 +375,7 @@ if (enumHeaderString != null)
    * @param body  (required)
    * @throws ApiException if fails to make API call
    */
-  public void testJsonFormData(Object body) throws ApiException {
+  public void testJsonFormData(Body5 body) throws ApiException {
     Object localVarPostBody = body;
     // verify the required parameter 'body' is set
     if (body == null) {
@@ -368,6 +404,6 @@ if (enumHeaderString != null)
 
     String[] localVarAuthNames = new String[] {  };
 
-    apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
 }

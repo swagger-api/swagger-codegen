@@ -257,14 +257,24 @@ public class GeneratorController {
     public ResponseContext languagesMulti(RequestContext requestContext, List<String> types, String version) {
         final List<String> languages = new ArrayList<>();
         if ("V2".equals(version)) {
-            types.forEach(s -> languages.addAll(TYPESV2.get(io.swagger.codegen.CodegenType.forValue(s))));
+            types.forEach(s -> {
+                List<String> typeLanguages = TYPESV2.get(io.swagger.codegen.CodegenType.forValue(s));
+                if (typeLanguages != null) {
+                    languages.addAll(typeLanguages);
+                }
+            });
             Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
             return new ResponseContext()
                     .status(Response.Status.OK.getStatusCode())
                     .entity(languages);
 
         }
-        types.forEach(s -> languages.addAll(TYPES.get(CodegenType.forValue(s))));
+        types.forEach(s -> {
+            List<String> typeLanguages = TYPES.get(CodegenType.forValue(s));
+            if (typeLanguages != null) {
+                languages.addAll(typeLanguages);
+            }
+        });
         Collections.sort(languages, String.CASE_INSENSITIVE_ORDER);
         return new ResponseContext()
                 .status(Response.Status.OK.getStatusCode())
@@ -322,7 +332,7 @@ public class GeneratorController {
 
     public ResponseContext generateFromURL(RequestContext context, String codegenOptionsURL) {
         final String content;
-
+        LOGGER.debug("generateFromURL start - " + codegenOptionsURL);
         try {
             content = RemoteUrl.urlToString(codegenOptionsURL, null);
         } catch (Exception e) {
@@ -359,11 +369,64 @@ public class GeneratorController {
             }
         }
 
-        return generate(context, generationRequest);
+        ResponseContext responseContext = generate(context, generationRequest);
+        LOGGER.debug("generateFromURL end - " + codegenOptionsURL);
+        return responseContext;
 
     }
 
+    private String requestLog(GenerationRequest generationRequest) {
+        final int maxLength = 41;
+        StringBuffer requestLog = new StringBuffer();
+        requestLog.append("lang: ");
+        requestLog.append(generationRequest.getLang());
+        requestLog.append(", ");
+        requestLog.append("version: ");
+        requestLog.append(generationRequest.getCodegenVersion().name());
+        requestLog.append(", ");
+        requestLog.append("specURL: ");
+        requestLog.append(generationRequest.getSpecURL());
+        requestLog.append(", ");
+        if (generationRequest.getSpec() != null) {
+            String spec = null;
+            if (generationRequest.getSpec() instanceof String && StringUtils.isNotBlank((String) generationRequest.getSpec())) {
+                if (((String) generationRequest.getSpec()).length() > maxLength) {
+                    spec = ((String) generationRequest.getSpec()).substring(0, 40);
+                } else {
+                    spec = ((String) generationRequest.getSpec());
+                }
+                requestLog.append("spec: ");
+                requestLog.append(spec);
+                requestLog.append(", ");
+            } else {
+                try {
+                    spec = Json.pretty(generationRequest.getSpec());
+                    if (spec.length() > maxLength) {
+                        spec = spec.substring(0, 40);
+                    }
+                    requestLog.append("spec: ");
+                    requestLog.append(spec);
+                    requestLog.append(", ");
+                } catch (Exception e) {
+                    requestLog.append("spec: ");
+                    requestLog.append(spec);
+                    requestLog.append(", ");
+                }
+            }
+        }
+        if (generationRequest.getOptions() != null) {
+            if (StringUtils.isNotBlank(generationRequest.getOptions().getLibrary())) {
+                requestLog.append("lib: ");
+                requestLog.append(generationRequest.getOptions().getLibrary());
+            }
+        }
+        return requestLog.toString();
+    }
+
     public ResponseContext generate(RequestContext context, GenerationRequest generationRequest) {
+
+        String requestLog = requestLog(generationRequest);
+        LOGGER.debug("generate start - " + requestLog);
         File outputRootFolder = getTmpFolder();
         String destPath = null;
 
@@ -406,7 +469,9 @@ public class GeneratorController {
 
         LOGGER.info("file zip file: " + outputFile.getAbsolutePath());
 
-        return generate(generationRequest, outputRootFolder, outputContentFolder, outputFile);
+        ResponseContext responseContext = generate(generationRequest, outputRootFolder, outputContentFolder, outputFile);
+        LOGGER.debug("generate end - " + requestLog);
+        return responseContext;
 
     }
 

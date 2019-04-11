@@ -11,13 +11,15 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializable {
-  private @Valid UUID uuid = null;  private @Valid Date dateTime = null;  private @Valid Map<String, Animal> map = new HashMap<String, Animal>();
+  private @Valid UUID uuid = null;
+  private @Valid Date dateTime = null;
+  private @Valid Map<String, Animal> map = new HashMap<String, Animal>();
 
   /**
    **/
@@ -27,8 +29,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("uuid")
+
   public UUID getUuid() {
     return uuid;
   }
@@ -44,8 +47,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("dateTime")
+
   public Date getDateTime() {
     return dateTime;
   }
@@ -61,8 +65,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("map")
+
   public Map<String, Animal> getMap() {
     return map;
   }

@@ -31,7 +31,9 @@ public interface StoreApi  {
    
     @DELETE
     @Path("/order/{orderId}")
-    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store" })
+    
+    
+    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={  })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
                 @ApiResponse(responseCode = "404", description = "Order not found")
@@ -40,8 +42,10 @@ public interface StoreApi  {
 
     @GET
     @Path("/inventory")
+    
     @Produces({ "application/json" })
-    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", tags={ "store" })
+    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
+        @SecurityRequirement(name = "api_key")    }, tags={  })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class))))
          })
@@ -49,8 +53,9 @@ public interface StoreApi  {
 
     @GET
     @Path("/order/{orderId}")
+    
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
+    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={  })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
                 @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
@@ -62,7 +67,7 @@ public interface StoreApi  {
     @Path("/order")
     @Consumes({ "*/*" })
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
+    @Operation(summary = "Place an order for a pet", description = "", tags={  })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
                 @ApiResponse(responseCode = "400", description = "Invalid Order")

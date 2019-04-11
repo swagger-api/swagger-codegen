@@ -27,6 +27,10 @@ import java.io.IOException;
 
 
 import java.math.BigDecimal;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.Body3;
+import io.swagger.client.model.Body4;
+import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
@@ -667,7 +671,7 @@ public class FakeApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call testEndpointParametersCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call testEndpointParametersCall(Body2 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -709,7 +713,7 @@ public class FakeApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call testEndpointParametersValidateBeforeCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call testEndpointParametersValidateBeforeCall(Body2 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testEndpointParameters(Async)");
@@ -730,7 +734,7 @@ public class FakeApi {
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void testEndpointParameters(Object body) throws ApiException {
+    public void testEndpointParameters(Body2 body) throws ApiException {
         testEndpointParametersWithHttpInfo(body);
     }
 
@@ -741,7 +745,7 @@ public class FakeApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> testEndpointParametersWithHttpInfo(Object body) throws ApiException {
+    public ApiResponse<Void> testEndpointParametersWithHttpInfo(Body2 body) throws ApiException {
         com.squareup.okhttp.Call call = testEndpointParametersValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
@@ -754,7 +758,7 @@ public class FakeApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call testEndpointParametersAsync(Object body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call testEndpointParametersAsync(Body2 body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -781,7 +785,6 @@ public class FakeApi {
     }
     /**
      * Build call for testEnumParameters
-     * @param body  (optional)
      * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
      * @param enumHeaderString Header parameter enum test (string) (optional)
      * @param enumQueryStringArray Query parameter enum test (string array) (optional)
@@ -792,8 +795,8 @@ public class FakeApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call testEnumParametersCall(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
+    public com.squareup.okhttp.Call testEnumParametersCall(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
         
         // create path and map variables
         String localVarPath = "/fake";
@@ -801,7 +804,7 @@ public class FakeApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (enumQueryStringArray != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "enum_query_string_array", enumQueryStringArray));
+        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "enum_query_string_array", enumQueryStringArray));
         if (enumQueryString != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("enum_query_string", enumQueryString));
         if (enumQueryInteger != null)
@@ -812,6 +815,134 @@ public class FakeApi {
         localVarHeaderParams.put("enum_header_string_array", apiClient.parameterToString(enumHeaderStringArray));
         if (enumHeaderString != null)
         localVarHeaderParams.put("enum_header_string", apiClient.parameterToString(enumHeaderString));
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call testEnumParametersValidateBeforeCall(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        com.squareup.okhttp.Call call = testEnumParametersCall(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, progressListener, progressRequestListener);
+        return call;
+
+        
+        
+        
+        
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
+     * @param enumHeaderString Header parameter enum test (string) (optional)
+     * @param enumQueryStringArray Query parameter enum test (string array) (optional)
+     * @param enumQueryString Query parameter enum test (string) (optional)
+     * @param enumQueryInteger Query parameter enum test (double) (optional)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void testEnumParameters(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
+        testEnumParametersWithHttpInfo(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
+     * @param enumHeaderString Header parameter enum test (string) (optional)
+     * @param enumQueryStringArray Query parameter enum test (string array) (optional)
+     * @param enumQueryString Query parameter enum test (string) (optional)
+     * @param enumQueryInteger Query parameter enum test (double) (optional)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> testEnumParametersWithHttpInfo(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
+        com.squareup.okhttp.Call call = testEnumParametersValidateBeforeCall(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, null, null);
+        return apiClient.execute(call);
+    }
+
+    /**
+     * To test enum parameters (asynchronously)
+     * To test enum parameters
+     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
+     * @param enumHeaderString Header parameter enum test (string) (optional)
+     * @param enumQueryStringArray Query parameter enum test (string array) (optional)
+     * @param enumQueryString Query parameter enum test (string) (optional)
+     * @param enumQueryInteger Query parameter enum test (double) (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call testEnumParametersAsync(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ApiCallback<Void> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = testEnumParametersValidateBeforeCall(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, progressListener, progressRequestListener);
+        apiClient.executeAsync(call, callback);
+        return call;
+    }
+    /**
+     * Build call for testEnumRequestBody
+     * @param body  (optional)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call testEnumRequestBodyCall(Body4 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+        
+        // create path and map variables
+        String localVarPath = "/fake/enum/form";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -840,13 +971,13 @@ public class FakeApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call testEnumParametersValidateBeforeCall(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call testEnumRequestBodyValidateBeforeCall(Body4 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        com.squareup.okhttp.Call call = testEnumParametersCall(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testEnumRequestBodyCall(body, progressListener, progressRequestListener);
         return call;
 
         
@@ -859,31 +990,21 @@ public class FakeApi {
      * To test enum parameters
      * To test enum parameters
      * @param body  (optional)
-     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-     * @param enumHeaderString Header parameter enum test (string) (optional)
-     * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-     * @param enumQueryString Query parameter enum test (string) (optional)
-     * @param enumQueryInteger Query parameter enum test (double) (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void testEnumParameters(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
-        testEnumParametersWithHttpInfo(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+    public void testEnumRequestBody(Body4 body) throws ApiException {
+        testEnumRequestBodyWithHttpInfo(body);
     }
 
     /**
      * To test enum parameters
      * To test enum parameters
      * @param body  (optional)
-     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-     * @param enumHeaderString Header parameter enum test (string) (optional)
-     * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-     * @param enumQueryString Query parameter enum test (string) (optional)
-     * @param enumQueryInteger Query parameter enum test (double) (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> testEnumParametersWithHttpInfo(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
-        com.squareup.okhttp.Call call = testEnumParametersValidateBeforeCall(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, null, null);
+    public ApiResponse<Void> testEnumRequestBodyWithHttpInfo(Body4 body) throws ApiException {
+        com.squareup.okhttp.Call call = testEnumRequestBodyValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
 
@@ -891,16 +1012,11 @@ public class FakeApi {
      * To test enum parameters (asynchronously)
      * To test enum parameters
      * @param body  (optional)
-     * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-     * @param enumHeaderString Header parameter enum test (string) (optional)
-     * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-     * @param enumQueryString Query parameter enum test (string) (optional)
-     * @param enumQueryInteger Query parameter enum test (double) (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call testEnumParametersAsync(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call testEnumRequestBodyAsync(Body4 body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -921,7 +1037,7 @@ public class FakeApi {
             };
         }
 
-        com.squareup.okhttp.Call call = testEnumParametersValidateBeforeCall(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = testEnumRequestBodyValidateBeforeCall(body, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
@@ -1053,7 +1169,7 @@ public class FakeApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call testJsonFormDataCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call testJsonFormDataCall(Body5 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -1091,11 +1207,11 @@ public class FakeApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call testJsonFormDataValidateBeforeCall(Object body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call testJsonFormDataValidateBeforeCall(Body5 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testJsonFormData(Async)");
@@ -1116,7 +1232,7 @@ public class FakeApi {
      * @param body  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void testJsonFormData(Object body) throws ApiException {
+    public void testJsonFormData(Body5 body) throws ApiException {
         testJsonFormDataWithHttpInfo(body);
     }
 
@@ -1127,7 +1243,7 @@ public class FakeApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> testJsonFormDataWithHttpInfo(Object body) throws ApiException {
+    public ApiResponse<Void> testJsonFormDataWithHttpInfo(Body5 body) throws ApiException {
         com.squareup.okhttp.Call call = testJsonFormDataValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
@@ -1140,7 +1256,7 @@ public class FakeApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call testJsonFormDataAsync(Object body, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call testJsonFormDataAsync(Body5 body, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

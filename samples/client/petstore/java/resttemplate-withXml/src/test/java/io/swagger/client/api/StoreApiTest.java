@@ -79,7 +79,7 @@ public class StoreApiTest {
     @Test
     public void getOrderByIdTest() {
         
-        Integer orderId = null;
+        Long orderId = null;
         
         Order response = api.getOrderById(orderId);
 

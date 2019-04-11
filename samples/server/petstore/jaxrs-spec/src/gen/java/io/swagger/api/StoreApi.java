@@ -22,15 +22,15 @@ import javax.validation.Valid;
 
 @Path("/store")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2018-08-02T12:45:22.616-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
 public class StoreApi {
 
     @DELETE
     @Path("/order/{order_id}")
-    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store" })
+    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-        @ApiResponse(responseCode = "404", description = "Order not found") 
+        @ApiResponse(responseCode = "404", description = "Order not found")
     })
     public Response deleteOrder( @PathParam("order_id")
 
@@ -40,20 +40,23 @@ public class StoreApi {
     }
     @GET
     @Path("/inventory")
-    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", tags={ "store" })
+    @Produces({ "application/json" })
+    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
+        @SecurityRequirement(name = "api_key")    }, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class))))
     })
     public Response getInventory() {
         return Response.ok().entity("magic!").build();
     }
     @GET
     @Path("/order/{order_id}")
-    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
+    @Produces({ "application/xml", "application/json" })
+    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
-        @ApiResponse(responseCode = "404", description = "Order not found") 
+        @ApiResponse(responseCode = "404", description = "Order not found")
     })
     public Response getOrderById( @DecimalMin("1") @DecimalMax("5") @PathParam("order_id")
 
@@ -63,10 +66,12 @@ public class StoreApi {
     }
     @POST
     @Path("/order")
-    @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
+    @Consumes({ "*/*" })
+    @Produces({ "application/xml", "application/json" })
+    @Operation(summary = "Place an order for a pet", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
-        @ApiResponse(responseCode = "400", description = "Invalid Order") 
+        @ApiResponse(responseCode = "400", description = "Invalid Order")
     })
     public Response placeOrder(@Valid Order body) {
         return Response.ok().entity("magic!").build();
