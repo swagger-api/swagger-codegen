@@ -459,9 +459,7 @@ export class {{classname}} {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-{{^isResponseFile}}
             json: true,
-{{/isResponseFile}}
 {{#isResponseFile}}
             encoding: null,
 {{/isResponseFile}}
