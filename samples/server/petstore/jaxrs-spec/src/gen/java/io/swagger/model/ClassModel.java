@@ -8,7 +8,7 @@ import javax.validation.Valid;
 /**
  * Model for testing model with \&quot;_class\&quot; property
  **/
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model with \"_class\" property")
@@ -24,8 +24,9 @@ public class ClassModel  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("_class")
+
   public String getPropertyClass() {
     return propertyClass;
   }

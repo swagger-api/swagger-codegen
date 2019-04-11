@@ -8,13 +8,25 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class FormatTest   {
-  private @Valid Integer integer = null;  private @Valid Integer int32 = null;  private @Valid Long int64 = null;  private @Valid BigDecimal number = null;  private @Valid Float _float = null;  private @Valid Double _double = null;  private @Valid String string = null;  private @Valid String _byte = null;  private @Valid String binary = null;  private @Valid LocalDate date = null;  private @Valid Date dateTime = null;  private @Valid UUID uuid = null;  private @Valid String password = null;
+  private @Valid Integer integer = null;
+  private @Valid Integer int32 = null;
+  private @Valid Long int64 = null;
+  private @Valid BigDecimal number = null;
+  private @Valid Float _float = null;
+  private @Valid Double _double = null;
+  private @Valid String string = null;
+  private @Valid String _byte = null;
+  private @Valid String binary = null;
+  private @Valid LocalDate date = null;
+  private @Valid Date dateTime = null;
+  private @Valid UUID uuid = null;
+  private @Valid String password = null;
 
   /**
    * minimum: 10
@@ -26,9 +38,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("integer")
- @Min(10) @Max(100)  public Integer getInteger() {
+ @Min(10) @Max(100)
+  public Integer getInteger() {
     return integer;
   }
   public void setInteger(Integer integer) {
@@ -45,9 +58,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("int32")
- @Min(20) @Max(200)  public Integer getInt32() {
+ @Min(20) @Max(200)
+  public Integer getInt32() {
     return int32;
   }
   public void setInt32(Integer int32) {
@@ -62,8 +76,9 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("int64")
+
   public Long getInt64() {
     return int64;
   }
@@ -81,10 +96,11 @@ public class FormatTest   {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("number")
   @NotNull
- @DecimalMin("32") @DecimalMax("543")  public BigDecimal getNumber() {
+ @DecimalMin("32") @DecimalMax("543")
+  public BigDecimal getNumber() {
     return number;
   }
   public void setNumber(BigDecimal number) {
@@ -101,9 +117,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("float")
- @DecimalMin("54") @DecimalMax("987")  public Float getFloat() {
+ @DecimalMin("54") @DecimalMax("987")
+  public Float getFloat() {
     return _float;
   }
   public void setFloat(Float _float) {
@@ -120,9 +137,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("double")
- @DecimalMin("67") @DecimalMax("123")  public Double getDouble() {
+ @DecimalMin("67") @DecimalMax("123")
+  public Double getDouble() {
     return _double;
   }
   public void setDouble(Double _double) {
@@ -137,9 +155,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("string")
- @Pattern(regexp="/[a-z]/i")  public String getString() {
+ @Pattern(regexp="/[a-z]/i")
+  public String getString() {
     return string;
   }
   public void setString(String string) {
@@ -154,10 +173,11 @@ public class FormatTest   {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("byte")
   @NotNull
- @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public String getByte() {
+ @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
+  public String getByte() {
     return _byte;
   }
   public void setByte(String _byte) {
@@ -172,8 +192,9 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("binary")
+
   public String getBinary() {
     return binary;
   }
@@ -189,9 +210,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("date")
   @NotNull
+
   public LocalDate getDate() {
     return date;
   }
@@ -207,8 +229,9 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("dateTime")
+
   public Date getDateTime() {
     return dateTime;
   }
@@ -224,8 +247,9 @@ public class FormatTest   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("uuid")
+
   public UUID getUuid() {
     return uuid;
   }
@@ -241,9 +265,10 @@ public class FormatTest   {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("password")
   @NotNull
+
   public String getPassword() {
     return password;
   }

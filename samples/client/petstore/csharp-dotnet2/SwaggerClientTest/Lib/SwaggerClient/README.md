@@ -67,6 +67,143 @@ namespace Example
         }
     }
 }
+            // Configure OAuth2 access token for authorization: petstore_auth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new PetApi();
+            var petId = new int?(); // int? | Pet id to delete
+            var apiKey = new string(); // string |  (optional) 
+
+            try
+            {
+                // Deletes a pet
+                apiInstance.DeletePet(petId, apiKey);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.DeletePet: " + e.Message );
+            }
+        }
+    }
+}
+            // Configure OAuth2 access token for authorization: petstore_auth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new PetApi();
+            var status = new List<string>(); // List<string> | Status values that need to be considered for filter
+
+            try
+            {
+                // Finds Pets by status
+                List<Pet> result = apiInstance.FindPetsByStatus(status);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.FindPetsByStatus: " + e.Message );
+            }
+        }
+    }
+}
+            // Configure OAuth2 access token for authorization: petstore_auth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new PetApi();
+            var tags = new List<string>(); // List<string> | Tags to filter by
+
+            try
+            {
+                // Finds Pets by tags
+                List<Pet> result = apiInstance.FindPetsByTags(tags);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.FindPetsByTags: " + e.Message );
+            }
+        }
+    }
+}
+            // Configure API key authorization: api_key
+            Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
+
+            var apiInstance = new PetApi();
+            var petId = new int?(); // int? | ID of pet to return
+
+            try
+            {
+                // Find pet by ID
+                Pet result = apiInstance.GetPetById(petId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.GetPetById: " + e.Message );
+            }
+        }
+    }
+}
+            // Configure OAuth2 access token for authorization: petstore_auth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new PetApi();
+            var body = new Pet(); // Pet | Pet object that needs to be added to the store
+
+            try
+            {
+                // Update an existing pet
+                apiInstance.UpdatePet(body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.UpdatePet: " + e.Message );
+            }
+        }
+    }
+}
+            // Configure OAuth2 access token for authorization: petstore_auth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new PetApi();
+            var petId = new int?(); // int? | ID of pet that needs to be updated
+            var name = new string(); // string |  (optional) 
+            var status = new string(); // string |  (optional) 
+
+            try
+            {
+                // Updates a pet in the store with form data
+                apiInstance.UpdatePetWithForm(petId, name, status);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.UpdatePetWithForm: " + e.Message );
+            }
+        }
+    }
+}
+            // Configure OAuth2 access token for authorization: petstore_auth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new PetApi();
+            var petId = new int?(); // int? | ID of pet to update
+            var additionalMetadata = new string(); // string |  (optional) 
+            var file = file_example;  // System.IO.Stream |  (optional) 
+
+            try
+            {
+                // uploads an image
+                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.UploadFile: " + e.Message );
+            }
+        }
+    }
+}
 ```
 
 <a name="documentation-for-api-endpoints"></a>

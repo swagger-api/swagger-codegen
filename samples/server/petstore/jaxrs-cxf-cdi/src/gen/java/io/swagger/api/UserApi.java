@@ -44,7 +44,7 @@ public class UserApi  {
     
     @Consumes({ "*/*" })
     
-    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response createUser(
@@ -57,7 +57,7 @@ public class UserApi  {
     @Path("/createWithArray")
     @Consumes({ "*/*" })
     
-    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response createUsersWithArrayInput(
@@ -70,7 +70,7 @@ public class UserApi  {
     @Path("/createWithList")
     @Consumes({ "*/*" })
     
-    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response createUsersWithListInput(
@@ -83,7 +83,7 @@ public class UserApi  {
     @Path("/{username}")
     
     
-    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
@@ -97,7 +97,7 @@ public class UserApi  {
     @Path("/{username}")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Get user by user name", description = "", tags={ "user" })
+    @Operation(summary = "Get user by user name", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
@@ -112,7 +112,7 @@ public class UserApi  {
     @Path("/login")
     
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
+    @Operation(summary = "Logs user into the system", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
@@ -128,7 +128,7 @@ public class UserApi  {
     @Path("/logout")
     
     
-    @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
+    @Operation(summary = "Logs out current logged in user session", description = "", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response logoutUser() {
@@ -139,7 +139,7 @@ public class UserApi  {
     @Path("/{username}")
     @Consumes({ "*/*" })
     
-    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })

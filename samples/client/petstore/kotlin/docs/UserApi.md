@@ -56,7 +56,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: */*
  - **Accept**: Not defined
 
 <a name="createUsersWithArrayInput"></a>
@@ -100,7 +100,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: */*
  - **Accept**: Not defined
 
 <a name="createUsersWithListInput"></a>
@@ -144,7 +144,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: */*
  - **Accept**: Not defined
 
 <a name="deleteUser"></a>
@@ -236,7 +236,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/xml, application/json
 
 <a name="loginUser"></a>
 # **loginUser**
@@ -283,7 +283,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: 
+ - **Accept**: application/xml, application/json
 
 <a name="logoutUser"></a>
 # **logoutUser**
@@ -370,6 +370,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: 
+ - **Content-Type**: */*
  - **Accept**: Not defined
 

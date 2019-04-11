@@ -83,7 +83,7 @@ module.exports.logoutUser = function logoutUser (req, res, next) {
 module.exports.updateUser = function updateUser (req, res, next) {
   var body = req.swagger.params['body'].value;
   var username = req.swagger.params['username'].value;
-  User.updateUser(bodyusername)
+  User.updateUser(body,username)
     .then(function (response) {
       utils.writeJson(res, response);
     })

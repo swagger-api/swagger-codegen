@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -60,11 +61,11 @@ public class FormatTest {
 
   @JsonProperty("byte")
 
-  private String _byte = null;
+  private byte[] _byte = null;
 
   @JsonProperty("binary")
 
-  private String binary = null;
+  private File binary = null;
 
   @JsonProperty("date")
 
@@ -219,7 +220,7 @@ public class FormatTest {
   public void setString(String string) {
     this.string = string;
   }
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -231,14 +232,14 @@ public class FormatTest {
   * @return _byte
   **/
     @NotNull
-   @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  @Schema(required = true, description = "")
-  public String getByte() {
+    @Schema(required = true, description = "")
+  public byte[] getByte() {
     return _byte;
   }
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
-  public FormatTest binary(String binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -249,11 +250,12 @@ public class FormatTest {
   * Get binary
   * @return binary
   **/
+    @Valid
     @Schema(description = "")
-  public String getBinary() {
+  public File getBinary() {
     return binary;
   }
-  public void setBinary(String binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
   public FormatTest date(LocalDate date) {

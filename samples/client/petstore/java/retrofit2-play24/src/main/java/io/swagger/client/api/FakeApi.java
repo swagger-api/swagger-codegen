@@ -10,6 +10,10 @@ import retrofit2.http.*;
 import okhttp3.RequestBody;
 
 import java.math.BigDecimal;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.Body3;
+import io.swagger.client.model.Body4;
+import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.OuterComposite;
 
@@ -103,13 +107,12 @@ public interface FakeApi {
   })
   @POST("fake")
   F.Promise<Response<Void>> testEndpointParameters(
-                    @retrofit2.http.Body Object body    
+                    @retrofit2.http.Body Body2 body    
   );
 
   /**
    * To test enum parameters
    * To test enum parameters
-   * @param body  (optional)
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
    * @param enumHeaderString Header parameter enum test (string) (optional)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
@@ -117,12 +120,23 @@ public interface FakeApi {
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @return Call&lt;Void&gt;
    */
+  @GET("fake")
+  F.Promise<Response<Void>> testEnumParameters(
+                @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Path("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Path("enum_query_string") String enumQueryString                ,     @retrofit2.http.Path("enum_query_integer") Integer enumQueryInteger                
+  );
+
+  /**
+   * To test enum parameters
+   * To test enum parameters
+   * @param body  (optional)
+   * @return Call&lt;Void&gt;
+   */
   @Headers({
     "Content-Type:*/*"
   })
-  @GET("fake")
-  F.Promise<Response<Void>> testEnumParameters(
-                    @retrofit2.http.Body Object body    ,             @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Path("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Path("enum_query_string") String enumQueryString                ,     @retrofit2.http.Path("enum_query_integer") Integer enumQueryInteger                
+  @POST("fake/enum/form")
+  F.Promise<Response<Void>> testEnumRequestBody(
+                    @retrofit2.http.Body Body4 body    
   );
 
   /**
@@ -148,9 +162,9 @@ public interface FakeApi {
   @Headers({
     "Content-Type:application/json"
   })
-  @GET("fake/jsonFormData")
+  @POST("fake/jsonFormData")
   F.Promise<Response<Void>> testJsonFormData(
-                    @retrofit2.http.Body Object body    
+                    @retrofit2.http.Body Body5 body    
   );
 
 }

@@ -63,7 +63,7 @@ public interface StoreApi {
    */
   @GET("/store/order/{order_id}")
   Order getOrderById(
-    @retrofit.http.Path("order_id") Integer orderId
+    @retrofit.http.Path("order_id") Long orderId
   );
 
   /**
@@ -74,7 +74,7 @@ public interface StoreApi {
    */
   @GET("/store/order/{order_id}")
   void getOrderById(
-    @retrofit.http.Path("order_id") Integer orderId, Callback<Order> cb
+    @retrofit.http.Path("order_id") Long orderId, Callback<Order> cb
   );
   /**
    * Place an order for a pet

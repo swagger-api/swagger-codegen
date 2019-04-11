@@ -6,13 +6,14 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Animal   {
-  private @Valid String className = null;  private @Valid String color = "red";
+  private @Valid String className = null;
+  private @Valid String color = "red";
 
   /**
    **/
@@ -22,9 +23,10 @@ public class Animal   {
   }
 
   
-  @Schema(required = true, description = "")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("className")
   @NotNull
+
   public String getClassName() {
     return className;
   }
@@ -40,8 +42,9 @@ public class Animal   {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("color")
+
   public String getColor() {
     return color;
   }

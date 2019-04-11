@@ -85,6 +85,10 @@ public interface CodegenConfig {
 
     void setInputSpec(String inputSpec);
 
+    String getInputURL();
+
+    void setInputURL(String inputSpec);
+
     String getOutputDir();
 
     void setOutputDir(String dir);

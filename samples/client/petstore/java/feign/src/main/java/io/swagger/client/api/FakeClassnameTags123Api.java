@@ -21,8 +21,7 @@ public interface FakeClassnameTags123Api extends ApiClient.Api {
    */
   @RequestLine("PATCH /fake_classname_test")
   @Headers({
-      "Content-Type: application/json",
-      "Accept: application/json",
+      "Accept: */*",
   })
   Client testClassname(Client body);
 }

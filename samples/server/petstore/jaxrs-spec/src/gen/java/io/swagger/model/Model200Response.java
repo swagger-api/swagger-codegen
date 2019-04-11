@@ -8,13 +8,14 @@ import javax.validation.Valid;
 /**
  * Model for testing model name starting with number
  **/
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model name starting with number")
 
 public class Model200Response  implements Serializable {
-  private @Valid Integer name = null;  private @Valid String propertyClass = null;
+  private @Valid Integer name = null;
+  private @Valid String propertyClass = null;
 
   /**
    **/
@@ -24,8 +25,9 @@ public class Model200Response  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("name")
+
   public Integer getName() {
     return name;
   }
@@ -41,8 +43,9 @@ public class Model200Response  implements Serializable {
   }
 
   
-  @Schema(description = "")
+  @ApiModelProperty(value = "")
   @JsonProperty("class")
+
   public String getPropertyClass() {
     return propertyClass;
   }

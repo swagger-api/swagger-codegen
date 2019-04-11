@@ -124,7 +124,7 @@ public class StoreApi {
    * @return Order
    * @throws ApiException if fails to make API call
    */
-  public Order getOrderById(Integer orderId) throws ApiException {
+  public Order getOrderById(Long orderId) throws ApiException {
     Object localVarPostBody = null;
     // verify the required parameter 'orderId' is set
     if (orderId == null) {

@@ -23,6 +23,7 @@ import org.junit.Ignore;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class PetApiTest {
     @Test
     public void deletePetTest() throws ApiException {
         
-        Integer petId = null;
+        Long petId = null;
         
         String apiKey = null;
         
@@ -86,9 +87,11 @@ public class PetApiTest {
     @Test
     public void findPetsByStatusTest() throws ApiException {
         
-        List<String> status = null;
+        List<String> status = Arrays.asList("available");
         
         List<Pet> response = api.findPetsByStatus(status);
+
+        System.out.println(response);
 
         // TODO: test validations
     }
@@ -122,7 +125,7 @@ public class PetApiTest {
     @Test
     public void getPetByIdTest() throws ApiException {
         
-        Integer petId = null;
+        Long petId = null;
         
         Pet response = api.getPetById(petId);
 
@@ -158,7 +161,7 @@ public class PetApiTest {
     @Test
     public void updatePetWithFormTest() throws ApiException {
         
-        Integer petId = null;
+        Long petId = null;
         
         String name = null;
 
@@ -179,8 +182,8 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileTest() throws ApiException {
-        
-        Integer petId = null;
+
+        Long petId = null;
 
         String additionalMetadata = null;
 
