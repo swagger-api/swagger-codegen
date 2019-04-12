@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.codegen.v3.CodegenArgument;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -423,10 +424,12 @@ public class CodeGenMojo extends AbstractMojo {
             System.clearProperty(CodegenConstants.SUPPORTING_FILES);
         }
 
-        System.setProperty(CodegenConstants.MODEL_TESTS, generateModelTests.toString());
-        System.setProperty(CodegenConstants.MODEL_DOCS, generateModelDocumentation.toString());
-        System.setProperty(CodegenConstants.API_TESTS, generateApiTests.toString());
-        System.setProperty(CodegenConstants.API_DOCS, generateApiDocumentation.toString());
+        // do not override config if already present (e.g. config read from file)
+        addCodegenArgumentIfAbsent(CodegenConstants.MODEL_TESTS_OPTION, "boolean", generateModelTests.toString(), configurator);
+        addCodegenArgumentIfAbsent(CodegenConstants.API_TESTS_OPTION , "boolean", generateApiTests.toString(), configurator);
+        addCodegenArgumentIfAbsent(CodegenConstants.MODEL_DOCS_OPTION, "boolean", generateModelDocumentation.toString(), configurator);
+        addCodegenArgumentIfAbsent(CodegenConstants.API_DOCS_OPTION, "boolean", generateApiDocumentation.toString(), configurator);
+
         System.setProperty(CodegenConstants.WITH_XML, withXml.toString());
 
         if (configOptions != null) {
@@ -519,7 +522,6 @@ public class CodeGenMojo extends AbstractMojo {
                 configurator.addSystemProperty(key, value);
             }
         }
-
         final ClientOptInput input = configurator.toClientOptInput();
         final CodegenConfig config = input.getConfig();
 
@@ -576,6 +578,14 @@ public class CodeGenMojo extends AbstractMojo {
             } else {
                 System.setProperty(entry.getKey(), entry.getValue());
             }
+        }
+    }
+
+
+    private void addCodegenArgumentIfAbsent(String option, String type, String value, CodegenConfigurator configurator) {
+         if (configurator.getCodegenArguments().stream()
+                .noneMatch(codegenArgument -> option.equals(codegenArgument.getOption()))) {
+            configurator.getCodegenArguments().add(new CodegenArgument().option(option).type(type).value(value));
         }
     }
 }
