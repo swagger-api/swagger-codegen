@@ -31,6 +31,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -70,7 +71,7 @@ public class CodegenConfigurator implements Serializable {
     private String artifactVersion;
     private String library;
     private String ignoreFileOverride;
-    private List<CodegenArgument> codegenArguments;
+    private List<CodegenArgument> codegenArguments = new ArrayList<>();
     private Map<String, String> systemProperties = new HashMap<String, String>();
     private Map<String, String> instantiationTypes = new HashMap<String, String>();
     private Map<String, String> typeMappings = new HashMap<String, String>();
@@ -579,6 +580,10 @@ public class CodegenConfigurator implements Serializable {
 
     public void setCodegenArguments(List<CodegenArgument> codegenArguments) {
         this.codegenArguments = codegenArguments;
+    }
+
+    public List<CodegenArgument> getCodegenArguments() {
+        return this.codegenArguments;
     }
 
     private void setSystemProperties() {
