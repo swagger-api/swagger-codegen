@@ -1023,7 +1023,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         objs.put("package", config.modelPackage());
         List<Object> models = new ArrayList<>();
 
-        objs.put("x-is-interface", codegenModel.vendorExtensions.get("x-is-interface"));
+        objs.put("x-is-one-of", codegenModel.vendorExtensions.get("x-is-one-of"));
 
         Map<String, Object> modelObject = new HashMap<>();
         modelObject.put("model", codegenModel);
