@@ -283,7 +283,13 @@ class ApiClient(object):
         elif klass == datetime.datetime:
             return self.__deserialize_datatime(data)
         else:
-            return self.__deserialize_model(data, klass)
+            if type(data) is list:
+                all_objects = []
+                for obj in data:
+                    all_objects.append(self.__deserialize_model(obj, klass))
+                return all_objects
+            else:
+                return self.__deserialize_model(data, klass)
 
     def call_api(self, resource_path, method,
                  path_params=None, query_params=None, header_params=None,
