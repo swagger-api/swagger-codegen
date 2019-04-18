@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
-import java.util.stream.IntStream;
 
 import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
@@ -324,6 +323,9 @@ public class ApiClient {
     
     /**
      * Parse the given string into Date object.
+     *
+     * @param str Date
+     * @return Date in string format
      */
     public Date parseDate(String str) {
         try {
@@ -335,6 +337,9 @@ public class ApiClient {
 
     /**
      * Format the given Date object into string.
+     *
+     * @param date Date
+     * @return Date in string format
      */
     public String formatDate(Date date) {
         return dateFormat.format(date);
@@ -515,24 +520,23 @@ public class ApiClient {
         updateParamsForAuth(authNames, queryParams, headerParams);
 
         Map<String, String> params = new HashMap<>();
-        final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(basePath).path(path).encode();
+        final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(basePath).path(path);
 
         if (queryParams != null) {
             builder.queryParams(queryParams);
             LinkedMultiValueMap<String, String> keys = new LinkedMultiValueMap<>();
 
             for (Map.Entry<String, List<String>> e : queryParams.entrySet()) {
-                IntStream.range(0, e.getValue().size())
-                    .forEach(i -> {
-                        keys.add(e.getKey(), "{" + e.getKey() + i + "}");
-                        params.put(e.getKey() + i, e.getValue().get(i));
-                    });
+                for(int i = 0; i < e.getValue().size(); i++) {
+                    keys.add(e.getKey(), "{" + e.getKey() + i + "}");
+                    params.put(e.getKey() + i, e.getValue().get(i));
+                }
             }
 
             builder.queryParams(keys);
         }
-        
-        final BodyBuilder requestBuilder = RequestEntity.method(method, builder.buildAndExpand(params).toUri());
+
+            final BodyBuilder requestBuilder = RequestEntity.method(method, builder.buildAndExpand(params).toUri());
         if(accept != null) {
             requestBuilder.accept(accept.toArray(new MediaType[accept.size()]));
         }
