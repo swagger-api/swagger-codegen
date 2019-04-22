@@ -359,12 +359,18 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
                 for (Object object : modelList) {
                     Map<String, Object> modelMap = (Map<String, Object>) object;
+                    CodegenModel codegenModel = null;
                     if (modelMap.containsKey("oneOf-model")) {
-                        CodegenModel oneOfModel = (CodegenModel) modelMap.get("oneOf-model");
-                        models = processModel(oneOfModel, config, schemas);
-                        models.put("classname", config.toModelName(oneOfModel.name));
+                        codegenModel = (CodegenModel) modelMap.get("oneOf-model");
+                    }
+                    if (modelMap.containsKey("anyOf-model")) {
+                        codegenModel = (CodegenModel) modelMap.get("anyOf-model");
+                    }
+                    if (codegenModel != null) {
+                        models = processModel(codegenModel, config, schemas);
+                        models.put("classname", config.toModelName(codegenModel.name));
                         models.putAll(config.additionalProperties());
-                        allProcessedModels.put(oneOfModel.name, models);
+                        allProcessedModels.put(codegenModel.name, models);
                         break;
                     }
                 }
@@ -987,6 +993,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 CodegenModel oneOfModel = (CodegenModel) cm.vendorExtensions.get("oneOf-model");
                 mo.put("oneOf-model", oneOfModel);
             }
+            if (cm.vendorExtensions.containsKey("anyOf-model")) {
+                CodegenModel anyOfModel = (CodegenModel) cm.vendorExtensions.get("anyOf-model");
+                mo.put("anyOf-model", anyOfModel);
+            }
             models.add(mo);
 
             allImports.addAll(cm.imports);
@@ -1023,7 +1033,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         objs.put("package", config.modelPackage());
         List<Object> models = new ArrayList<>();
 
-        objs.put("x-is-one-of", codegenModel.vendorExtensions.get("x-is-one-of"));
+        if (codegenModel.vendorExtensions.containsKey("x-is-composed-model")) {
+            objs.put("x-is-composed-model", codegenModel.vendorExtensions.get("x-is-composed-model"));
+        }
 
         Map<String, Object> modelObject = new HashMap<>();
         modelObject.put("model", codegenModel);
