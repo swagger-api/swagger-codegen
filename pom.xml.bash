@@ -1059,9 +1059,9 @@
     </repositories>
     <properties>
         <swagger-codegen-generators-version>1.0.8-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.0.7</swagger-core-version>
+        <swagger-core-version>2.0.8-SNAPSHOT</swagger-core-version>
         <swagger-core-version-v1>1.5.22</swagger-core-version-v1>
-        <swagger-parser-version>2.0.11</swagger-parser-version>
+        <swagger-parser-version>2.0.12-SNAPSHOT</swagger-parser-version>
         <swagger-parser-version-v1>1.0.44</swagger-parser-version-v1>
         <jackson-version>2.9.8</jackson-version>
         <scala-version>2.11.1</scala-version>
