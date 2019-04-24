@@ -350,6 +350,30 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 models.put("classname", config.toModelName(name));
                 models.putAll(config.additionalProperties());
                 allProcessedModels.put(name, models);
+
+                final List<Object> modelList  = (List<Object>) models.get("models");
+
+                if (modelList == null || modelList.isEmpty()) {
+                    continue;
+                }
+
+                for (Object object : modelList) {
+                    Map<String, Object> modelMap = (Map<String, Object>) object;
+                    CodegenModel codegenModel = null;
+                    if (modelMap.containsKey("oneOf-model")) {
+                        codegenModel = (CodegenModel) modelMap.get("oneOf-model");
+                    }
+                    if (modelMap.containsKey("anyOf-model")) {
+                        codegenModel = (CodegenModel) modelMap.get("anyOf-model");
+                    }
+                    if (codegenModel != null) {
+                        models = processModel(codegenModel, config, schemas);
+                        models.put("classname", config.toModelName(codegenModel.name));
+                        models.putAll(config.additionalProperties());
+                        allProcessedModels.put(codegenModel.name, models);
+                        break;
+                    }
+                }
             } catch (Exception e) {
                 throw new RuntimeException("Could not process model '" + name + "'" + ".Please make sure that your schema is correct!", e);
             }
@@ -965,10 +989,62 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             Map<String, Object> mo = new HashMap<>();
             mo.put("model", cm);
             mo.put("importPath", config.toModelImport(cm.classname));
+            if (cm.vendorExtensions.containsKey("oneOf-model")) {
+                CodegenModel oneOfModel = (CodegenModel) cm.vendorExtensions.get("oneOf-model");
+                mo.put("oneOf-model", oneOfModel);
+            }
+            if (cm.vendorExtensions.containsKey("anyOf-model")) {
+                CodegenModel anyOfModel = (CodegenModel) cm.vendorExtensions.get("anyOf-model");
+                mo.put("anyOf-model", anyOfModel);
+            }
             models.add(mo);
 
             allImports.addAll(cm.imports);
         }
+        objs.put("models", models);
+        Set<String> importSet = new TreeSet<>();
+        for (String nextImport : allImports) {
+            String mapping = config.importMapping().get(nextImport);
+            if (mapping == null) {
+                mapping = config.toModelImport(nextImport);
+            }
+            if (mapping != null && !config.defaultIncludes().contains(mapping)) {
+                importSet.add(mapping);
+            }
+            // add instantiation types
+            mapping = config.instantiationTypes().get(nextImport);
+            if (mapping != null && !config.defaultIncludes().contains(mapping)) {
+                importSet.add(mapping);
+            }
+        }
+        List<Map<String, String>> imports = new ArrayList<>();
+        for(String s: importSet) {
+            Map<String, String> item = new HashMap<>();
+            item.put("import", s);
+            imports.add(item);
+        }
+        objs.put("imports", imports);
+        config.postProcessModels(objs);
+        return objs;
+    }
+
+    private Map<String, Object> processModel(CodegenModel codegenModel, CodegenConfig config, Map<String, Schema> allDefinitions) {
+        Map<String, Object> objs = new HashMap<>();
+        objs.put("package", config.modelPackage());
+        List<Object> models = new ArrayList<>();
+
+        if (codegenModel.vendorExtensions.containsKey("x-is-composed-model")) {
+            objs.put("x-is-composed-model", codegenModel.vendorExtensions.get("x-is-composed-model"));
+        }
+
+        Map<String, Object> modelObject = new HashMap<>();
+        modelObject.put("model", codegenModel);
+        modelObject.put("importPath", config.toModelImport(codegenModel.classname));
+
+        Set<String> allImports = new LinkedHashSet<>();
+        allImports.addAll(codegenModel.imports);
+        models.add(modelObject);
+
         objs.put("models", models);
         Set<String> importSet = new TreeSet<>();
         for (String nextImport : allImports) {
