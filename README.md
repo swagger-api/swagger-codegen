@@ -38,7 +38,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.8</version>
+    <version>3.0.9-SNAPSHOT</version>
 </dependency>
 ```
 
