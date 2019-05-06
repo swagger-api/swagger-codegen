@@ -24,6 +24,7 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
         typeMapping.put("array", "std::vector");
         typeMapping.put("binary", "std::string");
         typeMapping.put("boolean", "bool");
+        typeMapping.put("ByteArray", "std::string");
         typeMapping.put("integer", "int32_t");
         typeMapping.put("long", "int64_t");
         typeMapping.put("map", "std::map");
