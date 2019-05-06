@@ -274,12 +274,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
     @Override
     public String toModelFilename(String name) {
-        return modelNamePrefix + initialCaps(name);
-    }
-
-    @Override
-    public String toApiFilename(String name) {
-        return modelNamePrefix + initialCaps(name) + "Api";
+        return toTypeName(name, modelNamePrefix, "");
     }
 
     /**
@@ -386,7 +381,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
                 languageSpecificPrimitives.contains(type)) {
             return type;
         } else {
-            return modelNamePrefix + Character.toUpperCase(type.charAt(0)) + type.substring(1);
+            return toTypeName(type, modelNamePrefix, "");
         }
     }
 
@@ -419,7 +414,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
     @Override
     public String toApiName(String type) {
-        return modelNamePrefix + Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
+        return toTypeName(type, modelNamePrefix, "Api");
     }
 
     @Override

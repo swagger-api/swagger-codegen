@@ -265,16 +265,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         return property.baseType.equals("HttpContent");
     }
 
-    @Override
-    public String toModelFilename(String name) {
-        return initialCaps(name);
-    }
-
-    @Override
-    public String toApiFilename(String name) {
-        return initialCaps(name) + "Api";
-    }
-
     /**
      * Optional - type declaration. This is a String which is used by the
      * templates to instantiate your types. There is typically special handling
@@ -376,22 +366,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         } else
             type = swaggerType;
         return toModelName(type);
-    }
-
-    @Override
-    public String toModelName(String type) {
-        if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
-                || importMapping.values().contains(type) || defaultIncludes.contains(type)
-                || languageSpecificPrimitives.contains(type)) {
-            return type;
-        } else {
-            return Character.toUpperCase(type.charAt(0)) + type.substring(1);
-        }
-    }
-
-    @Override
-    public String toApiName(String type) {
-        return Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
     }
 
     @Override

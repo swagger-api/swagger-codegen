@@ -204,17 +204,6 @@ public class RestbedCodegen extends AbstractCppCodegen {
       return codegenModel;
   }
 
-
-  @Override
-  public String toModelFilename(String name) {
-      return initialCaps(name);
-  }
-
-  @Override
-  public String toApiFilename(String name) {
-      return initialCaps(name) + "Api";
-  }
-  
   @SuppressWarnings("unchecked")
   @Override
   public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
@@ -367,22 +356,6 @@ public class RestbedCodegen extends AbstractCppCodegen {
       } else
           type = swaggerType;
       return toModelName(type);
-  }
-
-  @Override
-  public String toModelName(String type) {
-      if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
-              || importMapping.values().contains(type) || defaultIncludes.contains(type)
-              || languageSpecificPrimitives.contains(type)) {
-          return type;
-      } else {
-          return Character.toUpperCase(type.charAt(0)) + type.substring(1);
-      }
-  }
-
-  @Override
-  public String toApiName(String type) {
-      return Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
   }
 
   @Override

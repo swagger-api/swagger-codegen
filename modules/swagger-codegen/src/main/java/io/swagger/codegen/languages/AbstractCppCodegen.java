@@ -126,6 +126,32 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
         return sanitizeName(name);
     }
 
+    @Override
+    public String toApiFilename(String name) {
+        return toApiName(name);
+    }
+
+    @Override
+    public String toApiName(String type) {
+        return toTypeName(type, "", "Api");
+    }
+
+    @Override
+    public String toModelFilename(String name) {
+        return toTypeName(name);
+    }
+
+    @Override
+    public String toModelName(String type) {
+        if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
+                || importMapping.values().contains(type) || defaultIncludes.contains(type)
+                || languageSpecificPrimitives.contains(type)) {
+            return type;
+        } else {
+            return toTypeName(type);
+        }
+    }
+
     /**
      * Escapes a reserved word as defined in the `reservedWords` array. Handle
      * escaping those terms here. This logic is only called if a variable
@@ -176,5 +202,21 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
      */
     public String toBooleanGetter(String name) {
         return "is" + getterAndSetterCapitalize(name);
+    }
+
+    String toTypeName(String name) {
+        return toTypeName(name, "", "");
+    }
+
+    String toTypeName(String name, String prefix, String suffix) {
+        // Swagger name validation should already limit to [A-Za-z0-9._-]
+        name = camelize(sanitizeName(name));
+        name = prefix + name + suffix;
+
+        if (name.matches("^\\d.*")) {
+            LOGGER.warn(name + " (type name starts with number) cannot be used as type name. Renamed to Type" + name);
+            name = "Type" + name;
+        }
+        return name;
     }
 }
