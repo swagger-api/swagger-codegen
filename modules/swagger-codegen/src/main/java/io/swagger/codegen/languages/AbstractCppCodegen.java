@@ -3,14 +3,42 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.DateProperty;
+import io.swagger.models.properties.DateTimeProperty;
+import io.swagger.models.properties.FileProperty;
+import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.StringProperty;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 abstract public class AbstractCppCodegen extends DefaultCodegen implements CodegenConfig {
 
     public AbstractCppCodegen() {
         super();
+
+        typeMapping = new HashMap<>();
+        typeMapping.put("array", "std::vector");
+        typeMapping.put("binary", "std::string");
+        typeMapping.put("boolean", "bool");
+        typeMapping.put("integer", "int32_t");
+        typeMapping.put("long", "int64_t");
+        typeMapping.put("map", "std::map");
+        typeMapping.put("number", "double");
+        typeMapping.put("object", "Object");
+        typeMapping.put("string", "std::string");
+        typeMapping.put("UUID", "std::string");
+
+        importMapping = new HashMap<>();
+        importMapping.put("std::map", "#include <map>");
+        importMapping.put("std::string", "#include <string>");
+        importMapping.put("std::vector", "#include <vector>");
+
+        languageSpecificPrimitives = new HashSet<>(
+                Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
 
         /*
          * Reserved words.  Override this with reserved words specific to your language
@@ -193,7 +221,50 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
         property.nameInCamelCase = nameInCamelCase;
         return property;
     }
-    
+
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove " to avoid code injection
+        return input.replace("\"", "");
+    }
+
+    @Override
+    public String escapeUnsafeCharacters(String input) {
+        return input.replace("*/", "*_/").replace("/*", "/_*");
+    }
+
+    /**
+     * Optional - type declaration. This is a String which is used by the
+     * templates to instantiate your types. There is typically special handling
+     * for different property types
+     *
+     * @return a string value used as the `dataType` field for model templates,
+     *         `returnType` for api templates
+     */
+    @Override
+    public String getTypeDeclaration(Property p) {
+        String swaggerType = getSwaggerType(p);
+
+        if (p instanceof ArrayProperty) {
+            ArrayProperty ap = (ArrayProperty) p;
+            Property inner = ap.getItems();
+            return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
+        }
+        if (p instanceof MapProperty) {
+            MapProperty mp = (MapProperty) p;
+            Property inner = mp.getAdditionalProperties();
+            return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
+        }
+        if (p instanceof StringProperty || p instanceof DateProperty
+                || p instanceof DateTimeProperty || p instanceof FileProperty
+                || languageSpecificPrimitives.contains(swaggerType)) {
+            return toModelName(swaggerType);
+        }
+
+        return "std::shared_ptr<" + swaggerType + ">";
+    }
+
+
     /**
      * Output the Getter name for boolean property, e.g. isActive
      *
@@ -219,4 +290,5 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
         }
         return name;
     }
+
 }
