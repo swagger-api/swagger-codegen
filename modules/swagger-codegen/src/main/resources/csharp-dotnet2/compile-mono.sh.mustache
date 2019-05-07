@@ -1,12 +1,38 @@
-wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
-mozroots --import --sync
-mono nuget.exe install vendor/packages.config -o vendor;
-mkdir -p bin;
+#!/usr/bin/env bash
+
+
+nuget_cmd=nuget
+
+if ! type nuget &>/dev/null; then
+    echo "[INFO] Download nuget and packages"
+    wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
+    nuget_cmd="mono nuget.exe"
+fi
+
+cert-sync /etc/ssl/certs/ca-certificates.crt
+${nuget_cmd} install vendor/packages.config -o vendor;
+mkdir -p lib;
+
+echo "[INFO] Copy DLLs to the 'lib' folder"
+cp vendor/Newtonsoft.Json.7.0.1/lib/net20/Newtonsoft.Json.dll lib/Newtonsoft.Json.dll;
+cp vendor/RestSharp.Net20.105.2.3.3/lib/net20/RestSharp.Net20.dll lib/RestSharp.Net20.dll;
+
+echo "[INFO] Run 'mcs' to build lib/Ens.Sdk.dll"
+
 mcs -sdk:2 -r:vendor/Newtonsoft.Json.7.0.1/lib/net20/Newtonsoft.Json.dll,\
-vendor/RestSharp.Net2.1.1.11/lib/net20/RestSharp.Net2.dll,\
-System.Runtime.Serialization.dll \
+vendor/RestSharp.Net20.105.2.3.3/lib/net20/RestSharp.Net20.dll,\
+System.Runtime.Serialization.dll, \
 -target:library \
--out:bin/{{packageName}}.dll \
+-out:lib/{{packageName}}.dll \
 -recurse:'src/*.cs' \
--doc:bin/{{packageName}}.xml \
+-doc:lib/{{packageName}}.xml \
 -platform:anycpu
+
+
+if [ $? -ne 0 ]
+then
+  echo "[ERROR] Compilation failed with exit code $?"
+  exit 1
+else
+  echo "[INFO] lib/Ens.Sdk.dll was created successfully"
+fi

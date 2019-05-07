@@ -116,7 +116,7 @@ namespace {{clientPackage}}
         /// <returns>Escaped string.</returns>
         public string EscapeString(string str)
         {
-            return RestSharp.Contrib.HttpUtility.UrlEncode(str);
+             return str.ToString();
         }
     
         /// <summary>
@@ -217,7 +217,7 @@ namespace {{clientPackage}}
         {
             try
             {
-                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+                return obj != null ? JsonConvert.SerializeObject(obj, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }) : null;
             }
             catch (Exception e)
             {

@@ -14,6 +14,38 @@ namespace {{modelPackage}} {
   /// </summary>
   [DataContract]
   public class {{classname}}{{#parent}} : {{{parent}}}{{/parent}} {
+
+
+    /// <summary>
+    /// {{summary}} {{notes}}
+    /// </summary>
+    public {{classname}} ({{#vars}}{{{datatype}}} {{name}}{{^required}}{{#name}} = null{{/name}}{{/required}} {{#required}}{{#name}} = null{{/name}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}){
+            {{#vars}}
+            {{^isInherited}}
+            {{^isReadOnly}}
+            {{#required}}
+            {{#defaultValue}}// do not set value if  "{{name}}" not provided
+            if ({{name}} != null) this.{{name}} = {{name}};
+            {{/defaultValue}}
+            {{/required}}
+            {{/isReadOnly}}
+            {{/isInherited}}
+            {{/vars}}
+            {{#vars}}
+            {{^isInherited}}
+            {{^isReadOnly}}
+            {{^required}}
+            {{#defaultValue}}// do not set value if  "{{name}}" not provided
+            if ({{name}} != null) this.{{name}} = {{name}};
+            {{/defaultValue}}
+            {{/required}}
+            {{/isReadOnly}}
+            {{/isInherited}}
+            {{/vars}}
+
+    }
+
+
     {{#vars}}
     /// <summary>
     /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{{description}}}{{/description}}
@@ -33,7 +65,7 @@ namespace {{modelPackage}} {
       var sb = new StringBuilder();
       sb.Append("class {{classname}} {\n");
       {{#vars}}
-      sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
+      if ({{name}} != null) sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
       {{/vars}}
       sb.Append("}\n");
       return sb.ToString();
@@ -44,7 +76,7 @@ namespace {{modelPackage}} {
     /// </summary>
     /// <returns>JSON string presentation of the object</returns>
     public {{#parent}} new {{/parent}}string ToJson() {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
+      return JsonConvert.SerializeObject(this, Formatting.Indented , new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
     }
 
 }
