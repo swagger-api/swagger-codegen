@@ -12,7 +12,7 @@
  {{/notes}}
  *
 {{#allParams}}
- * {{paramName}} {{{dataType}}} {{{description}}}{{^required}} (optional){{/required}}
+ * params["{{paramName}}"] {{{dataType}}} {{{description}}}{{^required}} (optional){{/required}}
 {{/allParams}}
 {{^returnType}}
  * no response value expected for this operation
@@ -21,7 +21,7 @@
  * returns {{{returnType}}}
 {{/returnType}}
  **/
-exports.{{{operationId}}} = function({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) {
+exports.{{{operationId}}} = function(params) {
   return new Promise(function(resolve, reject) {
   {{#returnType}}
     var examples = {};

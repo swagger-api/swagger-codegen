@@ -6,10 +6,11 @@ var {{classname}} = require('../{{implFolder}}/{{classname}}Service');
 {{#operation}}
 
 module.exports.{{nickname}} = function {{nickname}} (req, res, next) {
+  var params = {};
   {{#allParams}}
-  var {{paramName}} = req.swagger.params['{{baseName}}'].value;
+  params["{{paramName}}"] = req.swagger.params['{{baseName}}'].value;
   {{/allParams}}
-  {{classname}}.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}})
+  {{classname}}.{{nickname}}(params)
     .then(function (response) {
       utils.writeJson(res, response);
     })
