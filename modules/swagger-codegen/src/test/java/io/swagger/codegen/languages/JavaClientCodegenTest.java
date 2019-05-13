@@ -193,6 +193,28 @@ public class JavaClientCodegenTest {
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.INVOKER_PACKAGE), "xyz.yyyyy.zzzzzzz.mmmmm");
     }
 
+    @Test
+    public void testFeignPathCamelCaseConversion() {
+        final JavaClientCodegen codegen = new JavaClientCodegen();
+        codegen.setLibrary("feign");
+
+        CodegenOperation operation = new CodegenOperation();
+        operation.path = "/customers/{test}/{entity}-{customer-name}/api";
+
+        List<CodegenOperation> codeGenOperation = Collections.singletonList(operation);
+
+        HashMap<String, Object> operations = new HashMap<>();
+        operations.put("operation", codeGenOperation);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("operations", operations);
+        map.put("imports", new ArrayList<Map<String, String>>()); // needed for preventing a NPE in AbstractJavaCodegen
+
+
+        codegen.postProcessOperations(map);
+
+        Assert.assertEquals(operation.path, "/customers/{test}/{entity}-{customerName}/api");
+    }
+
     private CodegenParameter createPathParam(String name) {
         CodegenParameter codegenParameter = createStringParam(name);
         codegenParameter.isPathParam = true;
