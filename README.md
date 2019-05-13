@@ -95,7 +95,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
     - [Docker](#docker)
       - [Development in Docker](#development-in-docker)
       - [Run docker in Vagrant](#run-docker-in-vagrant)
-      - [Public Docker image](#public-docker-image)
+      - [Public Docker image](#public-pre-built-docker-images)
     - [Homebrew](#homebrew)
   - [Getting Started](#getting-started)
   - Generators
