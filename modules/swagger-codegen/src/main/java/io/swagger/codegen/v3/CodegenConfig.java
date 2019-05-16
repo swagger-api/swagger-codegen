@@ -135,6 +135,8 @@ public interface CodegenConfig {
 
     TemplateEngine getTemplateEngine();
 
+    String sanitizeName(String name);
+
     String sanitizeTag(String tag);
 
     String toApiFilename(String name);
