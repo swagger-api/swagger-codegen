@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+{{#serializableModel}}import java.io.Serializable;{{/serializableModel}}
 
 {{#withXml}}
 @XmlAccessorType(XmlAccessType.FIELD)
