@@ -124,43 +124,54 @@
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api-version}</version>
         </dependency>
-    <!-- Bean Validation API support -->
-    <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.1.0.Final</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>6.8.8</version>
-        <scope>test</scope>
-        <exclusions>
-            <exclusion>
-                <artifactId>junit</artifactId>
-                <groupId>junit</groupId>
-            </exclusion>
-            <exclusion>
-                <artifactId>snakeyaml</artifactId>
-                <groupId>org.yaml</groupId>
-            </exclusion>
-            <exclusion>
-                <artifactId>bsh</artifactId>
-                <groupId>org.beanshell</groupId>
-            </exclusion>
-        </exclusions>
-    </dependency>
+        <!-- Bean Validation API support -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8.8</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>snakeyaml</artifactId>
+                    <groupId>org.yaml</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>bsh</artifactId>
+                    <groupId>org.beanshell</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-    <dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+        <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>4.5.2</version>
         <scope>test</scope>
-    </dependency>
+        </dependency>
     </dependencies>
     <properties>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <jetty-version>9.2.15.v20160210</jetty-version>
