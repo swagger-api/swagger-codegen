@@ -15,7 +15,7 @@ public class CodegenOperation {
     public boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams, hasRequiredParams,
             returnTypeIsPrimitive, returnSimpleType, subresourceOperation, isMapContainer,
             isListContainer, isMultipart, hasMore = true,
-            isResponseBinary = false, isResponseFile = false, hasReference = false,
+            isResponseBinary = false, isResponseFile = false, isResponseText = false, hasReference = false,
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
             isRestful, isDeprecated;
     public String path, testPath, operationId, returnType, httpMethod, returnBaseType,
@@ -248,6 +248,8 @@ public class CodegenOperation {
             return false;
         if (isResponseFile != that.isResponseFile)
             return false;
+        if (isResponseText != that.isResponseText)
+            return false;
         if (isDeprecated != that.isDeprecated)
             return false;
         if (path != null ? !path.equals(that.path) : that.path != null)
@@ -335,6 +337,7 @@ public class CodegenOperation {
         result = 31 * result + (hasMore ? 13:31);
         result = 31 * result + (isResponseBinary ? 13:31);
         result = 31 * result + (isResponseFile ? 13:31);
+        result = 31 * result + (isResponseText ? 13:31);
         result = 31 * result + (hasReference ? 13:31);
         result = 31 * result + (isDeprecated ? 13:31);
         result = 31 * result + (path != null ? path.hashCode() : 0);
