@@ -86,6 +86,10 @@ public class CodegenSecurity extends CodegenObject {
         return getBooleanValue(CodegenConstants.IS_BASIC_EXT_NAME);
     }
 
+    public Boolean getIsBearer() {
+        return getBooleanValue(CodegenConstants.IS_BEARER_EXT_NAME);
+    }
+
     public Boolean getIsOAuth() {
         return getBooleanValue(CodegenConstants.IS_OAUTH_EXT_NAME);
     }

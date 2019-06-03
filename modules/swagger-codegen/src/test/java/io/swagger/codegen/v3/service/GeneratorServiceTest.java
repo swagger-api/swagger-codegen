@@ -6,6 +6,7 @@ import io.swagger.util.Yaml;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import io.swagger.v3.parser.core.models.ParseOptions;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -31,6 +32,34 @@ public class GeneratorServiceTest {
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
         Assert.assertFalse(files.isEmpty());
+    }
+
+    @Test
+    public void testNoModel() throws Exception{
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-jersey")
+                .spec(loadSpecAsNode("3_0_0/noModel.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        System.out.println(path);
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/impl/FooApiServiceImpl.java".equals(relPath) ||
+                    "/src/gen/java/io/swagger/api/FooApiService.java".equals(relPath) ||
+                    "/src/gen/java/io/swagger/api/FooApi.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("import io.swagger.model"));
+            }
+        }
+
     }
 
     @Test(description = "test generator service with java 2.0")
@@ -95,7 +124,29 @@ public class GeneratorServiceTest {
                 .specURL("src/test/resources/3_0_0/petstore.json")
                 .options(
                         new Options()
-                            .outputDir(getTmpFolder().getAbsolutePath())
+                                .outputDir(getTmpFolder().getAbsolutePath())
+                                .artifactId("swagger-petstore-jersey2")
+                                .library("jersey2")
+                                .addAdditionalProperty("useRuntimeException", true)
+                                .addAdditionalProperty("useRxJava", true)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+    }
+
+    @Test(description = "test boolean additional properties")
+    public void testGeneratorServiceBooleanAdditionalProperties() throws Exception {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/swos92.yaml", true, false))
+                .options(
+                        new Options()
+                            .outputDir(path)
                             .artifactId("swagger-petstore-jersey2")
                             .library("jersey2")
                             .addAdditionalProperty("useRuntimeException", true)
@@ -103,6 +154,13 @@ public class GeneratorServiceTest {
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
         Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/Product.java".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("Map<String, Object> foo = null"));
+            }
+        }
+
     }
 
     @Test(description = "test generator service with java client 2.0")
@@ -152,6 +210,22 @@ public class GeneratorServiceTest {
                 return Json.mapper().readTree(in);
             }
             return io.swagger.v3.core.util.Json.mapper().readTree(in);
+        } catch (Exception e) {
+            throw new RuntimeException("could not load file " + file);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    protected OpenAPI deserializeOpenAPI(final String file, boolean yaml, boolean v2) {
+        InputStream in = null;
+        String s = "";
+        try {
+            in = getClass().getClassLoader().getResourceAsStream(file);
+            if (yaml) {
+                return io.swagger.v3.core.util.Yaml.mapper().readValue(in, OpenAPI.class);
+            }
+            return io.swagger.v3.core.util.Json.mapper().readValue(in, OpenAPI.class);
         } catch (Exception e) {
             throw new RuntimeException("could not load file " + file);
         } finally {
