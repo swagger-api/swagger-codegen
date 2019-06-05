@@ -638,7 +638,7 @@ public class ApiClient {
    * @param path The sub-path of the HTTP URL
    * @param method The request method, one of "GET", "POST", "PUT", "HEAD" and "DELETE"
    * @param queryParams The query parameters
-   * @param queryParams The collection query parameters
+   * @param collectionQueryParams The collection query parameters
    * @param body The request body object
    * @param headerParams The header parameters
    * @param formParams The form parameters
@@ -652,43 +652,44 @@ public class ApiClient {
   public <T> ApiResponse<T> invokeAPI(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String accept, String contentType, String[] authNames, GenericType<T> returnType) throws ApiException {
     updateParamsForAuth(authNames, queryParams, headerParams);
 
-    StringBuilder uriQueryParameters = new StringBuilder();
+    final StringBuilder url = new StringBuilder();
+    url.append(basePath).append(path);
 
     if (queryParams != null && !queryParams.isEmpty()) {
-      String prefix = uriQueryParameters.toString().contains("?") ? "&" : "?";
+      // support (constant) query string in `path`, e.g. "/posts?draft=1"
+      String prefix = path.contains("?") ? "&" : "?";
       for (Pair param : queryParams) {
         if (param.getValue() != null) {
           if (prefix != null) {
-              uriQueryParameters.append(prefix);
-              prefix = null;
+            url.append(prefix);
+            prefix = null;
           } else {
-              uriQueryParameters.append("&");
+            url.append("&");
           }
           String value = parameterToString(param.getValue());
-          // collection query parameter value already escaped as part of parameterToPairs
-          uriQueryParameters.append(escapeString(param.getName())).append("=").append(value);
+          url.append(escapeString(param.getName())).append("=").append(escapeString(value));
         }
       }
     }
 
     if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
-      String prefix = uriQueryParameters.toString().contains("?") ? "&" : "?";
+      String prefix = url.toString().contains("?") ? "&" : "?";
       for (Pair param : collectionQueryParams) {
         if (param.getValue() != null) {
           if (prefix != null) {
-              uriQueryParameters.append(prefix);
-              prefix = null;
+            url.append(prefix);
+            prefix = null;
           } else {
-              uriQueryParameters.append("&");
+            url.append("&");
           }
           String value = parameterToString(param.getValue());
           // collection query parameter value already escaped as part of parameterToPairs
-          uriQueryParameters.append(escapeString(param.getName())).append("=").append(value);
+          url.append(escapeString(param.getName())).append("=").append(value);
         }
       }
     }
 
-    WebTarget target = httpClient.target(this.basePath + path + uriQueryParameters.toString());
+    WebTarget target = httpClient.target(url.toString());
 
     Invocation.Builder invocationBuilder = target.request().accept(accept);
 
