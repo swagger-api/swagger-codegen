@@ -68,7 +68,7 @@ def get_user_by_name(username):  # noqa: E501
 
      # noqa: E501
 
-    :param username: The name that needs to be fetched. Use user1 for testing. 
+    :param username: The name that needs to be fetched. Use user1 for testing.
     :type username: str
 
     :rtype: User

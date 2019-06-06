@@ -11,6 +11,7 @@ import io.swagger.client.model.Client;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,6 +114,32 @@ public interface FakeApi {
   @POST("/fake/outer/string")
   void fakeOuterStringSerialize(
     @retrofit.http.Body String body, Callback<String> cb
+  );
+  /**
+   * 
+   * Sync method
+   * 
+   * @param body  (required)
+   * @param query  (required)
+   * @return Void
+   */
+  
+  @PUT("/fake/body-with-query-params")
+  Void testBodyWithQueryParams(
+    @retrofit.http.Body User body, @retrofit.http.Query("query") String query
+  );
+
+  /**
+   * 
+   * Async method
+   * @param body  (required)
+   * @param query  (required)
+   * @param cb callback method
+   */
+  
+  @PUT("/fake/body-with-query-params")
+  void testBodyWithQueryParams(
+    @retrofit.http.Body User body, @retrofit.http.Query("query") String query, Callback<Void> cb
   );
   /**
    * To test \&quot;client\&quot; model

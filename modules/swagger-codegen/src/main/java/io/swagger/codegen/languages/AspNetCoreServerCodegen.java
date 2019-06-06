@@ -59,6 +59,10 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
                 CodegenConstants.SOURCE_FOLDER_DESC,
                 sourceFolder);
 
+        addOption(CodegenConstants.PRESERVE_COMMENT_NEWLINES,
+                "Preserve newlines in comments",
+                String.valueOf(this.preserveNewLines));
+
         // CLI Switches
         addSwitch(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG,
                 CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG_DESC,

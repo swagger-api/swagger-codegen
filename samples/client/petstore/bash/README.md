@@ -99,6 +99,7 @@ Class | Method | HTTP request | Description
 *FakeApi* | [**fakeOuterCompositeSerialize**](docs/FakeApi.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
 *FakeApi* | [**fakeOuterNumberSerialize**](docs/FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
 *FakeApi* | [**fakeOuterStringSerialize**](docs/FakeApi.md#fakeouterstringserialize) | **POST** /fake/outer/string | 
+*FakeApi* | [**testBodyWithQueryParams**](docs/FakeApi.md#testbodywithqueryparams) | **PUT** /fake/body-with-query-params | 
 *FakeApi* | [**testClientModel**](docs/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
 *FakeApi* | [**testEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters
 假端點
