@@ -9,7 +9,7 @@ version = '0.1'
 
 buildscript {
     repositories {
-        maven { url 'http://repo.jfrog.org/artifactory/gradle-plugins' }
+        maven { url 'https://repo.jfrog.org/artifactory/gradle-plugins' }
     }
     dependencies {
         classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.0.16')
@@ -19,8 +19,7 @@ buildscript {
 repositories {
     mavenCentral()
     mavenLocal()
-    mavenCentral(artifactUrls: ['http://maven.springframework.org/milestone'])
-    maven { url  "http://$artifactory:8080/artifactory/repo" }
+    mavenCentral(artifactUrls: ['https://maven.springframework.org/milestone'])
 }
 
 ext {

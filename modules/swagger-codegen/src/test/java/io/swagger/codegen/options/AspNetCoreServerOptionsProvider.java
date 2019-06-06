@@ -10,6 +10,7 @@ public class AspNetCoreServerOptionsProvider implements OptionsProvider {
     public static final String PACKAGE_NAME_VALUE = "swagger_server_aspnetcore";
     public static final String PACKAGE_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String SOURCE_FOLDER_VALUE = "src_aspnetcore";
+    public static final boolean PRESERVE_NEW_LINES = false;
 
     @Override
     public String getLanguage() {
@@ -24,6 +25,7 @@ public class AspNetCoreServerOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER_VALUE)
                 .put(CodegenConstants.OPTIONAL_PROJECT_GUID, PROJECT_GUID_VALUE)
                 .put(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG, "true")
+                .put(CodegenConstants.PRESERVE_COMMENT_NEWLINES, "false")
                 .put(CodegenConstants.USE_DATETIME_OFFSET, "true")
                 .put(CodegenConstants.USE_COLLECTION, "false")
                 .put(CodegenConstants.RETURN_ICOLLECTION, "false")

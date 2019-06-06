@@ -219,7 +219,7 @@ public class InlineModelResolver {
     private void fixStringModel(ModelImpl m) {
         if (m.getType() != null && m.getType().equals("string") && m.getExample() != null) {
             String example = m.getExample().toString();
-            if (example.substring(0, 1).equals("\"") &&
+            if (!example.isEmpty() && example.substring(0, 1).equals("\"") &&
                     example.substring(example.length() - 1).equals("\"")) {
                 m.setExample(example.substring(1, example.length() - 1));
             }

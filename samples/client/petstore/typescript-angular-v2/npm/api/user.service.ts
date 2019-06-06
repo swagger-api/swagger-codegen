@@ -194,6 +194,7 @@ export class UserService {
      
      */
     public createUserWithHttpInfo(body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
@@ -239,6 +240,7 @@ export class UserService {
      
      */
     public createUsersWithArrayInputWithHttpInfo(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
@@ -284,6 +286,7 @@ export class UserService {
      
      */
     public createUsersWithListInputWithHttpInfo(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
@@ -329,6 +332,7 @@ export class UserService {
      
      */
     public deleteUserWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
@@ -369,6 +373,7 @@ export class UserService {
      
      */
     public getUserByNameWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
@@ -410,9 +415,11 @@ export class UserService {
      
      */
     public loginUserWithHttpInfo(username: string, password: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling loginUser.');
         }
+
         if (password === null || password === undefined) {
             throw new Error('Required parameter password was null or undefined when calling loginUser.');
         }
@@ -499,9 +506,11 @@ export class UserService {
      
      */
     public updateUserWithHttpInfo(username: string, body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
         }

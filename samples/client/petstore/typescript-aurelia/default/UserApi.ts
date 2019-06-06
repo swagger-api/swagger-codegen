@@ -212,7 +212,7 @@ export class UserApi extends Api {
   /**
    * Get user by user name
    * 
-   * @param params.username The name that needs to be fetched. Use user1 for testing. 
+   * @param params.username The name that needs to be fetched. Use user1 for testing.
    */
   async getUserByName(params: IGetUserByNameParams): Promise<User> {
     // Verify required parameters are set
