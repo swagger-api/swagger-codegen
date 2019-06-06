@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ModelUtils {
     /**
@@ -43,7 +46,7 @@ public class ModelUtils {
     }
 
     public static Operation[] createOperationArray (PathItem pathItem) {
-        return new Operation[]{
+        return Stream.of(
                 pathItem.getGet(),
                 pathItem.getPost(),
                 pathItem.getDelete(),
@@ -51,7 +54,10 @@ public class ModelUtils {
                 pathItem.getPut(),
                 pathItem.getPatch(),
                 pathItem.getOptions()
-        };
+        )
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet())
+                .toArray(new Operation[]{});
     }
 
     public static void processCodegenModels(Map<String, CodegenModel> allModels) {
