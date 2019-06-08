@@ -39,7 +39,7 @@ public class CodegenProperty implements Cloneable {
     public boolean hasMore, required, secondaryParam;
     public boolean hasMoreNonReadOnly; // for model constructor, true if next properyt is not readonly
     public boolean isPrimitiveType, isContainer, isNotContainer;
-    public boolean isString, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBinary, isFile, isBoolean, isDate, isDateTime, isUuid;
+    public boolean isString, isHashName, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBinary, isFile, isBoolean, isDate, isDateTime, isUuid;
     public boolean isListContainer, isMapContainer;
     public boolean isEnum;
     public boolean isReadOnly = false;
@@ -116,6 +116,7 @@ public class CodegenProperty implements Cloneable {
         result = prime * result + ((vendorExtensions == null) ? 0 : vendorExtensions.hashCode());
         result = prime * result + ((hasValidation  ? 13:31));
         result = prime * result + ((isString  ? 13:31));
+        result = prime * result + ((isHashName ? 13:31));
         result = prime * result + ((isNumeric ? 13:31));
         result = prime * result + ((isInteger ? 13:31));
         result = prime * result + ((isLong  ?13:31));
@@ -263,6 +264,10 @@ public class CodegenProperty implements Cloneable {
         }
 
         if (this.isString != other.isString) {
+            return false;
+        }
+
+        if (this.isHashName != other.isHashName) {
             return false;
         }
 

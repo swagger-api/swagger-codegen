@@ -269,11 +269,23 @@
       self == o
     end
 
+    {{^hasHashProperty}}
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
       [{{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}}].hash
     end
+    {{/hasHashProperty}}
+    {{#hasHashProperty}}
+    # Skipped hash method that calculates a hash code according to all attributes because
+    # there exists an attribute by the name "hash".
+    #
+    # Calculates hash code according to all attributes.
+    # @return [Fixnum] Hash code
+    # def hash
+    #   [{{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}}].hash
+    # end
+    {{/hasHashProperty}}
 
 {{> base_object}}
   end

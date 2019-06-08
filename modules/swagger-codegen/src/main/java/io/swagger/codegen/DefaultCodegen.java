@@ -1572,6 +1572,7 @@ public class DefaultCodegen {
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
         property.name = toVarName(name);
+        property.isHashName = property.name.equals("hash");
         property.baseName = name;
         property.nameInCamelCase = camelize(property.name, false);
         property.description = escapeText(p.getDescription());
@@ -1653,6 +1654,7 @@ public class DefaultCodegen {
                 property.hasValidation = true;
 
             property.isString = true;
+
             if (sp.getEnum() != null) {
                 List<String> _enum = sp.getEnum();
                 property._enum = _enum;
@@ -3190,6 +3192,11 @@ public class DefaultCodegen {
                 // set model's hasOnlyReadOnly to false if the property is read-only
                 if (!Boolean.TRUE.equals(cp.isReadOnly)) {
                     m.hasOnlyReadOnly = false;
+                }
+
+                // set model's hasHashProperty to true if the property has the name "hash"
+                if (Boolean.TRUE.equals(cp.isHashName)) {
+                    m.hasHashProperty = true;
                 }
 
                 if (i+1 != totalCount) {
