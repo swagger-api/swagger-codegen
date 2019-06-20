@@ -158,7 +158,7 @@
                 <version>2.10.3</version>
                 <configuration>
                     <aggregate>true</aggregate>
-                    <source>1.7</source>
+                    <source>1.8</source>
                     <encoding>UTF-8</encoding>
                     <maxmemory>1g</maxmemory>
                     <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
