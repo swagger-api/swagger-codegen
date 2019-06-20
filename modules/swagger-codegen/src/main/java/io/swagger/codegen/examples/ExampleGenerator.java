@@ -157,6 +157,12 @@ public class ExampleGenerator {
             Property innerType = ((ArrayProperty) property).getItems();
             if (innerType != null) {
                 int arrayLength = null == ((ArrayProperty) property).getMaxItems() ? 2 : ((ArrayProperty) property).getMaxItems();
+                // swagger-jersey2-jaxrs generated spec may contain maxItem = 2147483647
+                // semantically this means there is no upper limit
+                // treating this as if the property was not present at all
+                if (arrayLength == Integer.MAX_VALUE) {
+                    arrayLength = 2;
+                }
                 Object[] objectProperties = new Object[arrayLength];
                 Object objProperty = resolvePropertyToExample(propertyName, mediaType, innerType, processedModels);
                 for(int i=0; i < arrayLength; i++) {
