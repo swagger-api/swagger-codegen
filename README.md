@@ -2,6 +2,10 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-core-master-java-8.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-core-master-java-8)
 
+[![Build Status](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master/badge/icon?subject=jenkins%20build)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master/)
+
+[![Build Status](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master-java7/badge/icon?subject=jenkins%20build%20-%20java%207)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master-java7/)
+
 - Master (2.4.5): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Java Test](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
@@ -892,6 +896,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Mindera](http://mindera.com/)
 - [Mporium](http://mporium.com/)
 - [Neverfail](https://neverfail.com/)
+- [NexCap](http://www.nexess-solutions.com/fr/plateforme-iot/)
 - [NTT DATA](http://www.nttdata.com/)
 - [nViso](http://www.nviso.ch/)
 - [Okiok](https://www.okiok.com)
