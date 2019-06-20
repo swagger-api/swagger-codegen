@@ -3,7 +3,7 @@
 
 @echo off
 
-dotnet restore srcIO.Swagger
-dotnet build srcIO.Swagger
-echo Now, run the following to start the project: dotnet run -p srcIO.SwaggerIO.Swagger.csproj --launch-profile web.
+dotnet restore src\IO.Swagger
+dotnet build src\IO.Swagger
+echo Now, run the following to start the project: dotnet run -p src\IO.Swagger\IO.Swagger.csproj --launch-profile web.
 echo.

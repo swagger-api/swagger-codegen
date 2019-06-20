@@ -82,6 +82,10 @@ public class CodegenSecurity extends CodegenObject {
         return scopes;
     }
 
+    public Boolean getHasScopes() {
+        return scopes != null && !scopes.isEmpty();
+    }
+
     public Boolean getIsBasic() {
         return getBooleanValue(CodegenConstants.IS_BASIC_EXT_NAME);
     }
