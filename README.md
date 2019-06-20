@@ -1167,6 +1167,9 @@ Who is eligible? Those who want to join must have at least 3 PRs merged into a g
 | Swift     | @ehyche (2017/08) |
 | TypeScript | |
 
+# Security contact
+
+Please disclose any security-related issues or vulnerabilities by emailing [security@swagger.io](mailto:security@swagger.io), instead of using the public issue tracker.
 
 # License information on Generated Code
 
@@ -1177,14 +1180,10 @@ The Swagger Codegen project is intended as a benefit for users of the Swagger / 
 
 When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties--expressed or implied--for generated code.  You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
 
-## Security contact
+# License
 
-Please disclose any security-related issues or vulnerabilities by emailing [security@swagger.io](mailto:security@swagger.io), instead of using the public issue tracker.
-
-License
--------
-
-Copyright 2018 SmartBear Software
+```
+Copyright 2019 SmartBear Software
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -1195,3 +1194,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
