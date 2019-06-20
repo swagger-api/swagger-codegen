@@ -1,7 +1,7 @@
 /*
  * Swagger Petstore
  *
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -9,18 +9,14 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
+using IO.Swagger.Security;
+using Microsoft.AspNetCore.Authorization;
 using IO.Swagger.Models;
 
 namespace IO.Swagger.Controllers
@@ -28,16 +24,16 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class PetApiController : Controller
+    [ApiController]
+    public class PetApiController : ControllerBase
     { 
         /// <summary>
         /// Add a new pet to the store
         /// </summary>
-        
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <response code="405">Invalid input</response>
         [HttpPost]
-        [Route("/v2/pet")]
+        [Route("/pet")]
         [ValidateModelState]
         [SwaggerOperation("AddPet")]
         public virtual IActionResult AddPet([FromBody]Pet body)
@@ -51,18 +47,21 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Deletes a pet
         /// </summary>
-        
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
-        /// <response code="400">Invalid pet value</response>
+        /// <response code="400">Invalid ID supplied</response>
+        /// <response code="404">Pet not found</response>
         [HttpDelete]
-        [Route("/v2/pet/{petId}")]
+        [Route("/pet/{petId}")]
         [ValidateModelState]
         [SwaggerOperation("DeletePet")]
-        public virtual IActionResult DeletePet([FromRoute][Required]int? petId, [FromHeader]string apiKey)
+        public virtual IActionResult DeletePet([FromRoute][Required]long? petId, [FromHeader]string apiKey)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
+
+            //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(404);
 
             throw new NotImplementedException();
         }
@@ -75,7 +74,7 @@ namespace IO.Swagger.Controllers
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid status value</response>
         [HttpGet]
-        [Route("/v2/pet/findByStatus")]
+        [Route("/pet/findByStatus")]
         [ValidateModelState]
         [SwaggerOperation("FindPetsByStatus")]
         [SwaggerResponse(statusCode: 200, type: typeof(List<Pet>), description: "successful operation")]
@@ -87,6 +86,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
             string exampleJson = null;
+            exampleJson = "[ {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}, {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n} ]";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<List<Pet>>(exampleJson)
@@ -97,12 +97,12 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
-        /// <remarks>Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.</remarks>
+        /// <remarks>Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.</remarks>
         /// <param name="tags">Tags to filter by</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid tag value</response>
         [HttpGet]
-        [Route("/v2/pet/findByTags")]
+        [Route("/pet/findByTags")]
         [ValidateModelState]
         [SwaggerOperation("FindPetsByTags")]
         [SwaggerResponse(statusCode: 200, type: typeof(List<Pet>), description: "successful operation")]
@@ -114,6 +114,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
             string exampleJson = null;
+            exampleJson = "[ {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}, {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n} ]";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<List<Pet>>(exampleJson)
@@ -130,11 +131,12 @@ namespace IO.Swagger.Controllers
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Pet not found</response>
         [HttpGet]
-        [Route("/v2/pet/{petId}")]
+        [Route("/pet/{petId}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetPetById")]
         [SwaggerResponse(statusCode: 200, type: typeof(Pet), description: "successful operation")]
-        public virtual IActionResult GetPetById([FromRoute][Required]int? petId)
+        public virtual IActionResult GetPetById([FromRoute][Required]long? petId)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(Pet));
@@ -145,6 +147,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
             string exampleJson = null;
+            exampleJson = "{\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<Pet>(exampleJson)
@@ -155,13 +158,12 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Update an existing pet
         /// </summary>
-        
         /// <param name="body">Pet object that needs to be added to the store</param>
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Pet not found</response>
         /// <response code="405">Validation exception</response>
         [HttpPut]
-        [Route("/v2/pet")]
+        [Route("/pet")]
         [ValidateModelState]
         [SwaggerOperation("UpdatePet")]
         public virtual IActionResult UpdatePet([FromBody]Pet body)
@@ -181,16 +183,15 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
-        
         /// <param name="petId">ID of pet that needs to be updated</param>
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <response code="405">Invalid input</response>
         [HttpPost]
-        [Route("/v2/pet/{petId}")]
+        [Route("/pet/{petId}")]
         [ValidateModelState]
         [SwaggerOperation("UpdatePetWithForm")]
-        public virtual IActionResult UpdatePetWithForm([FromRoute][Required]int? petId, [FromForm]string name, [FromForm]string status)
+        public virtual IActionResult UpdatePetWithForm([FromRoute][Required]long? petId, [FromForm]string name, [FromForm]string status)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -201,21 +202,20 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// uploads an image
         /// </summary>
-        
         /// <param name="petId">ID of pet to update</param>
-        /// <param name="additionalMetadata"></param>
-        /// <param name="file"></param>
+        /// <param name="body"></param>
         /// <response code="200">successful operation</response>
         [HttpPost]
-        [Route("/v2/pet/{petId}/uploadImage")]
+        [Route("/pet/{petId}/uploadImage")]
         [ValidateModelState]
         [SwaggerOperation("UploadFile")]
         [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
-        public virtual IActionResult UploadFile([FromRoute][Required]int? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream file)
+        public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromBody]Object body)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(ApiResponse));
             string exampleJson = null;
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)

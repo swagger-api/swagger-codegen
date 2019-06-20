@@ -1,7 +1,7 @@
 /*
  * Swagger Petstore
  *
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace IO.Swagger.Models
 { 
     /// <summary>
-    /// An order for a pets from the pet store
+    /// 
     /// </summary>
     [DataContract]
     public partial class Order : IEquatable<Order>
@@ -58,20 +58,20 @@ namespace IO.Swagger.Models
         public enum StatusEnum
         {
             /// <summary>
-            /// Enum PLACED for "placed"
+            /// Enum PlacedEnum for placed
             /// </summary>
-            [EnumMember(Value = ""placed"")]
-            PLACED = 0,
+            [EnumMember(Value = "placed")]
+            PlacedEnum = 0,
             /// <summary>
-            /// Enum APPROVED for "approved"
+            /// Enum ApprovedEnum for approved
             /// </summary>
-            [EnumMember(Value = ""approved"")]
-            APPROVED = 1,
+            [EnumMember(Value = "approved")]
+            ApprovedEnum = 1,
             /// <summary>
-            /// Enum DELIVERED for "delivered"
+            /// Enum DeliveredEnum for delivered
             /// </summary>
-            [EnumMember(Value = ""delivered"")]
-            DELIVERED = 2        }
+            [EnumMember(Value = "delivered")]
+            DeliveredEnum = 2        }
 
         /// <summary>
         /// Order Status
