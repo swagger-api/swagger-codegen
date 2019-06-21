@@ -230,4 +230,7 @@ public class CodegenConstants {
 
     public static final String STRIP_PACKAGE_NAME = "stripPackageName";
     public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
+
+    // Boolean VE property for marking a model as a inheritance hierarchy root model
+    public static final String X_ROOT_ANCESTOR = "x-root-ancestor";
 }
