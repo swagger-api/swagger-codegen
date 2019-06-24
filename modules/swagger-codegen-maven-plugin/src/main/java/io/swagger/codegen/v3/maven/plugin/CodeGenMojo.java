@@ -61,7 +61,7 @@ public class CodeGenMojo extends AbstractMojo {
     /**
      * Client language to generate.
      */
-    @Parameter(name = "language", required = true)
+    @Parameter(name = "language", property = "swagger.codegen.maven.plugin.language", required = true)
     private String language;
 
     /**
@@ -74,212 +74,212 @@ public class CodeGenMojo extends AbstractMojo {
     /**
      * Location of the swagger spec, as URL or file.
      */
-    @Parameter(name = "inputSpec", required = true)
+    @Parameter(name = "inputSpec", property = "swagger.codegen.maven.plugin.inputSpec", required = true)
     private String inputSpec;
 
     /**
      * Git user ID, e.g. swagger-api.
      */
-    @Parameter(name = "gitUserId", required = false)
+    @Parameter(name = "gitUserId", property = "swagger.codegen.maven.plugin.gitUserId", required = false)
     private String gitUserId;
 
     /**
      * Git repo ID, e.g. swagger-codegen.
      */
-    @Parameter(name = "gitRepoId", required = false)
+    @Parameter(name = "gitRepoId", property = "swagger.codegen.maven.plugin.gitRepoId", required = false)
     private String gitRepoId;
 
     /**
      * Folder containing the template files.
      */
-    @Parameter(name = "templateDirectory")
+    @Parameter(name = "templateDirectory", property = "swagger.codegen.maven.plugin.templateDirectory", required = false)
     private File templateDirectory;
 
     /**
      * Adds authorization headers when fetching the swagger definitions remotely. " Pass in a
      * URL-encoded string of name:header with a comma separating multiple values
      */
-    @Parameter(name = "auth")
+    @Parameter(name = "auth", property = "swagger.codegen.maven.plugin.auth", required = false)
     private String auth;
 
     /**
      * Path to separate json configuration file.
      */
-    @Parameter(name = "configurationFile", required = false)
+    @Parameter(name = "configurationFile", property = "swagger.codegen.maven.plugin.configurationFile", required = false)
     private String configurationFile;
 
     /**
      * Specifies if the existing files should be overwritten during the generation.
      */
-    @Parameter(name = "skipOverwrite", required = false)
+    @Parameter(name = "skipOverwrite", property = "swagger.codegen.maven.plugin.skipOverwrite", required = false)
     private Boolean skipOverwrite;
 
     /**
      * Specifies if the existing files should be overwritten during the generation.
      */
-    @Parameter(name = "removeOperationIdPrefix", required = false)
+    @Parameter(name = "removeOperationIdPrefix", property = "swagger.codegen.maven.plugin.removeOperationIdPrefix", required = false)
     private Boolean removeOperationIdPrefix;
 
     /**
      * The package to use for generated api objects/classes
      */
-    @Parameter(name = "apiPackage")
+    @Parameter(name = "apiPackage", property = "swagger.codegen.maven.plugin.apiPackage", required = false)
     private String apiPackage;
 
     /**
      * The package to use for generated model objects/classes
      */
-    @Parameter(name = "modelPackage")
+    @Parameter(name = "modelPackage", property = "swagger.codegen.maven.plugin.modelPackage", required = false)
     private String modelPackage;
 
     /**
      * The package to use for the generated invoker objects
      */
-    @Parameter(name = "invokerPackage")
+    @Parameter(name = "invokerPackage", property = "swagger.codegen.maven.plugin.invokerPackage", required = false)
     private String invokerPackage;
 
     /**
      * groupId in generated pom.xml
      */
-    @Parameter(name = "groupId")
+    @Parameter(name = "groupId", property = "swagger.codegen.maven.plugin.groupId", required = false)
     private String groupId;
 
     /**
      * artifactId in generated pom.xml
      */
-    @Parameter(name = "artifactId")
+    @Parameter(name = "artifactId", property = "swagger.codegen.maven.plugin.artifactId", required = false)
     private String artifactId;
 
     /**
      * artifact version in generated pom.xml
      */
-    @Parameter(name = "artifactVersion")
+    @Parameter(name = "artifactVersion", property = "swagger.codegen.maven.plugin.artifactVersion", required = false)
     private String artifactVersion;
 
     /**
      * Sets the library
      */
-    @Parameter(name = "library", required = false)
+    @Parameter(name = "library", property = "swagger.codegen.maven.plugin.library", required = false)
     private String library;
 
     /**
      * Sets the prefix for model enums and classes
      */
-    @Parameter(name = "modelNamePrefix", required = false)
+    @Parameter(name = "modelNamePrefix", property = "swagger.codegen.maven.plugin.modelNamePrefix", required = false)
     private String modelNamePrefix;
 
     /**
      * Sets the suffix for model enums and classes
      */
-    @Parameter(name = "modelNameSuffix", required = false)
+    @Parameter(name = "modelNameSuffix", property = "swagger.codegen.maven.plugin.modelNameSuffix", required = false)
     private String modelNameSuffix;
 
     /**
      * Sets an optional ignoreFileOverride path
      */
-    @Parameter(name = "ignoreFileOverride", required = false)
+    @Parameter(name = "ignoreFileOverride", property = "swagger.codegen.maven.plugin.ignoreFileOverride", required = false)
     private String ignoreFileOverride;
 
     /**
      * A map of language-specific parameters as passed with the -c option to the command line
      */
-    @Parameter(name = "configOptions")
+    @Parameter(name = "configOptions", property = "swagger.codegen.maven.plugin.configOptions", required = false)
     private Map<?, ?> configOptions;
 
     /**
      * A map of types and the types they should be instantiated as
      */
-    @Parameter(name = "instantiationTypes")
+    @Parameter(name = "instantiationTypes", property = "swagger.codegen.maven.plugin.instantiationTypes", required = false)
     private List<String> instantiationTypes;
 
     /**
      * A map of classes and the import that should be used for that class
      */
-    @Parameter(name = "importMappings")
+    @Parameter(name = "importMappings", property = "swagger.codegen.maven.plugin.importMappings", required = false)
     private List<String> importMappings;
 
     /**
      * A map of swagger spec types and the generated code types to use for them
      */
-    @Parameter(name = "typeMappings")
+    @Parameter(name = "typeMappings", property = "swagger.codegen.maven.plugin.typeMappings", required = false)
     private List<String> typeMappings;
 
     /**
      * A map of additional language specific primitive types
      */
-    @Parameter(name = "languageSpecificPrimitives")
+    @Parameter(name = "languageSpecificPrimitives", property = "swagger.codegen.maven.plugin.languageSpecificPrimitives", required = false)
     private List<String> languageSpecificPrimitives;
 
     /**
      * A map of additional properties that can be referenced by the mustache templates
      */
-    @Parameter(name = "additionalProperties")
+    @Parameter(name = "additionalProperties", property = "swagger.codegen.maven.plugin.additionalProperties", required = false)
     private List<String> additionalProperties;
 
     /**
      * A map of reserved names and how they should be escaped
      */
-    @Parameter(name = "reservedWordsMappings")
+    @Parameter(name = "reservedWordsMappings", property = "swagger.codegen.maven.plugin.reservedWordsMappings", required = false)
     private List<String> reservedWordsMappings;    
 
     /**
      * Generate the apis
      */
-    @Parameter(name = "generateApis", required = false)
+    @Parameter(name = "generateApis", property = "swagger.codegen.maven.plugin.generateApis", required = false)
     private Boolean generateApis = true;
 
     /**
      * Generate the models
      */
-    @Parameter(name = "generateModels", required = false)
+    @Parameter(name = "generateModels", property = "swagger.codegen.maven.plugin.generateModels", required = false)
     private Boolean generateModels = true;
 
     /**
      * A comma separated list of models to generate. All models is the default.
      */
-    @Parameter(name = "modelsToGenerate", required = false)
+    @Parameter(name = "modelsToGenerate", property = "swagger.codegen.maven.plugin.modelsToGenerate", required = false)
     private String modelsToGenerate = "";
 
     /**
      * Generate the supporting files
      */
-    @Parameter(name = "generateSupportingFiles", required = false)
+    @Parameter(name = "generateSupportingFiles", property = "swagger.codegen.maven.plugin.generateSupportingFiles", required = false)
     private Boolean generateSupportingFiles = true;
 
     /**
      * A comma separated list of models to generate. All models is the default.
      */
-    @Parameter(name = "supportingFilesToGenerate", required = false)
+    @Parameter(name = "supportingFilesToGenerate", property = "swagger.codegen.maven.plugin.supportingFilesToGenerate", required = false)
     private String supportingFilesToGenerate = "";
 
     /**
      * Generate the model tests
      */
-    @Parameter(name = "generateModelTests", required = false)
+    @Parameter(name = "generateModelTests", property = "swagger.codegen.maven.plugin.generateModelTests", required = false)
     private Boolean generateModelTests = true;
 
     /**
      * Generate the model documentation
      */
-    @Parameter(name = "generateModelDocumentation", required = false)
+    @Parameter(name = "generateModelDocumentation", property = "swagger.codegen.maven.plugin.generateModelDocumentation", required = false)
     private Boolean generateModelDocumentation = true;
 
     /**
      * Generate the api tests
      */
-    @Parameter(name = "generateApiTests", required = false)
+    @Parameter(name = "generateApiTests", property = "swagger.codegen.maven.plugin.generateApiTests", required = false)
     private Boolean generateApiTests = true;
 
     /**
      * Generate the api documentation
      */
-    @Parameter(name = "generateApiDocumentation", required = false)
+    @Parameter(name = "generateApiDocumentation", property = "swagger.codegen.maven.plugin.generateApiDocumentation", required = false)
     private Boolean generateApiDocumentation = true;
 
     /**
      * Generate the api documentation
      */
-    @Parameter(name = "withXml", required = false)
+    @Parameter(name = "withXml", property = "swagger.codegen.maven.plugin.withXml", required = false)
     private Boolean withXml = false;
 
     /**
