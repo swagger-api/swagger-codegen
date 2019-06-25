@@ -3,7 +3,7 @@
 """
     Swagger Petstore */ ' \" =end -- \\r\\n \\n \\r
 
-    This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\  */ ' \" =end --       
+    This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\  */ ' \" =end --
 
     OpenAPI spec version: 1.0.0 */ ' \" =end -- \\r\\n \\n \\r
     Contact: apiteam@swagger.io */ ' \" =end -- \\r\\n \\n \\r
@@ -39,18 +39,18 @@ class FakeApi(object):
         """
         To test code injection */ ' \" =end -- \\r\\n \\n \\r
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_code_inject____end__rn_n_r(async=True)
+        asynchronous HTTP request, please pass non_blocking=True
+        >>> thread = api.test_code_inject____end__rn_n_r(non_blocking=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param non_blocking bool
         :param str test_code_inject____end____rn_n_r: To test code injection */ ' \" =end -- \\r\\n \\n \\r
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        if kwargs.get('async'):
+        if kwargs.get('non_blocking'):
             return self.test_code_inject____end__rn_n_r_with_http_info(**kwargs)
         else:
             (data) = self.test_code_inject____end__rn_n_r_with_http_info(**kwargs)
@@ -60,11 +60,11 @@ class FakeApi(object):
         """
         To test code injection */ ' \" =end -- \\r\\n \\n \\r
         This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async=True
-        >>> thread = api.test_code_inject____end__rn_n_r_with_http_info(async=True)
+        asynchronous HTTP request, please pass non_blocking=True
+        >>> thread = api.test_code_inject____end__rn_n_r_with_http_info(non_blocking=True)
         >>> result = thread.get()
 
-        :param async bool
+        :param non_blocking bool
         :param str test_code_inject____end____rn_n_r: To test code injection */ ' \" =end -- \\r\\n \\n \\r
         :return: None
                  If the method is called asynchronously,
@@ -72,7 +72,7 @@ class FakeApi(object):
         """
 
         all_params = ['test_code_inject____end____rn_n_r']
-        all_params.append('async')
+        all_params.append('non_blocking')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
         all_params.append('_request_timeout')
@@ -122,7 +122,7 @@ class FakeApi(object):
                                         files=local_var_files,
                                         response_type=None,
                                         auth_settings=auth_settings,
-                                        async=params.get('async'),
+                                        non_blocking=params.get('non_blocking'),
                                         _return_http_data_only=params.get('_return_http_data_only'),
                                         _preload_content=params.get('_preload_content', True),
                                         _request_timeout=params.get('_request_timeout'),

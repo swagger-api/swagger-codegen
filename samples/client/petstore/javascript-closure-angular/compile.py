@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from __future__ import print_function
 import httplib, urllib, sys
 
 # Collect all the files in an order that will work. That is Models first then APIs
@@ -53,8 +54,8 @@ def main():
     for name, targetFiles in targets.iteritems():
         errors = checkForCompilerErrors(targetFiles)
         if errors:
-            print "Compiler errors when building %s" % name
-            print errors
+            print("Compiler errors when building %s" % name)
+            print(errors)
 
     for name, targetFiles in targets.iteritems():
         compile("%s.compiled.js" % name, targets[name])
