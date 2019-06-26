@@ -125,9 +125,17 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected void configureGeneratorProperties() {
         // allows generating only models by specifying a CSV of models to generate, or empty for all
         // NOTE: Boolean.TRUE is required below rather than `true` because of JVM boxing constraints and type inference.
-        isGenerateApis = System.getProperty(CodegenConstants.APIS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.APIS, null);
-        isGenerateModels = System.getProperty(CodegenConstants.MODELS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODELS, null);
-        isGenerateSupportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.SUPPORTING_FILES, null);
+        if (System.getProperty(CodegenConstants.GENERATE_APIS) != null) {
+            isGenerateApis = Boolean.valueOf(System.getProperty(CodegenConstants.GENERATE_APIS));
+        } else {
+            isGenerateApis = System.getProperty(CodegenConstants.APIS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.APIS, null);
+        }
+        if (System.getProperty(CodegenConstants.GENERATE_MODELS) != null) {
+            isGenerateModels = Boolean.valueOf(System.getProperty(CodegenConstants.GENERATE_MODELS));
+        } else {
+            isGenerateModels = System.getProperty(CodegenConstants.MODELS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODELS, null);
+        }
+        isGenerateSupportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.SUPPORTING_FILES)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.SUPPORTING_FILES, null);
 
         if (isGenerateApis == null && isGenerateModels == null && isGenerateSupportingFiles == null) {
             // no specifics are set, generate everything
