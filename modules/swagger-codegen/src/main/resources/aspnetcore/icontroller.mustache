@@ -14,7 +14,6 @@ using {{packageName}}.Models;
     [Description("{{description}}")]{{/description}}
     public interface I{{classname}}Controller
     { {{#operation}}
-      {{#contents}}
         /// <summary>
         /// {{#summary}}{{summary}}{{/summary}}
         /// </summary>
@@ -22,7 +21,6 @@ using {{packageName}}.Models;
         /// <param name="{{paramName}}">{{description}}</param>{{/parameters}}{{#responses}}
         /// <response code="{{code}}">{{message}}</response>{{/responses}}
         IActionResult {{operationId}}({{#parameters}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/parameters}});
-        {{/contents}}
         {{/operation}}
     }
 {{/operations}}

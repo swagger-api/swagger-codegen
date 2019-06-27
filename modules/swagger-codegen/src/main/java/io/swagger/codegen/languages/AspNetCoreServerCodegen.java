@@ -202,6 +202,16 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
     }
 
     @Override
+    public String apiFilename(String templateName, String tag) {
+        boolean isInterface = templateName.equalsIgnoreCase("icontroller.mustache");
+        String suffix = apiTemplateFiles().get(templateName);
+        if (isInterface) {
+            return apiFileFolder() + "/I" + toApiFilename(tag) + suffix;
+        }
+        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+    }
+
+    @Override
     public String modelFileFolder() {
         return outputFolder + File.separator + sourceFolder + File.separator + packageName + File.separator  + "Models";
     }
