@@ -20,6 +20,9 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using IO.Swagger.Filters;
+using IO.Swagger.Security;
+
+using Microsoft.AspNetCore.Authentication;
 
 namespace IO.Swagger
 {
@@ -58,7 +61,12 @@ namespace IO.Swagger
                     opts.SerializerSettings.Converters.Add(new StringEnumConverter {
                         CamelCaseText = true
                     });
-                });
+                })
+                .AddXmlSerializerFormatters();
+
+            services.AddAuthentication(ApiKeyAuthenticationHandler.SchemeName)
+                .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationHandler.SchemeName, null);
+
 
             services
                 .AddSwaggerGen(c =>
