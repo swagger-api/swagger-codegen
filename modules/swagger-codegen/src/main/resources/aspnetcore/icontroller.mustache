@@ -17,10 +17,10 @@ using {{packageName}}.Models;
         /// <summary>
         /// {{#summary}}{{summary}}{{/summary}}
         /// </summary>
-        {{#notes}}/// <remarks>{{notes}}</remarks>{{/notes}}{{#parameters}}
-        /// <param name="{{paramName}}">{{description}}</param>{{/parameters}}{{#responses}}
+        {{#notes}}/// <remarks>{{notes}}</remarks>{{/notes}}{{#allParams}}
+        /// <param name="{{paramName}}">{{description}}</param>{{/allParams}}{{#responses}}
         /// <response code="{{code}}">{{message}}</response>{{/responses}}
-        IActionResult {{operationId}}({{#parameters}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/parameters}});
+        IActionResult {{operationId}}({{#allParams}}{{>pathParam}}{{>queryParam}}{{>bodyParam}}{{>formParam}}{{>headerParam}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/operation}}
     }
 {{/operations}}
