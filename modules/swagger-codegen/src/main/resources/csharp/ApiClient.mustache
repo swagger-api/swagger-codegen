@@ -23,7 +23,9 @@ namespace {{packageName}}.Client
     {
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+            DateFormatHandling= DateFormatHandling.IsoDateFormat,
+            DateTimeZoneHandling= DateTimeZoneHandling.Utc
         };
 
         /// <summary>
