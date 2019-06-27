@@ -145,6 +145,8 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("2.1/Dockerfile.mustache", packageFolder, "Dockerfile"));
         }
 
+        additionalProperties.put("aspNetCoreVersion", aspNetCoreVersion);
+
         additionalProperties.put("packageGuid", packageGuid);
         
         additionalProperties.put("dockerTag", this.packageName.toLowerCase());
