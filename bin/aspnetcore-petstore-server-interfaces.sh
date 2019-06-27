@@ -26,6 +26,6 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="$@ generate -l aspnetcore -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -o samples/server/petstore/aspnetcore-interca-only --interface-only"
+ags="$@ generate -l aspnetcore -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -o samples/server/petstore/aspnetcore-interface-only --interface-only"
 
 java $JAVA_OPTS -jar $executable $ags
