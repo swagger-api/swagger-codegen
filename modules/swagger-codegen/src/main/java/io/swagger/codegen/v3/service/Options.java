@@ -37,6 +37,8 @@ public class Options {
     private Boolean skipOverride;
     private String outputDir = "";
 
+    private Map<String, String> codegenArguments = new LinkedHashMap<>();
+
     public Options authorizationValue(AuthorizationValue authorizationValue) {
         this.authorizationValue = authorizationValue;
         return this;
@@ -210,6 +212,25 @@ public class Options {
         this.importMappings.put(key, value);
         return this;
     }
+
+    public Options codegenArguments(Map<String, String> codegenArguments) {
+        this.codegenArguments = codegenArguments;
+        return this;
+    }
+
+    public Map<String, String> getCodegenArguments() {
+        return codegenArguments;
+    }
+
+    public void setCodegenArguments(Map<String, String> codegenArguments) {
+        this.codegenArguments = codegenArguments;
+    }
+
+    public Options addCodegenArgument(String key, String value) {
+        this.codegenArguments.put(key, value);
+        return this;
+    }
+
 
     public Options invokerPackage(String invokerPackage) {
         this.invokerPackage = invokerPackage;
