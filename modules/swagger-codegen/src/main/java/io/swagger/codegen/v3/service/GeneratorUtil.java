@@ -6,6 +6,7 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.v3.ClientOptInput;
+import io.swagger.codegen.v3.CodegenArgument;
 import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.codegen.v3.service.exception.BadRequestException;
 import io.swagger.models.Swagger;
@@ -198,6 +199,7 @@ public class GeneratorUtil {
 
         if (isNotEmpty(lang)) {
             configurator.setLang(lang);
+            readCodegenArguments(configurator, options);
         }
         if (isNotEmpty(options.getAuth())) {
             configurator.setAuth(options.getAuth());
@@ -285,5 +287,27 @@ public class GeneratorUtil {
         }
         LOGGER.debug("getClientOptInput - end");
         return configurator.toClientOptInput();
+    }
+
+    private static void readCodegenArguments(CodegenConfigurator configurator, Options options) {
+        if (options == null) {
+            return;
+        }
+        io.swagger.codegen.v3.CodegenConfig config = io.swagger.codegen.v3.CodegenConfigLoader.forName(configurator.getLang());
+        if (config == null) {
+            return;
+        }
+        final List<CodegenArgument> arguments = config.readLanguageArguments();
+        if (arguments == null || arguments.isEmpty()) {
+            return;
+        }
+        for (CodegenArgument codegenArgument : arguments) {
+            final String value = options.getCodegenArguments().get(codegenArgument.getOption().substring(2));
+            if (value == null) {
+                continue;
+            }
+            codegenArgument.setValue(value);
+        }
+        configurator.setCodegenArguments(arguments);
     }
 }
