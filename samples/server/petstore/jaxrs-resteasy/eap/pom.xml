@@ -43,11 +43,21 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
-                    <stopKey>alpha</stopKey>
-                    <stopPort>9099</stopPort>
-                    <stopWait>2</stopWait>
+                    <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
+                    <stopPort>8079</stopPort>
+                    <stopKey>stopit</stopKey>
+                    <httpConnector>
+                        <port>80</port>
+                        <idleTimeout>60000</idleTimeout>
+                    </httpConnector>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.validation</groupId>
+                        <artifactId>validation-api</artifactId>
+                        <version>${beanvalidation-version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>start-jetty</id>
@@ -224,5 +234,6 @@
         <slf4j-version>1.6.3</slf4j-version>
         <junit-version>4.8.1</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
+        <beanvalidation-version>1.1.0.Final</beanvalidation-version>
     </properties>
 </project>
