@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
@@ -375,12 +376,16 @@ public class JavaClientCodegen extends AbstractJavaCodegen
                 String[] items = path.split("/", -1);
 
                 for (int i = 0; i < items.length; ++i) {
-                    if (items[i].matches("^\\{(.*)\\}$")) { // wrap in {}
-                        // camelize path variable
-                        items[i] = "{" + camelize(items[i].substring(1, items[i].length()-1), true) + "}";
+                    Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(items[i]);
+                    StringBuffer sb = new StringBuffer();
+                    while (m.find()) {
+                        m.appendReplacement(sb, "{" + camelize(m.group(1), true) + "}");
                     }
+                    m.appendTail(sb);
+                    items[i] = sb.toString();
                 }
                 op.path = StringUtils.join(items, "/");
+
             }
         }
 
