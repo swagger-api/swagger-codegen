@@ -1,4 +1,3 @@
-sudo: required
 language: java
 jdk:
   - openjdk7
@@ -32,6 +31,15 @@ services:
 addons:
   hosts:
     - petstore.swagger.io
+
+matrix:
+  include:
+    - language: python
+      dist: xenial  # required for Python >= 3.7
+      python: 3.7
+      before_install: pip install --upgrade pip
+      install: pip install flake8
+      script: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
 before_install:
   # required when sudo: required for the Ruby petstore tests
