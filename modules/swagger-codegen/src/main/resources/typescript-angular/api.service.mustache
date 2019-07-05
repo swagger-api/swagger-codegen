@@ -309,7 +309,7 @@ export class {{classname}} {
 
 {{/hasFormParams}}
 {{#useHttpClient}}
-        return this.httpClient.{{httpMethod}}{{^isResponseFile}}<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>{{/isResponseFile}}(`${this.basePath}{{{path}}}`,{{#isBodyAllowed}}
+        return this.httpClient.{{httpMethod}}{{#isResponseText}}/*{{/isResponseText}}{{^isResponseFile}}<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>{{/isResponseFile}}{{#isResponseText}}*/{{/isResponseText}}(`${this.basePath}{{{path}}}`,{{#isBodyAllowed}}
             {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}{{#hasFormParams}}convertFormParamsToString ? formParams.toString() : formParams{{/hasFormParams}}{{^hasFormParams}}null{{/hasFormParams}}{{/bodyParam}},{{/isBodyAllowed}}
             {
 {{#hasQueryParams}}
@@ -318,6 +318,9 @@ export class {{classname}} {
 {{#isResponseFile}}
                 responseType: "blob",
 {{/isResponseFile}}
+{{#isResponseText}}
+                responseType: 'text',
+{{/isResponseText}}
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -338,6 +341,9 @@ export class {{classname}} {
 {{#isResponseFile}}
             responseType: ResponseContentType.Blob,
 {{/isResponseFile}}
+{{#isResponseText}}
+                responseType: "text",
+{{/isResponseText}}
 {{#hasQueryParams}}
             search: queryParameters,
 {{/hasQueryParams}}
