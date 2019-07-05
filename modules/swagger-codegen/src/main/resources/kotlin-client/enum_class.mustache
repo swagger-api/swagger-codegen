@@ -1,11 +1,22 @@
+{{#jvm}}
 import com.squareup.moshi.Json
+{{/jvm}}
+{{#native}}
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.CommonEnumSerializer
+{{/native}}
 
 /**
 * {{{description}}}
-* Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
+* Values: {{#allowableValues}}{{#enumVars}}{{{name}}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
 */
+{{#native}}@Serializable(with = {{classname}}.Serializer::class){{/native}}
 enum class {{classname}}(val value: {{dataType}}){
 {{#allowableValues}}{{#enumVars}}
-    @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+    {{#jvm}}@Json(name = {{{value}}}) {{/jvm}}{{{name}}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
 {{/enumVars}}{{/allowableValues}}
+
+{{#native}}
+    object Serializer : CommonEnumSerializer<{{classname}}>("{{classname}}", values(), values().map { it.value }.toTypedArray())
+{{/native}}
 }

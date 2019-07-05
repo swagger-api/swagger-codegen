@@ -1,1 +1,25 @@
+{{#native}}
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "kotlin-multiplatform") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
+            }
+            if (requested.id.id == "kotlinx-serialization") {
+                useModule("org.jetbrains.kotlin:kotlin-serialization:${requested.version}")
+            }
+        }
+    }
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    }
+}
+
+enableFeaturePreview('GRADLE_METADATA')
+{{/native}}
+
 rootProject.name = '{{artifactId}}'

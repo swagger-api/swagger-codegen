@@ -1,12 +1,19 @@
-{{#hasEnums}}
+{{#jvm}}{{#hasEnums}}
 import com.squareup.moshi.Json
-{{/hasEnums}}
+{{/hasEnums}}{{/jvm}}
+{{#native}}
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.CommonEnumSerializer
+{{/native}}
 /**
  * {{{description}}}
 {{#vars}}
- * @param {{name}} {{{description}}}
+ * @param {{{vendorExtensions.x-escapedName}}} {{{description}}}
 {{/vars}}
  */
+{{#native}}
+@Serializable
+{{/native}}
 data class {{classname}} (
 {{#requiredVars}}
 {{>data_class_req_var}}{{^-last}},
@@ -17,12 +24,17 @@ data class {{classname}} (
 {{#hasEnums}}{{#vars}}{{#isEnum}}
     /**
     * {{{description}}}
-    * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
+    * Values: {{#allowableValues}}{{#enumVars}}{{{name}}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
     */
+    {{#native}}@Serializable(with = {{nameInCamelCase}}.Serializer::class){{/native}}
     enum class {{nameInCamelCase}}(val value: {{datatype}}){
     {{#allowableValues}}{{#enumVars}}
-        @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+        {{#jvm}}@Json(name = {{{value}}}) {{/jvm}}{{{name}}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
     {{/enumVars}}{{/allowableValues}}
+
+    {{#native}}
+        object Serializer : CommonEnumSerializer<{{nameInCamelCase}}>("{{nameInCamelCase}}", values(), values().map { it.value }.toTypedArray())
+    {{/native}}
     }
 {{/isEnum}}{{/vars}}{{/hasEnums}}
 }
