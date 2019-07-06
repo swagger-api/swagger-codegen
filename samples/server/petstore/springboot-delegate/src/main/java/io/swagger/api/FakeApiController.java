@@ -53,6 +53,7 @@ public class FakeApiController implements FakeApi {
     }
 
     public ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) throws Exception {
+
         return delegate.testClientModel(body);
     }
 

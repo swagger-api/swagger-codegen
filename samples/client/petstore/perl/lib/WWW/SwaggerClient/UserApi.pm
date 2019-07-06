@@ -299,12 +299,12 @@ sub delete_user {
 #
 # Get user by user name
 # 
-# @param string $username The name that needs to be fetched. Use user1 for testing.  (required)
+# @param string $username The name that needs to be fetched. Use user1 for testing. (required)
 {
     my $params = {
     'username' => {
         data_type => 'string',
-        description => 'The name that needs to be fetched. Use user1 for testing. ',
+        description => 'The name that needs to be fetched. Use user1 for testing.',
         required => '1',
     },
     };

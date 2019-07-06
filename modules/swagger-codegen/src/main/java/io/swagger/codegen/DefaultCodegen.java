@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -1168,6 +1169,8 @@ public class DefaultCodegen {
             }
         } else if (p instanceof StringProperty) {
             datatype = "string";
+        } else if(p instanceof UntypedProperty){
+            datatype = "object";
         } else {
             if (p != null) {
                 datatype = p.getType();
@@ -1334,7 +1337,9 @@ public class DefaultCodegen {
         if (model instanceof ModelImpl) {
             ModelImpl modelImpl = (ModelImpl) model;
             m.discriminator = modelImpl.getDiscriminator();
-
+            if (m.discriminator != null) {
+                m.discriminatorClassVarName = toParamName(m.discriminator);
+            }
             if (modelImpl.getXml() != null) {
                 m.xmlPrefix = modelImpl.getXml().getPrefix();
                 m.xmlNamespace = modelImpl.getXml().getNamespace();
@@ -1366,6 +1371,9 @@ public class DefaultCodegen {
                         ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
                             m.discriminator = modelImpl.getDiscriminator();
+                            if (m.discriminator != null) {
+                                m.discriminatorClassVarName = toParamName(m.discriminator);
+                            }
                         }
                         if (modelImpl.getXml() != null) {
                             m.xmlPrefix = modelImpl.getXml().getPrefix();
@@ -2332,6 +2340,9 @@ public class DefaultCodegen {
         op.isRestfulDestroy = op.isRestfulDestroy();
         op.isRestful = op.isRestful();
 
+        // TODO: fix error with resolved yaml/json generators in order to enable this again.
+        //configureDataForTestTemplate(op);
+
         return op;
     }
 
@@ -2680,6 +2691,10 @@ public class DefaultCodegen {
                         name = getTypeDeclaration(name);
                     }
                     p.dataType = name;
+                } else {
+                    if (sub instanceof ComposedModel) {
+                        p.dataType = "object";
+                    }
                 }
             }
             p.paramName = toParamName(bp.getName());
@@ -3845,5 +3860,55 @@ public class DefaultCodegen {
         if (defaultValue != null)
             option.defaultValue(defaultValue.toString());
         cliOptions.add(option);
+    }
+
+    protected void configureDataForTestTemplate(CodegenOperation codegenOperation) {
+        final String httpMethod = codegenOperation.httpMethod;
+        String path = codegenOperation.path;
+        if ("GET".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-get-method", Boolean.TRUE);
+        }
+        if ("POST".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-post-method", Boolean.TRUE);
+        }
+        if ("PUT".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-put-method", Boolean.TRUE);
+        }
+        if ("DELETE".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-delete-method", Boolean.TRUE);
+        }
+        if ("HEAD".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-head-method", Boolean.TRUE);
+        }
+        if ("TRACE".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-trace-method", Boolean.TRUE);
+        }
+        if ("PATCH".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-head-method", Boolean.TRUE);
+        }
+        if ("OPTIONS".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-options-method", Boolean.TRUE);
+        }
+        if (path.contains("{")) {
+            while(path.contains("{")) {
+                final String pathParam = path.substring(path.indexOf("{"), path.indexOf("}") + 1);
+                final String paramName = pathParam.replace("{", StringUtils.EMPTY).replace("}", StringUtils.EMPTY);
+
+                CodegenParameter codegenParameter = null;
+
+                for (CodegenParameter parameter : codegenOperation.pathParams) {
+                    if (parameter.baseName.equalsIgnoreCase(paramName)) {
+                        codegenParameter = parameter;
+                        break;
+                    }
+                }
+
+                if (codegenParameter == null || codegenParameter.testExample == null) {
+                    return;
+                }
+                path = path.replace(pathParam, codegenParameter.testExample);
+            }
+        }
+        codegenOperation.testPath = path;
     }
 }

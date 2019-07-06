@@ -63,6 +63,9 @@ class AnimalFarm(object):
                 ))
             else:
                 result[attr] = value
+        if issubclass(AnimalFarm, dict):
+            for key, value in self.items():
+                result[key] = value
 
         return result
 

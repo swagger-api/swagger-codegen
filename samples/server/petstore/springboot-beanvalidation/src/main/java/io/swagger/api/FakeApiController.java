@@ -98,11 +98,13 @@ public class FakeApiController implements FakeApi {
     }
 
     public ResponseEntity<Void> testBodyWithQueryParams(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "query", required = true) String query) throws Exception {
+
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) throws Exception {
+
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
