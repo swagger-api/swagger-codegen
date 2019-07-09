@@ -10,18 +10,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
+using IO.Swagger.Security;
+using Microsoft.AspNetCore.Authorization;
 using IO.Swagger.Models;
 
 namespace IO.Swagger.Controllers
@@ -29,7 +25,8 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class StoreApiController : Controller
+    [ApiController]
+    public class StoreApiController : ControllerBase
     { 
         /// <summary>
         /// Delete purchase order by ID
@@ -61,6 +58,7 @@ namespace IO.Swagger.Controllers
         /// <response code="200">successful operation</response>
         [HttpGet]
         [Route("/v2/store/inventory")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetInventory")]
         [SwaggerResponse(statusCode: 200, type: typeof(Dictionary<string, int?>), description: "successful operation")]
