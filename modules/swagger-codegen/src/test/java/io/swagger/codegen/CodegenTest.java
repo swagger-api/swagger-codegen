@@ -366,6 +366,35 @@ public class CodegenTest {
         Assert.assertEquals(child.parent, "ChildOfComposedParent");
     }
 
+    @Test(description = "use relative $ref for definitions of parameters")
+    public void relativeDefinitionsInParameterTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/getPhotos";
+        final Operation p = model.getPaths().get(path).getPost();
+        CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("PhotosRequest"));
+
+    }
+
+    @Test(description = "use relative $ref for definitions of response")
+    public void relativeDefinitionsInResponseTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/{id}";
+        final Operation p = model.getPaths().get(path).getGet();
+        CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("integer"));
+
+    }
 
     @Test(description = "use operation consumes and produces")
     public void localConsumesAndProducesTest() {
