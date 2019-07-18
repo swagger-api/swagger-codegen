@@ -396,6 +396,21 @@ public class CodegenTest {
 
     }
 
+    @Test(description = "use relative $ref for definitions of response")
+    public void relativeDefinitionsMapInResponseTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/thumbnails";
+        final Operation p = model.getPaths().get(path).getPost();
+        CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("PhotoThumbnailsRequest"));
+
+    }
+    
     @Test(description = "use operation consumes and produces")
     public void localConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");

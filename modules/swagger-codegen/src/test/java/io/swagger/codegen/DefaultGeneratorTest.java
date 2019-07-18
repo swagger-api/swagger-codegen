@@ -1,6 +1,5 @@
 package io.swagger.codegen;
 
-import com.google.common.collect.ImmutableMap;
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.ExternalDocs;
