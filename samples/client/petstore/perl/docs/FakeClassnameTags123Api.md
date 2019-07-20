@@ -17,6 +17,8 @@ Method | HTTP request | Description
 
 To test class name in snake case
 
+To test class name in snake case
+
 ### Example 
 ```perl
 use Data::Dumper;

@@ -44,11 +44,7 @@ class ApiClient {
           {{#model}}
         case '{{classname}}':
             {{#isEnum}}
-          // Enclose the value in a list so that Dartson can use a transformer
-          // to decode it.
-          final listValue = [value];
-          final List<dynamic> listResult = dson.map(listValue, []);
-          return listResult[0];
+           return new {{classname}}.fromJson(value);
             {{/isEnum}}
             {{^isEnum}}
           return new {{classname}}.fromJson(value);
@@ -80,8 +76,8 @@ class ApiClient {
     // Remove all spaces.  Necessary for reg expressions as well.
     targetType = targetType.replaceAll(' ', '');
 
-    if (targetType == 'String') return json;
-
+    if (targetType == 'String') return jsonVal;
+    
     var decodedJson = json.decode(jsonstr);
     return _deserialize(decodedJson, targetType);
   }

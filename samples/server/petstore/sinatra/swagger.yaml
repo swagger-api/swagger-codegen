@@ -11,7 +11,7 @@ info:
   contact:
     email: "apiteam@swagger.io"
   license:
-    name: "Apache 2.0"
+    name: "Apache-2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "petstore.swagger.io"
 basePath: "/v2"
@@ -58,6 +58,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      x-is-post-method: true
     put:
       tags:
       - "pet"
@@ -88,6 +89,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      x-is-put-method: true
   /pet/findByStatus:
     get:
       tags:
@@ -106,11 +108,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
       responses:
         200:
@@ -125,6 +127,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      x-is-get-method: true
   /pet/findByTags:
     get:
       tags:
@@ -158,6 +161,8 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      deprecated: true
+      x-is-get-method: true
   /pet/{petId}:
     get:
       tags:
@@ -186,6 +191,7 @@ paths:
           description: "Pet not found"
       security:
       - api_key: []
+      x-is-get-method: true
     post:
       tags:
       - "pet"
@@ -221,6 +227,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      x-is-post-method: true
     delete:
       tags:
       - "pet"
@@ -248,6 +255,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      x-is-delete-method: true
   /pet/{petId}/uploadImage:
     post:
       tags:
@@ -285,6 +293,7 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      x-is-post-method: true
   /store/inventory:
     get:
       tags:
@@ -305,6 +314,7 @@ paths:
               format: "int32"
       security:
       - api_key: []
+      x-is-get-method: true
   /store/order:
     post:
       tags:
@@ -329,6 +339,7 @@ paths:
             $ref: "#/definitions/Order"
         400:
           description: "Invalid Order"
+      x-is-post-method: true
   /store/order/{orderId}:
     get:
       tags:
@@ -358,6 +369,7 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
+      x-is-get-method: true
     delete:
       tags:
       - "store"
@@ -379,6 +391,7 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
+      x-is-delete-method: true
   /user:
     post:
       tags:
@@ -399,6 +412,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+      x-is-post-method: true
   /user/createWithArray:
     post:
       tags:
@@ -421,6 +435,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+      x-is-post-method: true
   /user/createWithList:
     post:
       tags:
@@ -443,6 +458,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+      x-is-post-method: true
   /user/login:
     get:
       tags:
@@ -467,8 +483,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            type: "string"
           headers:
             X-Rate-Limit:
               type: "integer"
@@ -478,8 +492,11 @@ paths:
               type: "string"
               format: "date-time"
               description: "date in UTC when toekn expires"
+          schema:
+            type: "string"
         400:
           description: "Invalid username/password supplied"
+      x-is-get-method: true
   /user/logout:
     get:
       tags:
@@ -494,6 +511,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+      x-is-get-method: true
   /user/{username}:
     get:
       tags:
@@ -507,7 +525,7 @@ paths:
       parameters:
       - name: "username"
         in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
+        description: "The name that needs to be fetched. Use user1 for testing."
         required: true
         type: "string"
       responses:
@@ -519,6 +537,7 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
+      x-is-get-method: true
     put:
       tags:
       - "user"
@@ -545,6 +564,7 @@ paths:
           description: "Invalid user supplied"
         404:
           description: "User not found"
+      x-is-put-method: true
     delete:
       tags:
       - "user"
@@ -565,6 +585,7 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
+      x-is-delete-method: true
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -604,9 +625,16 @@ definitions:
         type: "boolean"
         default: false
     title: "Pet Order"
-    description: "An order for a pets from the pet store"
     xml:
       name: "Order"
+    description: "An order for a pets from the pet store"
+    example:
+      petId: 6
+      quantity: 1
+      id: 0
+      shipDate: "2000-01-23T04:56:07.000+00:00"
+      complete: false
+      status: "placed"
   Category:
     type: "object"
     properties:
@@ -616,9 +644,12 @@ definitions:
       name:
         type: "string"
     title: "Pet category"
-    description: "A category for a pet"
     xml:
       name: "Category"
+    description: "A category for a pet"
+    example:
+      name: "name"
+      id: 6
   User:
     type: "object"
     properties:
@@ -642,9 +673,18 @@ definitions:
         format: "int32"
         description: "User Status"
     title: "a User"
-    description: "A User who is purchasing from the pet store"
     xml:
       name: "User"
+    description: "A User who is purchasing from the pet store"
+    example:
+      firstName: "firstName"
+      lastName: "lastName"
+      password: "password"
+      userStatus: 6
+      phone: "phone"
+      id: 0
+      email: "email"
+      username: "username"
   Tag:
     type: "object"
     properties:
@@ -654,9 +694,12 @@ definitions:
       name:
         type: "string"
     title: "Pet Tag"
-    description: "A tag for a pet"
     xml:
       name: "Tag"
+    description: "A tag for a pet"
+    example:
+      name: "name"
+      id: 1
   Pet:
     type: "object"
     required:
@@ -693,9 +736,24 @@ definitions:
         - "pending"
         - "sold"
     title: "a Pet"
-    description: "A pet for sale in the pet store"
     xml:
       name: "Pet"
+    description: "A pet for sale in the pet store"
+    example:
+      photoUrls:
+      - "photoUrls"
+      - "photoUrls"
+      name: "doggie"
+      id: 0
+      category:
+        name: "name"
+        id: 6
+      tags:
+      - name: "name"
+        id: 1
+      - name: "name"
+        id: 1
+      status: "available"
   ApiResponse:
     type: "object"
     properties:
@@ -708,6 +766,29 @@ definitions:
         type: "string"
     title: "An uploaded response"
     description: "Describes the result of uploading an image resource"
+    example:
+      code: 0
+      type: "type"
+      message: "message"
+  Amount:
+    type: "object"
+    required:
+    - "currency"
+    - "value"
+    properties:
+      value:
+        type: "number"
+        format: "double"
+        description: "some description\n"
+        minimum: 0.01
+        maximum: 1000000000000000
+      currency:
+        $ref: "#/definitions/Currency"
+    description: "some description\n"
+  Currency:
+    type: "string"
+    pattern: "^[A-Z]{3,3}$"
+    description: "some description\n"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"

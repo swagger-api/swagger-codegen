@@ -89,6 +89,7 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(JavaClientCodegen.WITH_XML, WITH_XML_VALUE)
             //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
             .put("hideGenerationTimestamp", "true")
+            .put(JavaClientCodegen.DISABLE_HTML_ESCAPING, "false")
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put("serverPort", "2345")
             .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
