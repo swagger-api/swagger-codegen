@@ -16,11 +16,13 @@ module SwaggerPetstore.API
   -- * Client and Server
   ( ServerConfig(..)
   , SwaggerPetstoreBackend
+  , SwaggerPetstoreBackend(..)
   , createSwaggerPetstoreClient
   , runSwaggerPetstoreServer
   , runSwaggerPetstoreClient
   , runSwaggerPetstoreClientWithManager
   , SwaggerPetstoreClient
+  , SwaggerPetstoreClient(..)
   -- ** Servant
   , SwaggerPetstoreAPI
   ) where

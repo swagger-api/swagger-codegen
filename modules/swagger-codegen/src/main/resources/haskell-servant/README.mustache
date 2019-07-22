@@ -27,7 +27,7 @@ import {{title}}.API
 
 main :: IO ()
 main = do
-  {{title}}Backend{..} <- create{{title}}Client (ServerConfig "localhost" 8080)
+  {{title}}Backend{..} <- create{{title}}Client
   -- Any {{title}} API call can go here.
   return ()
 ```
