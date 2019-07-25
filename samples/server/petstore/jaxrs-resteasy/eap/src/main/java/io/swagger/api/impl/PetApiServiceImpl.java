@@ -20,7 +20,7 @@ public class PetApiServiceImpl implements PetApi {
       // do some magic!
       return Response.ok().build();
   }
-      public Response deletePet(Integer petId,String apiKey,SecurityContext securityContext) {
+      public Response deletePet(Long petId,String apiKey,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }
@@ -32,7 +32,7 @@ public class PetApiServiceImpl implements PetApi {
       // do some magic!
       return Response.ok().build();
   }
-      public Response getPetById(Integer petId,SecurityContext securityContext) {
+      public Response getPetById(Long petId,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }
@@ -40,11 +40,11 @@ public class PetApiServiceImpl implements PetApi {
       // do some magic!
       return Response.ok().build();
   }
-      public Response updatePetWithForm(Integer petId,String name,String status,SecurityContext securityContext) {
+      public Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }
-      public Response uploadFile(MultipartFormDataInput input,Integer petId,SecurityContext securityContext) {
+      public Response uploadFile(MultipartFormDataInput input,Long petId,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }

@@ -22,7 +22,7 @@ public class StoreApiServiceImpl implements StoreApi {
       // do some magic!
       return Response.ok().build();
   }
-      public Response getOrderById(Integer orderId,SecurityContext securityContext) {
+      public Response getOrderById(Long orderId,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }
