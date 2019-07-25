@@ -20,6 +20,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("POST /user")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   void createUser(User body);
@@ -30,6 +31,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("POST /user/createWithArray")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   void createUsersWithArrayInput(List<User> body);
@@ -40,6 +42,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("POST /user/createWithList")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   void createUsersWithListInput(List<User> body);
@@ -50,6 +53,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /user/{username}")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void deleteUser(@Param("username") String username);
@@ -61,7 +65,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("GET /user/{username}")
   @Headers({
-      "Accept: */*",
+      "Accept: application/json",
   })
   User getUserByName(@Param("username") String username);
   /**
@@ -73,7 +77,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("GET /user/login?username={username}&password={password}")
   @Headers({
-      "Accept: */*",
+      "Accept: application/json",
   })
   String loginUser(@Param("username") String username, @Param("password") String password);
 
@@ -97,6 +101,7 @@ public interface UserApi extends ApiClient.Api {
   @RequestLine("GET /user/login?username={username}&password={password}")
   @Headers({
       "Content-Type: */*",
+      "Accept: application/json",
   })
   String loginUser(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
@@ -131,6 +136,7 @@ public interface UserApi extends ApiClient.Api {
    */
   @RequestLine("PUT /user/{username}")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   void updateUser(User body, @Param("username") String username);
