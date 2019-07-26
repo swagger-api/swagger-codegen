@@ -57,6 +57,7 @@ public class CodegenConfigurator implements Serializable {
     private boolean verbose;
     private boolean skipOverwrite;
     private boolean removeOperationIdPrefix;
+    private boolean skipInlineModelMatches;
     private String templateDir;
     private String templateVersion;
     private String auth;
@@ -147,6 +148,15 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+        return this;
+    }
+
+    public boolean getSkipInlineModelMatches() {
+        return skipInlineModelMatches;
+    }
+
+    public CodegenConfigurator setSkipInlineModelMatches(boolean skipInlineModelMatches) {
+        this.skipInlineModelMatches = skipInlineModelMatches;
         return this;
     }
 
@@ -462,9 +472,7 @@ public class CodegenConfigurator implements Serializable {
 
         if (!StringUtils.isBlank(inputSpec)) {
             config.setInputSpec(inputSpec);
-            ParseOptions options = new ParseOptions();
-            options.setResolve(true);
-            options.setFlatten(true);
+            ParseOptions options = buildParseOptions();
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
 
@@ -489,9 +497,7 @@ public class CodegenConfigurator implements Serializable {
             }
             config.setInputSpec(specContent);
             config.setInputURL(inputSpecURL);
-            ParseOptions options = new ParseOptions();
-            options.setResolve(true);
-            options.setFlatten(true);
+            ParseOptions options = buildParseOptions();
             SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
             LOGGER.debug("getClientOptInput - parsed inputSpecURL " + inputSpecURL);
@@ -537,6 +543,14 @@ public class CodegenConfigurator implements Serializable {
 
         input.config(config);
         return input;
+    }
+
+    private ParseOptions buildParseOptions() {
+        ParseOptions options = new ParseOptions();
+        options.setResolve(true);
+        options.setFlatten(true);
+        options.setSkipMatches(this.skipInlineModelMatches);
+        return options;
     }
 
     @JsonAnySetter

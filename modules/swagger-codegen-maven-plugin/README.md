@@ -60,6 +60,7 @@ mvn clean compile
 - `generateSupportingFiles` - generate the supporting files (`true` by default)
 - `supportingFilesToGenerate` - A comma separated list of supporting files to generate.  All files is the default.
 - `skip` - skip code generation (`false` by default. Can also be set globally through the `codegen.skip` property)
+- `skipInlineModelMatches` - when processing inline models, generate unique classes for models with the same content (`false` by default, causes reusing)
 
 ### Custom Generator
 
