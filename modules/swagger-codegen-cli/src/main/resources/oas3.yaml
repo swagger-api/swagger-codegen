@@ -196,6 +196,11 @@ components:
           description: "load arguments from a local file or remote URL. Arguments found will replace any one placed on command."
           x-option: "--url"
           x-short-version: "-u"
+        disableExamples:
+          type: "boolean"
+          title: "disable examples"
+          description: "avoid writing json/xml examples on generated operations."
+          x-option: "--disable-examples"
     ConfigHelp:
       x-command: "config-help"
       x-command-description: "Config help for chosen lang"
