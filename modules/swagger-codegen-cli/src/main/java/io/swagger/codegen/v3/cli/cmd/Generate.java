@@ -74,6 +74,7 @@ public class Generate implements Runnable {
     protected List<String> reservedWordsMappings = new ArrayList<>();
     protected String ignoreFileOverride;
     protected Boolean removeOperationIdPrefix;
+    protected Boolean disableExamples;
     private String url;
     private List<CodegenArgument> codegenArguments;
 
@@ -213,6 +214,10 @@ public class Generate implements Runnable {
         this.codegenArguments = codegenArguments;
     }
 
+    public void setDisableExamples(Boolean disableExamples) {
+        this.disableExamples = disableExamples;
+    }
+
     @Override
     public void run() {
 
@@ -322,6 +327,10 @@ public class Generate implements Runnable {
 
         if (codegenArguments != null && !codegenArguments.isEmpty()) {
             configurator.setCodegenArguments(codegenArguments);
+        }
+
+        if (disableExamples != null && disableExamples) {
+            additionalProperties.add(String.format("%s=%s", CodegenConstants.DISABLE_EXAMPLES_OPTION, disableExamples.toString()));
         }
 
         if (CodegenConstants.MUSTACHE_TEMPLATE_ENGINE.equalsIgnoreCase(templateEngine)) {
