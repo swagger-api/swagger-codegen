@@ -22,6 +22,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void addPet(Pet body);
@@ -33,6 +34,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /pet/{petId}")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
     "api_key: {apiKey}"
   })
@@ -45,7 +47,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByStatus?status={status}")
   @Headers({
-      "Accept: */*",
+      "Accept: application/json",
   })
   List<Pet> findPetsByStatus(@Param("status") List<String> status);
 
@@ -68,6 +70,7 @@ public interface PetApi extends ApiClient.Api {
   @RequestLine("GET /pet/findByStatus?status={status}")
   @Headers({
       "Content-Type: */*",
+      "Accept: application/json",
   })
   List<Pet> findPetsByStatus(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
@@ -89,7 +92,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/findByTags?tags={tags}")
   @Headers({
-      "Accept: */*",
+      "Accept: application/json",
   })
   List<Pet> findPetsByTags(@Param("tags") List<String> tags);
 
@@ -112,6 +115,7 @@ public interface PetApi extends ApiClient.Api {
   @RequestLine("GET /pet/findByTags?tags={tags}")
   @Headers({
       "Content-Type: */*",
+      "Accept: application/json",
   })
   List<Pet> findPetsByTags(@QueryMap(encoded=true) Map<String, Object> queryParams);
 
@@ -133,7 +137,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("GET /pet/{petId}")
   @Headers({
-      "Accept: */*",
+      "Accept: application/json",
   })
   Pet getPetById(@Param("petId") Long petId);
   /**
@@ -143,6 +147,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("PUT /pet")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void updatePet(Pet body);
@@ -155,6 +160,7 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet/{petId}")
   @Headers({
+      "Content-Type: application/x-www-form-urlencoded",
       "Accept: */*",
   })
   void updatePetWithForm(@Param("petId") Long petId, @Param("name") String name, @Param("status") String status);
@@ -168,7 +174,8 @@ public interface PetApi extends ApiClient.Api {
    */
   @RequestLine("POST /pet/{petId}/uploadImage")
   @Headers({
-      "Accept: */*",
+      "Content-Type: multipart/form-data",
+      "Accept: application/json",
   })
   ModelApiResponse uploadFile(@Param("petId") Long petId, @Param("additionalMetadata") String additionalMetadata, @Param("file") File file);
 }
