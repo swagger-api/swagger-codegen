@@ -20,6 +20,7 @@ public interface AnimalApi extends ApiClient.Api {
    */
   @RequestLine("POST /animal")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void addAnimal(Animal body);
@@ -31,6 +32,7 @@ public interface AnimalApi extends ApiClient.Api {
    */
   @RequestLine("DELETE /animal/{animalId}")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
     "api_key: {apiKey}"
   })
@@ -43,7 +45,7 @@ public interface AnimalApi extends ApiClient.Api {
    */
   @RequestLine("GET /animal/{animalId}")
   @Headers({
-      "Accept: */*",
+      "Accept: application/json",
   })
   Animal getAnimalById(@Param("animalId") Long animalId);
   /**
@@ -53,6 +55,7 @@ public interface AnimalApi extends ApiClient.Api {
    */
   @RequestLine("PUT /animal")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void updateAnimal(Animal body);
@@ -65,6 +68,7 @@ public interface AnimalApi extends ApiClient.Api {
    */
   @RequestLine("POST /animal/{animalId}")
   @Headers({
+      "Content-Type: application/x-www-form-urlencoded",
       "Accept: */*",
   })
   void updateAnimalWithForm(@Param("animalId") Long animalId, @Param("name") String name, @Param("status") String status);
