@@ -235,6 +235,7 @@ public class CodegenConstants {
     public static final String USE_OAS2_DESC = "use OpenAPI v2.0 (Swagger 1.5.x)";
 
     public static final String TEMPLATE_ENGINE = "templateEngine";
+    public static final String DISABLE_EXAMPLES_OPTION = "disableExample";
 
     public static final String IS_ENUM_EXT_NAME = PREFIX_IS + "enum";
     public static final String IS_ALIAS_EXT_NAME = PREFIX_IS + "alias";
