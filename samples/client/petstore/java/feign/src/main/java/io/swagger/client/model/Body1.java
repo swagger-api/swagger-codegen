@@ -78,12 +78,12 @@ public class Body1 {
     }
     Body1 body1 = (Body1) o;
     return Objects.equals(this.additionalMetadata, body1.additionalMetadata) &&
-        Arrays.equals(this.file, body1.file);
+        Objects.equals(this.file, body1.file);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalMetadata, Arrays.hashCode(file));
+    return Objects.hash(additionalMetadata, Objects.hashCode(file));
   }
 
 

@@ -350,7 +350,7 @@ public class Body3 {
         Objects.equals(this.string, body3.string) &&
         Objects.equals(this.patternWithoutDelimiter, body3.patternWithoutDelimiter) &&
         Arrays.equals(this._byte, body3._byte) &&
-        Arrays.equals(this.binary, body3.binary) &&
+        Objects.equals(this.binary, body3.binary) &&
         Objects.equals(this.date, body3.date) &&
         Objects.equals(this.dateTime, body3.dateTime) &&
         Objects.equals(this.password, body3.password) &&
@@ -359,7 +359,7 @@ public class Body3 {
 
   @Override
   public int hashCode() {
-    return Objects.hash(integer, int32, int64, number, _float, _double, string, patternWithoutDelimiter, Arrays.hashCode(_byte), Arrays.hashCode(binary), date, dateTime, password, callback);
+    return Objects.hash(integer, int32, int64, number, _float, _double, string, patternWithoutDelimiter, Arrays.hashCode(_byte), Objects.hashCode(binary), date, dateTime, password, callback);
   }
 
 
