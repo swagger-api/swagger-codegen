@@ -32,7 +32,7 @@ public class PetApiControllerIntegrationTest {
 
     @Test
     public void deletePetTest() throws Exception {
-        Integer petId = 56;
+        Long petId = 56L;
         String apiKey = "apiKey_example";
         ResponseEntity<Void> responseEntity = api.deletePet(petId, apiKey);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
@@ -54,7 +54,7 @@ public class PetApiControllerIntegrationTest {
 
     @Test
     public void getPetByIdTest() throws Exception {
-        Integer petId = 56;
+        Long petId = 56L;
         ResponseEntity<Pet> responseEntity = api.getPetById(petId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
@@ -68,7 +68,7 @@ public class PetApiControllerIntegrationTest {
 
     @Test
     public void updatePetWithFormTest() throws Exception {
-        Integer petId = 56;
+        Long petId = 56L;
         String name = "name_example";
         String status = "status_example";
         ResponseEntity<Void> responseEntity = api.updatePetWithForm(petId, name, status);
@@ -77,7 +77,7 @@ public class PetApiControllerIntegrationTest {
 
     @Test
     public void uploadFileTest() throws Exception {
-        Integer petId = 56;
+        Long petId = 56L;
         String additionalMetadata = "additionalMetadata_example";
         org.springframework.web.multipart.MultipartFile file = null;
         ResponseEntity<ModelApiResponse> responseEntity = api.uploadFile(petId, additionalMetadata, file);

@@ -37,7 +37,7 @@ public class StoreApiControllerIntegrationTest {
 
     @Test
     public void getOrderByIdTest() throws Exception {
-        Integer orderId = 56;
+        Long orderId = 56L;
         ResponseEntity<Order> responseEntity = api.getOrderById(orderId);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
