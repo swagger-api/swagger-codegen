@@ -390,8 +390,12 @@ class StoreApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('map[string,int]' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         'map[string,int]',
                         $e->getResponseHeaders()
                     );
@@ -640,8 +644,12 @@ class StoreApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Order' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Order',
                         $e->getResponseHeaders()
                     );
@@ -909,8 +917,12 @@ class StoreApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Order' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Order',
                         $e->getResponseHeaders()
                     );

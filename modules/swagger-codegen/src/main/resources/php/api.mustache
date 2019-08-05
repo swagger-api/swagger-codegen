@@ -181,8 +181,12 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#responses}}
             {{#dataType}}
                 {{^isWildcard}}case {{code}}:{{/isWildcard}}{{#isWildcard}}default:{{/isWildcard}}
+                    $content = $e->getResponseBody();
+                    if ('{{dataType}}' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '{{dataType}}',
                         $e->getResponseHeaders()
                     );

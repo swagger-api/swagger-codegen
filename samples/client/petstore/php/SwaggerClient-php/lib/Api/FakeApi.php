@@ -163,8 +163,12 @@ class FakeApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\OuterBoolean' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterBoolean',
                         $e->getResponseHeaders()
                     );
@@ -410,8 +414,12 @@ class FakeApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\OuterComposite' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterComposite',
                         $e->getResponseHeaders()
                     );
@@ -657,8 +665,12 @@ class FakeApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\OuterNumber' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterNumber',
                         $e->getResponseHeaders()
                     );
@@ -904,8 +916,12 @@ class FakeApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\OuterString' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\OuterString',
                         $e->getResponseHeaders()
                     );
@@ -1386,8 +1402,12 @@ class FakeApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Client' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Client',
                         $e->getResponseHeaders()
                     );

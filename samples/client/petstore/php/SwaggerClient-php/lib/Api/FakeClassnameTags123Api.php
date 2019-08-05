@@ -167,8 +167,12 @@ class FakeClassnameTags123Api
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $content = $e->getResponseBody();
+                    if ('\Swagger\Client\Model\Client' !== 'string') {
+                        $content = json_decode($content);
+                    }
                     $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
+                        $content,
                         '\Swagger\Client\Model\Client',
                         $e->getResponseHeaders()
                     );
