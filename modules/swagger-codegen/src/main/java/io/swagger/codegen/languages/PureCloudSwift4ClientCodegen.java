@@ -20,6 +20,9 @@ import java.util.Map;
 public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
     private static String OPERATION_ID_PROPERTY_NAME = "x-purecloud-method-name";
 
+    protected String apiDocPath = "docs/";
+    protected String modelDocPath = "docs/";
+
     protected Logger LOGGER = LoggerFactory.getLogger(PureCloudSwift4ClientCodegen.class);
 
     public PureCloudSwift4ClientCodegen() {
@@ -37,10 +40,81 @@ public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
         // Custom mappings and overrides for swagger type -> swift type
         typeMapping.put("object", "JSON");
         typeMapping.put("LocalDateTime", "String");
+
+        // Documentation
+
+        // make api and model doc path available in mustache template
+        modelDocTemplateFiles.put("model_doc.mustache", ".md");
+        apiDocTemplateFiles.put("api_doc.mustache", ".md");
+        additionalProperties.put("apiDocPath", apiDocPath);
+        additionalProperties.put("modelDocPath", modelDocPath);
     }
 
     @Override
     public String getName() { return "purecloudios"; }
+
+    @Override
+    public String apiDocFileFolder() {
+        return (outputFolder + "/" + apiDocPath).replace('/', File.separatorChar);
+    }
+
+    @Override
+    public String modelDocFileFolder() {
+        return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
+    }
+
+    @Override
+    public void setParameterExampleValue(CodegenParameter p) {
+        String type = p.baseType;
+        if (type == null || type.equals(""))
+            type = p.dataType;
+        if (type != null && !type.equals("")) {
+            if (p.defaultValue != null && !p.defaultValue.equals((""))) {
+                p.example = p.defaultValue;
+                if (type.toLowerCase().equals("string")) {
+                    p.example = "\"" + p.example + "\"";
+                }
+            } else {
+                switch (type.toLowerCase()) {
+                    case "character":
+                    case "string": {
+                        p.example = "\"\"";
+                        break;
+                    }
+                    case "int32":
+                    case "int64":
+                    case "int": {
+                        p.example = "0";
+                        break;
+                    }
+                    case "double":
+                    case "float": {
+                        p.example = "0";
+                        break;
+                    }
+                    case "bool": {
+                        p.example = "true";
+                        break;
+                    }
+                    case "any": {
+                        p.example = "[Any]";
+                        break;
+                    }
+                    case "anyobject": {
+                        p.example = "[AnyObject]";
+                        break;
+                    }
+                    default: {
+                        p.example = "new " + type + "(...)";
+                    }
+                }
+
+                if (p.isListContainer != null && p.isListContainer) {
+                    p.example = "[" + p.example + "]";
+                }
+            }
+        }
+    }
 
     @Override
     /**
