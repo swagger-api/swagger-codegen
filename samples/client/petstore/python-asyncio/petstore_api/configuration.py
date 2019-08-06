@@ -49,6 +49,8 @@ class Configuration(object):
         self.api_key = {}
         # dict to store API prefix (e.g. Bearer)
         self.api_key_prefix = {}
+        # function to refresh API key if expired
+        self.refresh_api_key_hook = None
         # Username for HTTP basic authentication
         self.username = ""
         # Password for HTTP basic authentication
@@ -203,6 +205,9 @@ class Configuration(object):
         :param identifier: The identifier of apiKey.
         :return: The token for api key authentication.
         """
+        if self.refresh_api_key_hook:
+            self.refresh_api_key_hook(self)
+
         if (self.api_key.get(identifier) and
                 self.api_key_prefix.get(identifier)):
             return self.api_key_prefix[identifier] + ' ' + self.api_key[identifier]  # noqa: E501
