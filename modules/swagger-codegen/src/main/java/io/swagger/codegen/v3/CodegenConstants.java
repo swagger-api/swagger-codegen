@@ -198,12 +198,14 @@ public class CodegenConstants {
     public static final String EXCLUDE_TESTS_DESC = "Specifies that no tests are to be generated.";
 
     // Not user-configurable. System provided for use in templates.
+    public static final String GENERATE_APIS = "generateApis";
     public static final String GENERATE_API_DOCS = "generateApiDocs";
 
     public static final String GENERATE_API_TESTS = "generateApiTests";
     public static final String GENERATE_API_TESTS_DESC = "Specifies that api tests are to be generated.";
 
     // Not user-configurable. System provided for use in templates.
+    public static final String GENERATE_MODELS = "generateModels";
     public static final String GENERATE_MODEL_DOCS = "generateModelDocs";
 
     public static final String GENERATE_MODEL_TESTS = "generateModelTests";
@@ -233,6 +235,7 @@ public class CodegenConstants {
     public static final String USE_OAS2_DESC = "use OpenAPI v2.0 (Swagger 1.5.x)";
 
     public static final String TEMPLATE_ENGINE = "templateEngine";
+    public static final String DISABLE_EXAMPLES_OPTION = "disableExample";
 
     public static final String IS_ENUM_EXT_NAME = PREFIX_IS + "enum";
     public static final String IS_ALIAS_EXT_NAME = PREFIX_IS + "alias";

@@ -1,7 +1,7 @@
 /*
  * Swagger Petstore
  *
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -9,18 +9,14 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
+using IO.Swagger.Security;
+using Microsoft.AspNetCore.Authorization;
 using IO.Swagger.Models;
 
 namespace IO.Swagger.Controllers
@@ -28,7 +24,8 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class UserApiController : Controller
+    [ApiController]
+    public class UserApiController : ControllerBase
     { 
         /// <summary>
         /// Create user
@@ -37,7 +34,7 @@ namespace IO.Swagger.Controllers
         /// <param name="body">Created user object</param>
         /// <response code="0">successful operation</response>
         [HttpPost]
-        [Route("/v2/user")]
+        [Route("/user")]
         [ValidateModelState]
         [SwaggerOperation("CreateUser")]
         public virtual IActionResult CreateUser([FromBody]User body)
@@ -51,11 +48,10 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        
         /// <param name="body">List of user object</param>
         /// <response code="0">successful operation</response>
         [HttpPost]
-        [Route("/v2/user/createWithArray")]
+        [Route("/user/createWithArray")]
         [ValidateModelState]
         [SwaggerOperation("CreateUsersWithArrayInput")]
         public virtual IActionResult CreateUsersWithArrayInput([FromBody]List<User> body)
@@ -69,11 +65,10 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        
         /// <param name="body">List of user object</param>
         /// <response code="0">successful operation</response>
         [HttpPost]
-        [Route("/v2/user/createWithList")]
+        [Route("/user/createWithList")]
         [ValidateModelState]
         [SwaggerOperation("CreateUsersWithListInput")]
         public virtual IActionResult CreateUsersWithListInput([FromBody]List<User> body)
@@ -92,7 +87,7 @@ namespace IO.Swagger.Controllers
         /// <response code="400">Invalid username supplied</response>
         /// <response code="404">User not found</response>
         [HttpDelete]
-        [Route("/v2/user/{username}")]
+        [Route("/user/{username}")]
         [ValidateModelState]
         [SwaggerOperation("DeleteUser")]
         public virtual IActionResult DeleteUser([FromRoute][Required]string username)
@@ -109,13 +104,12 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Get user by user name
         /// </summary>
-        
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid username supplied</response>
         /// <response code="404">User not found</response>
         [HttpGet]
-        [Route("/v2/user/{username}")]
+        [Route("/user/{username}")]
         [ValidateModelState]
         [SwaggerOperation("GetUserByName")]
         [SwaggerResponse(statusCode: 200, type: typeof(User), description: "successful operation")]
@@ -130,6 +124,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
             string exampleJson = null;
+            exampleJson = "{\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"userStatus\" : 6,\n  \"phone\" : \"phone\",\n  \"id\" : 0,\n  \"email\" : \"email\",\n  \"username\" : \"username\"\n}";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<User>(exampleJson)
@@ -140,13 +135,12 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Logs user into the system
         /// </summary>
-        
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid username/password supplied</response>
         [HttpGet]
-        [Route("/v2/user/login")]
+        [Route("/user/login")]
         [ValidateModelState]
         [SwaggerOperation("LoginUser")]
         [SwaggerResponse(statusCode: 200, type: typeof(string), description: "successful operation")]
@@ -158,6 +152,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
             string exampleJson = null;
+            exampleJson = "\"\"";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<string>(exampleJson)
@@ -168,10 +163,9 @@ namespace IO.Swagger.Controllers
         /// <summary>
         /// Logs out current logged in user session
         /// </summary>
-        
         /// <response code="0">successful operation</response>
         [HttpGet]
-        [Route("/v2/user/logout")]
+        [Route("/user/logout")]
         [ValidateModelState]
         [SwaggerOperation("LogoutUser")]
         public virtual IActionResult LogoutUser()
@@ -187,14 +181,14 @@ namespace IO.Swagger.Controllers
         /// </summary>
         /// <remarks>This can only be done by the logged in user.</remarks>
         /// <param name="body">Updated user object</param>
-        /// <param name="username">name that need to be deleted</param>
+        /// <param name="username">name that need to be updated</param>
         /// <response code="400">Invalid user supplied</response>
         /// <response code="404">User not found</response>
         [HttpPut]
-        [Route("/v2/user/{username}")]
+        [Route("/user/{username}")]
         [ValidateModelState]
-        [SwaggerOperation("UpdateUser")]
-        public virtual IActionResult UpdateUser([FromBody]User body, [FromRoute][Required]string username)
+        [SwaggerOperation("UserUsernamePut")]
+        public virtual IActionResult UserUsernamePut([FromBody]User body, [FromRoute][Required]string username)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);

@@ -27,6 +27,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/boolean")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   Boolean fakeOuterBooleanSerialize(Boolean body);
@@ -38,6 +39,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/composite")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   OuterComposite fakeOuterCompositeSerialize(OuterComposite body);
@@ -49,6 +51,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/number")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   BigDecimal fakeOuterNumberSerialize(BigDecimal body);
@@ -60,6 +63,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/outer/string")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   String fakeOuterStringSerialize(String body);
@@ -71,7 +75,8 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("PATCH /fake")
   @Headers({
-      "Accept: */*",
+      "Content-Type: application/json",
+      "Accept: application/json",
   })
   Client testClientModel(Client body);
   /**
@@ -81,6 +86,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake")
   @Headers({
+      "Content-Type: application/xml; charset&#x3D;utf-8",
       "Accept: */*",
   })
   void testEndpointParameters(Body2 body);
@@ -153,6 +159,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/enum/form")
   @Headers({
+      "Content-Type: */*",
       "Accept: */*",
   })
   void testEnumRequestBody(Body4 body);
@@ -163,6 +170,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/inline-additionalProperties")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void testInlineAdditionalProperties(Map<String, String> body);
@@ -173,6 +181,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake/jsonFormData")
   @Headers({
+      "Content-Type: application/json",
       "Accept: */*",
   })
   void testJsonFormData(Body5 body);
