@@ -15,7 +15,7 @@ package io.swagger.client.auth;
 
 import io.swagger.client.Pair;
 
-import com.squareup.okhttp.Credentials;
+import okhttp3.Credentials;
 
 import java.util.Map;
 import java.util.List;
