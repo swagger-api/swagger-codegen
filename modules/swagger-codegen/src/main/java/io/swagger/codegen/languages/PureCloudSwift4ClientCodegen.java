@@ -28,9 +28,6 @@ public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
     public PureCloudSwift4ClientCodegen() {
         super();
 
-        // Override output folder
-        sourceFolder = "Classes" + File.separator + "PureCloud";
-
         // Use default templates
         embeddedTemplateDir = templateDir = "Swift";
 
@@ -42,8 +39,6 @@ public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
         typeMapping.put("LocalDateTime", "String");
 
         // Documentation
-
-        // make api and model doc path available in mustache template
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
         additionalProperties.put("apiDocPath", apiDocPath);

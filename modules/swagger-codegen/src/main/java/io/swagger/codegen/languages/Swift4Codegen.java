@@ -41,7 +41,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
     protected boolean lenientTypeCast = false;
     protected boolean swiftUseApiNamespace;
     protected String[] responseAs = new String[0];
-    protected String sourceFolder = "Classes" + File.separator + "Swaggers";
+    protected String sourceFolder = "src";
 
     @Override
     public CodegenType getTag() {
@@ -234,7 +234,8 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         } else {
             additionalProperties.put(PROJECT_NAME, projectName);
         }
-        sourceFolder = projectName + File.separator + sourceFolder;
+        // Quit changing the path where it can't be overridden!
+//        sourceFolder = projectName + File.separator + sourceFolder;
 
         // Setup unwrapRequired option, which makes all the
         // properties with "required" non-optional
