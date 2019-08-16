@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,38 +21,38 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * NumberOnly
  */
 
 @XmlRootElement(name = "NumberOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "NumberOnly")public class NumberOnly {
-
+@JacksonXmlRootElement(localName = "NumberOnly")
+public class NumberOnly {
   @JsonProperty("JustNumber")
   @JacksonXmlProperty(localName = "JustNumber")
-  @XmlElement(name="JustNumber")
-
+  @XmlElement(name = "JustNumber")
   private BigDecimal justNumber = null;
+
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get justNumber
-  * @return justNumber
+   /**
+   * Get justNumber
+   * @return justNumber
   **/
   @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
+
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -66,8 +67,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justNumber);
+    return Objects.hash(justNumber);
   }
+
 
   @Override
   public String toString() {
