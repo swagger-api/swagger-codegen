@@ -14,38 +14,15 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.client.model.Animal;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.client.model.OneOfAllPetsResponseItems;
+import java.util.ArrayList;
+import java.util.List;
 /**
- * Cat
+ * AllPetsResponse
  */
 
 
-public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
-  @JsonProperty("declawed")
-  private Boolean declawed = null;
-
-  public Cat declawed(Boolean declawed) {
-    this.declawed = declawed;
-    return this;
-  }
-
-   /**
-   * Get declawed
-   * @return declawed
-  **/
-  @Schema(description = "")
-  public Boolean isDeclawed() {
-    return declawed;
-  }
-
-  public void setDeclawed(Boolean declawed) {
-    this.declawed = declawed;
-  }
-
+public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> {
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -55,23 +32,20 @@ public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSingl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Cat cat = (Cat) o;
-    return Objects.equals(this.declawed, cat.declawed) &&
-        super.equals(o);
+    return super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(declawed, super.hashCode());
+    return Objects.hash(super.hashCode());
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Cat {\n");
+    sb.append("class AllPetsResponse {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
     sb.append("}");
     return sb.toString();
   }
