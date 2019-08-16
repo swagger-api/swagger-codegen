@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -20,34 +21,37 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * HasOnlyReadOnly
  */
 
-public class HasOnlyReadOnly {
 
+public class HasOnlyReadOnly {
   @SerializedName("bar")
   private String bar = null;
 
   @SerializedName("foo")
   private String foo = null;
-  /**
-  * Get bar
-  * @return bar
+
+   /**
+   * Get bar
+   * @return bar
   **/
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  /**
-  * Get foo
-  * @return foo
+
+   /**
+   * Get foo
+   * @return foo
   **/
   @Schema(description = "")
   public String getFoo() {
     return foo;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,8 +67,9 @@ public class HasOnlyReadOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(bar, foo);
+    return Objects.hash(bar, foo);
   }
+
 
   @Override
   public String toString() {

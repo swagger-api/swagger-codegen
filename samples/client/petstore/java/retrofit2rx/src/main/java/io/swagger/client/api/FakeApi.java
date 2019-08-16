@@ -118,7 +118,7 @@ public interface FakeApi {
    */
   @GET("fake")
   Observable<Void> testEnumParameters(
-                @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Path("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Path("enum_query_string") String enumQueryString                ,     @retrofit2.http.Path("enum_query_integer") Integer enumQueryInteger                
+                @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Query("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Query("enum_query_string") String enumQueryString                ,     @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger                
   );
 
   /**
