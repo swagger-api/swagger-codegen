@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Animal
  */
@@ -31,52 +31,52 @@ import javax.validation.Valid;
   @JsonSubTypes.Type(value = Dog.class, name = "Dog"),
   @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
 })
+
 public class Animal {
-
   @JsonProperty("className")
-
   private String className = null;
 
   @JsonProperty("color")
-
   private String color = "red";
+
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
-  
-
-  /**
-  * Get className
-  * @return className
+   /**
+   * Get className
+   * @return className
   **/
-    @NotNull
-    @Schema(required = true, description = "")
+  @NotNull
+  @Schema(required = true, description = "")
   public String getClassName() {
     return className;
   }
+
   public void setClassName(String className) {
     this.className = className;
   }
+
   public Animal color(String color) {
     this.color = color;
     return this;
   }
 
-  
-
-  /**
-  * Get color
-  * @return color
+   /**
+   * Get color
+   * @return color
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getColor() {
     return color;
   }
+
   public void setColor(String color) {
     this.color = color;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -92,8 +92,9 @@ public class Animal {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(className, color);
+    return Objects.hash(className, color);
   }
+
 
   @Override
   public String toString() {

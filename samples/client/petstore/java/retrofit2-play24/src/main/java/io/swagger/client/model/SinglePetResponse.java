@@ -17,46 +17,36 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ArrayOfArrayOfNumberOnly
+ * SinglePetResponse
  */
 
 
-public class ArrayOfArrayOfNumberOnly {
-  @JsonProperty("ArrayArrayNumber")
-  private List<List<BigDecimal>> arrayArrayNumber = null;
+public class SinglePetResponse {
+  @JsonProperty("pet")
+  private OneOfSinglePetResponsePet pet = null;
 
-  public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
-    this.arrayArrayNumber = arrayArrayNumber;
-    return this;
-  }
-
-  public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
-    if (this.arrayArrayNumber == null) {
-      this.arrayArrayNumber = new ArrayList<>();
-    }
-    this.arrayArrayNumber.add(arrayArrayNumberItem);
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
     return this;
   }
 
    /**
-   * Get arrayArrayNumber
-   * @return arrayArrayNumber
+   * Get pet
+   * @return pet
   **/
   @Valid
   @Schema(description = "")
-  public List<List<BigDecimal>> getArrayArrayNumber() {
-    return arrayArrayNumber;
+  public OneOfSinglePetResponsePet getPet() {
+    return pet;
   }
 
-  public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
-    this.arrayArrayNumber = arrayArrayNumber;
+  public void setPet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
   }
 
 
@@ -68,22 +58,22 @@ public class ArrayOfArrayOfNumberOnly {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ArrayOfArrayOfNumberOnly arrayOfArrayOfNumberOnly = (ArrayOfArrayOfNumberOnly) o;
-    return Objects.equals(this.arrayArrayNumber, arrayOfArrayOfNumberOnly.arrayArrayNumber);
+    SinglePetResponse singlePetResponse = (SinglePetResponse) o;
+    return Objects.equals(this.pet, singlePetResponse.pet);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayArrayNumber);
+    return Objects.hash(pet);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ArrayOfArrayOfNumberOnly {\n");
+    sb.append("class SinglePetResponse {\n");
     
-    sb.append("    arrayArrayNumber: ").append(toIndentedString(arrayArrayNumber)).append("\n");
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -13,194 +13,188 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * User
  */
 
+
 public class User {
-
   @JsonProperty("id")
-
   private Long id = null;
 
   @JsonProperty("username")
-
   private String username = null;
 
   @JsonProperty("firstName")
-
   private String firstName = null;
 
   @JsonProperty("lastName")
-
   private String lastName = null;
 
   @JsonProperty("email")
-
   private String email = null;
 
   @JsonProperty("password")
-
   private String password = null;
 
   @JsonProperty("phone")
-
   private String phone = null;
 
   @JsonProperty("userStatus")
-
   private Integer userStatus = null;
+
   public User id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public User username(String username) {
     this.username = username;
     return this;
   }
 
-  
-
-  /**
-  * Get username
-  * @return username
+   /**
+   * Get username
+   * @return username
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getUsername() {
     return username;
   }
+
   public void setUsername(String username) {
     this.username = username;
   }
+
   public User firstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
 
-  
-
-  /**
-  * Get firstName
-  * @return firstName
+   /**
+   * Get firstName
+   * @return firstName
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getFirstName() {
     return firstName;
   }
+
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
+
   public User lastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
 
-  
-
-  /**
-  * Get lastName
-  * @return lastName
+   /**
+   * Get lastName
+   * @return lastName
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getLastName() {
     return lastName;
   }
+
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
+
   public User email(String email) {
     this.email = email;
     return this;
   }
 
-  
-
-  /**
-  * Get email
-  * @return email
+   /**
+   * Get email
+   * @return email
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getEmail() {
     return email;
   }
+
   public void setEmail(String email) {
     this.email = email;
   }
+
   public User password(String password) {
     this.password = password;
     return this;
   }
 
-  
-
-  /**
-  * Get password
-  * @return password
+   /**
+   * Get password
+   * @return password
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getPassword() {
     return password;
   }
+
   public void setPassword(String password) {
     this.password = password;
   }
+
   public User phone(String phone) {
     this.phone = phone;
     return this;
   }
 
-  
-
-  /**
-  * Get phone
-  * @return phone
+   /**
+   * Get phone
+   * @return phone
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getPhone() {
     return phone;
   }
+
   public void setPhone(String phone) {
     this.phone = phone;
   }
+
   public User userStatus(Integer userStatus) {
     this.userStatus = userStatus;
     return this;
   }
 
-  
-
-  /**
-  * User Status
-  * @return userStatus
+   /**
+   * User Status
+   * @return userStatus
   **/
-    @Schema(description = "User Status")
+  @Schema(description = "User Status")
   public Integer getUserStatus() {
     return userStatus;
   }
+
   public void setUserStatus(Integer userStatus) {
     this.userStatus = userStatus;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -222,8 +216,9 @@ public class User {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
+    return Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
   }
+
 
   @Override
   public String toString() {

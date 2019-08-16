@@ -14,17 +14,17 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import io.swagger.client.model.Animal;
+import io.swagger.client.model.OneOfAllPetsResponseItems;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * AnimalFarm
+ * AllPetsResponse
  */
 
 
-public class AnimalFarm extends ArrayList<Animal> {
+public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> {
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -46,7 +46,7 @@ public class AnimalFarm extends ArrayList<Animal> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AnimalFarm {\n");
+    sb.append("class AllPetsResponse {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();

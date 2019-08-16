@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,16 +23,15 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * MapTest
  */
 
+
 public class MapTest {
-
   @JsonProperty("map_map_of_string")
-
   private Map<String, Map<String, String>> mapMapOfString = null;
+
   /**
    * Gets or Sets inner
    */
@@ -63,16 +63,14 @@ public class MapTest {
       return null;
     }
 
-  }
-  @JsonProperty("map_of_enum_string")
-
+  }  @JsonProperty("map_of_enum_string")
   private Map<String, InnerEnum> mapOfEnumString = null;
+
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
     return this;
   }
 
-  
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
     if (this.mapMapOfString == null) {
       this.mapMapOfString = new HashMap<>();
@@ -80,24 +78,26 @@ public class MapTest {
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
-  /**
-  * Get mapMapOfString
-  * @return mapMapOfString
+
+   /**
+   * Get mapMapOfString
+   * @return mapMapOfString
   **/
-    @Valid
-    @Schema(description = "")
+  @Valid
+  @Schema(description = "")
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
+
   public void setMapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
     this.mapMapOfString = mapMapOfString;
   }
+
   public MapTest mapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
     return this;
   }
 
-  
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
     if (this.mapOfEnumString == null) {
       this.mapOfEnumString = new HashMap<>();
@@ -105,17 +105,21 @@ public class MapTest {
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
-  /**
-  * Get mapOfEnumString
-  * @return mapOfEnumString
+
+   /**
+   * Get mapOfEnumString
+   * @return mapOfEnumString
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
+
   public void setMapOfEnumString(Map<String, InnerEnum> mapOfEnumString) {
     this.mapOfEnumString = mapOfEnumString;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -131,8 +135,9 @@ public class MapTest {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(mapMapOfString, mapOfEnumString);
+    return Objects.hash(mapMapOfString, mapOfEnumString);
   }
+
 
   @Override
   public String toString() {
