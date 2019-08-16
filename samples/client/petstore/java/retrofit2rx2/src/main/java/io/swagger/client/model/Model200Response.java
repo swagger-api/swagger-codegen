@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -20,54 +21,55 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * Model for testing model name starting with number
  */
 @Schema(description = "Model for testing model name starting with number")
-public class Model200Response {
 
+public class Model200Response {
   @SerializedName("name")
   private Integer name = null;
 
   @SerializedName("class")
   private String propertyClass = null;
+
   public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
   @Schema(description = "")
   public Integer getName() {
     return name;
   }
+
   public void setName(Integer name) {
     this.name = name;
   }
+
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-  
-
-  /**
-  * Get propertyClass
-  * @return propertyClass
+   /**
+   * Get propertyClass
+   * @return propertyClass
   **/
   @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
+
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -83,8 +85,9 @@ public class Model200Response {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(name, propertyClass);
+    return Objects.hash(name, propertyClass);
   }
+
 
   @Override
   public String toString() {

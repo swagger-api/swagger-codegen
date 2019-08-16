@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,10 +23,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Body4
  */
+
 
 public class Body4 {
   /**
@@ -69,9 +70,9 @@ public class Body4 {
         return EnumFormStringArrayEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("enum_form_string_array")
+  }  @SerializedName("enum_form_string_array")
   private List<EnumFormStringArrayEnum> enumFormStringArray = null;
+
   /**
    * Form parameter enum test (string)
    */
@@ -114,9 +115,9 @@ public class Body4 {
         return EnumFormStringEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("enum_form_string")
+  }  @SerializedName("enum_form_string")
   private EnumFormStringEnum enumFormString = EnumFormStringEnum._EFG;
+
   /**
    * Query parameter enum test (double)
    */
@@ -158,9 +159,9 @@ public class Body4 {
         return EnumQueryDoubleEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("enum_query_double")
+  }  @SerializedName("enum_query_double")
   private EnumQueryDoubleEnum enumQueryDouble = null;
+
   public Body4 enumFormStringArray(List<EnumFormStringArrayEnum> enumFormStringArray) {
     this.enumFormStringArray = enumFormStringArray;
     return this;
@@ -174,53 +175,56 @@ public class Body4 {
     return this;
   }
 
-  /**
-  * Form parameter enum test (string array)
-  * @return enumFormStringArray
+   /**
+   * Form parameter enum test (string array)
+   * @return enumFormStringArray
   **/
   @Schema(description = "Form parameter enum test (string array)")
   public List<EnumFormStringArrayEnum> getEnumFormStringArray() {
     return enumFormStringArray;
   }
+
   public void setEnumFormStringArray(List<EnumFormStringArrayEnum> enumFormStringArray) {
     this.enumFormStringArray = enumFormStringArray;
   }
+
   public Body4 enumFormString(EnumFormStringEnum enumFormString) {
     this.enumFormString = enumFormString;
     return this;
   }
 
-  
-
-  /**
-  * Form parameter enum test (string)
-  * @return enumFormString
+   /**
+   * Form parameter enum test (string)
+   * @return enumFormString
   **/
   @Schema(description = "Form parameter enum test (string)")
   public EnumFormStringEnum getEnumFormString() {
     return enumFormString;
   }
+
   public void setEnumFormString(EnumFormStringEnum enumFormString) {
     this.enumFormString = enumFormString;
   }
+
   public Body4 enumQueryDouble(EnumQueryDoubleEnum enumQueryDouble) {
     this.enumQueryDouble = enumQueryDouble;
     return this;
   }
 
-  
-
-  /**
-  * Query parameter enum test (double)
-  * @return enumQueryDouble
+   /**
+   * Query parameter enum test (double)
+   * @return enumQueryDouble
   **/
   @Schema(description = "Query parameter enum test (double)")
   public EnumQueryDoubleEnum getEnumQueryDouble() {
     return enumQueryDouble;
   }
+
   public void setEnumQueryDouble(EnumQueryDoubleEnum enumQueryDouble) {
     this.enumQueryDouble = enumQueryDouble;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -237,8 +241,9 @@ public class Body4 {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(enumFormStringArray, enumFormString, enumQueryDouble);
+    return Objects.hash(enumFormStringArray, enumFormString, enumQueryDouble);
   }
+
 
   @Override
   public String toString() {

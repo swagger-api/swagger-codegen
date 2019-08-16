@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -21,33 +22,34 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.client.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * Dog
  */
 
-public class Dog extends Animal {
 
+public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("breed")
   private String breed = null;
+
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
-  
-
-  /**
-  * Get breed
-  * @return breed
+   /**
+   * Get breed
+   * @return breed
   **/
   @Schema(description = "")
   public String getBreed() {
     return breed;
   }
+
   public void setBreed(String breed) {
     this.breed = breed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,8 +65,9 @@ public class Dog extends Animal {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(breed, super.hashCode());
+    return Objects.hash(breed, super.hashCode());
   }
+
 
   @Override
   public String toString() {
