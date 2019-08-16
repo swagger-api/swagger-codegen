@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,57 +21,56 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.File;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Body1
  */
 
+
 public class Body1 {
-
   @JsonProperty("additionalMetadata")
-
   private String additionalMetadata = null;
 
   @JsonProperty("file")
-
   private File file = null;
+
   public Body1 additionalMetadata(String additionalMetadata) {
     this.additionalMetadata = additionalMetadata;
     return this;
   }
 
-  
-
-  /**
-  * Additional data to pass to server
-  * @return additionalMetadata
+   /**
+   * Additional data to pass to server
+   * @return additionalMetadata
   **/
-    @Schema(description = "Additional data to pass to server")
+  @Schema(description = "Additional data to pass to server")
   public String getAdditionalMetadata() {
     return additionalMetadata;
   }
+
   public void setAdditionalMetadata(String additionalMetadata) {
     this.additionalMetadata = additionalMetadata;
   }
+
   public Body1 file(File file) {
     this.file = file;
     return this;
   }
 
-  
-
-  /**
-  * file to upload
-  * @return file
+   /**
+   * file to upload
+   * @return file
   **/
-    @Valid
-    @Schema(description = "file to upload")
+  @Valid
+  @Schema(description = "file to upload")
   public File getFile() {
     return file;
   }
+
   public void setFile(File file) {
     this.file = file;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -86,8 +86,9 @@ public class Body1 {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(additionalMetadata, file);
+    return Objects.hash(additionalMetadata, Objects.hashCode(file));
   }
+
 
   @Override
   public String toString() {

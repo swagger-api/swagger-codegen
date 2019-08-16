@@ -18,45 +18,54 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * ArrayOfArrayOfNumberOnly
+ * Body6
  */
 
 
-public class ArrayOfArrayOfNumberOnly {
-  @JsonProperty("ArrayArrayNumber")
-  private List<List<BigDecimal>> arrayArrayNumber = null;
+public class Body6 {
+  @JsonProperty("name")
+  private String name = null;
 
-  public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
-    this.arrayArrayNumber = arrayArrayNumber;
-    return this;
-  }
+  @JsonProperty("status")
+  private String status = null;
 
-  public ArrayOfArrayOfNumberOnly addArrayArrayNumberItem(List<BigDecimal> arrayArrayNumberItem) {
-    if (this.arrayArrayNumber == null) {
-      this.arrayArrayNumber = new ArrayList<>();
-    }
-    this.arrayArrayNumber.add(arrayArrayNumberItem);
+  public Body6 name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Get arrayArrayNumber
-   * @return arrayArrayNumber
+   * Updated name of the animal
+   * @return name
   **/
-  @Valid
-  @Schema(description = "")
-  public List<List<BigDecimal>> getArrayArrayNumber() {
-    return arrayArrayNumber;
+  @Schema(description = "Updated name of the animal")
+  public String getName() {
+    return name;
   }
 
-  public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
-    this.arrayArrayNumber = arrayArrayNumber;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Body6 status(String status) {
+    this.status = status;
+    return this;
+  }
+
+   /**
+   * Updated status of the animal
+   * @return status
+  **/
+  @Schema(description = "Updated status of the animal")
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
@@ -68,22 +77,24 @@ public class ArrayOfArrayOfNumberOnly {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ArrayOfArrayOfNumberOnly arrayOfArrayOfNumberOnly = (ArrayOfArrayOfNumberOnly) o;
-    return Objects.equals(this.arrayArrayNumber, arrayOfArrayOfNumberOnly.arrayArrayNumber);
+    Body6 body6 = (Body6) o;
+    return Objects.equals(this.name, body6.name) &&
+        Objects.equals(this.status, body6.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayArrayNumber);
+    return Objects.hash(name, status);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ArrayOfArrayOfNumberOnly {\n");
+    sb.append("class Body6 {\n");
     
-    sb.append("    arrayArrayNumber: ").append(toIndentedString(arrayArrayNumber)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }
