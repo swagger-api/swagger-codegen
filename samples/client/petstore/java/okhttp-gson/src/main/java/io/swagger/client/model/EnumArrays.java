@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,10 +23,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * EnumArrays
  */
+
 
 public class EnumArrays {
   /**
@@ -69,9 +70,9 @@ public class EnumArrays {
         return JustSymbolEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("just_symbol")
+  }  @SerializedName("just_symbol")
   private JustSymbolEnum justSymbol = null;
+
   /**
    * Gets or Sets arrayEnum
    */
@@ -113,27 +114,27 @@ public class EnumArrays {
         return ArrayEnumEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("array_enum")
+  }  @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
+
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-  
-
-  /**
-  * Get justSymbol
-  * @return justSymbol
+   /**
+   * Get justSymbol
+   * @return justSymbol
   **/
   @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
+
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
+
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
@@ -147,17 +148,20 @@ public class EnumArrays {
     return this;
   }
 
-  /**
-  * Get arrayEnum
-  * @return arrayEnum
+   /**
+   * Get arrayEnum
+   * @return arrayEnum
   **/
   @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
+
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -173,8 +177,9 @@ public class EnumArrays {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justSymbol, arrayEnum);
+    return Objects.hash(justSymbol, arrayEnum);
   }
+
 
   @Override
   public String toString() {

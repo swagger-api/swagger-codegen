@@ -14,41 +14,15 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.IOException;
-import java.math.BigDecimal;
+import io.swagger.client.model.OneOfAllPetsResponseItems;
+import java.util.ArrayList;
+import java.util.List;
 /**
- * NumberOnly
+ * AllPetsResponse
  */
 
 
-public class NumberOnly {
-  @SerializedName("JustNumber")
-  private BigDecimal justNumber = null;
-
-  public NumberOnly justNumber(BigDecimal justNumber) {
-    this.justNumber = justNumber;
-    return this;
-  }
-
-   /**
-   * Get justNumber
-   * @return justNumber
-  **/
-  @Schema(description = "")
-  public BigDecimal getJustNumber() {
-    return justNumber;
-  }
-
-  public void setJustNumber(BigDecimal justNumber) {
-    this.justNumber = justNumber;
-  }
-
+public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> {
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -58,22 +32,20 @@ public class NumberOnly {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NumberOnly numberOnly = (NumberOnly) o;
-    return Objects.equals(this.justNumber, numberOnly.justNumber);
+    return super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(justNumber);
+    return Objects.hash(super.hashCode());
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NumberOnly {\n");
-    
-    sb.append("    justNumber: ").append(toIndentedString(justNumber)).append("\n");
+    sb.append("class AllPetsResponse {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();
   }

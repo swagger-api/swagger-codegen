@@ -19,34 +19,34 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-import java.math.BigDecimal;
 /**
- * NumberOnly
+ * SinglePetResponse
  */
 
 
-public class NumberOnly {
-  @SerializedName("JustNumber")
-  private BigDecimal justNumber = null;
+public class SinglePetResponse {
+  @SerializedName("pet")
+  private OneOfSinglePetResponsePet pet = null;
 
-  public NumberOnly justNumber(BigDecimal justNumber) {
-    this.justNumber = justNumber;
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
     return this;
   }
 
    /**
-   * Get justNumber
-   * @return justNumber
+   * Get pet
+   * @return pet
   **/
   @Schema(description = "")
-  public BigDecimal getJustNumber() {
-    return justNumber;
+  public OneOfSinglePetResponsePet getPet() {
+    return pet;
   }
 
-  public void setJustNumber(BigDecimal justNumber) {
-    this.justNumber = justNumber;
+  public void setPet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
   }
 
 
@@ -58,22 +58,22 @@ public class NumberOnly {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NumberOnly numberOnly = (NumberOnly) o;
-    return Objects.equals(this.justNumber, numberOnly.justNumber);
+    SinglePetResponse singlePetResponse = (SinglePetResponse) o;
+    return Objects.equals(this.pet, singlePetResponse.pet);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(justNumber);
+    return Objects.hash(pet);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NumberOnly {\n");
+    sb.append("class SinglePetResponse {\n");
     
-    sb.append("    justNumber: ").append(toIndentedString(justNumber)).append("\n");
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }
