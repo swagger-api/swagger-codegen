@@ -13,92 +13,91 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * ModelApiResponse
  */
 
 @XmlRootElement(name = "ModelApiResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ModelApiResponse")public class ModelApiResponse {
-
+@JacksonXmlRootElement(localName = "ModelApiResponse")
+public class ModelApiResponse {
   @JsonProperty("code")
   @JacksonXmlProperty(localName = "code")
-  @XmlElement(name="code")
-
+  @XmlElement(name = "code")
   private Integer code = null;
 
   @JsonProperty("type")
   @JacksonXmlProperty(localName = "type")
-  @XmlElement(name="type")
-
+  @XmlElement(name = "type")
   private String type = null;
 
   @JsonProperty("message")
   @JacksonXmlProperty(localName = "message")
-  @XmlElement(name="message")
-
+  @XmlElement(name = "message")
   private String message = null;
+
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
 
-  
-
-  /**
-  * Get code
-  * @return code
+   /**
+   * Get code
+   * @return code
   **/
   @Schema(description = "")
   public Integer getCode() {
     return code;
   }
+
   public void setCode(Integer code) {
     this.code = code;
   }
+
   public ModelApiResponse type(String type) {
     this.type = type;
     return this;
   }
 
-  
-
-  /**
-  * Get type
-  * @return type
+   /**
+   * Get type
+   * @return type
   **/
   @Schema(description = "")
   public String getType() {
     return type;
   }
+
   public void setType(String type) {
     this.type = type;
   }
+
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
   }
 
-  
-
-  /**
-  * Get message
-  * @return message
+   /**
+   * Get message
+   * @return message
   **/
   @Schema(description = "")
   public String getMessage() {
     return message;
   }
+
   public void setMessage(String message) {
     this.message = message;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -115,8 +114,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(code, type, message);
+    return Objects.hash(code, type, message);
   }
+
 
   @Override
   public String toString() {

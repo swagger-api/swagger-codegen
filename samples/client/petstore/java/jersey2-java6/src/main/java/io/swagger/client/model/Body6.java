@@ -17,56 +17,55 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * Body6
  */
 
+
 public class Body6 {
-
   @JsonProperty("name")
-
   private String name = null;
 
   @JsonProperty("status")
-
   private String status = null;
+
   public Body6 name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Updated name of the animal
-  * @return name
+   /**
+   * Updated name of the animal
+   * @return name
   **/
   @Schema(description = "Updated name of the animal")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
   public Body6 status(String status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * Updated status of the animal
-  * @return status
+   /**
+   * Updated status of the animal
+   * @return status
   **/
   @Schema(description = "Updated status of the animal")
   public String getStatus() {
     return status;
   }
+
   public void setStatus(String status) {
     this.status = status;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -84,6 +83,7 @@ public class Body6 {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(name, status);
   }
+
 
   @Override
   public String toString() {

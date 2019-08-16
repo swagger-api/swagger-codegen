@@ -17,34 +17,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * Client
  */
 
+
 public class Client {
-
   @JsonProperty("client")
-
   private String client = null;
+
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-  
-
-  /**
-  * Get client
-  * @return client
+   /**
+   * Get client
+   * @return client
   **/
   @Schema(description = "")
   public String getClient() {
     return client;
   }
+
   public void setClient(String client) {
     this.client = client;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -61,6 +61,7 @@ public class Client {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(client);
   }
+
 
   @Override
   public String toString() {

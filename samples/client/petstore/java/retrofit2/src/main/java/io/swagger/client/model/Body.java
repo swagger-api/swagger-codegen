@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -20,54 +21,55 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * Body
  */
 
-public class Body {
 
+public class Body {
   @SerializedName("name")
   private String name = null;
 
   @SerializedName("status")
   private String status = null;
+
   public Body name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Updated name of the pet
-  * @return name
+   /**
+   * Updated name of the pet
+   * @return name
   **/
   @Schema(description = "Updated name of the pet")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
   public Body status(String status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * Updated status of the pet
-  * @return status
+   /**
+   * Updated status of the pet
+   * @return status
   **/
   @Schema(description = "Updated status of the pet")
   public String getStatus() {
     return status;
   }
+
   public void setStatus(String status) {
     this.status = status;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -83,8 +85,9 @@ public class Body {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(name, status);
+    return Objects.hash(name, status);
   }
+
 
   @Override
   public String toString() {

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,38 +21,34 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.threeten.bp.OffsetDateTime;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Order
  */
 
 @XmlRootElement(name = "Order")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Order")public class Order {
-
+@JacksonXmlRootElement(localName = "Order")
+public class Order {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
-  @XmlElement(name="id")
-
+  @XmlElement(name = "id")
   private Long id = null;
 
   @JsonProperty("petId")
   @JacksonXmlProperty(localName = "petId")
-  @XmlElement(name="petId")
-
+  @XmlElement(name = "petId")
   private Long petId = null;
 
   @JsonProperty("quantity")
   @JacksonXmlProperty(localName = "quantity")
-  @XmlElement(name="quantity")
-
+  @XmlElement(name = "quantity")
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
   @JacksonXmlProperty(localName = "shipDate")
-  @XmlElement(name="shipDate")
-
+  @XmlElement(name = "shipDate")
   private OffsetDateTime shipDate = null;
+
   /**
    * Order Status
    */
@@ -84,126 +81,125 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("status")
+  }  @JsonProperty("status")
   @JacksonXmlProperty(localName = "status")
-  @XmlElement(name="status")
-
+  @XmlElement(name = "status")
   private StatusEnum status = null;
 
   @JsonProperty("complete")
   @JacksonXmlProperty(localName = "complete")
-  @XmlElement(name="complete")
-
+  @XmlElement(name = "complete")
   private Boolean complete = false;
+
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
   @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
-  
-
-  /**
-  * Get petId
-  * @return petId
+   /**
+   * Get petId
+   * @return petId
   **/
   @Schema(description = "")
   public Long getPetId() {
     return petId;
   }
+
   public void setPetId(Long petId) {
     this.petId = petId;
   }
+
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
-  
-
-  /**
-  * Get quantity
-  * @return quantity
+   /**
+   * Get quantity
+   * @return quantity
   **/
   @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
   }
+
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
+
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
-  
-
-  /**
-  * Get shipDate
-  * @return shipDate
+   /**
+   * Get shipDate
+   * @return shipDate
   **/
   @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
+
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
+
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * Order Status
-  * @return status
+   /**
+   * Order Status
+   * @return status
   **/
   @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
+
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
-  
-
-  /**
-  * Get complete
-  * @return complete
+   /**
+   * Get complete
+   * @return complete
   **/
   @Schema(description = "")
   public Boolean isComplete() {
     return complete;
   }
+
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -223,8 +219,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
+    return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
+
 
   @Override
   public String toString() {

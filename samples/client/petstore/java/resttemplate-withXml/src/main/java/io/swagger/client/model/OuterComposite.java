@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,86 +21,84 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * OuterComposite
  */
 
 @XmlRootElement(name = "OuterComposite")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "OuterComposite")public class OuterComposite {
-
+@JacksonXmlRootElement(localName = "OuterComposite")
+public class OuterComposite {
   @JsonProperty("my_number")
   @JacksonXmlProperty(localName = "my_number")
-  @XmlElement(name="my_number")
-
+  @XmlElement(name = "my_number")
   private BigDecimal myNumber = null;
 
   @JsonProperty("my_string")
   @JacksonXmlProperty(localName = "my_string")
-  @XmlElement(name="my_string")
-
+  @XmlElement(name = "my_string")
   private String myString = null;
 
   @JsonProperty("my_boolean")
   @JacksonXmlProperty(localName = "my_boolean")
-  @XmlElement(name="my_boolean")
-
+  @XmlElement(name = "my_boolean")
   private Boolean myBoolean = null;
+
   public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get myNumber
-  * @return myNumber
+   /**
+   * Get myNumber
+   * @return myNumber
   **/
   @Schema(description = "")
   public BigDecimal getMyNumber() {
     return myNumber;
   }
+
   public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
+
   public OuterComposite myString(String myString) {
     this.myString = myString;
     return this;
   }
 
-  
-
-  /**
-  * Get myString
-  * @return myString
+   /**
+   * Get myString
+   * @return myString
   **/
   @Schema(description = "")
   public String getMyString() {
     return myString;
   }
+
   public void setMyString(String myString) {
     this.myString = myString;
   }
+
   public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
     return this;
   }
 
-  
-
-  /**
-  * Get myBoolean
-  * @return myBoolean
+   /**
+   * Get myBoolean
+   * @return myBoolean
   **/
   @Schema(description = "")
   public Boolean getMyBoolean() {
     return myBoolean;
   }
+
   public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -116,8 +115,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(myNumber, myString, myBoolean);
+    return Objects.hash(myNumber, myString, myBoolean);
   }
+
 
   @Override
   public String toString() {

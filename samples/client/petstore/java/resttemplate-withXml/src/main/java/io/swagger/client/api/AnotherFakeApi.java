@@ -64,9 +64,13 @@ public class AnotherFakeApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = {  };
+        final String[] accepts = { 
+            "application/json"
+         };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = {  };
+        final String[] contentTypes = { 
+            "application/json"
+         };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 
         String[] authNames = new String[] {  };

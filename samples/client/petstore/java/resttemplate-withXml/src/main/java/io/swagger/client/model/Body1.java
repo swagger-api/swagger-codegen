@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,62 +21,61 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.File;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Body1
  */
 
 @XmlRootElement(name = "Body1")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body1")public class Body1 {
-
+@JacksonXmlRootElement(localName = "Body1")
+public class Body1 {
   @JsonProperty("additionalMetadata")
   @JacksonXmlProperty(localName = "additionalMetadata")
-  @XmlElement(name="additionalMetadata")
-
+  @XmlElement(name = "additionalMetadata")
   private String additionalMetadata = null;
 
   @JsonProperty("file")
   @JacksonXmlProperty(localName = "file")
-  @XmlElement(name="file")
-
+  @XmlElement(name = "file")
   private File file = null;
+
   public Body1 additionalMetadata(String additionalMetadata) {
     this.additionalMetadata = additionalMetadata;
     return this;
   }
 
-  
-
-  /**
-  * Additional data to pass to server
-  * @return additionalMetadata
+   /**
+   * Additional data to pass to server
+   * @return additionalMetadata
   **/
   @Schema(description = "Additional data to pass to server")
   public String getAdditionalMetadata() {
     return additionalMetadata;
   }
+
   public void setAdditionalMetadata(String additionalMetadata) {
     this.additionalMetadata = additionalMetadata;
   }
+
   public Body1 file(File file) {
     this.file = file;
     return this;
   }
 
-  
-
-  /**
-  * file to upload
-  * @return file
+   /**
+   * file to upload
+   * @return file
   **/
   @Schema(description = "file to upload")
   public File getFile() {
     return file;
   }
+
   public void setFile(File file) {
     this.file = file;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -91,8 +91,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(additionalMetadata, file);
+    return Objects.hash(additionalMetadata, Objects.hashCode(file));
   }
+
 
   @Override
   public String toString() {

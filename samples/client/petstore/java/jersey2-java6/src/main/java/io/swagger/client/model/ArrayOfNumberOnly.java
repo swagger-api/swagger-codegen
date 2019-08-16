@@ -20,16 +20,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * ArrayOfNumberOnly
  */
 
+
 public class ArrayOfNumberOnly {
-
   @JsonProperty("ArrayNumber")
-
   private List<BigDecimal> arrayNumber = null;
+
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
@@ -37,23 +36,26 @@ public class ArrayOfNumberOnly {
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
     if (this.arrayNumber == null) {
-      this.arrayNumber = new ArrayList<BigDecimal>();
+      this.arrayNumber = new ArrayList<>();
     }
     this.arrayNumber.add(arrayNumberItem);
     return this;
   }
 
-  /**
-  * Get arrayNumber
-  * @return arrayNumber
+   /**
+   * Get arrayNumber
+   * @return arrayNumber
   **/
   @Schema(description = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
+
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -70,6 +72,7 @@ public class ArrayOfNumberOnly {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(arrayNumber);
   }
+
 
   @Override
   public String toString() {

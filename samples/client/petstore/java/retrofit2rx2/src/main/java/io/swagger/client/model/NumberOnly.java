@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -21,33 +22,34 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.math.BigDecimal;
-
 /**
  * NumberOnly
  */
 
-public class NumberOnly {
 
+public class NumberOnly {
   @SerializedName("JustNumber")
   private BigDecimal justNumber = null;
+
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get justNumber
-  * @return justNumber
+   /**
+   * Get justNumber
+   * @return justNumber
   **/
   @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
+
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -62,8 +64,9 @@ public class NumberOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justNumber);
+    return Objects.hash(justNumber);
   }
+
 
   @Override
   public String toString() {

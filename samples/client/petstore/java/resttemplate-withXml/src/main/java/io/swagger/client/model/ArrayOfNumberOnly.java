@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,22 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * ArrayOfNumberOnly
  */
 
 @XmlRootElement(name = "ArrayOfNumberOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ArrayOfNumberOnly")public class ArrayOfNumberOnly {
-
+@JacksonXmlRootElement(localName = "ArrayOfNumberOnly")
+public class ArrayOfNumberOnly {
   @JsonProperty("ArrayNumber")
-  
-  
-  @XmlElement(name="null")
-  
-
+  // Is a container wrapped=
+  // items.name=arrayNumber items.baseName=arrayNumber items.xmlName= items.xmlNamespace=
+  // items.example= items.type=BigDecimal
+  @XmlElement(name = "arrayNumber")
   private List<BigDecimal> arrayNumber = null;
+
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
@@ -51,17 +51,20 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get arrayNumber
-  * @return arrayNumber
+   /**
+   * Get arrayNumber
+   * @return arrayNumber
   **/
   @Schema(description = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
+
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -76,8 +79,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayNumber);
+    return Objects.hash(arrayNumber);
   }
+
 
   @Override
   public String toString() {

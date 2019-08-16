@@ -17,46 +17,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * ReadOnlyFirst
  */
 
+
 public class ReadOnlyFirst {
-
   @JsonProperty("bar")
-
   private String bar = null;
 
   @JsonProperty("baz")
-
   private String baz = null;
-  /**
-  * Get bar
-  * @return bar
+
+   /**
+   * Get bar
+   * @return bar
   **/
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
+
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
-  
-
-  /**
-  * Get baz
-  * @return baz
+   /**
+   * Get baz
+   * @return baz
   **/
   @Schema(description = "")
   public String getBaz() {
     return baz;
   }
+
   public void setBaz(String baz) {
     this.baz = baz;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -74,6 +74,7 @@ public class ReadOnlyFirst {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(bar, baz);
   }
+
 
   @Override
   public String toString() {

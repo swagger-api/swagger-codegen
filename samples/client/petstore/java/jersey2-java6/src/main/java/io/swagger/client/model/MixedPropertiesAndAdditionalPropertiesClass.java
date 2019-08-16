@@ -18,89 +18,89 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.client.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import org.threeten.bp.OffsetDateTime;
-
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
+
 public class MixedPropertiesAndAdditionalPropertiesClass {
-
   @JsonProperty("uuid")
-
   private UUID uuid = null;
 
   @JsonProperty("dateTime")
-
   private OffsetDateTime dateTime = null;
 
   @JsonProperty("map")
-
   private Map<String, Animal> map = null;
+
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
-  
-
-  /**
-  * Get uuid
-  * @return uuid
+   /**
+   * Get uuid
+   * @return uuid
   **/
   @Schema(description = "")
   public UUID getUuid() {
     return uuid;
   }
+
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
+
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
-  
-
-  /**
-  * Get dateTime
-  * @return dateTime
+   /**
+   * Get dateTime
+   * @return dateTime
   **/
   @Schema(description = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
+
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
+
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
     return this;
   }
 
-  
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
     if (this.map == null) {
-      this.map = new HashMap<String, Animal>();
+      this.map = new HashMap<>();
     }
     this.map.put(key, mapItem);
     return this;
   }
-  /**
-  * Get map
-  * @return map
+
+   /**
+   * Get map
+   * @return map
   **/
   @Schema(description = "")
   public Map<String, Animal> getMap() {
     return map;
   }
+
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -119,6 +119,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(uuid, dateTime, map);
   }
+
 
   @Override
   public String toString() {

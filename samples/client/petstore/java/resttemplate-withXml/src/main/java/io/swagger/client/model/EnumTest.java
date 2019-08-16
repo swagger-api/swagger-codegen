@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,14 +21,14 @@ import io.swagger.client.model.OuterEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * EnumTest
  */
 
 @XmlRootElement(name = "EnumTest")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "EnumTest")public class EnumTest {
+@JacksonXmlRootElement(localName = "EnumTest")
+public class EnumTest {
   /**
    * Gets or Sets enumString
    */
@@ -60,12 +61,11 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("enum_string")
+  }  @JsonProperty("enum_string")
   @JacksonXmlProperty(localName = "enum_string")
-  @XmlElement(name="enum_string")
-
+  @XmlElement(name = "enum_string")
   private EnumStringEnum enumString = null;
+
   /**
    * Gets or Sets enumInteger
    */
@@ -97,12 +97,11 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("enum_integer")
+  }  @JsonProperty("enum_integer")
   @JacksonXmlProperty(localName = "enum_integer")
-  @XmlElement(name="enum_integer")
-
+  @XmlElement(name = "enum_integer")
   private EnumIntegerEnum enumInteger = null;
+
   /**
    * Gets or Sets enumNumber
    */
@@ -134,90 +133,89 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("enum_number")
+  }  @JsonProperty("enum_number")
   @JacksonXmlProperty(localName = "enum_number")
-  @XmlElement(name="enum_number")
-
+  @XmlElement(name = "enum_number")
   private EnumNumberEnum enumNumber = null;
 
   @JsonProperty("outerEnum")
   @JacksonXmlProperty(localName = "outerEnum")
-  @XmlElement(name="outerEnum")
-
+  @XmlElement(name = "outerEnum")
   private OuterEnum outerEnum = null;
+
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
-  
-
-  /**
-  * Get enumString
-  * @return enumString
+   /**
+   * Get enumString
+   * @return enumString
   **/
   @Schema(description = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
+
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
+
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
 
-  
-
-  /**
-  * Get enumInteger
-  * @return enumInteger
+   /**
+   * Get enumInteger
+   * @return enumInteger
   **/
   @Schema(description = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
+
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
+
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get enumNumber
-  * @return enumNumber
+   /**
+   * Get enumNumber
+   * @return enumNumber
   **/
   @Schema(description = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
+
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
+
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
   }
 
-  
-
-  /**
-  * Get outerEnum
-  * @return outerEnum
+   /**
+   * Get outerEnum
+   * @return outerEnum
   **/
   @Schema(description = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
+
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -235,8 +233,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
+    return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
+
 
   @Override
   public String toString() {

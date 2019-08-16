@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -23,337 +24,324 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Body2
  */
 
+
 public class Body2 {
-
   @JsonProperty("integer")
-
   private Integer integer = null;
 
   @JsonProperty("int32")
-
   private Integer int32 = null;
 
   @JsonProperty("int64")
-
   private Long int64 = null;
 
   @JsonProperty("number")
-
   private BigDecimal number = null;
 
   @JsonProperty("float")
-
   private Float _float = null;
 
   @JsonProperty("double")
-
   private Double _double = null;
 
   @JsonProperty("string")
-
   private String string = null;
 
   @JsonProperty("pattern_without_delimiter")
-
   private String patternWithoutDelimiter = null;
 
   @JsonProperty("byte")
-
   private byte[] _byte = null;
 
   @JsonProperty("binary")
-
   private File binary = null;
 
   @JsonProperty("date")
-
   private LocalDate date = null;
 
   @JsonProperty("dateTime")
-
   private OffsetDateTime dateTime = null;
 
   @JsonProperty("password")
-
   private String password = null;
 
   @JsonProperty("callback")
-
   private String callback = null;
+
   public Body2 integer(Integer integer) {
     this.integer = integer;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * minimum: 10
-  * maximum: 100
-  * @return integer
+   /**
+   * None
+   * minimum: 10
+   * maximum: 100
+   * @return integer
   **/
-   @Min(10) @Max(100)  @Schema(description = "None")
+ @Min(10) @Max(100)  @Schema(description = "None")
   public Integer getInteger() {
     return integer;
   }
+
   public void setInteger(Integer integer) {
     this.integer = integer;
   }
+
   public Body2 int32(Integer int32) {
     this.int32 = int32;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * minimum: 20
-  * maximum: 200
-  * @return int32
+   /**
+   * None
+   * minimum: 20
+   * maximum: 200
+   * @return int32
   **/
-   @Min(20) @Max(200)  @Schema(description = "None")
+ @Min(20) @Max(200)  @Schema(description = "None")
   public Integer getInt32() {
     return int32;
   }
+
   public void setInt32(Integer int32) {
     this.int32 = int32;
   }
+
   public Body2 int64(Long int64) {
     this.int64 = int64;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return int64
+   /**
+   * None
+   * @return int64
   **/
-    @Schema(description = "None")
+  @Schema(description = "None")
   public Long getInt64() {
     return int64;
   }
+
   public void setInt64(Long int64) {
     this.int64 = int64;
   }
+
   public Body2 number(BigDecimal number) {
     this.number = number;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * minimum: 32
-  * maximum: 543
-  * @return number
+   /**
+   * None
+   * minimum: 32
+   * maximum: 543
+   * @return number
   **/
-    @NotNull
-    @Valid
-   @DecimalMin("32") @DecimalMax("543")  @Schema(required = true, description = "None")
+  @NotNull
+  @Valid
+ @DecimalMin("32") @DecimalMax("543")  @Schema(required = true, description = "None")
   public BigDecimal getNumber() {
     return number;
   }
+
   public void setNumber(BigDecimal number) {
     this.number = number;
   }
+
   public Body2 _float(Float _float) {
     this._float = _float;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * maximum: 987
-  * @return _float
+   /**
+   * None
+   * maximum: 987
+   * @return _float
   **/
-   @DecimalMax("987")  @Schema(description = "None")
+ @DecimalMax("987")  @Schema(description = "None")
   public Float getFloat() {
     return _float;
   }
+
   public void setFloat(Float _float) {
     this._float = _float;
   }
+
   public Body2 _double(Double _double) {
     this._double = _double;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * minimum: 67
-  * maximum: 123
-  * @return _double
+   /**
+   * None
+   * minimum: 67
+   * maximum: 123
+   * @return _double
   **/
-    @NotNull
-   @DecimalMin("67") @DecimalMax("123")  @Schema(required = true, description = "None")
+  @NotNull
+ @DecimalMin("67") @DecimalMax("123")  @Schema(required = true, description = "None")
   public Double getDouble() {
     return _double;
   }
+
   public void setDouble(Double _double) {
     this._double = _double;
   }
+
   public Body2 string(String string) {
     this.string = string;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return string
+   /**
+   * None
+   * @return string
   **/
-   @Pattern(regexp="/[a-z]/i")  @Schema(description = "None")
+ @Pattern(regexp="/[a-z]/i")  @Schema(description = "None")
   public String getString() {
     return string;
   }
+
   public void setString(String string) {
     this.string = string;
   }
+
   public Body2 patternWithoutDelimiter(String patternWithoutDelimiter) {
     this.patternWithoutDelimiter = patternWithoutDelimiter;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return patternWithoutDelimiter
+   /**
+   * None
+   * @return patternWithoutDelimiter
   **/
-    @NotNull
-   @Pattern(regexp="^[A-Z].*")  @Schema(required = true, description = "None")
+  @NotNull
+ @Pattern(regexp="^[A-Z].*")  @Schema(required = true, description = "None")
   public String getPatternWithoutDelimiter() {
     return patternWithoutDelimiter;
   }
+
   public void setPatternWithoutDelimiter(String patternWithoutDelimiter) {
     this.patternWithoutDelimiter = patternWithoutDelimiter;
   }
+
   public Body2 _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return _byte
+   /**
+   * None
+   * @return _byte
   **/
-    @NotNull
-    @Schema(required = true, description = "None")
+  @NotNull
+  @Schema(required = true, description = "None")
   public byte[] getByte() {
     return _byte;
   }
+
   public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
+
   public Body2 binary(File binary) {
     this.binary = binary;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return binary
+   /**
+   * None
+   * @return binary
   **/
-    @Valid
-    @Schema(description = "None")
+  @Valid
+  @Schema(description = "None")
   public File getBinary() {
     return binary;
   }
+
   public void setBinary(File binary) {
     this.binary = binary;
   }
+
   public Body2 date(LocalDate date) {
     this.date = date;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return date
+   /**
+   * None
+   * @return date
   **/
-    @Valid
-    @Schema(description = "None")
+  @Valid
+  @Schema(description = "None")
   public LocalDate getDate() {
     return date;
   }
+
   public void setDate(LocalDate date) {
     this.date = date;
   }
+
   public Body2 dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return dateTime
+   /**
+   * None
+   * @return dateTime
   **/
-    @Valid
-    @Schema(description = "None")
+  @Valid
+  @Schema(description = "None")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
+
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
+
   public Body2 password(String password) {
     this.password = password;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return password
+   /**
+   * None
+   * @return password
   **/
-    @Schema(description = "None")
+  @Schema(description = "None")
   public String getPassword() {
     return password;
   }
+
   public void setPassword(String password) {
     this.password = password;
   }
+
   public Body2 callback(String callback) {
     this.callback = callback;
     return this;
   }
 
-  
-
-  /**
-  * None
-  * @return callback
+   /**
+   * None
+   * @return callback
   **/
-    @Schema(description = "None")
+  @Schema(description = "None")
   public String getCallback() {
     return callback;
   }
+
   public void setCallback(String callback) {
     this.callback = callback;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -371,7 +359,7 @@ public class Body2 {
         Objects.equals(this._double, body2._double) &&
         Objects.equals(this.string, body2.string) &&
         Objects.equals(this.patternWithoutDelimiter, body2.patternWithoutDelimiter) &&
-        Objects.equals(this._byte, body2._byte) &&
+        Arrays.equals(this._byte, body2._byte) &&
         Objects.equals(this.binary, body2.binary) &&
         Objects.equals(this.date, body2.date) &&
         Objects.equals(this.dateTime, body2.dateTime) &&
@@ -381,8 +369,9 @@ public class Body2 {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(integer, int32, int64, number, _float, _double, string, patternWithoutDelimiter, _byte, binary, date, dateTime, password, callback);
+    return Objects.hash(integer, int32, int64, number, _float, _double, string, patternWithoutDelimiter, Arrays.hashCode(_byte), Objects.hashCode(binary), date, dateTime, password, callback);
   }
+
 
   @Override
   public String toString() {

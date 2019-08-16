@@ -18,34 +18,34 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.client.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * Dog
  */
 
-public class Dog extends Animal {
 
+public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("breed")
-
   private String breed = null;
+
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
-  
-
-  /**
-  * Get breed
-  * @return breed
+   /**
+   * Get breed
+   * @return breed
   **/
   @Schema(description = "")
   public String getBreed() {
     return breed;
   }
+
   public void setBreed(String breed) {
     this.breed = breed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -63,6 +63,7 @@ public class Dog extends Animal {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(breed, super.hashCode());
   }
+
 
   @Override
   public String toString() {
