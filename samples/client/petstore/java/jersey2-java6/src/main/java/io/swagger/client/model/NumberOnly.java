@@ -18,34 +18,34 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
-
 /**
  * NumberOnly
  */
 
+
 public class NumberOnly {
-
   @JsonProperty("JustNumber")
-
   private BigDecimal justNumber = null;
+
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get justNumber
-  * @return justNumber
+   /**
+   * Get justNumber
+   * @return justNumber
   **/
   @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
+
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -62,6 +62,7 @@ public class NumberOnly {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(justNumber);
   }
+
 
   @Override
   public String toString() {
