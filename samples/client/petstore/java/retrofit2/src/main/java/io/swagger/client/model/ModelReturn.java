@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -20,33 +21,34 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * Model for testing reserved words
  */
 @Schema(description = "Model for testing reserved words")
-public class ModelReturn {
 
+public class ModelReturn {
   @SerializedName("return")
   private Integer _return = null;
+
   public ModelReturn _return(Integer _return) {
     this._return = _return;
     return this;
   }
 
-  
-
-  /**
-  * Get _return
-  * @return _return
+   /**
+   * Get _return
+   * @return _return
   **/
   @Schema(description = "")
   public Integer getReturn() {
     return _return;
   }
+
   public void setReturn(Integer _return) {
     this._return = _return;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -61,8 +63,9 @@ public class ModelReturn {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(_return);
+    return Objects.hash(_return);
   }
+
 
   @Override
   public String toString() {

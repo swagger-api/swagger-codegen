@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -21,10 +22,10 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.client.model.OuterEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * EnumTest
  */
+
 
 public class EnumTest {
   /**
@@ -69,9 +70,9 @@ public class EnumTest {
         return EnumStringEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("enum_string")
+  }  @SerializedName("enum_string")
   private EnumStringEnum enumString = null;
+
   /**
    * Gets or Sets enumInteger
    */
@@ -113,9 +114,9 @@ public class EnumTest {
         return EnumIntegerEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("enum_integer")
+  }  @SerializedName("enum_integer")
   private EnumIntegerEnum enumInteger = null;
+
   /**
    * Gets or Sets enumNumber
    */
@@ -157,84 +158,85 @@ public class EnumTest {
         return EnumNumberEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("enum_number")
+  }  @SerializedName("enum_number")
   private EnumNumberEnum enumNumber = null;
 
   @SerializedName("outerEnum")
   private OuterEnum outerEnum = null;
+
   public EnumTest enumString(EnumStringEnum enumString) {
     this.enumString = enumString;
     return this;
   }
 
-  
-
-  /**
-  * Get enumString
-  * @return enumString
+   /**
+   * Get enumString
+   * @return enumString
   **/
   @Schema(description = "")
   public EnumStringEnum getEnumString() {
     return enumString;
   }
+
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
   }
+
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
     return this;
   }
 
-  
-
-  /**
-  * Get enumInteger
-  * @return enumInteger
+   /**
+   * Get enumInteger
+   * @return enumInteger
   **/
   @Schema(description = "")
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
+
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
     this.enumInteger = enumInteger;
   }
+
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get enumNumber
-  * @return enumNumber
+   /**
+   * Get enumNumber
+   * @return enumNumber
   **/
   @Schema(description = "")
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
+
   public void setEnumNumber(EnumNumberEnum enumNumber) {
     this.enumNumber = enumNumber;
   }
+
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
   }
 
-  
-
-  /**
-  * Get outerEnum
-  * @return outerEnum
+   /**
+   * Get outerEnum
+   * @return outerEnum
   **/
   @Schema(description = "")
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
+
   public void setOuterEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -252,8 +254,9 @@ public class EnumTest {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
+    return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
   }
+
 
   @Override
   public String toString() {
