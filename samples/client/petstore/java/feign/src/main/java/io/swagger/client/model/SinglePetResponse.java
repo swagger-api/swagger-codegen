@@ -17,33 +17,33 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.client.model.Animal;
+import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
 /**
- * Cat
+ * SinglePetResponse
  */
 
 
-public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
-  @JsonProperty("declawed")
-  private Boolean declawed = null;
+public class SinglePetResponse {
+  @JsonProperty("pet")
+  private OneOfSinglePetResponsePet pet = null;
 
-  public Cat declawed(Boolean declawed) {
-    this.declawed = declawed;
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
     return this;
   }
 
    /**
-   * Get declawed
-   * @return declawed
+   * Get pet
+   * @return pet
   **/
   @Schema(description = "")
-  public Boolean isDeclawed() {
-    return declawed;
+  public OneOfSinglePetResponsePet getPet() {
+    return pet;
   }
 
-  public void setDeclawed(Boolean declawed) {
-    this.declawed = declawed;
+  public void setPet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
   }
 
 
@@ -55,23 +55,22 @@ public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSingl
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Cat cat = (Cat) o;
-    return Objects.equals(this.declawed, cat.declawed) &&
-        super.equals(o);
+    SinglePetResponse singlePetResponse = (SinglePetResponse) o;
+    return Objects.equals(this.pet, singlePetResponse.pet);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(declawed, super.hashCode());
+    return Objects.hash(pet);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Cat {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
+    sb.append("class SinglePetResponse {\n");
+    
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }
