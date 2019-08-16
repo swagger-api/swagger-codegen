@@ -17,51 +17,39 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 /**
- * ArrayOfNumberOnly
+ * SinglePetResponse
  */
 
-@XmlRootElement(name = "ArrayOfNumberOnly")
+@XmlRootElement(name = "SinglePetResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ArrayOfNumberOnly")
-public class ArrayOfNumberOnly {
-  @JsonProperty("ArrayNumber")
-  // Is a container wrapped=
-  // items.name=arrayNumber items.baseName=arrayNumber items.xmlName= items.xmlNamespace=
-  // items.example= items.type=BigDecimal
-  @XmlElement(name = "arrayNumber")
-  private List<BigDecimal> arrayNumber = null;
+@JacksonXmlRootElement(localName = "SinglePetResponse")
+public class SinglePetResponse {
+  @JsonProperty("pet")
+  @JacksonXmlProperty(localName = "pet")
+  @XmlElement(name = "pet")
+  private OneOfSinglePetResponsePet pet = null;
 
-  public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
-    this.arrayNumber = arrayNumber;
-    return this;
-  }
-
-  public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
-    if (this.arrayNumber == null) {
-      this.arrayNumber = new ArrayList<BigDecimal>();
-    }
-    this.arrayNumber.add(arrayNumberItem);
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
     return this;
   }
 
    /**
-   * Get arrayNumber
-   * @return arrayNumber
+   * Get pet
+   * @return pet
   **/
   @Schema(description = "")
-  public List<BigDecimal> getArrayNumber() {
-    return arrayNumber;
+  public OneOfSinglePetResponsePet getPet() {
+    return pet;
   }
 
-  public void setArrayNumber(List<BigDecimal> arrayNumber) {
-    this.arrayNumber = arrayNumber;
+  public void setPet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
   }
 
 
@@ -73,22 +61,22 @@ public class ArrayOfNumberOnly {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ArrayOfNumberOnly arrayOfNumberOnly = (ArrayOfNumberOnly) o;
-    return Objects.equals(this.arrayNumber, arrayOfNumberOnly.arrayNumber);
+    SinglePetResponse singlePetResponse = (SinglePetResponse) o;
+    return Objects.equals(this.pet, singlePetResponse.pet);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayNumber);
+    return Objects.hash(pet);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ArrayOfNumberOnly {\n");
+    sb.append("class SinglePetResponse {\n");
     
-    sb.append("    arrayNumber: ").append(toIndentedString(arrayNumber)).append("\n");
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }

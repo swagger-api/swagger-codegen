@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,38 +21,38 @@ import io.swagger.client.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Dog
  */
 
 @XmlRootElement(name = "Dog")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Dog")public class Dog extends Animal {
-
+@JacksonXmlRootElement(localName = "Dog")
+public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("breed")
   @JacksonXmlProperty(localName = "breed")
-  @XmlElement(name="breed")
-
+  @XmlElement(name = "breed")
   private String breed = null;
+
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
-  
-
-  /**
-  * Get breed
-  * @return breed
+   /**
+   * Get breed
+   * @return breed
   **/
   @Schema(description = "")
   public String getBreed() {
     return breed;
   }
+
   public void setBreed(String breed) {
     this.breed = breed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -67,8 +68,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(breed, super.hashCode());
+    return Objects.hash(breed, super.hashCode());
   }
+
 
   @Override
   public String toString() {

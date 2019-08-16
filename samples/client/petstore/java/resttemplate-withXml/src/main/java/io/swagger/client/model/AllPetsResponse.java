@@ -14,43 +14,19 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.client.model.OneOfAllPetsResponseItems;
+import java.util.ArrayList;
+import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 /**
- * Model for testing reserved words
+ * AllPetsResponse
  */
-@Schema(description = "Model for testing reserved words")
-@XmlRootElement(name = "Return")
+
+@XmlRootElement(name = "AllPetsResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Return")
-public class ModelReturn {
-  @JsonProperty("return")
-  @JacksonXmlProperty(localName = "return")
-  @XmlElement(name = "return")
-  private Integer _return = null;
-
-  public ModelReturn _return(Integer _return) {
-    this._return = _return;
-    return this;
-  }
-
-   /**
-   * Get _return
-   * @return _return
-  **/
-  @Schema(description = "")
-  public Integer getReturn() {
-    return _return;
-  }
-
-  public void setReturn(Integer _return) {
-    this._return = _return;
-  }
-
+@JacksonXmlRootElement(localName = "AllPetsResponse")
+public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> {
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -60,22 +36,20 @@ public class ModelReturn {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ModelReturn _return = (ModelReturn) o;
-    return Objects.equals(this._return, _return._return);
+    return super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_return);
+    return Objects.hash(super.hashCode());
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ModelReturn {\n");
-    
-    sb.append("    _return: ").append(toIndentedString(_return)).append("\n");
+    sb.append("class AllPetsResponse {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();
   }

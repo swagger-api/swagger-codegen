@@ -13,68 +13,68 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Body7
  */
 
 @XmlRootElement(name = "Body7")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body7")public class Body7 {
-
+@JacksonXmlRootElement(localName = "Body7")
+public class Body7 {
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
-  @XmlElement(name="name")
-
+  @XmlElement(name = "name")
   private String name = null;
 
   @JsonProperty("status")
   @JacksonXmlProperty(localName = "status")
-  @XmlElement(name="status")
-
+  @XmlElement(name = "status")
   private String status = null;
+
   public Body7 name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Updated name of the dog
-  * @return name
+   /**
+   * Updated name of the dog
+   * @return name
   **/
   @Schema(description = "Updated name of the dog")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
   public Body7 status(String status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * Updated status of the dog
-  * @return status
+   /**
+   * Updated status of the dog
+   * @return status
   **/
   @Schema(description = "Updated status of the dog")
   public String getStatus() {
     return status;
   }
+
   public void setStatus(String status) {
     this.status = status;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -90,8 +90,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(name, status);
+    return Objects.hash(name, status);
   }
+
 
   @Override
   public String toString() {
