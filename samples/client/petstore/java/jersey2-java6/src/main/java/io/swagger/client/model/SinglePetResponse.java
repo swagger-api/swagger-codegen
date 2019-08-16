@@ -16,53 +16,33 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
 /**
- * Body5
+ * SinglePetResponse
  */
 
 
-public class Body5 {
-  @JsonProperty("param")
-  private String param = null;
+public class SinglePetResponse {
+  @JsonProperty("pet")
+  private OneOfSinglePetResponsePet pet = null;
 
-  @JsonProperty("param2")
-  private String param2 = null;
-
-  public Body5 param(String param) {
-    this.param = param;
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
     return this;
   }
 
    /**
-   * field1
-   * @return param
+   * Get pet
+   * @return pet
   **/
-  @Schema(required = true, description = "field1")
-  public String getParam() {
-    return param;
+  @Schema(description = "")
+  public OneOfSinglePetResponsePet getPet() {
+    return pet;
   }
 
-  public void setParam(String param) {
-    this.param = param;
-  }
-
-  public Body5 param2(String param2) {
-    this.param2 = param2;
-    return this;
-  }
-
-   /**
-   * field2
-   * @return param2
-  **/
-  @Schema(required = true, description = "field2")
-  public String getParam2() {
-    return param2;
-  }
-
-  public void setParam2(String param2) {
-    this.param2 = param2;
+  public void setPet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
   }
 
 
@@ -74,24 +54,22 @@ public class Body5 {
   if (o == null || getClass() != o.getClass()) {
     return false;
   }
-    Body5 body5 = (Body5) o;
-    return ObjectUtils.equals(this.param, body5.param) &&
-    ObjectUtils.equals(this.param2, body5.param2);
+    SinglePetResponse singlePetResponse = (SinglePetResponse) o;
+    return ObjectUtils.equals(this.pet, singlePetResponse.pet);
   }
 
   @Override
   public int hashCode() {
-    return ObjectUtils.hashCodeMulti(param, param2);
+    return ObjectUtils.hashCodeMulti(pet);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body5 {\n");
+    sb.append("class SinglePetResponse {\n");
     
-    sb.append("    param: ").append(toIndentedString(param)).append("\n");
-    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }
