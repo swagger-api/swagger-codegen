@@ -13,48 +13,50 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * HasOnlyReadOnly
  */
 
 @XmlRootElement(name = "HasOnlyReadOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "HasOnlyReadOnly")public class HasOnlyReadOnly {
-
+@JacksonXmlRootElement(localName = "HasOnlyReadOnly")
+public class HasOnlyReadOnly {
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")
-  @XmlElement(name="bar")
-
+  @XmlElement(name = "bar")
   private String bar = null;
 
   @JsonProperty("foo")
   @JacksonXmlProperty(localName = "foo")
-  @XmlElement(name="foo")
-
+  @XmlElement(name = "foo")
   private String foo = null;
-  /**
-  * Get bar
-  * @return bar
+
+   /**
+   * Get bar
+   * @return bar
   **/
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
-  /**
-  * Get foo
-  * @return foo
+
+   /**
+   * Get foo
+   * @return foo
   **/
   @Schema(description = "")
   public String getFoo() {
     return foo;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -70,8 +72,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(bar, foo);
+    return Objects.hash(bar, foo);
   }
+
 
   @Override
   public String toString() {

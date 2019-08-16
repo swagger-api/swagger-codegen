@@ -13,19 +13,21 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import io.swagger.client.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * AnimalFarm
  */
 
 @XmlRootElement(name = "AnimalFarm")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "AnimalFarm")public class AnimalFarm extends ArrayList<Animal> {
+@JacksonXmlRootElement(localName = "AnimalFarm")
+public class AnimalFarm extends ArrayList<Animal> {
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -39,8 +41,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(super.hashCode());
+    return Objects.hash(super.hashCode());
   }
+
 
   @Override
   public String toString() {

@@ -13,44 +13,45 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Model for testing model with \&quot;_class\&quot; property
  */
 @Schema(description = "Model for testing model with \"_class\" property")
 @XmlRootElement(name = "ClassModel")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ClassModel")public class ClassModel {
-
+@JacksonXmlRootElement(localName = "ClassModel")
+public class ClassModel {
   @JsonProperty("_class")
   @JacksonXmlProperty(localName = "_class")
-  @XmlElement(name="_class")
-
+  @XmlElement(name = "_class")
   private String propertyClass = null;
+
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-  
-
-  /**
-  * Get propertyClass
-  * @return propertyClass
+   /**
+   * Get propertyClass
+   * @return propertyClass
   **/
   @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
+
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,8 +66,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(propertyClass);
+    return Objects.hash(propertyClass);
   }
+
 
   @Override
   public String toString() {

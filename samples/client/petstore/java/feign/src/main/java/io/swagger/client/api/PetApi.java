@@ -3,9 +3,11 @@ package io.swagger.client.api;
 import io.swagger.client.ApiClient;
 import io.swagger.client.EncodingUtils;
 
+import io.swagger.client.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SinglePetResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -130,6 +132,16 @@ public interface PetApi extends ApiClient.Api {
     }
   }
   /**
+   * 
+   * 
+   * @return AllPetsResponse
+   */
+  @RequestLine("GET /allPets")
+  @Headers({
+      "Accept: application/json",
+  })
+  AllPetsResponse getAllPets();
+  /**
    * Find pet by ID
    * Returns a single pet
    * @param petId ID of pet to return (required)
@@ -140,6 +152,16 @@ public interface PetApi extends ApiClient.Api {
       "Accept: application/json",
   })
   Pet getPetById(@Param("petId") Long petId);
+  /**
+   * 
+   * 
+   * @return SinglePetResponse
+   */
+  @RequestLine("GET /randomPet")
+  @Headers({
+      "Accept: application/json",
+  })
+  SinglePetResponse getRandomPet();
   /**
    * Update an existing pet
    * 

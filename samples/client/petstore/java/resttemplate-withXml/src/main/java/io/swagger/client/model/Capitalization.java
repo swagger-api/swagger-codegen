@@ -13,164 +13,160 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Capitalization
  */
 
 @XmlRootElement(name = "Capitalization")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Capitalization")public class Capitalization {
-
+@JacksonXmlRootElement(localName = "Capitalization")
+public class Capitalization {
   @JsonProperty("smallCamel")
   @JacksonXmlProperty(localName = "smallCamel")
-  @XmlElement(name="smallCamel")
-
+  @XmlElement(name = "smallCamel")
   private String smallCamel = null;
 
   @JsonProperty("CapitalCamel")
   @JacksonXmlProperty(localName = "CapitalCamel")
-  @XmlElement(name="CapitalCamel")
-
+  @XmlElement(name = "CapitalCamel")
   private String capitalCamel = null;
 
   @JsonProperty("small_Snake")
   @JacksonXmlProperty(localName = "small_Snake")
-  @XmlElement(name="small_Snake")
-
+  @XmlElement(name = "small_Snake")
   private String smallSnake = null;
 
   @JsonProperty("Capital_Snake")
   @JacksonXmlProperty(localName = "Capital_Snake")
-  @XmlElement(name="Capital_Snake")
-
+  @XmlElement(name = "Capital_Snake")
   private String capitalSnake = null;
 
   @JsonProperty("SCA_ETH_Flow_Points")
   @JacksonXmlProperty(localName = "SCA_ETH_Flow_Points")
-  @XmlElement(name="SCA_ETH_Flow_Points")
-
+  @XmlElement(name = "SCA_ETH_Flow_Points")
   private String scAETHFlowPoints = null;
 
   @JsonProperty("ATT_NAME")
   @JacksonXmlProperty(localName = "ATT_NAME")
-  @XmlElement(name="ATT_NAME")
-
+  @XmlElement(name = "ATT_NAME")
   private String ATT_NAME = null;
+
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
   }
 
-  
-
-  /**
-  * Get smallCamel
-  * @return smallCamel
+   /**
+   * Get smallCamel
+   * @return smallCamel
   **/
   @Schema(description = "")
   public String getSmallCamel() {
     return smallCamel;
   }
+
   public void setSmallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
   }
+
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
     return this;
   }
 
-  
-
-  /**
-  * Get capitalCamel
-  * @return capitalCamel
+   /**
+   * Get capitalCamel
+   * @return capitalCamel
   **/
   @Schema(description = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
+
   public void setCapitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
   }
+
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
     return this;
   }
 
-  
-
-  /**
-  * Get smallSnake
-  * @return smallSnake
+   /**
+   * Get smallSnake
+   * @return smallSnake
   **/
   @Schema(description = "")
   public String getSmallSnake() {
     return smallSnake;
   }
+
   public void setSmallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
   }
+
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
     return this;
   }
 
-  
-
-  /**
-  * Get capitalSnake
-  * @return capitalSnake
+   /**
+   * Get capitalSnake
+   * @return capitalSnake
   **/
   @Schema(description = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
+
   public void setCapitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
   }
+
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
     return this;
   }
 
-  
-
-  /**
-  * Get scAETHFlowPoints
-  * @return scAETHFlowPoints
+   /**
+   * Get scAETHFlowPoints
+   * @return scAETHFlowPoints
   **/
   @Schema(description = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
+
   public void setScAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
+
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
     return this;
   }
 
-  
-
-  /**
-  * Name of the pet 
-  * @return ATT_NAME
+   /**
+   * Name of the pet 
+   * @return ATT_NAME
   **/
   @Schema(description = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
+
   public void setATTNAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -190,8 +186,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
+    return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
+
 
   @Override
   public String toString() {

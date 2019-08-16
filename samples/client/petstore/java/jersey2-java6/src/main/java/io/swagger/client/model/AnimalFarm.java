@@ -16,12 +16,13 @@ import org.apache.commons.lang3.ObjectUtils;
 import io.swagger.client.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * AnimalFarm
  */
 
+
 public class AnimalFarm extends ArrayList<Animal> {
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -37,6 +38,7 @@ public class AnimalFarm extends ArrayList<Animal> {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(super.hashCode());
   }
+
 
   @Override
   public String toString() {

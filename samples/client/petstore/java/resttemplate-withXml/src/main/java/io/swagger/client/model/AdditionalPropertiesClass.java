@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,36 +23,33 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * AdditionalPropertiesClass
  */
 
 @XmlRootElement(name = "AdditionalPropertiesClass")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "AdditionalPropertiesClass")public class AdditionalPropertiesClass {
-
+@JacksonXmlRootElement(localName = "AdditionalPropertiesClass")
+public class AdditionalPropertiesClass {
   @JsonProperty("map_property")
-  
-  
-  @XmlElement(name="null")
-  
-
+  // Is a container wrapped=
+  // items.name=inner items.baseName=inner items.xmlName= items.xmlNamespace=
+  // items.example= items.type=String
+  @XmlElement(name = "inner")
   private Map<String, String> mapProperty = null;
 
   @JsonProperty("map_of_map_property")
-  
-  
-  @XmlElement(name="inner")
-  
-
+  // Is a container wrapped=
+  // items.name=inner items.baseName=inner items.xmlName= items.xmlNamespace=
+  // items.example= items.type=Map&lt;String, String&gt;
+  @XmlElement(name = "inner")
   private Map<String, Map<String, String>> mapOfMapProperty = null;
+
   public AdditionalPropertiesClass mapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
     return this;
   }
 
-  
   public AdditionalPropertiesClass putMapPropertyItem(String key, String mapPropertyItem) {
     if (this.mapProperty == null) {
       this.mapProperty = new HashMap<String, String>();
@@ -59,23 +57,25 @@ import javax.xml.bind.annotation.*;
     this.mapProperty.put(key, mapPropertyItem);
     return this;
   }
-  /**
-  * Get mapProperty
-  * @return mapProperty
+
+   /**
+   * Get mapProperty
+   * @return mapProperty
   **/
   @Schema(description = "")
   public Map<String, String> getMapProperty() {
     return mapProperty;
   }
+
   public void setMapProperty(Map<String, String> mapProperty) {
     this.mapProperty = mapProperty;
   }
+
   public AdditionalPropertiesClass mapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
     return this;
   }
 
-  
   public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
     if (this.mapOfMapProperty == null) {
       this.mapOfMapProperty = new HashMap<String, Map<String, String>>();
@@ -83,17 +83,21 @@ import javax.xml.bind.annotation.*;
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
   }
-  /**
-  * Get mapOfMapProperty
-  * @return mapOfMapProperty
+
+   /**
+   * Get mapOfMapProperty
+   * @return mapOfMapProperty
   **/
   @Schema(description = "")
   public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
+
   public void setMapOfMapProperty(Map<String, Map<String, String>> mapOfMapProperty) {
     this.mapOfMapProperty = mapOfMapProperty;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -109,8 +113,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(mapProperty, mapOfMapProperty);
+    return Objects.hash(mapProperty, mapOfMapProperty);
   }
+
 
   @Override
   public String toString() {

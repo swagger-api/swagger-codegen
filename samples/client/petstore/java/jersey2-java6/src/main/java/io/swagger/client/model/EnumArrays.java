@@ -19,10 +19,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * EnumArrays
  */
+
 
 public class EnumArrays {
   /**
@@ -56,10 +56,9 @@ public class EnumArrays {
       return null;
     }
 
-  }
-  @JsonProperty("just_symbol")
-
+  }  @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
+
   /**
    * Gets or Sets arrayEnum
    */
@@ -91,28 +90,27 @@ public class EnumArrays {
       return null;
     }
 
-  }
-  @JsonProperty("array_enum")
-
+  }  @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
+
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-  
-
-  /**
-  * Get justSymbol
-  * @return justSymbol
+   /**
+   * Get justSymbol
+   * @return justSymbol
   **/
   @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
+
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
+
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
@@ -120,23 +118,26 @@ public class EnumArrays {
 
   public EnumArrays addArrayEnumItem(ArrayEnumEnum arrayEnumItem) {
     if (this.arrayEnum == null) {
-      this.arrayEnum = new ArrayList<ArrayEnumEnum>();
+      this.arrayEnum = new ArrayList<>();
     }
     this.arrayEnum.add(arrayEnumItem);
     return this;
   }
 
-  /**
-  * Get arrayEnum
-  * @return arrayEnum
+   /**
+   * Get arrayEnum
+   * @return arrayEnum
   **/
   @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
+
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -154,6 +155,7 @@ public class EnumArrays {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti(justSymbol, arrayEnum);
   }
+
 
   @Override
   public String toString() {
