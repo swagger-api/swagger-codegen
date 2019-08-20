@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 {{/jdk8}}
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.WebDataBinder;
 {{^jdk8}}
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,6 +69,12 @@ public class {{classname}}Controller implements {{classname}} {
         return delegate;
     }
     {{/jdk8}}
+	
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        delegate.initBinder(binder);
+    }
+
 {{/isDelegate}}
 {{^isDelegate}}
     {{^jdk8}}
@@ -92,6 +100,11 @@ public class {{classname}}Controller implements {{classname}} {
     @Override
     public Optional<HttpServletRequest> getRequest() {
         return Optional.ofNullable(request);
+    }
+	
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        //Add custom binding configuration
     }
     {{/jdk8}}
 
