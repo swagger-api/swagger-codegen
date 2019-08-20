@@ -15,6 +15,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
 
     public static final String DATE_LIBRARY = "dateLibrary";
     protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.camelCase;
+    protected CodegenConstants.SERIALIZATION_ENGINE_TYPE serializationEngine = CodegenConstants.SERIALIZATION_ENGINE_TYPE.moshi;
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
 
     protected String dateLibrary = DateLibrary.JAVA8.value;
