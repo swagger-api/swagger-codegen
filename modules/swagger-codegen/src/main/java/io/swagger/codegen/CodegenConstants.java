@@ -164,7 +164,7 @@ public class CodegenConstants {
     public static final String ENUM_PROPERTY_NAMING_DESC = "Naming convention for enum properties: 'camelCase', 'PascalCase', 'snake_case', 'UPPERCASE', and 'original'";
 
     public static final String SERIALIZATION_ENGINE = "serializationEngine";
-    public static final String SERIALIZATION_ENGINE_DESC = "What serialization enging to use: 'moshi' (default), or 'gson'";
+    public static final String SERIALIZATION_ENGINE_DESC = "What serialization engine to use: 'moshi' (default), or 'gson'";
     public static enum SERIALIZATION_ENGINE_TYPE {moshi, gson}
 
     public static final String MODEL_NAME_PREFIX = "modelNamePrefix";
