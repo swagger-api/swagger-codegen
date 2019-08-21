@@ -170,11 +170,23 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         // model/api tests and documentation options rely on parent generate options (api or model) and no other options.
         // They default to true in all scenarios and can only be marked false explicitly
-        final Boolean generateModelTestsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_TESTS_OPTION);
-        final Boolean generateModelDocsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_DOCS_OPTION);
-        final Boolean generateAPITestsOption = getCustomOptionBooleanValue(CodegenConstants.API_TESTS_OPTION);
-        final Boolean generateAPIDocsOption = getCustomOptionBooleanValue(CodegenConstants.API_DOCS_OPTION);
-        final Boolean useOas2Option = getCustomOptionBooleanValue(CodegenConstants.USE_OAS2_OPTION);
+        Boolean generateModelTestsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_TESTS_OPTION);
+        if (generateModelTestsOption == null) {
+            generateModelTestsOption = System.getProperty(CodegenConstants.MODEL_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_TESTS)) : null;
+        }
+        Boolean generateModelDocsOption = getCustomOptionBooleanValue(CodegenConstants.MODEL_DOCS_OPTION);
+        if (generateModelDocsOption == null) {
+            generateModelDocsOption = System.getProperty(CodegenConstants.MODEL_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.MODEL_DOCS)) : null;
+        }
+        Boolean generateAPITestsOption = getCustomOptionBooleanValue(CodegenConstants.API_TESTS_OPTION);
+        if (generateAPITestsOption == null) {
+            generateAPITestsOption = System.getProperty(CodegenConstants.API_TESTS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_TESTS)) : null;
+        }
+        Boolean generateAPIDocsOption = getCustomOptionBooleanValue(CodegenConstants.API_DOCS_OPTION);
+        if (generateAPIDocsOption == null) {
+            generateAPIDocsOption = System.getProperty(CodegenConstants.API_DOCS) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.API_DOCS)) : null;
+        }
+        Boolean useOas2Option = getCustomOptionBooleanValue(CodegenConstants.USE_OAS2_OPTION);
 
         generateModelTests = generateModelTestsOption != null ? generateModelTestsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_TESTS, true);
         generateModelDocumentation = generateModelDocsOption != null ? generateModelDocsOption : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODEL_DOCS, true);
