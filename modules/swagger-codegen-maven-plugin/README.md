@@ -44,6 +44,7 @@ mvn clean compile
 - `addCompileSourceRoot` - add the output directory to the project as a source root (`true` by default)
 - `modelPackage` - the package to use for generated model objects/classes
 - `apiPackage` - the package to use for generated api objects/classes
+- `httpUserAgent` - sets User-Agent http header
 - `invokerPackage` - the package to use for the generated invoker objects
 - `modelNamePrefix` and `modelNameSuffix` - Sets the pre- or suffix for model classes and enums
 - `withXml` - enable XML annotations inside the generated models and API (only works with Java `language` and libraries that provide support for JSON and XML)
