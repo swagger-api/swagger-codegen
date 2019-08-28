@@ -21,11 +21,11 @@ then
   -l java \
   -DdateLibrary=java8 \
   -o intouch_api/java_client/java \
-  -c config.json
-  --group-id com.capillary.platforms 
-  --artifact-version $version 
-  --model-package com.capillary.platforms.intouch-api.models.v3 
-  --api-package com.capillary.platforms.intouch-api.api.v3
+  
+  --group-id com.capillary.platforms \ 
+  --artifact-version $version \
+  --model-package com.capillary.platforms.intouch-api.models.v3 \ 
+  --api-package com.capillary.platforms.intouch-api.api.v3 \
   --artifact-id intouch-api-client.v3
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
   mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
