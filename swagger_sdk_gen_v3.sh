@@ -4,11 +4,11 @@ fi
 if [ "$Branch" = "snapshot" ]
   then
     url="http://newapi-nightly.capillary.in/tl-docs/v2/api-docs"
-    version="http://newapi-nightly.capillary.in/tl-docs/v2/api-docs/version.json"
+    version="https://nightly.capillary.in/v3/meta/version"
 elif [ "$Branch" = "production" ]
   then
     url="http://newapi-nightly.capillary.in/tl-docs/v2/api-docs"
-    version="http://newapi-nightly.capillary.in/tl-docs/v2/api-docs/version.json"
+    version="https://nightly.capillary.in/v3/meta/version"
 else " No Branch is selected"
 fi
 curl -k $version -o config.json
