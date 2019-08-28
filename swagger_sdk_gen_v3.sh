@@ -21,7 +21,7 @@ then
   -l java \
   -DdateLibrary=java8 \
   -o intouch_api/java_client/java \
-  
+  -c config.json \  
   --group-id com.capillary.platforms \ 
   --artifact-version $version \
   --model-package com.capillary.platforms.intouch-api.models.v3 \ 
