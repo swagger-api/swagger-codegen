@@ -123,7 +123,7 @@ public class GeneratorController {
                 try {
                     options = yamlMapper.readValue(inputStream, LanguageOptions.class);
                 } catch (Exception e) {
-                    LOGGER.info("Failed to parse hidden options configuration file {}", languageOptionsFileKey, e);
+                    LOGGER.info("Failed to parse language options configuration file {}", languageOptionsFileKey, e);
                     return LanguageOptions.getEmpty();
                 }
 
