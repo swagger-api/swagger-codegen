@@ -468,7 +468,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
         // camelize the enum variable name
         // ref: https://basarat.gitbooks.io/typescript/content/docs/enums.html
-        enumName = camelize(enumName);
+        enumName = enumName.toUpperCase().equals(enumName) ? enumName : camelize(enumName);
 
         if (enumName.matches("\\d.*")) { // starts with number
             return "_" + enumName;
