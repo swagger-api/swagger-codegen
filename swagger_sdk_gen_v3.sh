@@ -40,7 +40,8 @@ then rm -rf intouch_api/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l php \
-  -o intouch_api/php_client/php
+  -o intouch_api/php_client/php \
+  -c config.json
   tar cvzf intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
   fpm -f -s "dir" -t "deb" -a "all" -n "swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-v3-sdk"
 elif [ "$Client" = "nodejs" ]
