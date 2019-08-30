@@ -3168,7 +3168,7 @@ public class DefaultCodegen {
                 LOGGER.warn("null property for " + key);
             } else {
                 final CodegenProperty cp = fromProperty(key, prop);
-                cp.required = mandatory.contains(key) ? true : false;
+                cp.required = mandatory.contains(key);
                 m.hasRequired = m.hasRequired || cp.required;
                 m.hasOptional = m.hasOptional || !cp.required;
                 if (cp.isEnum) {
