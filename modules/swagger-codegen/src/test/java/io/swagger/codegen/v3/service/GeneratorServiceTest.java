@@ -12,10 +12,163 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 public class GeneratorServiceTest {
+
+    @Test(description = "test generator service with jaxrs-cxf-client")
+    public void testGeneratorService_Jaxrs_cxf_client() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("jaxrs-cxf-client")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/gen/java/io/swagger/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("isisProcessed"));
+            }
+        }
+
+    }
+
+    @Test(description = "test generator service with jaxrs-cxf-cdi")
+    public void testGeneratorService_Jaxrs_cxf_cdi() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("jaxrs-cxf-cdi")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/gen/java/io/swagger/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("isisProcessed"));
+            }
+        }
+
+    }
+
+    @Test(description = "test generator service with jaxrs-cxf-cdi")
+    public void testGeneratorService_Jaxrs_resteasy_eap() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("jaxrs-resteasy-eap")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/gen/java/io/swagger/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("isisProcessed"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with jaxrs-cxf-cdi")
+    public void testGeneratorService_Jaxrs_resteasy() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("jaxrs-resteasy")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/gen/java/io/swagger/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("isisProcessed"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with jaxrs-cxf-cdi")
+    public void testGeneratorService_Jaxrs_spec() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("jaxrs-spec")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/gen/java/io/swagger/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("isisProcessed"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with jaxrs-cxf-cdi")
+    public void testGeneratorService_JavaSpring() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("spring")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/gen/java/io/swagger/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("isisProcessed"));
+            }
+        }
+    }
 
     @Test(description = "test generator service with java 3.0")
     public void testGeneratorServiceJava3() {
