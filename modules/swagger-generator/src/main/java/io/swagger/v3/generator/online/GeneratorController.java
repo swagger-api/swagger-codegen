@@ -109,14 +109,14 @@ public class GeneratorController {
 
     public static LanguageOptions loadLanguageOptions(String languageOptionsKey, String languageOptionsPathKey, String languageOptionsFileKey) {
         LanguageOptions options = null;
-        String hidden = System.getProperty(languageOptionsKey);
-        if (StringUtils.isNotBlank(hidden)) {
-            options = loadLanguageOptionsFromEnv(hidden);
+        String languages = System.getProperty(languageOptionsKey);
+        if (StringUtils.isNotBlank(languages)) {
+            options = loadLanguageOptionsFromEnv(languages);
         }
         if (options == null) {
-            String hiddenPath = System.getProperty(languageOptionsPathKey);
-            if (StringUtils.isNotBlank(hiddenPath)) {
-                options = loadLanguageOptions(hiddenPath);
+            String languagesPath = System.getProperty(languageOptionsPathKey);
+            if (StringUtils.isNotBlank(languagesPath)) {
+                options = loadLanguageOptions(languagesPath);
             }
             if (options == null) {
                 InputStream inputStream = GeneratorController.class.getClassLoader().getResourceAsStream(languageOptionsFileKey);
