@@ -7,7 +7,7 @@ maven_cache_repo="${HOME}/.m2/repository"
 
 mkdir -p "${maven_cache_repo}"
 
-docker run --rm -it \
+docker run --rm \
         -w /gen \
         -e GEN_DIR=/gen \
         -e MAVEN_CONFIG=/var/maven/.m2 \
