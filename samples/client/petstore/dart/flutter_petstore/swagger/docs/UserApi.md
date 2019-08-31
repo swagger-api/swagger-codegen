@@ -199,7 +199,7 @@ Get user by user name
 import 'package:swagger/api.dart';
 
 var api_instance = new UserApi();
-var username = username_example; // String | The name that needs to be fetched. Use user1 for testing. 
+var username = username_example; // String | The name that needs to be fetched. Use user1 for testing.
 
 try { 
     var result = api_instance.getUserByName(username);
@@ -213,7 +213,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **String**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 

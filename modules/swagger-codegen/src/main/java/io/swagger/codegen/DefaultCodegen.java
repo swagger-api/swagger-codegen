@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -126,6 +127,12 @@ public class DefaultCodegen {
 
         if (additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
             this.setApiPackage((String) additionalProperties.get(CodegenConstants.API_PACKAGE));
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
+            setHideGenerationTimestamp(convertPropertyToBooleanAndWriteBack(CodegenConstants.HIDE_GENERATION_TIMESTAMP));
+        } else {
+            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, hideGenerationTimestamp);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SORT_PARAMS_BY_REQUIRED_FLAG)) {
@@ -263,21 +270,25 @@ public class DefaultCodegen {
     }
 
     /**
-     * Returns the common prefix of variables for enum naming
+     * Returns the common prefix of variables for enum naming if 
+     * two or more variables are present
      *
      * @param vars List of variable names
      * @return the common prefix for naming
      */
     public String findCommonPrefixOfVars(List<Object> vars) {
-        try {
-            String[] listStr = vars.toArray(new String[vars.size()]);
-            String prefix = StringUtils.getCommonPrefix(listStr);
-            // exclude trailing characters that should be part of a valid variable
-            // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
-            return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
-        } catch (ArrayStoreException e) {
-            return "";
+        if (vars.size() > 1) {
+            try {
+                String[] listStr = vars.toArray(new String[vars.size()]);
+                String prefix = StringUtils.getCommonPrefix(listStr);
+                // exclude trailing characters that should be part of a valid variable
+                // e.g. ["status-on", "status-off"] => "status-" (not "status-o")
+                return prefix.replaceAll("[a-zA-Z0-9]+\\z", "");
+            } catch (ArrayStoreException e) {
+                // do nothing, just return default value
+            }
         }
+        return "";
     }
 
     /**
@@ -1148,8 +1159,9 @@ public class DefaultCodegen {
             try {
                 RefProperty r = (RefProperty) p;
                 datatype = r.get$ref();
-                if (datatype.indexOf("#/definitions/") == 0) {
-                    datatype = datatype.substring("#/definitions/".length());
+                // '#/definitions' or ../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/
+                if (datatype.indexOf("#/definitions/") >= 0) {
+                    datatype = datatype.substring(datatype.indexOf("#/definitions/") + "#/definitions/".length());
                 }
             } catch (Exception e) {
                 LOGGER.warn("Error obtaining the datatype from RefProperty:" + p + ". Datatype default to Object");
@@ -1158,6 +1170,8 @@ public class DefaultCodegen {
             }
         } else if (p instanceof StringProperty) {
             datatype = "string";
+        } else if(p instanceof UntypedProperty){
+            datatype = "object";
         } else {
             if (p != null) {
                 datatype = p.getType();
@@ -1324,7 +1338,9 @@ public class DefaultCodegen {
         if (model instanceof ModelImpl) {
             ModelImpl modelImpl = (ModelImpl) model;
             m.discriminator = modelImpl.getDiscriminator();
-
+            if (m.discriminator != null) {
+                m.discriminatorClassVarName = toParamName(m.discriminator);
+            }
             if (modelImpl.getXml() != null) {
                 m.xmlPrefix = modelImpl.getXml().getPrefix();
                 m.xmlNamespace = modelImpl.getXml().getNamespace();
@@ -1356,6 +1372,9 @@ public class DefaultCodegen {
                         ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
                             m.discriminator = modelImpl.getDiscriminator();
+                            if (m.discriminator != null) {
+                                m.discriminatorClassVarName = toParamName(m.discriminator);
+                            }
                         }
                         if (modelImpl.getXml() != null) {
                             m.xmlPrefix = modelImpl.getXml().getPrefix();
@@ -1373,7 +1392,7 @@ public class DefaultCodegen {
                 allRequired = null;
             }
             // parent model
-            RefModel parent = (RefModel) composed.getParent();
+            Model parent = (Model) composed.getParent();
 
             // interfaces (intermediate models)
             if (composed.getInterfaces() != null) {
@@ -1406,16 +1425,31 @@ public class DefaultCodegen {
             }
 
             if (parent != null) {
-                final String parentRef = parent.getSimpleRef();
-                m.parentSchema = parentRef;
-                m.parent = toModelName(parent.getSimpleRef());
-                addImport(m, m.parent);
-                if (allDefinitions != null) {
-                    final Model parentModel = allDefinitions.get(m.parentSchema);
-                    if (supportsInheritance) {
-                        addProperties(allProperties, allRequired, parentModel, allDefinitions);
-                    } else {
-                        addProperties(properties, required, parentModel, allDefinitions);
+                String parentName = null;
+                if(parent instanceof RefModel) {
+                    parentName = ((RefModel)parent).getSimpleRef();
+                }
+                else {
+                    if(parent instanceof ModelImpl) {
+                        // check for a title
+                        ModelImpl parentImpl = (ModelImpl) parent;
+                        if(StringUtils.isNotBlank(parentImpl.getTitle())) {
+                            parentName = parentImpl.getTitle();
+                        }
+                    }
+                }
+
+                if(parentName != null) {
+                    m.parentSchema = parentName;
+                    m.parent = toModelName(parentName);
+                    addImport(m, m.parent);
+                    if (allDefinitions != null) {
+                        final Model parentModel = allDefinitions.get(m.parentSchema);
+                        if (supportsInheritance) {
+                            addProperties(allProperties, allRequired, parentModel, allDefinitions);
+                        } else {
+                            addProperties(properties, required, parentModel, allDefinitions);
+                        }
                     }
                 }
             }
@@ -1432,7 +1466,7 @@ public class DefaultCodegen {
                     addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
-            addVars(m, properties, required, allProperties, allRequired);
+            addVars(m, properties, required, allDefinitions, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
             if (impl.getType() != null) {
@@ -1448,7 +1482,7 @@ public class DefaultCodegen {
             if (impl.getAdditionalProperties() != null) {
                 addAdditionPropertiesToCodeGenModel(m, impl);
             }
-            addVars(m, impl.getProperties(), impl.getRequired());
+            addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
         if (m.vars != null) {
@@ -1973,7 +2007,7 @@ public class DefaultCodegen {
     /**
      * Override with any special handling of response codes
      * @param responses Swagger Operation's responses
-     * @return default method response or <tt>null</tt> if not found
+     * @return default method response or &lt;tt&gt;null&lt;/tt&gt; if not found
      */
     protected Response findMethodResponse(Map<String, Response> responses) {
 
@@ -2146,10 +2180,10 @@ public class DefaultCodegen {
             op.responses.get(op.responses.size() - 1).hasMore = false;
 
             if (methodResponse != null) {
-                if (methodResponse.getSchema() != null) {
-                    CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
-
-                    Property responseProperty = methodResponse.getSchema();
+                final Property responseProperty = methodResponse.getSchema();
+                if (responseProperty != null) {
+                    responseProperty.setRequired(true);
+                    CodegenProperty cm = fromProperty("response", responseProperty);
 
                     if (responseProperty instanceof ArrayProperty) {
                         ArrayProperty ap = (ArrayProperty) responseProperty;
@@ -2166,7 +2200,7 @@ public class DefaultCodegen {
                             op.returnBaseType = cm.baseType;
                         }
                     }
-                    op.examples = new ExampleGenerator(definitions).generate(methodResponse.getExamples(), operation.getProduces(), responseProperty);
+                    op.examples = getExamples(definitions, methodResponse.getExamples(), operation.getProduces(), responseProperty);
                     op.defaultResponse = toDefaultValue(responseProperty);
                     op.returnType = cm.datatype;
                     op.hasReference = definitions != null && definitions.containsKey(op.returnBaseType);
@@ -2247,7 +2281,7 @@ public class DefaultCodegen {
                     bodyParam = p;
                     bodyParams.add(p.copy());
                     if(definitions != null) {
-                        op.requestBodyExamples = new ExampleGenerator(definitions).generate(null, operation.getConsumes(), bodyParam.dataType);
+                        op.requestBodyExamples = getExamples(definitions, null, consumes, bodyParam.dataType);
                     }
                 } else if (param instanceof FormParameter) {
                     formParams.add(p.copy());
@@ -2306,6 +2340,9 @@ public class DefaultCodegen {
         op.isRestfulUpdate = op.isRestfulUpdate();
         op.isRestfulDestroy = op.isRestfulDestroy();
         op.isRestful = op.isRestful();
+
+        // TODO: fix error with resolved yaml/json generators in order to enable this again.
+        //configureDataForTestTemplate(op);
 
         return op;
     }
@@ -2655,6 +2692,10 @@ public class DefaultCodegen {
                         name = getTypeDeclaration(name);
                     }
                     p.dataType = name;
+                } else {
+                    if (sub instanceof ComposedModel) {
+                        p.dataType = "object";
+                    }
                 }
             }
             p.paramName = toParamName(bp.getName());
@@ -3082,11 +3123,11 @@ public class DefaultCodegen {
         }
     }
 
-    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required) {
-        addVars(m, properties, required, null, null);
+    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required, Map<String, Model> allDefinitions) {
+        addVars(m, properties, required, allDefinitions, null, null);
     }
 
-    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required,
+    private void addVars(CodegenModel m, Map<String, Property> properties, List<String> required, Map<String, Model> allDefinitions,
                          Map<String, Property> allProperties, List<String> allRequired) {
 
         m.hasRequired = false;
@@ -3097,7 +3138,7 @@ public class DefaultCodegen {
 
             Set<String> mandatory = required == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(required);
-            addVars(m, m.vars, properties, mandatory);
+            addVars(m, m.vars, properties, mandatory, allDefinitions);
             m.allMandatory = m.mandatory = mandatory;
         } else {
             m.emptyVars = true;
@@ -3108,12 +3149,12 @@ public class DefaultCodegen {
         if (allProperties != null) {
             Set<String> allMandatory = allRequired == null ? Collections.<String> emptySet()
                     : new TreeSet<String>(allRequired);
-            addVars(m, m.allVars, allProperties, allMandatory);
+            addVars(m, m.allVars, allProperties, allMandatory, allDefinitions);
             m.allMandatory = allMandatory;
         }
     }
 
-    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory) {
+    private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory, Map<String, Model> allDefinitions) {
         // convert set to list so that we can access the next entry in the loop
         List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
         final int totalCount = propertyList.size();
@@ -3134,6 +3175,17 @@ public class DefaultCodegen {
                     // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
                     // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
                     m.hasEnums = true;
+                }
+
+                if (allDefinitions != null && prop instanceof RefProperty) {
+                    RefProperty refProperty = (RefProperty) prop;
+                    Model model =  allDefinitions.get(refProperty.getSimpleRef());
+                    if (model instanceof ModelImpl) {
+                        ModelImpl modelImpl = (ModelImpl) model;
+                        cp.pattern = modelImpl.getPattern();
+                        cp.minLength = modelImpl.getMinLength();
+                        cp.maxLength = modelImpl.getMaxLength();
+                    }
                 }
 
                 // set model's hasOnlyReadOnly to false if the property is read-only
@@ -3320,7 +3372,7 @@ public class DefaultCodegen {
 
     public String apiFilename(String templateName, String tag) {
         String suffix = apiTemplateFiles().get(templateName);
-        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
     }
 
     /**
@@ -3333,7 +3385,7 @@ public class DefaultCodegen {
      */
     public String apiDocFilename(String templateName, String tag) {
         String suffix = apiDocTemplateFiles().get(templateName);
-        return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
+        return apiDocFileFolder() + File.separator + toApiDocFilename(tag) + suffix;
     }
 
     /**
@@ -3346,7 +3398,7 @@ public class DefaultCodegen {
      */
     public String apiTestFilename(String templateName, String tag) {
         String suffix = apiTestTemplateFiles().get(templateName);
-        return apiTestFileFolder() + '/' + toApiTestFilename(tag) + suffix;
+        return apiTestFileFolder() + File.separator + toApiTestFilename(tag) + suffix;
     }
 
     public boolean shouldOverwrite(String filename) {
@@ -3367,6 +3419,14 @@ public class DefaultCodegen {
 
     public void setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+    }
+
+    public boolean isHideGenerationTimestamp() {
+        return hideGenerationTimestamp;
+    }
+
+    public void setHideGenerationTimestamp(boolean hideGenerationTimestamp) {
+        this.hideGenerationTimestamp = hideGenerationTimestamp;
     }
 
     /**
@@ -3772,7 +3832,84 @@ public class DefaultCodegen {
         return booleanValue;
     }
 
+    protected List<Map<String, String>> getExamples(Map<String, Model> definitions, Map<String, Object> examples, List<String> mediaTypes, Object object) {
+        if (object instanceof Property) {
+            Property responseProperty = (Property) object;
+            return new ExampleGenerator(definitions).generate(examples, mediaTypes, responseProperty);
+        }
+        // this must be a model name instead
+        return new ExampleGenerator(definitions).generate(examples, mediaTypes, object.toString());
+    }
+
     public void writePropertyBack(String propertyKey, boolean value) {
         additionalProperties.put(propertyKey, value);
+    }
+
+    protected void addOption(String key, String description) {
+        addOption(key, description, null);
+    }
+
+    protected void addOption(String key, String description, String defaultValue) {
+        CliOption option = new CliOption(key, description);
+        if (defaultValue != null)
+            option.defaultValue(defaultValue);
+        cliOptions.add(option);
+    }
+
+    protected void addSwitch(String key, String description, Boolean defaultValue) {
+        CliOption option = CliOption.newBoolean(key, description);
+        if (defaultValue != null)
+            option.defaultValue(defaultValue.toString());
+        cliOptions.add(option);
+    }
+
+    protected void configureDataForTestTemplate(CodegenOperation codegenOperation) {
+        final String httpMethod = codegenOperation.httpMethod;
+        String path = codegenOperation.path;
+        if ("GET".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-get-method", Boolean.TRUE);
+        }
+        if ("POST".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-post-method", Boolean.TRUE);
+        }
+        if ("PUT".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-put-method", Boolean.TRUE);
+        }
+        if ("DELETE".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-delete-method", Boolean.TRUE);
+        }
+        if ("HEAD".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-head-method", Boolean.TRUE);
+        }
+        if ("TRACE".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-trace-method", Boolean.TRUE);
+        }
+        if ("PATCH".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-head-method", Boolean.TRUE);
+        }
+        if ("OPTIONS".equalsIgnoreCase(httpMethod)) {
+            codegenOperation.vendorExtensions.put("x-is-options-method", Boolean.TRUE);
+        }
+        if (path.contains("{")) {
+            while(path.contains("{")) {
+                final String pathParam = path.substring(path.indexOf("{"), path.indexOf("}") + 1);
+                final String paramName = pathParam.replace("{", StringUtils.EMPTY).replace("}", StringUtils.EMPTY);
+
+                CodegenParameter codegenParameter = null;
+
+                for (CodegenParameter parameter : codegenOperation.pathParams) {
+                    if (parameter.baseName.equalsIgnoreCase(paramName)) {
+                        codegenParameter = parameter;
+                        break;
+                    }
+                }
+
+                if (codegenParameter == null || codegenParameter.testExample == null) {
+                    return;
+                }
+                path = path.replace(pathParam, codegenParameter.testExample);
+            }
+        }
+        codegenOperation.testPath = path;
     }
 }

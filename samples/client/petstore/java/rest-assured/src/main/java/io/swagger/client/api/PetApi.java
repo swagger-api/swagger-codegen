@@ -40,11 +40,8 @@ public class PetApi {
 
     private RequestSpecBuilder reqSpec;
 
-    private JSON json;
-
     private PetApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
-        this.json = new JSON();
     }
 
     public static PetApi pet(RequestSpecBuilder reqSpec) {
@@ -83,26 +80,6 @@ public class PetApi {
 
     public UploadFileOper uploadFile() {
         return new UploadFileOper(reqSpec);
-    }
-
-    /**
-     * Get JSON
-     *
-     * @return JSON object
-     */
-    public JSON getJSON() {
-        return json;
-    }
-
-    /**
-     * Set JSON
-     *
-     * @param json JSON object
-     * @return PetApi
-     */
-    public PetApi setJSON(JSON json) {
-        this.json = json;
-        return this;
     }
 
     /**
@@ -152,7 +129,7 @@ public class PetApi {
          * @param body (Pet) Pet object that needs to be added to the store (required)
          */
         public AddPetOper body(Pet body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -278,7 +255,7 @@ public class PetApi {
          */
         public List<Pet> executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<List<Pet>>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -347,7 +324,7 @@ public class PetApi {
          */
         public List<Pet> executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<List<Pet>>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -414,7 +391,7 @@ public class PetApi {
          */
         public Pet executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<Pet>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -480,7 +457,7 @@ public class PetApi {
          * @param body (Pet) Pet object that needs to be added to the store (required)
          */
         public UpdatePetOper body(Pet body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -621,7 +598,7 @@ public class PetApi {
          */
         public ModelApiResponse executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<ModelApiResponse>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**

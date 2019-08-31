@@ -47,7 +47,7 @@ public class FakeClassnameTags123Api {
 
     /**
      * To test class name in snake case
-     * 
+     * To test class name in snake case
      * <p><b>200</b> - successful operation
      * @param body client model
      * @return Client
@@ -66,6 +66,8 @@ public class FakeClassnameTags123Api {
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+        
+        
 
         final String[] accepts = { 
             "application/json"

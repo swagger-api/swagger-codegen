@@ -10,18 +10,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
+using IO.Swagger.Security;
+using Microsoft.AspNetCore.Authorization;
 using IO.Swagger.Models;
 
 namespace IO.Swagger.Controllers
@@ -29,7 +25,8 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class UserApiController : Controller
+    [ApiController]
+    public class UserApiController : ControllerBase
     { 
         /// <summary>
         /// Create user
@@ -115,7 +112,7 @@ namespace IO.Swagger.Controllers
         /// Get user by user name
         /// </summary>
         
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <response code="200">successful operation</response>
         /// <response code="400">Invalid username supplied</response>
         /// <response code="404">User not found</response>

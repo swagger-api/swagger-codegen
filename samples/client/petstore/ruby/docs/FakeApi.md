@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**fake_outer_composite_serialize**](FakeApi.md#fake_outer_composite_serialize) | **POST** /fake/outer/composite | 
 [**fake_outer_number_serialize**](FakeApi.md#fake_outer_number_serialize) | **POST** /fake/outer/number | 
 [**fake_outer_string_serialize**](FakeApi.md#fake_outer_string_serialize) | **POST** /fake/outer/string | 
+[**test_body_with_query_params**](FakeApi.md#test_body_with_query_params) | **PUT** /fake/body-with-query-params | 
 [**test_client_model**](FakeApi.md#test_client_model) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**test_endpoint_parameters**](FakeApi.md#test_endpoint_parameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**test_enum_parameters**](FakeApi.md#test_enum_parameters) | **GET** /fake | To test enum parameters
@@ -203,6 +204,52 @@ No authorization required
 
 
 
+# **test_body_with_query_params**
+> test_body_with_query_params(body, query)
+
+
+
+### Example
+```ruby
+# load the gem
+require 'petstore'
+
+api_instance = Petstore::FakeApi.new
+
+body = Petstore::User.new # User | 
+
+query = 'query_example' # String | 
+
+
+begin
+  api_instance.test_body_with_query_params(body, query)
+rescue Petstore::ApiError => e
+  puts "Exception when calling FakeApi->test_body_with_query_params: #{e}"
+end
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**User**](User.md)|  | 
+ **query** | **String**|  | 
+
+### Return type
+
+nil (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+
+
 # **test_client_model**
 > Client test_client_model(body)
 
@@ -274,21 +321,21 @@ number = 8.14 # Float | None
 
 double = 1.2 # Float | None
 
-pattern_without_delimiter = "pattern_without_delimiter_example" # String | None
+pattern_without_delimiter = 'pattern_without_delimiter_example' # String | None
 
-byte = "B" # String | None
+byte = 'B' # String | None
 
 opts = { 
   integer: 56, # Integer | None
   int32: 56, # Integer | None
   int64: 789, # Integer | None
   float: 3.4, # Float | None
-  string: "string_example", # String | None
-  binary: "B", # String | None
-  date: Date.parse("2013-10-20"), # Date | None
-  date_time: DateTime.parse("2013-10-20T19:20:30+01:00"), # DateTime | None
-  password: "password_example", # String | None
-  callback: "callback_example" # String | None
+  string: 'string_example', # String | None
+  binary: 'B', # String | None
+  date: Date.parse('2013-10-20'), # Date | None
+  date_time: DateTime.parse('2013-10-20T19:20:30+01:00'), # DateTime | None
+  password: 'password_example', # String | None
+  callback: 'callback_example' # String | None
 }
 
 begin
@@ -348,12 +395,12 @@ require 'petstore'
 api_instance = Petstore::FakeApi.new
 
 opts = { 
-  enum_form_string_array: ["enum_form_string_array_example"], # Array<String> | Form parameter enum test (string array)
-  enum_form_string: "-efg", # String | Form parameter enum test (string)
-  enum_header_string_array: ["enum_header_string_array_example"], # Array<String> | Header parameter enum test (string array)
-  enum_header_string: "-efg", # String | Header parameter enum test (string)
-  enum_query_string_array: ["enum_query_string_array_example"], # Array<String> | Query parameter enum test (string array)
-  enum_query_string: "-efg", # String | Query parameter enum test (string)
+  enum_form_string_array: ['enum_form_string_array_example'], # Array<String> | Form parameter enum test (string array)
+  enum_form_string: '-efg', # String | Form parameter enum test (string)
+  enum_header_string_array: ['enum_header_string_array_example'], # Array<String> | Header parameter enum test (string array)
+  enum_header_string: '-efg', # String | Header parameter enum test (string)
+  enum_query_string_array: ['enum_query_string_array_example'], # Array<String> | Query parameter enum test (string array)
+  enum_query_string: '-efg', # String | Query parameter enum test (string)
   enum_query_integer: 56, # Integer | Query parameter enum test (double)
   enum_query_double: 1.2 # Float | Query parameter enum test (double)
 }
@@ -454,9 +501,9 @@ require 'petstore'
 
 api_instance = Petstore::FakeApi.new
 
-param = "param_example" # String | field1
+param = 'param_example' # String | field1
 
-param2 = "param2_example" # String | field2
+param2 = 'param2_example' # String | field2
 
 
 begin

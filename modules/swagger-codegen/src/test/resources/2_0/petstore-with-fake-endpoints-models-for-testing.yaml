@@ -471,7 +471,7 @@ paths:
             X-Expires-After:
               type: string
               format: date-time
-              description: date in UTC when toekn expires
+              description: date in UTC when token expires
         '400':
           description: Invalid username/password supplied
   /user/logout:
@@ -501,7 +501,7 @@ paths:
       parameters:
         - name: username
           in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: 'The name that needs to be fetched. Use user1 for testing.'
           required: true
           type: string
       responses:
@@ -565,7 +565,7 @@ paths:
       tags:
         - "fake_classname_tags 123#$%^"
       summary: To test class name in snake case
-      descriptions: To test class name in snake case
+      description: To test class name in snake case
       operationId: testClassname
       consumes:
         - application/json
@@ -919,6 +919,26 @@ paths:
       responses:
         '200':
           description: successful operation
+  /fake/body-with-query-params:
+    put:
+      tags:
+        - fake
+      operationId: testBodyWithQueryParams
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+        - name: query
+          in: query
+          required: true
+          type: string
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: Success
   /another-fake/dummy:
     patch:
       tags:
@@ -1225,8 +1245,16 @@ definitions:
       - (xyz)
   Enum_Test:
     type: object
+    required:
+      - enum_string_required
     properties:
       enum_string:
+        type: string
+        enum:
+          - UPPER
+          - lower
+          - ''
+      enum_string_required:
         type: string
         enum:
           - UPPER

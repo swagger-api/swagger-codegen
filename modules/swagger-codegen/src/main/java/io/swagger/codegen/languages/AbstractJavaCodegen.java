@@ -51,10 +51,13 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String DEFAULT_LIBRARY = "<default>";
     public static final String DATE_LIBRARY = "dateLibrary";
     public static final String JAVA8_MODE = "java8";
+    public static final String SUPPORT_ASYNC = "supportAsync";
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
+    public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
 
     protected String dateLibrary = "threetenbp";
+    protected boolean supportAsync = false;
     protected boolean java8Mode = false;
     protected boolean withXml = false;
     protected String invokerPackage = "io.swagger";
@@ -81,10 +84,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String javaUtilPrefix = "";
     protected Boolean serializableModel = false;
     protected boolean serializeBigDecimalAsString = false;
-    protected boolean hideGenerationTimestamp = false;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
+    protected boolean disableHtmlEscaping = false;
 
     public AbstractJavaCodegen() {
         super();
@@ -95,6 +98,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
+        hideGenerationTimestamp = false; 
+        
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
@@ -174,6 +179,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         java8Mode.setEnum(java8ModeOptions);
         cliOptions.add(java8Mode);
 
+        cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
     }
 
     @Override
@@ -185,6 +191,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
         additionalProperties.put(SUPPORT_JAVA6, supportJava6);
 
+        if (additionalProperties.containsKey(DISABLE_HTML_ESCAPING)) {
+            this.setDisableHtmlEscaping(Boolean.valueOf(additionalProperties.get(DISABLE_HTML_ESCAPING).toString()));
+        }
+        additionalProperties.put(DISABLE_HTML_ESCAPING, disableHtmlEscaping);
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
@@ -203,6 +213,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else {
             //not set, use default to be passed to template
             additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
+        }
+
+        if (!additionalProperties.containsKey(CodegenConstants.MODEL_PACKAGE)) {
+            additionalProperties.put(CodegenConstants.MODEL_PACKAGE, modelPackage);
+        }
+
+        if (!additionalProperties.containsKey(CodegenConstants.API_PACKAGE)) {
+            additionalProperties.put(CodegenConstants.API_PACKAGE, apiPackage);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.GROUP_ID)) {
@@ -381,14 +399,21 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
 
-        if(additionalProperties.containsKey(JAVA8_MODE)) {
+        if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
             if ( java8Mode ) {
                 additionalProperties.put("java8", "true");
             }
         }
 
-        if(additionalProperties.containsKey(WITH_XML)) {
+        if (additionalProperties.containsKey(SUPPORT_ASYNC)) {
+            setSupportAsync(Boolean.parseBoolean(additionalProperties.get(SUPPORT_ASYNC).toString()));
+            if (supportAsync) {
+                additionalProperties.put(SUPPORT_ASYNC, "true");
+            }
+        }
+
+        if (additionalProperties.containsKey(WITH_XML)) {
             setWithXml(Boolean.parseBoolean(additionalProperties.get(WITH_XML).toString()));
             if ( withXml ) {
                 additionalProperties.put(WITH_XML, "true");
@@ -754,6 +779,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             if (example == null) {
                 example = p.paramName + "_example";
             }
+            p.testExample = example;
             example = "\"" + escapeText(example) + "\"";
         } else if ("Integer".equals(type) || "Short".equals(type)) {
             if (example == null) {
@@ -763,15 +789,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             if (example == null) {
                 example = "56";
             }
+            p.testExample = example;
             example = example + "L";
         } else if ("Float".equals(type)) {
             if (example == null) {
                 example = "3.4";
             }
+            p.testExample = example;
             example = example + "F";
         } else if ("Double".equals(type)) {
             example = "3.4";
             example = example + "D";
+            p.testExample = example;
         } else if ("Boolean".equals(type)) {
             if (example == null) {
                 example = "true";
@@ -783,9 +812,17 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             example = "new File(\"" + escapeText(example) + "\")";
         } else if ("Date".equals(type)) {
             example = "new Date()";
+        } else if ("LocalDate".equals(type)) {
+            example = "LocalDate.now()";
+        } else if ("OffsetDateTime".equals(type)) {
+            example = "OffsetDateTime.now()";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
             example = "new " + type + "()";
+        }
+
+        if (p.testExample == null) {
+            p.testExample = example;
         }
 
         if (example == null) {
@@ -1116,6 +1153,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         return packageName;
     }
 
+    public String getInvokerPackage() {
+        return invokerPackage;
+    }
+
     public void setInvokerPackage(String invokerPackage) {
         this.invokerPackage = invokerPackage;
     }
@@ -1215,6 +1256,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setJava8Mode(boolean enabled) {
         this.java8Mode = enabled;
+    }
+
+    public void setDisableHtmlEscaping(boolean disabled) {
+        this.disableHtmlEscaping = disabled;
+    }
+
+    public void setSupportAsync(boolean enabled) {
+        this.supportAsync = enabled;
     }
 
     @Override

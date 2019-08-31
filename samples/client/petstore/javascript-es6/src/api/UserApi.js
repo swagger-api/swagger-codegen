@@ -222,7 +222,7 @@ export default class UserApi {
     /**
      * Get user by user name
      * 
-     * @param {String} username The name that needs to be fetched. Use user1 for testing. 
+     * @param {String} username The name that needs to be fetched. Use user1 for testing.
      * @param {module:api/UserApi~getUserByNameCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/User}
      */

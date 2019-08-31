@@ -10,8 +10,8 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.Info;
 import io.swagger.models.License;
@@ -96,6 +96,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     protected String apiTestPath = "api/";
     protected String modelTestPath = "model/";
     protected boolean useES6 = false; // default is ES5
+    private String modelPropertyNaming = "camelCase";
 
     public JavascriptClientCodegen() {
         super();
@@ -110,6 +111,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         modelPackage = "model";
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
+
+        // default HIDE_GENERATION_TIMESTAMP to true
+        hideGenerationTimestamp = Boolean.TRUE;
 
         // reference: http://www.w3schools.com/js/js_reserved.asp
         setReservedWordsLowerCase(
@@ -192,11 +196,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         cliOptions.add(new CliOption(USE_INHERITANCE,
                 "use JavaScript prototype chains & delegation for inheritance")
                 .defaultValue(Boolean.TRUE.toString()));
-        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "hides the timestamp when files were generated")
+        cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
         cliOptions.add(new CliOption(USE_ES6,
                 "use JavaScript ES6 (ECMAScript 6) (beta). Default is ES5.")
                 .defaultValue(Boolean.FALSE.toString()));
+        cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
     }
 
     @Override
@@ -222,14 +227,6 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             setUseES6(false); // default to ES5
         }
         super.processOpts();
-
-        // default HIDE_GENERATION_TIMESTAMP to true
-        if (!additionalProperties.containsKey(CodegenConstants.HIDE_GENERATION_TIMESTAMP)) {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, Boolean.TRUE.toString());
-        } else {
-            additionalProperties.put(CodegenConstants.HIDE_GENERATION_TIMESTAMP,
-                    Boolean.valueOf(additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP).toString()));
-        }
 
         if (additionalProperties.containsKey(PROJECT_NAME)) {
             setProjectName(((String) additionalProperties.get(PROJECT_NAME)));
@@ -269,6 +266,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
         if (additionalProperties.containsKey(EMIT_JS_DOC)) {
             setEmitJSDoc(convertPropertyToBooleanAndWriteBack(EMIT_JS_DOC));
+        }
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
+            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
         }
     }
 
@@ -396,6 +396,10 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         return createPath(outputFolder, sourceFolder, invokerPackage, modelPackage());
     }
 
+    public String getInvokerPackage() {
+        return invokerPackage;
+    }
+
     public void setInvokerPackage(String invokerPackage) {
         this.invokerPackage = invokerPackage;
     }
@@ -486,6 +490,22 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         return toModelName(name) + ".spec";
     }
 
+    public String getModelPropertyNaming() {
+        return this.modelPropertyNaming;
+    }
+
+    private String getNameUsingModelPropertyNaming(String name) {
+        switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
+            case original:    return name;
+            case camelCase:   return camelize(name, true);
+            case PascalCase:  return camelize(name);
+            case snake_case:  return underscore(name);
+            default:          throw new IllegalArgumentException("Invalid model property naming '" +
+                    name + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
     @Override
     public String toVarName(String name) {
         // sanitize name
@@ -502,7 +522,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
         // camelize (lower first character) the variable name
         // pet_id => petId
-        name = camelize(name, true);
+        name = getNameUsingModelPropertyNaming(name);
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name) || name.matches("^\\d.*")) {
@@ -622,14 +642,25 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         return null;
     }
 
+    public void setModelPropertyNaming(String naming) {
+        if ("original".equals(naming) || "camelCase".equals(naming) ||
+                "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+            this.modelPropertyNaming = naming;
+        } else {
+            throw new IllegalArgumentException("Invalid model property naming '" +
+                    naming + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
     @Override
     public String toDefaultValueWithParam(String name, Property p) {
-        String type = normalizeType(getTypeDeclaration(p));
-        if (p instanceof RefProperty) {
+        String typeDeclaration = getTypeDeclaration(p);
+        String type = normalizeType(typeDeclaration);
+        if (p instanceof RefProperty && !isPrimitiveType(typeDeclaration.toLowerCase())) {
             return " = " + type + ".constructFromObject(data['" + name + "']);";
-        } else {
-          return " = ApiClient.convertToType(data['" + name + "'], " + type + ");";
         }
+        return " = ApiClient.convertToType(data['" + name + "'], " + type + ");";
     }
 
     @Override
@@ -795,6 +826,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
             if (mm.getAdditionalProperties() != null) {
                 codegenModel.vendorExtensions.put("x-isMap", true);
                 codegenModel.vendorExtensions.put("x-itemType", getSwaggerType(mm.getAdditionalProperties()));
+            } else {
+                String type = mm.getType();
+                if (isPrimitiveType(type)){
+                    codegenModel.vendorExtensions.put("x-isPrimitive", true);
+                }
             }
         }
 
@@ -877,6 +913,11 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     private boolean isModelledType(CodegenOperation co) {
         // This seems to be the only way to tell whether an operation return type is modelled.
         return !Boolean.TRUE.equals(co.returnTypeIsPrimitive);
+    }
+
+    private boolean isPrimitiveType(String type) {
+        final String[] primitives = {"number", "integer", "string", "boolean", "null"};
+        return Arrays.asList(primitives).contains(type);
     }
 
     @SuppressWarnings("unchecked")

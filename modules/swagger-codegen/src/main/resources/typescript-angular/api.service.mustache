@@ -14,7 +14,12 @@ import { Response, ResponseContentType }                     from '@angular/http
 import { CustomQueryEncoderHelper }                          from '../encoder';
 {{/useHttpClient}}
 
+{{^useRxJS6}}
 import { Observable }                                        from 'rxjs/Observable';
+{{/useRxJS6}}
+{{#useRxJS6}}
+import { Observable }                                        from 'rxjs';
+{{/useRxJS6}}
 {{^useHttpClient}}
 import '../rxjs-operators';
 {{/useHttpClient}}
@@ -26,7 +31,7 @@ import { {{classname}} } from '../{{filename}}';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 {{#withInterfaces}}
-import { {{classname}}Interface }                            from './{{classname}}Interface';
+import { {{classname}}Interface }                            from './{{classFilename}}Interface';
 {{/withInterfaces}}
 
 {{#operations}}
@@ -36,7 +41,14 @@ import { {{classname}}Interface }                            from './{{classname
  * {{&description}}
  */
 {{/description}}
+{{^providedInRoot}}
 @Injectable()
+{{/providedInRoot}}
+{{#providedInRoot}}
+@Injectable({
+  providedIn: 'root'
+})
+{{/providedInRoot}}
 {{#withInterfaces}}
 export class {{classname}} implements {{classname}}Interface {
 {{/withInterfaces}}
@@ -64,7 +76,7 @@ export class {{classname}} {
      */
     private canConsumeForm(consumes: string[]): boolean {
         const form = 'multipart/form-data';
-        for (let consume of consumes) {
+        for (const consume of consumes) {
             if (form === consume) {
                 return true;
             }
@@ -112,19 +124,25 @@ export class {{classname}} {
      * @param reportProgress flag to report request and response progress.{{/useHttpClient}}
      */
     {{#useHttpClient}}
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public {{nickname}}({{#allParams}}{{^isConstEnumParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstEnumParam}}{{/allParams}}observe?: 'body', reportProgress?: boolean): Observable<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>;
+    public {{nickname}}({{#allParams}}{{^isConstEnumParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstEnumParam}}{{/allParams}}observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams}}{{^isConstEnumParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstEnumParam}}{{/allParams}}observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>>;
+    public {{nickname}}({{#allParams}}{{^isConstEnumParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isConstEnumParam}}{{/allParams}}observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
     {{/useHttpClient}}
     {{^useHttpClient}}
     public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
     {{/useHttpClient}}
 {{#allParams}}
+
 {{#required}}
+        {{#isConstEnumParam}}
+        let {{paramName}} = {{{dataType}}};
+        {{/isConstEnumParam}}
+        {{^isConstEnumParam}}
         if ({{paramName}} === null || {{paramName}} === undefined) {
             throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
         }
+        {{/isConstEnumParam}}
 {{/required}}
 {{/allParams}}
 
@@ -149,7 +167,7 @@ export class {{classname}} {
         }
         {{/isListContainer}}
         {{^isListContainer}}
-        if ({{paramName}} !== undefined) {
+        if ({{paramName}} !== undefined && {{paramName}} !== null) {
         {{#isDateTime}}
             {{#useHttpClient}}queryParameters = {{/useHttpClient}}queryParameters.set('{{baseName}}', <any>{{paramName}}.toISOString());
         {{/isDateTime}}
@@ -199,7 +217,7 @@ export class {{classname}} {
 {{/isBasic}}
 {{#isOAuth}}
         if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
+            const accessToken = typeof this.configuration.accessToken === 'function'
                 ? this.configuration.accessToken()
                 : this.configuration.accessToken;
             {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('Authorization', 'Bearer ' + accessToken);
@@ -213,30 +231,30 @@ export class {{classname}} {
             '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/produces}}
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
 {{^useHttpClient}}
-            headers.set("Accept", httpHeaderAcceptSelected);
+            headers.set('Accept', httpHeaderAcceptSelected);
 {{/useHttpClient}}
 {{#useHttpClient}}
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
 {{/useHttpClient}}
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
             {{#consumes}}
             '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
             {{/consumes}}
         ];
 {{#bodyParam}}
-        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
 {{^useHttpClient}}
             headers.set('Content-Type', httpContentTypeSelected);
 {{/useHttpClient}}
 {{#useHttpClient}}
-            headers = headers.set("Content-Type", httpContentTypeSelected);
+            headers = headers.set('Content-Type', httpContentTypeSelected);
 {{/useHttpClient}}
         }
 {{/bodyParam}}

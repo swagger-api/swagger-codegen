@@ -108,7 +108,7 @@ public class UserApi {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+     * @param username The name that needs to be fetched. Use user1 for testing. (required)
      * @param resultHandler Asynchronous result handler
      */
     public void getUserByName(String username, Handler<AsyncResult<User>> resultHandler) {
@@ -118,7 +118,7 @@ public class UserApi {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+     * @param username The name that needs to be fetched. Use user1 for testing. (required)
      * @return Asynchronous result handler (RxJava Single)
      */
     public Single<User> rxGetUserByName(String username) {

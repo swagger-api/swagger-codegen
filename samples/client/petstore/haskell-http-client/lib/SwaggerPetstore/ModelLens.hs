@@ -216,6 +216,11 @@ enumTestEnumStringL :: Lens_' EnumTest (Maybe E'EnumString)
 enumTestEnumStringL f EnumTest{..} = (\enumTestEnumString -> EnumTest { enumTestEnumString, ..} ) <$> f enumTestEnumString
 {-# INLINE enumTestEnumStringL #-}
 
+-- | 'enumTestEnumStringRequired' Lens
+enumTestEnumStringRequiredL :: Lens_' EnumTest (E'EnumString)
+enumTestEnumStringRequiredL f EnumTest{..} = (\enumTestEnumStringRequired -> EnumTest { enumTestEnumStringRequired, ..} ) <$> f enumTestEnumStringRequired
+{-# INLINE enumTestEnumStringRequiredL #-}
+
 -- | 'enumTestEnumInteger' Lens
 enumTestEnumIntegerL :: Lens_' EnumTest (Maybe E'EnumInteger)
 enumTestEnumIntegerL f EnumTest{..} = (\enumTestEnumInteger -> EnumTest { enumTestEnumInteger, ..} ) <$> f enumTestEnumInteger

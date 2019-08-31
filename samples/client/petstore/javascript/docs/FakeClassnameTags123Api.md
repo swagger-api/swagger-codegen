@@ -13,6 +13,8 @@ Method | HTTP request | Description
 
 To test class name in snake case
 
+To test class name in snake case
+
 ### Example
 ```javascript
 var SwaggerPetstore = require('swagger_petstore');

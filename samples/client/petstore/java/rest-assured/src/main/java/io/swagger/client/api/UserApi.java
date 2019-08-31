@@ -38,11 +38,8 @@ public class UserApi {
 
     private RequestSpecBuilder reqSpec;
 
-    private JSON json;
-
     private UserApi(RequestSpecBuilder reqSpec) {
         this.reqSpec = reqSpec;
-        this.json = new JSON();
     }
 
     public static UserApi user(RequestSpecBuilder reqSpec) {
@@ -80,26 +77,6 @@ public class UserApi {
 
     public UpdateUserOper updateUser() {
         return new UpdateUserOper(reqSpec);
-    }
-
-    /**
-     * Get JSON
-     *
-     * @return JSON object
-     */
-    public JSON getJSON() {
-        return json;
-    }
-
-    /**
-     * Set JSON
-     *
-     * @param json JSON object
-     * @return UserApi
-     */
-    public UserApi setJSON(JSON json) {
-        this.json = json;
-        return this;
     }
 
     /**
@@ -149,7 +126,7 @@ public class UserApi {
          * @param body (User) Created user object (required)
          */
         public CreateUserOper body(User body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -208,7 +185,7 @@ public class UserApi {
          * @param body (List<User>) List of user object (required)
          */
         public CreateUsersWithArrayInputOper body(List<User> body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -267,7 +244,7 @@ public class UserApi {
          * @param body (List<User>) List of user object (required)
          */
         public CreateUsersWithListInputOper body(List<User> body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 
@@ -348,7 +325,7 @@ public class UserApi {
      * Get user by user name
      * 
      *
-     * @see #usernamePath The name that needs to be fetched. Use user1 for testing.  (required)
+     * @see #usernamePath The name that needs to be fetched. Use user1 for testing. (required)
      * return User
      */
     public class GetUserByNameOper {
@@ -384,11 +361,11 @@ public class UserApi {
          */
         public User executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<User>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
-         * @param username (String) The name that needs to be fetched. Use user1 for testing.  (required)
+         * @param username (String) The name that needs to be fetched. Use user1 for testing. (required)
          */
         public GetUserByNameOper usernamePath(Object username) {
             reqSpec.addPathParam("username", username);
@@ -452,7 +429,7 @@ public class UserApi {
          */
         public String executeAs(Function<Response, Response> handler) {
             Type type = new TypeToken<String>(){}.getType();
-            return getJSON().deserialize(execute(handler).asString(), type);
+            return execute(handler).as(type);
         }
 
         /**
@@ -575,7 +552,7 @@ public class UserApi {
          * @param body (User) Updated user object (required)
          */
         public UpdateUserOper body(User body) {
-            reqSpec.setBody(getJSON().serialize(body));
+            reqSpec.setBody(body);
             return this;
         }
 

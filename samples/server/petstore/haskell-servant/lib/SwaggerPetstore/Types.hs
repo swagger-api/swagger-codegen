@@ -3,8 +3,10 @@
 {-# OPTIONS_GHC -fno-warn-unused-binds -fno-warn-unused-imports #-}
 
 module SwaggerPetstore.Types (
+  Amount (..),
   ApiResponse (..),
   Category (..),
+  Currency (..),
   Order (..),
   Pet (..),
   Tag (..),
@@ -21,6 +23,17 @@ import qualified Data.Map as Map
 import GHC.Generics (Generic)
 import Data.Function ((&))
 
+
+-- | some description 
+data Amount = Amount
+  { amountValue :: Double -- ^ some description 
+  , amountCurrency :: Currency -- ^ 
+  } deriving (Show, Eq, Generic)
+
+instance FromJSON Amount where
+  parseJSON = genericParseJSON (removeFieldLabelPrefix True "amount")
+instance ToJSON Amount where
+  toJSON = genericToJSON (removeFieldLabelPrefix False "amount")
 
 -- | Describes the result of uploading an image resource
 data ApiResponse = ApiResponse
@@ -44,6 +57,9 @@ instance FromJSON Category where
   parseJSON = genericParseJSON (removeFieldLabelPrefix True "category")
 instance ToJSON Category where
   toJSON = genericToJSON (removeFieldLabelPrefix False "category")
+
+-- | some description 
+newtype Currency = Currency Text deriving (Show, Eq, FromJSON, ToJSON, Generic)
 
 -- | An order for a pets from the pet store
 data Order = Order
