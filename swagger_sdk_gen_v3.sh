@@ -12,7 +12,7 @@ elif [ "$Branch" = "production" ]
 else " No Branch is selected"
 fi
 curl -k $version -o config.json
-echo '{"artifactVersion":"0.0.1-SNAPSHOT","invokerPackage":"Example","modelPackage":"Example\Model","apiPackage":"Example\Api"}'>config_php.json
+echo '{"artifactVersion":"0.0.1-SNAPSHOT","invokerPackage":"Example","modelPackage":"Example\\\\Model","apiPackage":"Example\\\\Api"}'>config_php.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
