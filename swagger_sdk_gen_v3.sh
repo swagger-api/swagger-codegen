@@ -38,6 +38,7 @@ then rm -rf intouch_api/csharp_client/c#
 elif [ "$Client" = "php" ]
 then rm -rf intouch_api/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -DpackageName=Swagger.V3 \
   -i $url  \
   -l php \
   -o intouch_api/php_client/php \
