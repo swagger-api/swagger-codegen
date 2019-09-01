@@ -12,6 +12,10 @@ elif [ "$Branch" = "production" ]
 else " No Branch is selected"
 fi
 curl -k $version -o config.json
+echo '{
+    "invokerPackage": "Example",
+    "modelPackage": "Example\\Model",
+    "apiPackage": "Example\\Api"}'>config_php.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
@@ -38,11 +42,10 @@ then rm -rf intouch_api/csharp_client/c#
 elif [ "$Client" = "php" ]
 then rm -rf intouch_api/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -DpackageName=Swagger.V3 \
   -i $url  \
   -l php \
   -o intouch_api/php_client/php \
-  -c config.json
+  -c config_php.json
   tar cvzf intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
   fpm -f -s "dir" -t "deb" -a "all" -n "swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-v3-sdk"
 elif [ "$Client" = "nodejs" ]
