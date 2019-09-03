@@ -1,4 +1,4 @@
 {{#description}}
     /* {{{description}}} */
 {{/description}}
-    {{#native}}@SerialName(value = "{{name}}") @Required {{/native}}val {{{vendorExtensions.x-escapedName}}}: {{#isEnum}}{{classname}}.{{nameInCamelCase}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}
+    {{#multiplatform}}@SerialName(value = "{{name}}") @Required {{/multiplatform}}val {{{vendorExtensions.x-escapedName}}}: {{#isEnum}}{{classname}}.{{nameInCamelCase}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}

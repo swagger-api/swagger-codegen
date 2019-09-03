@@ -30,7 +30,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
 
     protected static final String JVM = "jvm";
-    protected static final String NATIVE = "native";
+    protected static final String MULTIPLATFORM = "multiplatform";
 
     protected String dateLibrary = DateLibrary.JAVA8.value;
 
@@ -81,7 +81,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         cliOptions.add(dateLibrary);
 
         supportedLibraries.put(JVM, "Platform: Java Virtual Machine. HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.8.1.");
-        supportedLibraries.put(NATIVE, "Platform: Kotlin/Native. HTTP client: Ktor 1.2.2. JSON processing: Kotlinx Serialization: 0.11.1.");
+        supportedLibraries.put(MULTIPLATFORM, "Platform: Kotlin multiplatform. HTTP client: Ktor 1.2.4. JSON processing: Kotlinx Serialization: 0.12.0.");
 
         CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "Library template (sub-template) to use");
         libraryOption.setEnum(supportedLibraries);
@@ -110,7 +110,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
     public void processOpts() {
         super.processOpts();
 
-        if (NATIVE.equals(getLibrary())) {
+        if (MULTIPLATFORM.equals(getLibrary())) {
             sourceFolder = "src/commonMain/kotlin";
         }
 
@@ -122,7 +122,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
             setDateLibrary(additionalProperties.get(DATE_LIBRARY).toString());
         }
 
-        // common (jvm/native) supporting files
+        // common (jvm/multiplatform) supporting files
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
         supportingFiles.add(new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
@@ -141,19 +141,19 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
             supportingFiles.add(new SupportingFile("infrastructure/Serializer.kt.mustache", infrastructureFolder, "Serializer.kt"));
             supportingFiles.add(new SupportingFile("infrastructure/ApiInfrastructureResponse.kt.mustache", infrastructureFolder, "ApiInfrastructureResponse.kt"));
 
-        } else if (NATIVE.equals(getLibrary())) {
-            additionalProperties.put(NATIVE, true);
+        } else if (MULTIPLATFORM.equals(getLibrary())) {
+            additionalProperties.put(MULTIPLATFORM, true);
             setDateLibrary(DateLibrary.STRING.value);
 
-            // kotlin native import mapping
+            // multiplatform import mapping
             importMapping.put("InputProvider", "io.ktor.client.request.forms.InputProvider");
             defaultIncludes.add("io.ktor.client.request.forms.InputProvider");
 
-            // kotlin native type mapping
+            // multiplatform type mapping
             typeMapping.put("number", "kotlin.Double");
             typeMapping.put("file", "InputProvider");
 
-            // native specific supporting files
+            // multiplatform specific supporting files
             supportingFiles.add(new SupportingFile("infrastructure/HttpResponse.kt.mustache", infrastructureFolder, "HttpResponse.kt"));
 
             // gradle wrapper supporting files

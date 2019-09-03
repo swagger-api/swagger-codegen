@@ -22,4 +22,4 @@ fun <T : Any?> toMultiValue(items: Iterable<T>, collectionFormat: String, map: (
     }
 }
 
-{{#native}}fun toStringOrEmpty(value: Any?): String = value?.let { value.toString() } ?: ""{{/native}}
+{{#multiplatform}}fun toStringOrEmpty(value: Any?): String = value?.let { value.toString() } ?: ""{{/multiplatform}}

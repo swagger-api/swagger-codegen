@@ -113,6 +113,12 @@ kotlin {
         iosX64().compilations.test.defaultSourceSet {
             dependsOn iosTest
         }
+
+        all {
+            languageSettings {
+                useExperimentalAnnotation('kotlin.Experimental')
+            }
+        }
     }
 }
 
