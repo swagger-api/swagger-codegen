@@ -1179,8 +1179,9 @@ public class DefaultCodegen {
             try {
                 RefProperty r = (RefProperty) p;
                 datatype = r.get$ref();
-                if (datatype.indexOf("#/definitions/") == 0) {
-                    datatype = datatype.substring("#/definitions/".length());
+                // '#/definitions' or ../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/
+                if (datatype.indexOf("#/definitions/") >= 0) {
+                    datatype = datatype.substring(datatype.indexOf("#/definitions/") + "#/definitions/".length());
                 }
             } catch (Exception e) {
                 LOGGER.warn("Error obtaining the datatype from RefProperty:" + p + ". Datatype default to Object");
@@ -2026,7 +2027,7 @@ public class DefaultCodegen {
     /**
      * Override with any special handling of response codes
      * @param responses Swagger Operation's responses
-     * @return default method response or <tt>null</tt> if not found
+     * @return default method response or &lt;tt&gt;null&lt;/tt&gt; if not found
      */
     protected Response findMethodResponse(Map<String, Response> responses) {
 
