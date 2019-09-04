@@ -293,9 +293,6 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("APIHelper.mustache",
                 sourceFolder,
                 "APIHelper.swift"));
-        supportingFiles.add(new SupportingFile("AlamofireImplementations.mustache",
-                sourceFolder,
-                "AlamofireImplementations.swift"));
         supportingFiles.add(new SupportingFile("SdkConfiguration.mustache",
                 sourceFolder,
                 "SdkConfiguration.swift"));
@@ -311,15 +308,9 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("CodableHelper.mustache",
                 sourceFolder,
                 "CodableHelper.swift"));
-        supportingFiles.add(new SupportingFile("JSONEncodableEncoding.mustache",
-                sourceFolder,
-                "JSONEncodableEncoding.swift"));
         supportingFiles.add(new SupportingFile("JSONEncodingHelper.mustache",
                 sourceFolder,
                 "JSONEncodingHelper.swift"));
-//        supportingFiles.add(new SupportingFile("git_push.sh.mustache",
-//                "",
-//                "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache",
                 "",
                 ".gitignore"));

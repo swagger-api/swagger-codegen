@@ -43,6 +43,9 @@ public class PureCloudSwift4ClientCodegen extends Swift4Codegen {
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
+
+        // New stuff
+        supportingFiles.add(new SupportingFile("UrlSessionImplementations.mustache", sourceFolder, "UrlSessionImplementations.swift"));
     }
 
     @Override
