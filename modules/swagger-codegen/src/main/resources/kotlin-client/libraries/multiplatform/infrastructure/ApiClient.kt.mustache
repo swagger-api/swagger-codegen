@@ -54,7 +54,7 @@ open class ApiClient(
             {{classname}}.setMappers(serializer)
             {{/apis}}{{/apiInfo}}
             {{#models}}
-            {{#model}}serializer.setMapper({{classname}}::class, {{classname}}.serializer()){{/model}}
+            {{#model}}{{^isAlias}}serializer.setMapper({{classname}}::class, {{classname}}.serializer()){{/isAlias}}{{/model}}
             {{/models}}
         }
     }

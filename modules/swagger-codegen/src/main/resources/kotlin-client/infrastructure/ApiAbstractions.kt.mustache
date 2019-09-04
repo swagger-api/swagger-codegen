@@ -18,7 +18,7 @@ fun <T : Any?> toMultiValue(items: Array<T>, collectionFormat: String, map: (ite
 fun <T : Any?> toMultiValue(items: Iterable<T>, collectionFormat: String, map: (item: T) -> String = defaultMultiValueConverter): List<String> {
     return when(collectionFormat) {
         "multi" -> items.map(map)
-        else -> listOf(items.map(map).joinToString(separator = collectionDelimiter(collectionFormat)))
+        else -> listOf(items.joinToString(separator = collectionDelimiter(collectionFormat), transform = map))
     }
 }
 
