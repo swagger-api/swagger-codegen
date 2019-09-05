@@ -928,7 +928,8 @@
                     "maximum" : 100,
                     "minimum" : 10,
                     "type" : "integer",
-                    "description" : "None"
+                    "description" : "None",
+                    "format" : "int32"
                   },
                   "int32" : {
                     "maximum" : 200,
@@ -1013,7 +1014,8 @@
                     "maximum" : 100,
                     "minimum" : 10,
                     "type" : "integer",
-                    "description" : "None"
+                    "description" : "None",
+                    "format" : "int32"
                   },
                   "int32" : {
                     "maximum" : 200,

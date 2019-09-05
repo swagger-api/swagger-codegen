@@ -11,7 +11,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class EnumTest  implements Serializable {
+public class EnumTest  implements Serializable  {
 public enum EnumStringEnum {
 
     UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower")), EMPTY(String.valueOf(""));

@@ -12,12 +12,14 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
   * Model for testing model name same as property name
  **/
 @Schema(description="Model for testing model name same as property name")
-public class Name  {
+public class Name   {
   
   @Schema(required = true, description = "")
   private Integer name = null;

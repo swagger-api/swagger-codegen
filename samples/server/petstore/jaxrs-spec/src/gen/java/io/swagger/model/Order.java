@@ -11,7 +11,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Order  implements Serializable {
+public class Order  implements Serializable  {
   private @Valid Long id = null;
   private @Valid Long petId = null;
   private @Valid Integer quantity = null;
@@ -152,7 +152,7 @@ public enum StatusEnum {
   @ApiModelProperty(value = "")
   @JsonProperty("complete")
 
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
