@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 
 
-public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
+public class Cat extends Animal implements OneOfAllPetsResponseItems {
   @JsonProperty("declawed")
   private Boolean declawed = null;
 

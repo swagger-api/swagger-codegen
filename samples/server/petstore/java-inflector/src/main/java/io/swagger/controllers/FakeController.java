@@ -12,6 +12,7 @@ import io.swagger.model.*;
 
 import java.math.BigDecimal;
 import io.swagger.model.Body2;
+import io.swagger.model.Body3;
 import io.swagger.model.Body4;
 import io.swagger.model.Body5;
 import io.swagger.model.Client;

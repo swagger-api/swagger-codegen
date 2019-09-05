@@ -1,5 +1,4 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -7,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
+
+
 
 
 public class Body3   {
