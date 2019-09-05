@@ -123,6 +123,6 @@
         <logback-version>1.0.1</logback-version>
         <junit-version>4.8.2</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
-        <swagger-inflector-version>2.0.0-SNAPSHOT</swagger-inflector-version>
+        <swagger-inflector-version>2.0.0</swagger-inflector-version>
     </properties>
 </project>
