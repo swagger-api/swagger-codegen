@@ -19,6 +19,6 @@ import javax.ws.rs.core.SecurityContext;
 public interface StoreApiService {
       public Response deleteOrder(String orderId, SecurityContext securityContext);
       public Response getInventory(SecurityContext securityContext);
-      public Response getOrderById(Integer orderId, SecurityContext securityContext);
+      public Response getOrderById(Long orderId, SecurityContext securityContext);
       public Response placeOrder(Order body, SecurityContext securityContext);
 }

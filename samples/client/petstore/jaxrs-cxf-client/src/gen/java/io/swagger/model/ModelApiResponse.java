@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
   * Describes the result of uploading an image resource
  **/
 @Schema(description="Describes the result of uploading an image resource")
-public class ModelApiResponse  {
+public class ModelApiResponse   {
   
   @Schema(description = "")
   private Integer code = null;

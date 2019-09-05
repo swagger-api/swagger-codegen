@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
   * A tag for a pet
  **/
 @Schema(description="A tag for a pet")
-public class Tag  {
+public class Tag   {
   
   @Schema(description = "")
   private Long id = null;

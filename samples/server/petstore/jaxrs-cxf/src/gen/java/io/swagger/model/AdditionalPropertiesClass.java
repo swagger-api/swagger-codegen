@@ -14,8 +14,10 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class AdditionalPropertiesClass  {
+public class AdditionalPropertiesClass   {
   
   @Schema(description = "")
   private Map<String, String> mapProperty = null;

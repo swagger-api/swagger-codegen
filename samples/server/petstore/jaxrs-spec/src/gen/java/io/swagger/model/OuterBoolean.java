@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class OuterBoolean  implements Serializable {
+public class OuterBoolean  implements Serializable  {
 
 
   @Override

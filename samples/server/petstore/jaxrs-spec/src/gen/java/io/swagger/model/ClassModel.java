@@ -13,7 +13,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model with \"_class\" property")
 
-public class ClassModel  implements Serializable {
+public class ClassModel  implements Serializable  {
   private @Valid String propertyClass = null;
 
   /**

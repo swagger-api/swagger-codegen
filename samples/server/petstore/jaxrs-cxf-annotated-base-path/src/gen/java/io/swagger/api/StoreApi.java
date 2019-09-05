@@ -38,7 +38,7 @@ public interface StoreApi  {
      */
     @DELETE
     @Path("/store/order/{orderId}")
-    @Operation(summary = "Delete purchase order by ID", tags={  })
+    @Operation(summary = "Delete purchase order by ID", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
@@ -53,7 +53,7 @@ public interface StoreApi  {
     @GET
     @Path("/store/inventory")
     @Produces({ "application/json" })
-    @Operation(summary = "Returns pet inventories by status", tags={  })
+    @Operation(summary = "Returns pet inventories by status", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Map<String, Integer> getInventory();
@@ -67,12 +67,12 @@ public interface StoreApi  {
     @GET
     @Path("/store/order/{orderId}")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", tags={  })
+    @Operation(summary = "Find purchase order by ID", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Order getOrderById(@PathParam("orderId") @DecimalMin("1") @DecimalMax("5") Integer orderId);
+    public Order getOrderById(@PathParam("orderId") @Min(1L) @Max(5L) Long orderId);
 
     /**
      * Place an order for a pet
@@ -82,7 +82,7 @@ public interface StoreApi  {
     @Path("/store/order")
     @Consumes({ "*/*" })
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Place an order for a pet", tags={  })
+    @Operation(summary = "Place an order for a pet", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid Order") })

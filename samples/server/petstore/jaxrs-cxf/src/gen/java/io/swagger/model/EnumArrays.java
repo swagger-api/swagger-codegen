@@ -13,74 +13,68 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class EnumArrays  {
-@XmlType(name="JustSymbolEnum")
-@XmlEnum(String.class)
-public enum JustSymbolEnum {
-
-@XmlEnumValue(">=") GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), @XmlEnumValue("$") DOLLAR(String.valueOf("$"));
-
+public class EnumArrays   {
+  public enum JustSymbolEnum {
+    GREATER_THAN_OR_EQUAL_TO(">="),
+    DOLLAR("$");
 
     private String value;
 
-    JustSymbolEnum (String v) {
-        value = v;
+    JustSymbolEnum(String value) {
+      this.value = value;
     }
-
-    public String value() {
-        return value;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static JustSymbolEnum fromValue(String v) {
-        for (JustSymbolEnum b : JustSymbolEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static JustSymbolEnum fromValue(String text) {
+      for (JustSymbolEnum b : JustSymbolEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "")
   private JustSymbolEnum justSymbol = null;
-@XmlType(name="ArrayEnumEnum")
-@XmlEnum(String.class)
-public enum ArrayEnumEnum {
-
-@XmlEnumValue("fish") FISH(String.valueOf("fish")), @XmlEnumValue("crab") CRAB(String.valueOf("crab"));
-
+  public enum ArrayEnumEnum {
+    FISH("fish"),
+    CRAB("crab");
 
     private String value;
 
-    ArrayEnumEnum (String v) {
-        value = v;
+    ArrayEnumEnum(String value) {
+      this.value = value;
     }
-
-    public String value() {
-        return value;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static ArrayEnumEnum fromValue(String v) {
-        for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static ArrayEnumEnum fromValue(String text) {
+      for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "")
   private List<ArrayEnumEnum> arrayEnum = null;
  /**
@@ -92,7 +86,7 @@ public enum ArrayEnumEnum {
     if (justSymbol == null) {
       return null;
     }
-    return justSymbol.value();
+    return justSymbol.getValue();
   }
 
   public void setJustSymbol(JustSymbolEnum justSymbol) {
