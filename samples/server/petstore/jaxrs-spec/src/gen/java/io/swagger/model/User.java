@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class User  implements Serializable {
+public class User  implements Serializable  {
   private @Valid Long id = null;
   private @Valid String username = null;
   private @Valid String firstName = null;

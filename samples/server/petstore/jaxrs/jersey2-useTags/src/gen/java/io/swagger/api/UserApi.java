@@ -31,7 +31,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/User")
+@Path("/user")
+
 
 
 public class UserApi  {
@@ -72,7 +73,7 @@ public class UserApi  {
         return delegate.createUser(body,securityContext);
     }
     @POST
-    
+    @Path("/createWithArray")
     @Consumes({ "*/*" })
     
     @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
@@ -85,7 +86,7 @@ public class UserApi  {
         return delegate.createUsersWithArrayInput(body,securityContext);
     }
     @POST
-    
+    @Path("/createWithList")
     @Consumes({ "*/*" })
     
     @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
@@ -98,7 +99,7 @@ public class UserApi  {
         return delegate.createUsersWithListInput(body,securityContext);
     }
     @DELETE
-    
+    @Path("/{username}")
     
     
     @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
@@ -112,7 +113,7 @@ public class UserApi  {
         return delegate.deleteUser(username,securityContext);
     }
     @GET
-    
+    @Path("/{username}")
     
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Get user by user name", description = "", tags={ "user" })
@@ -128,7 +129,7 @@ public class UserApi  {
         return delegate.getUserByName(username,securityContext);
     }
     @GET
-    
+    @Path("/login")
     
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
@@ -143,7 +144,7 @@ public class UserApi  {
         return delegate.loginUser(username,password,securityContext);
     }
     @GET
-    
+    @Path("/logout")
     
     
     @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
@@ -154,7 +155,7 @@ public class UserApi  {
         return delegate.logoutUser(securityContext);
     }
     @PUT
-    
+    @Path("/{username}")
     @Consumes({ "*/*" })
     
     @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })

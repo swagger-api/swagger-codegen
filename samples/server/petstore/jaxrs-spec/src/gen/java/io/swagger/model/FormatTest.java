@@ -14,7 +14,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class FormatTest  implements Serializable {
+public class FormatTest  implements Serializable  {
   private @Valid Integer integer = null;
   private @Valid Integer int32 = null;
   private @Valid Long int64 = null;

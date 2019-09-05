@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ReadOnlyFirst  implements Serializable {
+public class ReadOnlyFirst  implements Serializable  {
   private @Valid String bar = null;
   private @Valid String baz = null;
 
