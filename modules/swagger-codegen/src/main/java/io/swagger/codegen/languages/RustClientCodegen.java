@@ -333,8 +333,7 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         @SuppressWarnings("unchecked")
         List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
         for (CodegenOperation operation : operations) {
-            // http method verb conversion (e.g. PUT => Put)
-            operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+            operation.httpMethod = operation.httpMethod.toUpperCase();
             // update return type to conform to rust standard
             /*
             if (operation.returnType != null) {

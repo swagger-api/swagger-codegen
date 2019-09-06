@@ -1109,7 +1109,7 @@ public class RustServerCodegen extends DefaultCodegen implements CodegenConfig {
             param.vendorExtensions.put("formatString", "{:?}");
             if (param.isFile) {
                 // Optional file types are wrapped in a future
-                param.vendorExtensions.put("example", (example != null) ? "Box::new(future::ok(Some(" + example + "))) as Box<Future<Item=_, Error=_> + Send>" : "None");
+                param.vendorExtensions.put("example", (example != null) ? "Box::new(future::ok(Some(" + example + "))) as Box<dyn Future<Item=_, Error=_> + Send>" : "None");
             } else {
                 param.vendorExtensions.put("example", (example != null) ? "Some(" + example + ")" : "None");
             }
