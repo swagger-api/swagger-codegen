@@ -2748,8 +2748,13 @@ public class DefaultCodegen {
 
         // set the example value
         // if not specified in x-example, generate a default value
-        if (p.vendorExtensions.containsKey("x-example")) {
-            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+        if (p.vendorExtensions != null && p.vendorExtensions.containsKey("x-example")) {
+            boolean isObject = "object".equalsIgnoreCase(p.baseType) || "object".equalsIgnoreCase(p.dataType);
+            if (isObject) {
+                p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+            } else {
+                p.example = p.vendorExtensions.get("x-example").toString();
+            }
         } else if (Boolean.TRUE.equals(p.isUuid) && (Boolean.TRUE.equals(p.isString))) {
             p.example = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
         } else if (Boolean.TRUE.equals(p.isString)) {
