@@ -12,6 +12,7 @@
 package io.swagger.client.models
 
 
+
 /**
  * A User who is purchasing from the pet store
  * @param id 
@@ -23,6 +24,7 @@ package io.swagger.client.models
  * @param phone 
  * @param userStatus User Status
  */
+
 data class User (
     val id: kotlin.Long? = null,
     val username: kotlin.String? = null,

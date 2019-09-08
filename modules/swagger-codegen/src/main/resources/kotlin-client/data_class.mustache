@@ -1,6 +1,4 @@
-{{#jvm}}{{#hasEnums}}
-import com.squareup.moshi.Json
-{{/hasEnums}}{{/jvm}}
+{{#jvm}}{{#hasEnums}}import com.squareup.moshi.Json{{/hasEnums}}{{/jvm}}
 {{#multiplatform}}
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.CommonEnumSerializer
@@ -11,9 +9,7 @@ import kotlinx.serialization.internal.CommonEnumSerializer
  * @param {{{vendorExtensions.x-escapedName}}} {{{description}}}
 {{/vars}}
  */
-{{#multiplatform}}
-@Serializable
-{{/multiplatform}}
+{{#multiplatform}}@Serializable{{/multiplatform}}
 data class {{classname}} (
 {{#requiredVars}}
 {{>data_class_req_var}}{{^-last}},

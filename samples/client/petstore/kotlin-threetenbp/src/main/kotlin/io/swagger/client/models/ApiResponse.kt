@@ -13,12 +13,14 @@ package io.swagger.client.models
 
 import org.threeten.bp.LocalDateTime
 
+
 /**
  * Describes the result of uploading an image resource
  * @param code 
  * @param type 
  * @param message 
  */
+
 data class ApiResponse (
     val code: kotlin.Int? = null,
     val type: kotlin.String? = null,

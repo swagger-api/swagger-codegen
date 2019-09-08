@@ -13,6 +13,7 @@ package io.swagger.client.models
 
 import org.threeten.bp.LocalDateTime
 
+
 /**
  * A User who is purchasing from the pet store
  * @param id 
@@ -24,6 +25,7 @@ import org.threeten.bp.LocalDateTime
  * @param phone 
  * @param userStatus User Status
  */
+
 data class User (
     val id: kotlin.Long? = null,
     val username: kotlin.String? = null,

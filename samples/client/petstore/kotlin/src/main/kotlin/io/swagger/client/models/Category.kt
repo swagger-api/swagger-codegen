@@ -12,11 +12,13 @@
 package io.swagger.client.models
 
 
+
 /**
  * A category for a pet
  * @param id 
  * @param name 
  */
+
 data class Category (
     val id: kotlin.Long? = null,
     val name: kotlin.String? = null

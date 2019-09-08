@@ -14,11 +14,13 @@ package io.swagger.client.models
 import io.swagger.client.models.Currency
 import org.threeten.bp.LocalDateTime
 
+
 /**
  * some description 
  * @param value some description 
  * @param currency 
  */
+
 data class Amount (
     /* some description  */
     val value: kotlin.Double,

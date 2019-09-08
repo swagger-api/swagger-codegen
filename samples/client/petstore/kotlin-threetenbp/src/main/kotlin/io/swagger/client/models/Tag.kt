@@ -13,11 +13,13 @@ package io.swagger.client.models
 
 import org.threeten.bp.LocalDateTime
 
+
 /**
  * A tag for a pet
  * @param id 
  * @param name 
  */
+
 data class Tag (
     val id: kotlin.Long? = null,
     val name: kotlin.String? = null

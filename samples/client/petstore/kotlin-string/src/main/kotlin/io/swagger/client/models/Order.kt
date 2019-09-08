@@ -22,6 +22,7 @@ import com.squareup.moshi.Json
  * @param status Order Status
  * @param complete 
  */
+
 data class Order (
     val id: kotlin.Long? = null,
     val petId: kotlin.Long? = null,
@@ -36,6 +37,7 @@ data class Order (
     * Order Status
     * Values: placed,approved,delivered
     */
+    
     enum class Status(val value: kotlin.String){
     
         @Json(name = "placed") placed("placed"),
@@ -44,6 +46,7 @@ data class Order (
     
         @Json(name = "delivered") delivered("delivered");
     
+
     }
 
 }
