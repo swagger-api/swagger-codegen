@@ -264,6 +264,30 @@ paths:
             schema:
               type: string
               format: binary
+  /randomPet:
+    get:
+      tags:
+        - pet
+      operationId: getRandomPet
+      responses:
+        '200':
+          description: "a single random pet"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinglePetResponse'
+  /allPets:
+    get:
+      tags:
+        - pet
+      operationId: getAllPets
+      responses:
+        '200':
+          description: "a single random pet"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllPetsResponse'
   /store/inventory:
     get:
       tags:
@@ -649,6 +673,45 @@ components:
             - sold
       xml:
         name: Pet
+
+    SinglePetResponse:
+      type: object
+      properties:
+        pet:
+          oneOf:
+            - $ref: "#/components/schemas/Dog"
+            - $ref: "#/components/schemas/Cat"
+          discriminator:
+            propertyName: pet_type
+    AllPetsResponse:
+      type: array
+      items:
+        oneOf:
+          - $ref: "#/components/schemas/Dog"
+          - $ref: "#/components/schemas/Cat"
+        discriminator:
+          propertyName: pet_type
+
+    Dog:
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+        - type: object
+          properties:
+            bark:
+              type: boolean
+            breed:
+              type: string
+              enum: [Dingo, Husky, Retriever, Shepherd]
+    Cat:
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+        - type: object
+          properties:
+            hunts:
+              type: boolean
+            age:
+              type: integer
+
     ApiResponse:
       type: object
       properties:

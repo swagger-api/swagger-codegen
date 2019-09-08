@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Animal
  */
@@ -33,55 +33,55 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "Animal")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Animal")public class Animal {
-
+@JacksonXmlRootElement(localName = "Animal")
+public class Animal {
   @JsonProperty("className")
   @JacksonXmlProperty(localName = "className")
-  @XmlElement(name="className")
-
+  @XmlElement(name = "className")
   private String className = null;
 
   @JsonProperty("color")
   @JacksonXmlProperty(localName = "color")
-  @XmlElement(name="color")
-
+  @XmlElement(name = "color")
   private String color = "red";
+
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
-  
-
-  /**
-  * Get className
-  * @return className
+   /**
+   * Get className
+   * @return className
   **/
   @Schema(required = true, description = "")
   public String getClassName() {
     return className;
   }
+
   public void setClassName(String className) {
     this.className = className;
   }
+
   public Animal color(String color) {
     this.color = color;
     return this;
   }
 
-  
-
-  /**
-  * Get color
-  * @return color
+   /**
+   * Get color
+   * @return color
   **/
   @Schema(description = "")
   public String getColor() {
     return color;
   }
+
   public void setColor(String color) {
     this.color = color;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -97,8 +97,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(className, color);
+    return Objects.hash(className, color);
   }
+
 
   @Override
   public String toString() {

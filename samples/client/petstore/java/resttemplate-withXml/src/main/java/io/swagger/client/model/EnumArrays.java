@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -21,14 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * EnumArrays
  */
 
 @XmlRootElement(name = "EnumArrays")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "EnumArrays")public class EnumArrays {
+@JacksonXmlRootElement(localName = "EnumArrays")
+public class EnumArrays {
   /**
    * Gets or Sets justSymbol
    */
@@ -60,12 +61,11 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("just_symbol")
+  }  @JsonProperty("just_symbol")
   @JacksonXmlProperty(localName = "just_symbol")
-  @XmlElement(name="just_symbol")
-
+  @XmlElement(name = "just_symbol")
   private JustSymbolEnum justSymbol = null;
+
   /**
    * Gets or Sets arrayEnum
    */
@@ -97,32 +97,31 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("array_enum")
-  
-  
-  @XmlElement(name="null")
-  
-
+  }  @JsonProperty("array_enum")
+  // Is a container wrapped=
+  // items.name=arrayEnum items.baseName=arrayEnum items.xmlName= items.xmlNamespace=
+  // items.example= items.type=String
+  @XmlElement(name = "arrayEnum")
   private List<ArrayEnumEnum> arrayEnum = null;
+
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-  
-
-  /**
-  * Get justSymbol
-  * @return justSymbol
+   /**
+   * Get justSymbol
+   * @return justSymbol
   **/
   @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
+
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
+
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
@@ -136,17 +135,20 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get arrayEnum
-  * @return arrayEnum
+   /**
+   * Get arrayEnum
+   * @return arrayEnum
   **/
   @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
+
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -162,8 +164,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justSymbol, arrayEnum);
+    return Objects.hash(justSymbol, arrayEnum);
   }
+
 
   @Override
   public String toString() {

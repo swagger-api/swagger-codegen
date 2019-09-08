@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.11-SNAPSHOT</version>
+    <version>3.0.12-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -1058,11 +1058,11 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.11-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.0.9-SNAPSHOT</swagger-core-version>
-        <swagger-core-version-v1>1.5.23-SNAPSHOT</swagger-core-version-v1>
-        <swagger-parser-version>2.0.14-SNAPSHOT</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.46-SNAPSHOT</swagger-parser-version-v1>
+        <swagger-codegen-generators-version>1.0.12-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.0.9</swagger-core-version>
+        <swagger-core-version-v1>1.5.23</swagger-core-version-v1>
+        <swagger-parser-version>2.0.14</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.46</swagger-parser-version-v1>
         <jackson-version>2.9.9</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,38 +21,38 @@ import io.swagger.client.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Cat
  */
 
 @XmlRootElement(name = "Cat")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Cat")public class Cat extends Animal {
-
+@JacksonXmlRootElement(localName = "Cat")
+public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("declawed")
   @JacksonXmlProperty(localName = "declawed")
-  @XmlElement(name="declawed")
-
+  @XmlElement(name = "declawed")
   private Boolean declawed = null;
+
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
   }
 
-  
-
-  /**
-  * Get declawed
-  * @return declawed
+   /**
+   * Get declawed
+   * @return declawed
   **/
   @Schema(description = "")
   public Boolean isDeclawed() {
     return declawed;
   }
+
   public void setDeclawed(Boolean declawed) {
     this.declawed = declawed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -67,8 +68,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(declawed, super.hashCode());
+    return Objects.hash(declawed, super.hashCode());
   }
+
 
   @Override
   public String toString() {

@@ -13,68 +13,68 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Body5
  */
 
 @XmlRootElement(name = "Body5")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body5")public class Body5 {
-
+@JacksonXmlRootElement(localName = "Body5")
+public class Body5 {
   @JsonProperty("param")
   @JacksonXmlProperty(localName = "param")
-  @XmlElement(name="param")
-
+  @XmlElement(name = "param")
   private String param = null;
 
   @JsonProperty("param2")
   @JacksonXmlProperty(localName = "param2")
-  @XmlElement(name="param2")
-
+  @XmlElement(name = "param2")
   private String param2 = null;
+
   public Body5 param(String param) {
     this.param = param;
     return this;
   }
 
-  
-
-  /**
-  * field1
-  * @return param
+   /**
+   * field1
+   * @return param
   **/
   @Schema(required = true, description = "field1")
   public String getParam() {
     return param;
   }
+
   public void setParam(String param) {
     this.param = param;
   }
+
   public Body5 param2(String param2) {
     this.param2 = param2;
     return this;
   }
 
-  
-
-  /**
-  * field2
-  * @return param2
+   /**
+   * field2
+   * @return param2
   **/
   @Schema(required = true, description = "field2")
   public String getParam2() {
     return param2;
   }
+
   public void setParam2(String param2) {
     this.param2 = param2;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -90,8 +90,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(param, param2);
+    return Objects.hash(param, param2);
   }
+
 
   @Override
   public String toString() {

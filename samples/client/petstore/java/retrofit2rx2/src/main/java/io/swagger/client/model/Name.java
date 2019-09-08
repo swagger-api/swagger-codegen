@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -20,13 +21,12 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
-
 /**
  * Model for testing model name same as property name
  */
 @Schema(description = "Model for testing model name same as property name")
-public class Name {
 
+public class Name {
   @SerializedName("name")
   private Integer name = null;
 
@@ -38,58 +38,62 @@ public class Name {
 
   @SerializedName("123Number")
   private Integer _123Number = null;
+
   public Name name(Integer name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
   @Schema(required = true, description = "")
   public Integer getName() {
     return name;
   }
+
   public void setName(Integer name) {
     this.name = name;
   }
-  /**
-  * Get snakeCase
-  * @return snakeCase
+
+   /**
+   * Get snakeCase
+   * @return snakeCase
   **/
   @Schema(description = "")
   public Integer getSnakeCase() {
     return snakeCase;
   }
+
   public Name property(String property) {
     this.property = property;
     return this;
   }
 
-  
-
-  /**
-  * Get property
-  * @return property
+   /**
+   * Get property
+   * @return property
   **/
   @Schema(description = "")
   public String getProperty() {
     return property;
   }
+
   public void setProperty(String property) {
     this.property = property;
   }
-  /**
-  * Get _123Number
-  * @return _123Number
+
+   /**
+   * Get _123Number
+   * @return _123Number
   **/
   @Schema(description = "")
   public Integer get123Number() {
     return _123Number;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -107,8 +111,9 @@ public class Name {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(name, snakeCase, property, _123Number);
+    return Objects.hash(name, snakeCase, property, _123Number);
   }
+
 
   @Override
   public String toString() {

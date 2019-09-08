@@ -581,7 +581,11 @@ public class ApiClient {
       }
     }
 
-    Invocation.Builder invocationBuilder = target.request().accept(accept);
+    Invocation.Builder invocationBuilder = target.request();
+    
+    if (accept != null) {
+    	invocationBuilder = invocationBuilder.accept(accept);
+    }
 
     for (String key : headerParams.keySet()) {
       String value = headerParams.get(key);

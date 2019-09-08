@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -23,52 +24,43 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * Pet
  */
 
 @XmlRootElement(name = "Pet")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Pet")public class Pet {
-
+@JacksonXmlRootElement(localName = "Pet")
+public class Pet {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")
-  @XmlElement(name="id")
-
+  @XmlElement(name = "id")
   private Long id = null;
 
   @JsonProperty("category")
   @JacksonXmlProperty(localName = "category")
-  @XmlElement(name="category")
-
+  @XmlElement(name = "category")
   private Category category = null;
 
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
-  @XmlElement(name="name")
-
+  @XmlElement(name = "name")
   private String name = null;
 
   @JsonProperty("photoUrls")
-  
-  // items.xmlName=
-  @JacksonXmlElementWrapper(useWrapping = true, localName = "null")
-  
-  @XmlElement(name="null")
-  @XmlElementWrapper(name="photoUrl")
-
+  // Is a container wrapped=
+  // items.name=photoUrls items.baseName=photoUrls items.xmlName= items.xmlNamespace=
+  // items.example= items.type=String
+  @XmlElement(name = "photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
 
   @JsonProperty("tags")
-  
-  // items.xmlName=
-  @JacksonXmlElementWrapper(useWrapping = true, localName = "null")
-  
-  @XmlElement(name="null")
-  @XmlElementWrapper(name="tag")
-
+  // Is a container wrapped=
+  // items.name=tags items.baseName=tags items.xmlName= items.xmlNamespace=
+  // items.example= items.type=Tag
+  @XmlElement(name = "tags")
   private List<Tag> tags = null;
+
   /**
    * pet status in the store
    */
@@ -101,66 +93,65 @@ import javax.xml.bind.annotation.*;
       return null;
     }
 
-  }
-  @JsonProperty("status")
+  }  @JsonProperty("status")
   @JacksonXmlProperty(localName = "status")
-  @XmlElement(name="status")
-
+  @XmlElement(name = "status")
   private StatusEnum status = null;
+
   public Pet id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
   @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Pet category(Category category) {
     this.category = category;
     return this;
   }
 
-  
-
-  /**
-  * Get category
-  * @return category
+   /**
+   * Get category
+   * @return category
   **/
   @Schema(description = "")
   public Category getCategory() {
     return category;
   }
+
   public void setCategory(Category category) {
     this.category = category;
   }
+
   public Pet name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
   @Schema(example = "doggie", required = true, description = "")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
   public Pet photoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
     return this;
@@ -171,17 +162,19 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get photoUrls
-  * @return photoUrls
+   /**
+   * Get photoUrls
+   * @return photoUrls
   **/
   @Schema(required = true, description = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
+
   public void setPhotoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
   }
+
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
     return this;
@@ -195,35 +188,38 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get tags
-  * @return tags
+   /**
+   * Get tags
+   * @return tags
   **/
   @Schema(description = "")
   public List<Tag> getTags() {
     return tags;
   }
+
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
+
   public Pet status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * pet status in the store
-  * @return status
+   /**
+   * pet status in the store
+   * @return status
   **/
   @Schema(description = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }
+
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -243,8 +239,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, category, name, photoUrls, tags, status);
+    return Objects.hash(id, category, name, photoUrls, tags, status);
   }
+
 
   @Override
   public String toString() {

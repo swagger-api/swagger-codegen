@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,38 +23,35 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
-
 /**
  * ArrayTest
  */
 
 @XmlRootElement(name = "ArrayTest")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "ArrayTest")public class ArrayTest {
-
+@JacksonXmlRootElement(localName = "ArrayTest")
+public class ArrayTest {
   @JsonProperty("array_of_string")
-  
-  
-  @XmlElement(name="null")
-  
-
+  // Is a container wrapped=
+  // items.name=arrayOfString items.baseName=arrayOfString items.xmlName= items.xmlNamespace=
+  // items.example= items.type=String
+  @XmlElement(name = "arrayOfString")
   private List<String> arrayOfString = null;
 
   @JsonProperty("array_array_of_integer")
-  
-  
-  @XmlElement(name="arrayArrayOfInteger")
-  
-
+  // Is a container wrapped=
+  // items.name=arrayArrayOfInteger items.baseName=arrayArrayOfInteger items.xmlName= items.xmlNamespace=
+  // items.example= items.type=List&lt;Long&gt;
+  @XmlElement(name = "arrayArrayOfInteger")
   private List<List<Long>> arrayArrayOfInteger = null;
 
   @JsonProperty("array_array_of_model")
-  
-  
-  @XmlElement(name="arrayArrayOfModel")
-  
-
+  // Is a container wrapped=
+  // items.name=arrayArrayOfModel items.baseName=arrayArrayOfModel items.xmlName= items.xmlNamespace=
+  // items.example= items.type=List&lt;ReadOnlyFirst&gt;
+  @XmlElement(name = "arrayArrayOfModel")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
+
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
@@ -67,17 +65,19 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get arrayOfString
-  * @return arrayOfString
+   /**
+   * Get arrayOfString
+   * @return arrayOfString
   **/
   @Schema(description = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
+
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
+
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
@@ -91,17 +91,19 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get arrayArrayOfInteger
-  * @return arrayArrayOfInteger
+   /**
+   * Get arrayArrayOfInteger
+   * @return arrayArrayOfInteger
   **/
   @Schema(description = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
+
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
+
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
@@ -115,17 +117,20 @@ import javax.xml.bind.annotation.*;
     return this;
   }
 
-  /**
-  * Get arrayArrayOfModel
-  * @return arrayArrayOfModel
+   /**
+   * Get arrayArrayOfModel
+   * @return arrayArrayOfModel
   **/
   @Schema(description = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
+
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -142,8 +147,9 @@ import javax.xml.bind.annotation.*;
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
+    return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
+
 
   @Override
   public String toString() {

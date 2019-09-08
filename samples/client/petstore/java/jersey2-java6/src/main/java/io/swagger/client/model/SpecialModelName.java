@@ -17,34 +17,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * SpecialModelName
  */
 
+
 public class SpecialModelName {
-
   @JsonProperty("$special[property.name]")
-
   private Long $specialPropertyName = null;
+
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
-  
-
-  /**
-  * Get $specialPropertyName
-  * @return $specialPropertyName
+   /**
+   * Get $specialPropertyName
+   * @return $specialPropertyName
   **/
   @Schema(description = "")
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
+
   public void set$SpecialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
   if (this == o) {
@@ -61,6 +61,7 @@ public class SpecialModelName {
   public int hashCode() {
     return ObjectUtils.hashCodeMulti($specialPropertyName);
   }
+
 
   @Override
   public String toString() {
