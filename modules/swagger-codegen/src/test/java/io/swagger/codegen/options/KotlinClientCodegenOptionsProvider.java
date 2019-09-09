@@ -15,6 +15,7 @@ public class KotlinClientCodegenOptionsProvider implements OptionsProvider {
     public static final String SOURCE_FOLDER = "./generated/kotlin";
     public static final String ENUM_PROPERTY_NAMING = "camelCase";
     public static final String DATE_LIBRARY = KotlinClientCodegen.DateLibrary.JAVA8.value;
+    public static final String DEFAULT_LIBRARY = "jvm";
 
     @Override
     public String getLanguage() {
@@ -25,6 +26,7 @@ public class KotlinClientCodegenOptionsProvider implements OptionsProvider {
     public Map<String, String> createOptions() {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
         return builder
+                .put(CodegenConstants.LIBRARY, DEFAULT_LIBRARY)
                 .put(CodegenConstants.PACKAGE_NAME, PACKAGE_NAME_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.ARTIFACT_ID, ARTIFACT_ID)
