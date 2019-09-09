@@ -1,36 +1,33 @@
-use std::rc::Rc;
-
 use hyper;
 use super::configuration::Configuration;
 
-pub struct APIClient<C: hyper::client::Connect> {
-  configuration: Rc<Configuration<C>>,
-  pet_api: Box<::apis::PetApi>,
-  store_api: Box<::apis::StoreApi>,
-  user_api: Box<::apis::UserApi>,
+pub struct APIClient<'a, C: hyper::client::connect::Connect> {
+  #[allow(dead_code)]
+  configuration: &'a Configuration<C>,
+  pet_api: Box<dyn (::apis::PetApi) + 'a>,
+  store_api: Box<dyn (::apis::StoreApi) + 'a>,
+  user_api: Box<dyn (::apis::UserApi) + 'a>,
 }
 
-impl<C: hyper::client::Connect> APIClient<C> {
-  pub fn new(configuration: Configuration<C>) -> APIClient<C> {
-    let rc = Rc::new(configuration);
-
+impl<'a, C: hyper::client::connect::Connect> APIClient<'a, C> where C: 'static {
+  pub fn new(configuration: &'a Configuration<C>) -> APIClient<C> where C: 'static {
     APIClient {
-      configuration: rc.clone(),
-      pet_api: Box::new(::apis::PetApiClient::new(rc.clone())),
-      store_api: Box::new(::apis::StoreApiClient::new(rc.clone())),
-      user_api: Box::new(::apis::UserApiClient::new(rc.clone())),
+      configuration: configuration,
+      pet_api: Box::new(::apis::PetApiClient::new(configuration)),
+      store_api: Box::new(::apis::StoreApiClient::new(configuration)),
+      user_api: Box::new(::apis::UserApiClient::new(configuration)),
     }
   }
 
-  pub fn pet_api(&self) -> &::apis::PetApi{
+  pub fn pet_api(&self) -> &dyn (::apis::PetApi) {
     self.pet_api.as_ref()
   }
 
-  pub fn store_api(&self) -> &::apis::StoreApi{
+  pub fn store_api(&self) -> &dyn (::apis::StoreApi) {
     self.store_api.as_ref()
   }
 
-  pub fn user_api(&self) -> &::apis::UserApi{
+  pub fn user_api(&self) -> &dyn (::apis::UserApi) {
     self.user_api.as_ref()
   }
 

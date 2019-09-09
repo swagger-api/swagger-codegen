@@ -4,7 +4,7 @@ use hyper::header::{HeaderName, HeaderValue};
 use hyper::rt::{Future, Stream};
 use serde_json;
 
-use super::{Error, configuration, client};
+use super::{Error, configuration};
 
 pub struct {{{classname}}}Client<'a, C: hyper::client::connect::Connect> {
     configuration: &'a configuration::Configuration<C>,
@@ -21,7 +21,7 @@ impl<'a, C: hyper::client::connect::Connect> {{{classname}}}Client<'a, C> {
 pub trait {{classname}} {
 {{#operations}}
 {{#operation}}
-    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{#isUuid}}&str{{/isUuid}}{{^isString}}{{^isUuid}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isUuid}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<dyn Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{returnType}}}{{/returnType}}, Error = Error>>;
+    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{#isUuid}}&str{{/isUuid}}{{^isString}}{{^isUuid}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isUuid}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<dyn Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{returnType}}}{{/returnType}}, Error = Error<serde_json::Value>>>;
 {{/operation}}
 {{/operations}}
 }
@@ -29,7 +29,7 @@ pub trait {{classname}} {
 impl<'a, C: hyper::client::connect::Connect>{{classname}} for {{classname}}Client<'a, C> where C: 'static {
 {{#operations}}
 {{#operation}}
-    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{#isUuid}}&str{{/isUuid}}{{^isString}}{{^isUuid}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isUuid}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<dyn Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{.}}}{{/returnType}}, Error = Error>> {
+    fn {{{operationId}}}(&self, {{#allParams}}{{paramName}}: {{#isString}}&str{{/isString}}{{#isUuid}}&str{{/isUuid}}{{^isString}}{{^isUuid}}{{^isPrimitiveType}}{{^isContainer}}::models::{{/isContainer}}{{/isPrimitiveType}}{{{dataType}}}{{/isUuid}}{{/isString}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Box<dyn Future<Item = {{^returnType}}(){{/returnType}}{{#returnType}}{{{.}}}{{/returnType}}, Error = Error<serde_json::Value>>> {
         let method = hyper::Method::{{httpMethod}};
         {{#hasBodyParam}}
         {{#bodyParams}}
@@ -50,7 +50,7 @@ impl<'a, C: hyper::client::connect::Connect>{{classname}} for {{classname}}Clien
                 None => key,
             };
         {{#isKeyInHeader}}
-            auth_headers.insert("{{keyParamName}}".to_owned(), val);
+            auth_headers.insert(HeaderName::from_static("{{keyParamName}}"), val);
         {{/isKeyInHeader}}
         {{#isKeyInQuery}}
             auth_query.insert("{{keyParamName}}".to_owned(), val);
@@ -58,9 +58,9 @@ impl<'a, C: hyper::client::connect::Connect>{{classname}} for {{classname}}Clien
         };
 {{/isApiKey}}
 {{#isBasic}}
-        if let Some(ref auth_conf) = configuration.basic_auth {
-            let auth = hyper::header::Authorization(
-                hyper::header::Basic {
+        if let Some(ref auth_conf) = self.configuration.basic_auth {
+            let auth = hyper_old_types::header::Authorization(
+                hyper_old_types::header::Basic {
                     username: auth_conf.0.to_owned(),
                     password: auth_conf.1.to_owned(),
                 }
@@ -69,9 +69,9 @@ impl<'a, C: hyper::client::connect::Connect>{{classname}} for {{classname}}Clien
         };
 {{/isBasic}}
 {{#isOAuth}}
-        if let Some(ref token) = configuration.oauth_access_token {
-            let auth = hyper::header::Authorization(
-                hyper::header::Bearer {
+        if let Some(ref token) = self.configuration.oauth_access_token {
+            let auth = hyper_old_types::header::Authorization(
+                hyper_old_types::header::Bearer {
                     token: token.to_owned(),
                 }
             );
@@ -116,7 +116,7 @@ impl<'a, C: hyper::client::connect::Connect>{{classname}} for {{classname}}Clien
         {
             let mut headers = req.headers_mut();
             {{#headerParams}}
-            headers.set_raw("{{baseName}}", {{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}});
+            headers.insert(HeaderName::from_static("{{baseName}}"), HeaderValue::from_str({{paramName}}{{#isListContainer}}.join(",").as_ref(){{/isListContainer}}).unwrap());
             {{/headerParams}}
         }
         {{/hasHeaderParams}}
