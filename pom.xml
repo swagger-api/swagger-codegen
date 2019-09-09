@@ -385,6 +385,18 @@
             </modules>
         </profile>
         <profile>
+            <id>html-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>html</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/html</module>
+            </modules>
+        </profile>
+        <profile>
             <id>java-client-jersey1</id>
             <activation>
                 <property>

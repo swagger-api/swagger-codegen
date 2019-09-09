@@ -1,0 +1,12 @@
+{
+  "name": "swagger_petstore",
+  "version": "1.0.0",
+  "description": "Mini project for testing swagger-codegen HTML output",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "backstop test --config=backstop.config.js"
+  },
+  "devDependencies": {
+    "backstopjs": "^4.3.2"
+  }
+}
