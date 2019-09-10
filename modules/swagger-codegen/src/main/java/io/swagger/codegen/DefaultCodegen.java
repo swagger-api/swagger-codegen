@@ -21,6 +21,7 @@ import com.samskivert.mustache.Mustache.Compiler;
 import io.swagger.codegen.examples.ExampleGenerator;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.ComposedModel;
+import io.swagger.models.ExternalDocs;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
@@ -2254,7 +2255,23 @@ public class DefaultCodegen {
             }
         }
 
-        List<Parameter> parameters = operation.getParameters();
+        setParameterFields(httpMethod, operation.getParameters(), definitions, op, imports, consumes, operation.getExternalDocs());
+
+        // set Restful Flag
+        op.isRestfulShow = op.isRestfulShow();
+        op.isRestfulIndex = op.isRestfulIndex();
+        op.isRestfulCreate = op.isRestfulCreate();
+        op.isRestfulUpdate = op.isRestfulUpdate();
+        op.isRestfulDestroy = op.isRestfulDestroy();
+        op.isRestful = op.isRestful();
+
+        // TODO: fix error with resolved yaml/json generators in order to enable this again.
+        //configureDataForTestTemplate(op);
+
+        return op;
+    }
+
+    public void setParameterFields(String httpMethod, List<Parameter> parameters, Map<String, Model> definitions, CodegenOperation op, Set<String> imports, List<String> consumes, ExternalDocs externalDocs) {
         CodegenParameter bodyParam = null;
         List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();
         List<CodegenParameter> bodyParams = new ArrayList<CodegenParameter>();
@@ -2344,27 +2361,12 @@ public class DefaultCodegen {
         // op.cookieParams = cookieParams;
         op.formParams = addHasMore(formParams);
         op.requiredParams = addHasMore(requiredParams);
-        op.externalDocs = operation.getExternalDocs();
+        op.externalDocs = externalDocs;
         // legacy support
         op.nickname = op.operationId;
 
-        if (op.allParams.size() > 0) {
-            op.hasParams = true;
-        }
+        op.hasParams = op.allParams.size() > 0;
         op.hasRequiredParams = op.requiredParams.size() > 0;
-
-        // set Restful Flag
-        op.isRestfulShow = op.isRestfulShow();
-        op.isRestfulIndex = op.isRestfulIndex();
-        op.isRestfulCreate = op.isRestfulCreate();
-        op.isRestfulUpdate = op.isRestfulUpdate();
-        op.isRestfulDestroy = op.isRestfulDestroy();
-        op.isRestful = op.isRestful();
-
-        // TODO: fix error with resolved yaml/json generators in order to enable this again.
-        //configureDataForTestTemplate(op);
-
-        return op;
     }
 
     /**
@@ -2470,6 +2472,7 @@ public class DefaultCodegen {
      */
     public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
         CodegenParameter p = CodegenModelFactory.newInstance(CodegenModelType.PARAMETER);
+        p.parameter = param;
         p.baseName = param.getName();
         p.description = escapeText(param.getDescription());
         p.unescapedDescription = param.getDescription();

@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.features.SignatureFeatures.MethodsPerHttpRequestStrategy;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
@@ -33,6 +34,7 @@ public class DefaultGeneratorTest {
     private static final String POM_FILE = "pom.xml";
     private static final String MODEL_ORDER_FILE = "/src/main/java/io/swagger/client/model/Order.java";
     private static final String API_CLIENT_FILE = "/src/main/java/io/swagger/client/ApiClient.java";
+    private static final String FOO_API_FILE = "/src/main/java/io/swagger/client/api/FooApi.java";
     private static final String BUILD_GRADLE_FILE = "build.gradle";
 
     private static final String LIBRARY_COMMENT = "//overloaded template file within library folder to add this comment";
@@ -206,6 +208,55 @@ public class DefaultGeneratorTest {
         assertEquals(FileUtils.readFileToString(order, StandardCharsets.UTF_8), TEST_SKIP_OVERWRITE);
         // Disabling this check, it's not valid with the DefaultCodegen.writeOptional(...) arg
 //        assertTrue(pom.exists());
+    }
+    
+    @Test
+    public void testJavaClientGeneration_useOverloading() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/overloadingtest.json");
+        JavaClientCodegen codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("resttemplate");
+        codegenConfig.setMethodsPerHttpRequestStrategy(MethodsPerHttpRequestStrategy.OVERLOADING);
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate content first time without skipOverwrite flag, so all generated files should be recorded
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File fooApi = new File(output, FOO_API_FILE);
+        assertTrue(fooApi.exists());
+        
+        //Assert that the overloaded methods have been created
+        String fooApiAsString = FileUtils.readFileToString(fooApi, StandardCharsets.UTF_8);
+        assertTrue(fooApiAsString.contains("getBar()"));
+        assertTrue(fooApiAsString.contains("getBar(String type)"));
+        assertTrue(fooApiAsString.contains("deleteBar(Long barId)"));
+        assertTrue(fooApiAsString.contains("deleteBar(Long barId, String type)"));
+    }
+    
+    @Test
+    public void testJavaClientGeneration_dontUseOverloading() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/overloadingtest.json");
+        JavaClientCodegen codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("resttemplate");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate content first time without skipOverwrite flag, so all generated files should be recorded
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File fooApi = new File(output, FOO_API_FILE);
+        assertTrue(fooApi.exists());
+        
+        //Assert that the overloaded methods have been created
+        String fooApiAsString = FileUtils.readFileToString(fooApi, StandardCharsets.UTF_8);
+        assertFalse(fooApiAsString.contains("getBar()"));
+        assertTrue(fooApiAsString.contains("getBar(String type)"));
+        assertFalse(fooApiAsString.contains("deleteBar(Long barId)"));
+        assertTrue(fooApiAsString.contains("deleteBar(Long barId, String type)"));
     }
 
     @Test

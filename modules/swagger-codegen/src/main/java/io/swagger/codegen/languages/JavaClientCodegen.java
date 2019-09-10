@@ -2,14 +2,23 @@ package io.swagger.codegen.languages;
 
 import static java.util.Collections.sort;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Lists;
+
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
+import io.swagger.codegen.languages.features.SignatureFeatures;
+import io.swagger.models.parameters.Parameter;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.config.Configuration.AccessLevel;
+import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +28,7 @@ import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, PerformBeanValidationFeatures,
-                   GzipFeatures
+                   GzipFeatures, SignatureFeatures
 {
     static final String MEDIA_TYPE = "mediaType";
 
@@ -52,8 +61,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean performBeanValidation = false;
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
+    protected MethodsPerHttpRequestStrategy methodsPerHttpRequestStrategy = MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
 
-
+    private final ModelMapper modelMapper;
+    
     public JavaClientCodegen() {
         super();
         outputFolder = "generated-code" + File.separator + "java";
@@ -73,6 +84,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
         cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
+        cliOptions.add(CliOption.newBoolean(METHODS_TO_HTTP_REQUEST_STRATEGY, "Specify a strategy for creating methods from the swagger doc http request methods. Valid values: " + Joiner.on(";").join(MethodsPerHttpRequestStrategy.values())));
 
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.9.9. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.9.9");
@@ -93,6 +105,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(libraryOption);
         setLibrary("okhttp-gson");
 
+        modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+            .setMatchingStrategy(MatchingStrategies.STRICT)
+            .setDeepCopyEnabled(true)
+            .setFieldMatchingEnabled(true)
+            .setFieldAccessLevel(AccessLevel.PRIVATE);
+            modelMapper.addMappings(new PropertyMap<CodegenParameter, CodegenParameter>() {
+              @Override
+              protected void configure() {
+                  skip(destination.parameter);
+              }
+          });
     }
 
     @Override
@@ -156,6 +180,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_RUNTIME_EXCEPTION)) {
             this.setUseRuntimeException(convertPropertyToBooleanAndWriteBack(USE_RUNTIME_EXCEPTION));
         }
+        
+        if (additionalProperties.containsKey(METHODS_TO_HTTP_REQUEST_STRATEGY)) {
+          Object value = additionalProperties.get(METHODS_TO_HTTP_REQUEST_STRATEGY);
+          MethodsPerHttpRequestStrategy localMethodsPerHttpRequestStrategy = (value != null && value instanceof String)
+              ? MethodsPerHttpRequestStrategy.fromString((String) value)
+              : MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD;
+          this.setMethodsPerHttpRequestStrategy(localMethodsPerHttpRequestStrategy);
+        }
+        additionalProperties.put(METHODS_TO_HTTP_REQUEST_STRATEGY, methodsPerHttpRequestStrategy);
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -322,6 +355,29 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
+        
+        switch (methodsPerHttpRequestStrategy) {
+        case OVERLOADING:
+          /**
+           * Let's expand the List of CodegenOperations with some overloaded variants
+           * chosen to protect generated client code from compilation errors when the
+           * swagger doc adds a new optional query parameter to an endpoint
+           */
+          Map<String, Object> operationsMap = (Map<String, Object>) objs.get("operations");
+          List<CodegenOperation> codegenOperations = (List<CodegenOperation>) operationsMap.get("operation");
+          List<CodegenOperation> overloadedCodegenOperations = transformToMapOfOverloadedOperations(codegenOperations);
+          operationsMap.put("operation", overloadedCodegenOperations);
+          break;
+        case ONE_PER_HTTP_REQUST_METHOD:
+          /**
+           * Do nothing since this is the option to use the list of CodegenOperations that
+           * has already been created (and which are contained within the passed Map)
+           */
+          break;
+        default:
+          break;
+        }
+        
         if (usesAnyRetrofitLibrary()) {
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
@@ -386,6 +442,85 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         return objs;
     }
+
+  private List<CodegenOperation> transformToMapOfOverloadedOperations(List<CodegenOperation> codegenOperations) {
+    List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    for (CodegenOperation codegenOperation : codegenOperations) {
+      overloadedCodegenOperations.addAll(createListOfOverloadedCodegenOperations(codegenOperation));
+    }
+    return overloadedCodegenOperations;
+  }
+
+  private Collection<? extends CodegenOperation> createListOfOverloadedCodegenOperations(CodegenOperation codegenOperation) {
+    List<CodegenParameter> optionalParameters = Lists.newArrayList();
+    List<CodegenParameter> requiredParameters = Lists.newArrayList();
+    for (CodegenParameter codegenParam : codegenOperation.allParams) {
+      if (codegenParam.required) {
+        requiredParameters.add(codegenParam);
+      } else {
+        optionalParameters.add(codegenParam);
+      }
+    }
+    List<List<CodegenParameter>> combinationsOfParameters = createParameterCombinations(optionalParameters, requiredParameters);
+    return createOverloadedCodegenOperations(codegenOperation, requiredParameters, combinationsOfParameters);
+  }
+
+  /**
+   * Note that this method does not create the full set of 'combinations' in the
+   * formal mathematical sense of the word (See <a href=
+   * "https://en.wikipedia.org/wiki/Combination">https://en.wikipedia.org/wiki/Combination</a>))
+   * <br>
+   * Rather, we create as many combinations as there are optional parameters. <br>
+   * The reason behind this is: The useOverloading parameter triggering this logic
+   * is intended to spare autogenerated java clients from compile time errors due
+   * to new optional parameters having been added to the swagger doc. <br>
+   * As such, we do not care about all combinations. We only care about creating:
+   * <ol>
+   * <li>a signature with only the mandatory arguments
+   * <li>a signature with the mandatory arguments plus the first optional argument
+   * <li>a signature with the mandatory arguments plus the first and second
+   * optional argument
+   * <li>etc
+   * <li>a signature with the mandatory arguments plus all of the optional arguments
+   * </ol>
+   * 
+   * @param optionalParameters
+   * @param requiredParameters
+   * @return
+   */
+  private List<List<CodegenParameter>> createParameterCombinations(List<CodegenParameter> optionalParameters, List<CodegenParameter> requiredParameters) {
+    List<List<CodegenParameter>> combinationsOfParameters = Lists.newArrayList();
+    /**
+     * Add first combination of parameters (We do not care about whether or nor the list is empty)
+     */
+    combinationsOfParameters.add(requiredParameters);
+    for (int i = 0; i < optionalParameters.size(); i++) {
+      List<CodegenParameter> parameterCombination = Lists.newArrayList(requiredParameters);
+      parameterCombination.addAll(optionalParameters.subList(0, i + 1));
+      combinationsOfParameters.add(parameterCombination);
+    }
+    return combinationsOfParameters;
+  }
+
+  private Collection<? extends CodegenOperation> createOverloadedCodegenOperations(CodegenOperation codegenOperation, List<CodegenParameter> requiredParameters, List<List<CodegenParameter>> combinationsOfParameters) {
+    List<CodegenOperation> overloadedCodegenOperations = Lists.newArrayList();
+    for (List<CodegenParameter> combination : combinationsOfParameters) {
+      CodegenOperation overloadedOperation = mapAndSetParameters(codegenOperation, combination);
+      overloadedCodegenOperations.add(overloadedOperation);
+    }
+    return overloadedCodegenOperations;
+  }
+
+  public CodegenOperation mapAndSetParameters(CodegenOperation codegenOperation, List<CodegenParameter> codegenParameters) {
+    CodegenOperation newOperation = modelMapper.map(codegenOperation, CodegenOperation.class);
+    List<Parameter> parameters = Lists.newArrayList();
+    for (CodegenParameter codegenParameter : codegenParameters) {
+      parameters.add(codegenParameter.parameter);
+    }
+    newOperation.hasOptionalParams = false;
+    setParameterFields(newOperation.httpMethod, parameters, null, newOperation, newOperation.imports, null, newOperation.externalDocs);
+    return newOperation;
+  }
 
     @Override
     public String apiFilename(String templateName, String tag) {
@@ -585,6 +720,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
     public void setUseRuntimeException(boolean useRuntimeException) {
         this.useRuntimeException = useRuntimeException;
+    }
+
+    @Override
+    public void setMethodsPerHttpRequestStrategy(MethodsPerHttpRequestStrategy methodsPerHttpRequestStrategy) {
+        this.methodsPerHttpRequestStrategy = methodsPerHttpRequestStrategy;
     }
 
     final private static Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application\\/json(;.*)?");

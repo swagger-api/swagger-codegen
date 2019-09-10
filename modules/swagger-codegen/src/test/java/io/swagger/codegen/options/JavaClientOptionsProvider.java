@@ -2,6 +2,7 @@ package io.swagger.codegen.options;
 
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.features.SignatureFeatures.MethodsPerHttpRequestStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class JavaClientOptionsProvider extends JavaOptionsProvider {
         options.put(JavaClientCodegen.PERFORM_BEANVALIDATION, PERFORM_BEANVALIDATION);
         options.put(JavaClientCodegen.USE_GZIP_FEATURE, "false");
         options.put(JavaClientCodegen.USE_RUNTIME_EXCEPTION, "false");
+        options.put(JavaClientCodegen.METHODS_TO_HTTP_REQUEST_STRATEGY, MethodsPerHttpRequestStrategy.ONE_PER_HTTP_REQUST_METHOD.name());
         options.put(JavaClientCodegen.JAVA8_MODE, "false");
         return options;
     }
