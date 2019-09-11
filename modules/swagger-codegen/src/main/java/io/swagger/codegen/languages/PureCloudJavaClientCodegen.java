@@ -28,6 +28,7 @@ public class PureCloudJavaClientCodegen extends JavaClientCodegen {
         importMapping.put("PagedResource", "com.mypurecloud.sdk.v2.PagedResource");
         importMapping.put("ArrayNode", "com.fasterxml.jackson.databind.node.ArrayNode");
         importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("JsonNode", "com.fasterxml.jackson.databind.JsonNode");
 
         // Type overrides
         typeMapping.put("date", "LocalDate");
