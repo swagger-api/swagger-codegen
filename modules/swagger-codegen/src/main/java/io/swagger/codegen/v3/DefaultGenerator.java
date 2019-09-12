@@ -497,6 +497,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 });
                 Map<String, Object> operation = processOperations(config, tag, ops, allModels);
 
+                processSecurityProperties(operation);
+
                 operation.put("basePath", basePath);
                 operation.put("basePathWithoutHost", basePathWithoutHost);
                 operation.put("contextPath", contextPath);
@@ -743,12 +745,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
         bundle.put("modelPackage", config.modelPackage());
 
-        final Map<String, SecurityScheme> securitySchemeMap = openAPI.getComponents() != null ? openAPI.getComponents().getSecuritySchemes() : null;
-        final List<CodegenSecurity> authMethods = config.fromSecurity(securitySchemeMap);
-        if (authMethods != null && !authMethods.isEmpty()) {
-            bundle.put("authMethods", authMethods);
-            bundle.put("hasAuthMethods", true);
-        }
+        processSecurityProperties(bundle);
+
         if (openAPI.getExternalDocs() != null) {
             bundle.put("externalDocs", openAPI.getExternalDocs());
         }
@@ -1136,4 +1134,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         return Boolean.valueOf(optionalCodegenArgument.get().getValue());
     }
+
+    protected void processSecurityProperties (Map<String, Object> bundle) {
+        final Map<String, SecurityScheme> securitySchemeMap = openAPI.getComponents() != null ? openAPI.getComponents().getSecuritySchemes() : null;
+        final List<CodegenSecurity> authMethods = config.fromSecurity(securitySchemeMap);
+        if (authMethods != null && !authMethods.isEmpty()) {
+            bundle.put("authMethods", authMethods);
+            bundle.put("hasAuthMethods", true);
+        }
+    }
+
 }
