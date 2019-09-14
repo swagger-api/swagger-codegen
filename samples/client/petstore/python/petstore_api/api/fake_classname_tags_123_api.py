@@ -87,7 +87,7 @@ class FakeClassnameTags123Api(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
+        if self.api_client.client_side_validation and ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `test_classname`")  # noqa: E501
 
