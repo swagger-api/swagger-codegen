@@ -98,7 +98,7 @@ class Configuration(object):
         self.safe_chars_for_path_param = ''
 
         # Disable client side validation
-        self.client_side_validation = false
+        self.client_side_validation = true
 
     @classmethod
     def set_default(cls, default):
