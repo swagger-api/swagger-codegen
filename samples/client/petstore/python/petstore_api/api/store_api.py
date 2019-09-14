@@ -273,9 +273,9 @@ class StoreApi(object):
                 params['order_id'] is None):
             raise ValueError("Missing the required parameter `order_id` when calling `get_order_by_id`")  # noqa: E501
 
-        if self.api_client.client_side_validation and 'order_id' in params and params['order_id'] > 5:  # noqa: E501
+        if self.client_side_validation and ('order_id' in params and params['order_id'] > 5):  # noqa: E501
             raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value less than or equal to `5`")  # noqa: E501
-        if self.api_client.client_side_validation and 'order_id' in params and params['order_id'] < 1:  # noqa: E501
+        if self.client_side_validation and ('order_id' in params and params['order_id'] < 1):  # noqa: E501
             raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value greater than or equal to `1`")  # noqa: E501
         collection_formats = {}
 

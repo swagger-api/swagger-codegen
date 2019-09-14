@@ -572,7 +572,7 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
+        if self.api_client.client_side_validation and ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `update_pet`")  # noqa: E501
 

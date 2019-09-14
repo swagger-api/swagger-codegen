@@ -66,7 +66,8 @@ class ApiClient(object):
             configuration = Configuration()
         self.configuration = configuration
 
-        self.pool = ThreadPool()
+        # Use the pool property to lazily initialize the ThreadPool.
+        self._pool = None
         self.rest_client = rest.RESTClientObject(configuration)
         self.default_headers = {}
         if header_name is not None:
@@ -74,10 +75,18 @@ class ApiClient(object):
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
+        self.client_side_validation = configuration.client_side_validation
 
     def __del__(self):
-        self.pool.close()
-        self.pool.join()
+        if self._pool is not None:
+            self._pool.close()
+            self._pool.join()
+
+    @property
+    def pool(self):
+        if self._pool is None:
+            self._pool = ThreadPool()
+        return self._pool
 
     @property
     def user_agent(self):
@@ -592,7 +601,7 @@ class ApiClient(object):
             )
 
     def __hasattr(self, object, name):
-            return name in object.__class__.__dict__
+        return name in object.__class__.__dict__
 
     def __deserialize_model(self, data, klass):
         """Deserializes list or dict to model.
@@ -602,8 +611,8 @@ class ApiClient(object):
         :return: model object.
         """
 
-        if not klass.swagger_types and not \
-                self.__hasattr(klass, 'get_real_child_model'):
+        if (not klass.swagger_types and
+                not self.__hasattr(klass, 'get_real_child_model')):
             return data
 
         kwargs = {}
