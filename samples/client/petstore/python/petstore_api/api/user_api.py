@@ -87,7 +87,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
+        if self.api_client.client_side_validation and ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_user`")  # noqa: E501
 
@@ -182,7 +182,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
+        if self.api_client.client_side_validation and ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_users_with_array_input`")  # noqa: E501
 
@@ -277,7 +277,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
+        if self.api_client.client_side_validation and ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `create_users_with_list_input`")  # noqa: E501
 
@@ -372,7 +372,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'username' is set
-        if ('username' not in params or
+        if self.api_client.client_side_validation and ('username' not in params or
                 params['username'] is None):
             raise ValueError("Missing the required parameter `username` when calling `delete_user`")  # noqa: E501
 
@@ -467,7 +467,7 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'username' is set
-        if ('username' not in params or
+        if self.api_client.client_side_validation and ('username' not in params or
                 params['username'] is None):
             raise ValueError("Missing the required parameter `username` when calling `get_user_by_name`")  # noqa: E501
 
@@ -564,11 +564,11 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'username' is set
-        if ('username' not in params or
+        if self.api_client.client_side_validation and ('username' not in params or
                 params['username'] is None):
             raise ValueError("Missing the required parameter `username` when calling `login_user`")  # noqa: E501
         # verify the required parameter 'password' is set
-        if ('password' not in params or
+        if self.api_client.client_side_validation and ('password' not in params or
                 params['password'] is None):
             raise ValueError("Missing the required parameter `password` when calling `login_user`")  # noqa: E501
 
@@ -754,11 +754,11 @@ class UserApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'username' is set
-        if ('username' not in params or
+        if self.api_client.client_side_validation and ('username' not in params or
                 params['username'] is None):
             raise ValueError("Missing the required parameter `username` when calling `update_user`")  # noqa: E501
         # verify the required parameter 'body' is set
-        if ('body' not in params or
+        if self.api_client.client_side_validation and ('body' not in params or
                 params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `update_user`")  # noqa: E501
 
