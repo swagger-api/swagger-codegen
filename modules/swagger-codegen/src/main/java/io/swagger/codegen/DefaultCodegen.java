@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -229,6 +230,7 @@ public class DefaultCodegen {
      */
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         List<Object> models = (List<Object>) objs.get("models");
+        Map<String, Integer> uniqueNames = new HashMap<>();
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
@@ -240,6 +242,7 @@ public class DefaultCodegen {
                 List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
                 String commonPrefix = findCommonPrefixOfVars(values);
                 int truncateIdx = commonPrefix.length();
+                uniqueNames.clear();
                 for (Object value : values) {
                     Map<String, String> enumVar = new HashMap<String, String>();
                     String enumName;
@@ -251,7 +254,8 @@ public class DefaultCodegen {
                             enumName = value.toString();
                         }
                     }
-                    enumVar.put("name", toEnumVarName(enumName, cm.dataType));
+                    String varName = toEnumVarName(enumName, cm.dataType);
+                    enumVar.put("name", ensureUniqueName(uniqueNames, varName));
                     enumVar.put("value", toEnumValue(value.toString(), cm.dataType));
                     enumVars.add(enumVar);
                 }
@@ -263,7 +267,11 @@ public class DefaultCodegen {
             for (CodegenProperty var : cm.vars) {
                 updateCodegenPropertyEnum(var);
             }
-
+            if (cm.vars != cm.allVars) {
+                for (CodegenProperty var : cm.allVars) {
+                    updateCodegenPropertyEnum(var);
+                }
+            }
         }
         return objs;
     }
@@ -288,6 +296,19 @@ public class DefaultCodegen {
             }
         }
         return "";
+    }
+
+    /**
+     * If necessary, appends a suffix to enforce uniqueness of names within a namespace.
+     * @param uniqueNames Counts name occurrences within a namespace.
+     * @param name The proposed name.
+     * @return <code>name</code>, uniquely suffixed as necessary.
+     */
+    protected String ensureUniqueName(Map<String, Integer> uniqueNames, String name) {
+        int count = uniqueNames.containsKey(name) ? uniqueNames.get(name) + 1 : 1;
+        if (uniqueNames.put(name, count) != null)
+            name = name + '_' + count;
+        return name;
     }
 
     /**
@@ -1158,8 +1179,9 @@ public class DefaultCodegen {
             try {
                 RefProperty r = (RefProperty) p;
                 datatype = r.get$ref();
-                if (datatype.indexOf("#/definitions/") == 0) {
-                    datatype = datatype.substring("#/definitions/".length());
+                // '#/definitions' or ../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/
+                if (datatype.indexOf("#/definitions/") >= 0) {
+                    datatype = datatype.substring(datatype.indexOf("#/definitions/") + "#/definitions/".length());
                 }
             } catch (Exception e) {
                 LOGGER.warn("Error obtaining the datatype from RefProperty:" + p + ". Datatype default to Object");
@@ -1168,6 +1190,8 @@ public class DefaultCodegen {
             }
         } else if (p instanceof StringProperty) {
             datatype = "string";
+        } else if(p instanceof UntypedProperty){
+            datatype = "object";
         } else {
             if (p != null) {
                 datatype = p.getType();
@@ -1334,7 +1358,9 @@ public class DefaultCodegen {
         if (model instanceof ModelImpl) {
             ModelImpl modelImpl = (ModelImpl) model;
             m.discriminator = modelImpl.getDiscriminator();
-
+            if (m.discriminator != null) {
+                m.discriminatorClassVarName = toParamName(m.discriminator);
+            }
             if (modelImpl.getXml() != null) {
                 m.xmlPrefix = modelImpl.getXml().getPrefix();
                 m.xmlNamespace = modelImpl.getXml().getNamespace();
@@ -1366,6 +1392,9 @@ public class DefaultCodegen {
                         ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
                             m.discriminator = modelImpl.getDiscriminator();
+                            if (m.discriminator != null) {
+                                m.discriminatorClassVarName = toParamName(m.discriminator);
+                            }
                         }
                         if (modelImpl.getXml() != null) {
                             m.xmlPrefix = modelImpl.getXml().getPrefix();
@@ -1998,7 +2027,7 @@ public class DefaultCodegen {
     /**
      * Override with any special handling of response codes
      * @param responses Swagger Operation's responses
-     * @return default method response or <tt>null</tt> if not found
+     * @return default method response or &lt;tt&gt;null&lt;/tt&gt; if not found
      */
     protected Response findMethodResponse(Map<String, Response> responses) {
 
@@ -2332,7 +2361,8 @@ public class DefaultCodegen {
         op.isRestfulDestroy = op.isRestfulDestroy();
         op.isRestful = op.isRestful();
 
-        configureDataForTestTemplate(op);
+        // TODO: fix error with resolved yaml/json generators in order to enable this again.
+        //configureDataForTestTemplate(op);
 
         return op;
     }
@@ -2682,6 +2712,10 @@ public class DefaultCodegen {
                         name = getTypeDeclaration(name);
                     }
                     p.dataType = name;
+                } else {
+                    if (sub instanceof ComposedModel) {
+                        p.dataType = "object";
+                    }
                 }
             }
             p.paramName = toParamName(bp.getName());
@@ -2714,8 +2748,13 @@ public class DefaultCodegen {
 
         // set the example value
         // if not specified in x-example, generate a default value
-        if (p.vendorExtensions.containsKey("x-example")) {
-            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+        if (p.vendorExtensions != null && p.vendorExtensions.containsKey("x-example")) {
+            boolean isObject = "object".equalsIgnoreCase(p.baseType) || "object".equalsIgnoreCase(p.dataType);
+            if (isObject) {
+                p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+            } else {
+                p.example = p.vendorExtensions.get("x-example").toString();
+            }
         } else if (Boolean.TRUE.equals(p.isUuid) && (Boolean.TRUE.equals(p.isString))) {
             p.example = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
         } else if (Boolean.TRUE.equals(p.isString)) {
@@ -3580,10 +3619,9 @@ public class DefaultCodegen {
 
         // remove everything else other than word, number and _
         // $php_variable => php_variable
-        if (allowUnicodeIdentifiers) { //could be converted to a single line with ?: operator
+        if (allowUnicodeIdentifiers) { // could be converted to a single line with ?: operator
             name = Pattern.compile("\\W", Pattern.UNICODE_CHARACTER_CLASS).matcher(name).replaceAll("");
-        }
-        else {
+        } else {
             name = name.replaceAll("\\W", "");
         }
 
@@ -3719,6 +3757,7 @@ public class DefaultCodegen {
         List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
         String commonPrefix = findCommonPrefixOfVars(values);
         int truncateIdx = commonPrefix.length();
+        Map<String, Integer> uniqueNames = new HashMap<>();
         for (Object value : values) {
             Map<String, String> enumVar = new HashMap<String, String>();
             String enumName;
@@ -3730,7 +3769,8 @@ public class DefaultCodegen {
                     enumName = value.toString();
                 }
             }
-            enumVar.put("name", toEnumVarName(enumName, var.datatype));
+            String varName = toEnumVarName(enumName, var.datatype);
+            enumVar.put("name", ensureUniqueName(uniqueNames, varName));
             enumVar.put("value", toEnumValue(value.toString(), var.datatype));
             enumVars.add(enumVar);
         }

@@ -33,6 +33,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String SPRING_CLOUD_LIBRARY = "spring-cloud";
     public static final String IMPLICIT_HEADERS = "implicitHeaders";
     public static final String SWAGGER_DOCKET_CONFIG = "swaggerDocketConfig";
+    public static final String TARGET_OPENFEIGN = "generateForOpenFeign";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
@@ -49,10 +50,12 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean implicitHeaders = false;
     protected boolean swaggerDocketConfig = false;
     protected boolean useOptional = false;
+    protected boolean openFeign = false;
 
     public SpringCodegen() {
         super();
         outputFolder = "generated-code/javaSpring";
+        apiTestTemplateFiles.clear();
         embeddedTemplateDir = templateDir = "JavaSpring";
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
@@ -80,6 +83,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(SWAGGER_DOCKET_CONFIG, "Generate Spring Swagger Docket configuration class."));
         cliOptions.add(CliOption.newBoolean(USE_OPTIONAL,
                 "Use Optional container for optional parameters"));
+        cliOptions.add(CliOption.newBoolean(TARGET_OPENFEIGN,"Generate for usage with OpenFeign (instead of feign)"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -177,13 +181,17 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(USE_TAGS)) {
             this.setUseTags(Boolean.valueOf(additionalProperties.get(USE_TAGS).toString()));
         }
-        
+
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }
 
         if (additionalProperties.containsKey(USE_OPTIONAL)) {
             this.setUseOptional(convertPropertyToBoolean(USE_OPTIONAL));
+        }
+
+        if (additionalProperties.containsKey(TARGET_OPENFEIGN)) {
+            this.setOpenFeign(convertPropertyToBoolean(TARGET_OPENFEIGN));
         }
 
         if (useBeanValidation) {
@@ -200,7 +208,7 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         typeMapping.put("file", "Resource");
         importMapping.put("Resource", "org.springframework.core.io.Resource");
-        
+
         if (useOptional) {
             writePropertyBack(USE_OPTIONAL, useOptional);
         }
@@ -253,7 +261,6 @@ public class SpringCodegen extends AbstractJavaCodegen
                     additionalProperties.put(SINGLE_CONTENT_TYPES, "true");
                     this.setSingleContentTypes(true);
                 }
-                apiTestTemplateFiles.clear();
             } else {
                 apiTemplateFiles.put("apiController.mustache", "Controller.java");
                 supportingFiles.add(new SupportingFile("apiException.mustache",
@@ -280,7 +287,7 @@ public class SpringCodegen extends AbstractJavaCodegen
                         (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "JacksonConfiguration.java"));
             }
         }
-        
+
         if ((!this.delegatePattern && this.java8) || this.delegateMethod) {
             additionalProperties.put("jdk8-no-delegate", true);
         }
@@ -299,6 +306,10 @@ public class SpringCodegen extends AbstractJavaCodegen
             }
         } else if (this.async) {
             additionalProperties.put(RESPONSE_WRAPPER, "Callable");
+        }
+
+        if(this.openFeign){
+            additionalProperties.put("isOpenFeign", "true");
         }
 
         // Some well-known Spring or Spring-Cloud response wrappers
@@ -673,7 +684,7 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         return objs;
     }
-    
+
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
     }
@@ -681,5 +692,9 @@ public class SpringCodegen extends AbstractJavaCodegen
     @Override
     public void setUseOptional(boolean useOptional) {
         this.useOptional = useOptional;
+    }
+
+    public void setOpenFeign(boolean openFeign) {
+        this.openFeign = openFeign;
     }
 }

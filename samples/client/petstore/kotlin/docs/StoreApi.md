@@ -1,6 +1,6 @@
 # StoreApi
 
-All URIs are relative to *https://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 Delete purchase order by ID
 
-For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
 
 ### Example
 ```kotlin
@@ -25,7 +25,7 @@ For valid response try integer IDs with positive integer value. Negative or non-
 //import io.swagger.client.models.*
 
 val apiInstance = StoreApi()
-val orderId : kotlin.Long = 789 // kotlin.Long | ID of the order that needs to be deleted
+val orderId : kotlin.String = orderId_example // kotlin.String | ID of the order that needs to be deleted
 try {
     apiInstance.deleteOrder(orderId)
 } catch (e: ClientException) {
@@ -41,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **kotlin.Long**| ID of the order that needs to be deleted |
+ **orderId** | **kotlin.String**| ID of the order that needs to be deleted |
 
 ### Return type
 
@@ -105,7 +105,7 @@ This endpoint does not need any parameter.
 
 Find purchase order by ID
 
-For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
+For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
 
 ### Example
 ```kotlin

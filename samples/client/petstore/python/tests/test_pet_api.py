@@ -80,6 +80,9 @@ class PetApiTests(unittest.TestCase):
         self.test_file_dir = os.path.realpath(self.test_file_dir)
         self.foo = os.path.join(self.test_file_dir, "foo.png")
 
+    def tearDown(self):
+        Configuration.set_default(None)
+
     def test_preload_content_flag(self):
         self.pet_api.add_pet(body=self.pet)
 
@@ -132,14 +135,42 @@ class PetApiTests(unittest.TestCase):
 
         self.assertNotEqual(pet_api.api_client.user_agent, pet_api2.api_client.user_agent)
 
-    def test_separate_default_config_instances(self):
+    def test_default_config(self):
+        default = Configuration()
+        default.host = 'default_host'
+        default.api_key['api_key'] = 'default_key'
+        default.api_key_prefix['prefix'] = 'default_prefix'
+        Configuration.set_default(default)
+
+        configuration = Configuration()
+        self.assertIsNot(configuration, default)
+        self.assertEqual(configuration.host, default.host)
+        self.assertEqual(configuration.api_key['api_key'], default.api_key['api_key'])
+        self.assertEqual(configuration.api_key_prefix['prefix'], default.api_key_prefix['prefix'])
+
+        configuration.host = 'some_host'
+        configuration.api_key['api_key'] = 'some_key'
+        configuration.api_key_prefix['prefix'] = 'some_prefix'
+        self.assertEqual(default.host, 'default_host')
+        self.assertEqual(default.api_key['api_key'], 'default_key')
+        self.assertEqual(default.api_key_prefix['prefix'], 'default_prefix')
+
+    def test_separate_config_instances(self):
         pet_api = petstore_api.PetApi()
         pet_api2 = petstore_api.PetApi()
         self.assertNotEqual(pet_api.api_client.configuration, pet_api2.api_client.configuration)
 
-        pet_api.api_client.configuration.host = 'somehost'
-        pet_api2.api_client.configuration.host = 'someotherhost'
+        pet_api.api_client.configuration.host = 'some_host'
+        pet_api2.api_client.configuration.host = 'some_other_host'
         self.assertNotEqual(pet_api.api_client.configuration.host, pet_api2.api_client.configuration.host)
+
+        pet_api.api_client.configuration.api_key['api_key'] = 'some_key'
+        pet_api2.api_client.configuration.api_key['api_key'] = 'some_other_key'
+        self.assertNotEqual(pet_api.api_client.configuration.api_key['api_key'], pet_api2.api_client.configuration.api_key['api_key'])
+
+        pet_api.api_client.configuration.api_key_prefix['prefix'] = 'some_prefix'
+        pet_api2.api_client.configuration.api_key_prefix['prefix'] = 'some_other_prefix'
+        self.assertNotEqual(pet_api.api_client.configuration.api_key_prefix['prefix'], pet_api2.api_client.configuration.api_key_prefix['prefix'])
 
     def test_async_request(self):
         thread = self.pet_api.add_pet(body=self.pet, async_req=True)

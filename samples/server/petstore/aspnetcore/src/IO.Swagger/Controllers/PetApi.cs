@@ -10,18 +10,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
+using IO.Swagger.Security;
+using Microsoft.AspNetCore.Authorization;
 using IO.Swagger.Models;
 
 namespace IO.Swagger.Controllers
@@ -29,7 +25,8 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class PetApiController : Controller
+    [ApiController]
+    public class PetApiController : ControllerBase
     { 
         /// <summary>
         /// Add a new pet to the store
@@ -92,7 +89,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<Pet>\n  <id>123456789</id>\n  <name>doggie</name>\n  <photoUrls>\n    <photoUrls>aeiou</photoUrls>\n  </photoUrls>\n  <tags>\n  </tags>\n  <status>aeiou</status>\n</Pet>";
-            exampleJson = "[ {\r\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\r\n  \"name\" : \"doggie\",\r\n  \"id\" : 0,\r\n  \"category\" : {\r\n    \"name\" : \"name\",\r\n    \"id\" : 6\r\n  },\r\n  \"tags\" : [ {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  }, {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  } ],\r\n  \"status\" : \"available\"\r\n}, {\r\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\r\n  \"name\" : \"doggie\",\r\n  \"id\" : 0,\r\n  \"category\" : {\r\n    \"name\" : \"name\",\r\n    \"id\" : 6\r\n  },\r\n  \"tags\" : [ {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  }, {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  } ],\r\n  \"status\" : \"available\"\r\n} ]";
+            exampleJson = "[ {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}, {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n} ]";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<List<Pet>>(exampleJson)
@@ -123,7 +120,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<Pet>\n  <id>123456789</id>\n  <name>doggie</name>\n  <photoUrls>\n    <photoUrls>aeiou</photoUrls>\n  </photoUrls>\n  <tags>\n  </tags>\n  <status>aeiou</status>\n</Pet>";
-            exampleJson = "[ {\r\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\r\n  \"name\" : \"doggie\",\r\n  \"id\" : 0,\r\n  \"category\" : {\r\n    \"name\" : \"name\",\r\n    \"id\" : 6\r\n  },\r\n  \"tags\" : [ {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  }, {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  } ],\r\n  \"status\" : \"available\"\r\n}, {\r\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\r\n  \"name\" : \"doggie\",\r\n  \"id\" : 0,\r\n  \"category\" : {\r\n    \"name\" : \"name\",\r\n    \"id\" : 6\r\n  },\r\n  \"tags\" : [ {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  }, {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  } ],\r\n  \"status\" : \"available\"\r\n} ]";
+            exampleJson = "[ {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}, {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n} ]";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<List<Pet>>(exampleJson)
@@ -142,6 +139,7 @@ namespace IO.Swagger.Controllers
         /// <response code="404">Pet not found</response>
         [HttpGet]
         [Route("/v2/pet/{petId}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetPetById")]
         [SwaggerResponse(statusCode: 200, type: typeof(Pet), description: "successful operation")]
@@ -158,7 +156,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<Pet>\n  <id>123456789</id>\n  <name>doggie</name>\n  <photoUrls>\n    <photoUrls>aeiou</photoUrls>\n  </photoUrls>\n  <tags>\n  </tags>\n  <status>aeiou</status>\n</Pet>";
-            exampleJson = "{\r\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\r\n  \"name\" : \"doggie\",\r\n  \"id\" : 0,\r\n  \"category\" : {\r\n    \"name\" : \"name\",\r\n    \"id\" : 6\r\n  },\r\n  \"tags\" : [ {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  }, {\r\n    \"name\" : \"name\",\r\n    \"id\" : 1\r\n  } ],\r\n  \"status\" : \"available\"\r\n}";
+            exampleJson = "{\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<Pet>(exampleJson)
@@ -234,7 +232,7 @@ namespace IO.Swagger.Controllers
             // return StatusCode(200, default(ApiResponse));
 
             string exampleJson = null;
-            exampleJson = "{\r\n  \"code\" : 0,\r\n  \"type\" : \"type\",\r\n  \"message\" : \"message\"\r\n}";
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)

@@ -105,11 +105,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
       responses:
         200:
@@ -467,8 +467,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            type: "string"
           headers:
             X-Rate-Limit:
               type: "integer"
@@ -477,7 +475,9 @@ paths:
             X-Expires-After:
               type: "string"
               format: "date-time"
-              description: "date in UTC when toekn expires"
+              description: "date in UTC when token expires"
+          schema:
+            type: "string"
         400:
           description: "Invalid username/password supplied"
   /user/logout:
@@ -507,7 +507,7 @@ paths:
       parameters:
       - name: "username"
         in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
+        description: "The name that needs to be fetched. Use user1 for testing."
         required: true
         type: "string"
       responses:
@@ -570,6 +570,7 @@ paths:
       tags:
       - "fake_classname_tags 123#$%^"
       summary: "To test class name in snake case"
+      description: "To test class name in snake case"
       operationId: "testClassname"
       consumes:
       - "application/json"
@@ -608,10 +609,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
       - name: "enum_form_string"
         in: "formData"
         description: "Form parameter enum test (string)"
@@ -629,10 +630,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
       - name: "enum_header_string"
         in: "header"
         description: "Header parameter enum test (string)"
@@ -650,10 +651,10 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "$"
           enum:
           - ">"
           - "$"
-          default: "$"
       - name: "enum_query_string"
         in: "query"
         description: "Query parameter enum test (string)"
@@ -939,6 +940,26 @@ paths:
       responses:
         200:
           description: "successful operation"
+  /fake/body-with-query-params:
+    put:
+      tags:
+      - "fake"
+      operationId: "testBodyWithQueryParams"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      - name: "query"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success"
   /another-fake/dummy:
     patch:
       tags:
@@ -1012,6 +1033,8 @@ definitions:
         type: "boolean"
         default: false
         x-dataType: "Bool"
+    xml:
+      name: "Order"
     example:
       petId: 6
       quantity: 1
@@ -1019,8 +1042,6 @@ definitions:
       shipDate: "2000-01-23T04:56:07.000+00:00"
       complete: false
       status: "placed"
-    xml:
-      name: "Order"
     x-mimeTypes:
     - "MimeJSON"
     - "MimeXML"
@@ -1034,11 +1055,11 @@ definitions:
       name:
         type: "string"
         x-dataType: "Text"
+    xml:
+      name: "Category"
     example:
       name: "name"
       id: 6
-    xml:
-      name: "Category"
   User:
     type: "object"
     properties:
@@ -1070,6 +1091,8 @@ definitions:
         format: "int32"
         description: "User Status"
         x-dataType: "Int"
+    xml:
+      name: "User"
     example:
       firstName: "firstName"
       lastName: "lastName"
@@ -1079,8 +1102,6 @@ definitions:
       id: 0
       email: "email"
       username: "username"
-    xml:
-      name: "User"
     x-mimeTypes:
     - "MimeJSON"
     - "MimeXML"
@@ -1094,11 +1115,11 @@ definitions:
       name:
         type: "string"
         x-dataType: "Text"
+    xml:
+      name: "Tag"
     example:
       name: "name"
       id: 1
-    xml:
-      name: "Tag"
   Pet:
     type: "object"
     required:
@@ -1141,6 +1162,8 @@ definitions:
         - "pending"
         - "sold"
         x-dataType: "E'Status2"
+    xml:
+      name: "Pet"
     example:
       photoUrls:
       - "photoUrls"
@@ -1156,8 +1179,6 @@ definitions:
       - name: "name"
         id: 1
       status: "available"
-    xml:
-      name: "Pet"
     x-mimeTypes:
     - "MimeJSON"
     - "MimeXML"
@@ -1192,9 +1213,9 @@ definitions:
         type: "integer"
         format: "int32"
         x-dataType: "Int"
-    description: "Model for testing reserved words"
     xml:
       name: "Return"
+    description: "Model for testing reserved words"
   Name:
     required:
     - "name"
@@ -1215,9 +1236,9 @@ definitions:
         type: "integer"
         readOnly: true
         x-dataType: "Int"
-    description: "Model for testing model name same as property name"
     xml:
       name: "Name"
+    description: "Model for testing model name same as property name"
   200_response:
     properties:
       name:
@@ -1227,9 +1248,9 @@ definitions:
       class:
         type: "string"
         x-dataType: "Text"
-    description: "Model for testing model name starting with number"
     xml:
       name: "Name"
+    description: "Model for testing model name starting with number"
   ClassModel:
     properties:
       _class:
@@ -1349,8 +1370,17 @@ definitions:
     default: "-efg"
   Enum_Test:
     type: "object"
+    required:
+    - "enum_string_required"
     properties:
       enum_string:
+        type: "string"
+        enum:
+        - "UPPER"
+        - "lower"
+        - ""
+        x-dataType: "E'EnumString"
+      enum_string_required:
         type: "string"
         enum:
         - "UPPER"

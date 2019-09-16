@@ -15,7 +15,7 @@ import io.swagger.client.models.User
 
 import io.swagger.client.infrastructure.*
 
-class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiClient(basePath) {
+class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
 
     /**
     * Create user
@@ -39,7 +39,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -76,7 +76,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -113,7 +113,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -150,7 +150,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -168,7 +168,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
     /**
     * Get user by user name
     * 
-    * @param username The name that needs to be fetched. Use user1 for testing.  
+    * @param username The name that needs to be fetched. Use user1 for testing. 
     * @return User
     */
     @Suppress("UNCHECKED_CAST")
@@ -263,7 +263,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
@@ -281,7 +281,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
     /**
     * Updated user
     * This can only be done by the logged in user.
-    * @param username name that need to be updated 
+    * @param username name that need to be deleted 
     * @param body Updated user object 
     * @return void
     */
@@ -301,7 +301,7 @@ class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiC
             query = localVariableQuery,
             headers = localVariableHeaders
         )
-        val response = request<Any?>(
+        val response = request<Unit>(
             localVariableConfig,
             localVariableBody
         )
