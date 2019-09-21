@@ -311,7 +311,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
-    Object localVarPostBody = null;
+    Object localVarPostBody = new Object();
     
     // verify the required parameter 'number' is set
     if (number == null) {
@@ -402,7 +402,7 @@ if (paramCallback != null)
    * @throws ApiException if fails to make API call
    */
   public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws ApiException {
-    Object localVarPostBody = null;
+    Object localVarPostBody = new Object();
     
     // create path and map variables
     String localVarPath = "/fake";
@@ -493,7 +493,7 @@ if (enumQueryDouble != null)
    * @throws ApiException if fails to make API call
    */
   public void testJsonFormData(String param, String param2) throws ApiException {
-    Object localVarPostBody = null;
+    Object localVarPostBody = new Object();
     
     // verify the required parameter 'param' is set
     if (param == null) {
