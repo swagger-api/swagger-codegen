@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/swagger-api/swagger-codegen'
   s.summary = 'PetstoreClient'
   s.source_files = 'PetstoreClient/Classes/**/*.swift'
-  s.dependency 'Alamofire', '~> 4.9.0'
+  s.dependency 'Alamofire', '~> 4.5.0'
 end
