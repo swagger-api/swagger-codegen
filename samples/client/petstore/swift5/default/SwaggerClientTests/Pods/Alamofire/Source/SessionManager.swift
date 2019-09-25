@@ -1,7 +1,7 @@
 //
 //  SessionManager.swift
 //
-//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ open class SessionManager {
 
     /// A default instance of `SessionManager`, used by top-level Alamofire request methods, and suitable for use
     /// directly for any ad hoc requests.
-    open static let `default`: SessionManager = {
+    public static let `default`: SessionManager = {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
 
@@ -53,23 +53,15 @@ open class SessionManager {
     }()
 
     /// Creates default values for the "Accept-Encoding", "Accept-Language" and "User-Agent" headers.
-    open static let defaultHTTPHeaders: HTTPHeaders = {
+    public static let defaultHTTPHeaders: HTTPHeaders = {
         // Accept-Encoding HTTP Header; see https://tools.ietf.org/html/rfc7230#section-4.2.3
         let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
 
         // Accept-Language HTTP Header; see https://tools.ietf.org/html/rfc7231#section-5.3.5
-    #if swift(>=4.0)
-        let acceptLanguage = Locale.preferredLanguages.prefix(6).enumerated().map { enumeratedLanguage in
-            let (index, languageCode) = enumeratedLanguage
-            let quality = 1.0 - (Double(index) * 0.1)
-            return "\(languageCode);q=\(quality)"
-        }.joined(separator: ", ")
-    #else
         let acceptLanguage = Locale.preferredLanguages.prefix(6).enumerated().map { index, languageCode in
             let quality = 1.0 - (Double(index) * 0.1)
             return "\(languageCode);q=\(quality)"
         }.joined(separator: ", ")
-    #endif
 
         // User-Agent Header; see https://tools.ietf.org/html/rfc7231#section-5.5.3
         // Example: `iOS Example/1.0 (org.alamofire.iOS-Example; build:1; iOS 10.0.0) Alamofire/4.0.0`
@@ -126,13 +118,13 @@ open class SessionManager {
     }()
 
     /// Default memory threshold used when encoding `MultipartFormData` in bytes.
-    open static let multipartFormDataEncodingMemoryThreshold: UInt64 = 10_000_000
+    public static let multipartFormDataEncodingMemoryThreshold: UInt64 = 10_000_000
 
     /// The underlying session.
-    open let session: URLSession
+    public let session: URLSession
 
     /// The session delegate handling all the task and session delegate callbacks.
-    open let delegate: SessionDelegate
+    public let delegate: SessionDelegate
 
     /// Whether to start requests immediately after being constructed. `true` by default.
     open var startRequestsImmediately: Bool = true
@@ -257,6 +249,7 @@ open class SessionManager {
     /// - parameter urlRequest: The URL request.
     ///
     /// - returns: The created `DataRequest`.
+    @discardableResult
     open func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
         var originalRequest: URLRequest?
 
@@ -618,6 +611,7 @@ open class SessionManager {
         to url: URLConvertible,
         method: HTTPMethod = .post,
         headers: HTTPHeaders? = nil,
+        queue: DispatchQueue? = nil,
         encodingCompletion: ((MultipartFormDataEncodingResult) -> Void)?)
     {
         do {
@@ -627,10 +621,11 @@ open class SessionManager {
                 multipartFormData: multipartFormData,
                 usingThreshold: encodingMemoryThreshold,
                 with: urlRequest,
+                queue: queue,
                 encodingCompletion: encodingCompletion
             )
         } catch {
-            DispatchQueue.main.async { encodingCompletion?(.failure(error)) }
+            (queue ?? DispatchQueue.main).async { encodingCompletion?(.failure(error)) }
         }
     }
 
@@ -661,6 +656,7 @@ open class SessionManager {
         multipartFormData: @escaping (MultipartFormData) -> Void,
         usingThreshold encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
         with urlRequest: URLRequestConvertible,
+        queue: DispatchQueue? = nil,
         encodingCompletion: ((MultipartFormDataEncodingResult) -> Void)?)
     {
         DispatchQueue.global(qos: .utility).async {
@@ -684,7 +680,7 @@ open class SessionManager {
                         streamFileURL: nil
                     )
 
-                    DispatchQueue.main.async { encodingCompletion?(encodingResult) }
+                    (queue ?? DispatchQueue.main).async { encodingCompletion?(encodingResult) }
                 } else {
                     let fileManager = FileManager.default
                     let tempDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
@@ -720,7 +716,7 @@ open class SessionManager {
                         }
                     }
 
-                    DispatchQueue.main.async {
+                    (queue ?? DispatchQueue.main).async {
                         let encodingResult = MultipartFormDataEncodingResult.success(
                             request: upload,
                             streamingFromDisk: true,
@@ -740,7 +736,7 @@ open class SessionManager {
                     }
                 }
 
-                DispatchQueue.main.async { encodingCompletion?(.failure(error)) }
+                (queue ?? DispatchQueue.main).async { encodingCompletion?(.failure(error)) }
             }
         }
     }
@@ -854,6 +850,10 @@ open class SessionManager {
 
         do {
             let task = try originalTask.task(session: session, adapter: adapter, queue: queue)
+
+            if let originalTask = request.task {
+                delegate[originalTask] = nil // removes the old request to avoid endless growth
+            }
 
             request.delegate.task = task // resets all task delegate data
 
