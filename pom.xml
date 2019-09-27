@@ -1164,7 +1164,7 @@
         <swagger-codegen-generators-version>1.0.12-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.0.9</swagger-core-version>
         <swagger-core-version-v1>1.5.23</swagger-core-version-v1>
-        <swagger-parser-version>2.0.14</swagger-parser-version>
+        <swagger-parser-version>2.0.15-SNAPSHOT</swagger-parser-version>
         <swagger-parser-version-v1>1.0.46</swagger-parser-version-v1>
         <jackson-version>2.9.9</jackson-version>
         <scala-version>2.11.1</scala-version>
@@ -1184,5 +1184,6 @@
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
         <snakeyaml-version>1.23</snakeyaml-version>
+        <handlebars-version>4.1.2</handlebars-version>
     </properties>
 </project>
