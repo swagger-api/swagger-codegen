@@ -22,12 +22,10 @@
  * limitations under the License.
  */
 
-
 package io.swagger.api;
 
 import java.util.Map;
 import io.swagger.model.Order;
-
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -38,10 +36,7 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
-
-
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,23 +46,15 @@ import java.util.Map;
 
 
 
-
-
 /**
- 
  * Swagger Petstore
  *
- 
- 
  * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
  *
- 
  * API tests for StoreApi 
  */
-
 public class StoreApiTest {
 
-    
 
     private StoreApi api;
     
@@ -77,107 +64,75 @@ public class StoreApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        
-
         api = JAXRSClientFactory.create("http://petstore.swagger.io/v2", StoreApi.class, providers);
-
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-
-
     }
 
-    
     /**
-     
      * Delete purchase order by ID
      *
-     
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void deleteOrderTest() {
-        
         String orderId = null;
-        
         //api.deleteOrder(orderId);
         
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Returns pet inventories by status
      *
-     
      * Returns a map of status codes to quantities
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void getInventoryTest() {
-        
         //Map<String, Integer> response = api.getInventory();
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Find purchase order by ID
      *
-     
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void getOrderByIdTest() {
-        
-        Integer orderId = null;
-        
+        Long orderId = null;
         //Order response = api.getOrderById(orderId);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Place an order for a pet
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void placeOrderTest() {
-        
-        Order order = null;
-        
-        //Order response = api.placeOrder(order);
+        Order body = null;
+        //Order response = api.placeOrder(body);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
 }
