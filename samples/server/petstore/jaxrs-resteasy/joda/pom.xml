@@ -159,6 +159,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.10</version>
+            <scope>test</scope>
+        </dependency>
     <!-- Bean Validation API support -->
     <dependency>
         <groupId>javax.validation</groupId>
@@ -178,7 +184,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-core-version>2.0.0</swagger-core-version>
+        <swagger-core-version>2.0.9</swagger-core-version>
         <jetty-version>9.2.9.v20150224</jetty-version>
         <resteasy-version>3.0.11.Final</resteasy-version>
         <slf4j-version>1.6.3</slf4j-version>
