@@ -270,7 +270,7 @@
         <dependency>
             <groupId>com.github.jknack</groupId>
             <artifactId>handlebars</artifactId>
-            <version>4.0.6</version>
+            <version>${handlebars-version}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
