@@ -1059,11 +1059,11 @@
     </repositories>
     <properties>
         <swagger-codegen-generators-version>1.0.12-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.0.9</swagger-core-version>
+        <swagger-core-version>2.0.10-SNAPSHOT</swagger-core-version>
         <swagger-core-version-v1>1.5.23</swagger-core-version-v1>
         <swagger-parser-version>2.0.15-SNAPSHOT</swagger-parser-version>
         <swagger-parser-version-v1>1.0.46</swagger-parser-version-v1>
-        <jackson-version>2.9.9</jackson-version>
+        <jackson-version>2.9.10</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.4</commons-io-version>
