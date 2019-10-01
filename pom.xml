@@ -887,9 +887,9 @@
                 <!--<module>samples/client/petstore/jaxrs-cxf-client</module>-->
                 <module>samples/client/petstore/java/resttemplate</module>
                 <module>samples/client/petstore/java/resttemplate-withXml</module>
-                <module>samples/client/petstore/java/vertx</module>
+                <!--<module>samples/client/petstore/java/vertx</module>-->
                 <module>samples/client/petstore/java/resteasy</module>
-                <module>samples/client/petstore/java/google-api-client</module>
+                <!--<module>samples/client/petstore/java/google-api-client</module>-->
                 <!--<module>samples/client/petstore/kotlin/</module>-->
                 <!-- test non-java projects -->
                 <!--<module>samples/client/petstore/go</module>-->
