@@ -390,7 +390,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             if (!im.equals(cm.classname)) {
                 HashMap<String, String> tsImport = new HashMap<>();
                 tsImport.put("classname", im);
-                tsImport.put("filename", toModelFilename(im));
+                tsImport.put("filename", im);
                 tsImports.add(tsImport);
             }
         }
@@ -425,7 +425,7 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String toModelImport(String name) {
-        return modelPackage() + "/" + toModelFilename(name);
+        return modelPackage() + "/" + name;
     }
 
     public String getNpmName() {
