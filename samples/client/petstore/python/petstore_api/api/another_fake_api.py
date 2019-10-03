@@ -88,7 +88,7 @@ class AnotherFakeApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None): # noqa: E501
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `test_special_tags`")  # noqa: E501
 
         collection_formats = {}

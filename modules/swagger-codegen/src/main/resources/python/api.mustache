@@ -101,7 +101,7 @@ class {{classname}}(object):
 {{#required}}
         # verify the required parameter '{{paramName}}' is set
         if self.api_client.client_side_validation and ('{{paramName}}' not in params or
-                                                       params['{{paramName}}'] is None): # noqa: E501
+                                                       params['{{paramName}}'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")  # noqa: E501
 {{/required}}
 {{/allParams}}
