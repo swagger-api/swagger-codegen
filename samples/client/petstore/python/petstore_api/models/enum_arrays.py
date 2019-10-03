@@ -76,7 +76,8 @@ class EnumArrays(object):
         :type: str
         """
         allowed_values = [">=", "$"]  # noqa: E501
-        if self._configuration.client_side_validation and just_symbol not in allowed_values:
+        if self._configuration.client_side_validation and 
+            just_symbol not in allowed_values:
             raise ValueError(
                 "Invalid value for `just_symbol` ({0}), must be one of {1}"  # noqa: E501
                 .format(just_symbol, allowed_values)

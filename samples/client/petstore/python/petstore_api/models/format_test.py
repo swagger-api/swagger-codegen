@@ -126,9 +126,11 @@ class FormatTest(object):
         :param integer: The integer of this FormatTest.  # noqa: E501
         :type: int
         """
-        if self._configuration.client_side_validation and integer is not None and integer > 100:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            integer is not None and integer > 100:  # noqa: E501
             raise ValueError("Invalid value for `integer`, must be a value less than or equal to `100`")  # noqa: E501
-        if self._configuration.client_side_validation and integer is not None and integer < 10:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            integer is not None and integer < 10:  # noqa: E501
             raise ValueError("Invalid value for `integer`, must be a value greater than or equal to `10`")  # noqa: E501
 
         self._integer = integer
@@ -151,9 +153,11 @@ class FormatTest(object):
         :param int32: The int32 of this FormatTest.  # noqa: E501
         :type: int
         """
-        if self._configuration.client_side_validation and int32 is not None and int32 > 200:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            int32 is not None and int32 > 200:  # noqa: E501
             raise ValueError("Invalid value for `int32`, must be a value less than or equal to `200`")  # noqa: E501
-        if self._configuration.client_side_validation and int32 is not None and int32 < 20:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            int32 is not None and int32 < 20:  # noqa: E501
             raise ValueError("Invalid value for `int32`, must be a value greater than or equal to `20`")  # noqa: E501
 
         self._int32 = int32
@@ -199,9 +203,11 @@ class FormatTest(object):
         """
         if self._configuration.client_side_validation and number is None:
             raise ValueError("Invalid value for `number`, must not be `None`")  # noqa: E501
-        if self._configuration.client_side_validation and number is not None and number > 543.2:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            number is not None and number > 543.2:  # noqa: E501
             raise ValueError("Invalid value for `number`, must be a value less than or equal to `543.2`")  # noqa: E501
-        if self._configuration.client_side_validation and number is not None and number < 32.1:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            number is not None and number < 32.1:  # noqa: E501
             raise ValueError("Invalid value for `number`, must be a value greater than or equal to `32.1`")  # noqa: E501
 
         self._number = number
@@ -224,9 +230,11 @@ class FormatTest(object):
         :param _float: The _float of this FormatTest.  # noqa: E501
         :type: float
         """
-        if self._configuration.client_side_validation and _float is not None and _float > 987.6:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            _float is not None and _float > 987.6:  # noqa: E501
             raise ValueError("Invalid value for `_float`, must be a value less than or equal to `987.6`")  # noqa: E501
-        if self._configuration.client_side_validation and _float is not None and _float < 54.3:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            _float is not None and _float < 54.3:  # noqa: E501
             raise ValueError("Invalid value for `_float`, must be a value greater than or equal to `54.3`")  # noqa: E501
 
         self.__float = _float
@@ -249,9 +257,11 @@ class FormatTest(object):
         :param double: The double of this FormatTest.  # noqa: E501
         :type: float
         """
-        if self._configuration.client_side_validation and double is not None and double > 123.4:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            double is not None and double > 123.4:  # noqa: E501
             raise ValueError("Invalid value for `double`, must be a value less than or equal to `123.4`")  # noqa: E501
-        if self._configuration.client_side_validation and double is not None and double < 67.8:  # noqa: E501
+        if self._configuration.client_side_validation and 
+            double is not None and double < 67.8:  # noqa: E501
             raise ValueError("Invalid value for `double`, must be a value greater than or equal to `67.8`")  # noqa: E501
 
         self._double = double
@@ -274,7 +284,8 @@ class FormatTest(object):
         :param string: The string of this FormatTest.  # noqa: E501
         :type: str
         """
-        if self._configuration.client_side_validation and string is not None and not re.search(r'[a-z]', string, flags=re.IGNORECASE):  # noqa: E501
+        if self._configuration.client_side_validation and 
+            string is not None and not re.search(r'[a-z]', string, flags=re.IGNORECASE):  # noqa: E501
             raise ValueError(r"Invalid value for `string`, must be a follow pattern or equal to `/[a-z]/i`")  # noqa: E501
 
         self._string = string
@@ -299,7 +310,8 @@ class FormatTest(object):
         """
         if self._configuration.client_side_validation and byte is None:
             raise ValueError("Invalid value for `byte`, must not be `None`")  # noqa: E501
-        if self._configuration.client_side_validation and byte is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte):  # noqa: E501
+        if self._configuration.client_side_validation and 
+            byte is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte):  # noqa: E501
             raise ValueError(r"Invalid value for `byte`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`")  # noqa: E501
 
         self._byte = byte
@@ -410,9 +422,11 @@ class FormatTest(object):
         """
         if self._configuration.client_side_validation and password is None:
             raise ValueError("Invalid value for `password`, must not be `None`")  # noqa: E501
-        if self._configuration.client_side_validation and password is not None and len(password) > 64:
+        if self._configuration.client_side_validation and 
+            password is not None and len(password) > 64:
             raise ValueError("Invalid value for `password`, length must be less than or equal to `64`")  # noqa: E501
-        if self._configuration.client_side_validation and password is not None and len(password) < 10:
+        if self._configuration.client_side_validation and 
+            password is not None and len(password) < 10:
             raise ValueError("Invalid value for `password`, length must be greater than or equal to `10`")  # noqa: E501
 
         self._password = password
