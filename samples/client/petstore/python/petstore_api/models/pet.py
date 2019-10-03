@@ -205,8 +205,8 @@ class Pet(object):
         :type: str
         """
         allowed_values = ["available", "pending", "sold"]  # noqa: E501
-        if (self._configuration.client_side_validation and 
-            status not in allowed_values):
+        if (self._configuration.client_side_validation and
+                status not in allowed_values):
             raise ValueError(
                 "Invalid value for `status` ({0}), must be one of {1}"  # noqa: E501
                 .format(status, allowed_values)

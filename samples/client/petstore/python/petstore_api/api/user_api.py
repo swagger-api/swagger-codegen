@@ -88,7 +88,7 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `create_user`")  # noqa: E501
 
         collection_formats = {}
@@ -183,7 +183,7 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `create_users_with_array_input`")  # noqa: E501
 
         collection_formats = {}
@@ -278,7 +278,7 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `create_users_with_list_input`")  # noqa: E501
 
         collection_formats = {}
@@ -373,7 +373,7 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'username' is set
         if self.api_client.client_side_validation and ('username' not in params or
-                                                       params['username'] is None):
+                                                       params['username'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `username` when calling `delete_user`")  # noqa: E501
 
         collection_formats = {}
@@ -468,7 +468,7 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'username' is set
         if self.api_client.client_side_validation and ('username' not in params or
-                                                       params['username'] is None):
+                                                       params['username'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `username` when calling `get_user_by_name`")  # noqa: E501
 
         collection_formats = {}
@@ -565,11 +565,11 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'username' is set
         if self.api_client.client_side_validation and ('username' not in params or
-                                                       params['username'] is None):
+                                                       params['username'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `username` when calling `login_user`")  # noqa: E501
         # verify the required parameter 'password' is set
         if self.api_client.client_side_validation and ('password' not in params or
-                                                       params['password'] is None):
+                                                       params['password'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `password` when calling `login_user`")  # noqa: E501
 
         collection_formats = {}
@@ -755,11 +755,11 @@ class UserApi(object):
         del params['kwargs']
         # verify the required parameter 'username' is set
         if self.api_client.client_side_validation and ('username' not in params or
-                                                       params['username'] is None):
+                                                       params['username'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `username` when calling `update_user`")  # noqa: E501
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `update_user`")  # noqa: E501
 
         collection_formats = {}

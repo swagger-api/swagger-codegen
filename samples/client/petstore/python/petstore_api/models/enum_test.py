@@ -90,8 +90,8 @@ class EnumTest(object):
         :type: str
         """
         allowed_values = ["UPPER", "lower", ""]  # noqa: E501
-        if (self._configuration.client_side_validation and 
-            enum_string not in allowed_values):
+        if (self._configuration.client_side_validation and
+                enum_string not in allowed_values):
             raise ValueError(
                 "Invalid value for `enum_string` ({0}), must be one of {1}"  # noqa: E501
                 .format(enum_string, allowed_values)
@@ -120,8 +120,8 @@ class EnumTest(object):
         if self._configuration.client_side_validation and enum_string_required is None:
             raise ValueError("Invalid value for `enum_string_required`, must not be `None`")  # noqa: E501
         allowed_values = ["UPPER", "lower", ""]  # noqa: E501
-        if (self._configuration.client_side_validation and 
-            enum_string_required not in allowed_values):
+        if (self._configuration.client_side_validation and
+                enum_string_required not in allowed_values):
             raise ValueError(
                 "Invalid value for `enum_string_required` ({0}), must be one of {1}"  # noqa: E501
                 .format(enum_string_required, allowed_values)
@@ -148,8 +148,8 @@ class EnumTest(object):
         :type: int
         """
         allowed_values = [1, -1]  # noqa: E501
-        if (self._configuration.client_side_validation and 
-            enum_integer not in allowed_values):
+        if (self._configuration.client_side_validation and
+                enum_integer not in allowed_values):
             raise ValueError(
                 "Invalid value for `enum_integer` ({0}), must be one of {1}"  # noqa: E501
                 .format(enum_integer, allowed_values)
@@ -176,8 +176,8 @@ class EnumTest(object):
         :type: float
         """
         allowed_values = [1.1, -1.2]  # noqa: E501
-        if (self._configuration.client_side_validation and 
-            enum_number not in allowed_values):
+        if (self._configuration.client_side_validation and
+                enum_number not in allowed_values):
             raise ValueError(
                 "Invalid value for `enum_number` ({0}), must be one of {1}"  # noqa: E501
                 .format(enum_number, allowed_values)

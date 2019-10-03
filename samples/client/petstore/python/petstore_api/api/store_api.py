@@ -88,7 +88,7 @@ class StoreApi(object):
         del params['kwargs']
         # verify the required parameter 'order_id' is set
         if self.api_client.client_side_validation and ('order_id' not in params or
-                                                       params['order_id'] is None):
+                                                       params['order_id'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `order_id` when calling `delete_order`")  # noqa: E501
 
         collection_formats = {}
@@ -270,7 +270,7 @@ class StoreApi(object):
         del params['kwargs']
         # verify the required parameter 'order_id' is set
         if self.api_client.client_side_validation and ('order_id' not in params or
-                                                       params['order_id'] is None):
+                                                       params['order_id'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `order_id` when calling `get_order_by_id`")  # noqa: E501
 
         if self.client_side_validation and ('order_id' in params and params['order_id'] > 5):  # noqa: E501
@@ -369,7 +369,7 @@ class StoreApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `place_order`")  # noqa: E501
 
         collection_formats = {}

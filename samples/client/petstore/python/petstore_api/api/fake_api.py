@@ -436,11 +436,11 @@ class FakeApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `test_body_with_query_params`")  # noqa: E501
         # verify the required parameter 'query' is set
         if self.api_client.client_side_validation and ('query' not in params or
-                                                       params['query'] is None):
+                                                       params['query'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `query` when calling `test_body_with_query_params`")  # noqa: E501
 
         collection_formats = {}
@@ -537,7 +537,7 @@ class FakeApi(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):
+                                                       params['body'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `test_client_model`")  # noqa: E501
 
         collection_formats = {}
@@ -662,19 +662,19 @@ class FakeApi(object):
         del params['kwargs']
         # verify the required parameter 'number' is set
         if self.api_client.client_side_validation and ('number' not in params or
-                                                       params['number'] is None):
+                                                       params['number'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `number` when calling `test_endpoint_parameters`")  # noqa: E501
         # verify the required parameter 'double' is set
         if self.api_client.client_side_validation and ('double' not in params or
-                                                       params['double'] is None):
+                                                       params['double'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `double` when calling `test_endpoint_parameters`")  # noqa: E501
         # verify the required parameter 'pattern_without_delimiter' is set
         if self.api_client.client_side_validation and ('pattern_without_delimiter' not in params or
-                                                       params['pattern_without_delimiter'] is None):
+                                                       params['pattern_without_delimiter'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `pattern_without_delimiter` when calling `test_endpoint_parameters`")  # noqa: E501
         # verify the required parameter 'byte' is set
         if self.api_client.client_side_validation and ('byte' not in params or
-                                                       params['byte'] is None):
+                                                       params['byte'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `byte` when calling `test_endpoint_parameters`")  # noqa: E501
 
         if self.client_side_validation and ('number' in params and params['number'] > 543.2):  # noqa: E501
@@ -953,7 +953,7 @@ class FakeApi(object):
         del params['kwargs']
         # verify the required parameter 'param' is set
         if self.api_client.client_side_validation and ('param' not in params or
-                                                       params['param'] is None):
+                                                       params['param'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `param` when calling `test_inline_additional_properties`")  # noqa: E501
 
         collection_formats = {}
@@ -1050,11 +1050,11 @@ class FakeApi(object):
         del params['kwargs']
         # verify the required parameter 'param' is set
         if self.api_client.client_side_validation and ('param' not in params or
-                                                       params['param'] is None):
+                                                       params['param'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `param` when calling `test_json_form_data`")  # noqa: E501
         # verify the required parameter 'param2' is set
         if self.api_client.client_side_validation and ('param2' not in params or
-                                                       params['param2'] is None):
+                                                       params['param2'] is None): # noqa: E501
             raise ValueError("Missing the required parameter `param2` when calling `test_json_form_data`")  # noqa: E501
 
         collection_formats = {}
