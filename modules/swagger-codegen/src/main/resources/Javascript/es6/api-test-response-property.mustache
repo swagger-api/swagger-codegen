@@ -1,0 +1,40 @@
+{{#vendorExtensions.x-is-container}}
+            {
+              let dataCtr = data{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}.{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}};
+              expect(dataCtr).to.be.an({{baseType}});
+              expect(dataCtr).to.not.be.empty();
+  {{#vendorExtensions.x-stash-cached-contexts}}
+    {{#items}}
+              for (let p in dataCtr) {
+                let data = dataCtr[p];
+                expect(data{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}.{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}}).to.be.a({{^isPrimitiveType}}{{moduleName}}.{{/isPrimitiveType}}{{vendorExtensions.x-expect-js-type}});
+      {{#isPrimitiveType}}
+                {{^loadTestDataFromFile}}// {{/loadTestDataFromFile}}expect(data{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}.{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}}).to.be({{!
+                }}{{#loadTestDataFromFile}}getTestData(testDataPtr + "{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}/{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}}/" + p){{/loadTestDataFromFile}}{{!
+                }}{{^loadTestDataFromFile}}{{>api-test-property}}{{/loadTestDataFromFile}});
+      {{/isPrimitiveType}}
+      {{^isPrimitiveType}}
+        {{#vendorExtensions.x-indent}}
+          {{#vendorExtensions.x-indent}}
+{{>api-test-response-complex}}{{!
+          }}{{/vendorExtensions.x-indent}}{{!
+        }}{{/vendorExtensions.x-indent}}{{!
+      }}{{/isPrimitiveType}}{{!
+}}              }
+    {{/items}}
+  {{/vendorExtensions.x-stash-cached-contexts}}
+            }
+{{/vendorExtensions.x-is-container}}
+{{^vendorExtensions.x-is-container}}
+            expect(data{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}.{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}}).to.be.a({{^isPrimitiveType}}{{moduleName}}.{{/isPrimitiveType}}{{vendorExtensions.x-expect-js-type}});
+  {{#isPrimitiveType}}
+            {{^loadTestDataFromFile}}// {{/loadTestDataFromFile}}expect(data{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}.{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}}).to.be({{!
+                }}{{#loadTestDataFromFile}}getTestData(testDataPtr + "{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}/{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}}/"){{/loadTestDataFromFile}}{{!
+                }}{{^loadTestDataFromFile}}{{>api-test-property}}{{/loadTestDataFromFile}});
+  {{/isPrimitiveType}}
+  {{^isPrimitiveType}}
+    {{#vendorExtensions.x-indent}}{{!
+}}{{>api-test-response-complex}}{{!
+    }}{{/vendorExtensions.x-indent}}{{!
+  }}{{/isPrimitiveType}}{{!
+}}{{/vendorExtensions.x-is-container}}
