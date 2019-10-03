@@ -125,9 +125,22 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected void configureGeneratorProperties() {
         // allows generating only models by specifying a CSV of models to generate, or empty for all
         // NOTE: Boolean.TRUE is required below rather than `true` because of JVM boxing constraints and type inference.
-        isGenerateApis = System.getProperty(CodegenConstants.APIS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.APIS, null);
-        isGenerateModels = System.getProperty(CodegenConstants.MODELS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODELS, null);
-        isGenerateSupportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.SUPPORTING_FILES, null);
+        if (System.getProperty(CodegenConstants.GENERATE_APIS) != null) {
+            isGenerateApis = Boolean.valueOf(System.getProperty(CodegenConstants.GENERATE_APIS));
+        } else {
+            isGenerateApis = System.getProperty(CodegenConstants.APIS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.APIS, null);
+        }
+        if (System.getProperty(CodegenConstants.GENERATE_MODELS) != null) {
+            isGenerateModels = Boolean.valueOf(System.getProperty(CodegenConstants.GENERATE_MODELS));
+        } else {
+            isGenerateModels = System.getProperty(CodegenConstants.MODELS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODELS, null);
+        }
+        String supportingFilesProperty = System.getProperty(CodegenConstants.SUPPORTING_FILES);
+        if (((supportingFilesProperty != null) && supportingFilesProperty.equalsIgnoreCase("false"))) {
+            isGenerateSupportingFiles = false;
+        } else {
+            isGenerateSupportingFiles = supportingFilesProperty != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.SUPPORTING_FILES, null);
+        }
 
         if (isGenerateApis == null && isGenerateModels == null && isGenerateSupportingFiles == null) {
             // no specifics are set, generate everything
@@ -560,7 +573,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         Set<String> supportingFilesToGenerate = null;
         String supportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES);
-        if (supportingFiles != null && !supportingFiles.isEmpty()) {
+        boolean generateAll = false;
+        if (supportingFiles != null && supportingFiles.equalsIgnoreCase("true")) {
+            generateAll = true;
+        } else if (supportingFiles != null && !supportingFiles.isEmpty()) {
             supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
         }
 
@@ -586,7 +602,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     templateFile = getFullTemplateFile(config, support.templateFile);
                 }
                 boolean shouldGenerate = true;
-                if (supportingFilesToGenerate != null && !supportingFilesToGenerate.isEmpty()) {
+                if (!generateAll && supportingFilesToGenerate != null && !supportingFilesToGenerate.isEmpty()) {
                     shouldGenerate = supportingFilesToGenerate.contains(support.destinationFilename);
                 }
                 if (!shouldGenerate) {

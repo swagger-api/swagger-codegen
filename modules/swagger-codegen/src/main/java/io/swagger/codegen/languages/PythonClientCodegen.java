@@ -267,8 +267,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
             //Must follow Perl /pattern/modifiers convention
             if(pattern.charAt(0) != '/' || i < 2) {
-                throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+                pattern = String.format("/%s/", pattern);
+                i = pattern.lastIndexOf('/');
             }
 
             String regex = pattern.substring(1, i).replace("'", "\\'");

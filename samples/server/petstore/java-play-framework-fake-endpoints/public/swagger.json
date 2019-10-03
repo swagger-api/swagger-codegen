@@ -61,8 +61,7 @@
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       },
       "put" : {
         "tags" : [ "pet" ],
@@ -95,8 +94,7 @@
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-put-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/pet/findByStatus" : {
@@ -136,8 +134,7 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/pet/findByTags" : {
@@ -176,8 +173,7 @@
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
         "deprecated" : true,
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/pet/{petId}" : {
@@ -212,8 +208,7 @@
         "security" : [ {
           "api_key" : [ ]
         } ],
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       },
       "post" : {
         "tags" : [ "pet" ],
@@ -251,8 +246,7 @@
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
         "x-contentType" : "application/x-www-form-urlencoded",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       },
       "delete" : {
         "tags" : [ "pet" ],
@@ -281,8 +275,7 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "x-accepts" : "application/json",
-        "x-is-delete-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/pet/{petId}/uploadImage" : {
@@ -325,8 +318,7 @@
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
         "x-contentType" : "multipart/form-data",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/store/inventory" : {
@@ -352,8 +344,7 @@
         "security" : [ {
           "api_key" : [ ]
         } ],
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/store/order" : {
@@ -384,8 +375,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/store/order/{order_id}" : {
@@ -419,8 +409,7 @@
             "description" : "Order not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       },
       "delete" : {
         "tags" : [ "store" ],
@@ -443,8 +432,7 @@
             "description" : "Order not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-is-delete-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/user" : {
@@ -469,8 +457,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/user/createWithArray" : {
@@ -498,8 +485,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/user/createWithList" : {
@@ -527,8 +513,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/user/login" : {
@@ -574,8 +559,7 @@
             "description" : "Invalid username/password supplied"
           }
         },
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/user/logout" : {
@@ -591,8 +575,7 @@
             "description" : "successful operation"
           }
         },
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/user/{username}" : {
@@ -623,8 +606,7 @@
             "description" : "User not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       },
       "put" : {
         "tags" : [ "user" ],
@@ -656,8 +638,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-put-method" : true
+        "x-accepts" : "application/json"
       },
       "delete" : {
         "tags" : [ "user" ],
@@ -680,8 +661,7 @@
             "description" : "User not found"
           }
         },
-        "x-accepts" : "application/json",
-        "x-is-delete-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake_classname_test" : {
@@ -713,8 +693,7 @@
           "api_key_query" : [ ]
         } ],
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-head-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake" : {
@@ -808,8 +787,7 @@
           }
         },
         "x-contentType" : "*/*",
-        "x-accepts" : "*/*",
-        "x-is-get-method" : true
+        "x-accepts" : "*/*"
       },
       "post" : {
         "tags" : [ "fake" ],
@@ -937,8 +915,7 @@
           "http_basic_test" : [ ]
         } ],
         "x-contentType" : "application/xml; charset=utf-8",
-        "x-accepts" : "application/xml; charset=utf-8,application/json; charset=utf-8",
-        "x-is-post-method" : true
+        "x-accepts" : "application/xml; charset=utf-8,application/json; charset=utf-8"
       },
       "patch" : {
         "tags" : [ "fake" ],
@@ -965,8 +942,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-head-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake/outer/number" : {
@@ -993,7 +969,6 @@
         },
         "x-contentType" : "application/json",
         "x-accepts" : "application/json",
-        "x-is-post-method" : true,
         "missingReturnInfoIfNeeded" : "1.0"
       }
     },
@@ -1020,8 +995,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake/outer/boolean" : {
@@ -1048,7 +1022,6 @@
         },
         "x-contentType" : "application/json",
         "x-accepts" : "application/json",
-        "x-is-post-method" : true,
         "missingReturnInfoIfNeeded" : "true"
       }
     },
@@ -1075,8 +1048,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake/jsonFormData" : {
@@ -1105,8 +1077,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-get-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake/inline-additionalProperties" : {
@@ -1134,8 +1105,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-post-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/fake/body-with-query-params" : {
@@ -1162,8 +1132,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-put-method" : true
+        "x-accepts" : "application/json"
       }
     },
     "/another-fake/dummy" : {
@@ -1192,8 +1161,7 @@
           }
         },
         "x-contentType" : "application/json",
-        "x-accepts" : "application/json",
-        "x-is-head-method" : true
+        "x-accepts" : "application/json"
       }
     }
   },
