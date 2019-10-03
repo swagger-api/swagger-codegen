@@ -101,7 +101,7 @@ class {{classname}}(object):
 {{#required}}
         # verify the required parameter '{{paramName}}' is set
         if self.api_client.client_side_validation and ('{{paramName}}' not in params or
-                params['{{paramName}}'] is None):
+                                                       params['{{paramName}}'] is None):
             raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")  # noqa: E501
 {{/required}}
 {{/allParams}}
@@ -110,12 +110,12 @@ class {{classname}}(object):
 {{#hasValidation}}
     {{#maxLength}}
         if self.api_client.client_side_validation and ('{{paramName}}' in params and
-                len(params['{{paramName}}']) > {{maxLength}}):
+                                                       len(params['{{paramName}}']) > {{maxLength}}):
             raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")  # noqa: E501
     {{/maxLength}}
     {{#minLength}}
         if self.api_client.client_side_validation and ('{{paramName}}' in params and
-                len(params['{{paramName}}']) < {{minLength}}):
+                                                       len(params['{{paramName}}']) < {{minLength}}):
             raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")  # noqa: E501
     {{/minLength}}
     {{#maximum}}
@@ -132,12 +132,12 @@ class {{classname}}(object):
     {{/pattern}}
     {{#maxItems}}
         if self.client_side_validation and ('{{paramName}}' in params and
-                len(params['{{paramName}}']) > {{maxItems}}):
+                                            len(params['{{paramName}}']) > {{maxItems}}):
             raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")  # noqa: E501
     {{/maxItems}}
     {{#minItems}}
         if self.client_side_validation and ('{{paramName}}' in params and
-                len(params['{{paramName}}']) < {{minItems}}):
+                                            len(params['{{paramName}}']) < {{minItems}}):
             raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")  # noqa: E501
     {{/minItems}}
 {{/hasValidation}}

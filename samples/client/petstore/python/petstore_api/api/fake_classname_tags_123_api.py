@@ -88,7 +88,7 @@ class FakeClassnameTags123Api(object):
         del params['kwargs']
         # verify the required parameter 'body' is set
         if self.api_client.client_side_validation and ('body' not in params or
-                params['body'] is None):
+                                                       params['body'] is None):
             raise ValueError("Missing the required parameter `body` when calling `test_classname`")  # noqa: E501
 
         collection_formats = {}
