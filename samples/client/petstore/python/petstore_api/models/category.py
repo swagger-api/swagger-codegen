@@ -139,8 +139,11 @@ class Category(object):
         if not isinstance(other, Category):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, Category):
+            return True
+
+        return self.to_dict() != other.to_dict()
