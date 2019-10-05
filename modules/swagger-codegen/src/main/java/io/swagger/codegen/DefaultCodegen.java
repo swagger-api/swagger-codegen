@@ -1030,8 +1030,14 @@ public class DefaultCodegen {
                 LOGGER.error("No Type defined for Additional Property " + additionalProperties2 + "\n" //
                         + "\tIn Property: " + p);
             }
-            String inner = getSwaggerType(additionalProperties2);
-            return instantiationTypes.get("map") + "<String, " + inner + ">";
+
+            String additionalPropInstType = toInstantiationType(additionalProperties2);
+            if (additionalPropInstType != null) {
+                return instantiationTypes.get("map") + "<String, " + additionalPropInstType + ">";
+            } else {
+                String inner = getSwaggerType(additionalProperties2);
+                return instantiationTypes.get("map") + "<String, " + inner + ">";
+            }
         } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             String inner = getSwaggerType(ap.getItems());
