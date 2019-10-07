@@ -57,7 +57,7 @@ public class StoreApiController implements StoreApi {
         return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(5L) @ApiParam(value = "ID of pet that needs to be fetched",required=true, allowableValues = "") @PathVariable("orderId") Long orderId) {
+    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(5L) @ApiParam(value = "ID of pet that needs to be fetched",required=true, allowableValues="") @PathVariable("orderId") Long orderId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
