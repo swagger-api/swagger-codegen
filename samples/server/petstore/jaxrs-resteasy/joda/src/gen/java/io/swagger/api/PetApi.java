@@ -63,7 +63,7 @@ public class PetApi  {
     }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
-    public Response deletePet( @PathParam("petId") Integer petId,@Parameter(description = "" )@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext)
+    public Response deletePet( @PathParam("petId") Long petId,@Parameter(description = "" )@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.deletePet(petId,apiKey,securityContext);
     }
@@ -114,7 +114,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Response getPetById( @PathParam("petId") Integer petId,@Context SecurityContext securityContext)
+    public Response getPetById( @PathParam("petId") Long petId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getPetById(petId,securityContext);
     }
@@ -148,7 +148,7 @@ public class PetApi  {
     }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updatePetWithForm( @PathParam("petId") Integer petId,@Parameter(description = "")@FormParam("name")  String name,@Parameter(description = "")@FormParam("status")  String status,@Context SecurityContext securityContext)
+    public Response updatePetWithForm( @PathParam("petId") Long petId,@Parameter(description = "")@FormParam("name")  String name,@Parameter(description = "")@FormParam("status")  String status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.updatePetWithForm(petId,name,status,securityContext);
     }
@@ -163,7 +163,7 @@ public class PetApi  {
     }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
-    public Response uploadFile(MultipartFormDataInput input, @PathParam("petId") Integer petId,@Context SecurityContext securityContext)
+    public Response uploadFile(MultipartFormDataInput input, @PathParam("petId") Long petId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.uploadFile(input,petId,securityContext);
     }
