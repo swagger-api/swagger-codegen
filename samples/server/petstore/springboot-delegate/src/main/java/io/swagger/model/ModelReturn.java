@@ -14,7 +14,6 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing reserved words")
 @Validated
-
 public class ModelReturn   {
   @JsonProperty("return")
   private Integer _return = null;
@@ -29,7 +28,6 @@ public class ModelReturn   {
    * @return _return
   **/
   @ApiModelProperty(value = "")
-
 
   public Integer getReturn() {
     return _return;
@@ -78,4 +76,3 @@ public class ModelReturn   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

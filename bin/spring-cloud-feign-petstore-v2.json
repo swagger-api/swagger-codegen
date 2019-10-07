@@ -1,0 +1,5 @@
+{
+    "library": "spring-cloud",
+    "artifactId": "swagger-petstore-spring-cloud",
+    "springBootVersion" : "2.1.7.RELEASE"
+}
