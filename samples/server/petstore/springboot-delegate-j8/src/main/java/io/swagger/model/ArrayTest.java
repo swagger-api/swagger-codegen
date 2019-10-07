@@ -16,7 +16,6 @@ import javax.validation.constraints.*;
  * ArrayTest
  */
 @Validated
-
 public class ArrayTest   {
   @JsonProperty("array_of_string")
   @Valid
@@ -49,7 +48,6 @@ public class ArrayTest   {
   **/
   @ApiModelProperty(value = "")
 
-
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
@@ -76,9 +74,7 @@ public class ArrayTest   {
    * @return arrayArrayOfInteger
   **/
   @ApiModelProperty(value = "")
-
   @Valid
-
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -105,9 +101,7 @@ public class ArrayTest   {
    * @return arrayArrayOfModel
   **/
   @ApiModelProperty(value = "")
-
   @Valid
-
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
@@ -159,4 +153,3 @@ public class ArrayTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

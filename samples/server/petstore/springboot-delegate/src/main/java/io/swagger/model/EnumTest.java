@@ -15,7 +15,6 @@ import javax.validation.constraints.*;
  * EnumTest
  */
 @Validated
-
 public class EnumTest   {
   /**
    * Gets or Sets enumString
@@ -49,7 +48,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
 
@@ -83,7 +81,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
 
@@ -117,7 +114,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
 
@@ -134,7 +130,6 @@ public class EnumTest   {
    * @return enumString
   **/
   @ApiModelProperty(value = "")
-
 
   public EnumStringEnum getEnumString() {
     return enumString;
@@ -155,7 +150,6 @@ public class EnumTest   {
   **/
   @ApiModelProperty(value = "")
 
-
   public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
@@ -174,7 +168,6 @@ public class EnumTest   {
    * @return enumNumber
   **/
   @ApiModelProperty(value = "")
-
 
   public EnumNumberEnum getEnumNumber() {
     return enumNumber;
@@ -196,7 +189,6 @@ public class EnumTest   {
   @ApiModelProperty(value = "")
 
   @Valid
-
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }
@@ -250,4 +242,3 @@ public class EnumTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
