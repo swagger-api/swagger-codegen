@@ -19,35 +19,43 @@ import javax.ws.rs.core.SecurityContext;
 
 @RequestScoped
 public class PetApiServiceImpl implements PetApiService {
-      public Response addPet(Pet body,SecurityContext securityContext) throws NotFoundException {
+      public Response addPet(Pet body,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response deletePet(Integer petId,String apiKey,SecurityContext securityContext) throws NotFoundException {
+      public Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response findPetsByStatus(List<String> status,SecurityContext securityContext) throws NotFoundException {
+      public Response findPetsByStatus(List<String> status,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response findPetsByTags(List<String> tags,SecurityContext securityContext) throws NotFoundException {
+      public Response findPetsByTags(List<String> tags,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response getPetById(Integer petId,SecurityContext securityContext) throws NotFoundException {
+      public Response getPetById(Long petId,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response updatePet(Pet body,SecurityContext securityContext) throws NotFoundException {
+      public Response updatePet(Pet body,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response updatePetWithForm(Integer petId,String name,String status,SecurityContext securityContext) throws NotFoundException {
+      public Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response uploadFile(MultipartFormDataInput input,Integer petId,SecurityContext securityContext) throws NotFoundException {
+      public Response uploadFile(MultipartFormDataInput input,Long petId,SecurityContext securityContext)
+      throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
