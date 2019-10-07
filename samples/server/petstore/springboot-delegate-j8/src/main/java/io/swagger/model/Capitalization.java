@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
  * Capitalization
  */
 @Validated
-
 public class Capitalization   {
   @JsonProperty("smallCamel")
   private String smallCamel = null;
@@ -44,7 +43,6 @@ public class Capitalization   {
   **/
   @ApiModelProperty(value = "")
 
-
   public String getSmallCamel() {
     return smallCamel;
   }
@@ -63,7 +61,6 @@ public class Capitalization   {
    * @return capitalCamel
   **/
   @ApiModelProperty(value = "")
-
 
   public String getCapitalCamel() {
     return capitalCamel;
@@ -84,7 +81,6 @@ public class Capitalization   {
   **/
   @ApiModelProperty(value = "")
 
-
   public String getSmallSnake() {
     return smallSnake;
   }
@@ -103,7 +99,6 @@ public class Capitalization   {
    * @return capitalSnake
   **/
   @ApiModelProperty(value = "")
-
 
   public String getCapitalSnake() {
     return capitalSnake;
@@ -124,7 +119,6 @@ public class Capitalization   {
   **/
   @ApiModelProperty(value = "")
 
-
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
@@ -143,7 +137,6 @@ public class Capitalization   {
    * @return ATT_NAME
   **/
   @ApiModelProperty(value = "Name of the pet ")
-
 
   public String getATTNAME() {
     return ATT_NAME;
@@ -202,4 +195,3 @@ public class Capitalization   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

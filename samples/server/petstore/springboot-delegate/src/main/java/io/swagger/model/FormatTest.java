@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
  * FormatTest
  */
 @Validated
-
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;
@@ -41,10 +40,10 @@ public class FormatTest   {
   private String string = null;
 
   @JsonProperty("byte")
-  private byte[] _byte = null;
+  private String _byte = null;
 
   @JsonProperty("binary")
-  private byte[] binary = null;
+  private String binary = null;
 
   @JsonProperty("date")
   private LocalDate date = null;
@@ -71,8 +70,7 @@ public class FormatTest   {
   **/
   @ApiModelProperty(value = "")
 
-@Min(10) @Max(100) 
-  public Integer getInteger() {
+@Min(10) @Max(100)   public Integer getInteger() {
     return integer;
   }
 
@@ -93,8 +91,7 @@ public class FormatTest   {
   **/
   @ApiModelProperty(value = "")
 
-@Min(20) @Max(200) 
-  public Integer getInt32() {
+@Min(20) @Max(200)   public Integer getInt32() {
     return int32;
   }
 
@@ -113,7 +110,6 @@ public class FormatTest   {
   **/
   @ApiModelProperty(value = "")
 
-
   public Long getInt64() {
     return int64;
   }
@@ -129,16 +125,15 @@ public class FormatTest   {
 
   /**
    * Get number
-   * minimum: 32.1
-   * maximum: 543.2
+   * minimum: 32
+   * maximum: 543
    * @return number
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
   @Valid
-@DecimalMin("32.1") @DecimalMax("543.2") 
-  public BigDecimal getNumber() {
+@DecimalMin("32") @DecimalMax("543")   public BigDecimal getNumber() {
     return number;
   }
 
@@ -153,14 +148,13 @@ public class FormatTest   {
 
   /**
    * Get _float
-   * minimum: 54.3
-   * maximum: 987.6
+   * minimum: 54
+   * maximum: 987
    * @return _float
   **/
   @ApiModelProperty(value = "")
 
-@DecimalMin("54.3") @DecimalMax("987.6") 
-  public Float getFloat() {
+@DecimalMin("54") @DecimalMax("987")   public Float getFloat() {
     return _float;
   }
 
@@ -175,14 +169,13 @@ public class FormatTest   {
 
   /**
    * Get _double
-   * minimum: 67.8
-   * maximum: 123.4
+   * minimum: 67
+   * maximum: 123
    * @return _double
   **/
   @ApiModelProperty(value = "")
 
-@DecimalMin("67.8") @DecimalMax("123.4") 
-  public Double getDouble() {
+@DecimalMin("67") @DecimalMax("123")   public Double getDouble() {
     return _double;
   }
 
@@ -201,8 +194,7 @@ public class FormatTest   {
   **/
   @ApiModelProperty(value = "")
 
-@Pattern(regexp="/[a-z]/i") 
-  public String getString() {
+@Pattern(regexp="/[a-z]/i")   public String getString() {
     return string;
   }
 
@@ -210,7 +202,7 @@ public class FormatTest   {
     this.string = string;
   }
 
-  public FormatTest _byte(byte[] _byte) {
+  public FormatTest _byte(String _byte) {
     this._byte = _byte;
     return this;
   }
@@ -222,16 +214,15 @@ public class FormatTest   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
-  public byte[] getByte() {
+@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")   public String getByte() {
     return _byte;
   }
 
-  public void setByte(byte[] _byte) {
+  public void setByte(String _byte) {
     this._byte = _byte;
   }
 
-  public FormatTest binary(byte[] binary) {
+  public FormatTest binary(String binary) {
     this.binary = binary;
     return this;
   }
@@ -242,12 +233,11 @@ public class FormatTest   {
   **/
   @ApiModelProperty(value = "")
 
-
-  public byte[] getBinary() {
+  public String getBinary() {
     return binary;
   }
 
-  public void setBinary(byte[] binary) {
+  public void setBinary(String binary) {
     this.binary = binary;
   }
 
@@ -264,7 +254,6 @@ public class FormatTest   {
   @NotNull
 
   @Valid
-
   public LocalDate getDate() {
     return date;
   }
@@ -285,7 +274,6 @@ public class FormatTest   {
   @ApiModelProperty(value = "")
 
   @Valid
-
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -306,7 +294,6 @@ public class FormatTest   {
   @ApiModelProperty(value = "")
 
   @Valid
-
   public UUID getUuid() {
     return uuid;
   }
@@ -327,7 +314,6 @@ public class FormatTest   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-@Size(min=10,max=64) 
   public String getPassword() {
     return password;
   }
@@ -399,4 +385,3 @@ public class FormatTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

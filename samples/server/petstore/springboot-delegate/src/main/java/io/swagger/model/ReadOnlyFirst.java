@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
  * ReadOnlyFirst
  */
 @Validated
-
 public class ReadOnlyFirst   {
   @JsonProperty("bar")
   private String bar = null;
@@ -31,7 +30,6 @@ public class ReadOnlyFirst   {
    * @return bar
   **/
   @ApiModelProperty(readOnly = true, value = "")
-
 
   public String getBar() {
     return bar;
@@ -51,7 +49,6 @@ public class ReadOnlyFirst   {
    * @return baz
   **/
   @ApiModelProperty(value = "")
-
 
   public String getBaz() {
     return baz;
@@ -102,4 +99,3 @@ public class ReadOnlyFirst   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
