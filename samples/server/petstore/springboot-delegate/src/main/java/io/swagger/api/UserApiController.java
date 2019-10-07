@@ -1,6 +1,5 @@
 package io.swagger.api;
 
-import java.util.List;
 import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import java.util.List;
-
+import java.util.Map;
 @Controller
 public class UserApiController implements UserApi {
 
@@ -56,8 +55,8 @@ public class UserApiController implements UserApi {
         return delegate.logoutUser();
     }
 
-    public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be deleted",required=true) @PathVariable("username") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body) {
-        return delegate.updateUser(username, body);
+    public ResponseEntity<Void> updateUser(@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body,@ApiParam(value = "name that need to be deleted",required=true) @PathVariable("username") String username) {
+        return delegate.updateUser(body, username);
     }
 
 }

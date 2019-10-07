@@ -14,7 +14,6 @@ import javax.validation.constraints.*;
  * NumberOnly
  */
 @Validated
-
 public class NumberOnly   {
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;
@@ -31,7 +30,6 @@ public class NumberOnly   {
   @ApiModelProperty(value = "")
 
   @Valid
-
   public BigDecimal getJustNumber() {
     return justNumber;
   }
@@ -79,4 +77,3 @@ public class NumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

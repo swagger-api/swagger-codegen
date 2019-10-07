@@ -14,7 +14,6 @@ import javax.validation.constraints.*;
  * OuterComposite
  */
 @Validated
-
 public class OuterComposite   {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;
@@ -37,7 +36,6 @@ public class OuterComposite   {
   @ApiModelProperty(value = "")
 
   @Valid
-
   public BigDecimal getMyNumber() {
     return myNumber;
   }
@@ -57,7 +55,6 @@ public class OuterComposite   {
   **/
   @ApiModelProperty(value = "")
 
-
   public String getMyString() {
     return myString;
   }
@@ -76,7 +73,6 @@ public class OuterComposite   {
    * @return myBoolean
   **/
   @ApiModelProperty(value = "")
-
 
   public Boolean getMyBoolean() {
     return myBoolean;
@@ -129,4 +125,3 @@ public class OuterComposite   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

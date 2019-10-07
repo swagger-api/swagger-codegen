@@ -12,22 +12,22 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * A delegate to be called by the {@link AnotherFakeApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-
 public interface AnotherFakeApiDelegate {
 
     Logger log = LoggerFactory.getLogger(AnotherFakeApi.class);
 
-    default Optional<ObjectMapper> getObjectMapper() {
+    default Optional<ObjectMapper> getObjectMapper(){
         return Optional.empty();
     }
 
-    default Optional<HttpServletRequest> getRequest() {
+    default Optional<HttpServletRequest> getRequest(){
         return Optional.empty();
     }
 
@@ -38,11 +38,11 @@ public interface AnotherFakeApiDelegate {
     /**
      * @see AnotherFakeApi#testSpecialTags
      */
-    default ResponseEntity<Client> testSpecialTags(Client body) {
+    default ResponseEntity<Client> testSpecialTags( Client  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"client\" : \"client\"}", Client.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{\n  \"client\" : \"client\"\n}", Client.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
