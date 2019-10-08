@@ -80,7 +80,7 @@ public interface StoreApi  {
      */
     @POST
     @Path("/store/order")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Place an order for a pet", tags={ "store" })
     @ApiResponses(value = { 

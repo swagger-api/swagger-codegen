@@ -74,8 +74,8 @@ public class MapTest   {
    * @return mapMapOfString
   **/
   @ApiModelProperty(value = "")
-  @Valid
-  public Map<String, Map<String, String>> getMapMapOfString() {
+      @Valid
+    public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
 
@@ -101,8 +101,8 @@ public class MapTest   {
    * @return mapOfEnumString
   **/
   @ApiModelProperty(value = "")
-
-  public Map<String, InnerEnum> getMapOfEnumString() {
+  
+    public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
 

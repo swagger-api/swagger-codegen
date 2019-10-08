@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,28 +21,24 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.threeten.bp.OffsetDateTime;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Order
  */
 
+
 public class Order {
-
   @JsonProperty("id")
-
   private Long id = null;
 
   @JsonProperty("petId")
-
   private Long petId = null;
 
   @JsonProperty("quantity")
-
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
-
   private OffsetDateTime shipDate = null;
+
   /**
    * Order Status
    */
@@ -74,123 +71,122 @@ public class Order {
       return null;
     }
 
-  }
-  @JsonProperty("status")
-
+  }  @JsonProperty("status")
   private StatusEnum status = null;
 
   @JsonProperty("complete")
-
   private Boolean complete = false;
+
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
-  
-
-  /**
-  * Get petId
-  * @return petId
+   /**
+   * Get petId
+   * @return petId
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Long getPetId() {
     return petId;
   }
+
   public void setPetId(Long petId) {
     this.petId = petId;
   }
+
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
-  
-
-  /**
-  * Get quantity
-  * @return quantity
+   /**
+   * Get quantity
+   * @return quantity
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
   }
+
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
+
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
-  
-
-  /**
-  * Get shipDate
-  * @return shipDate
+   /**
+   * Get shipDate
+   * @return shipDate
   **/
-    @Valid
-    @Schema(description = "")
+  @Valid
+  @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
+
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
+
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * Order Status
-  * @return status
+   /**
+   * Order Status
+   * @return status
   **/
-    @Schema(description = "Order Status")
+  @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
+
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
-  
-
-  /**
-  * Get complete
-  * @return complete
+   /**
+   * Get complete
+   * @return complete
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Boolean isComplete() {
     return complete;
   }
+
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -210,8 +206,9 @@ public class Order {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
+    return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
+
 
   @Override
   public String toString() {

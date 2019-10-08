@@ -76,7 +76,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "x-codegen-request-body-name" : "body"
       },
       "post" : {
         "tags" : [ "pet" ],
@@ -106,7 +107,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/pet/findByStatus" : {
@@ -126,8 +128,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "default" : "available",
-              "enum" : [ "available", "pending", "sold" ]
+              "enum" : [ "available", "pending", "sold" ],
+              "default" : "available"
             }
           }
         } ],
@@ -448,7 +450,8 @@
             "description" : "Invalid Order",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/store/order/{order_id}" : {
@@ -543,7 +546,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/user/createWithArray" : {
@@ -570,7 +574,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/user/createWithList" : {
@@ -597,7 +602,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/user/login" : {
@@ -748,7 +754,8 @@
             "description" : "User not found",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       },
       "delete" : {
         "tags" : [ "user" ],
@@ -806,7 +813,8 @@
         },
         "security" : [ {
           "api_key_query" : [ ]
-        } ]
+        } ],
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/fake" : {
@@ -825,8 +833,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "default" : "$",
-              "enum" : [ ">", "$" ]
+              "enum" : [ ">", "$" ],
+              "default" : "$"
             }
           }
         }, {
@@ -835,8 +843,8 @@
           "description" : "Header parameter enum test (string)",
           "schema" : {
             "type" : "string",
-            "default" : "-efg",
-            "enum" : [ "_abc", "-efg", "(xyz)" ]
+            "enum" : [ "_abc", "-efg", "(xyz)" ],
+            "default" : "-efg"
           }
         }, {
           "name" : "enum_query_string_array",
@@ -848,8 +856,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "default" : "$",
-              "enum" : [ ">", "$" ]
+              "enum" : [ ">", "$" ],
+              "default" : "$"
             }
           }
         }, {
@@ -858,8 +866,8 @@
           "description" : "Query parameter enum test (string)",
           "schema" : {
             "type" : "string",
-            "default" : "-efg",
-            "enum" : [ "_abc", "-efg", "(xyz)" ]
+            "enum" : [ "_abc", "-efg", "(xyz)" ],
+            "default" : "-efg"
           }
         }, {
           "name" : "enum_query_integer",
@@ -881,15 +889,15 @@
                     "description" : "Form parameter enum test (string array)",
                     "items" : {
                       "type" : "string",
-                      "default" : "$",
-                      "enum" : [ ">", "$" ]
+                      "enum" : [ ">", "$" ],
+                      "default" : "$"
                     }
                   },
                   "enum_form_string" : {
                     "type" : "string",
                     "description" : "Form parameter enum test (string)",
-                    "default" : "-efg",
-                    "enum" : [ "_abc", "-efg", "(xyz)" ]
+                    "enum" : [ "_abc", "-efg", "(xyz)" ],
+                    "default" : "-efg"
                   },
                   "enum_query_double" : {
                     "type" : "number",
@@ -1136,7 +1144,8 @@
               }
             }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/fake/outer/number" : {
@@ -1166,7 +1175,8 @@
               }
             }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/fake/outer/string" : {
@@ -1196,7 +1206,8 @@
               }
             }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/fake/outer/boolean" : {
@@ -1226,7 +1237,8 @@
               }
             }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/fake/outer/composite" : {
@@ -1256,7 +1268,8 @@
               }
             }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/fake/jsonFormData" : {
@@ -1316,7 +1329,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "param"
       }
     },
     "/another-fake/dummy" : {
@@ -1347,7 +1361,8 @@
               }
             }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     }
   },
@@ -1706,8 +1721,8 @@
       },
       "EnumClass" : {
         "type" : "string",
-        "default" : "-efg",
-        "enum" : [ "_abc", "-efg", "(xyz)" ]
+        "enum" : [ "_abc", "-efg", "(xyz)" ],
+        "default" : "-efg"
       },
       "Enum_Test" : {
         "type" : "object",

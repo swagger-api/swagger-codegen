@@ -1,39 +1,31 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import io.swagger.model.OneOfSinglePetResponsePet;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-/**
- * Client
- */
-@Validated
-public class Client   {
-  @JsonProperty("client")
-  private String client = null;
 
-  public Client client(String client) {
-    this.client = client;
+
+
+public class SinglePetResponse   {
+  @JsonProperty("pet")
+  private OneOfSinglePetResponsePet pet = null;
+  /**
+   **/
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
     return this;
   }
 
-  /**
-   * Get client
-   * @return client
-  **/
-  @ApiModelProperty(value = "")
-
-  public String getClient() {
-    return client;
+  
+  @Schema(description = "")
+  @JsonProperty("pet")
+  public OneOfSinglePetResponsePet getPet() {
+    return pet;
   }
-
-  public void setClient(String client) {
-    this.client = client;
+  public void setPet(OneOfSinglePetResponsePet pet) {
+    this.pet = pet;
   }
 
 
@@ -45,21 +37,20 @@ public class Client   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Client client = (Client) o;
-    return Objects.equals(this.client, client.client);
+    SinglePetResponse singlePetResponse = (SinglePetResponse) o;
+    return Objects.equals(pet, singlePetResponse.pet);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(client);
+    return Objects.hash(pet);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Client {\n");
-    
-    sb.append("    client: ").append(toIndentedString(client)).append("\n");
+    sb.append("class SinglePetResponse {\n");
+    sb.append("    pet: ").append(toIndentedString(pet)).append("\n");
     sb.append("}");
     return sb.toString();
   }

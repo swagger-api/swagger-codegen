@@ -13,40 +13,41 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Client
  */
 
+
 public class Client {
-
   @JsonProperty("client")
-
   private String client = null;
+
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-  
-
-  /**
-  * Get client
-  * @return client
+   /**
+   * Get client
+   * @return client
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getClient() {
     return client;
   }
+
   public void setClient(String client) {
     this.client = client;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -61,8 +62,9 @@ public class Client {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(client);
+    return Objects.hash(client);
   }
+
 
   @Override
   public String toString() {

@@ -27,8 +27,8 @@ public class SpecialModelName   {
    * @return $specialPropertyName
   **/
   @ApiModelProperty(value = "")
-
-  public Long get$SpecialPropertyName() {
+  
+    public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
 

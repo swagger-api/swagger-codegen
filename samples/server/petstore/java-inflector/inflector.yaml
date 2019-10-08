@@ -38,6 +38,7 @@ ModelReturn : io.swagger.model.ModelReturn
 Name : io.swagger.model.Name
 NumberOnly : io.swagger.model.NumberOnly
 OneOfAllPetsResponseItems : io.swagger.model.OneOfAllPetsResponseItems
+OneOfSinglePetResponsePet : io.swagger.model.OneOfSinglePetResponsePet
 Order : io.swagger.model.Order
 OuterComposite : io.swagger.model.OuterComposite
 OuterEnum : io.swagger.model.OuterEnum

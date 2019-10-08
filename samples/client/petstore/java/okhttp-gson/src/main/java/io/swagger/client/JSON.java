@@ -54,7 +54,6 @@ public class JSON {
             @Override
             public Class<? extends Animal> getClassForElement(JsonElement readElement) {
                 Map<String, Class<? extends Animal>> classByDiscriminatorValue = new HashMap<>();
-
                     classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
                     classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
                     classByDiscriminatorValue.put("Animal".toUpperCase(), Animal.class);
@@ -72,7 +71,6 @@ public class JSON {
               @Override
               public void postSerialize(JsonElement result, Animal src, Gson gson) {
                   Map<Class<? extends Animal>, String> discriminatorValueByClass = new HashMap<>();
-
                       discriminatorValueByClass.put(Cat.class, "Cat");
                       discriminatorValueByClass.put(Dog.class, "Dog");
                       discriminatorValueByClass.put(Animal.class, "Animal");

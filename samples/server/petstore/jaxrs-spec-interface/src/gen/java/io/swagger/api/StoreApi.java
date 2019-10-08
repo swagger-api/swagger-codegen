@@ -22,7 +22,7 @@ import javax.validation.Valid;
 
 @Path("/store")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-09-04T10:31:08.444-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-10-08T21:26:16.639+02:00[Europe/Rome]")
 public interface StoreApi {
 
     @DELETE

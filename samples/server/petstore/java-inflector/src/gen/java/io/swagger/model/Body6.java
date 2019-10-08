@@ -1,61 +1,51 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-/**
- * Tag
- */
-@Validated
-public class Tag   {
-  @JsonProperty("id")
-  private Long id = null;
 
+
+
+public class Body6   {
   @JsonProperty("name")
   private String name = null;
-
-  public Tag id(Long id) {
-    this.id = id;
-    return this;
-  }
-
+  @JsonProperty("status")
+  private String status = null;
   /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Tag name(String name) {
+   * Updated name of the animal
+   **/
+  public Body6 name(String name) {
     this.name = name;
     return this;
   }
 
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
-
+  
+  @Schema(description = "Updated name of the animal")
+  @JsonProperty("name")
   public String getName() {
     return name;
   }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  /**
+   * Updated status of the animal
+   **/
+  public Body6 status(String status) {
+    this.status = status;
+    return this;
+  }
+
+  
+  @Schema(description = "Updated status of the animal")
+  @JsonProperty("status")
+  public String getStatus() {
+    return status;
+  }
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
@@ -67,23 +57,22 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+    Body6 body6 = (Body6) o;
+    return Objects.equals(name, body6.name) &&
+        Objects.equals(status, body6.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(name, status);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class Body6 {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,16 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * ArrayOfArrayOfNumberOnly
  */
 
+
 public class ArrayOfArrayOfNumberOnly {
-
   @JsonProperty("ArrayArrayNumber")
-
   private List<List<BigDecimal>> arrayArrayNumber = null;
+
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
     return this;
@@ -45,18 +45,21 @@ public class ArrayOfArrayOfNumberOnly {
     return this;
   }
 
-  /**
-  * Get arrayArrayNumber
-  * @return arrayArrayNumber
+   /**
+   * Get arrayArrayNumber
+   * @return arrayArrayNumber
   **/
-    @Valid
-    @Schema(description = "")
+  @Valid
+  @Schema(description = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
+
   public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -71,8 +74,9 @@ public class ArrayOfArrayOfNumberOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayArrayNumber);
+    return Objects.hash(arrayArrayNumber);
   }
+
 
   @Override
   public String toString() {
