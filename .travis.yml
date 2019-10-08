@@ -1,7 +1,8 @@
 sudo: required
 language: java
+dist: trusty
 jdk:
-  - openjdk7
+  - openjdk8
 
 cache:
   directories:
