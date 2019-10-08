@@ -32,6 +32,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
+
 @Path("/store")
 
 
@@ -77,7 +78,8 @@ public class StoreApi  {
     @Path("/inventory")
     
     @Produces({ "application/json" })
-    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", tags={ "store" })
+    @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
+        @SecurityRequirement(name = "api_key")    }, tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Response getInventory(@Context SecurityContext securityContext)
@@ -95,7 +97,8 @@ public class StoreApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response getOrderById(@Parameter(description = "ID of pet that needs to be fetched",required=true) @PathParam("order_id") Integer orderId
+    public Response getOrderById(@Parameter(description = "ID of pet that needs to be fetched",required=true, schema=@Schema(allowableValues={  }, minimum="1", maximum="5")
+) @PathParam("order_id") Long orderId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getOrderById(orderId,securityContext);

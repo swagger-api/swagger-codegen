@@ -15,7 +15,9 @@ package io.swagger.client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import io.gsonfire.GsonFireBuilder;
+import io.gsonfire.PostProcessor;
 import io.gsonfire.TypeSelector;
 import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
@@ -52,7 +54,6 @@ public class JSON {
             @Override
             public Class<? extends Animal> getClassForElement(JsonElement readElement) {
                 Map<String, Class<? extends Animal>> classByDiscriminatorValue = new HashMap<>();
-
                     classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
                     classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
                     classByDiscriminatorValue.put("Animal".toUpperCase(), Animal.class);
@@ -60,6 +61,27 @@ public class JSON {
                             classByDiscriminatorValue,
                             getDiscriminatorValue(readElement, "className"));
             }
+          })
+          .registerPostProcessor(Animal.class, new PostProcessor<Animal>() {
+              @Override
+              public void postDeserialize(Animal result, JsonElement src, Gson gson) {
+
+              }
+
+              @Override
+              public void postSerialize(JsonElement result, Animal src, Gson gson) {
+                  Map<Class<? extends Animal>, String> discriminatorValueByClass = new HashMap<>();
+                      discriminatorValueByClass.put(Cat.class, "Cat");
+                      discriminatorValueByClass.put(Dog.class, "Dog");
+                      discriminatorValueByClass.put(Animal.class, "Animal");
+                  if(result instanceof JsonObject)
+                  {
+                      if(!((JsonObject) result).has("className"))
+                      {
+                          ((JsonObject) result).addProperty("className", discriminatorValueByClass.get(src.getClass()));
+                      }
+                  }
+              }
           })
         ;
         return fireBuilder.createGsonBuilder();

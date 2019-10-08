@@ -28,8 +28,8 @@ public class ModelReturn   {
    * @return _return
   **/
   @ApiModelProperty(value = "")
-
-  public Integer getReturn() {
+  
+    public Integer getReturn() {
     return _return;
   }
 

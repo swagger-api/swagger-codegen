@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,33 +24,37 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Cat
  */
 
-public class Cat extends Animal {
 
+public class Cat extends Animal implements Parcelable , OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("declawed")
   private Boolean declawed = null;
+
+  public Cat() {
+    super();
+  }
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
   }
 
-  
-
-  /**
-  * Get declawed
-  * @return declawed
+   /**
+   * Get declawed
+   * @return declawed
   **/
   @Schema(description = "")
   public Boolean isDeclawed() {
     return declawed;
   }
+
   public void setDeclawed(Boolean declawed) {
     this.declawed = declawed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,8 +70,9 @@ public class Cat extends Animal {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(declawed, super.hashCode());
+    return Objects.hash(declawed, super.hashCode());
   }
+
 
   @Override
   public String toString() {
@@ -89,19 +95,15 @@ public class Cat extends Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-     super.writeToParcel(out, flags); 
+    super.writeToParcel(out, flags);
     out.writeValue(declawed);
   }
 
-  public Cat() {
-    super();
-  }
-
   Cat(Parcel in) {
-     super(in); 
+    super(in);
     declawed = (Boolean)in.readValue(null);
-    
   }
 
   public int describeContents() {

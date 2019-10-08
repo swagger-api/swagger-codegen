@@ -30,6 +30,7 @@ ags="$@ generate --artifact-id "jaxrs-cxf-petstore-client" -i modules/swagger-co
 
 echo "Removing files and folders under samples/client/petstore/jaxrs-cxf-client/src/main"
 rm -rf samples/client/petstore/jaxrs-cxf-client/src/main
+rm -rf samples/client/petstore/jaxrs-cxf-client/src/gen
 find samples/client/petstore/jaxrs-cxf-client -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 
 java $JAVA_OPTS -jar $executable $ags

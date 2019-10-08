@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,33 +24,37 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Dog
  */
 
-public class Dog extends Animal {
 
+public class Dog extends Animal implements Parcelable , OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("breed")
   private String breed = null;
+
+  public Dog() {
+    super();
+  }
   public Dog breed(String breed) {
     this.breed = breed;
     return this;
   }
 
-  
-
-  /**
-  * Get breed
-  * @return breed
+   /**
+   * Get breed
+   * @return breed
   **/
   @Schema(description = "")
   public String getBreed() {
     return breed;
   }
+
   public void setBreed(String breed) {
     this.breed = breed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,8 +70,9 @@ public class Dog extends Animal {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(breed, super.hashCode());
+    return Objects.hash(breed, super.hashCode());
   }
+
 
   @Override
   public String toString() {
@@ -89,19 +95,15 @@ public class Dog extends Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-     super.writeToParcel(out, flags); 
+    super.writeToParcel(out, flags);
     out.writeValue(breed);
   }
 
-  public Dog() {
-    super();
-  }
-
   Dog(Parcel in) {
-     super(in); 
+    super(in);
     breed = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

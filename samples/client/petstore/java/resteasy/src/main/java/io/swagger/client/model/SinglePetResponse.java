@@ -17,6 +17,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * SinglePetResponse
@@ -25,9 +26,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class SinglePetResponse {
   @JsonProperty("pet")
-  private Object pet = null;
+  private OneOfSinglePetResponsePet pet = null;
 
-  public SinglePetResponse pet(Object pet) {
+  public SinglePetResponse pet(OneOfSinglePetResponsePet pet) {
     this.pet = pet;
     return this;
   }
@@ -37,11 +38,11 @@ public class SinglePetResponse {
    * @return pet
   **/
   @Schema(description = "")
-  public Object getPet() {
+  public OneOfSinglePetResponsePet getPet() {
     return pet;
   }
 
-  public void setPet(Object pet) {
+  public void setPet(OneOfSinglePetResponsePet pet) {
     this.pet = pet;
   }
 

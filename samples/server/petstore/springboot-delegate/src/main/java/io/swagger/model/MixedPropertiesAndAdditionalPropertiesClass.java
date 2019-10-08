@@ -40,9 +40,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return uuid
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-  public UUID getUuid() {
+  
+    @Valid
+    public UUID getUuid() {
     return uuid;
   }
 
@@ -60,9 +60,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return dateTime
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-  public OffsetDateTime getDateTime() {
+  
+    @Valid
+    public OffsetDateTime getDateTime() {
     return dateTime;
   }
 
@@ -88,8 +88,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    * @return map
   **/
   @ApiModelProperty(value = "")
-  @Valid
-  public Map<String, Animal> getMap() {
+      @Valid
+    public Map<String, Animal> getMap() {
     return map;
   }
 

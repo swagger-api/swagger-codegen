@@ -38,9 +38,9 @@ public class Animal   {
    * @return className
   **/
   @ApiModelProperty(required = true, value = "")
-  @NotNull
+      @NotNull
 
-  public String getClassName() {
+    public String getClassName() {
     return className;
   }
 
@@ -58,8 +58,8 @@ public class Animal   {
    * @return color
   **/
   @ApiModelProperty(value = "")
-
-  public String getColor() {
+  
+    public String getColor() {
     return color;
   }
 

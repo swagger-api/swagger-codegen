@@ -28,8 +28,8 @@ public class Dog extends Animal  {
    * @return breed
   **/
   @ApiModelProperty(value = "")
-
-  public String getBreed() {
+  
+    public String getBreed() {
     return breed;
   }
 

@@ -39,8 +39,8 @@ public class ArrayOfArrayOfNumberOnly   {
    * @return arrayArrayNumber
   **/
   @ApiModelProperty(value = "")
-  @Valid
-  public List<List<BigDecimal>> getArrayArrayNumber() {
+      @Valid
+    public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
 

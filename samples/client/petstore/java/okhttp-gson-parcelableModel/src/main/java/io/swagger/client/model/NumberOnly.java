@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,33 +24,36 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * NumberOnly
  */
 
-public class NumberOnly {
 
+public class NumberOnly implements Parcelable {
   @SerializedName("JustNumber")
   private BigDecimal justNumber = null;
+
+  public NumberOnly() {
+  }
   public NumberOnly justNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get justNumber
-  * @return justNumber
+   /**
+   * Get justNumber
+   * @return justNumber
   **/
   @Schema(description = "")
   public BigDecimal getJustNumber() {
     return justNumber;
   }
+
   public void setJustNumber(BigDecimal justNumber) {
     this.justNumber = justNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -64,8 +68,9 @@ public class NumberOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justNumber);
+    return Objects.hash(justNumber);
   }
+
 
   @Override
   public String toString() {
@@ -88,18 +93,12 @@ public class NumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(justNumber);
   }
 
-  public NumberOnly() {
-    super();
-  }
-
   NumberOnly(Parcel in) {
-    
-    
     justNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());
   }
 

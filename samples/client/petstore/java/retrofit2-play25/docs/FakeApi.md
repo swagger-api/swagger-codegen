@@ -329,10 +329,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**Object**](Object.md)|  | [optional]
  **enumHeaderStringArray** | [**List&lt;String&gt;**](String.md)| Header parameter enum test (string array) | [optional] [enum: >, $]
- **enumHeaderString** | [**String**](.md)| Header parameter enum test (string) | [optional]
+ **enumHeaderString** | **String**| Header parameter enum test (string) | [optional] [enum: _abc, -efg, (xyz)]
  **enumQueryStringArray** | [**List&lt;String&gt;**](String.md)| Query parameter enum test (string array) | [optional] [enum: >, $]
- **enumQueryString** | [**String**](.md)| Query parameter enum test (string) | [optional]
- **enumQueryInteger** | [**Integer**](.md)| Query parameter enum test (double) | [optional]
+ **enumQueryString** | **String**| Query parameter enum test (string) | [optional] [enum: _abc, -efg, (xyz)]
+ **enumQueryInteger** | **Integer**| Query parameter enum test (double) | [optional] [enum: 1, -2]
 
 ### Return type
 
