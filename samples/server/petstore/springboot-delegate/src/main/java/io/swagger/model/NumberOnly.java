@@ -28,9 +28,9 @@ public class NumberOnly   {
    * @return justNumber
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-  public BigDecimal getJustNumber() {
+  
+    @Valid
+    public BigDecimal getJustNumber() {
     return justNumber;
   }
 

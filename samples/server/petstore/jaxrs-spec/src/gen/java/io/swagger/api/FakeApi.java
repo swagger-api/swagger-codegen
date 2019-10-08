@@ -23,14 +23,14 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-10-08T21:26:13.815+02:00[Europe/Rome]")
 public class FakeApi {
 
     @POST
     @Path("/outer/boolean")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={  })
+    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class)))
     })
@@ -41,7 +41,7 @@ public class FakeApi {
     @Path("/outer/composite")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={  })
+    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class)))
     })
@@ -52,7 +52,7 @@ public class FakeApi {
     @Path("/outer/number")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of outer number types", tags={  })
+    @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class)))
     })
@@ -63,7 +63,7 @@ public class FakeApi {
     @Path("/outer/string")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of outer string types", tags={  })
+    @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class)))
     })
@@ -73,7 +73,7 @@ public class FakeApi {
     @PATCH
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={  })
+    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class)))
     })
@@ -83,7 +83,7 @@ public class FakeApi {
     @POST
     @Consumes({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
     @Operation(summary = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", description = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", security = {
-        @SecurityRequirement(name = "http_basic_test")    }, tags={  })
+        @SecurityRequirement(name = "http_basic_test")    }, tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")
@@ -93,7 +93,7 @@ public class FakeApi {
     }
     @GET
     @Consumes({ "*/*" })
-    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={  })
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found")
@@ -119,7 +119,7 @@ public class FakeApi {
     @POST
     @Path("/inline-additionalProperties")
     @Consumes({ "application/json" })
-    @Operation(summary = "test inline additionalProperties", description = "", tags={  })
+    @Operation(summary = "test inline additionalProperties", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
@@ -129,7 +129,7 @@ public class FakeApi {
     @GET
     @Path("/jsonFormData")
     @Consumes({ "application/json" })
-    @Operation(summary = "test json serialization of form data", description = "", tags={  })
+    @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })

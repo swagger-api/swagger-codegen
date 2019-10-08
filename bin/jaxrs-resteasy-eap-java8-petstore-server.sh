@@ -30,6 +30,7 @@ ags="$@ generate --artifact-id swagger-jaxrs-resteasy-eap-java8-server -i module
 
 echo "Removing files and folders under samples/server/petstore/jaxrs-resteasy/eap-java8/src/main"
 rm -rf samples/server/petstore/jaxrs-resteasy/eap-java8/src/main
+rm -rf samples/server/petstore/jaxrs-resteasy/eap-java8/src/gen
 find samples/server/petstore/jaxrs-resteasy/eap-java8 -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 
 java $JAVA_OPTS -jar $executable $ags

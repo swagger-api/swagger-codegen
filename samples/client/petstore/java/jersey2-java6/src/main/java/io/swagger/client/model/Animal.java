@@ -16,6 +16,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,7 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 })
 
 public class Animal {
-  @JsonProperty("className")
+  @JsonTypeId
   private String className = null;
 
   @JsonProperty("color")

@@ -31,6 +31,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
+
 @Path("/fake_classname_test")
 
 
@@ -62,7 +63,8 @@ public class FakeClassnameTestApi  {
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @Operation(summary = "To test class name in snake case", description = "", tags={ "fake_classname_tags 123#$%^" })
+    @Operation(summary = "To test class name in snake case", description = "", security = {
+        @SecurityRequirement(name = "api_key_query")    }, tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
     public Response testClassname(@Parameter(description = "client model" ,required=true) Client body

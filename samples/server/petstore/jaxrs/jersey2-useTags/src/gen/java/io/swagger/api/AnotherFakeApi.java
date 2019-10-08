@@ -31,7 +31,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/AnotherFake")
+@Path("/another-fake/dummy")
+
 
 
 public class AnotherFakeApi  {

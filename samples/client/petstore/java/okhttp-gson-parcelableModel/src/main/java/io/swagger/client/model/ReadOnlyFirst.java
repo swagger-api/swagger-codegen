@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,44 +23,48 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * ReadOnlyFirst
  */
 
-public class ReadOnlyFirst {
 
+public class ReadOnlyFirst implements Parcelable {
   @SerializedName("bar")
   private String bar = null;
 
   @SerializedName("baz")
   private String baz = null;
-  /**
-  * Get bar
-  * @return bar
+
+  public ReadOnlyFirst() {
+  }
+   /**
+   * Get bar
+   * @return bar
   **/
   @Schema(description = "")
   public String getBar() {
     return bar;
   }
+
   public ReadOnlyFirst baz(String baz) {
     this.baz = baz;
     return this;
   }
 
-  
-
-  /**
-  * Get baz
-  * @return baz
+   /**
+   * Get baz
+   * @return baz
   **/
   @Schema(description = "")
   public String getBaz() {
     return baz;
   }
+
   public void setBaz(String baz) {
     this.baz = baz;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -75,8 +80,9 @@ public class ReadOnlyFirst {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(bar, baz);
+    return Objects.hash(bar, baz);
   }
+
 
   @Override
   public String toString() {
@@ -100,22 +106,15 @@ public class ReadOnlyFirst {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(bar);
     out.writeValue(baz);
   }
 
-  public ReadOnlyFirst() {
-    super();
-  }
-
   ReadOnlyFirst(Parcel in) {
-    
     bar = (String)in.readValue(null);
-    
     baz = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

@@ -14,7 +14,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Pet  implements Serializable {
+public class Pet  implements Serializable  {
   private @Valid Long id = null;
   private @Valid Category category = null;
   private @Valid String name = null;

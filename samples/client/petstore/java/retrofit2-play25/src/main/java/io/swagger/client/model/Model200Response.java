@@ -13,62 +13,62 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Model for testing model name starting with number
  */
 @Schema(description = "Model for testing model name starting with number")
+
 public class Model200Response {
-
   @JsonProperty("name")
-
   private Integer name = null;
 
   @JsonProperty("class")
-
   private String propertyClass = null;
+
   public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Integer getName() {
     return name;
   }
+
   public void setName(Integer name) {
     this.name = name;
   }
+
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-  
-
-  /**
-  * Get propertyClass
-  * @return propertyClass
+   /**
+   * Get propertyClass
+   * @return propertyClass
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
+
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -84,8 +84,9 @@ public class Model200Response {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(name, propertyClass);
+    return Objects.hash(name, propertyClass);
   }
+
 
   @Override
   public String toString() {

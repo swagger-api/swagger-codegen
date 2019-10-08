@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,54 +23,57 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Body5
  */
 
-public class Body5 {
 
+public class Body5 implements Parcelable {
   @SerializedName("param")
   private String param = null;
 
   @SerializedName("param2")
   private String param2 = null;
+
+  public Body5() {
+  }
   public Body5 param(String param) {
     this.param = param;
     return this;
   }
 
-  
-
-  /**
-  * field1
-  * @return param
+   /**
+   * field1
+   * @return param
   **/
   @Schema(required = true, description = "field1")
   public String getParam() {
     return param;
   }
+
   public void setParam(String param) {
     this.param = param;
   }
+
   public Body5 param2(String param2) {
     this.param2 = param2;
     return this;
   }
 
-  
-
-  /**
-  * field2
-  * @return param2
+   /**
+   * field2
+   * @return param2
   **/
   @Schema(required = true, description = "field2")
   public String getParam2() {
     return param2;
   }
+
   public void setParam2(String param2) {
     this.param2 = param2;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -85,8 +89,9 @@ public class Body5 {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(param, param2);
+    return Objects.hash(param, param2);
   }
+
 
   @Override
   public String toString() {
@@ -110,22 +115,15 @@ public class Body5 {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(param);
     out.writeValue(param2);
   }
 
-  public Body5() {
-    super();
-  }
-
   Body5(Parcel in) {
-    
     param = (String)in.readValue(null);
-    
     param2 = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

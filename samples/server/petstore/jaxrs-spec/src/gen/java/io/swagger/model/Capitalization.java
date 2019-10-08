@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Capitalization  implements Serializable {
+public class Capitalization  implements Serializable  {
   private @Valid String smallCamel = null;
   private @Valid String capitalCamel = null;
   private @Valid String smallSnake = null;
