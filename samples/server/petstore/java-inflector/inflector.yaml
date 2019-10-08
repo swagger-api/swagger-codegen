@@ -5,6 +5,7 @@ modelMappings:
   # to enable explicit mappings, use this syntax:
   DefinitionFromSwaggerSpecification: fully.qualified.path.to.Model
   AdditionalPropertiesClass : io.swagger.model.AdditionalPropertiesClass
+AllPetsResponse : io.swagger.model.AllPetsResponse
 Animal : io.swagger.model.Animal
 AnimalFarm : io.swagger.model.AnimalFarm
 ArrayOfArrayOfNumberOnly : io.swagger.model.ArrayOfArrayOfNumberOnly
@@ -16,6 +17,8 @@ Body2 : io.swagger.model.Body2
 Body3 : io.swagger.model.Body3
 Body4 : io.swagger.model.Body4
 Body5 : io.swagger.model.Body5
+Body6 : io.swagger.model.Body6
+Body7 : io.swagger.model.Body7
 Capitalization : io.swagger.model.Capitalization
 Cat : io.swagger.model.Cat
 Category : io.swagger.model.Category
@@ -34,11 +37,14 @@ ModelApiResponse : io.swagger.model.ModelApiResponse
 ModelReturn : io.swagger.model.ModelReturn
 Name : io.swagger.model.Name
 NumberOnly : io.swagger.model.NumberOnly
+OneOfAllPetsResponseItems : io.swagger.model.OneOfAllPetsResponseItems
+OneOfSinglePetResponsePet : io.swagger.model.OneOfSinglePetResponsePet
 Order : io.swagger.model.Order
 OuterComposite : io.swagger.model.OuterComposite
 OuterEnum : io.swagger.model.OuterEnum
 Pet : io.swagger.model.Pet
 ReadOnlyFirst : io.swagger.model.ReadOnlyFirst
+SinglePetResponse : io.swagger.model.SinglePetResponse
 SpecialModelName : io.swagger.model.SpecialModelName
 Tag : io.swagger.model.Tag
 User : io.swagger.model.User

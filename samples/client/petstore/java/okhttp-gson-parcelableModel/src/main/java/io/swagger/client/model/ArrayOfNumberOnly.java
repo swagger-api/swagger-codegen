@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -25,15 +26,17 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * ArrayOfNumberOnly
  */
 
-public class ArrayOfNumberOnly {
 
+public class ArrayOfNumberOnly implements Parcelable {
   @SerializedName("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
+
+  public ArrayOfNumberOnly() {
+  }
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
@@ -47,17 +50,20 @@ public class ArrayOfNumberOnly {
     return this;
   }
 
-  /**
-  * Get arrayNumber
-  * @return arrayNumber
+   /**
+   * Get arrayNumber
+   * @return arrayNumber
   **/
   @Schema(description = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
+
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -72,8 +78,9 @@ public class ArrayOfNumberOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayNumber);
+    return Objects.hash(arrayNumber);
   }
+
 
   @Override
   public String toString() {
@@ -96,18 +103,12 @@ public class ArrayOfNumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(arrayNumber);
   }
 
-  public ArrayOfNumberOnly() {
-    super();
-  }
-
   ArrayOfNumberOnly(Parcel in) {
-    
-    
     arrayNumber = (List<BigDecimal>)in.readValue(BigDecimal.class.getClassLoader());
   }
 

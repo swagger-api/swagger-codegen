@@ -1,12 +1,15 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+
 /**
  * Model for testing model name starting with number
- **/@Schema(description = "Model for testing model name starting with number")
+ **/
+@Schema(description = "Model for testing model name starting with number")
+
 public class Model200Response   {
   @JsonProperty("name")
   private Integer name = null;

@@ -29,7 +29,7 @@ public interface UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/user",
-        consumes = { "*/*" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User body);
 
@@ -38,7 +38,7 @@ public interface UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/user/createWithArray",
-        consumes = { "*/*" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true )  @Valid @RequestBody List<User> body);
 
@@ -47,7 +47,7 @@ public interface UserApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/user/createWithList",
-        consumes = { "*/*" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true )  @Valid @RequestBody List<User> body);
 

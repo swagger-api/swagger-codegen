@@ -24,7 +24,7 @@ public class Cat extends Animal  {
   @ApiModelProperty(value = "")
   @JsonProperty("declawed")
 
-  public Boolean isisDeclawed() {
+  public Boolean isDeclawed() {
     return declawed;
   }
   public void setDeclawed(Boolean declawed) {

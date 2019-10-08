@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class OuterString  implements Serializable {
+public class OuterString  implements Serializable  {
 
 
   @Override

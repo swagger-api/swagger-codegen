@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,13 +23,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * User
  */
 
-public class User {
 
+public class User implements Parcelable {
   @SerializedName("id")
   private Long id = null;
 
@@ -52,150 +52,154 @@ public class User {
 
   @SerializedName("userStatus")
   private Integer userStatus = null;
+
+  public User() {
+  }
   public User id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
   @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public User username(String username) {
     this.username = username;
     return this;
   }
 
-  
-
-  /**
-  * Get username
-  * @return username
+   /**
+   * Get username
+   * @return username
   **/
   @Schema(description = "")
   public String getUsername() {
     return username;
   }
+
   public void setUsername(String username) {
     this.username = username;
   }
+
   public User firstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
 
-  
-
-  /**
-  * Get firstName
-  * @return firstName
+   /**
+   * Get firstName
+   * @return firstName
   **/
   @Schema(description = "")
   public String getFirstName() {
     return firstName;
   }
+
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
+
   public User lastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
 
-  
-
-  /**
-  * Get lastName
-  * @return lastName
+   /**
+   * Get lastName
+   * @return lastName
   **/
   @Schema(description = "")
   public String getLastName() {
     return lastName;
   }
+
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
+
   public User email(String email) {
     this.email = email;
     return this;
   }
 
-  
-
-  /**
-  * Get email
-  * @return email
+   /**
+   * Get email
+   * @return email
   **/
   @Schema(description = "")
   public String getEmail() {
     return email;
   }
+
   public void setEmail(String email) {
     this.email = email;
   }
+
   public User password(String password) {
     this.password = password;
     return this;
   }
 
-  
-
-  /**
-  * Get password
-  * @return password
+   /**
+   * Get password
+   * @return password
   **/
   @Schema(description = "")
   public String getPassword() {
     return password;
   }
+
   public void setPassword(String password) {
     this.password = password;
   }
+
   public User phone(String phone) {
     this.phone = phone;
     return this;
   }
 
-  
-
-  /**
-  * Get phone
-  * @return phone
+   /**
+   * Get phone
+   * @return phone
   **/
   @Schema(description = "")
   public String getPhone() {
     return phone;
   }
+
   public void setPhone(String phone) {
     this.phone = phone;
   }
+
   public User userStatus(Integer userStatus) {
     this.userStatus = userStatus;
     return this;
   }
 
-  
-
-  /**
-  * User Status
-  * @return userStatus
+   /**
+   * User Status
+   * @return userStatus
   **/
   @Schema(description = "User Status")
   public Integer getUserStatus() {
     return userStatus;
   }
+
   public void setUserStatus(Integer userStatus) {
     this.userStatus = userStatus;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -217,8 +221,9 @@ public class User {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
+    return Objects.hash(id, username, firstName, lastName, email, password, phone, userStatus);
   }
+
 
   @Override
   public String toString() {
@@ -248,8 +253,8 @@ public class User {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(id);
     out.writeValue(username);
     out.writeValue(firstName);
@@ -260,28 +265,15 @@ public class User {
     out.writeValue(userStatus);
   }
 
-  public User() {
-    super();
-  }
-
   User(Parcel in) {
-    
     id = (Long)in.readValue(null);
-    
     username = (String)in.readValue(null);
-    
     firstName = (String)in.readValue(null);
-    
     lastName = (String)in.readValue(null);
-    
     email = (String)in.readValue(null);
-    
     password = (String)in.readValue(null);
-    
     phone = (String)in.readValue(null);
-    
     userStatus = (Integer)in.readValue(null);
-    
   }
 
   public int describeContents() {

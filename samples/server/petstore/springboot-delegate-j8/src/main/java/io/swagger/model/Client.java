@@ -27,8 +27,8 @@ public class Client   {
    * @return client
   **/
   @ApiModelProperty(value = "")
-
-  public String getClient() {
+  
+    public String getClient() {
     return client;
   }
 

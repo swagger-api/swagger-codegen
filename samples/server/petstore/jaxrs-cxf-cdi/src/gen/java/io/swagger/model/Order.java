@@ -155,7 +155,7 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("complete")
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {

@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class OuterNumber  implements Serializable {
+public class OuterNumber  implements Serializable  {
 
 
   @Override

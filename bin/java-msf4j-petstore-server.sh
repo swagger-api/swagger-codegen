@@ -30,5 +30,6 @@ ags="$@ generate -t modules/swagger-codegen/src/main/resources/MSF4J -i modules/
 
 echo "Removing files and folders under samples/server/petstore/java-msf4j/src/main"
 rm -rf samples/server/petstore/java-msf4j/src/main
+rm -rf samples/server/petstore/java-msf4j/src/gen
 find samples/server/petstore/java-msf4j -maxdepth 1 -type f ! -name "README.md" ! -name "pom.xml" ! -name "mvn_test_jdk8_only.sh" ! -name ".swagger-codegen-ignore" -exec rm {} +
 # java $JAVA_OPTS -jar $executable $ags

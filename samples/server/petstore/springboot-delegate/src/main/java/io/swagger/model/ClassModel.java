@@ -28,8 +28,8 @@ public class ClassModel   {
    * @return propertyClass
   **/
   @ApiModelProperty(value = "")
-
-  public String getPropertyClass() {
+  
+    public String getPropertyClass() {
     return propertyClass;
   }
 

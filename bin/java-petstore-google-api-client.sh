@@ -30,6 +30,7 @@ ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore-with
 
 echo "Removing files and folders under samples/client/petstore/java/google-api-client/src/main"
 rm -rf samples/client/petstore/java/google-api-client/src/main
+rm -rf samples/client/petstore/java/google-api-client/src/gen
 find samples/client/petstore/java/google-api-client -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 # TODO: uncomment the java commmand when the issue with this script is fixed, see https://github.com/swagger-api/swagger-codegen-generators/issues/52
 java $JAVA_OPTS -jar $executable $ags
