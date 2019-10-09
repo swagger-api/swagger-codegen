@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.4.8-SNAPSHOT</version>
+    <version>2.4.9-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -914,14 +914,14 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.46-SNAPSHOT</swagger-parser-version>
+        <swagger-parser-version>1.0.46</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.5.23-SNAPSHOT</swagger-core-version>
+        <swagger-core-version>1.5.23</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
         <junit-version>4.8.1</junit-version>
-        <jackson-version>2.9.9</jackson-version>
+        <jackson-version>2.9.10</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.12</slf4j-version>

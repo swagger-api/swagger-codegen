@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**fakeOuterNumberSerialize**](FakeApi.md#fakeOuterNumberSerialize) | **POST** /fake/outer/number | 
 [**fakeOuterStringSerialize**](FakeApi.md#fakeOuterStringSerialize) | **POST** /fake/outer/string | 
 [**testBodyWithQueryParams**](FakeApi.md#testBodyWithQueryParams) | **PUT** /fake/body-with-query-params | 
-[**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
+[**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \"client\" model
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**testEnumParameters**](FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
 [**testInlineAdditionalProperties**](FakeApi.md#testInlineAdditionalProperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
@@ -26,7 +26,7 @@ Test serialization of outer boolean types
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -72,7 +72,7 @@ Test serialization of object with outer number type
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -118,7 +118,7 @@ Test serialization of outer number types
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -164,7 +164,7 @@ Test serialization of outer string types
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -208,7 +208,7 @@ No authorization required
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -250,13 +250,13 @@ No authorization required
 # **testClientModel**
 > Client testClientModel(body)
 
-To test \&quot;client\&quot; model
+To test \"client\" model
 
-To test \&quot;client\&quot; model
+To test \"client\" model
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -301,7 +301,7 @@ Fake endpoint for testing various parameters 假端點 偽のエンドポイン�
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure HTTP basic authorization: http_basic_test
@@ -317,7 +317,7 @@ let _double = 1.2; // Number | None
 
 let patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
 
-let _byte = B; // Blob | None
+let _byte = "QmFzZTY0IGV4YW1wbGU="; // Blob | None
 
 let opts = { 
   'integer': 56, // Number | None
@@ -325,7 +325,7 @@ let opts = {
   'int64': 789, // Number | None
   '_float': 3.4, // Number | None
   '_string': "_string_example", // String | None
-  'binary': B, // Blob | None
+  'binary': "QmFzZTY0IGV4YW1wbGU=", // Blob | None
   '_date': new Date("2013-10-20"), // Date | None
   'dateTime': new Date("2013-10-20T19:20:30+01:00"), // Date | None
   'password': "password_example", // String | None
@@ -383,7 +383,7 @@ To test enum parameters
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -443,7 +443,7 @@ test inline additionalProperties
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
@@ -488,7 +488,7 @@ test json serialization of form data
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.FakeApi();
 
