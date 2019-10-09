@@ -8,9 +8,11 @@ JAVA_OPTS=${JAVA_OPTS:-"-Xmx1024M -Dlogback.configurationFile=conf/logback.xml"}
 
 cli="${GEN_DIR}/modules/swagger-codegen-cli"
 codegen="${cli}/target/swagger-codegen-cli.jar"
-cmdsrc="${cli}/src/main/java/io/swagger/codegen/cmd"
+cmdsrc="${cli}/src/main/java/io/swagger/codegen/v3/cli/cmd"
 
-pattern="${1^} implements Runnable"
+command=$(echo $1 | sed -r 's/(\<|-)([[:alnum:]])/\U\2/g')
+pattern="$command implements Runnable"
+
 if expr "x$1" : 'x[a-z][a-z-]*$' > /dev/null && fgrep -qe "$pattern" "$cmdsrc"/*.java || expr "$1" = 'help' > /dev/null; then
     # If ${GEN_DIR} has been mapped elsewhere from default, and that location has not been built
     if [[ ! -f "${codegen}" ]]; then
