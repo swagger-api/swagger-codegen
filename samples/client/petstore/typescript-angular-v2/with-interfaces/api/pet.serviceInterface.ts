@@ -13,7 +13,6 @@ import { Headers }                                           from '@angular/http
 
 import { Observable }                                        from 'rxjs/Observable';
 
-
 import { ApiResponse } from '../model/apiResponse';
 import { Pet } from '../model/pet';
 

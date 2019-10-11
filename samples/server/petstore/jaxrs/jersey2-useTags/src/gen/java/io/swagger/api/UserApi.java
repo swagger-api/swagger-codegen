@@ -116,7 +116,7 @@ public class UserApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = Void.class) })
-    public Response getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username
+    public Response getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing.",required=true) @PathParam("username") String username
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getUserByName(username,securityContext);

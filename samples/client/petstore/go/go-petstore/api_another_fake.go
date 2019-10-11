@@ -11,11 +11,11 @@
 package petstore
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"context"
 )
 
 // Linger please
@@ -99,11 +99,6 @@ func (a *AnotherFakeApiService) TestSpecialTags(ctx context.Context, body Client
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-			if err != nil {
-				return localVarReturnValue, localVarHttpResponse, err
-			}
-
 			var v Client
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {

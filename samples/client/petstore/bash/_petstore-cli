@@ -300,6 +300,7 @@ case $state in
             "fakeOuterCompositeSerialize[]" \
             "fakeOuterNumberSerialize[]" \
             "fakeOuterStringSerialize[]" \
+            "testBodyWithQueryParams[]" \
             "testClientModel[To test \"client\" model]" \
             "testEndpointParameters[Fake endpoint for testing various parameters
 假端點
@@ -359,6 +360,13 @@ case $state in
         local -a _op_arguments
         _op_arguments=(
                               )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      testBodyWithQueryParams)
+        local -a _op_arguments
+        _op_arguments=(
+                    "query=:[QUERY] "
+          )
         _describe -t actions 'operations' _op_arguments -S '' && ret=0
         ;;
       testClientModel)

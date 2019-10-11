@@ -79,6 +79,26 @@ export class RequiredError extends Error {
 }
 
 /**
+ * some description 
+ * @export
+ * @interface Amount
+ */
+export interface Amount {
+    /**
+     * some description 
+     * @type {number}
+     * @memberof Amount
+     */
+    value: number;
+    /**
+     * 
+     * @type {Currency}
+     * @memberof Amount
+     */
+    currency: Currency;
+}
+
+/**
  * Describes the result of uploading an image resource
  * @export
  * @interface ApiResponse
@@ -122,6 +142,14 @@ export interface Category {
      * @memberof Category
      */
     name?: string;
+}
+
+/**
+ * some description 
+ * @export
+ * @interface Currency
+ */
+export interface Currency {
 }
 
 /**

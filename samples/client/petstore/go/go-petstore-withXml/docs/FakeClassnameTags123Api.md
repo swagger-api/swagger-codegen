@@ -17,7 +17,7 @@ To test class name in snake case
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **body** | [**Client**](Client.md)| client model | 
 
 ### Return type

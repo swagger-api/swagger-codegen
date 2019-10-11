@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
@@ -365,7 +366,51 @@ public class CodegenTest {
         Assert.assertEquals(child.parent, "ChildOfComposedParent");
     }
 
+    @Test(description = "use relative $ref for definitions of parameters")
+    public void relativeDefinitionsInParameterTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/getPhotos";
+        final Operation p = model.getPaths().get(path).getPost();
+        CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions(), model);
 
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("PhotosRequest"));
+
+    }
+
+    @Test(description = "use relative $ref for definitions of response")
+    public void relativeDefinitionsInResponseTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/{id}";
+        final Operation p = model.getPaths().get(path).getGet();
+        CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("integer"));
+
+    }
+
+    @Test(description = "use relative $ref for definitions of response")
+    public void relativeDefinitionsMapInResponseTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/thumbnails";
+        final Operation p = model.getPaths().get(path).getPost();
+        CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("PhotoThumbnailsRequest"));
+
+    }
+    
     @Test(description = "use operation consumes and produces")
     public void localConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -430,5 +475,26 @@ public class CodegenTest {
         final CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions());
 
         Assert.assertTrue(op.isDeprecated);
+    }
+
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/7980")
+    public void testPattern() throws Exception {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/petstore.yaml");
+        ModelImpl currency = (ModelImpl) swagger.getDefinitions().get("Currency");
+        Assert.assertNotNull(currency);
+        Assert.assertEquals(currency.getPattern(), "^[A-Z]{3,3}$");
+
+        ModelImpl amount = (ModelImpl) swagger.getDefinitions().get("Amount");
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("Amount", amount, swagger.getDefinitions());
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            if ("currency".equalsIgnoreCase(codegenProperty.name)) {
+                Assert.assertEquals(codegenProperty.pattern, "^[A-Z]{3,3}$");
+                break;
+            }
+        }
+
     }
 }

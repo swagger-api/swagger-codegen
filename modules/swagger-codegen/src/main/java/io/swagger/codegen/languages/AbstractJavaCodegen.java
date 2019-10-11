@@ -54,6 +54,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String SUPPORT_ASYNC = "supportAsync";
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
+    public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -86,6 +87,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
+    protected boolean disableHtmlEscaping = false;
 
     public AbstractJavaCodegen() {
         super();
@@ -96,8 +98,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        hideGenerationTimestamp = false; 
-        
+        hideGenerationTimestamp = false;
+
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
@@ -165,6 +167,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+) - note: this also sets \"" + JAVA8_MODE + "\" to true");
         dateOptions.put("threetenbp", "Backport of JSR310 (preferred for jdk < 1.8)");
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
+        dateOptions.put("java8-instant", "Java 8 using Instant");
         dateOptions.put("joda", "Joda (for legacy app only)");
         dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp");
         dateLibrary.setEnum(dateOptions);
@@ -176,6 +179,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         java8ModeOptions.put("false", "Various third party libraries as needed");
         java8Mode.setEnum(java8ModeOptions);
         cliOptions.add(java8Mode);
+
+        cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
     }
 
     @Override
@@ -187,6 +192,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
         additionalProperties.put(SUPPORT_JAVA6, supportJava6);
 
+        if (additionalProperties.containsKey(DISABLE_HTML_ESCAPING)) {
+            this.setDisableHtmlEscaping(Boolean.valueOf(additionalProperties.get(DISABLE_HTML_ESCAPING).toString()));
+        }
+        additionalProperties.put(DISABLE_HTML_ESCAPING, disableHtmlEscaping);
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
@@ -394,7 +403,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
             if ( java8Mode ) {
-                additionalProperties.put("java8", "true");
+                additionalProperties.put("java8", true);
             }
         }
 
@@ -417,32 +426,38 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         if ("threetenbp".equals(dateLibrary)) {
-            additionalProperties.put("threetenbp", "true");
+            additionalProperties.put("threetenbp", true);
             additionalProperties.put("jsr310", "true");
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "OffsetDateTime");
             importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
             importMapping.put("OffsetDateTime", "org.threeten.bp.OffsetDateTime");
         } else if ("joda".equals(dateLibrary)) {
-            additionalProperties.put("joda", "true");
+            additionalProperties.put("joda", true);
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
             importMapping.put("LocalDate", "org.joda.time.LocalDate");
             importMapping.put("DateTime", "org.joda.time.DateTime");
         } else if (dateLibrary.startsWith("java8")) {
-            additionalProperties.put("java8", "true");
+            additionalProperties.put("java8", true);
             additionalProperties.put("jsr310", "true");
-            typeMapping.put("date", "LocalDate");
-            importMapping.put("LocalDate", "java.time.LocalDate");
             if ("java8-localdatetime".equals(dateLibrary)) {
+                typeMapping.put("date", "LocalDate");
                 typeMapping.put("DateTime", "LocalDateTime");
+                importMapping.put("LocalDate", "java.time.LocalDate");
                 importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+            } else if ("java8-instant".equals(dateLibrary)) {
+                typeMapping.put("date", "Instant");
+                typeMapping.put("DateTime", "Instant");
+                importMapping.put("Instant", "java.time.Instant");
             } else {
+                typeMapping.put("date", "LocalDate");
                 typeMapping.put("DateTime", "OffsetDateTime");
+                importMapping.put("LocalDate", "java.time.LocalDate");
                 importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
             }
         } else if (dateLibrary.equals("legacy")) {
-            additionalProperties.put("legacyDates", "true");
+            additionalProperties.put("legacyDates", true);
         }
     }
 
@@ -771,6 +786,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             if (example == null) {
                 example = p.paramName + "_example";
             }
+            p.testExample = example;
             example = "\"" + escapeText(example) + "\"";
         } else if ("Integer".equals(type) || "Short".equals(type)) {
             if (example == null) {
@@ -780,15 +796,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             if (example == null) {
                 example = "56";
             }
+            p.testExample = example;
             example = example + "L";
         } else if ("Float".equals(type)) {
             if (example == null) {
                 example = "3.4";
             }
+            p.testExample = example;
             example = example + "F";
         } else if ("Double".equals(type)) {
             example = "3.4";
             example = example + "D";
+            p.testExample = example;
         } else if ("Boolean".equals(type)) {
             if (example == null) {
                 example = "true";
@@ -800,9 +819,17 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             example = "new File(\"" + escapeText(example) + "\")";
         } else if ("Date".equals(type)) {
             example = "new Date()";
+        } else if ("LocalDate".equals(type)) {
+            example = "LocalDate.now()";
+        } else if ("OffsetDateTime".equals(type)) {
+            example = "OffsetDateTime.now()";
         } else if (!languageSpecificPrimitives.contains(type)) {
             // type is a model class, e.g. User
             example = "new " + type + "()";
+        }
+
+        if (p.testExample == null) {
+            p.testExample = example;
         }
 
         if (example == null) {
@@ -1236,6 +1263,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setJava8Mode(boolean enabled) {
         this.java8Mode = enabled;
+    }
+
+    public void setDisableHtmlEscaping(boolean disabled) {
+        this.disableHtmlEscaping = disabled;
     }
 
     public void setSupportAsync(boolean enabled) {

@@ -122,6 +122,28 @@ var ObjectSerializer = (function () {
     };
     return ObjectSerializer;
 }());
+var Amount = (function () {
+    function Amount() {
+    }
+    Amount.getAttributeTypeMap = function () {
+        return Amount.attributeTypeMap;
+    };
+    Amount.discriminator = undefined;
+    Amount.attributeTypeMap = [
+        {
+            "name": "value",
+            "baseName": "value",
+            "type": "number"
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency"
+        }
+    ];
+    return Amount;
+}());
+exports.Amount = Amount;
 var ApiResponse = (function () {
     function ApiResponse() {
     }
@@ -171,6 +193,17 @@ var Category = (function () {
     return Category;
 }());
 exports.Category = Category;
+var Currency = (function () {
+    function Currency() {
+    }
+    Currency.getAttributeTypeMap = function () {
+        return Currency.attributeTypeMap;
+    };
+    Currency.discriminator = undefined;
+    Currency.attributeTypeMap = [];
+    return Currency;
+}());
+exports.Currency = Currency;
 var Order = (function () {
     function Order() {
     }
@@ -352,8 +385,10 @@ var enumsMap = {
     "Pet.StatusEnum": Pet.StatusEnum,
 };
 var typeMap = {
+    "Amount": Amount,
     "ApiResponse": ApiResponse,
     "Category": Category,
+    "Currency": Currency,
     "Order": Order,
     "Pet": Pet,
     "Tag": Tag,

@@ -4,11 +4,26 @@
 import localVarRequest = require('request');
 import http = require('http');
 import Promise = require('bluebird');
+export declare class Amount {
+    'value': number;
+    'currency': Currency;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
 export declare class ApiResponse {
     'code'?: number;
     'type'?: string;
     'message'?: string;
-    static discriminator: undefined;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -23,7 +38,20 @@ export declare class ApiResponse {
 export declare class Category {
     'id'?: number;
     'name'?: string;
-    static discriminator: undefined;
+    static discriminator: string | undefined;
+    static attributeTypeMap: Array<{
+        name: string;
+        baseName: string;
+        type: string;
+    }>;
+    static getAttributeTypeMap(): {
+        name: string;
+        baseName: string;
+        type: string;
+    }[];
+}
+export declare class Currency {
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -42,7 +70,7 @@ export declare class Order {
     'shipDate'?: Date;
     'status'?: Order.StatusEnum;
     'complete'?: boolean;
-    static discriminator: undefined;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -68,7 +96,7 @@ export declare class Pet {
     'photoUrls': Array<string>;
     'tags'?: Array<Tag>;
     'status'?: Pet.StatusEnum;
-    static discriminator: undefined;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -90,7 +118,7 @@ export declare namespace Pet {
 export declare class Tag {
     'id'?: number;
     'name'?: string;
-    static discriminator: undefined;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
@@ -111,7 +139,7 @@ export declare class User {
     'password'?: string;
     'phone'?: string;
     'userStatus'?: number;
-    static discriminator: undefined;
+    static discriminator: string | undefined;
     static attributeTypeMap: Array<{
         name: string;
         baseName: string;
