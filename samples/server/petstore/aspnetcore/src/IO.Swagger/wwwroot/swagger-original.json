@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "default" : "available",
-            "enum" : [ "available", "pending", "sold" ]
+            "enum" : [ "available", "pending", "sold" ],
+            "default" : "available"
           },
           "collectionFormat" : "csv"
         } ],
@@ -688,12 +688,12 @@
       },
       "description" : "An order for a pets from the pet store",
       "example" : {
-        "petId" : 6,
-        "quantity" : 1,
         "id" : 0,
-        "shipDate" : "2000-01-23T04:56:07.000+00:00",
+        "petId" : 6,
         "complete" : false,
-        "status" : "placed"
+        "status" : "placed",
+        "quantity" : 1,
+        "shipDate" : "2000-01-23T04:56:07.000+00:00"
       }
     },
     "Category" : {
@@ -713,8 +713,8 @@
       },
       "description" : "A category for a pet",
       "example" : {
-        "name" : "name",
-        "id" : 6
+        "id" : 6,
+        "name" : "name"
       }
     },
     "User" : {
@@ -754,14 +754,14 @@
       },
       "description" : "A User who is purchasing from the pet store",
       "example" : {
-        "firstName" : "firstName",
-        "lastName" : "lastName",
-        "password" : "password",
-        "userStatus" : 6,
-        "phone" : "phone",
         "id" : 0,
+        "lastName" : "lastName",
+        "phone" : "phone",
+        "username" : "username",
         "email" : "email",
-        "username" : "username"
+        "userStatus" : 6,
+        "firstName" : "firstName",
+        "password" : "password"
       }
     },
     "Tag" : {
@@ -781,8 +781,8 @@
       },
       "description" : "A tag for a pet",
       "example" : {
-        "name" : "name",
-        "id" : 1
+        "id" : 1,
+        "name" : "name"
       }
     },
     "Pet" : {
@@ -832,21 +832,21 @@
       },
       "description" : "A pet for sale in the pet store",
       "example" : {
-        "photoUrls" : [ "photoUrls", "photoUrls" ],
-        "name" : "doggie",
+        "tags" : [ {
+          "id" : 1,
+          "name" : "name"
+        }, {
+          "id" : 1,
+          "name" : "name"
+        } ],
         "id" : 0,
         "category" : {
-          "name" : "name",
-          "id" : 6
+          "id" : 6,
+          "name" : "name"
         },
-        "tags" : [ {
-          "name" : "name",
-          "id" : 1
-        }, {
-          "name" : "name",
-          "id" : 1
-        } ],
-        "status" : "available"
+        "status" : "available",
+        "name" : "doggie",
+        "photoUrls" : [ "photoUrls", "photoUrls" ]
       }
     },
     "ApiResponse" : {
@@ -866,9 +866,9 @@
       "title" : "An uploaded response",
       "description" : "Describes the result of uploading an image resource",
       "example" : {
+        "message" : "message",
         "code" : 0,
-        "type" : "type",
-        "message" : "message"
+        "type" : "type"
       }
     },
     "Amount" : {
