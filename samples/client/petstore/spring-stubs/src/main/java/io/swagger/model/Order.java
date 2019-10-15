@@ -16,7 +16,6 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "An order for a pets from the pet store")
 @Validated
-
 public class Order   {
   @JsonProperty("id")
   private Long id = null;
@@ -62,7 +61,6 @@ public class Order   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -79,9 +77,8 @@ public class Order   {
    * @return id
   **/
   @ApiModelProperty(value = "")
-
-
-  public Long getId() {
+  
+    public Long getId() {
     return id;
   }
 
@@ -99,9 +96,8 @@ public class Order   {
    * @return petId
   **/
   @ApiModelProperty(value = "")
-
-
-  public Long getPetId() {
+  
+    public Long getPetId() {
     return petId;
   }
 
@@ -119,9 +115,8 @@ public class Order   {
    * @return quantity
   **/
   @ApiModelProperty(value = "")
-
-
-  public Integer getQuantity() {
+  
+    public Integer getQuantity() {
     return quantity;
   }
 
@@ -139,10 +134,9 @@ public class Order   {
    * @return shipDate
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getShipDate() {
+  
+    @Valid
+    public OffsetDateTime getShipDate() {
     return shipDate;
   }
 
@@ -160,9 +154,8 @@ public class Order   {
    * @return status
   **/
   @ApiModelProperty(value = "Order Status")
-
-
-  public StatusEnum getStatus() {
+  
+    public StatusEnum getStatus() {
     return status;
   }
 
@@ -180,9 +173,8 @@ public class Order   {
    * @return complete
   **/
   @ApiModelProperty(value = "")
-
-
-  public Boolean isComplete() {
+  
+    public Boolean isComplete() {
     return complete;
   }
 
@@ -239,4 +231,3 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

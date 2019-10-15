@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
   * A category for a pet
  **/
 @Schema(description="A category for a pet")
-public class Category  {
+public class Category   {
   
   @Schema(description = "")
   private Long id = null;

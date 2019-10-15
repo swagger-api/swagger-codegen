@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -25,13 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * ArrayTest
  */
 
-public class ArrayTest {
 
+public class ArrayTest implements Parcelable {
   @SerializedName("array_of_string")
   private List<String> arrayOfString = null;
 
@@ -40,6 +40,9 @@ public class ArrayTest {
 
   @SerializedName("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
+
+  public ArrayTest() {
+  }
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
@@ -53,17 +56,19 @@ public class ArrayTest {
     return this;
   }
 
-  /**
-  * Get arrayOfString
-  * @return arrayOfString
+   /**
+   * Get arrayOfString
+   * @return arrayOfString
   **/
   @Schema(description = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
+
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
+
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
@@ -77,17 +82,19 @@ public class ArrayTest {
     return this;
   }
 
-  /**
-  * Get arrayArrayOfInteger
-  * @return arrayArrayOfInteger
+   /**
+   * Get arrayArrayOfInteger
+   * @return arrayArrayOfInteger
   **/
   @Schema(description = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
+
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
+
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
@@ -101,17 +108,20 @@ public class ArrayTest {
     return this;
   }
 
-  /**
-  * Get arrayArrayOfModel
-  * @return arrayArrayOfModel
+   /**
+   * Get arrayArrayOfModel
+   * @return arrayArrayOfModel
   **/
   @Schema(description = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
+
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -128,8 +138,9 @@ public class ArrayTest {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
+    return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
+
 
   @Override
   public String toString() {
@@ -154,24 +165,16 @@ public class ArrayTest {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(arrayOfString);
     out.writeValue(arrayArrayOfInteger);
     out.writeValue(arrayArrayOfModel);
   }
 
-  public ArrayTest() {
-    super();
-  }
-
   ArrayTest(Parcel in) {
-    
     arrayOfString = (List<String>)in.readValue(null);
-    
-    
     arrayArrayOfInteger = (List<List<Long>>)in.readValue(List.class.getClassLoader());
-    
     arrayArrayOfModel = (List<List<ReadOnlyFirst>>)in.readValue(List.class.getClassLoader());
   }
 

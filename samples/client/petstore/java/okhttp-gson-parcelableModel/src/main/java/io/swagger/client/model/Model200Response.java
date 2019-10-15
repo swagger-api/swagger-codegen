@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,54 +23,57 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Model for testing model name starting with number
  */
 @Schema(description = "Model for testing model name starting with number")
-public class Model200Response {
 
+public class Model200Response implements Parcelable {
   @SerializedName("name")
   private Integer name = null;
 
   @SerializedName("class")
   private String propertyClass = null;
+
+  public Model200Response() {
+  }
   public Model200Response name(Integer name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
   @Schema(description = "")
   public Integer getName() {
     return name;
   }
+
   public void setName(Integer name) {
     this.name = name;
   }
+
   public Model200Response propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-  
-
-  /**
-  * Get propertyClass
-  * @return propertyClass
+   /**
+   * Get propertyClass
+   * @return propertyClass
   **/
   @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
+
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -85,8 +89,9 @@ public class Model200Response {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(name, propertyClass);
+    return Objects.hash(name, propertyClass);
   }
+
 
   @Override
   public String toString() {
@@ -110,22 +115,15 @@ public class Model200Response {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(name);
     out.writeValue(propertyClass);
   }
 
-  public Model200Response() {
-    super();
-  }
-
   Model200Response(Parcel in) {
-    
     name = (Integer)in.readValue(null);
-    
     propertyClass = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

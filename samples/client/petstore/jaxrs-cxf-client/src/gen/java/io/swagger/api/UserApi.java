@@ -35,7 +35,7 @@ public interface UserApi  {
      */
     @POST
     @Path("/user")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     @Operation(summary = "Create user", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
@@ -47,7 +47,7 @@ public interface UserApi  {
      */
     @POST
     @Path("/user/createWithArray")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     @Operation(summary = "Creates list of users with given input array", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
@@ -59,7 +59,7 @@ public interface UserApi  {
      */
     @POST
     @Path("/user/createWithList")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     @Operation(summary = "Creates list of users with given input array", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })

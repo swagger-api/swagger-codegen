@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
  * MapTest
  */
 @Validated
-
 public class MapTest   {
   @JsonProperty("map_map_of_string")
   @Valid
@@ -53,7 +52,6 @@ public class MapTest   {
       return null;
     }
   }
-
   @JsonProperty("map_of_enum_string")
   @Valid
   private Map<String, InnerEnum> mapOfEnumString = null;
@@ -76,10 +74,8 @@ public class MapTest   {
    * @return mapMapOfString
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Map<String, Map<String, String>> getMapMapOfString() {
+      @Valid
+    public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
 
@@ -105,9 +101,8 @@ public class MapTest   {
    * @return mapOfEnumString
   **/
   @ApiModelProperty(value = "")
-
-
-  public Map<String, InnerEnum> getMapOfEnumString() {
+  
+    public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }
 
@@ -156,4 +151,3 @@ public class MapTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

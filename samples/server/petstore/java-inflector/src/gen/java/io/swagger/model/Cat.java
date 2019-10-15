@@ -1,12 +1,14 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public class Cat extends Animal  {
+
+
+
+public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet  {
   @JsonProperty("declawed")
   private Boolean declawed = null;
   /**

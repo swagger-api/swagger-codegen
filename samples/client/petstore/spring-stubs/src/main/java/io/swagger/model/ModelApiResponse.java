@@ -14,7 +14,6 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Describes the result of uploading an image resource")
 @Validated
-
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;
@@ -35,9 +34,8 @@ public class ModelApiResponse   {
    * @return code
   **/
   @ApiModelProperty(value = "")
-
-
-  public Integer getCode() {
+  
+    public Integer getCode() {
     return code;
   }
 
@@ -55,9 +53,8 @@ public class ModelApiResponse   {
    * @return type
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getType() {
+  
+    public String getType() {
     return type;
   }
 
@@ -75,9 +72,8 @@ public class ModelApiResponse   {
    * @return message
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getMessage() {
+  
+    public String getMessage() {
     return message;
   }
 
@@ -128,4 +124,3 @@ public class ModelApiResponse   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

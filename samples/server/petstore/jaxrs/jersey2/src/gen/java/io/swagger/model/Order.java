@@ -180,7 +180,7 @@ public class Order   {
    **/
   @JsonProperty("complete")
   @Schema(description = "")
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
 

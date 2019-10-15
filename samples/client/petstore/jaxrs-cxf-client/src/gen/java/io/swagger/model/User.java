@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
   * A User who is purchasing from the pet store
  **/
 @Schema(description="A User who is purchasing from the pet store")
-public class User  {
+public class User   {
   
   @Schema(description = "")
   private Long id = null;

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,55 +23,59 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Animal
  */
 
 
-public class Animal {
 
+public class Animal implements Parcelable {
   @SerializedName("className")
   private String className = null;
 
   @SerializedName("color")
   private String color = "red";
+
+  public Animal() {
+    this.className = this.getClass().getSimpleName();
+  }
   public Animal className(String className) {
     this.className = className;
     return this;
   }
 
-  
-
-  /**
-  * Get className
-  * @return className
+   /**
+   * Get className
+   * @return className
   **/
   @Schema(required = true, description = "")
   public String getClassName() {
     return className;
   }
+
   public void setClassName(String className) {
     this.className = className;
   }
+
   public Animal color(String color) {
     this.color = color;
     return this;
   }
 
-  
-
-  /**
-  * Get color
-  * @return color
+   /**
+   * Get color
+   * @return color
   **/
   @Schema(description = "")
   public String getColor() {
     return color;
   }
+
   public void setColor(String color) {
     this.color = color;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -86,8 +91,9 @@ public class Animal {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(className, color);
+    return Objects.hash(className, color);
   }
+
 
   @Override
   public String toString() {
@@ -111,22 +117,15 @@ public class Animal {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(className);
     out.writeValue(color);
   }
 
-  public Animal() {
-    super();
-  }
-
   Animal(Parcel in) {
-    
     className = (String)in.readValue(null);
-    
     color = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

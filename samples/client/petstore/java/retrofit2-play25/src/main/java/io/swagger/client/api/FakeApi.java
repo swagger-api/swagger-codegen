@@ -99,7 +99,7 @@ public interface FakeApi {
    * @return Call&lt;Void&gt;
    */
   @Headers({
-    "Content-Type:application/json; charset&#x3D;utf-8"
+    "Content-Type:application/json; charset=utf-8"
   })
   @POST("fake")
   CompletionStage<Response<Void>> testEndpointParameters(
@@ -122,7 +122,7 @@ public interface FakeApi {
   })
   @GET("fake")
   CompletionStage<Response<Void>> testEnumParameters(
-                    @retrofit2.http.Body Object body    ,             @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Path("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Path("enum_query_string") String enumQueryString                ,     @retrofit2.http.Path("enum_query_integer") Integer enumQueryInteger                
+                    @retrofit2.http.Body Object body    ,             @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Query("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Query("enum_query_string") String enumQueryString                ,     @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger                
   );
 
   /**

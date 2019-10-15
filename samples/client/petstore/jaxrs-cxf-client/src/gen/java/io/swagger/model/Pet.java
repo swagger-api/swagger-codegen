@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
   * A pet for sale in the pet store
  **/
 @Schema(description="A pet for sale in the pet store")
-public class Pet  {
+public class Pet   {
   
   @Schema(description = "")
   private Long id = null;

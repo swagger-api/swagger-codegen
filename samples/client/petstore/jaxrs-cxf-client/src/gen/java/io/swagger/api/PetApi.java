@@ -50,7 +50,7 @@ public interface PetApi  {
     @Operation(summary = "Deletes a pet", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
-    public void deletePet(@PathParam("petId") Integer petId, @HeaderParam("api_key") String apiKey);
+    public void deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
 
     /**
      * Finds Pets by status
@@ -96,7 +96,7 @@ public interface PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Pet.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Pet getPetById(@PathParam("petId") Integer petId);
+    public Pet getPetById(@PathParam("petId") Long petId);
 
     /**
      * Update an existing pet
@@ -122,7 +122,7 @@ public interface PetApi  {
     @Operation(summary = "Updates a pet in the store with form data", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public void updatePetWithForm(@PathParam("petId") Integer petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
+    public void updatePetWithForm(@PathParam("petId") Long petId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
 
     /**
      * uploads an image
@@ -135,5 +135,5 @@ public interface PetApi  {
     @Operation(summary = "uploads an image", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
-    public ModelApiResponse uploadFile(@PathParam("petId") Integer petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file" , required = false) Attachment fileDetail);
+    public ModelApiResponse uploadFile(@PathParam("petId") Long petId, @Multipart(value = "additionalMetadata", required = false)  String additionalMetadata,  @Multipart(value = "file" , required = false) Attachment fileDetail);
 }

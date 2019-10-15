@@ -13,40 +13,41 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * SpecialModelName
  */
 
+
 public class SpecialModelName {
-
   @JsonProperty("$special[property.name]")
-
   private Long $specialPropertyName = null;
+
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
-  
-
-  /**
-  * Get $specialPropertyName
-  * @return $specialPropertyName
+   /**
+   * Get $specialPropertyName
+   * @return $specialPropertyName
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
+
   public void set$SpecialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -61,8 +62,9 @@ public class SpecialModelName {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash($specialPropertyName);
+    return Objects.hash($specialPropertyName);
   }
+
 
   @Override
   public String toString() {

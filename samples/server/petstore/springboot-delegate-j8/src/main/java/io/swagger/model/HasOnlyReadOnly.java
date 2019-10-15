@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
  * HasOnlyReadOnly
  */
 @Validated
-
 public class HasOnlyReadOnly   {
   @JsonProperty("bar")
   private String bar = null;
@@ -31,9 +30,8 @@ public class HasOnlyReadOnly   {
    * @return bar
   **/
   @ApiModelProperty(readOnly = true, value = "")
-
-
-  public String getBar() {
+  
+    public String getBar() {
     return bar;
   }
 
@@ -51,9 +49,8 @@ public class HasOnlyReadOnly   {
    * @return foo
   **/
   @ApiModelProperty(readOnly = true, value = "")
-
-
-  public String getFoo() {
+  
+    public String getFoo() {
     return foo;
   }
 
@@ -102,4 +99,3 @@ public class HasOnlyReadOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

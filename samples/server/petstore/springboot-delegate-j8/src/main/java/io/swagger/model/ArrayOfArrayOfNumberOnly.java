@@ -16,7 +16,6 @@ import javax.validation.constraints.*;
  * ArrayOfArrayOfNumberOnly
  */
 @Validated
-
 public class ArrayOfArrayOfNumberOnly   {
   @JsonProperty("ArrayArrayNumber")
   @Valid
@@ -40,10 +39,8 @@ public class ArrayOfArrayOfNumberOnly   {
    * @return arrayArrayNumber
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<List<BigDecimal>> getArrayArrayNumber() {
+      @Valid
+    public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
 
@@ -90,4 +87,3 @@ public class ArrayOfArrayOfNumberOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

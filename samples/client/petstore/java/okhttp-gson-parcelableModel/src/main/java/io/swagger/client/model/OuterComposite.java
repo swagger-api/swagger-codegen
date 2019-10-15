@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,13 +24,12 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * OuterComposite
  */
 
-public class OuterComposite {
 
+public class OuterComposite implements Parcelable {
   @SerializedName("my_number")
   private BigDecimal myNumber = null;
 
@@ -38,60 +38,64 @@ public class OuterComposite {
 
   @SerializedName("my_boolean")
   private Boolean myBoolean = null;
+
+  public OuterComposite() {
+  }
   public OuterComposite myNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
     return this;
   }
 
-  
-
-  /**
-  * Get myNumber
-  * @return myNumber
+   /**
+   * Get myNumber
+   * @return myNumber
   **/
   @Schema(description = "")
   public BigDecimal getMyNumber() {
     return myNumber;
   }
+
   public void setMyNumber(BigDecimal myNumber) {
     this.myNumber = myNumber;
   }
+
   public OuterComposite myString(String myString) {
     this.myString = myString;
     return this;
   }
 
-  
-
-  /**
-  * Get myString
-  * @return myString
+   /**
+   * Get myString
+   * @return myString
   **/
   @Schema(description = "")
   public String getMyString() {
     return myString;
   }
+
   public void setMyString(String myString) {
     this.myString = myString;
   }
+
   public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
     return this;
   }
 
-  
-
-  /**
-  * Get myBoolean
-  * @return myBoolean
+   /**
+   * Get myBoolean
+   * @return myBoolean
   **/
   @Schema(description = "")
   public Boolean getMyBoolean() {
     return myBoolean;
   }
+
   public void setMyBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -108,8 +112,9 @@ public class OuterComposite {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(myNumber, myString, myBoolean);
+    return Objects.hash(myNumber, myString, myBoolean);
   }
+
 
   @Override
   public String toString() {
@@ -134,25 +139,17 @@ public class OuterComposite {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(myNumber);
     out.writeValue(myString);
     out.writeValue(myBoolean);
   }
 
-  public OuterComposite() {
-    super();
-  }
-
   OuterComposite(Parcel in) {
-    
-    
     myNumber = (BigDecimal)in.readValue(BigDecimal.class.getClassLoader());
     myString = (String)in.readValue(null);
-    
     myBoolean = (Boolean)in.readValue(null);
-    
   }
 
   public int describeContents() {
