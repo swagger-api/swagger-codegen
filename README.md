@@ -9,7 +9,7 @@
 - Master (2.4.9): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Java Test](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
-- 3.0.12:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+- 3.0.13:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Java Test](https://img.shields.io/jenkins/s/https/jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3.svg)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=3.0.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 
@@ -51,7 +51,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>2.4.</version>
+    <version>2.4.9</version>
 </dependency>
 ```
 
@@ -69,7 +69,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.12</version>
+    <version>3.0.13</version>
 </dependency>
 ```
 
@@ -133,8 +133,9 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-3.0.13-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.13-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.12](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.12) (**current stable**) | 2019-10-14   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.12](https://github.com/swagger-api/swagger-codegen/tree/v3.0.12)
+3.0.14-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.14-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.13](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.13) (**current stable**) | 2019-16-14   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.13](https://github.com/swagger-api/swagger-codegen/tree/v3.0.13)
+[3.0.12](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.12) | 2019-10-14   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.12](https://github.com/swagger-api/swagger-codegen/tree/v3.0.12)
 [3.0.11](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.11) | 2019-08-24   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.11](https://github.com/swagger-api/swagger-codegen/tree/v3.0.11)
 [3.0.10](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.10) | 2019-07-11   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.10](https://github.com/swagger-api/swagger-codegen/tree/v3.0.10)
 [3.0.9](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.9) | 2019-06-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.9](https://github.com/swagger-api/swagger-codegen/tree/v3.0.9)
@@ -164,6 +165,7 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 [2.1.6](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.1.6) | 2016-04-06   | 1.0, 1.1, 1.2, 2.0   | [tag v2.1.6](https://github.com/swagger-api/swagger-codegen/tree/v2.1.6)
 2.0.17                     | 2014-08-22   | 1.1, 1.2             | [tag v2.0.17](https://github.com/swagger-api/swagger-codegen/tree/2.0.17)
 1.0.4                      | 2012-04-12   | 1.0, 1.1             | [tag v1.0.4](https://github.com/swagger-api/swagger-codegen/tree/swagger-codegen_2.9.1-1.1)
+
 
 
 ### Prerequisites
