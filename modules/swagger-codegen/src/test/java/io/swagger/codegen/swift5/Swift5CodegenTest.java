@@ -7,65 +7,66 @@ import io.swagger.codegen.languages.Swift5Codegen;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.parser.SwaggerParser;
+import org.junit.experimental.theories.suppliers.TestedOn;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Swift5CodegenTest {
 
-    Swift5Codegen swiftCodegen = new Swift5Codegen();
+    private Swift5Codegen swiftCodegen = new Swift5Codegen();
 
     @Test
-    public void testCapitalizedReservedWord() throws Exception {
+    public void testCapitalizedReservedWord() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("AS", null), "_as");
     }
 
     @Test
-    public void testReservedWord() throws Exception {
+    public void testReservedWord() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("Public", null), "_public");
     }
 
     @Test
-    public void shouldNotBreakNonReservedWord() throws Exception {
+    public void shouldNotBreakNonReservedWord() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("Error", null), "error");
     }
 
     @Test
-    public void shouldNotBreakCorrectName() throws Exception {
+    public void shouldNotBreakCorrectName() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("EntryName", null), "entryName");
     }
 
     @Test
-    public void testSingleWordAllCaps() throws Exception {
+    public void testSingleWordAllCaps() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("VALUE", null), "value");
     }
 
     @Test
-    public void testSingleWordLowercase() throws Exception {
+    public void testSingleWordLowercase() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("value", null), "value");
     }
 
     @Test
-    public void testCapitalsWithUnderscore() throws Exception {
+    public void testCapitalsWithUnderscore() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY_NAME", null), "entryName");
     }
 
     @Test
-    public void testCapitalsWithDash() throws Exception {
+    public void testCapitalsWithDash() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY-NAME", null), "entryName");
     }
 
     @Test
-    public void testCapitalsWithSpace() throws Exception {
+    public void testCapitalsWithSpace() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("ENTRY NAME", null), "entryName");
     }
 
     @Test
-    public void testLowercaseWithUnderscore() throws Exception {
+    public void testLowercaseWithUnderscore() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("entry_name", null), "entryName");
     }
 
     @Test
-    public void testStartingWithNumber() throws Exception {
+    public void testStartingWithNumber() {
         Assert.assertEquals(swiftCodegen.toEnumVarName("123EntryName", null), "_123entryName");
         Assert.assertEquals(swiftCodegen.toEnumVarName("123Entry_name", null), "_123entryName");
         Assert.assertEquals(swiftCodegen.toEnumVarName("123EntryName123", null), "_123entryName123");
@@ -98,7 +99,7 @@ public class Swift5CodegenTest {
     }
 
     @Test
-    public void testDefaultPodAuthors() throws Exception {
+    public void testDefaultPodAuthors() {
         // Given
 
         // When
@@ -110,7 +111,7 @@ public class Swift5CodegenTest {
     }
 
     @Test
-    public void testPodAuthors() throws Exception {
+    public void testPodAuthors() {
         // Given
         final String swaggerDevs = "Swagger Devs";
         swiftCodegen.additionalProperties().put(Swift5Codegen.POD_AUTHORS, swaggerDevs);
@@ -129,7 +130,7 @@ public class Swift5CodegenTest {
         codegen.processOpts();
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.TRUE);
-        Assert.assertEquals(codegen.isHideGenerationTimestamp(), true);
+        Assert.assertTrue(codegen.isHideGenerationTimestamp());
     }
 
     @Test
@@ -139,7 +140,7 @@ public class Swift5CodegenTest {
         codegen.processOpts();
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
-        Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+        Assert.assertFalse(codegen.isHideGenerationTimestamp());
     }
 
     @Test
@@ -149,7 +150,6 @@ public class Swift5CodegenTest {
         codegen.processOpts();
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
-        Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+        Assert.assertFalse(codegen.isHideGenerationTimestamp());
     }
-
 }
