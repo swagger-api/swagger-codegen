@@ -13,17 +13,19 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import io.swagger.client.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * AnimalFarm
  */
 
+
 public class AnimalFarm extends ArrayList<Animal> {
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -37,8 +39,9 @@ public class AnimalFarm extends ArrayList<Animal> {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(super.hashCode());
+    return Objects.hash(super.hashCode());
   }
+
 
   @Override
   public String toString() {

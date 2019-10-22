@@ -39,7 +39,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | [**String**](.md)| ID of the order that needs to be deleted |
+ **orderId** | **String**| ID of the order that needs to be deleted |
 
 ### Return type
 
@@ -121,7 +121,7 @@ For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other val
 
 
 StoreApi apiInstance = new StoreApi();
-Integer orderId = 56; // Integer | ID of pet that needs to be fetched
+Long orderId = 789L; // Long | ID of pet that needs to be fetched
 try {
     Order result = apiInstance.getOrderById(orderId);
     System.out.println(result);
@@ -135,7 +135,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | [**Integer**](.md)| ID of pet that needs to be fetched |
+ **orderId** | **Long**| ID of pet that needs to be fetched | [enum: ]
 
 ### Return type
 

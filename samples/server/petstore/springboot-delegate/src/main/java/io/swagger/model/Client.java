@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
  * Client
  */
 @Validated
-
 public class Client   {
   @JsonProperty("client")
   private String client = null;
@@ -28,9 +27,8 @@ public class Client   {
    * @return client
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getClient() {
+  
+    public String getClient() {
     return client;
   }
 
@@ -77,4 +75,3 @@ public class Client   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

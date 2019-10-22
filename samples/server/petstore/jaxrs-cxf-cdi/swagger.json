@@ -76,7 +76,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "x-codegen-request-body-name" : "body"
       },
       "post" : {
         "tags" : [ "pet" ],
@@ -106,7 +107,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/pet/findByStatus" : {
@@ -126,8 +128,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "default" : "available",
-              "enum" : [ "available", "pending", "sold" ]
+              "enum" : [ "available", "pending", "sold" ],
+              "default" : "available"
             }
           }
         } ],
@@ -420,7 +422,7 @@
         "requestBody" : {
           "description" : "order placed for purchasing the pet",
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/Order"
               }
@@ -448,7 +450,8 @@
             "description" : "Invalid Order",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/store/order/{orderId}" : {
@@ -530,7 +533,7 @@
         "requestBody" : {
           "description" : "Created user object",
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/User"
               }
@@ -543,7 +546,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/user/createWithArray" : {
@@ -554,7 +558,7 @@
         "requestBody" : {
           "description" : "List of user object",
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "type" : "array",
                 "items" : {
@@ -570,7 +574,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/user/createWithList" : {
@@ -581,7 +586,7 @@
         "requestBody" : {
           "description" : "List of user object",
           "content" : {
-            "*/*" : {
+            "application/json" : {
               "schema" : {
                 "type" : "array",
                 "items" : {
@@ -597,7 +602,8 @@
             "description" : "successful operation",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       }
     },
     "/user/login" : {
@@ -748,7 +754,8 @@
             "description" : "User not found",
             "content" : { }
           }
-        }
+        },
+        "x-codegen-request-body-name" : "body"
       },
       "delete" : {
         "tags" : [ "user" ],

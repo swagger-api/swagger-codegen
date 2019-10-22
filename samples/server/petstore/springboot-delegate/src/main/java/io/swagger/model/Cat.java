@@ -14,7 +14,6 @@ import javax.validation.constraints.*;
  * Cat
  */
 @Validated
-
 public class Cat extends Animal  {
   @JsonProperty("declawed")
   private Boolean declawed = null;
@@ -29,9 +28,8 @@ public class Cat extends Animal  {
    * @return declawed
   **/
   @ApiModelProperty(value = "")
-
-
-  public Boolean isDeclawed() {
+  
+    public Boolean isDeclawed() {
     return declawed;
   }
 
@@ -79,4 +77,3 @@ public class Cat extends Animal  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

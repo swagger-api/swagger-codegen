@@ -26,6 +26,8 @@ public class URLPathUtil {
         String url = server.getUrl();
         if(url.equals(DEFAULT_PATH)) {
             url = LOCAL_HOST;
+        } else if (url.startsWith("/") && url.trim().length() > 1) {
+            url = LOCAL_HOST + url;
         }
         try {
             return new URL(url);

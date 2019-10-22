@@ -1,12 +1,15 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+
 /**
  * Model for testing reserved words
- **/@Schema(description = "Model for testing reserved words")
+ **/
+@Schema(description = "Model for testing reserved words")
+
 public class ModelReturn   {
   @JsonProperty("return")
   private Integer _return = null;

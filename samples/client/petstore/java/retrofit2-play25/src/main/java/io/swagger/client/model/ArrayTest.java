@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,24 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * ArrayTest
  */
 
+
 public class ArrayTest {
-
   @JsonProperty("array_of_string")
-
   private List<String> arrayOfString = null;
 
   @JsonProperty("array_array_of_integer")
-
   private List<List<Long>> arrayArrayOfInteger = null;
 
   @JsonProperty("array_array_of_model")
-
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
+
   public ArrayTest arrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
     return this;
@@ -53,17 +51,19 @@ public class ArrayTest {
     return this;
   }
 
-  /**
-  * Get arrayOfString
-  * @return arrayOfString
+   /**
+   * Get arrayOfString
+   * @return arrayOfString
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public List<String> getArrayOfString() {
     return arrayOfString;
   }
+
   public void setArrayOfString(List<String> arrayOfString) {
     this.arrayOfString = arrayOfString;
   }
+
   public ArrayTest arrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
     return this;
@@ -77,18 +77,20 @@ public class ArrayTest {
     return this;
   }
 
-  /**
-  * Get arrayArrayOfInteger
-  * @return arrayArrayOfInteger
+   /**
+   * Get arrayArrayOfInteger
+   * @return arrayArrayOfInteger
   **/
-    @Valid
-    @Schema(description = "")
+  @Valid
+  @Schema(description = "")
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
+
   public void setArrayArrayOfInteger(List<List<Long>> arrayArrayOfInteger) {
     this.arrayArrayOfInteger = arrayArrayOfInteger;
   }
+
   public ArrayTest arrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
     return this;
@@ -102,18 +104,21 @@ public class ArrayTest {
     return this;
   }
 
-  /**
-  * Get arrayArrayOfModel
-  * @return arrayArrayOfModel
+   /**
+   * Get arrayArrayOfModel
+   * @return arrayArrayOfModel
   **/
-    @Valid
-    @Schema(description = "")
+  @Valid
+  @Schema(description = "")
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
+
   public void setArrayArrayOfModel(List<List<ReadOnlyFirst>> arrayArrayOfModel) {
     this.arrayArrayOfModel = arrayArrayOfModel;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -130,8 +135,9 @@ public class ArrayTest {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
+    return Objects.hash(arrayOfString, arrayArrayOfInteger, arrayArrayOfModel);
   }
+
 
   @Override
   public String toString() {

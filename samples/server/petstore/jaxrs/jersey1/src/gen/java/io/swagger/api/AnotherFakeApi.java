@@ -26,6 +26,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 
+
 @Path("/another-fake")
 
 
@@ -41,8 +42,9 @@ public class AnotherFakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     public Response testSpecialTags(
-            @ApiParam(value = "client model" ,required=true) Client body
-    ,
+                        @ApiParam(value = "client model" ,required=true) Client body
+        
+,
         @Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.testSpecialTags(body,securityContext);

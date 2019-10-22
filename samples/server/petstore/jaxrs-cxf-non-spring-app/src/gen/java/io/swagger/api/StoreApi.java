@@ -72,7 +72,7 @@ public interface StoreApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Order getOrderById(@PathParam("orderId") @DecimalMin("1") @DecimalMax("5") Integer orderId);
+    public Order getOrderById(@PathParam("orderId") @Min(1L) @Max(5L) Long orderId);
 
     /**
      * Place an order for a pet
@@ -80,7 +80,7 @@ public interface StoreApi  {
      */
     @POST
     @Path("/store/order")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Place an order for a pet", tags={ "store" })
     @ApiResponses(value = { 

@@ -16,7 +16,6 @@ import javax.validation.constraints.*;
  * EnumArrays
  */
 @Validated
-
 public class EnumArrays   {
   /**
    * Gets or Sets justSymbol
@@ -48,7 +47,6 @@ public class EnumArrays   {
       return null;
     }
   }
-
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
 
@@ -82,7 +80,6 @@ public class EnumArrays   {
       return null;
     }
   }
-
   @JsonProperty("array_enum")
   @Valid
   private List<ArrayEnumEnum> arrayEnum = null;
@@ -97,9 +94,8 @@ public class EnumArrays   {
    * @return justSymbol
   **/
   @ApiModelProperty(value = "")
-
-
-  public JustSymbolEnum getJustSymbol() {
+  
+    public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
 
@@ -125,9 +121,8 @@ public class EnumArrays   {
    * @return arrayEnum
   **/
   @ApiModelProperty(value = "")
-
-
-  public List<ArrayEnumEnum> getArrayEnum() {
+  
+    public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
 
@@ -176,4 +171,3 @@ public class EnumArrays   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

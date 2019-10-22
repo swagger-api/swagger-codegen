@@ -16,7 +16,6 @@ import javax.validation.constraints.*;
  * AdditionalPropertiesClass
  */
 @Validated
-
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   @Valid
@@ -44,9 +43,8 @@ public class AdditionalPropertiesClass   {
    * @return mapProperty
   **/
   @ApiModelProperty(value = "")
-
-
-  public Map<String, String> getMapProperty() {
+  
+    public Map<String, String> getMapProperty() {
     return mapProperty;
   }
 
@@ -72,10 +70,8 @@ public class AdditionalPropertiesClass   {
    * @return mapOfMapProperty
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Map<String, Map<String, String>> getMapOfMapProperty() {
+      @Valid
+    public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
 
@@ -124,4 +120,3 @@ public class AdditionalPropertiesClass   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

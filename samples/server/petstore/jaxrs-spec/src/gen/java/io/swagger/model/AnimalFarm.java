@@ -13,7 +13,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class AnimalFarm extends ArrayList<Animal> implements Serializable {
+public class AnimalFarm extends ArrayList<Animal> implements Serializable  {
 
 
   @Override

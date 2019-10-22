@@ -72,13 +72,13 @@ public class StoreApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response getOrderById( @DecimalMin("1") @DecimalMax("5") @PathParam("orderId") Integer orderId,@Context SecurityContext securityContext)
+    public Response getOrderById( @Min(1L) @Max(5L) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getOrderById(orderId,securityContext);
     }
     @POST
     @Path("/order")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
     @ApiResponses(value = { 

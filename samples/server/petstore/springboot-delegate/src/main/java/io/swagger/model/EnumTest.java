@@ -15,7 +15,6 @@ import javax.validation.constraints.*;
  * EnumTest
  */
 @Validated
-
 public class EnumTest   {
   /**
    * Gets or Sets enumString
@@ -49,7 +48,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
 
@@ -83,7 +81,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
 
@@ -117,7 +114,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
 
@@ -134,9 +130,8 @@ public class EnumTest   {
    * @return enumString
   **/
   @ApiModelProperty(value = "")
-
-
-  public EnumStringEnum getEnumString() {
+  
+    public EnumStringEnum getEnumString() {
     return enumString;
   }
 
@@ -154,9 +149,8 @@ public class EnumTest   {
    * @return enumInteger
   **/
   @ApiModelProperty(value = "")
-
-
-  public EnumIntegerEnum getEnumInteger() {
+  
+    public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
 
@@ -174,9 +168,8 @@ public class EnumTest   {
    * @return enumNumber
   **/
   @ApiModelProperty(value = "")
-
-
-  public EnumNumberEnum getEnumNumber() {
+  
+    public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
 
@@ -194,10 +187,9 @@ public class EnumTest   {
    * @return outerEnum
   **/
   @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OuterEnum getOuterEnum() {
+  
+    @Valid
+    public OuterEnum getOuterEnum() {
     return outerEnum;
   }
 
@@ -250,4 +242,3 @@ public class EnumTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

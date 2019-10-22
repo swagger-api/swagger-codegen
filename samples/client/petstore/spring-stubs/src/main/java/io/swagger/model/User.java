@@ -14,7 +14,6 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "A User who is purchasing from the pet store")
 @Validated
-
 public class User   {
   @JsonProperty("id")
   private Long id = null;
@@ -50,9 +49,8 @@ public class User   {
    * @return id
   **/
   @ApiModelProperty(value = "")
-
-
-  public Long getId() {
+  
+    public Long getId() {
     return id;
   }
 
@@ -70,9 +68,8 @@ public class User   {
    * @return username
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getUsername() {
+  
+    public String getUsername() {
     return username;
   }
 
@@ -90,9 +87,8 @@ public class User   {
    * @return firstName
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getFirstName() {
+  
+    public String getFirstName() {
     return firstName;
   }
 
@@ -110,9 +106,8 @@ public class User   {
    * @return lastName
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getLastName() {
+  
+    public String getLastName() {
     return lastName;
   }
 
@@ -130,9 +125,8 @@ public class User   {
    * @return email
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getEmail() {
+  
+    public String getEmail() {
     return email;
   }
 
@@ -150,9 +144,8 @@ public class User   {
    * @return password
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getPassword() {
+  
+    public String getPassword() {
     return password;
   }
 
@@ -170,9 +163,8 @@ public class User   {
    * @return phone
   **/
   @ApiModelProperty(value = "")
-
-
-  public String getPhone() {
+  
+    public String getPhone() {
     return phone;
   }
 
@@ -190,9 +182,8 @@ public class User   {
    * @return userStatus
   **/
   @ApiModelProperty(value = "User Status")
-
-
-  public Integer getUserStatus() {
+  
+    public Integer getUserStatus() {
     return userStatus;
   }
 
@@ -253,4 +244,3 @@ public class User   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

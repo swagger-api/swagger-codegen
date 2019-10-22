@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,16 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * ArrayOfNumberOnly
  */
 
+
 public class ArrayOfNumberOnly {
-
   @JsonProperty("ArrayNumber")
-
   private List<BigDecimal> arrayNumber = null;
+
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
     return this;
@@ -45,18 +45,21 @@ public class ArrayOfNumberOnly {
     return this;
   }
 
-  /**
-  * Get arrayNumber
-  * @return arrayNumber
+   /**
+   * Get arrayNumber
+   * @return arrayNumber
   **/
-    @Valid
-    @Schema(description = "")
+  @Valid
+  @Schema(description = "")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }
+
   public void setArrayNumber(List<BigDecimal> arrayNumber) {
     this.arrayNumber = arrayNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -71,8 +74,9 @@ public class ArrayOfNumberOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayNumber);
+    return Objects.hash(arrayNumber);
   }
+
 
   @Override
   public String toString() {

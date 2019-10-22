@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -28,13 +29,12 @@ import java.util.UUID;
 import org.threeten.bp.OffsetDateTime;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
-public class MixedPropertiesAndAdditionalPropertiesClass {
 
+public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   @SerializedName("uuid")
   private UUID uuid = null;
 
@@ -43,48 +43,50 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
 
   @SerializedName("map")
   private Map<String, Animal> map = null;
+
+  public MixedPropertiesAndAdditionalPropertiesClass() {
+  }
   public MixedPropertiesAndAdditionalPropertiesClass uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
-  
-
-  /**
-  * Get uuid
-  * @return uuid
+   /**
+   * Get uuid
+   * @return uuid
   **/
   @Schema(description = "")
   public UUID getUuid() {
     return uuid;
   }
+
   public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
+
   public MixedPropertiesAndAdditionalPropertiesClass dateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
     return this;
   }
 
-  
-
-  /**
-  * Get dateTime
-  * @return dateTime
+   /**
+   * Get dateTime
+   * @return dateTime
   **/
   @Schema(description = "")
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
+
   public void setDateTime(OffsetDateTime dateTime) {
     this.dateTime = dateTime;
   }
+
   public MixedPropertiesAndAdditionalPropertiesClass map(Map<String, Animal> map) {
     this.map = map;
     return this;
   }
 
-  
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
     if (this.map == null) {
       this.map = new HashMap<String, Animal>();
@@ -92,17 +94,21 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     this.map.put(key, mapItem);
     return this;
   }
-  /**
-  * Get map
-  * @return map
+
+   /**
+   * Get map
+   * @return map
   **/
   @Schema(description = "")
   public Map<String, Animal> getMap() {
     return map;
   }
+
   public void setMap(Map<String, Animal> map) {
     this.map = map;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -119,8 +125,9 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(uuid, dateTime, map);
+    return Objects.hash(uuid, dateTime, map);
   }
+
 
   @Override
   public String toString() {
@@ -145,24 +152,16 @@ public class MixedPropertiesAndAdditionalPropertiesClass {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(uuid);
     out.writeValue(dateTime);
     out.writeValue(map);
   }
 
-  public MixedPropertiesAndAdditionalPropertiesClass() {
-    super();
-  }
-
   MixedPropertiesAndAdditionalPropertiesClass(Parcel in) {
-    
-    
     uuid = (UUID)in.readValue(UUID.class.getClassLoader());
-    
     dateTime = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
-    
     map = (Map<String, Animal>)in.readValue(Animal.class.getClassLoader());
   }
 

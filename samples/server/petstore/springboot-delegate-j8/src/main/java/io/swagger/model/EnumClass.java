@@ -12,12 +12,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * Gets or Sets EnumClass
  */
 public enum EnumClass {
-  
   _ABC("_abc"),
-  
-  _EFG("-efg"),
-  
-  _XYZ_("(xyz)");
+    _EFG("-efg"),
+    _XYZ_("(xyz)");
 
   private String value;
 
@@ -41,4 +38,3 @@ public enum EnumClass {
     return null;
   }
 }
-
