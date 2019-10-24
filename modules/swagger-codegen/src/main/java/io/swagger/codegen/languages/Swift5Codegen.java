@@ -1,10 +1,16 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.SupportingFile;
+
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.Operation;
-import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -35,15 +41,15 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
     public static final String SWIFT_USE_API_NAMESPACE = "swiftUseApiNamespace";
     public static final String DEFAULT_POD_AUTHORS = "Swagger Codegen";
     public static final String LENIENT_TYPE_CAST = "lenientTypeCast";
-    protected static final String LIBRARY_PROMISE_KIT = "PromiseKit";
-    protected static final String LIBRARY_RX_SWIFT = "RxSwift";
-    protected static final String[] RESPONSE_LIBRARIES = {LIBRARY_PROMISE_KIT, LIBRARY_RX_SWIFT};
+    private static final String LIBRARY_PROMISE_KIT = "PromiseKit";
+    private static final String LIBRARY_RX_SWIFT = "RxSwift";
+    private static final String[] RESPONSE_LIBRARIES = {LIBRARY_PROMISE_KIT, LIBRARY_RX_SWIFT};
     protected String projectName = "SwaggerClient";
-    protected boolean unwrapRequired;
-    protected boolean objcCompatible = false;
-    protected boolean lenientTypeCast = false;
+    private boolean unwrapRequired;
+    private boolean objcCompatible = false;
+    private boolean lenientTypeCast = false;
     protected boolean swiftUseApiNamespace;
-    protected String[] responseAs = new String[0];
+    private String[] responseAs = new String[0];
     protected String sourceFolder = "Classes" + File.separator + "Swaggers";
 
     @Override
@@ -454,8 +460,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
     public String toInstantiationType(Property prop) {
         if (prop instanceof MapProperty) {
             MapProperty ap = (MapProperty) prop;
-            String inner = getSwaggerType(ap.getAdditionalProperties());
-            return inner;
+            return getSwaggerType(ap.getAdditionalProperties());
         } else if (prop instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) prop;
             String inner = getSwaggerType(ap.getItems());
@@ -555,7 +560,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
                 final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent,
                                                                         parentModel,
                                                                         allDefinitions);
-                codegenModel = Swift5Codegen.reconcileProperties(codegenModel, parentCodegenModel);
+                Swift5Codegen.reconcileProperties(codegenModel, parentCodegenModel);
 
                 // get the next parent
                 parentSchema = parentCodegenModel.parentSchema;
@@ -631,7 +636,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         }
 
         // Camelize only when we have a structure defined below
-        Boolean camelized = false;
+        boolean camelized = false;
         if (name.matches("[A-Z][a-z0-9]+[a-zA-Z0-9]*")) {
             name = camelize(name, true);
             camelized = true;
@@ -661,7 +666,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
 
         char[] separators = {'-', '_', ' ', ':', '(', ')'};
         return camelize(WordUtils.capitalizeFully(StringUtils.lowerCase(name), separators)
-                                 .replaceAll("[-_ :\\(\\)]", ""),
+                                 .replaceAll("[-_ :()]", ""),
                         true);
     }
 
@@ -761,8 +766,8 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 
-    private static CodegenModel reconcileProperties(CodegenModel codegenModel,
-                                                    CodegenModel parentCodegenModel) {
+    private static void reconcileProperties(CodegenModel codegenModel,
+                                            CodegenModel parentCodegenModel) {
         // To support inheritance in this generator, we will analyze
         // the parent and child models, look for properties that match, and remove
         // them from the child models and leave them in the parent.
@@ -772,7 +777,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         // Get the properties for the parent and child models
         final List<CodegenProperty> parentModelCodegenProperties = parentCodegenModel.vars;
         List<CodegenProperty> codegenProperties = codegenModel.vars;
-        codegenModel.allVars = new ArrayList<CodegenProperty>(codegenProperties);
+        codegenModel.allVars = new ArrayList<>(codegenProperties);
         codegenModel.parentVars = parentCodegenModel.allVars;
 
         // Iterate over all of the parent model properties
@@ -784,7 +789,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
             Iterator<CodegenProperty> iterator = codegenProperties.iterator();
             while (iterator.hasNext()) {
                 CodegenProperty codegenProperty = iterator.next();
-                if (codegenProperty.baseName == parentModelCodegenProperty.baseName) {
+                if (codegenProperty.baseName.equals(parentModelCodegenProperty.baseName)) {
                     // We found a property in the child class that is
                     // a duplicate of the one in the parent, so remove it.
                     iterator.remove();
@@ -799,12 +804,9 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
             int numVars = codegenProperties.size();
             for (CodegenProperty codegenProperty : codegenProperties) {
                 count += 1;
-                codegenProperty.hasMore = (count < numVars) ? true : false;
+                codegenProperty.hasMore = count < numVars;
             }
             codegenModel.vars = codegenProperties;
         }
-
-
-        return codegenModel;
     }
 }
