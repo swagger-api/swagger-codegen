@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = 'PetstoreClient'
+  s.name = 'TestClient'
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.11'
   s.tvos.deployment_target = '9.0'
@@ -8,8 +8,7 @@ Pod::Spec.new do |s|
   s.authors = ''
   s.license = 'Proprietary'
   s.homepage = 'https://github.com/swagger-api/swagger-codegen'
-  s.summary = 'PetstoreClient'
-  s.source_files = 'PetstoreClient/Classes/**/*.swift'
-  s.dependency 'PromiseKit/CorePromise', '~> 4.4.0'
+  s.summary = 'TestClient'
+  s.source_files = 'TestClient/Classes/**/*.swift'
   s.dependency 'Alamofire', '~> 4.9.0'
 end
