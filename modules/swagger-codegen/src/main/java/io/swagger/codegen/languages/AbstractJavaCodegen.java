@@ -98,8 +98,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        hideGenerationTimestamp = false; 
-        
+        hideGenerationTimestamp = false;
+
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
@@ -167,6 +167,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+) - note: this also sets \"" + JAVA8_MODE + "\" to true");
         dateOptions.put("threetenbp", "Backport of JSR310 (preferred for jdk < 1.8)");
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
+        dateOptions.put("java8-instant", "Java 8 using Instant");
         dateOptions.put("joda", "Joda (for legacy app only)");
         dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp");
         dateLibrary.setEnum(dateOptions);
@@ -402,7 +403,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
             if ( java8Mode ) {
-                additionalProperties.put("java8", "true");
+                additionalProperties.put("java8", true);
             }
         }
 
@@ -425,32 +426,38 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         if ("threetenbp".equals(dateLibrary)) {
-            additionalProperties.put("threetenbp", "true");
+            additionalProperties.put("threetenbp", true);
             additionalProperties.put("jsr310", "true");
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "OffsetDateTime");
             importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
             importMapping.put("OffsetDateTime", "org.threeten.bp.OffsetDateTime");
         } else if ("joda".equals(dateLibrary)) {
-            additionalProperties.put("joda", "true");
+            additionalProperties.put("joda", true);
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
             importMapping.put("LocalDate", "org.joda.time.LocalDate");
             importMapping.put("DateTime", "org.joda.time.DateTime");
         } else if (dateLibrary.startsWith("java8")) {
-            additionalProperties.put("java8", "true");
+            additionalProperties.put("java8", true);
             additionalProperties.put("jsr310", "true");
-            typeMapping.put("date", "LocalDate");
-            importMapping.put("LocalDate", "java.time.LocalDate");
             if ("java8-localdatetime".equals(dateLibrary)) {
+                typeMapping.put("date", "LocalDate");
                 typeMapping.put("DateTime", "LocalDateTime");
+                importMapping.put("LocalDate", "java.time.LocalDate");
                 importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+            } else if ("java8-instant".equals(dateLibrary)) {
+                typeMapping.put("date", "Instant");
+                typeMapping.put("DateTime", "Instant");
+                importMapping.put("Instant", "java.time.Instant");
             } else {
+                typeMapping.put("date", "LocalDate");
                 typeMapping.put("DateTime", "OffsetDateTime");
+                importMapping.put("LocalDate", "java.time.LocalDate");
                 importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
             }
         } else if (dateLibrary.equals("legacy")) {
-            additionalProperties.put("legacyDates", "true");
+            additionalProperties.put("legacyDates", true);
         }
     }
 
