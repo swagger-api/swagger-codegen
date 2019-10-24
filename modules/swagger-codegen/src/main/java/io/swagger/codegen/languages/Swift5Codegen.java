@@ -14,19 +14,12 @@ import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -575,6 +568,17 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         }
 
         return codegenModel;
+    }
+
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+
+        if (codegenOperation.returnType != null && codegenOperation.returnType.equals("Any")) {
+            codegenOperation.returnType = null;
+        }
+
+        return codegenOperation;
     }
 
     public void setProjectName(String projectName) {
