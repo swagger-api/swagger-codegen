@@ -6,8 +6,8 @@
 
 import Foundation
 
-open class PetstoreClientAPI {
-    public static var basePath = "http://petstore.swagger.io:80/v2"
+open class TestClientAPI {
+    public static var basePath = "http://api.example.com/basePath"
     public static var credential: URLCredential?
     public static var customHeaders: [String:String] = [:]
     public static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
@@ -31,7 +31,7 @@ open class RequestBuilder<T> {
         self.isBody = isBody
         self.headers = headers
 
-        addHeaders(PetstoreClientAPI.customHeaders)
+        addHeaders(TestClientAPI.customHeaders)
     }
 
     open func addHeaders(_ aHeaders:[String:String]) {
@@ -50,7 +50,7 @@ open class RequestBuilder<T> {
     }
 
     open func addCredential() -> Self {
-        self.credential = PetstoreClientAPI.credential
+        self.credential = TestClientAPI.credential
         return self
     }
 }
