@@ -1,0 +1,319 @@
+---
+swagger: '2.0'
+info:
+  title: alip-agent
+  description: ALIP Agent Summary
+  version: '1.0'
+host: eastus.cloudapp.azure.com
+basePath: "/alip-agents"
+schemes:
+  - http
+paths:
+  "/agents/{id}/summary":
+    get:
+      description: Get Agent Summary from ALIP
+      parameters:
+        - name: client_id
+          required: true
+          in: query
+          type: string
+        - name: client_secret
+          required: true
+          in: query
+          type: string
+        - name: id
+          description: Agent Number
+          required: true
+          in: path
+          default: '131'
+          type: string
+      responses:
+        '200':
+          description: ''
+          x-amf-mediaType: application/json
+          schema:
+            example:
+              TXLife:
+                TXLifeResponse:
+                  TransRefGUID: acbd73e3-e17f-5f66-e320-226f8e4b7c7d
+                  TransExeDate: '2017-09-14'
+                  TransExeTime: '01:34:20'
+                  OLifE:
+                    Party:
+                      "@id": Party_1
+                      EMailAddress:
+                        EMailType:
+                          "@tc": '2'
+                          "$": Personal
+                        AddrLine: lisa.spencer@lifeins.com
+                      PartySysKey: 35
+                      FullName: Lisa Spencer
+                      Address:
+                        - LastUpdate: '2017-09-11'
+                          Zip: 10111
+                          Line3:
+                          EndDate: '2999-12-31'
+                          StartDate: '2014-01-07'
+                          LastUpdateTime: 02:21:16-04:00
+                          Line2: 14th Floor
+                          AddressCountryTC:
+                            "@tc": '1'
+                            "$": USA
+                          City: NEW YORK
+                          AddressSysKey: 2
+                          AddressState: New York
+                          Line1: 449 Fifth Avenue
+                          "@id": Address_1
+                          AddressTypeCode:
+                            "@tc": '2'
+                            "$": Business
+                          AddressStateTC:
+                            "@tc": '37'
+                            "$": NY
+                          AddressCountry: United States of America
+                        - Zip: 08837
+                          AddressCountry: United States of America
+                          LastUpdateTime: 02:43:54-04:00
+                          Line2:
+                          "@id": Address_2
+                          StartDate: '2014-01-09'
+                          City: Edison
+                          AddressTypeCode:
+                            "@tc": '1'
+                            "$": Home
+                          EndDate: '2999-12-31'
+                          Line3:
+                          AddressSysKey: 52466
+                          LastUpdate: '2017-09-12'
+                          AddressCountryTC:
+                            "@tc": '1'
+                            "$": USA
+                          AddressStateTC:
+                            "@tc": '35'
+                            "$": NJ
+                          AddressState: New Jersey
+                          Line1: 500 Main Street Y
+                      OLifEExtension:
+                        VendorCode: 33
+                        Holding:
+                          id: Holding_1
+                          HoldingTypeCode:
+                            tc: 2
+                            content: Policy
+                          HoldingName: "#839438asdfghjk"
+                          Policy:
+                            id: Policy_1
+                            PolNumber: 839438
+                            ProductType:
+                              tc: 1
+                              content: Standard Flexible VUL
+                            isTrad: false
+                      GovtIDTC:
+                        "@tc": '1'
+                        "$": Social Security Number US
+                      GovtID: 126319308
+                      Person:
+                        MiddleName: ''
+                        FirstName: Lisa
+                        Gender:
+                          "@tc": '2'
+                          "$": Female
+                        LastName: Spencer
+                        BirthDate: '1900-01-01'
+                      Phone:
+                        - PhoneTypeCode:
+                            "@tc": '1'
+                            "$": Home
+                          DialNumber:
+                        - PhoneTypeCode:
+                            "@tc": '12'
+                            "$": Mobile
+                          AreaCode: 111
+                          DialNumber: 1111111
+                        - PhoneTypeCode:
+                            "@tc": '2'
+                            "$": Other
+                          AreaCode: 456
+                          DialNumber: 7897656
+                  TransResult:
+                    ResultCode:
+                      "@tc": '1'
+                      "$": Success
+                  TransType:
+                    "@tc": '204'
+                    "$": Agent Party Inquiry
+            type: object
+            additionalProperties: true
+            properties:
+              TXLife:
+                type: object
+                additionalProperties: true
+                properties:
+                  TXLifeResponse:
+                    type: object
+                    additionalProperties: true
+                    properties:
+                      OLifE:
+                        type: object
+                        additionalProperties: true
+                        properties:
+                          Party:
+                            type: object
+                            additionalProperties: true
+                            properties:
+                              Address:
+                                type: array
+                                additionalProperties: true
+                                items:
+                                  type: object
+                                  properties:
+                                    AddressCountry:
+                                      type: string
+                                    AddressCountryTC:
+                                      properties:
+                                        content:
+                                          type: string
+                                        tc:
+                                          type: integer
+                                      type: object
+                                      additionalProperties: true
+                                    AddressKey:
+                                      type: integer
+                                    AddressState:
+                                      type: string
+                                    AddressStateTC:
+                                      type: object
+                                      additionalProperties: true
+                                      properties:
+                                        content:
+                                          type: string
+                                        tc:
+                                          type: integer
+                                    AddressTypeCode:
+                                      type: object
+                                      additionalProperties: true
+                                      properties:
+                                        content:
+                                          type: string
+                                        tc:
+                                          type: integer
+                                    City:
+                                      type: string
+                                    EndDate:
+                                      type: string
+                                    LastUpdate:
+                                      type: string
+                                    LastUpdateTime:
+                                      type: string
+                                    Line1:
+                                      type: string
+                                    Line2:
+                                      type: string
+                                    Line3:
+                                      type: string
+                                    StartDate:
+                                      type: string
+                                    Zip:
+                                      type: integer
+                                    id:
+                                      type: string
+                              EMailAddress:
+                                type: object
+                                additionalProperties: true
+                                properties:
+                                  AddrLine:
+                                    type: string
+                                  EMailType:
+                                    type: object
+                                    additionalProperties: true
+                                    properties:
+                                      content:
+                                        type: string
+                                      tc:
+                                        type: integer
+                              FullName:
+                                type: string
+                              GovtID:
+                                type: integer
+                              GovtIDTC:
+                                type: object
+                                additionalProperties: true
+                                properties:
+                                  content:
+                                    type: string
+                                  tc:
+                                    type: integer
+                              PartyKey:
+                                type: integer
+                              Person:
+                                type: object
+                                additionalProperties: true
+                                properties:
+                                  BirthDate:
+                                    type: string
+                                  FirstName:
+                                    type: string
+                                  Gender:
+                                    type: object
+                                    additionalProperties: true
+                                    properties:
+                                      content:
+                                        type: string
+                                      tc:
+                                        type: integer
+                                  LastName:
+                                    type: string
+                                  MiddleName:
+                                    type: string
+                              Phone:
+                                type: array
+                                additionalProperties: true
+                                items:
+                                  type: object
+                                  properties:
+                                    DialNumber:
+                                      type: string
+                                    PhoneTypeCode:
+                                      type: object
+                                      additionalProperties: true
+                                      properties:
+                                        content:
+                                          type: string
+                                        tc:
+                                          type: integer
+                              id:
+                                type: string
+                      TransExeDate:
+                        type: string
+                      TransExeTime:
+                        type: string
+                      TransRefGUID:
+                        type: string
+                      TransResult:
+                        type: object
+                        additionalProperties: true
+                        properties:
+                          ResultCode:
+                            type: object
+                            additionalProperties: true
+                            properties:
+                              content:
+                                type: string
+                              tc:
+                                type: integer
+                      TransSubType:
+                        type: object
+                        additionalProperties: true
+                        properties:
+                          content:
+                            type: string
+                          tc:
+                            type: integer
+                      TransType:
+                        type: object
+                        additionalProperties: true
+                        properties:
+                          content:
+                            type: string
+                          tc:
+                            type: integer

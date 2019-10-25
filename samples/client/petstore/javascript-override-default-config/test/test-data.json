@@ -1,0 +1,359 @@
+{
+  "petstore" : {
+    "AnotherFakeApi" : {
+      "call123testSpecialTags" : {
+        "body" : {
+          "client" : "vATDkru"
+        },
+        "response" : {
+          "client" : "U7R1S1"
+        }
+      }
+    },
+    "FakeApi" : {
+      "fakeOuterBooleanSerialize" : {
+        "body" : false,
+        "response" : false
+      },
+      "fakeOuterCompositeSerialize" : {
+        "body" : {
+          "myString" : "TD57e",
+          "myBoolean" : true
+        },
+        "response" : {
+          "myString" : "ymL5y",
+          "myBoolean" : false
+        }
+      },
+      "fakeOuterStringSerialize" : {
+        "body" : "gLY85V",
+        "response" : "DDVS6vGR2mx"
+      },
+      "testBodyWithQueryParams" : {
+        "query" : "fAYi3",
+        "body" : {
+          "id" : -7866621490027962368,
+          "username" : "lR590NP",
+          "firstName" : "CpmlJE",
+          "lastName" : "qARdH",
+          "email" : "TleqB7T",
+          "password" : "dFAKBW",
+          "phone" : "l4Yqf",
+          "userStatus" : -1614669479
+        }
+      },
+      "testClientModel" : {
+        "body" : {
+          "client" : "S1Yx9T"
+        },
+        "response" : {
+          "client" : "KcEuD"
+        }
+      },
+      "testEndpointParameters" : {
+        "_double" : 99.33046217410168,
+        "patternWithoutDelimiter" : "^Xïº­çŽ�",
+        "_byte" : "GQ==",
+        "integer" : 66,
+        "int32" : 186,
+        "int64" : -4624138477139687424,
+        "_float" : -2.8459266E37,
+        "string" : "/t/i",
+        "binary" : "B0EEA5AA",
+        "dateTime" : "1970-01-01T12:00:00.000Z",
+        "password" : "JlK5zkc0Dd36",
+        "paramCallback" : "uPoRwqp1"
+      },
+      "testEnumParameters" : {
+        "enumHeaderStringArray" : [ ">" ],
+        "enumHeaderString" : "(xyz)",
+        "enumQueryStringArray" : [ "$" ],
+        "enumQueryString" : "_abc",
+        "enumQueryInteger" : -2,
+        "enumQueryDouble" : -1.2,
+        "enumFormStringArray" : [ "$" ],
+        "enumFormString" : "_abc"
+      },
+      "testGroupParameters" : {
+        "requiredStringGroup" : 688217826,
+        "requiredBooleanGroup" : false,
+        "requiredInt64Group" : -4268675600936480768,
+        "stringGroup" : 457352824,
+        "booleanGroup" : true,
+        "int64Group" : 874526121801592832
+      },
+      "testInlineAdditionalProperties" : {
+        "param" : {
+          "VYay3hKWBY5" : "WQLa4W2"
+        }
+      },
+      "testJsonFormData" : {
+        "param" : "j109f",
+        "param2" : "V6FV6"
+      },
+      "createXmlItem" : {
+        "xmlItem" : {
+          "attributeString" : "tszZh",
+          "attributeInteger" : -459762915,
+          "attributeBoolean" : false,
+          "wrappedArray" : [ 1782739206 ],
+          "nameString" : "v55Dm8G6E",
+          "nameInteger" : -1845544482,
+          "nameBoolean" : false,
+          "nameArray" : [ 599738932 ],
+          "nameWrappedArray" : [ -1033168643 ],
+          "prefixString" : "m3cTCnq",
+          "prefixInteger" : 1635801829,
+          "prefixBoolean" : true,
+          "prefixArray" : [ -108161436 ],
+          "prefixWrappedArray" : [ 877409522 ],
+          "namespaceString" : "vOmYfL",
+          "namespaceInteger" : -1774304311,
+          "namespaceBoolean" : false,
+          "namespaceArray" : [ 144422107 ],
+          "namespaceWrappedArray" : [ 1380481059 ],
+          "prefixNsString" : "e8hLw",
+          "prefixNsInteger" : -392441427,
+          "prefixNsBoolean" : false,
+          "prefixNsArray" : [ 1819778892 ],
+          "prefixNsWrappedArray" : [ 283672519 ]
+        }
+      }
+    },
+    "FakeClassnameTags123Api" : {
+      "testClassname" : {
+        "body" : {
+          "client" : "zMce5k3"
+        },
+        "response" : {
+          "client" : "hAZ974688b"
+        }
+      }
+    },
+    "PetApi" : {
+      "addPet" : {
+        "body" : {
+          "id" : 1640256362522431488,
+          "category" : {
+            "id" : -3338952135522205696,
+            "name" : "NjV2Hl7"
+          },
+          "name" : "zE6Un",
+          "photoUrls" : [ "rnZsh" ],
+          "tags" : [ {
+            "id" : 2679131844677046272,
+            "name" : "FEWlek1O"
+          } ],
+          "status" : "pending"
+        }
+      },
+      "deletePet" : {
+        "petId" : -2061861526674106368,
+        "apiKey" : "bKMts"
+      },
+      "findPetsByStatus" : {
+        "status" : [ "sold" ],
+        "response" : [ {
+          "id" : 3843014970467803136,
+          "category" : {
+            "id" : 1035455743555880960,
+            "name" : "T57Mz6OFGAO"
+          },
+          "name" : "Vwhr1",
+          "photoUrls" : [ "gSc07wyX7" ],
+          "tags" : [ {
+            "id" : -2914721508102445056,
+            "name" : "myBg55"
+          } ],
+          "status" : "pending"
+        } ]
+      },
+      "findPetsByTags" : {
+        "tags" : [ "AJcKBL" ],
+        "response" : [ {
+          "id" : 50032289509419008,
+          "category" : {
+            "id" : 5869674297924743168,
+            "name" : "qxN1r"
+          },
+          "name" : "SsHmB",
+          "photoUrls" : [ "hVs3rZ8d" ],
+          "tags" : [ {
+            "id" : 2205589254133385216,
+            "name" : "d0657Rs"
+          } ],
+          "status" : "available"
+        } ]
+      },
+      "getPetById" : {
+        "petId" : -6725967706500734976,
+        "response" : {
+          "id" : 2956417183957096448,
+          "category" : {
+            "id" : 6943108626212063232,
+            "name" : "nonzO"
+          },
+          "name" : "g82c6",
+          "photoUrls" : [ "PJxMKTIw8" ],
+          "tags" : [ {
+            "id" : -7961513807389990912,
+            "name" : "cBzZCR"
+          } ],
+          "status" : "pending"
+        }
+      },
+      "updatePet" : {
+        "body" : {
+          "id" : 4486482867627804672,
+          "category" : {
+            "id" : -5197266840567955456,
+            "name" : "fRHF9Mk2j"
+          },
+          "name" : "Q7ZZE",
+          "photoUrls" : [ "dayjY04g" ],
+          "tags" : [ {
+            "id" : -5692365700824717312,
+            "name" : "ob91jzha1"
+          } ],
+          "status" : "pending"
+        }
+      },
+      "updatePetWithForm" : {
+        "petId" : -8437144647860006912,
+        "name" : "RSS13R",
+        "status" : "w9t5lzA"
+      },
+      "uploadFile" : {
+        "petId" : 8114788578012659712,
+        "additionalMetadata" : "P5Y7w",
+        "file" : "B25AEB939981",
+        "response" : {
+          "code" : -290889777,
+          "type" : "y8bIC",
+          "message" : "rxi84RRV"
+        }
+      },
+      "uploadFileWithRequiredFile" : {
+        "petId" : -7300665648179058688,
+        "requiredFile" : "CD0F0BF4A8D29E",
+        "additionalMetadata" : "LMXt9U8m",
+        "response" : {
+          "code" : -375912034,
+          "type" : "EG7nU",
+          "message" : "mtOYmfE"
+        }
+      }
+    },
+    "StoreApi" : {
+      "deleteOrder" : {
+        "orderId" : "B9o6L"
+      },
+      "getInventory" : {
+        "response" : {
+          "qXxt1" : -514522198
+        }
+      },
+      "getOrderById" : {
+        "orderId" : 1,
+        "response" : {
+          "id" : 7585544805222469632,
+          "petId" : -317547088056479744,
+          "quantity" : 1321193090,
+          "shipDate" : "1970-01-01T12:00:00.000Z",
+          "status" : "delivered",
+          "complete" : true
+        }
+      },
+      "placeOrder" : {
+        "body" : {
+          "id" : 6493357704826976256,
+          "petId" : -816648398122926080,
+          "quantity" : -346663905,
+          "shipDate" : "1970-01-01T12:00:00.000Z",
+          "status" : "approved",
+          "complete" : true
+        },
+        "response" : {
+          "id" : 2475312096272056320,
+          "petId" : 7034333448540139520,
+          "quantity" : -436483893,
+          "shipDate" : "1970-01-01T12:00:00.000Z",
+          "status" : "delivered",
+          "complete" : true
+        }
+      }
+    },
+    "UserApi" : {
+      "createUser" : {
+        "body" : {
+          "id" : -5754163986267174912,
+          "username" : "DYHWgL",
+          "firstName" : "S0G4b8",
+          "lastName" : "zDbxS95",
+          "email" : "XjT0gq",
+          "password" : "hs5v8KCYQ8f",
+          "phone" : "d1oPv5",
+          "userStatus" : -833818711
+        }
+      },
+      "createUsersWithArrayInput" : {
+        "body" : [ {
+          "id" : -165238718470537216,
+          "username" : "kPc13",
+          "firstName" : "K3A08v2BG",
+          "lastName" : "IAgSVlW6",
+          "email" : "Z538Q",
+          "password" : "ThMt8h",
+          "phone" : "y7nbhDag",
+          "userStatus" : 787221677
+        } ]
+      },
+      "createUsersWithListInput" : {
+        "body" : [ {
+          "id" : 4712326402859421696,
+          "username" : "uc3zl",
+          "firstName" : "e951tjGz",
+          "lastName" : "KPEV4xA",
+          "email" : "VszlX",
+          "password" : "JZ286",
+          "phone" : "ID9dLb",
+          "userStatus" : 1696135321
+        } ]
+      },
+      "deleteUser" : {
+        "username" : "h8Nyiv"
+      },
+      "getUserByName" : {
+        "username" : "s0pChjvk",
+        "response" : {
+          "id" : 7595577888855468032,
+          "username" : "EZ16IW",
+          "firstName" : "Fary39",
+          "lastName" : "on2zl",
+          "email" : "Rb9f2",
+          "password" : "q4Fblzud",
+          "phone" : "Ps12qK",
+          "userStatus" : 965553598
+        }
+      },
+      "loginUser" : {
+        "username" : "KPE3D",
+        "password" : "JtfMY7F",
+        "response" : "K9oV8"
+      },
+      "updateUser" : {
+        "username" : "m4bw8",
+        "body" : {
+          "id" : 4623220618912569344,
+          "username" : "JTH4Sz",
+          "firstName" : "xR2W3V",
+          "lastName" : "GBroK",
+          "email" : "V0r6u9",
+          "password" : "r5r7P",
+          "phone" : "wtwUDj",
+          "userStatus" : 1319180266
+        }
+      }
+    }
+  }
+}
