@@ -67,13 +67,7 @@ public class GeneratorController {
 
         loader.forEach(config -> {
             boolean isServer = CodegenType.SERVER.equals(config.getTag());
-            boolean process = false;
-            if (isServer && !hiddenOptions.isServerV3(config.getName()) && (availableOptions.wereValuesSpecified() && availableOptions.isServerV3(config.getName()))) {
-                process = true;
-            } else if (!isServer && !hiddenOptions.isClientV3(config.getName()) && (availableOptions.wereValuesSpecified() && availableOptions.isClientV3(config.getName()))) {
-                process = true;
-            }
-            if (process) {
+            if (shouldProcess(isServer, true, config.getName())) {
                 List<String> typeLanguages = TYPES.get(config.getTag());
                 if (typeLanguages == null) {
                     typeLanguages = new ArrayList<>();
@@ -89,13 +83,7 @@ public class GeneratorController {
 
         loaderV2.forEach(config -> {
             boolean isServer = io.swagger.codegen.CodegenType.SERVER.equals(config.getTag());
-            boolean process = false;
-            if (isServer && !hiddenOptions.isServer(config.getName()) && (availableOptions.wereValuesSpecified() && availableOptions.isServer(config.getName()))) {
-                process = true;
-            } else if (!isServer && !hiddenOptions.isClient(config.getName()) && (availableOptions.wereValuesSpecified() && availableOptions.isClient(config.getName()))) {
-                process = true;
-            }
-            if (process) {
+            if (shouldProcess(isServer, false, config.getName())) {
                 List<String> typeLanguages = TYPESV2.get(config.getTag());
                 if (typeLanguages == null) {
                     typeLanguages = new ArrayList<>();
@@ -597,4 +585,71 @@ public class GeneratorController {
                 .contentType(MediaType.TEXT_PLAIN)
                 .entity("Could not generate files.");
     }
+
+    private static boolean shouldProcess(boolean isServer, boolean isV3, String name){
+        if(isServer){
+            return shouldProcessServer(isV3, name);
+        }else{
+            return shouldProcessClient(isV3, name);
+        }
+    }
+
+    private static boolean shouldProcessServer(boolean isV3, String name){
+
+        if(isServerHidden(isV3, name)){
+            return false;
+        }
+
+        if(availableOptions.wereValuesSpecified() && !isServerAvailable(isV3, name)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean shouldProcessClient(boolean isV3, String name){
+        if(isClientHidden(isV3, name)){
+            return false;
+        }
+
+        if(availableOptions.wereValuesSpecified() && !isClientAvailable(isV3, name)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean isClientAvailable(boolean isV3, String name){
+        if(isV3){
+            return availableOptions.isClientV3(name);
+        }else{
+            return availableOptions.isClient(name);
+        }
+    }
+
+    private static boolean isClientHidden(boolean isV3, String name){
+        if (isV3) {
+            return hiddenOptions.isClientV3(name);
+        }else {
+            return hiddenOptions.isClient(name);
+        }
+    }
+
+    private static boolean isServerAvailable(boolean isV3, String name){
+        if(isV3){
+            return availableOptions.isServerV3(name);
+        }else{
+            return availableOptions.isServer(name);
+        }
+    }
+
+    private static boolean isServerHidden(boolean isV3, String name){
+        if (isV3) {
+            return hiddenOptions.isServerV3(name);
+        }else {
+            return hiddenOptions.isServer(name);
+        }
+    }
+
+
 }
