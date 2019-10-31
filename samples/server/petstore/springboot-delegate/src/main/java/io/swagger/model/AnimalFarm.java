@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
  * AnimalFarm
  */
 @Validated
+
 public class AnimalFarm extends ArrayList<Animal>  {
 
   @Override
@@ -50,3 +51,4 @@ public class AnimalFarm extends ArrayList<Animal>  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

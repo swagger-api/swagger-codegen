@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  * Dog
  */
 @Validated
+
 public class Dog extends Animal  {
   @JsonProperty("breed")
   private String breed = null;
@@ -28,8 +29,9 @@ public class Dog extends Animal  {
    * @return breed
   **/
   @ApiModelProperty(value = "")
-  
-    public String getBreed() {
+
+
+  public String getBreed() {
     return breed;
   }
 
@@ -77,3 +79,4 @@ public class Dog extends Animal  {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

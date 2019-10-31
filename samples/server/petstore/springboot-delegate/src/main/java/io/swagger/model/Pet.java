@@ -18,6 +18,7 @@ import javax.validation.constraints.*;
  * Pet
  */
 @Validated
+
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;
@@ -68,6 +69,7 @@ public class Pet   {
       return null;
     }
   }
+
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -81,8 +83,9 @@ public class Pet   {
    * @return id
   **/
   @ApiModelProperty(value = "")
-  
-    public Long getId() {
+
+
+  public Long getId() {
     return id;
   }
 
@@ -100,9 +103,10 @@ public class Pet   {
    * @return category
   **/
   @ApiModelProperty(value = "")
-  
-    @Valid
-    public Category getCategory() {
+
+  @Valid
+
+  public Category getCategory() {
     return category;
   }
 
@@ -120,9 +124,10 @@ public class Pet   {
    * @return name
   **/
   @ApiModelProperty(example = "doggie", required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public String getName() {
+
+  public String getName() {
     return name;
   }
 
@@ -145,9 +150,10 @@ public class Pet   {
    * @return photoUrls
   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public List<String> getPhotoUrls() {
+
+  public List<String> getPhotoUrls() {
     return photoUrls;
   }
 
@@ -173,8 +179,10 @@ public class Pet   {
    * @return tags
   **/
   @ApiModelProperty(value = "")
-      @Valid
-    public List<Tag> getTags() {
+
+  @Valid
+
+  public List<Tag> getTags() {
     return tags;
   }
 
@@ -192,8 +200,9 @@ public class Pet   {
    * @return status
   **/
   @ApiModelProperty(value = "pet status in the store")
-  
-    public StatusEnum getStatus() {
+
+
+  public StatusEnum getStatus() {
     return status;
   }
 
@@ -250,3 +259,4 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

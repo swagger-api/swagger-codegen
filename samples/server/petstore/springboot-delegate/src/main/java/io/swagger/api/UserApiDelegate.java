@@ -1,17 +1,18 @@
 package io.swagger.api;
 
+import java.util.List;
 import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * A delegate to be called by the {@link UserApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
+
 public interface UserApiDelegate {
 
     /**
@@ -53,7 +54,7 @@ public interface UserApiDelegate {
     /**
      * @see UserApi#updateUser
      */
-    ResponseEntity<Void> updateUser( User  body,
-         String  username);
+    ResponseEntity<Void> updateUser( String  username,
+         User  body);
 
 }

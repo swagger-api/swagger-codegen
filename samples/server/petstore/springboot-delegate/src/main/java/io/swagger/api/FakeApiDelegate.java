@@ -2,18 +2,20 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
 import io.swagger.model.OuterComposite;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * A delegate to be called by the {@link FakeApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
+
 public interface FakeApiDelegate {
 
     /**
@@ -44,26 +46,42 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEndpointParameters
      */
-    ResponseEntity<Void> testEndpointParameters( Object  body);
+    ResponseEntity<Void> testEndpointParameters( BigDecimal  number,
+         Double  _double,
+         String  patternWithoutDelimiter,
+         byte[]  _byte,
+         Integer  integer,
+         Integer  int32,
+         Long  int64,
+         Float  _float,
+         String  string,
+         byte[]  binary,
+         LocalDate  date,
+         OffsetDateTime  dateTime,
+         String  password,
+         String  paramCallback);
 
     /**
      * @see FakeApi#testEnumParameters
      */
-    ResponseEntity<Void> testEnumParameters( Object  body,
+    ResponseEntity<Void> testEnumParameters( List<String>  enumFormStringArray,
+         String  enumFormString,
          List<String>  enumHeaderStringArray,
          String  enumHeaderString,
          List<String>  enumQueryStringArray,
          String  enumQueryString,
-         Integer  enumQueryInteger);
+         Integer  enumQueryInteger,
+         Double  enumQueryDouble);
 
     /**
      * @see FakeApi#testInlineAdditionalProperties
      */
-    ResponseEntity<Void> testInlineAdditionalProperties( Map<String, String>  body);
+    ResponseEntity<Void> testInlineAdditionalProperties( Object  param);
 
     /**
      * @see FakeApi#testJsonFormData
      */
-    ResponseEntity<Void> testJsonFormData( Object  body);
+    ResponseEntity<Void> testJsonFormData( String  param,
+         String  param2);
 
 }

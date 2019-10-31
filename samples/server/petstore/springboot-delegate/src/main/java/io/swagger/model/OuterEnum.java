@@ -12,9 +12,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * Gets or Sets OuterEnum
  */
 public enum OuterEnum {
+  
   PLACED("placed"),
-    APPROVED("approved"),
-    DELIVERED("delivered");
+  
+  APPROVED("approved"),
+  
+  DELIVERED("delivered");
 
   private String value;
 
@@ -38,3 +41,4 @@ public enum OuterEnum {
     return null;
   }
 }
+

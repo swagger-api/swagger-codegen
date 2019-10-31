@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing model name same as property name")
 @Validated
+
 public class Name   {
   @JsonProperty("name")
   private Integer name = null;
@@ -37,9 +38,10 @@ public class Name   {
    * @return name
   **/
   @ApiModelProperty(required = true, value = "")
-      @NotNull
+  @NotNull
 
-    public Integer getName() {
+
+  public Integer getName() {
     return name;
   }
 
@@ -57,8 +59,9 @@ public class Name   {
    * @return snakeCase
   **/
   @ApiModelProperty(readOnly = true, value = "")
-  
-    public Integer getSnakeCase() {
+
+
+  public Integer getSnakeCase() {
     return snakeCase;
   }
 
@@ -76,8 +79,9 @@ public class Name   {
    * @return property
   **/
   @ApiModelProperty(value = "")
-  
-    public String getProperty() {
+
+
+  public String getProperty() {
     return property;
   }
 
@@ -95,8 +99,9 @@ public class Name   {
    * @return _123Number
   **/
   @ApiModelProperty(readOnly = true, value = "")
-  
-    public Integer get123Number() {
+
+
+  public Integer get123Number() {
     return _123Number;
   }
 
@@ -149,3 +154,4 @@ public class Name   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

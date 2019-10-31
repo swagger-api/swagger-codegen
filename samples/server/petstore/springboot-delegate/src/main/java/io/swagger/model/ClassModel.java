@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing model with \"_class\" property")
 @Validated
+
 public class ClassModel   {
   @JsonProperty("_class")
   private String propertyClass = null;
@@ -28,8 +29,9 @@ public class ClassModel   {
    * @return propertyClass
   **/
   @ApiModelProperty(value = "")
-  
-    public String getPropertyClass() {
+
+
+  public String getPropertyClass() {
     return propertyClass;
   }
 
@@ -76,3 +78,4 @@ public class ClassModel   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+

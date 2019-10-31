@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing model name starting with number")
 @Validated
+
 public class Model200Response   {
   @JsonProperty("name")
   private Integer name = null;
@@ -31,8 +32,9 @@ public class Model200Response   {
    * @return name
   **/
   @ApiModelProperty(value = "")
-  
-    public Integer getName() {
+
+
+  public Integer getName() {
     return name;
   }
 
@@ -50,8 +52,9 @@ public class Model200Response   {
    * @return propertyClass
   **/
   @ApiModelProperty(value = "")
-  
-    public String getPropertyClass() {
+
+
+  public String getPropertyClass() {
     return propertyClass;
   }
 
@@ -100,3 +103,4 @@ public class Model200Response   {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
