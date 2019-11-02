@@ -48,14 +48,14 @@ public class JavaScriptInheritanceTest {
         Assert.assertEquals(cm.parent, "Base");
         Assert.assertEquals(cm.interfaces, Arrays.asList("Interface1", "Interface2"));
         Assert.assertEquals(cm.imports, Sets.newHashSet("Base", "Interface1", "Interface2"));
-        Assert.assertEquals(cm.vars.size(), 1);
-        Assert.assertEquals(cm.vars.get(0).name, "childProp");
+        Assert.assertEquals(cm.vars.size(), 4);
+        Assert.assertEquals(cm.vars.get(3).name, "childProp");
         Assert.assertEquals(cm.allVars.size(), 4);
         String[] allVars = {"intf1Prop", "intf2Prop", "baseProp", "childProp"};
         for (int i = 0; i < allVars.length; i++) {
             Assert.assertEquals(cm.allVars.get(i).name, allVars[i]);
         }
-        Assert.assertEquals(cm.mandatory, Sets.newHashSet("childProp"));
+        Assert.assertEquals(cm.mandatory, Sets.newHashSet("baseProp", "intf2Prop", "childProp"));
         Assert.assertEquals(cm.allMandatory, Sets.newHashSet("baseProp", "intf2Prop", "childProp"));
     }
 
@@ -91,7 +91,7 @@ public class JavaScriptInheritanceTest {
         Assert.assertEquals(cm.imports, Sets.newHashSet("Base", "Interface1", "Interface2"));
         Assert.assertEquals(cm.vars.size(), 4);
         Assert.assertEquals(cm.allVars.size(), 4);
-        String[] allVars = {"intf1Prop", "intf2Prop", "baseProp", "childProp"};
+        String[] allVars = {"baseProp", "intf1Prop", "intf2Prop", "childProp"};
         for (int i = 0; i < allVars.length; i++) {
             Assert.assertEquals(cm.vars.get(i).name, allVars[i]);
             Assert.assertEquals(cm.allVars.get(i).name, allVars[i]);

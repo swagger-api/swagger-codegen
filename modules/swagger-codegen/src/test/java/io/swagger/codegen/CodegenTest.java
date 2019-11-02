@@ -14,6 +14,21 @@ import java.util.List;
 
 public class CodegenTest {
 
+    @Test(description = "handle simple composition")
+    public void  propertiesInComposedModelTest() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/allOfProperties.yaml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        codegen.supportsInheritance = true;
+        final Model model = swagger.getDefinitions().get("RedisResource");
+        CodegenModel composed = codegen.fromModel("RedisResource", model, swagger.getDefinitions());
+
+        Assert.assertEquals(composed.vars.size(), 3);
+        Assert.assertEquals(composed.vars.get(0).baseName, "properties");
+        Assert.assertEquals(composed.vars.get(1).baseName, "zones");
+        Assert.assertEquals(composed.vars.get(2).baseName, "modelOneProp");
+        Assert.assertNull(composed.parent);
+    }
+
     @Test(description = "test sanitizeTag")
     public void sanitizeTagTest() {
         final DefaultCodegen codegen = new DefaultCodegen();
@@ -284,9 +299,9 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 2);
+        Assert.assertEquals(child.vars.size(), 4);
         Assert.assertEquals(child.vars.get(0).baseName, "modelOneProp");
-        Assert.assertEquals(child.vars.get(1).baseName, "childOfSimpleParentProp");
+        Assert.assertEquals(child.vars.get(3).baseName, "childOfSimpleParentProp");
         Assert.assertEquals(child.parent, "SimpleParent");
     }
 
@@ -298,8 +313,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 1);
-        Assert.assertEquals(child.vars.get(0).baseName, "childOfChildOfSimpleParentProp");
+        Assert.assertEquals(child.vars.size(), 5);
+        Assert.assertEquals(child.vars.get(4).baseName, "childOfChildOfSimpleParentProp");
         Assert.assertEquals(child.parent, "ChildOfSimpleParent");
     }
 
@@ -328,8 +343,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 1);
-        Assert.assertEquals(child.vars.get(0).baseName, "childOfChildOfSimpleParentProp");
+        Assert.assertEquals(child.vars.size(), 5);
+        Assert.assertEquals(child.vars.get(4).baseName, "childOfChildOfSimpleParentProp");
         Assert.assertEquals(child.allVars.size(), 5);
         Assert.assertEquals(child.allVars.get(0).baseName, "modelOneProp");
         Assert.assertEquals(child.allVars.get(1).baseName, "disc");
@@ -348,8 +363,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfComposedParent");
         CodegenModel child = codegen.fromModel("ChildOfComposedParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 1);
-        Assert.assertEquals(child.vars.get(0).baseName, "childOfComposedParentProp");
+        Assert.assertEquals(child.vars.size(), 5);
+        Assert.assertEquals(child.vars.get(4).baseName, "childOfComposedParentProp");
         Assert.assertEquals(child.parent, "ComposedParent");
     }
 
@@ -361,8 +376,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfChildOfComposedParent");
         CodegenModel child = codegen.fromModel("ChildOfChildOfComposedParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 1);
-        Assert.assertEquals(child.vars.get(0).baseName, "childOfChildOfComposedParentProp");
+        Assert.assertEquals(child.vars.size(), 6);
+        Assert.assertEquals(child.vars.get(5).baseName, "childOfChildOfComposedParentProp");
         Assert.assertEquals(child.parent, "ChildOfComposedParent");
     }
 
