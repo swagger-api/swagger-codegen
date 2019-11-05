@@ -251,8 +251,8 @@ Image accepts the following env variables:
 - `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file definining which languages to hide. e.g. `/data/hiddenOptions.yaml`
 - `HIDDEN_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass hidden options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
 e.g. `servers:foo,bar|clientsV3:wtf,isthis` where category can be `clients`, `servers`, `clientsV3`, `serversV3`
-- `AVAILABLE_OPTIONS_PATH` (alternative to `AVAILABLE_OPTIONS`): useful if attaching a volume containing a `availableOptions.yaml` file definining which languages to hide. e.g. `/data/availableOptions.yaml`
-- `AVAILABLE_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass available options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
+- `AVAILABLE_OPTIONS_PATH` (alternative to `AVAILABLE_OPTIONS`): useful if attaching a volume containing a `availableOptions.yaml` file definining which languages to expose. e.g. `/data/availableOptions.yaml`
+- `AVAILABLE_OPTIONS` (alternative to `AVAILABLE_OPTIONS_PATH`): allows to pass available options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
 e.g. `servers:foo,bar|clientsV3:wtf,isthis` where category can be `clients`, `servers`, `clientsV3`, `serversV3`
 
 An example of running the container:

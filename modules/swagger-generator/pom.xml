@@ -65,7 +65,7 @@
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopPort>${JETTY_TEST_STOP_PORT}</stopPort>
                     <stopKey>STOP</stopKey>
-                    <useTestScope>false</useTestScope>
+                    <useTestScope>true</useTestScope>
                     <systemProperties>
                         <systemProperty>
                             <name>config</name>
