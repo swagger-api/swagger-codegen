@@ -230,6 +230,7 @@ public class DefaultCodegen {
      */
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         List<Object> models = (List<Object>) objs.get("models");
+        Map<String, Integer> uniqueNames = new HashMap<>();
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
@@ -241,6 +242,7 @@ public class DefaultCodegen {
                 List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
                 String commonPrefix = findCommonPrefixOfVars(values);
                 int truncateIdx = commonPrefix.length();
+                uniqueNames.clear();
                 for (Object value : values) {
                     Map<String, String> enumVar = new HashMap<String, String>();
                     String enumName;
@@ -252,7 +254,8 @@ public class DefaultCodegen {
                             enumName = value.toString();
                         }
                     }
-                    enumVar.put("name", toEnumVarName(enumName, cm.dataType));
+                    String varName = toEnumVarName(enumName, cm.dataType);
+                    enumVar.put("name", ensureUniqueName(uniqueNames, varName));
                     enumVar.put("value", toEnumValue(value.toString(), cm.dataType));
                     enumVars.add(enumVar);
                 }
@@ -264,7 +267,11 @@ public class DefaultCodegen {
             for (CodegenProperty var : cm.vars) {
                 updateCodegenPropertyEnum(var);
             }
-
+            if (cm.vars != cm.allVars) {
+                for (CodegenProperty var : cm.allVars) {
+                    updateCodegenPropertyEnum(var);
+                }
+            }
         }
         return objs;
     }
@@ -289,6 +296,19 @@ public class DefaultCodegen {
             }
         }
         return "";
+    }
+
+    /**
+     * If necessary, appends a suffix to enforce uniqueness of names within a namespace.
+     * @param uniqueNames Counts name occurrences within a namespace.
+     * @param name The proposed name.
+     * @return <code>name</code>, uniquely suffixed as necessary.
+     */
+    protected String ensureUniqueName(Map<String, Integer> uniqueNames, String name) {
+        int count = uniqueNames.containsKey(name) ? uniqueNames.get(name) + 1 : 1;
+        if (uniqueNames.put(name, count) != null)
+            name = name + '_' + count;
+        return name;
     }
 
     /**
@@ -2728,8 +2748,13 @@ public class DefaultCodegen {
 
         // set the example value
         // if not specified in x-example, generate a default value
-        if (p.vendorExtensions.containsKey("x-example")) {
-            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+        if (p.vendorExtensions != null && p.vendorExtensions.containsKey("x-example")) {
+            boolean isObject = "object".equalsIgnoreCase(p.baseType) || "object".equalsIgnoreCase(p.dataType);
+            if (isObject) {
+                p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+            } else {
+                p.example = p.vendorExtensions.get("x-example").toString();
+            }
         } else if (Boolean.TRUE.equals(p.isUuid) && (Boolean.TRUE.equals(p.isString))) {
             p.example = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
         } else if (Boolean.TRUE.equals(p.isString)) {
@@ -3594,10 +3619,9 @@ public class DefaultCodegen {
 
         // remove everything else other than word, number and _
         // $php_variable => php_variable
-        if (allowUnicodeIdentifiers) { //could be converted to a single line with ?: operator
+        if (allowUnicodeIdentifiers) { // could be converted to a single line with ?: operator
             name = Pattern.compile("\\W", Pattern.UNICODE_CHARACTER_CLASS).matcher(name).replaceAll("");
-        }
-        else {
+        } else {
             name = name.replaceAll("\\W", "");
         }
 
@@ -3733,6 +3757,7 @@ public class DefaultCodegen {
         List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
         String commonPrefix = findCommonPrefixOfVars(values);
         int truncateIdx = commonPrefix.length();
+        Map<String, Integer> uniqueNames = new HashMap<>();
         for (Object value : values) {
             Map<String, String> enumVar = new HashMap<String, String>();
             String enumName;
@@ -3744,7 +3769,8 @@ public class DefaultCodegen {
                     enumName = value.toString();
                 }
             }
-            enumVar.put("name", toEnumVarName(enumName, var.datatype));
+            String varName = toEnumVarName(enumName, var.datatype);
+            enumVar.put("name", ensureUniqueName(uniqueNames, varName));
             enumVar.put("value", toEnumValue(value.toString(), var.datatype));
             enumVars.add(enumVar);
         }

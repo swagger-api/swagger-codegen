@@ -2,10 +2,10 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD.
-    define(['expect.js', '../../src/index'], factory);
+    define(['expect.js', '../{{#invokerPackage}}../{{/invokerPackage}}../{{sourceFolder}}/{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}index'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    factory(require('expect.js'), require('../../src/index'));
+    factory(require('expect.js'), require('../{{#invokerPackage}}../{{/invokerPackage}}../{{sourceFolder}}/{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}index'));
   } else {
     // Browser globals (root is window)
     factory(root.expect, root.{{moduleName}});
@@ -15,51 +15,43 @@
 
   var instance;
 
-  beforeEach(function() {
+  describe({{#invokerPackage}}'{{invokerPackage}}'{{/invokerPackage}}{{^invokerPackage}}'(package)'{{/invokerPackage}}, function() {
 {{#models}}
-{{#model}}
-{{^isEnum}}
-    instance = new {{moduleName}}.{{classname}}();
-{{/isEnum}}
-{{/model}}
+  {{#model}}
+    describe('{{classname}}', function() {
+      beforeEach(function() {
+        instance = {{^isEnum}}new {{/isEnum}}{{moduleName}}.{{classname}}{{^isEnum}}(){{/isEnum}};
+      });
+
+      it('should create an instance of {{classname}}', function() {
+        // TODO: update the code to test {{classname}}
+        expect(instance).to.be.a({{^isEnum}}{{moduleName}}.{{classname}}{{/isEnum}}{{#isEnum}}'object'{{/isEnum}});
+      });
+
+    {{^isEnum}}
+      {{#vars}}
+      it('should have the property {{name}} (base name: "{{baseName}}")', function() {
+        // TODO: update the code to test the property {{name}}
+        expect(instance).to.have.property('{{name}}');
+        // expect({{^emitModelMethods}}instance.{{name}}{{/emitModelMethods}}{{#emitModelMethods}}instance.{{getter}}(){{/emitModelMethods}}).to.be(expectedValueLiteral);
+      });
+
+      {{/vars}}
+    {{/isEnum}}
+    {{#isEnum}}
+      {{#allowableValues}}
+        {{#enumVars}}
+      it('should have the property {{name}}', function() {
+        expect(instance).to.have.property('{{name}}');
+        expect(instance.{{name}}).to.be({{value}});
+      });
+
+        {{/enumVars}}
+      {{/allowableValues}}
+    {{/isEnum}}
+  {{/model}}
 {{/models}}
-  });
-
-  var getProperty = function(object, getter, property) {
-    // Use getter method if present; otherwise, get the property directly.
-    if (typeof object[getter] === 'function')
-      return object[getter]();
-    else
-      return object[property];
-  }
-
-  var setProperty = function(object, setter, property, value) {
-    // Use setter method if present; otherwise, set the property directly.
-    if (typeof object[setter] === 'function')
-      object[setter](value);
-    else
-      object[property] = value;
-  }
-
-  describe('{{classname}}', function() {
-    it('should create an instance of {{classname}}', function() {
-      // uncomment below and update the code to test {{classname}}
-      //var instance = new {{moduleName}}.{{classname}}();
-      //expect(instance).to.be.a({{moduleName}}.{{classname}});
     });
-
-{{#models}}
-{{#model}}
-{{#vars}}
-    it('should have the property {{name}} (base name: "{{baseName}}")', function() {
-      // uncomment below and update the code to test the property {{name}}
-      //var instance = new {{moduleName}}.{{classname}}();
-      //expect(instance).to.be();
-    });
-
-{{/vars}}
-{{/model}}
-{{/models}}
   });
 
 }));
