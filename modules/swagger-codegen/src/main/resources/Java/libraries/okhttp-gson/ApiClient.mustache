@@ -1138,6 +1138,13 @@ public class ApiClient {
                 Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName() + "\"");
                 MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
                 mpBuilder.addPart(partHeaders, RequestBody.create(mediaType, file));
+            } else if (param.getValue() instanceof List && ((List) param.getValue()).size() >= 0 && ((List) param.getValue()).get(0) instanceof File) {
+                for (Object fileObj : ((List) param.getValue())) {
+                    File file = (File) fileObj;
+                    Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName() + "\"");
+                    MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
+                    mpBuilder.addPart(partHeaders, RequestBody.create(mediaType, file));
+                }
             } else {
                 Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
                 mpBuilder.addPart(partHeaders, RequestBody.create(null, parameterToString(param.getValue())));
