@@ -319,7 +319,7 @@ Integer int32 = 56; // Integer | None
 Long int64 = 789L; // Long | None
 Float _float = 3.4F; // Float | None
 String string = "string_example"; // String | None
-byte[] binary = B; // byte[] | None
+File binary = new File("B"); // File | None
 LocalDate date = LocalDate.now(); // LocalDate | None
 OffsetDateTime dateTime = OffsetDateTime.now(); // OffsetDateTime | None
 String password = "password_example"; // String | None
@@ -345,7 +345,7 @@ Name | Type | Description  | Notes
  **int64** | **Long**| None | [optional]
  **_float** | **Float**| None | [optional]
  **string** | **String**| None | [optional]
- **binary** | **byte[]**| None | [optional]
+ **binary** | **File**| None | [optional]
  **date** | **LocalDate**| None | [optional]
  **dateTime** | **OffsetDateTime**| None | [optional]
  **password** | **String**| None | [optional]

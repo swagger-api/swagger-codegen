@@ -68,13 +68,22 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
         let encoding:ParameterEncoding = isBody ? JSONDataEncoding() : URLEncoding()
 
         let xMethod = Alamofire.HTTPMethod(rawValue: method)
-        let fileKeys = parameters == nil ? [] : parameters!.filter { $1 is NSURL }
+        let fileKeys = parameters == nil ? [] : parameters!.filter { $1 is [URL] || $1 is NSURL }
                                                            .map { $0.0 }
 
         if fileKeys.count > 0 {
             manager.upload(multipartFormData: { mpForm in
                 for (k, v) in self.parameters! {
                     switch v {
+                    case let array as [URL]:
+                        for item in array {
+                            if let mimeType = self.contentTypeForFormPart(fileURL: item) {
+                                mpForm.append(item, withName: k, fileName: item.lastPathComponent, mimeType: mimeType)
+                            }
+                            else {
+                                mpForm.append(item, withName: k)
+                            }
+                        }
                     case let fileURL as URL:
                         if let mimeType = self.contentTypeForFormPart(fileURL: fileURL) {
                             mpForm.append(fileURL, withName: k, fileName: fileURL.lastPathComponent, mimeType: mimeType)
