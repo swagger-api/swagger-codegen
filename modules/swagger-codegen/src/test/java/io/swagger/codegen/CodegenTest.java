@@ -23,9 +23,9 @@ public class CodegenTest {
         CodegenModel composed = codegen.fromModel("RedisResource", model, swagger.getDefinitions());
 
         Assert.assertEquals(composed.vars.size(), 3);
-        Assert.assertEquals(composed.vars.get(0).baseName, "properties");
-        Assert.assertEquals(composed.vars.get(1).baseName, "zones");
-        Assert.assertEquals(composed.vars.get(2).baseName, "modelOneProp");
+        Assert.assertEquals(composed.vars.get(0).baseName, "modelOneProp");
+        Assert.assertEquals(composed.vars.get(1).baseName, "properties");
+        Assert.assertEquals(composed.vars.get(2).baseName, "zones");
         Assert.assertNull(composed.parent);
     }
 
@@ -62,7 +62,7 @@ public class CodegenTest {
         Assert.assertEquals(codegen.camelize(".foo.bar"), "FooBar");
         Assert.assertEquals(codegen.camelize("foo$bar"), "Foo$bar");
         Assert.assertEquals(codegen.camelize("foo_$bar"), "Foo$bar");
-        
+
         Assert.assertEquals(codegen.camelize("foo_bar"), "FooBar");
         Assert.assertEquals(codegen.camelize("foo_bar_baz"), "FooBarBaz");
         Assert.assertEquals(codegen.camelize("foo/bar.baz"), "FooBarBaz");
@@ -247,7 +247,7 @@ public class CodegenTest {
         Assert.assertTrue(op.responses.get(0).isFile);
         Assert.assertTrue(op.isResponseFile);
     }
-    
+
     @Test(description = "discriminator is present")
     public void discriminatorTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/discriminatorTest.json");
@@ -299,9 +299,9 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 4);
+        Assert.assertEquals(child.vars.size(), 2);
         Assert.assertEquals(child.vars.get(0).baseName, "modelOneProp");
-        Assert.assertEquals(child.vars.get(3).baseName, "childOfSimpleParentProp");
+        Assert.assertEquals(child.vars.get(1).baseName, "childOfSimpleParentProp");
         Assert.assertEquals(child.parent, "SimpleParent");
     }
 
@@ -313,8 +313,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 5);
-        Assert.assertEquals(child.vars.get(4).baseName, "childOfChildOfSimpleParentProp");
+        Assert.assertEquals(child.vars.size(), 1);
+        Assert.assertEquals(child.vars.get(0).baseName, "childOfChildOfSimpleParentProp");
         Assert.assertEquals(child.parent, "ChildOfSimpleParent");
     }
 
@@ -343,8 +343,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 5);
-        Assert.assertEquals(child.vars.get(4).baseName, "childOfChildOfSimpleParentProp");
+        Assert.assertEquals(child.vars.size(), 1);
+        Assert.assertEquals(child.vars.get(0).baseName, "childOfChildOfSimpleParentProp");
         Assert.assertEquals(child.allVars.size(), 5);
         Assert.assertEquals(child.allVars.get(0).baseName, "modelOneProp");
         Assert.assertEquals(child.allVars.get(1).baseName, "disc");
@@ -363,8 +363,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfComposedParent");
         CodegenModel child = codegen.fromModel("ChildOfComposedParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 5);
-        Assert.assertEquals(child.vars.get(4).baseName, "childOfComposedParentProp");
+        Assert.assertEquals(child.vars.size(), 1);
+        Assert.assertEquals(child.vars.get(0).baseName, "childOfComposedParentProp");
         Assert.assertEquals(child.parent, "ComposedParent");
     }
 
@@ -376,8 +376,8 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfChildOfComposedParent");
         CodegenModel child = codegen.fromModel("ChildOfChildOfComposedParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 6);
-        Assert.assertEquals(child.vars.get(5).baseName, "childOfChildOfComposedParentProp");
+        Assert.assertEquals(child.vars.size(), 1);
+        Assert.assertEquals(child.vars.get(0).baseName, "childOfChildOfComposedParentProp");
         Assert.assertEquals(child.parent, "ChildOfComposedParent");
     }
 
@@ -425,7 +425,7 @@ public class CodegenTest {
         Assert.assertTrue(op.imports.contains("PhotoThumbnailsRequest"));
 
     }
-    
+
     @Test(description = "use operation consumes and produces")
     public void localConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -433,7 +433,7 @@ public class CodegenTest {
         final String path = "/tests/localConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/json");
@@ -441,7 +441,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/json");
     }
-    
+
     @Test(description = "use spec consumes and produces")
     public void globalConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -449,7 +449,7 @@ public class CodegenTest {
         final String path = "/tests/globalConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/global_consumes");
@@ -457,7 +457,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/global_produces");
     }
- 
+
     @Test(description = "use operation consumes and produces (reset in operation with empty array)")
     public void localResetConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -465,7 +465,7 @@ public class CodegenTest {
         final String path = "/tests/localResetConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertNotNull(op);
         Assert.assertFalse(op.hasConsumes);
         Assert.assertNull(op.consumes);

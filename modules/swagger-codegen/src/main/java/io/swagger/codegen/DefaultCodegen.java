@@ -1413,7 +1413,6 @@ public class DefaultCodegen {
             }
             // parent model
             Model parent = (Model) composed.getParent();
-            addProperties(properties, required, model, allDefinitions);
 
             // interfaces (intermediate models)
             if (composed.getInterfaces() != null) {
@@ -1475,6 +1474,10 @@ public class DefaultCodegen {
                 }
             }
 
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
+
             // child model (properties owned by the model itself)
             Model child = composed.getChild();
             if (child != null && child instanceof RefModel && allDefinitions != null) {
@@ -1487,6 +1490,7 @@ public class DefaultCodegen {
                     addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
+
             addVars(m, properties, required, allDefinitions, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
