@@ -41,6 +41,9 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 {{/java8}}
+{{#java8-instant}}
+import java.time.Instant;
+{{/java8-instant}}
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
@@ -59,8 +62,11 @@ public class JSON {
     private LocalDateTypeAdapter localDateTypeAdapter = new LocalDateTypeAdapter();
     {{/jsr310}}
     private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
+    {{#java8-instant}}
+    private InstantTypeAdapter instantTypeAdapter = new InstantTypeAdapter();
+    {{/java8-instant}}
 
-    public static GsonBuilder createGson() {
+      public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
         {{#parent}}
           .registerTypeSelector({{classname}}.class, new TypeSelector() {
@@ -113,6 +119,9 @@ public class JSON {
             .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
             .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
             {{/jsr310}}
+            {{#java8-instant}}
+            .registerTypeAdapter(Instant.class, instantTypeAdapter)
+            {{/java8-instant}}
             .registerTypeAdapter(byte[].class, byteArrayAdapter)
             .create();
     }
@@ -401,6 +410,35 @@ public class JSON {
     }
 
     {{/jsr310}}
+    {{#java8-instant}}
+    /**
+     * Gson TypeAdapter for java.time.Instant type
+     */
+    public class InstantTypeAdapter extends TypeAdapter<Instant> {
+
+        @Override
+        public void write(JsonWriter out, Instant instant) throws IOException {
+            if (instant == null) {
+                out.nullValue();
+            } else {
+                out.value(instant.toString());
+            }
+        }
+
+        @Override
+        public Instant read(JsonReader in) throws IOException {
+            switch (in.peek()) {
+                case NULL:
+                    in.nextNull();
+                    return null;
+                default:
+                    String date = in.nextString();
+                    return Instant.parse(date);
+            }
+        }
+    }
+
+    {{/java8-instant}}
     /**
      * Gson TypeAdapter for java.sql.Date type
      * If the dateFormat is null, a simple "yyyy-MM-dd" format will be used
