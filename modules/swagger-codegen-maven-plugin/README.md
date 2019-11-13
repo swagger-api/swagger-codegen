@@ -47,7 +47,7 @@ mvn clean compile
 - `invokerPackage` - the package to use for the generated invoker objects
 - `modelNamePrefix` and `modelNameSuffix` - Sets the pre- or suffix for model classes and enums
 - `withXml` - enable XML annotations inside the generated models and API (only works with Java `language` and libraries that provide support for JSON and XML)
-- `configOptions` - a map of language-specific parameters (see below)
+- `configOptions` - a map of language-specific parameters (see `configHelp` below)
 - `configHelp` - dumps the configuration help for the specified library (generates no sources)
 - `ignoreFileOverride` - specifies the full path to a `.swagger-codegen-ignore` used for pattern based overrides of generated outputs
 - `generateApis` - generate the apis (`true` by default)
