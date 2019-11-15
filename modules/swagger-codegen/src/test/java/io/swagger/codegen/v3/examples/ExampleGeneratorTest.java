@@ -5,6 +5,7 @@
 package io.swagger.codegen.v3.examples;
 
 import io.swagger.v3.core.converter.ModelConverters;
+import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
@@ -19,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
@@ -50,6 +49,11 @@ public class ExampleGeneratorTest {
     String example = examples.get(0).get("example");
 
     Assert.assertEquals(example, expectedJson);
+
+    // Read the example JSON using the Json mapper to ensure that the generated JSON is
+    // deserializable back to an object.
+    Example exampleInstance = Json.mapper().readValue(example, Example.class);
+    Assert.assertNotNull(exampleInstance);
   }
 
   //

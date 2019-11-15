@@ -186,7 +186,7 @@ public class ExampleGenerator {
         } else if (property instanceof DateSchema) {
             return "2000-01-23";
         } else if (property instanceof DateTimeSchema) {
-            return "2000-01-23T04:56:07.000+00:00";
+            return "2000-01-23T04:56:07.000";
         } else if (property instanceof NumberSchema) {
             Double min = property.getMinimum() == null ? null : property.getMinimum().doubleValue();
             Double max = property.getMaximum() == null ? null : property.getMaximum().doubleValue();
