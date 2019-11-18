@@ -277,7 +277,7 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
                     if (response.status >= 200 && response.status < 400) {
                         return response{{#returnType}}.json(){{/returnType}};
                     } else {
-                        throw ApiException(response);
+                        throw new ApiException(response);
                     }
                 });
             };
