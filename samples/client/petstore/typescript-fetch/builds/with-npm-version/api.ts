@@ -50,6 +50,16 @@ export interface FetchArgs {
 }
 
 /**
+ *
+ * @export
+ * @class ApiException
+ */
+export class ApiException {
+    constructor(public response: Response) {
+    }
+}
+
+/**
  * 
  * @export
  * @class BaseAPI
@@ -723,10 +733,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).addPet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -743,10 +753,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).deletePet(petId, apiKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -762,10 +772,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByStatus(status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -781,10 +791,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).findPetsByTags(tags, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -800,10 +810,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).getPetById(petId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -819,10 +829,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePet(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -840,10 +850,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).updatePetWithForm(petId, name, status, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -861,10 +871,10 @@ export const PetApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = PetApiFetchParamCreator(configuration).uploadFile(petId, additionalMetadata, file, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1223,10 +1233,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).deleteOrder(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1241,10 +1251,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getInventory(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1260,10 +1270,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).getOrderById(orderId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1279,10 +1289,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = StoreApiFetchParamCreator(configuration).placeOrder(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1676,10 +1686,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUser(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1695,10 +1705,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithArrayInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1714,10 +1724,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).createUsersWithListInput(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1733,10 +1743,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).deleteUser(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1752,10 +1762,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).getUserByName(username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1772,10 +1782,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).loginUser(username, password, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1790,10 +1800,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).logoutUser(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
@@ -1810,10 +1820,10 @@ export const UserApiFp = function(configuration?: Configuration) {
             const localVarFetchArgs = UserApiFetchParamCreator(configuration).updateUser(username, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response;
                     } else {
-                        throw response;
+                        throw ApiException(response);
                     }
                 });
             };
