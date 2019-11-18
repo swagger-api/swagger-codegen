@@ -43,8 +43,9 @@ export interface FetchArgs {
  * @export
  * @class ApiException
  */
-export class ApiException {
+export class ApiException extends Error {
     constructor(public response: Response) {
+        super();
     }
 }
 
