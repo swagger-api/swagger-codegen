@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.14-SNAPSHOT</version>
+    <version>3.0.15-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -1161,12 +1161,12 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.14-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.0.10</swagger-core-version>
-        <swagger-core-version-v1>1.5.24</swagger-core-version-v1>
-        <swagger-parser-version>2.0.16-SNAPSHOT</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.47</swagger-parser-version-v1>
-        <jackson-version>2.9.10</jackson-version>
+        <swagger-codegen-generators-version>1.0.15-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.1.1-SNAPSHOT</swagger-core-version>
+        <swagger-core-version-v1>1.6.1-SNAPSHOT</swagger-core-version-v1>
+        <swagger-parser-version>2.0.17-SNAPSHOT</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.49-SNAPSHOT</swagger-parser-version-v1>
+        <jackson-version>2.10.1</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.4</commons-io-version>
@@ -1183,7 +1183,7 @@
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
-        <snakeyaml-version>1.23</snakeyaml-version>
+        <snakeyaml-version>1.24</snakeyaml-version>
         <handlebars-version>4.1.2</handlebars-version>
     </properties>
 </project>
