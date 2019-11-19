@@ -128,7 +128,7 @@ public class StoreApi {
     public Map<String, Integer> getInventory() throws IOException {
         HttpResponse response = getInventoryForHttpResponse();
         TypeReference typeRef = new TypeReference<Map<String, Integer>>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Map<String, Integer>)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -142,7 +142,7 @@ public class StoreApi {
     public Map<String, Integer> getInventory(Map<String, Object> params) throws IOException {
         HttpResponse response = getInventoryForHttpResponse(params);
         TypeReference typeRef = new TypeReference<Map<String, Integer>>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Map<String, Integer>)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse getInventoryForHttpResponse() throws IOException {
@@ -199,7 +199,7 @@ public class StoreApi {
     public Order getOrderById(Long orderId) throws IOException {
         HttpResponse response = getOrderByIdForHttpResponse(orderId);
         TypeReference typeRef = new TypeReference<Order>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Order)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -216,7 +216,7 @@ public class StoreApi {
     public Order getOrderById(Long orderId, Map<String, Object> params) throws IOException {
         HttpResponse response = getOrderByIdForHttpResponse(orderId, params);
         TypeReference typeRef = new TypeReference<Order>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Order)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse getOrderByIdForHttpResponse(Long orderId) throws IOException {
@@ -284,7 +284,7 @@ public class StoreApi {
     public Order placeOrder(Order body) throws IOException {
         HttpResponse response = placeOrderForHttpResponse(body);
         TypeReference typeRef = new TypeReference<Order>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Order)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -300,7 +300,7 @@ public class StoreApi {
     public Order placeOrder(Order body, Map<String, Object> params) throws IOException {
         HttpResponse response = placeOrderForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<Order>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Order)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse placeOrderForHttpResponse(Order body) throws IOException {
