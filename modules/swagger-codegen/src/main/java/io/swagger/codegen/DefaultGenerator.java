@@ -135,7 +135,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         } else {
             isGenerateModels = System.getProperty(CodegenConstants.MODELS) != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.MODELS, null);
         }
-        isGenerateSupportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES) != null ? Boolean.valueOf(System.getProperty(CodegenConstants.SUPPORTING_FILES)) : getGeneratorPropertyDefaultSwitch(CodegenConstants.SUPPORTING_FILES, null);
+        String supportingFilesProperty = System.getProperty(CodegenConstants.SUPPORTING_FILES);
+        if (((supportingFilesProperty != null) && supportingFilesProperty.equalsIgnoreCase("false"))) {
+            isGenerateSupportingFiles = false;
+        } else {
+            isGenerateSupportingFiles = supportingFilesProperty != null ? Boolean.TRUE : getGeneratorPropertyDefaultSwitch(CodegenConstants.SUPPORTING_FILES, null);
+        }
 
         if (isGenerateApis == null && isGenerateModels == null && isGenerateSupportingFiles == null) {
             // no specifics are set, generate everything
@@ -568,7 +573,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         Set<String> supportingFilesToGenerate = null;
         String supportingFiles = System.getProperty(CodegenConstants.SUPPORTING_FILES);
-        if (supportingFiles != null && !supportingFiles.isEmpty()) {
+        boolean generateAll = false;
+        if (supportingFiles != null && supportingFiles.equalsIgnoreCase("true")) {
+            generateAll = true;
+        } else if (supportingFiles != null && !supportingFiles.isEmpty()) {
             supportingFilesToGenerate = new HashSet<String>(Arrays.asList(supportingFiles.split(",")));
         }
 
@@ -594,7 +602,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     templateFile = getFullTemplateFile(config, support.templateFile);
                 }
                 boolean shouldGenerate = true;
-                if (supportingFilesToGenerate != null && !supportingFilesToGenerate.isEmpty()) {
+                if (!generateAll && supportingFilesToGenerate != null && !supportingFilesToGenerate.isEmpty()) {
                     shouldGenerate = supportingFilesToGenerate.contains(support.destinationFilename);
                 }
                 if (!shouldGenerate) {

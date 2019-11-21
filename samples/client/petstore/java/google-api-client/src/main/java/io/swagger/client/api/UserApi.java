@@ -389,7 +389,7 @@ public class UserApi {
     public User getUserByName(String username) throws IOException {
         HttpResponse response = getUserByNameForHttpResponse(username);
         TypeReference typeRef = new TypeReference<User>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (User)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -406,7 +406,7 @@ public class UserApi {
     public User getUserByName(String username, Map<String, Object> params) throws IOException {
         HttpResponse response = getUserByNameForHttpResponse(username, params);
         TypeReference typeRef = new TypeReference<User>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (User)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse getUserByNameForHttpResponse(String username) throws IOException {
@@ -475,7 +475,7 @@ public class UserApi {
     public String loginUser(String username, String password) throws IOException {
         HttpResponse response = loginUserForHttpResponse(username, password);
         TypeReference typeRef = new TypeReference<String>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (String)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -492,7 +492,7 @@ public class UserApi {
     public String loginUser(String username, String password, Map<String, Object> params) throws IOException {
         HttpResponse response = loginUserForHttpResponse(username, password, params);
         TypeReference typeRef = new TypeReference<String>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (String)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse loginUserForHttpResponse(String username, String password) throws IOException {

@@ -88,15 +88,15 @@ if(hasProperty('target') && target == 'android') {
     }
 
     task execute(type:JavaExec) {
-       main = System.getProperty('mainClass')
-       classpath = sourceSets.main.runtimeClasspath
+        main = System.getProperty('mainClass')
+        classpath = sourceSets.main.runtimeClasspath
     }
 }
 
 ext {
     oltu_version = "1.0.1"
     retrofit_version = "2.3.0"
-    jackson_version = "2.7.8"
+    jackson_version = "2.10.1"
     play_version = "2.5.14"
     swagger_annotations_version = "1.5.17"
     junit_version = "4.12"
