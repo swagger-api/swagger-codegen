@@ -18,6 +18,35 @@ import java.util.List;
 
 public class GeneratorServiceTest {
 
+    @Test(description = "test generator oneOf ComposedSchema Properties")
+    public void testGenerator_OneOf_ComposedSchemaProperties() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("html")
+                .spec(loadSpecAsNode("3_0_0/OneOfPropertiesIssue.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/index.html".equals(relPath)) {
+                //val_Member unique property
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("val_unique_reference"));
+                //val_Member_Product unique property
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("val_property_1"));
+            }
+        }
+
+    }
+
     @Test(description = "test generator service with jaxrs-cxf-client")
     public void testGeneratorService_Jaxrs_cxf_client() throws IOException {
 
