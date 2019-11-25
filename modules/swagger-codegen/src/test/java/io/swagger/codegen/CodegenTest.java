@@ -14,6 +14,32 @@ import java.util.List;
 
 public class CodegenTest {
 
+    @Test(description = "handle boolean additionalProperties in embedded model")
+    public void booleanAdditionalPropertiesTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/additionalProperties.json");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/user/email/v1";
+        final Operation p = model.getPaths().get(path).getPost();
+        final CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions());
+        System.out.println(model.getDefinitions());
+        Assert.assertEquals(model.getDefinitions().size(), 2);
+//        Assert.assertEquals(op.operationId, "postUserEmailV1");
+//        Assert.assertEquals(op.httpMethod, "POST");
+//        Assert.assertTrue(op.hasConsumes);
+//        Assert.assertEquals(op.consumes.size(), 1);
+//        Assert.assertEquals(op.consumes.get(0).get("mediaType"), "multipart/form-data");
+//        Assert.assertTrue(op.hasProduces);
+//        Assert.assertEquals(op.allParams.size(), 3);
+//        Assert.assertEquals(op.formParams.size(), 2);
+//
+//        final CodegenParameter file = op.formParams.get(1);
+//        Assert.assertTrue(file.isFormParam);
+//        Assert.assertEquals(file.dataType, "File");
+//        Assert.assertFalse(file.required);
+//        Assert.assertTrue(file.isFile);
+//        Assert.assertFalse(file.hasMore);
+    }
+
     @Test(description = "handle simple composition")
     public void  propertiesInComposedModelTest() {
         final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/allOfProperties.yaml");
