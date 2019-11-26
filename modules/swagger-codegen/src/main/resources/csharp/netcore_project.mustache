@@ -19,14 +19,15 @@
 
   <ItemGroup>
     {{#netStandard}}
-    <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.7" />
-    <PackageReference Include="FubarCoder.RestSharp.Portable.HttpClient" Version="4.0.7" />
+    <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.8" />
+    <PackageReference Include="FubarCoder.RestSharp.Portable.HttpClient" Version="4.0.8" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
     {{/netStandard}}
     {{^netStandard}}
     <PackageReference Include="RestSharp" Version="105.1.0" />
     {{/netStandard}}
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="JsonSubTypes" Version="1.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="JsonSubTypes" Version="1.5.2" />
   </ItemGroup>
 
   {{^netStandard}}

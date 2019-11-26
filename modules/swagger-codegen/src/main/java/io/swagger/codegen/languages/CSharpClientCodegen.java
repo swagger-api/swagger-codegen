@@ -237,8 +237,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                 additionalProperties.remove("supportsUWP");
             }
 
-            // TODO: NETSTANDARD=v5.0 and targetFrameworkNuget=netstandard1.3. These need to sync.
-            setTargetFrameworkNuget("netstandard1.3");
+            // TODO: NETSTANDARD=v5.0 and targetFrameworkNuget=netstandard2.0. These need to sync.
+            setTargetFrameworkNuget("netstandard2.0");
             setSupportsAsync(Boolean.TRUE);
             setSupportsUWP(Boolean.FALSE);
             setNetStandard(Boolean.TRUE);
