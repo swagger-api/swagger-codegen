@@ -22,7 +22,6 @@ public class StoreApiTest {
         api = new ApiClient().createService(StoreApi.class);
     }
 
-    
     /**
      * Delete purchase order by ID
      *
@@ -31,11 +30,10 @@ public class StoreApiTest {
     @Test
     public void deleteOrderTest() {
         String orderId = null;
-        // Void response = api.deleteOrder(orderId);
+        // api.deleteOrder(orderId);
 
         // TODO: test validations
     }
-    
     /**
      * Returns pet inventories by status
      *
@@ -47,7 +45,6 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Find purchase order by ID
      *
@@ -60,7 +57,6 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Place an order for a pet
      *
@@ -73,5 +69,4 @@ public class StoreApiTest {
 
         // TODO: test validations
     }
-    
 }

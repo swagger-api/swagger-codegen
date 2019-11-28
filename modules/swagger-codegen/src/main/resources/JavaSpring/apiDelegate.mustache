@@ -61,8 +61,8 @@ public interface {{classname}}Delegate {
     /**
      * @see {{classname}}#{{operationId}}
      */
-    {{#jdk8}}default {{/jdk8}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}({{#allParams}}{{^isFile}} {{>optionalDataType}} {{/isFile}}{{#isFile}}MultipartFile{{/isFile}} {{paramName}}{{#hasMore}},
-        {{/hasMore}}{{/allParams}}){{^jdk8}};{{/jdk8}}{{#jdk8}} {
+    {{#defaultInterfaces}}default {{/defaultInterfaces}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{operationId}}({{#allParams}}{{^isFile}} {{>optionalDataType}} {{/isFile}}{{#isFile}}MultipartFile{{/isFile}} {{paramName}}{{#hasMore}},
+        {{/hasMore}}{{/allParams}}){{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}} {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         {{#examples}}
             if (getAcceptHeader().get().contains("{{{contentType}}}")) {
@@ -78,7 +78,7 @@ public interface {{classname}}Delegate {
             log.warn("ObjectMapper or HttpServletRequest not configured in default {{classname}} interface so no example is generated");
         }
         return {{#async}}CompletableFuture.completedFuture({{/async}}new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED){{#async}}){{/async}};
-    }{{/jdk8}}
+    }{{/defaultInterfaces}}
 
 {{/operation}}
 }

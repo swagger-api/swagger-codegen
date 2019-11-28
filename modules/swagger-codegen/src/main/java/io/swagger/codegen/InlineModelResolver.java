@@ -4,6 +4,7 @@ import io.swagger.models.*;
 import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
+import io.swagger.models.utils.PropertyModelConverter;
 import io.swagger.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,11 +101,11 @@ public class InlineModelResolver {
                                         if (existing != null) {
                                             Property refProperty = this.makeRefProperty(existing, property);
                                             refProperty.setRequired(op.getRequired());
-                                            response.setSchema(refProperty);
+                                            response.setResponseSchema(new PropertyModelConverter().propertyToModel(refProperty));
                                         } else {
                                             Property refProperty = this.makeRefProperty(modelName, property);
                                             refProperty.setRequired(op.getRequired());
-                                            response.setSchema(refProperty);
+                                            response.setResponseSchema(new PropertyModelConverter().propertyToModel(refProperty));
                                             addGenerated(modelName, model);
                                             swagger.addDefinition(modelName, model);
                                         }
@@ -125,10 +126,12 @@ public class InlineModelResolver {
                                                 Property refProperty = this.makeRefProperty(existing, op);
                                                 refProperty.setRequired(op.getRequired());
                                                 ap.setItems(refProperty);
+                                                response.setResponseSchema(new PropertyModelConverter().propertyToModel(ap));
                                             } else {
                                                 Property refProperty = this.makeRefProperty(modelName, op);
                                                 refProperty.setRequired(op.getRequired());
                                                 ap.setItems(refProperty);
+                                                response.setResponseSchema(new PropertyModelConverter().propertyToModel(ap));
                                                 addGenerated(modelName, innerModel);
                                                 swagger.addDefinition(modelName, innerModel);
                                             }
@@ -150,10 +153,12 @@ public class InlineModelResolver {
                                                 RefProperty refProperty = new RefProperty(existing);
                                                 refProperty.setRequired(op.getRequired());
                                                 mp.setAdditionalProperties(refProperty);
+                                                response.setResponseSchema(new PropertyModelConverter().propertyToModel(mp));
                                             } else {
                                                 RefProperty refProperty = new RefProperty(modelName);
                                                 refProperty.setRequired(op.getRequired());
                                                 mp.setAdditionalProperties(refProperty);
+                                                response.setResponseSchema(new PropertyModelConverter().propertyToModel(mp));
                                                 addGenerated(modelName, innerModel);
                                                 swagger.addDefinition(modelName, innerModel);
                                             }
@@ -219,7 +224,7 @@ public class InlineModelResolver {
     private void fixStringModel(ModelImpl m) {
         if (m.getType() != null && m.getType().equals("string") && m.getExample() != null) {
             String example = m.getExample().toString();
-            if (example.substring(0, 1).equals("\"") &&
+            if (!example.isEmpty() && example.substring(0, 1).equals("\"") &&
                     example.substring(example.length() - 1).equals("\"")) {
                 m.setExample(example.substring(1, example.length() - 1));
             }
@@ -379,6 +384,12 @@ public class InlineModelResolver {
             model.setDescription(description);
             model.setExample(example);
             model.setItems(object.getItems());
+            if (object.getVendorExtensions() != null) {
+                for (String key : object.getVendorExtensions().keySet()) {
+                    model.setVendorExtension(key, object.getVendorExtensions().get(key));
+                }
+            }
+
             return model;
         }
 
@@ -398,10 +409,16 @@ public class InlineModelResolver {
         Map<String, Property> properties = object.getProperties();
 
         ModelImpl model = new ModelImpl();
+        model.type(object.getType());
         model.setDescription(description);
         model.setExample(example);
         model.setName(name);
         model.setXml(xml);
+        if (object.getVendorExtensions() != null) {
+            for (String key : object.getVendorExtensions().keySet()) {
+                model.setVendorExtension(key, object.getVendorExtensions().get(key));
+            }
+        }
 
         if (properties != null) {
             flattenProperties(properties, path);
@@ -425,6 +442,11 @@ public class InlineModelResolver {
         model.setDescription(description);
         model.setExample(example);
         model.setItems(object.getAdditionalProperties());
+        if (object.getVendorExtensions() != null) {
+            for (String key : object.getVendorExtensions().keySet()) {
+                model.setVendorExtension(key, object.getVendorExtensions().get(key));
+            }
+        }
 
         return model;
     }

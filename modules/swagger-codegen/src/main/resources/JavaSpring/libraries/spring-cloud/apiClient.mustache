@@ -1,6 +1,11 @@
 package {{package}};
 
-import org.springframework.cloud.netflix.feign.FeignClient;
+{{^isOpenFeign}}
+    import org.springframework.cloud.netflix.feign.FeignClient;
+{{/isOpenFeign}}
+{{#isOpenFeign}}
+    import org.springframework.cloud.openfeign.FeignClient;
+{{/isOpenFeign}}
 import {{configPackage}}.ClientConfiguration;
 
 {{=<% %>=}}

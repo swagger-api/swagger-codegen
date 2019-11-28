@@ -22,11 +22,10 @@ public class FakeClassnameTags123ApiTest {
         api = new ApiClient().createService(FakeClassnameTags123Api.class);
     }
 
-    
     /**
      * To test class name in snake case
      *
-     * 
+     * To test class name in snake case
      */
     @Test
     public void testClassnameTest() {
@@ -35,5 +34,4 @@ public class FakeClassnameTags123ApiTest {
 
         // TODO: test validations
     }
-    
 }

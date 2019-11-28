@@ -57,7 +57,7 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    public ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true ) @PathVariable("username") String username,
+    public ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing.",required=true ) @PathVariable("username") String username,
         @RequestHeader(value = "Accept", required = false) String accept) throws Exception {
         // do some magic!
 

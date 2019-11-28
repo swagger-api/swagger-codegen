@@ -46,6 +46,9 @@ interface {{classname}}
     {{#operation}}
 
     /**
+    {{#isDeprecated}}
+     * @deprecated
+    {{/isDeprecated}}
      * Operation {{{operationId}}}
     {{#summary}}
      *
