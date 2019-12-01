@@ -627,7 +627,7 @@ paths:
             enum:
               - '>'
               - '$'
-          in: formData
+          in: query
           description: Form parameter enum test (string array)
         - name: enum_form_string
           type: string
@@ -636,7 +636,7 @@ paths:
             - _abc
             - '-efg'
             - (xyz)
-          in: formData
+          in: query
           description: Form parameter enum test (string)
         - name: enum_header_string_array
           type: array
@@ -690,7 +690,7 @@ paths:
           enum:
             - 1.1
             - -1.2
-          in: formData
+          in: query
           description: Query parameter enum test (double)
       responses:
         '400':
@@ -714,6 +714,7 @@ paths:
       consumes:
         - application/xml; charset=utf-8
         - application/json; charset=utf-8
+        - application/x-www-form-urlencoded
       produces:
         - application/xml; charset=utf-8
         - application/json; charset=utf-8
@@ -886,12 +887,12 @@ paths:
         - application/json
       parameters:
         - name: param
-          in: formData
+          in: query
           description: field1
           required: true
           type: string
         - name: param2
-          in: formData
+          in: query
           description: field2
           required: true
           type: string
