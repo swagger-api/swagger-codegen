@@ -128,6 +128,8 @@ public class SpringCodegen extends AbstractJavaCodegen
             if (!additionalProperties.containsKey(DATE_LIBRARY)) {
                 setDateLibrary("java8");
             }
+        } else {
+            defaultInterfaces = false;
         }
 
         // set invokerPackage as basePackage
