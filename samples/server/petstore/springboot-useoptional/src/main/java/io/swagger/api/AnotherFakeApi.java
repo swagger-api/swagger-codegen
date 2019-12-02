@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "another-fake", description = "the another-fake API")
+@RequestMapping(value = "/v2")
 public interface AnotherFakeApi {
 
     @ApiOperation(value = "To test special tags", nickname = "testSpecialTags", notes = "To test special tags", response = Client.class, tags={ "$another-fake?", })

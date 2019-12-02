@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "pet", description = "the pet API")
+@RequestMapping(value = "/v2")
 public interface PetApi {
 
     PetApiDelegate getDelegate();

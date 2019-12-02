@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "fake", description = "the fake API")
+@RequestMapping(value = "/v2")
 public interface FakeApi {
 
     Logger log = LoggerFactory.getLogger(FakeApi.class);

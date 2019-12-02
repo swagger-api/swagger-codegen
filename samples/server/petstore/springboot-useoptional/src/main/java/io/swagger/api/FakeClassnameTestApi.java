@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "fake_classname_test", description = "the fake_classname_test API")
+@RequestMapping(value = "/v2")
 public interface FakeClassnameTestApi {
 
     @ApiOperation(value = "To test class name in snake case", nickname = "testClassname", notes = "To test class name in snake case", response = Client.class, authorizations = {

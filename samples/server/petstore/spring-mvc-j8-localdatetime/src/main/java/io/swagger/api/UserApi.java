@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "user", description = "the user API")
+@RequestMapping(value = "/v2")
 public interface UserApi {
 
     Logger log = LoggerFactory.getLogger(UserApi.class);

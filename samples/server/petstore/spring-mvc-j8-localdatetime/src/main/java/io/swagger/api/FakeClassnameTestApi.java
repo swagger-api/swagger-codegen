@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "fake_classname_test", description = "the fake_classname_test API")
+@RequestMapping(value = "/v2")
 public interface FakeClassnameTestApi {
 
     Logger log = LoggerFactory.getLogger(FakeClassnameTestApi.class);

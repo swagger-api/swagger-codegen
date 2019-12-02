@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "fake", description = "the fake API")
+@RequestMapping(value = "/v2")
 public interface FakeApi {
 
     @ApiOperation(value = "", nickname = "fakeOuterBooleanSerialize", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
