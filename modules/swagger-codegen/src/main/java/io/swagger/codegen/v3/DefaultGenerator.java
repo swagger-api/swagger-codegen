@@ -14,6 +14,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.security.Scopes;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.tags.Tag;
@@ -23,28 +24,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 //import io.swagger.codegen.languages.AbstractJavaCodegen;
 
@@ -200,7 +184,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
-        
+
         // Additional properties could be set already (f.e. using Maven plugin)
         if (useOas2Option != null || !config.additionalProperties().containsKey(CodegenConstants.USE_OAS2)) {
             config.additionalProperties().put(CodegenConstants.USE_OAS2, useOas2);
@@ -247,7 +231,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             LOGGER.error("Missing required field info version. Default appVersion set to 1.0.0");
             config.additionalProperties().put("appVersion", "1.0.0");
         }
-        
+
         if (StringUtils.isEmpty(info.getDescription())) {
             // set a default description if none is provided
             config.additionalProperties().put("appDescription",
@@ -911,18 +895,67 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 CodegenOperation codegenOperation = config.fromOperation(resourcePath, httpMethod, operation, schemas, openAPI);
                 codegenOperation.tags = new ArrayList<>(tags);
                 config.addOperationToGroup(config.sanitizeTag(tag.getName()), resourcePath, operation, codegenOperation, operations);
+                final List<SecurityRequirement> securities = new ArrayList<>();
 
-                List<SecurityRequirement> securities = operation.getSecurity();
-                if (securities != null && securities.isEmpty()) {
-                    continue;
+                if (globalSecurities != null) {
+                    for (SecurityRequirement globalSecurityRequirement : globalSecurities) {
+                        SecurityRequirement copy = new SecurityRequirement();
+                        for (Map.Entry<String, List<String>> entry : globalSecurityRequirement.entrySet()) {
+                            copy.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+                        }
+                        securities.add(copy);
+                        for (Map.Entry<String, List<String>> entry : copy.entrySet()) {
+                            if (operation.getSecurity() != null) {
+                                for (SecurityRequirement operationSecurityRequirement : operation.getSecurity()) {
+                                    List<String> scopes = operationSecurityRequirement.get(entry.getKey());
+                                    if (scopes != null) {
+                                        entry.getValue().addAll(scopes.stream().filter(s -> entry.getValue().stream().noneMatch(s::equals)).collect(Collectors.toList()));
+                                    } else {
+                                        securities.add(operationSecurityRequirement);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else if (operation.getSecurity() != null) {
+                    for (SecurityRequirement operationSecurityRequirement : operation.getSecurity()) {
+                        securities.add(operationSecurityRequirement);
+                    }
                 }
+
                 Map<String, SecurityScheme> authMethods = getAuthMethods(securities, securitySchemes);
-                if (authMethods == null || authMethods.isEmpty()) {
-                    authMethods = getAuthMethods(globalSecurities, securitySchemes);
-                }
-
+                codegenOperation.authMethods = config.fromSecurity(authMethods);
+                List<CodegenSecurity> codegenSecurities = new ArrayList<>();
                 if (authMethods != null && !authMethods.isEmpty()) {
-                    codegenOperation.authMethods = config.fromSecurity(authMethods);
+                    for (CodegenSecurity codegenSecurity : codegenOperation.authMethods) {
+                        for (SecurityRequirement securityRequirement : securities) {
+                            if (!securityRequirement.containsKey(codegenSecurity.name)) {
+                                continue;
+                            }
+                            CodegenSecurity codegenSecurityCopy = new CodegenSecurity();
+                            codegenSecurityCopy.vendorExtensions = codegenSecurity.vendorExtensions;
+                            if (codegenSecurityCopy.vendorExtensions != null) {
+                                for (Map.Entry<String, Object> entry : codegenSecurityCopy.vendorExtensions.entrySet()) {
+                                    codegenSecurityCopy.vendorExtensions.put(entry.getKey(), entry.getValue());
+                                }
+                            }
+                            codegenSecurityCopy.scopes = new Scopes();
+                            codegenSecurityCopy.name = codegenSecurity.name;
+                            codegenSecurityCopy.type = codegenSecurity.type;
+                            codegenSecurityCopy.authorizationUrl = codegenSecurity.authorizationUrl;
+                            codegenSecurityCopy.flow = codegenSecurity.flow;
+                            codegenSecurityCopy.keyParamName = codegenSecurity.keyParamName;
+                            codegenSecurityCopy.tokenUrl = codegenSecurity.tokenUrl;
+                            codegenSecurities.add(codegenSecurityCopy);
+                            List<String> scopes = securityRequirement.get(codegenSecurity.name);
+                            if (scopes != null && codegenSecurity.scopes != null) {
+                                for (String scope : scopes) {
+                                    codegenSecurityCopy.scopes.addString(scope, codegenSecurity.scopes.get(scope));
+                                }
+                            }
+                        }
+                    }
+                    codegenOperation.authMethods = codegenSecurities;
                     codegenOperation.getVendorExtensions().put(CodegenConstants.HAS_AUTH_METHODS_EXT_NAME, Boolean.TRUE);
                 }
             } catch (Exception ex) {
