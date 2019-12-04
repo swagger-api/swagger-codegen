@@ -242,8 +242,8 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
     }
 
-    @Test(description = "test generator service with java 3.0 and different scopes per endpoint")
-    public void testGeneratorServiceJava3WithDifferentEndpoints() throws IOException {
+    @Test(description = "test generator service with spring and different scopes per endpoint")
+    public void testGeneratorServiceSpringWithDifferentSecurityScopes() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath();
         GenerationRequest request = new GenerationRequest();
