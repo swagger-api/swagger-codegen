@@ -5,24 +5,13 @@
  */
 package io.swagger.api;
 
-import java.math.BigDecimal;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
-import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 @Api(value = "fake", description = "the fake API")
@@ -31,10 +20,10 @@ public interface FakeApi {
     FakeApiDelegate getDelegate();
 
     @ApiOperation(value = "", nickname = "fakeOuterBooleanSerialize", notes = "Test serialization of outer boolean types", response = Boolean.class, tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
     @RequestMapping(value = "/fake/outer/boolean",
-        produces = { "*/*" }, 
+        produces = { "*/*" },
         consumes = { "*/*" },
         method = RequestMethod.POST)
     default ResponseEntity<Boolean> fakeOuterBooleanSerialize(@ApiParam(value = "Input boolean as post body"  )  @Valid @RequestBody Boolean body) {
@@ -43,10 +32,10 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "", nickname = "fakeOuterCompositeSerialize", notes = "Test serialization of object with outer number type", response = OuterComposite.class, tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
     @RequestMapping(value = "/fake/outer/composite",
-        produces = { "*/*" }, 
+        produces = { "*/*" },
         consumes = { "*/*" },
         method = RequestMethod.POST)
     default ResponseEntity<OuterComposite> fakeOuterCompositeSerialize(@ApiParam(value = "Input composite as post body"  )  @Valid @RequestBody OuterComposite body) {
@@ -55,10 +44,10 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "", nickname = "fakeOuterNumberSerialize", notes = "Test serialization of outer number types", response = BigDecimal.class, tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
     @RequestMapping(value = "/fake/outer/number",
-        produces = { "*/*" }, 
+        produces = { "*/*" },
         consumes = { "*/*" },
         method = RequestMethod.POST)
     default ResponseEntity<BigDecimal> fakeOuterNumberSerialize(@ApiParam(value = "Input number as post body"  )  @Valid @RequestBody BigDecimal body) {
@@ -67,10 +56,10 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "", nickname = "fakeOuterStringSerialize", notes = "Test serialization of outer string types", response = String.class, tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Output string", response = String.class) })
     @RequestMapping(value = "/fake/outer/string",
-        produces = { "*/*" }, 
+        produces = { "*/*" },
         consumes = { "*/*" },
         method = RequestMethod.POST)
     default ResponseEntity<String> fakeOuterStringSerialize(@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body) {
@@ -79,10 +68,10 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "To test \"client\" model", nickname = "testClientModel", notes = "To test \"client\" model", response = Client.class, tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     @RequestMapping(value = "/fake",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
     default ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {
@@ -92,7 +81,7 @@ public interface FakeApi {
 
     @ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", nickname = "testEndpointParameters", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", authorizations = {
         @Authorization(value = "http_basic_test")    }, tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Invalid username supplied"),
         @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/fake",
@@ -104,7 +93,7 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "To test enum parameters", nickname = "testEnumParameters", notes = "To test enum parameters", tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Invalid request"),
         @ApiResponse(code = 404, message = "Not found") })
     @RequestMapping(value = "/fake",
@@ -116,7 +105,7 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "test inline additionalProperties", nickname = "testInlineAdditionalProperties", notes = "", tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/fake/inline-additionalProperties",
         consumes = { "application/json" },
@@ -127,7 +116,7 @@ public interface FakeApi {
 
 
     @ApiOperation(value = "test json serialization of form data", nickname = "testJsonFormData", notes = "", tags={ "fake", })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/fake/jsonFormData",
         consumes = { "application/json" },
