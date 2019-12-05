@@ -1474,6 +1474,10 @@ public class DefaultCodegen {
                 }
             }
 
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
+
             // child model (properties owned by the model itself)
             Model child = composed.getChild();
             if (child != null && child instanceof RefModel && allDefinitions != null) {
@@ -1486,6 +1490,7 @@ public class DefaultCodegen {
                     addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
+
             addVars(m, properties, required, allDefinitions, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
@@ -1556,9 +1561,14 @@ public class DefaultCodegen {
             }
         } else if (model instanceof RefModel) {
             String interfaceRef = ((RefModel) model).getSimpleRef();
-            Model interfaceModel = allDefinitions.get(interfaceRef);
-            addProperties(properties, required, interfaceModel, allDefinitions);
+            if (allDefinitions != null) {
+                Model interfaceModel = allDefinitions.get(interfaceRef);
+                addProperties(properties, required, interfaceModel, allDefinitions);
+            }
         } else if (model instanceof ComposedModel) {
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
             for (Model component :((ComposedModel) model).getAllOf()) {
                 addProperties(properties, required, component, allDefinitions);
             }

@@ -192,7 +192,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("float", "Float");
         typeMapping.put("number", "Double");
         typeMapping.put("double", "Double");
-        typeMapping.put("object", "Any");
+        typeMapping.put("object", "JSONValue");
         typeMapping.put("file", "URL");
         typeMapping.put("binary", "Data");
         typeMapping.put("ByteArray", "Data");
@@ -324,6 +324,9 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("JSONEncodingHelper.mustache",
                                                sourceFolder,
                                                "JSONEncodingHelper.swift"));
+        supportingFiles.add(new SupportingFile("JSONValue.mustache",
+                                               sourceFolder,
+                                               "JSONValue.swift"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache",
                                                "",
                                                "git_push.sh"));
