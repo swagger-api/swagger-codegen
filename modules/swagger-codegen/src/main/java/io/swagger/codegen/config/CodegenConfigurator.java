@@ -52,6 +52,7 @@ public class CodegenConfigurator implements Serializable {
     private String invokerPackage;
     private String modelNamePrefix;
     private String modelNameSuffix;
+    private String booleanGetterPrefix;
     private String groupId;
     private String artifactId;
     private String artifactVersion;
@@ -132,6 +133,15 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator setModelNameSuffix(String suffix) {
         this.modelNameSuffix = suffix;
+        return this;
+    }
+
+    public String getBooleanGetterPrefix() {
+        return booleanGetterPrefix;
+    }
+
+    public CodegenConfigurator setBooleanGetterPrefix(String booleanGetterPrefix) {
+        this.booleanGetterPrefix = booleanGetterPrefix;
         return this;
     }
 
@@ -394,6 +404,7 @@ public class CodegenConfigurator implements Serializable {
         config.setSkipOverwrite(skipOverwrite);
         config.setIgnoreFilePathOverride(ignoreFileOverride);
         config.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        config.setBooleanGetterPrefix(booleanGetterPrefix);
 
         config.instantiationTypes().putAll(instantiationTypes);
         config.typeMapping().putAll(typeMappings);

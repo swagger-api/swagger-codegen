@@ -105,6 +105,7 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
                         "xor",
                         "xor_eq")
         );
+        setBooleanGetterPrefix("is");
     }
 
     @Override
@@ -167,14 +168,5 @@ abstract public class AbstractCppCodegen extends DefaultCodegen implements Codeg
         property.nameInCamelCase = nameInCamelCase;
         return property;
     }
-    
-    /**
-     * Output the Getter name for boolean property, e.g. isActive
-     *
-     * @param name the name of the property
-     * @return getter name based on naming convention
-     */
-    public String toBooleanGetter(String name) {
-        return "is" + getterAndSetterCapitalize(name);
-    }
+
 }

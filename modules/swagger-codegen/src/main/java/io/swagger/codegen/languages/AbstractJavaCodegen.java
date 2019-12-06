@@ -1324,16 +1324,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         additionalProperties.put(propertyKey, value);
     }
 
-    /**
-     * Output the partial Getter name for boolean property, e.g. Active
-     *
-     * @param name the name of the property
-     * @return partial getter name based on naming convention
-     */
-    public String toBooleanGetter(String name) {
-        return getterAndSetterCapitalize(name);
-    }
-
     @Override
     public String sanitizeTag(String tag) {
         tag = camelize(underscore(sanitizeName(tag)));
