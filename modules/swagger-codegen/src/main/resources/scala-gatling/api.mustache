@@ -51,7 +51,7 @@ class {{classname}}Simulation extends Simulation {
         .contentTypeHeader(contentTypeHeader)
 
     // set authorization header if it has been modified from config
-    if(!authentication.equals("~MANUAL_ENTRY")){
+    if(!authentication.equals("~MANUAL_ENTRY~")){
         httpConf.authorizationHeader(authentication)
     }
 
