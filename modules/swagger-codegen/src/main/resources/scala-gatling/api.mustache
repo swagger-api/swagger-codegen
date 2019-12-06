@@ -15,10 +15,12 @@ class {{classname}}Simulation extends Simulation {
 
     def getCurrentDirectory = new File("").getAbsolutePath
     def userDataDirectory = getCurrentDirectory + "/src/gatling/resources/data"
+    def userConfDirectory = getCurrentDirectory + "/src/gatling/resources/conf"
 
     // basic test setup
     val configName = System.getProperty("testConfig", "baseline")
-    val config = ConfigFactory.load(configName).withFallback(ConfigFactory.load("default"))
+    val config = ConfigFactory.parseFile(new File(userConfDirectory + File.separator + configName + ".conf"))
+      .withFallback(ConfigFactory.parseFile(new File(userConfDirectory + File.separator + "default.conf")))
     val durationSeconds = config.getInt("performance.durationSeconds")
     val rampUpSeconds = config.getInt("performance.rampUpSeconds")
     val rampDownSeconds = config.getInt("performance.rampDownSeconds")
