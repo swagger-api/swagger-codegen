@@ -1705,6 +1705,7 @@ public class DefaultCodegen {
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
             property.isInteger = true;
+            property.isNumeric = true;
             if (sp.getEnum() != null) {
                 List<Integer> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -3079,10 +3080,10 @@ public class DefaultCodegen {
     }
 
     private void addParentContainer(CodegenModel m, String name, Property property) {
-        final CodegenProperty tmp = fromProperty(name, property);
-        addImport(m, tmp.complexType);
+        m.parentContainer = fromProperty(name, property);
+        addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
-        final String containerType = tmp.containerType;
+        final String containerType = m.parentContainer.containerType;
         final String instantiationType = instantiationTypes.get(containerType);
         if (instantiationType != null) {
             addImport(m, instantiationType);
