@@ -1,4 +1,4 @@
-FROM jimschubert/8-jdk-alpine-mvn:1.0
+FROM maven:3-jdk-8-alpine
 
 RUN set -x && \
     apk add --no-cache bash
