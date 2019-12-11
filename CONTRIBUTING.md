@@ -2,15 +2,16 @@
 
 ## Before submitting an issue
 
- - If you're not using the latest master to generate API clients or server stubs, please give it another try by pulling the latest master as the issue may have already been addressed. Ref: [Getting Started](https://github.com/swagger-api/swagger-codegen#getting-started)
- - Search the [open issue](https://github.com/swagger-api/swagger-codegen/issues) and [closed issue](https://github.com/swagger-api/swagger-codegen/issues?q=is%3Aissue+is%3Aclosed) to ensure no one else has reported something similar before.
+ - If you're not using the latest `3.0.0` branch coupled with the latest `master` branch of https://github.com/swagger-api/swagger-codegen-generators to generate API clients or server stubs, please give it another try by pulling the latest 3.0.0 as the issue may have already been addressed. Ref: [Getting Started](https://github.com/swagger-api/swagger-codegen/tree/3.0.0#getting-started)
+ - Search the [open issues](https://github.com/swagger-api/swagger-codegen/issues) and [closed issues](https://github.com/swagger-api/swagger-codegen/issues?q=is%3Aissue+is%3Aclosed) to ensure no one else has reported something similar before.
+ - Search the `swagger-codegen-generators` [open issues](https://github.com/swagger-api/swagger-codegen-generators/issues) and [closed issues](https://github.com/swagger-api/swagger-codegen-generators/issues?q=is%3Aissue+is%3Aclosed) to ensure no one else has reported something similar before.
  - File an [issue ticket](https://github.com/swagger-api/swagger-codegen/issues/new) by providing all the required information.
- - Test with the latest master by building the JAR locally to see if the issue has already been addressed.
+ - Test with the latest 3.0.0 branch by building the JAR locally to see if the issue has already been addressed.
  - You can also make a suggestion or ask a question by opening an "issue".
 
 ## Before submitting a PR
 
- - Search the [open issue](https://github.com/swagger-api/swagger-codegen/issues) to ensure no one else has reported something similar and no one is actively working on similar proposed change.
+ - Search the [open issues](https://github.com/swagger-api/swagger-codegen/issues) to ensure no one else has reported something similar and no one is actively working on similar proposed change.
  - If no one has suggested something similar, open an ["issue"](https://github.com/swagger-api/swagger-codegen/issues) with your suggestion to gather feedback from the community.
  - It's recommended to **create a new git branch** for the change so that the merge commit message looks nicer in the commit history.
 
@@ -24,11 +25,11 @@ https://github.com/swagger-api/swagger-codegen/wiki/FAQ#git
 
 ### Code generators
 
-All the code generators can be found in [modules/swagger-codegen/src/main/java/io/swagger/codegen/languages](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages)
+All the code generators for 3.0.0 version can be found in related project `swagger-codegen-generators` [generators](https://github.com/swagger-api/swagger-codegen-generators/tree/master/src/main/java/io/swagger/codegen/v3/generators)
 
 ### Templates
 
-All the templates ([mustache](https://mustache.github.io/)) can be found in [modules/swagger-codegen/src/main/resources](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/main/resources).
+All the templates ([handlebars](https://handlebarsjs.com/) / [mustache](https://mustache.github.io/)) can be found in related project `swagger-codegen-generators` [resources](https://github.com/swagger-api/swagger-codegen-generators/tree/master/src/main/resources/handlebars).
 
 For a list of variables available in the template, please refer to this [page](https://github.com/swagger-api/swagger-codegen/wiki/Mustache-Template-Variables)
 
@@ -67,18 +68,18 @@ For other languages, feel free to suggest.
 
 You may find the current code base not 100% conform to the coding style and we welcome contributions to fix those.
 
-For [Vendor Extensions](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#vendorExtensions), please follow the naming convention below:
+For [Vendor Extensions](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#specificationExtensions), please follow the naming convention below:
 - For general vendor extension, use lower case and hyphen. e.g. `x-is-unique`, `x-content-type`
 - For language-specified vendor extension, put it in the form of `x-{lang}-{extension-name}`. e.g. `x-objc-operation-id`, `x-java-feign-retry-limit`
 - For a list of existing vendor extensions in use, please refer to https://github.com/swagger-api/swagger-codegen/wiki/Vendor-Extensions. If you've added new vendor extensions as part of your PR, please update the wiki page.
 
 ### Testing
 
-To add test cases (optional) covering the change in the code generator, please refer to [modules/swagger-codegen/src/test/java/io/swagger/codegen](https://github.com/swagger-api/swagger-codegen/tree/master/modules/swagger-codegen/src/test/java/io/swagger/codegen)
+To add test cases (optional) covering the change in the code generator, please refer to [tests](https://github.com/swagger-api/swagger-codegen/tree/3.0.0/modules/swagger-codegen/src/test/java/io/swagger/codegen/v3/service)
 
 To test the templates, please perform the following:
-- Update the [Petstore](http://petstore.swagger.io/) sample by running the shell script under `bin` folder. For example, run `./bin/ruby-petstore.sh` to update the Ruby PetStore API client under [`samples/client/petstore/ruby`](https://github.com/swagger-api/swagger-codegen/tree/master/samples/client/petstore/ruby) For Windows, the batch files can be found under `bin\windows` folder. (If you find that there are new files generated or unexpected changes as a result of the update, that's not unusual as the test cases are added to the OpenAPI/Swagger spec from time to time. If you've questions or concerns, please open a ticket to start a discussion)
-- Run the tests in the sample folder, e.g. in `samples/client/petstore/ruby`, run `mvn integration-test -rf :RubyPetstoreClientTests`. (some languages may not contain unit testing for Petstore and we're looking for contribution from the community to implement those tests)
+- Update the [Petstore](http://petstore.swagger.io/) sample by running the shell script under `bin` folder. For example, run `./bin/python-petstore.sh` to update the python PetStore API client under [`samples/client/petstore/python`](https://github.com/swagger-api/swagger-codegen/tree/3.0.0/samples/client/petstore/python) For Windows, the batch files can be found under `bin\windows` folder. (If you find that there are new files generated or unexpected changes as a result of the update, that's not unusual as the test cases are added to the OpenAPI/Swagger spec from time to time. If you've questions or concerns, please open a ticket to start a discussion)
+- Run the tests in the sample folder (some languages may not contain unit testing for Petstore and we're looking for contribution from the community to implement those tests)
 - Finally, git commit the updated samples files: `git commit -a`
   (`git add -A` if added files with new test cases)
 
