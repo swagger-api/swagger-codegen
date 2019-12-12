@@ -175,11 +175,11 @@
     </repositories>
     <properties>
         <swagger-core-version>1.5.18</swagger-core-version>
-        <jetty-version>9.2.9.v20150224</jetty-version>
+        <jetty-version>9.3.27.v20190418</jetty-version>
         <resteasy-version>3.0.11.Final</resteasy-version>
         <slf4j-version>1.6.3</slf4j-version>
         <junit-version>4.8.1</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
-        <jackson-version>2.9.10</jackson-version>
+        <jackson-version>2.10.1</jackson-version>
     </properties>
 </project>
