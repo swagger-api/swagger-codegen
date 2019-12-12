@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
@@ -224,6 +225,42 @@ public class DefaultGeneratorTest {
         final File defaultApi = new File(output, MODEL_DEFAULT_API_FILE);
         assertTrue(defaultApi.exists());
 
+    }
+
+    @Test
+    public void testIssue9725() throws Exception {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"ResponseEntity<List<GetMarketsRegionIdOrders200Ok>>"));
+    }
+
+    @Test
+    public void testIssue9725Map() throws Exception {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"ResponseEntity<Map<String, GetMarketsRegionIdOrders200Ok>>"));
     }
 
     @Test

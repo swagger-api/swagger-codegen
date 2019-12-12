@@ -106,14 +106,14 @@ if(hasProperty('target') && target == 'android') {
 
 ext {
     swagger_annotations_version = "1.5.17"
-    jackson_version = "2.9.10"
+    jackson_version = "2.10.1"
     {{#supportJava6}}
     jersey_version = "2.6"
     commons_io_version=2.5
     commons_lang3_version=3.6
     {{/supportJava6}}
     {{^supportJava6}}
-    jersey_version = "2.25.1"
+    jersey_version = "2.29.1"
     {{/supportJava6}}
     junit_version = "4.12"
 }
@@ -130,6 +130,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version",
     {{/joda}}
     {{#java8}}
+    compile "org.glassfish.jersey.inject:jersey-hk2:$jersey_version"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version",
     {{/java8}}
     {{#supportJava6}}
