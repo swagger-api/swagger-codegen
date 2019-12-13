@@ -23,6 +23,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "fake_classname_test", description = "the fake_classname_test API")
+@RequestMapping(value = "/v2")
 public interface FakeClassnameTestApi {
 
     FakeClassnameTestApiDelegate getDelegate();

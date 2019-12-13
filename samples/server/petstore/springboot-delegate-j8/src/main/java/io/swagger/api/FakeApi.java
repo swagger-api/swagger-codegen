@@ -28,6 +28,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "fake", description = "the fake API")
+@RequestMapping(value = "/v2")
 public interface FakeApi {
 
     FakeApiDelegate getDelegate();

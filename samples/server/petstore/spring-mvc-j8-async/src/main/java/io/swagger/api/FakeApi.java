@@ -36,6 +36,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Api(value = "fake", description = "the fake API")
+@RequestMapping(value = "/v2")
 public interface FakeApi {
 
     Logger log = LoggerFactory.getLogger(FakeApi.class);
