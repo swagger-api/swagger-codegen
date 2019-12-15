@@ -1606,7 +1606,7 @@ public class DefaultCodegen {
      * @param itemsDepth the depth in nested containers or null
      * @return Codegen Property object
      */
-    protected CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
+    private CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
         if (p == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
