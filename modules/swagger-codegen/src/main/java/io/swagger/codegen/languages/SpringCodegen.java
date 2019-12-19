@@ -34,6 +34,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String IMPLICIT_HEADERS = "implicitHeaders";
     public static final String SWAGGER_DOCKET_CONFIG = "swaggerDocketConfig";
     public static final String TARGET_OPENFEIGN = "generateForOpenFeign";
+    public static final String DEFAULT_INTERFACES = "defaultInterfaces";
 
     protected String title = "swagger-petstore";
     protected String configPackage = "io.swagger.configuration";
@@ -51,6 +52,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean swaggerDocketConfig = false;
     protected boolean useOptional = false;
     protected boolean openFeign = false;
+    protected boolean defaultInterfaces = true;
 
     public SpringCodegen() {
         super();
@@ -74,7 +76,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(INTERFACE_ONLY, "Whether to generate only API interface stubs without the server files."));
         cliOptions.add(CliOption.newBoolean(DELEGATE_PATTERN, "Whether to generate the server files using the delegate pattern"));
         cliOptions.add(CliOption.newBoolean(SINGLE_CONTENT_TYPES, "Whether to select only one produces/consumes content-type by operation."));
-        cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 default interface"));
+        cliOptions.add(CliOption.newBoolean(JAVA_8, "use java8 features like the new date library"));
         cliOptions.add(CliOption.newBoolean(ASYNC, "use async Callable controllers"));
         cliOptions.add(new CliOption(RESPONSE_WRAPPER, "wrap the responses in given type (Future,Callable,CompletableFuture,ListenableFuture,DeferredResult,HystrixCommand,RxObservable,RxSingle or fully qualified type)"));
         cliOptions.add(CliOption.newBoolean(USE_TAGS, "use tags for creating interface and controller classnames"));
@@ -84,6 +86,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(USE_OPTIONAL,
                 "Use Optional container for optional parameters"));
         cliOptions.add(CliOption.newBoolean(TARGET_OPENFEIGN,"Generate for usage with OpenFeign (instead of feign)"));
+        cliOptions.add(CliOption.newBoolean(DEFAULT_INTERFACES, "Generate default implementations for interfaces").defaultValue("true"));
 
         supportedLibraries.put(DEFAULT_LIBRARY, "Spring-boot Server application using the SpringFox integration.");
         supportedLibraries.put(SPRING_MVC_LIBRARY, "Spring-MVC Server application using the SpringFox integration.");
@@ -193,6 +196,11 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (additionalProperties.containsKey(TARGET_OPENFEIGN)) {
             this.setOpenFeign(convertPropertyToBoolean(TARGET_OPENFEIGN));
         }
+
+        if (additionalProperties.containsKey(DEFAULT_INTERFACES)) {
+            this.setDefaultInterfaces(convertPropertyToBoolean(DEFAULT_INTERFACES));
+        }
+        additionalProperties.put(DEFAULT_INTERFACES, this.defaultInterfaces);
 
         if (useBeanValidation) {
             writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
@@ -696,5 +704,9 @@ public class SpringCodegen extends AbstractJavaCodegen
 
     public void setOpenFeign(boolean openFeign) {
         this.openFeign = openFeign;
+    }
+
+    public void setDefaultInterfaces(boolean defaultInterfaces) {
+        this.defaultInterfaces = defaultInterfaces;
     }
 }

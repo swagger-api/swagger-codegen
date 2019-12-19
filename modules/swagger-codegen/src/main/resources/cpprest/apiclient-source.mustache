@@ -31,6 +31,14 @@ utility::string_t ApiClient::parameterToString(utility::string_t value)
 {
     return value;
 }
+
+utility::string_t ApiClient::parameterToString(bool value)
+{
+    std::stringstream valueAsStringStream;
+    valueAsStringStream << (value ? "true" : "false");
+    return utility::conversions::to_string_t(valueAsStringStream.str());
+}
+
 utility::string_t ApiClient::parameterToString(int64_t value)
 {
 	std::stringstream valueAsStringStream;
@@ -132,7 +140,20 @@ pplx::task<web::http::http_response> ApiClient::callApi(
                 if (!formParams.empty())
                 {
                     request.set_body(body_data);
-		}
+                }
+            }
+            else if (contentType == utility::conversions::to_string_t("multipart/form-data"))
+            {
+                MultipartFormData uploadData;
+                for (auto& kvp : formParams)
+                {
+                    uploadData.add(ModelBase::toHttpContent(kvp.first, kvp.second));
+                }
+                std::stringstream data;
+                uploadData.writeTo(data);
+                auto bodyString = data.str();
+                auto length = bodyString.size();
+                request.set_body(concurrency::streams::bytestream::open_istream(std::move(bodyString)), length, utility::conversions::to_string_t("multipart/form-data; boundary=") + uploadData.getBoundary());
             }
             else
             {
