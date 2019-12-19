@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**fakeOuterNumberSerialize**](FakeApi.md#fakeOuterNumberSerialize) | **POST** /fake/outer/number | 
 [**fakeOuterStringSerialize**](FakeApi.md#fakeOuterStringSerialize) | **POST** /fake/outer/string | 
 [**testBodyWithQueryParams**](FakeApi.md#testBodyWithQueryParams) | **PUT** /fake/body-with-query-params | 
-[**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
+[**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \"client\" model
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**testEnumParameters**](FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
 [**testInlineAdditionalProperties**](FakeApi.md#testInlineAdditionalProperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
@@ -240,9 +240,9 @@ No authorization required
 # **testClientModel**
 > Client testClientModel(body)
 
-To test \&quot;client\&quot; model
+To test \"client\" model
 
-To test \&quot;client\&quot; model
+To test \"client\" model
 
 ### Example
 ```javascript
@@ -305,7 +305,7 @@ var _double = 1.2; // Number | None
 
 var patternWithoutDelimiter = "patternWithoutDelimiter_example"; // String | None
 
-var _byte = B; // Blob | None
+var _byte = "QmFzZTY0IGV4YW1wbGU="; // Blob | None
 
 var opts = { 
   'integer': 56, // Number | None
@@ -313,7 +313,7 @@ var opts = {
   'int64': 789, // Number | None
   '_float': 3.4, // Number | None
   '_string': "_string_example", // String | None
-  'binary': B, // Blob | None
+  'binary': "QmFzZTY0IGV4YW1wbGU=", // Blob | None
   '_date': new Date("2013-10-20"), // Date | None
   'dateTime': new Date("2013-10-20T19:20:30+01:00"), // Date | None
   'password': "password_example", // String | None

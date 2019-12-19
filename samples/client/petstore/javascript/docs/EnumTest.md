@@ -40,9 +40,9 @@ Name | Type | Description | Notes
 ## Enum: EnumIntegerEnum
 
 
-* `1` (value: `1`)
+* `_1` (value: `1`)
 
-* `-1` (value: `-1`)
+* `_1_2` (value: `-1`)
 
 
 
@@ -51,9 +51,9 @@ Name | Type | Description | Notes
 ## Enum: EnumNumberEnum
 
 
-* `1.1` (value: `1.1`)
+* `_11` (value: `1.1`)
 
-* `-1.2` (value: `-1.2`)
+* `_12` (value: `-1.2`)
 
 
 
