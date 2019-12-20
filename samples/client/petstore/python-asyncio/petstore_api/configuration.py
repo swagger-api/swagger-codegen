@@ -208,11 +208,13 @@ class Configuration(object):
         if self.refresh_api_key_hook:
             self.refresh_api_key_hook(self)
 
-        if (self.api_key.get(identifier) and
-                self.api_key_prefix.get(identifier)):
-            return self.api_key_prefix[identifier] + ' ' + self.api_key[identifier]  # noqa: E501
-        elif self.api_key.get(identifier):
-            return self.api_key[identifier]
+        key = self.api_key.get(identifier)
+        if key:
+            prefix = self.api_key_prefix.get(identifier)
+            if prefix:
+                return "%s %s" % (prefix, key)
+            else:
+                return key
 
     def get_basic_auth_token(self):
         """Gets HTTP basic authentication header (string).
