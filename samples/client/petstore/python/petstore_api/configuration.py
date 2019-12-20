@@ -207,7 +207,7 @@ class Configuration(object):
         """
 
         if self.refresh_api_key_hook:
-          self.refresh_api_key_hook(self)
+            self.refresh_api_key_hook(self)
 
         key = self.api_key.get(identifier)
         if key:
