@@ -1,17 +1,17 @@
 # SwaggerPetstoreEndRnNR.FakeApi
 
-All URIs are relative to *https://petstore.swagger.io *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r/v2 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r*
+All URIs are relative to *https://petstore.swagger.io *_/ ' \" =end -- \\r\\n \\n \\r/v2 *_/ ' \" =end -- \\r\\n \\n \\r*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**testCodeInjectEndRnNR**](FakeApi.md#testCodeInjectEndRnNR) | **PUT** /fake | To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+[**testCodeInjectEndRnNR**](FakeApi.md#testCodeInjectEndRnNR) | **PUT** /fake | To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
 
 
 <a name="testCodeInjectEndRnNR"></a>
 # **testCodeInjectEndRnNR**
 > testCodeInjectEndRnNR(opts)
 
-To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
+To test code injection *_/ ' \" =end -- \\r\\n \\n \\r
 
 ### Example
 ```javascript
@@ -37,7 +37,7 @@ apiInstance.testCodeInjectEndRnNR(opts, callback);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **testCodeInjectEndRnNR** | **String**| To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r | [optional] 
+ **testCodeInjectEndRnNR** | **String**| To test code injection *_/ ' \" =end -- \\r\\n \\n \\r | [optional] 
 
 ### Return type
 
