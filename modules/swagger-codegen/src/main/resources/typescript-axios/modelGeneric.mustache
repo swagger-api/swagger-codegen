@@ -15,13 +15,12 @@ export interface {{classname}} {{#parent}}extends models.{{{parent}}} {{/parent}
 }
 
 {{#hasEnums}}
-export namespace {{classname}} {
 {{#vars}}{{#isEnum}}
-    export enum {{enumName}} {
+    export enum {{classname}}{{enumName}} {
     {{#allowableValues}}
         {{#enumVars}}
-            {{{name}}} = <any> {{{value}}}{{^-last}},{{/-last}}
+            {{{name}}} = {{{value}}}{{^-last}},{{/-last}}
         {{/enumVars}}
     {{/allowableValues}}
     }{{/isEnum}}{{/vars}}
-}{{/hasEnums}}
+{{/hasEnums}}
