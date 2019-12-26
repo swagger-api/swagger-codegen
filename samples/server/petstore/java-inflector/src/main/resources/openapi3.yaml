@@ -47,13 +47,13 @@ paths:
               $ref: '#/components/schemas/Pet'
         required: true
       responses:
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Pet not found
           content: {}
-        405:
+        "405":
           description: Validation exception
           content: {}
       security:
@@ -78,7 +78,7 @@ paths:
               $ref: '#/components/schemas/Pet'
         required: true
       responses:
-        405:
+        "405":
           description: Invalid input
           content: {}
       security:
@@ -111,7 +111,7 @@ paths:
             - sold
             default: available
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -125,7 +125,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pet'
-        400:
+        "400":
           description: Invalid status value
           content: {}
       security:
@@ -153,7 +153,7 @@ paths:
           items:
             type: string
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -167,7 +167,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pet'
-        400:
+        "400":
           description: Invalid tag value
           content: {}
       deprecated: true
@@ -194,7 +194,7 @@ paths:
           type: integer
           format: int64
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -203,10 +203,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Pet not found
           content: {}
       security:
@@ -233,7 +233,7 @@ paths:
             schema:
               $ref: '#/components/schemas/body'
       responses:
-        405:
+        "405":
           description: Invalid input
           content: {}
       security:
@@ -265,7 +265,7 @@ paths:
           type: integer
           format: int64
       responses:
-        400:
+        "400":
           description: Invalid pet value
           content: {}
       security:
@@ -296,7 +296,7 @@ paths:
             schema:
               $ref: '#/components/schemas/body_1'
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/json:
@@ -314,7 +314,7 @@ paths:
       - pet
       operationId: getRandomPet
       responses:
-        200:
+        "200":
           description: a single random pet
           content:
             application/json:
@@ -327,7 +327,7 @@ paths:
       - pet
       operationId: getAllPets
       responses:
-        200:
+        "200":
           description: a single random pet
           content:
             application/json:
@@ -342,7 +342,7 @@ paths:
       description: Returns a map of status codes to quantities
       operationId: getInventory
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/json:
@@ -369,7 +369,7 @@ paths:
               $ref: '#/components/schemas/Order'
         required: true
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -378,7 +378,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
-        400:
+        "400":
           description: Invalid Order
           content: {}
       x-contentType: '*/*'
@@ -404,7 +404,7 @@ paths:
           type: integer
           format: int64
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -413,10 +413,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Order not found
           content: {}
       x-accepts: application/json
@@ -437,10 +437,10 @@ paths:
         schema:
           type: string
       responses:
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Order not found
           content: {}
       x-contentType: application/json
@@ -531,7 +531,7 @@ paths:
         schema:
           type: string
       responses:
-        200:
+        "200":
           description: successful operation
           headers:
             X-Rate-Limit:
@@ -556,7 +556,7 @@ paths:
             application/json:
               schema:
                 type: string
-        400:
+        "400":
           description: Invalid username/password supplied
           content: {}
       x-accepts: application/json
@@ -587,7 +587,7 @@ paths:
         schema:
           type: string
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -596,10 +596,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        400:
+        "400":
           description: Invalid username supplied
           content: {}
-        404:
+        "404":
           description: User not found
           content: {}
       x-accepts: application/json
@@ -626,10 +626,10 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       responses:
-        400:
+        "400":
           description: Invalid user supplied
           content: {}
-        404:
+        "404":
           description: User not found
           content: {}
       x-contentType: '*/*'
@@ -650,10 +650,10 @@ paths:
         schema:
           type: string
       responses:
-        400:
+        "400":
           description: Invalid username supplied
           content: {}
-        404:
+        "404":
           description: User not found
           content: {}
       x-contentType: application/json
@@ -672,7 +672,7 @@ paths:
               $ref: '#/components/schemas/Client'
         required: true
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/json:
@@ -757,10 +757,10 @@ paths:
           - 1
           - -2
       responses:
-        400:
+        "400":
           description: Invalid request
           content: {}
-        404:
+        "404":
           description: Not found
           content: {}
       x-accepts: ""
@@ -788,10 +788,10 @@ paths:
               $ref: '#/components/schemas/body_3'
         required: true
       responses:
-        400:
+        "400":
           description: Invalid username supplied
           content: {}
-        404:
+        "404":
           description: User not found
           content: {}
       security:
@@ -812,7 +812,7 @@ paths:
               $ref: '#/components/schemas/Client'
         required: true
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/json:
@@ -833,10 +833,10 @@ paths:
             schema:
               $ref: '#/components/schemas/body_4'
       responses:
-        400:
+        "400":
           description: Invalid request
           content: {}
-        404:
+        "404":
           description: Not found
           content: {}
       x-contentType: '*/*'
@@ -855,7 +855,7 @@ paths:
               $ref: '#/components/schemas/OuterNumber'
         required: false
       responses:
-        200:
+        "200":
           description: Output number
           content:
             '*/*':
@@ -877,7 +877,7 @@ paths:
               $ref: '#/components/schemas/OuterString'
         required: false
       responses:
-        200:
+        "200":
           description: Output string
           content:
             '*/*':
@@ -899,7 +899,7 @@ paths:
               $ref: '#/components/schemas/OuterBoolean'
         required: false
       responses:
-        200:
+        "200":
           description: Output boolean
           content:
             '*/*':
@@ -921,7 +921,7 @@ paths:
               $ref: '#/components/schemas/OuterComposite'
         required: false
       responses:
-        200:
+        "200":
           description: Output composite
           content:
             '*/*':
@@ -942,7 +942,7 @@ paths:
               $ref: '#/components/schemas/body_5'
         required: true
       responses:
-        200:
+        "200":
           description: successful operation
           content: {}
       x-contentType: application/json
@@ -963,7 +963,7 @@ paths:
                 type: string
         required: true
       responses:
-        200:
+        "200":
           description: successful operation
           content: {}
       x-contentType: application/json
@@ -983,7 +983,7 @@ paths:
               $ref: '#/components/schemas/Client'
         required: true
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/json:
@@ -1008,13 +1008,13 @@ paths:
               $ref: '#/components/schemas/Animal'
         required: true
       responses:
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Animal not found
           content: {}
-        405:
+        "405":
           description: Validation exception
           content: {}
       x-contentType: application/json
@@ -1035,7 +1035,7 @@ paths:
               $ref: '#/components/schemas/Animal'
         required: true
       responses:
-        405:
+        "405":
           description: Invalid input
           content: {}
       x-contentType: application/json
@@ -1058,7 +1058,7 @@ paths:
           type: integer
           format: int64
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -1067,10 +1067,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Animal'
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Pet not found
           content: {}
       x-accepts: application/json
@@ -1095,7 +1095,7 @@ paths:
             schema:
               $ref: '#/components/schemas/body_6'
       responses:
-        405:
+        "405":
           description: Invalid input
           content: {}
       x-contentType: application/x-www-form-urlencoded
@@ -1123,7 +1123,7 @@ paths:
           type: integer
           format: int64
       responses:
-        400:
+        "400":
           description: Invalid animal value
           content: {}
       x-contentType: application/json
@@ -1145,13 +1145,13 @@ paths:
               $ref: '#/components/schemas/Dog'
         required: true
       responses:
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Animal not found
           content: {}
-        405:
+        "405":
           description: Validation exception
           content: {}
       x-contentType: application/json
@@ -1172,7 +1172,7 @@ paths:
               $ref: '#/components/schemas/Dog'
         required: true
       responses:
-        405:
+        "405":
           description: Invalid input
           content: {}
       x-contentType: application/json
@@ -1195,7 +1195,7 @@ paths:
           type: integer
           format: int64
       responses:
-        200:
+        "200":
           description: successful operation
           content:
             application/xml:
@@ -1204,10 +1204,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Dog'
-        400:
+        "400":
           description: Invalid ID supplied
           content: {}
-        404:
+        "404":
           description: Pet not found
           content: {}
       x-accepts: application/json
@@ -1232,7 +1232,7 @@ paths:
             schema:
               $ref: '#/components/schemas/body_7'
       responses:
-        405:
+        "405":
           description: Invalid input
           content: {}
       x-contentType: application/x-www-form-urlencoded
@@ -1260,7 +1260,7 @@ paths:
           type: integer
           format: int64
       responses:
-        400:
+        "400":
           description: Invalid dog value
           content: {}
       x-contentType: application/json
@@ -1402,7 +1402,7 @@ components:
           readOnly: true
         property:
           type: string
-        123Number:
+        "123Number":
           type: integer
           readOnly: true
       description: Model for testing model name same as property name
@@ -1418,14 +1418,14 @@ components:
     List:
       type: object
       properties:
-        123-list:
+        "123-list":
           type: string
     NumberOnly:
       type: object
       properties:
         JustNumber:
           type: number
-    200_response:
+    "200_response":
       type: object
       properties:
         name:
