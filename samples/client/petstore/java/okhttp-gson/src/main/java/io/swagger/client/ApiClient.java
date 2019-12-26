@@ -59,8 +59,14 @@ public class ApiClient {
 
     private Map<String, Authentication> authentications;
 
+    private DateFormat dateFormat;
+    private DateFormat datetimeFormat;
+    private boolean lenientDatetimeFormat;
+    private int dateLength;
+
     private InputStream sslCaCert;
     private boolean verifyingSsl;
+    private KeyManager[] keyManagers;
 
     private OkHttpClient httpClient;
     private JSON json;
@@ -84,6 +90,7 @@ public class ApiClient {
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
         authentications.put("api_key", new ApiKeyAuth("header", "api_key"));
+        authentications.put("api_key_query", new ApiKeyAuth("query", "api_key_query"));
         authentications.put("http_basic_test", new HttpBasicAuth());
         authentications.put("petstore_auth", new OAuth());
         // Prevent the authentications from being modified.
@@ -193,6 +200,27 @@ public class ApiClient {
         this.sslCaCert = sslCaCert;
         applySslSettings();
         return this;
+    }
+
+    public KeyManager[] getKeyManagers() {
+        return keyManagers;
+    }
+
+    /**
+     * Configure client keys to use for authorization in an SSL session.
+     * Use null to reset to default.
+     *
+     * @param managers The KeyManagers to use
+     * @return ApiClient
+     */
+    public ApiClient setKeyManagers(KeyManager[] managers) {
+        this.keyManagers = managers;
+        applySslSettings();
+        return this;
+    }
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
     }
 
     public ApiClient setDateFormat(DateFormat dateFormat) {
@@ -380,7 +408,7 @@ public class ApiClient {
     }
 
     /**
-     * Set the tempoaray folder path (for downloading files)
+     * Set the temporary folder path (for downloading files)
      *
      * @param tempFolderPath Temporary folder path
      * @return ApiClient
@@ -402,12 +430,57 @@ public class ApiClient {
     /**
      * Sets the connect timeout (in milliseconds).
      * A value of 0 means no timeout, otherwise values must be between 1 and
+     * {@link Integer#MAX_VALUE}.
      *
      * @param connectionTimeout connection timeout in milliseconds
      * @return Api client
      */
     public ApiClient setConnectTimeout(int connectionTimeout) {
         httpClient.setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS);
+        return this;
+    }
+
+    /**
+     * Get read timeout (in milliseconds).
+     *
+     * @return Timeout in milliseconds
+     */
+    public int getReadTimeout() {
+        return httpClient.getReadTimeout();
+    }
+
+    /**
+     * Sets the read timeout (in milliseconds).
+     * A value of 0 means no timeout, otherwise values must be between 1 and
+     * {@link Integer#MAX_VALUE}.
+     *
+     * @param readTimeout read timeout in milliseconds
+     * @return Api client
+     */
+    public ApiClient setReadTimeout(int readTimeout) {
+        httpClient.setReadTimeout(readTimeout, TimeUnit.MILLISECONDS);
+        return this;
+    }
+
+    /**
+     * Get write timeout (in milliseconds).
+     *
+     * @return Timeout in milliseconds
+     */
+    public int getWriteTimeout() {
+        return httpClient.getWriteTimeout();
+    }
+
+    /**
+     * Sets the write timeout (in milliseconds).
+     * A value of 0 means no timeout, otherwise values must be between 1 and
+     * {@link Integer#MAX_VALUE}.
+     *
+     * @param writeTimeout connection timeout in milliseconds
+     * @return Api client
+     */
+    public ApiClient setWriteTimeout(int writeTimeout) {
+        httpClient.setWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
 
@@ -439,62 +512,70 @@ public class ApiClient {
     }
 
     /**
-     * Format to {@code Pair} objects.
+     * Formats the specified query parameter to a list containing a single {@code Pair} object.
      *
-     * @param collectionFormat collection format (e.g. csv, tsv)
-     * @param name Name
-     * @param value Value
-     * @return A list of Pair objects
+     * Note that {@code value} must not be a collection.
+     *
+     * @param name The name of the parameter.
+     * @param value The value of the parameter.
+     * @return A list containing a single {@code Pair} object.
      */
-    public List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
+    public List<Pair> parameterToPair(String name, Object value) {
         List<Pair> params = new ArrayList<Pair>();
 
         // preconditions
-        if (name == null || name.isEmpty() || value == null) return params;
+        if (name == null || name.isEmpty() || value == null || value instanceof Collection) return params;
 
-        Collection valueCollection = null;
-        if (value instanceof Collection) {
-            valueCollection = (Collection) value;
-        } else {
-            params.add(new Pair(name, parameterToString(value)));
+        params.add(new Pair(name, parameterToString(value)));
+        return params;
+    }
+
+    /**
+     * Formats the specified collection query parameters to a list of {@code Pair} objects.
+     *
+     * Note that the values of each of the returned Pair objects are percent-encoded.
+     *
+     * @param collectionFormat The collection format of the parameter.
+     * @param name The name of the parameter.
+     * @param value The value of the parameter.
+     * @return A list of {@code Pair} objects.
+     */
+    public List<Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
+        List<Pair> params = new ArrayList<Pair>();
+
+        // preconditions
+        if (name == null || name.isEmpty() || value == null || value.isEmpty()) {
             return params;
         }
-
-        if (valueCollection.isEmpty()){
-            return params;
-        }
-
-        // get the collection format
-        collectionFormat = (collectionFormat == null || collectionFormat.isEmpty() ? "csv" : collectionFormat); // default: csv
 
         // create the params based on the collection format
-        if (collectionFormat.equals("multi")) {
-            for (Object item : valueCollection) {
-                params.add(new Pair(name, parameterToString(item)));
+        if ("multi".equals(collectionFormat)) {
+            for (Object item : value) {
+                params.add(new Pair(name, escapeString(parameterToString(item))));
             }
-
             return params;
         }
 
+        // collectionFormat is assumed to be "csv" by default
         String delimiter = ",";
 
-        if (collectionFormat.equals("csv")) {
-            delimiter = ",";
-        } else if (collectionFormat.equals("ssv")) {
-            delimiter = " ";
-        } else if (collectionFormat.equals("tsv")) {
-            delimiter = "\t";
-        } else if (collectionFormat.equals("pipes")) {
-            delimiter = "|";
+        // escape all delimiters except commas, which are URI reserved
+        // characters
+        if ("ssv".equals(collectionFormat)) {
+            delimiter = escapeString(" ");
+        } else if ("tsv".equals(collectionFormat)) {
+            delimiter = escapeString("\t");
+        } else if ("pipes".equals(collectionFormat)) {
+            delimiter = escapeString("|");
         }
 
         StringBuilder sb = new StringBuilder() ;
-        for (Object item : valueCollection) {
+        for (Object item : value) {
             sb.append(delimiter);
-            sb.append(parameterToString(item));
+            sb.append(escapeString(parameterToString(item)));
         }
 
-        params.add(new Pair(name, sb.substring(1)));
+        params.add(new Pair(name, sb.substring(delimiter.length())));
 
         return params;
     }
@@ -517,12 +598,13 @@ public class ApiClient {
      *   application/json; charset=UTF8
      *   APPLICATION/JSON
      *   application/vnd.company+json
+     * "* / *" is also default to JSON
      * @param mime MIME (Multipurpose Internet Mail Extensions)
      * @return True if the given MIME is JSON, false otherwise.
      */
     public boolean isJsonMime(String mime) {
       String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
-      return mime != null && mime.matches(jsonMime);
+      return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
     }
 
     /**
@@ -553,11 +635,11 @@ public class ApiClient {
      *
      * @param contentTypes The Content-Type array to select from
      * @return The Content-Type header to use. If the given array is empty,
-     *   JSON will be used.
+     *   or matches "any", JSON will be used.
      */
     public String selectHeaderContentType(String[] contentTypes) {
-        if (contentTypes.length == 0) {
-            return "application/json";
+        if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
+             return "application/json";
         }
         for (String contentType : contentTypes) {
             if (isJsonMime(contentType)) {
@@ -854,6 +936,7 @@ public class ApiClient {
      * @param path The sub-path of the HTTP URL
      * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
      * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
      * @param body The request body object
      * @param headerParams The header parameters
      * @param formParams The form parameters
@@ -862,10 +945,31 @@ public class ApiClient {
      * @return The HTTP call
      * @throws ApiException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
+
+        return httpClient.newCall(request);
+    }
+
+    /**
+     * Build an HTTP request with the given options.
+     *
+     * @param path The sub-path of the HTTP URL
+     * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
+     * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
+     * @param body The request body object
+     * @param headerParams The header parameters
+     * @param formParams The form parameters
+     * @param authNames The authentications to apply
+     * @param progressRequestListener Progress request listener
+     * @return The HTTP request 
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         updateParamsForAuth(authNames, queryParams, headerParams);
 
-        final String url = buildUrl(path, queryParams);
+        final String url = buildUrl(path, queryParams, collectionQueryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
 
@@ -903,7 +1007,7 @@ public class ApiClient {
             request = reqBuilder.method(method, reqBody).build();
         }
 
-        return httpClient.newCall(request);
+        return request;
     }
 
     /**
@@ -911,9 +1015,10 @@ public class ApiClient {
      *
      * @param path The sub path
      * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
      * @return The full URL
      */
-    public String buildUrl(String path, List<Pair> queryParams) {
+    public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
         url.append(basePath).append(path);
 
@@ -930,6 +1035,23 @@ public class ApiClient {
                     }
                     String value = parameterToString(param.getValue());
                     url.append(escapeString(param.getName())).append("=").append(escapeString(value));
+                }
+            }
+        }
+
+        if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
+            String prefix = url.toString().contains("?") ? "&" : "?";
+            for (Pair param : collectionQueryParams) {
+                if (param.getValue() != null) {
+                    if (prefix != null) {
+                        url.append(prefix);
+                        prefix = null;
+                    } else {
+                        url.append("&");
+                    }
+                    String value = parameterToString(param.getValue());
+                    // collection query parameter value already escaped as part of parameterToPairs
+                    url.append(escapeString(param.getName())).append("=").append(value);
                 }
             }
         }
@@ -1027,7 +1149,6 @@ public class ApiClient {
      */
     private void applySslSettings() {
         try {
-            KeyManager[] keyManagers = null;
             TrustManager[] trustManagers = null;
             HostnameVerifier hostnameVerifier = null;
             if (!verifyingSsl) {

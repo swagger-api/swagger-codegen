@@ -1,33 +1,38 @@
 {{>licenseInfo}}
-#include "SWGHttpRequest.h"
+#include "{{prefix}}HttpRequest.h"
 #include <QDateTime>
 #include <QUrl>
 #include <QFileInfo>
 #include <QBuffer>
+#include <QtGlobal>
 
 
-HttpRequestInput::HttpRequestInput() {
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
+
+{{prefix}}HttpRequestInput::{{prefix}}HttpRequestInput() {
     initialize();
 }
 
-HttpRequestInput::HttpRequestInput(QString v_url_str, QString v_http_method) {
+{{prefix}}HttpRequestInput::{{prefix}}HttpRequestInput(QString v_url_str, QString v_http_method) {
     initialize();
     url_str = v_url_str;
     http_method = v_http_method;
 }
 
-void HttpRequestInput::initialize() {
+void {{prefix}}HttpRequestInput::initialize() {
     var_layout = NOT_SET;
     url_str = "";
     http_method = "GET";
 }
 
-void HttpRequestInput::add_var(QString key, QString value) {
+void {{prefix}}HttpRequestInput::add_var(QString key, QString value) {
     vars[key] = value;
 }
 
-void HttpRequestInput::add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type) {
-    SWGHttpRequestInputFileElement file;
+void {{prefix}}HttpRequestInput::add_file(QString variable_name, QString local_filename, QString request_filename, QString mime_type) {
+    {{prefix}}HttpRequestInputFileElement file;
     file.variable_name = variable_name;
     file.local_filename = local_filename;
     file.request_filename = request_filename;
@@ -36,19 +41,19 @@ void HttpRequestInput::add_file(QString variable_name, QString local_filename, Q
 }
 
 
-HttpRequestWorker::HttpRequestWorker(QObject *parent)
+{{prefix}}HttpRequestWorker::{{prefix}}HttpRequestWorker(QObject *parent)
     : QObject(parent), manager(nullptr)
 {
     qsrand(QDateTime::currentDateTime().toTime_t());
 
     manager = new QNetworkAccessManager(this);
-    connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(on_manager_finished(QNetworkReply*)));
+    connect(manager, &QNetworkAccessManager::finished, this, &{{prefix}}HttpRequestWorker::on_manager_finished);
 }
 
-HttpRequestWorker::~HttpRequestWorker() {
+{{prefix}}HttpRequestWorker::~{{prefix}}HttpRequestWorker() {
 }
 
-QString HttpRequestWorker::http_attribute_encode(QString attribute_name, QString input) {
+QString {{prefix}}HttpRequestWorker::http_attribute_encode(QString attribute_name, QString input) {
     // result structure follows RFC 5987
     bool need_utf_encoding = false;
     QString result = "";
@@ -96,7 +101,7 @@ QString HttpRequestWorker::http_attribute_encode(QString attribute_name, QString
     return QString("%1=\"%2\"; %1*=utf-8''%3").arg(attribute_name, result, result_utf8);
 }
 
-void HttpRequestWorker::execute(HttpRequestInput *input) {
+void {{prefix}}HttpRequestWorker::execute({{prefix}}HttpRequestInput *input) {
 
     // reset variables
 
@@ -176,7 +181,7 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         }
 
         // add files
-        for (QList<SWGHttpRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
+        for (QList<{{prefix}}HttpRequestInputFileElement>::iterator file_info = input->files.begin(); file_info != input->files.end(); file_info++) {
             QFileInfo fi(file_info->local_filename);
 
             // ensure necessary variables are available
@@ -248,6 +253,9 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
     // prepare connection
 
     QNetworkRequest request = QNetworkRequest(QUrl(input->url_str));
+    if ({{prefix}}HttpRequestWorker::sslDefaultConfiguration != nullptr) {
+        request.setSslConfiguration(*{{prefix}}HttpRequestWorker::sslDefaultConfiguration);
+    }
     request.setRawHeader("User-Agent", "Swagger-Client");
     foreach(QString key, input->headers.keys()) {
         request.setRawHeader(key.toStdString().c_str(), input->headers.value(key).toStdString().c_str());
@@ -279,22 +287,32 @@ void HttpRequestWorker::execute(HttpRequestInput *input) {
         manager->deleteResource(request);
     }
     else {
-        QBuffer buff(&request_content);
-        manager->sendCustomRequest(request, input->http_method.toLatin1(), &buff);
+#if (QT_VERSION >= 0x050800)
+        manager->sendCustomRequest(request, input->http_method.toLatin1(), request_content);
+#else
+        QBuffer *buffer = new QBuffer;
+        buffer->setData(request_content);
+        buffer->open(QIODevice::ReadOnly);
+
+        QNetworkReply* reply = manager->sendCustomRequest(request, input->http_method.toLatin1(), buffer);
+        buffer->setParent(reply);
+#endif
     }
 
 }
 
-void HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
+void {{prefix}}HttpRequestWorker::on_manager_finished(QNetworkReply *reply) {
     error_type = reply->error();
-    if (error_type == QNetworkReply::NoError) {
-        response = reply->readAll();
-    }
-    else {
-        error_str = reply->errorString();
-    }
+    response = reply->readAll();
+    error_str = reply->errorString();
 
     reply->deleteLater();
 
     emit on_execution_finished(this);
 }
+QSslConfiguration* {{prefix}}HttpRequestWorker::sslDefaultConfiguration;
+
+
+{{#cppNamespaceDeclarations}}
+}
+{{/cppNamespaceDeclarations}}

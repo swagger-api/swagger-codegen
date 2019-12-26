@@ -3,10 +3,11 @@ package {{packageName}}
 
 {{#operations}}
 import (
-	"net/url"
+	"context"
+	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
-	"golang.org/x/net/context"
 {{#imports}}	"{{import}}"
 {{/imports}}
 )
@@ -17,25 +18,32 @@ var (
 )
 
 type {{classname}}Service service
-
 {{#operation}}
 
-/* {{{classname}}}Service {{summary}}{{#notes}}
- {{notes}}{{/notes}}
-{{#hasAuthMethods}} * @param ctx context.Context Authentication Context {{/hasAuthMethods}}
-{{#allParams}}{{#required}} @param {{paramName}} {{description}}
-{{/required}}{{/allParams}}{{#hasOptionalParams}} @param optional (nil or map[string]interface{}) with one or more of:
-{{#allParams}}{{^required}}     @param "{{paramName}}" ({{dataType}}) {{description}}
-{{/required}}{{/allParams}}{{/hasOptionalParams}} @return {{#returnType}}{{{returnType}}}{{/returnType}}*/
-func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.Context, {{/hasAuthMethods}}{{#allParams}}{{#required}}{{paramName}} {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}}{{#hasOptionalParams}}localVarOptionals map[string]interface{}{{/hasOptionalParams}}) ({{#returnType}}{{{returnType}}}, {{/returnType}} *http.Response, error) {
+/* 
+{{{classname}}}Service{{#summary}} {{.}}{{/summary}}{{#notes}}
+{{notes}}{{/notes}}
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+{{#allParams}}{{#required}} * @param {{paramName}}{{#description}} {{.}}{{/description}}
+{{/required}}{{/allParams}}{{#hasOptionalParams}} * @param optional nil or *{{{nickname}}}Opts - Optional Parameters:
+{{#allParams}}{{^required}}     * @param "{{vendorExtensions.x-exportParamName}}" ({{#isPrimitiveType}}optional.{{vendorExtensions.x-optionalDataType}}{{/isPrimitiveType}}{{^isPrimitiveType}}optional.Interface of {{dataType}}{{/isPrimitiveType}}) - {{#description}} {{.}}{{/description}}
+{{/required}}{{/allParams}}{{/hasOptionalParams}}
+{{#returnType}}@return {{{returnType}}}{{/returnType}}
+*/
+{{#hasOptionalParams}}
+
+type {{{nickname}}}Opts struct { {{#allParams}}{{^required}}
+{{#isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.{{vendorExtensions.x-optionalDataType}}{{/isPrimitiveType}}{{^isPrimitiveType}}	{{vendorExtensions.x-exportParamName}} optional.Interface{{/isPrimitiveType}}{{/required}}{{/allParams}}
+}
+
+{{/hasOptionalParams}}
+func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}}, {{/hasParams}}{{#allParams}}{{#required}}{{paramName}} {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/allParams}}{{#hasOptionalParams}}localVarOptionals *{{{nickname}}}Opts{{/hasOptionalParams}}) ({{#returnType}}{{{returnType}}}, {{/returnType}}*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("{{httpMethod}}")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-{{#returnType}}
-	 	successPayload  {{returnType}}
-{{/returnType}}
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		{{#returnType}}localVarReturnValue {{{returnType}}}{{/returnType}}
 	)
 
 	// create path and map variables
@@ -45,34 +53,26 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
 	{{#allParams}}
-	{{^required}}
-	{{#isPrimitiveType}}
-	if err := typeCheckParameter(localVarOptionals["{{paramName}}"], "{{{dataType}}}", "{{paramName}}"); err != nil {
-		return {{#returnType}}successPayload, {{/returnType}}nil, err
-	}
-	{{/isPrimitiveType}}
-	{{/required}}
 	{{#required}}
 	{{#minItems}}
 	if len({{paramName}}) < {{minItems}} {
-			return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minItems}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minItems}} elements")
 	}
 	{{/minItems}}
 	{{#maxItems}}
 	if len({{paramName}}) > {{maxItems}} {
-			return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxItems}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxItems}} elements")
 	}
 	{{/maxItems}}
 	{{#minLength}}
 	if strlen({{paramName}}) < {{minLength}} {
-			return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minLength}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have at least {{minLength}} elements")
 	}
 	{{/minLength}}
 	{{#maxLength}}
 	if strlen({{paramName}}) > {{maxLength}} {
-			return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxLength}} elements")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must have less than {{maxLength}} elements")
 	}
 	{{/maxLength}}
 	{{#minimum}}
@@ -83,7 +83,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	{{^isString}}
 	if {{paramName}} < {{minimum}} {
 	{{/isString}}
-			return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must be greater than {{minimum}}")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must be greater than {{minimum}}")
 	}
 	{{/minimum}}
 	{{#maximum}}
@@ -94,7 +94,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	{{^isString}}
 	if {{paramName}} > {{maximum}} {
 	{{/isString}}
-			return {{#returnType}}successPayload, {{/returnType}}nil, reportError("{{paramName}} must be less than {{maximum}}")
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} must be less than {{maximum}}")
 	}
 	{{/maximum}}
 	{{/required}}
@@ -106,14 +106,16 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	localVarQueryParams.Add("{{baseName}}", parameterToString({{paramName}}, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 	{{/required}}
 	{{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarQueryParams.Add("{{baseName}}", parameterToString(localVarTempParam, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarQueryParams.Add("{{baseName}}", parameterToString(localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(), "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 	}
 	{{/required}}
 	{{/queryParams}}
 	{{/hasQueryParams}}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ {{#consumes}}"{{{mediaType}}}", {{/consumes}} }
+{{=<% %>=}}
+	localVarHttpContentTypes := []string{<%#consumes%>"<%&mediaType%>"<%^-last%>, <%/-last%><%/consumes%>}
+<%={{ }}=%>
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -122,11 +124,9 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		{{#produces}}
-		"{{{mediaType}}}",
-		{{/produces}}
-		}
+{{=<% %>=}}
+	localVarHttpHeaderAccepts := []string{<%#produces%>"<%&mediaType%>"<%^-last%>, <%/-last%><%/produces%>}
+<%={{ }}=%>
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -139,8 +139,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	localVarHeaderParams["{{baseName}}"] = parameterToString({{paramName}}, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}")
 	{{/required}}
 	{{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarHeaderParams["{{baseName}}"] = parameterToString(localVarTempParam, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}")
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarHeaderParams["{{baseName}}"] = parameterToString(localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(), "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}")
 	}
 	{{/required}}
 {{/headerParams}}
@@ -148,17 +148,21 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 {{#hasFormParams}}
 {{#formParams}}
 {{#isFile}}
+	var localVarFile {{dataType}}
 {{^required}}
-	var file ({{dataType}})
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		file = localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarFileOk := false
+		localVarFile, localVarFileOk = localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value().({{dataType}})
+		if !localVarFileOk {
+				return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} should be {{dataType}}")
+		}
 	}
 {{/required}}
-	if file != nil {
-		fbs, _ := ioutil.ReadAll(file)
+	if localVarFile != nil {
+		fbs, _ := ioutil.ReadAll(localVarFile)
 		localVarFileBytes = fbs
-		localVarFileName = file.Name()
-		file.Close()
+		localVarFileName = localVarFile.Name()
+		localVarFile.Close()
 	}
 {{/isFile}}
 {{^isFile}}
@@ -166,8 +170,8 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	localVarFormParams.Add("{{baseName}}", parameterToString({{paramName}}, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 {{/required}}
 {{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarFormParams.Add("{{baseName}}", parameterToString(localVarTempParam, "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		localVarFormParams.Add("{{baseName}}", parameterToString(localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(), "{{#collectionFormat}}{{collectionFormat}}{{/collectionFormat}}"))
 	}
 {{/required}}
 {{/isFile}}
@@ -179,8 +183,13 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 	localVarPostBody = &{{paramName}}
 {{/required}}
 {{^required}}
-	if localVarTempParam, localVarOk := localVarOptionals["{{paramName}}"].({{dataType}}); localVarOk {
-		localVarPostBody = &localVarTempParam
+	if localVarOptionals != nil && localVarOptionals.{{vendorExtensions.x-exportParamName}}.IsSet() {
+		{{#isPrimitiveType}}localVarPostBody = &localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value(){{/isPrimitiveType}}
+		{{^isPrimitiveType}}localVarOptional{{vendorExtensions.x-exportParamName}}, localVarOptional{{vendorExtensions.x-exportParamName}}ok := localVarOptionals.{{vendorExtensions.x-exportParamName}}.Value().({{{dataType}}})
+		if !localVarOptional{{vendorExtensions.x-exportParamName}}ok {
+				return {{#returnType}}localVarReturnValue, {{/returnType}}nil, reportError("{{paramName}} should be {{dataType}}")
+		}
+		localVarPostBody = &localVarOptional{{vendorExtensions.x-exportParamName}}{{/isPrimitiveType}}
 	}
 {{/required}}
 {{/bodyParams}}
@@ -196,32 +205,58 @@ func (a *{{{classname}}}Service) {{{nickname}}}({{#hasAuthMethods}}ctx context.C
 			} else {
 				key = auth.Key
 			}
-			{{#isKeyInHeader}}localVarHeaderParams["{{keyParamName}}"] = key{{/isKeyInHeader}}{{#isKeyInQuery}}localVarQueryParams['{{keyParamName}}'] = key{{/isKeyInQuery}}
+			{{#isKeyInHeader}}localVarHeaderParams["{{keyParamName}}"] = key{{/isKeyInHeader}}
+			{{#isKeyInQuery}}localVarQueryParams.Add("{{keyParamName}}", key){{/isKeyInQuery}}
 		}
 	}
 {{/isApiKey}}
 {{/authMethods}}
-	r, err := a.client.prepareRequest({{#hasAuthMethods}}ctx, {{/hasAuthMethods}}{{^hasAuthMethods}}nil, {{/hasAuthMethods}}localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return {{#returnType}}successPayload, {{/returnType}}nil, err
+		return {{#returnType}}localVarReturnValue, {{/returnType}}nil, err
 	}
 
-	 localVarHttpResponse, err := a.client.callAPI(r)
-	 if err != nil || localVarHttpResponse == nil {
-		  return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
-	 }
-	 defer localVarHttpResponse.Body.Close()
-	 if localVarHttpResponse.StatusCode >= 300 {
-		return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, reportError(localVarHttpResponse.Status)
-	 }
-{{#returnType}}
-	
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-	 	return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
 	}
 
-{{/returnType}}
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
+	}
 
-	return {{#returnType}}successPayload, {{/returnType}}localVarHttpResponse, err
+	{{#returnType}}
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
+		}
+	}
+	{{/returnType}}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		{{#responses}}{{#dataType}}
+		if localVarHttpResponse.StatusCode == {{{code}}} {
+			var v {{{dataType}}}
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+		}
+		{{/dataType}}{{/responses}}
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, newErr
+	}
+
+	return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, nil
 }
 {{/operation}}{{/operations}}

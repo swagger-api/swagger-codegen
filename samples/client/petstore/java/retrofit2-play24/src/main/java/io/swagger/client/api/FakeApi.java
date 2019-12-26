@@ -8,11 +8,15 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.MultipartBody;
 
 import java.math.BigDecimal;
 import io.swagger.client.model.Client;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +27,65 @@ import play.libs.F;
 import retrofit2.Response;
 
 public interface FakeApi {
+  /**
+   * 
+   * Test serialization of outer boolean types
+   * @param body Input boolean as post body (optional)
+   * @return Call&lt;Boolean&gt;
+   */
+  @POST("fake/outer/boolean")
+  F.Promise<Response<Boolean>> fakeOuterBooleanSerialize(
+    @retrofit2.http.Body Boolean body
+  );
+
+  /**
+   * 
+   * Test serialization of object with outer number type
+   * @param body Input composite as post body (optional)
+   * @return Call&lt;OuterComposite&gt;
+   */
+  @POST("fake/outer/composite")
+  F.Promise<Response<OuterComposite>> fakeOuterCompositeSerialize(
+    @retrofit2.http.Body OuterComposite body
+  );
+
+  /**
+   * 
+   * Test serialization of outer number types
+   * @param body Input number as post body (optional)
+   * @return Call&lt;BigDecimal&gt;
+   */
+  @POST("fake/outer/number")
+  F.Promise<Response<BigDecimal>> fakeOuterNumberSerialize(
+    @retrofit2.http.Body BigDecimal body
+  );
+
+  /**
+   * 
+   * Test serialization of outer string types
+   * @param body Input string as post body (optional)
+   * @return Call&lt;String&gt;
+   */
+  @POST("fake/outer/string")
+  F.Promise<Response<String>> fakeOuterStringSerialize(
+    @retrofit2.http.Body String body
+  );
+
+  /**
+   * 
+   * 
+   * @param body  (required)
+   * @param query  (required)
+   * @return Call&lt;Void&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @PUT("fake/body-with-query-params")
+  F.Promise<Response<Void>> testBodyWithQueryParams(
+    @retrofit2.http.Body User body, @retrofit2.http.Query("query") String query
+  );
+
   /**
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
@@ -79,6 +142,33 @@ public interface FakeApi {
   @GET("fake")
   F.Promise<Response<Void>> testEnumParameters(
     @retrofit2.http.Field("enum_form_string_array") List<String> enumFormStringArray, @retrofit2.http.Field("enum_form_string") String enumFormString, @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit2.http.Header("enum_header_string") String enumHeaderString, @retrofit2.http.Query("enum_query_string_array") CSVParams enumQueryStringArray, @retrofit2.http.Query("enum_query_string") String enumQueryString, @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger, @retrofit2.http.Field("enum_query_double") Double enumQueryDouble
+  );
+
+  /**
+   * test inline additionalProperties
+   * 
+   * @param param request body (required)
+   * @return Call&lt;Void&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("fake/inline-additionalProperties")
+  F.Promise<Response<Void>> testInlineAdditionalProperties(
+    @retrofit2.http.Body Object param
+  );
+
+  /**
+   * test json serialization of form data
+   * 
+   * @param param field1 (required)
+   * @param param2 field2 (required)
+   * @return Call&lt;Void&gt;
+   */
+  @retrofit2.http.FormUrlEncoded
+  @GET("fake/jsonFormData")
+  F.Promise<Response<Void>> testJsonFormData(
+    @retrofit2.http.Field("param") String param, @retrofit2.http.Field("param2") String param2
   );
 
 }

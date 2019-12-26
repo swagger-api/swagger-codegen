@@ -32,7 +32,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var orderId = orderId_example;  // string | ID of the order that needs to be deleted
 
@@ -93,11 +92,10 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure API key authorization: api_key
-            Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
+            Configuration.Default.AddApiKey("api_key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
+            // Configuration.Default.AddApiKeyPrefix("api_key", "Bearer");
 
             var apiInstance = new StoreApi();
 
@@ -156,7 +154,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var orderId = 789;  // long? | ID of pet that needs to be fetched
 
@@ -202,8 +199,6 @@ No authorization required
 
 Place an order for a pet
 
-
-
 ### Example
 ```csharp
 using System;
@@ -218,7 +213,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var body = new Order(); // Order | order placed for purchasing the pet
 

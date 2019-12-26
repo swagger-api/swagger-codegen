@@ -27,6 +27,7 @@
 
 enum HttpRequestVarLayout {NOT_SET, ADDRESS, URL_ENCODED, MULTIPART};
 
+namespace Swagger {
 
 class SWGHttpRequestInputFileElement {
 
@@ -72,6 +73,7 @@ public:
 
     QString http_attribute_encode(QString attribute_name, QString input);
     void execute(HttpRequestInput *input);
+    static QSslConfiguration* sslDefaultConfiguration;
 
 signals:
     void on_execution_finished(HttpRequestWorker *worker);
@@ -83,5 +85,7 @@ private slots:
     void on_manager_finished(QNetworkReply *reply);
 
 };
+
+}
 
 #endif // HTTPREQUESTWORKER_H

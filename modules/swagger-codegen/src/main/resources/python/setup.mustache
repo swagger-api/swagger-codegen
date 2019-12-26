@@ -2,10 +2,9 @@
 
 {{>partial_header}}
 
-import sys
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages  # noqa: H301
 
-NAME = "{{packageName}}"
+NAME = "{{{projectName}}}"
 VERSION = "{{packageVersion}}"
 {{#apiInfo}}
 {{#apis}}
@@ -17,7 +16,19 @@ VERSION = "{{packageVersion}}"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil"]
+REQUIRES = [
+    "certifi>=2017.4.17",
+    "python-dateutil>=2.1",
+    "six>=1.10",
+    "urllib3>=1.23"
+]
+    
+{{#asyncio}}
+REQUIRES.append("aiohttp")
+{{/asyncio}}
+{{#tornado}}
+REQUIRES.append("tornado")
+{{/tornado}}
 
 setup(
     name=NAME,
@@ -30,7 +41,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     long_description="""\
-    {{appDescription}}
+    {{appDescription}}  # noqa: E501
     """
 )
 {{/hasMore}}

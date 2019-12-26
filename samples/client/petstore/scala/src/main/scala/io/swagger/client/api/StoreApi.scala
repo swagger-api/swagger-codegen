@@ -24,6 +24,7 @@ import javax.ws.rs.core.MediaType
 
 import java.io.File
 import java.util.Date
+import java.util.TimeZone
 
 import scala.collection.mutable.HashMap
 
@@ -41,31 +42,47 @@ import scala.concurrent._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
-class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
-                        defApiInvoker: ApiInvoker = ApiInvoker) {
+import org.json4s._
 
-  implicit val formats = new org.json4s.DefaultFormats {
-    override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+0000")
+class StoreApi(
+  val defBasePath: String = "http://petstore.swagger.io/v2",
+  defApiInvoker: ApiInvoker = ApiInvoker
+) {
+  private lazy val dateTimeFormatter = {
+    val formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
+    formatter
   }
-  implicit val stringReader = ClientResponseReaders.StringReader
-  implicit val unitReader = ClientResponseReaders.UnitReader
-  implicit val jvalueReader = ClientResponseReaders.JValueReader
-  implicit val jsonReader = JsonFormatsReader
-  implicit val stringWriter = RequestWriters.StringWriter
-  implicit val jsonWriter = JsonFormatsWriter
+  private val dateFormatter = {
+    val formatter = new SimpleDateFormat("yyyy-MM-dd")
+    formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
+    formatter
+  }
+  implicit val formats = new org.json4s.DefaultFormats {
+    override def dateFormatter = dateTimeFormatter
+  }
+  implicit val stringReader: ClientResponseReader[String] = ClientResponseReaders.StringReader
+  implicit val unitReader: ClientResponseReader[Unit] = ClientResponseReaders.UnitReader
+  implicit val jvalueReader: ClientResponseReader[JValue] = ClientResponseReaders.JValueReader
+  implicit val jsonReader: ClientResponseReader[Nothing] = JsonFormatsReader
+  implicit val stringWriter: RequestWriter[String] = RequestWriters.StringWriter
+  implicit val jsonWriter: RequestWriter[Nothing] = JsonFormatsWriter
 
-  var basePath = defBasePath
-  var apiInvoker = defApiInvoker
+  var basePath: String = defBasePath
+  var apiInvoker: ApiInvoker = defApiInvoker
 
-  def addHeader(key: String, value: String) = apiInvoker.defaultHeaders += key -> value
+  def addHeader(key: String, value: String): mutable.HashMap[String, String] = {
+    apiInvoker.defaultHeaders += key -> value
+  }
 
-  val config = SwaggerConfig.forUrl(new URI(defBasePath))
+  val config: SwaggerConfig = SwaggerConfig.forUrl(new URI(defBasePath))
   val client = new RestClient(config)
   val helper = new StoreApiAsyncHelper(client, config)
 
   /**
    * Delete purchase order by ID
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+   *
    * @param orderId ID of the order that needs to be deleted 
    * @return void
    */
@@ -75,23 +92,23 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
    * Delete purchase order by ID asynchronously
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+   *
    * @param orderId ID of the order that needs to be deleted 
    * @return Future(void)
-  */
+   */
   def deleteOrderAsync(orderId: String) = {
       helper.deleteOrder(orderId)
   }
 
-
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
+   *
    * @return Map[String, Integer]
    */
   def getInventory(): Option[Map[String, Integer]] = {
@@ -100,22 +117,22 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
    * Returns pet inventories by status asynchronously
    * Returns a map of status codes to quantities
+   *
    * @return Future(Map[String, Integer])
-  */
+   */
   def getInventoryAsync(): Future[Map[String, Integer]] = {
       helper.getInventory()
   }
 
-
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+   *
    * @param orderId ID of pet that needs to be fetched 
    * @return Order
    */
@@ -125,23 +142,23 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
    * Find purchase order by ID asynchronously
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+   *
    * @param orderId ID of pet that needs to be fetched 
    * @return Future(Order)
-  */
+   */
   def getOrderByIdAsync(orderId: Long): Future[Order] = {
       helper.getOrderById(orderId)
   }
 
-
   /**
    * Place an order for a pet
    * 
+   *
    * @param body order placed for purchasing the pet 
    * @return Order
    */
@@ -151,19 +168,18 @@ class StoreApi(val defBasePath: String = "http://petstore.swagger.io/v2",
       case Success(i) => Some(await.get)
       case Failure(t) => None
     }
-
   }
 
   /**
    * Place an order for a pet asynchronously
    * 
+   *
    * @param body order placed for purchasing the pet 
    * @return Future(Order)
-  */
+   */
   def placeOrderAsync(body: Order): Future[Order] = {
       helper.placeOrder(body)
   }
-
 
 }
 
@@ -172,7 +188,7 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
   def deleteOrder(orderId: String)(implicit reader: ClientResponseReader[Unit]): Future[Unit] = {
     // create path and map variables
     val path = (addFmt("/store/order/{orderId}")
-      replaceAll ("\\{" + "orderId" + "\\}",orderId.toString))
+      replaceAll("\\{" + "orderId" + "\\}", orderId.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]
@@ -205,7 +221,7 @@ class StoreApiAsyncHelper(client: TransportClient, config: SwaggerConfig) extend
   def getOrderById(orderId: Long)(implicit reader: ClientResponseReader[Order]): Future[Order] = {
     // create path and map variables
     val path = (addFmt("/store/order/{orderId}")
-      replaceAll ("\\{" + "orderId" + "\\}",orderId.toString))
+      replaceAll("\\{" + "orderId" + "\\}", orderId.toString))
 
     // query params
     val queryParams = new mutable.HashMap[String, String]

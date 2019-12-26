@@ -30,6 +30,8 @@ use Log::Any qw($log);
 use Date::Parse;
 use DateTime;
 
+use WWW::SwaggerClient::Object::OuterEnum;
+
 use base ("Class::Accessor", "Class::Data::Inheritable");
 
 
@@ -149,6 +151,13 @@ __PACKAGE__->method_documentation({
     	format => '',
     	read_only => '',
     		},
+    'enum_string_required' => {
+    	datatype => 'string',
+    	base_name => 'enum_string_required',
+    	description => '',
+    	format => '',
+    	read_only => '',
+    		},
     'enum_integer' => {
     	datatype => 'int',
     	base_name => 'enum_integer',
@@ -174,6 +183,7 @@ __PACKAGE__->method_documentation({
 
 __PACKAGE__->swagger_types( {
     'enum_string' => 'string',
+    'enum_string_required' => 'string',
     'enum_integer' => 'int',
     'enum_number' => 'double',
     'outer_enum' => 'OuterEnum'
@@ -181,6 +191,7 @@ __PACKAGE__->swagger_types( {
 
 __PACKAGE__->attribute_map( {
     'enum_string' => 'enum_string',
+    'enum_string_required' => 'enum_string_required',
     'enum_integer' => 'enum_integer',
     'enum_number' => 'enum_number',
     'outer_enum' => 'outerEnum'

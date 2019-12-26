@@ -79,6 +79,39 @@ class UserAPITests: XCTestCase {
         self.waitForExpectations(timeout: testTimeout, handler: nil)
     }
     
+    func testCreateUserWithArray() {
+        let expectation = self.expectation(description: "testCreateUserWithArray")
+        let newUser = User()
+        newUser.email = "test@test.com"
+        newUser.firstName = "Test"
+        newUser.lastName = "Tester"
+        newUser.id = 1000
+        newUser.password = "test!"
+        newUser.phone = "867-5309"
+        newUser.username = "test@test.com"
+        newUser.userStatus = 0
+        
+        let newUser2 = User()
+        newUser2.email = "test2@test.com"
+        newUser2.firstName = "Test2"
+        newUser2.lastName = "Tester2"
+        newUser2.id = 1001
+        newUser2.password = "test2!"
+        newUser2.phone = "867-5302"
+        newUser2.username = "test2@test.com"
+        newUser2.userStatus = 0
+        
+        UserAPI.createUsersWithArrayInput(body: [newUser, newUser2]) { (error) in
+            guard error == nil else {
+                XCTFail("error creating users")
+                return
+            }
+            
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: testTimeout, handler: nil)
+    }
+    
     func test2GetUser() {
         let expectation = self.expectation(description: "testGetUser")
         
@@ -116,6 +149,16 @@ class UserAPITests: XCTestCase {
         }
         
         self.waitForExpectations(timeout: testTimeout, handler: nil)
+    }
+
+    func testPathParamsAreEscaped() {
+        // The path for this operation is /user/{userId}. In order to make a usable path,
+        // then we must make sure that {userId} is percent-escaped when it is substituted
+        // into the path. So we intentionally introduce a path with spaces.
+        let userRequestBuilder = UserAPI.getUserByNameWithRequestBuilder(username: "User Name With Spaces")
+        let urlContainsSpace = userRequestBuilder.URLString.contains(" ")
+
+        XCTAssert(!urlContainsSpace, "Expected URL to be escaped, but it was not.")
     }
 
 }

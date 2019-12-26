@@ -59,7 +59,7 @@ void MultipartFormData::writeTo( std::ostream& target )
         std::shared_ptr<HttpContent> content = m_Contents[i];
 
         // boundary
-        target << "\r\n" << "--" << utility::conversions::to_utf8string( m_Boundary ) << "\r\n";
+        target << (i > 0 ? "\r\n" : "") << "--" << utility::conversions::to_utf8string( m_Boundary ) << "\r\n";
 
         // headers
         target << "Content-Disposition: " << utility::conversions::to_utf8string( content->getContentDisposition() );

@@ -44,7 +44,7 @@ SWGUserApi*apiInstance = [[SWGUserApi alloc] init];
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SWGUser***](SWGUser*.md)| Created user object | [optional] 
+ **body** | [**SWGUser***](SWGUser.md)| Created user object | [optional] 
 
 ### Return type
 
@@ -383,7 +383,7 @@ SWGUserApi*apiInstance = [[SWGUserApi alloc] init];
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **username** | **NSString***| name that need to be deleted | 
- **body** | [**SWGUser***](SWGUser*.md)| Updated user object | [optional] 
+ **body** | [**SWGUser***](SWGUser.md)| Updated user object | [optional] 
 
 ### Return type
 

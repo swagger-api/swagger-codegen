@@ -9,7 +9,7 @@
       "email" : "apiteam@swagger.io"
     },
     "license" : {
-      "name" : "Apache 2.0",
+      "name" : "Apache-2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "default" : "available",
-            "enum" : [ "available", "pending", "sold" ]
+            "enum" : [ "available", "pending", "sold" ],
+            "default" : "available"
           },
           "collectionFormat" : "csv"
         } ],
@@ -166,7 +166,8 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ]
+        } ],
+        "deprecated" : true
       }
     },
     "/pet/{petId}" : {
@@ -515,9 +516,6 @@
         "responses" : {
           "200" : {
             "description" : "successful operation",
-            "schema" : {
-              "type" : "string"
-            },
             "headers" : {
               "X-Rate-Limit" : {
                 "type" : "integer",
@@ -529,6 +527,9 @@
                 "format" : "date-time",
                 "description" : "date in UTC when toekn expires"
               }
+            },
+            "schema" : {
+              "type" : "string"
             }
           },
           "400" : {
@@ -562,7 +563,7 @@
         "parameters" : [ {
           "name" : "username",
           "in" : "path",
-          "description" : "The name that needs to be fetched. Use user1 for testing. ",
+          "description" : "The name that needs to be fetched. Use user1 for testing.",
           "required" : true,
           "type" : "string"
         } ],
@@ -682,10 +683,10 @@
         }
       },
       "title" : "Pet Order",
-      "description" : "An order for a pets from the pet store",
       "xml" : {
         "name" : "Order"
-      }
+      },
+      "description" : "An order for a pets from the pet store"
     },
     "Category" : {
       "type" : "object",
@@ -698,11 +699,11 @@
           "type" : "string"
         }
       },
-      "title" : "Pet catehgry",
-      "description" : "A category for a pet",
+      "title" : "Pet category",
       "xml" : {
         "name" : "Category"
-      }
+      },
+      "description" : "A category for a pet"
     },
     "User" : {
       "type" : "object",
@@ -736,10 +737,10 @@
         }
       },
       "title" : "a User",
-      "description" : "A User who is purchasing from the pet store",
       "xml" : {
         "name" : "User"
-      }
+      },
+      "description" : "A User who is purchasing from the pet store"
     },
     "Tag" : {
       "type" : "object",
@@ -753,10 +754,10 @@
         }
       },
       "title" : "Pet Tag",
-      "description" : "A tag for a pet",
       "xml" : {
         "name" : "Tag"
-      }
+      },
+      "description" : "A tag for a pet"
     },
     "Pet" : {
       "type" : "object",
@@ -800,10 +801,10 @@
         }
       },
       "title" : "a Pet",
-      "description" : "A pet for sale in the pet store",
       "xml" : {
         "name" : "Pet"
-      }
+      },
+      "description" : "A pet for sale in the pet store"
     },
     "ApiResponse" : {
       "type" : "object",
@@ -821,6 +822,28 @@
       },
       "title" : "An uploaded response",
       "description" : "Describes the result of uploading an image resource"
+    },
+    "Amount" : {
+      "type" : "object",
+      "required" : [ "currency", "value" ],
+      "properties" : {
+        "value" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "some description\n",
+          "minimum" : 0.01,
+          "maximum" : 1000000000000000
+        },
+        "currency" : {
+          "$ref" : "#/definitions/Currency"
+        }
+      },
+      "description" : "some description\n"
+    },
+    "Currency" : {
+      "type" : "string",
+      "pattern" : "^[A-Z]{3,3}$",
+      "description" : "some description\n"
     }
   },
   "externalDocs" : {

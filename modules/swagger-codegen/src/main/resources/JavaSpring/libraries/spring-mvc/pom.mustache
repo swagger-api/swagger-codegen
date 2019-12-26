@@ -11,7 +11,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.1.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -36,6 +36,7 @@
                     <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
                     <stopPort>8079</stopPort>
                     <stopKey>stopit</stopKey>
+                    <stopWait>10</stopWait>
                     <httpConnector>
                         <port>8002</port>
                         <idleTimeout>60000</idleTimeout>
@@ -105,6 +106,16 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-version}</version>
         </dependency>
+        {{#withXml}}
+
+        <!-- XML processing: Jackson -->
+        <dependency>
+          <groupId>com.fasterxml.jackson.dataformat</groupId>
+          <artifactId>jackson-dataformat-xml</artifactId>
+          <version>${jackson-version}</version>
+        </dependency>
+
+        {{/withXml}}
         {{#java8}}
 
         <dependency>
@@ -126,7 +137,7 @@
         <dependency>
             <groupId>com.github.joschi.jackson</groupId>
             <artifactId>jackson-datatype-threetenbp</artifactId>
-            <version>${jackson-version}</version>
+            <version>${jackson-threetenbp-version}</version>
         </dependency>
         {{/threetenbp}}
 
@@ -149,18 +160,45 @@
         <version>1.1.0.Final</version>
         <scope>provided</scope>
     </dependency>
-{{/useBeanValidation}}        
+{{/useBeanValidation}}
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>6.8.8</version>
+        <scope>test</scope>
+        <exclusions>
+            <exclusion>
+                <artifactId>junit</artifactId>
+                <groupId>junit</groupId>
+            </exclusion>
+            <exclusion>
+                <artifactId>snakeyaml</artifactId>
+                <groupId>org.yaml</groupId>
+            </exclusion>
+            <exclusion>
+                <artifactId>bsh</artifactId>
+                <groupId>org.beanshell</groupId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.2</version>
+        <scope>test</scope>
+    </dependency>
     </dependencies>
     <properties>
         <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <jetty-version>9.2.15.v20160210</jetty-version>
+        <jetty-version>9.3.27.v20190418</jetty-version>
         <slf4j-version>1.7.21</slf4j-version>
         <junit-version>4.12</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
-        <springfox-version>2.6.0</springfox-version>
-        <jackson-version>2.6.4</jackson-version>
-        <spring-version>4.2.5.RELEASE</spring-version>
+        <springfox-version>2.7.0</springfox-version>
+        <jackson-version>2.10.1</jackson-version>
+        <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
+        <spring-version>4.3.9.RELEASE</spring-version>
     </properties>
 </project>

@@ -7,7 +7,7 @@ info:
   contact:
     email: apiteam@swagger.io
   license:
-    name: Apache 2.0
+    name: Apache-2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 host: petstore.swagger.io
 basePath: /v2
@@ -153,6 +153,7 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
+      deprecated: true
   '/pet/{petId}':
     get:
       tags:
@@ -500,7 +501,7 @@ paths:
       parameters:
         - name: username
           in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: 'The name that needs to be fetched. Use user1 for testing.'
           required: true
           type: string
       responses:
@@ -601,7 +602,7 @@ definitions:
     xml:
       name: Order
   Category:
-    title: Pet catehgry
+    title: Pet category
     description: A category for a pet
     type: object
     properties:
@@ -701,6 +702,29 @@ definitions:
         type: string
       message:
         type: string
+  #issue: https://github.com/swagger-api/swagger-codegen/issues/7980
+  Amount:
+    type: object
+    description: >
+      some description
+    properties:
+      value:
+        format: double
+        type: number
+        minimum: 0.01
+        maximum: 1000000000000000
+        description: >
+          some description
+      currency:
+        $ref: '#/definitions/Currency'
+    required:
+      - value
+      - currency
+  Currency:
+    type: string
+    pattern: '^[A-Z]{3,3}$'
+    description: >
+      some description
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'

@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
+import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +19,104 @@ import feign.*;
 
 public interface FakeApi extends ApiClient.Api {
 
+
+  /**
+   * 
+   * Test serialization of outer boolean types
+    * @param body Input boolean as post body (optional)
+   * @return Boolean
+   */
+  @RequestLine("POST /fake/outer/boolean")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  Boolean fakeOuterBooleanSerialize(Boolean body);
+
+  /**
+   * 
+   * Test serialization of object with outer number type
+    * @param body Input composite as post body (optional)
+   * @return OuterComposite
+   */
+  @RequestLine("POST /fake/outer/composite")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  OuterComposite fakeOuterCompositeSerialize(OuterComposite body);
+
+  /**
+   * 
+   * Test serialization of outer number types
+    * @param body Input number as post body (optional)
+   * @return BigDecimal
+   */
+  @RequestLine("POST /fake/outer/number")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  BigDecimal fakeOuterNumberSerialize(BigDecimal body);
+
+  /**
+   * 
+   * Test serialization of outer string types
+    * @param body Input string as post body (optional)
+   * @return String
+   */
+  @RequestLine("POST /fake/outer/string")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  String fakeOuterStringSerialize(String body);
+
+  /**
+   * 
+   * 
+    * @param body  (required)
+    * @param query  (required)
+   */
+  @RequestLine("PUT /fake/body-with-query-params?query={query}")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  void testBodyWithQueryParams(User body, @Param("query") String query);
+
+  /**
+   * 
+   * 
+   * Note, this is equivalent to the other <code>testBodyWithQueryParams</code> method,
+   * but with the query parameters collected into a single Map parameter. This
+   * is convenient for services with optional query parameters, especially when
+   * used with the {@link TestBodyWithQueryParamsQueryParams} class that allows for
+   * building up this map in a fluent style.
+   * @param body  (required)
+   * @param queryParams Map of query parameters as name-value pairs
+   *   <p>The following elements may be specified in the query map:</p>
+   *   <ul>
+   *   <li>query -  (required)</li>
+   *   </ul>
+   */
+  @RequestLine("PUT /fake/body-with-query-params?query={query}")
+  @Headers({
+  "Content-Type: application/json",
+  "Accept: application/json",
+  })
+  void testBodyWithQueryParams(User body, @QueryMap(encoded=true) Map<String, Object> queryParams);
+
+  /**
+   * A convenience class for generating query parameters for the
+   * <code>testBodyWithQueryParams</code> method in a fluent style.
+   */
+  public static class TestBodyWithQueryParamsQueryParams extends HashMap<String, Object> {
+    public TestBodyWithQueryParamsQueryParams query(final String value) {
+      put("query", EncodingUtils.encode(value));
+      return this;
+    }
+  }
 
   /**
    * To test \&quot;client\&quot; model
@@ -127,4 +227,29 @@ public interface FakeApi extends ApiClient.Api {
       return this;
     }
   }
+
+  /**
+   * test inline additionalProperties
+   * 
+    * @param param request body (required)
+   */
+  @RequestLine("POST /fake/inline-additionalProperties")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  void testInlineAdditionalProperties(Object param);
+
+  /**
+   * test json serialization of form data
+   * 
+    * @param param field1 (required)
+    * @param param2 field2 (required)
+   */
+  @RequestLine("GET /fake/jsonFormData")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  void testJsonFormData(@Param("param") String param, @Param("param2") String param2);
 }

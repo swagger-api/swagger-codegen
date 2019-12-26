@@ -4,7 +4,10 @@ If Not Exist %executable% (
   mvn clean package
 )
 
-REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M
-set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore-with-fake-endpoints-models-for-testing.yaml -l javascript -o samples\client\petstore\javascript
+REM Test spec files don't get overwritten, so delete them first.
+del /S samples\client\petstore\javascript\test\*.spec.js
 
-java -DappName=PetstoreClient %JAVA_OPTS% -jar %executable% %ags%
+REM set JAVA_OPTS=%JAVA_OPTS% -Xmx1024M
+set ags=generate -i modules\swagger-codegen\src\test\resources\2_0\petstore-with-fake-endpoints-models-for-testing.yaml -l javascript -o samples\client\petstore\javascript -DappName=PetstoreClient --additional-properties useES6=false
+
+java %JAVA_OPTS% -jar %executable% %ags%

@@ -181,7 +181,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Finds Pets by status
 /// Multiple status values can be provided with comma separated strings
-///  @param status Status values that need to be considered for filter (optional, default to available)
+///  @param status Status values that need to be considered for filter (optional)
 ///
 ///  @returns NSArray<SWGPet>*
 ///
@@ -194,7 +194,6 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     if (status != nil) {
         queryParams[@"status"] = [[SWGQueryParamCollection alloc] initWithValuesAndFormat: status format: @"multi"];
-        
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -252,7 +251,6 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     if (tags != nil) {
         queryParams[@"tags"] = [[SWGQueryParamCollection alloc] initWithValuesAndFormat: tags format: @"multi"];
-        
     }
     NSMutableDictionary* headerParams = [NSMutableDictionary dictionaryWithDictionary:self.apiClient.configuration.defaultHeaders];
     [headerParams addEntriesFromDictionary:self.defaultHeaders];
@@ -337,7 +335,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
     NSString *requestContentType = [self.apiClient.sanitizer selectHeaderContentType:@[]];
 
     // Authentication setting
-    NSArray *authSettings = @[@"petstore_auth", @"api_key"];
+    NSArray *authSettings = @[@"api_key", @"petstore_auth"];
 
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];

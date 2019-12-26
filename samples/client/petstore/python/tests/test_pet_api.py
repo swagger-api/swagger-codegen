@@ -1,7 +1,11 @@
 # coding: utf-8
 
+# flake8: noqa
+
 """
 Run the tests.
+$ docker pull swaggerapi/petstore
+$ docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
 $ pip install nose (optional)
 $ cd petstore_api-python
 $ nosetests -v
@@ -20,7 +24,7 @@ import json
 
 import urllib3
 
-HOST = 'http://petstore.swagger.io/v2'
+HOST = 'http://localhost/v2'
 
 
 class TimeoutWithEqual(urllib3.Timeout):
@@ -65,10 +69,8 @@ class PetApiTests(unittest.TestCase):
         self.tag = petstore_api.Tag()
         self.tag.id = id_gen()
         self.tag.name = "swagger-codegen-python-pet-tag"
-        self.pet = petstore_api.Pet()
+        self.pet = petstore_api.Pet(name="hello kity", photo_urls=["http://foo.bar.com/1", "http://foo.bar.com/2"])
         self.pet.id = id_gen()
-        self.pet.name = "hello kity"
-        self.pet.photo_urls = ["http://foo.bar.com/1", "http://foo.bar.com/2"]
         self.pet.status = "sold"
         self.pet.category = self.category
         self.pet.tags = [self.tag]
@@ -77,6 +79,9 @@ class PetApiTests(unittest.TestCase):
         self.test_file_dir = os.path.join(os.path.dirname(__file__), "..", "testfiles")
         self.test_file_dir = os.path.realpath(self.test_file_dir)
         self.foo = os.path.join(self.test_file_dir, "foo.png")
+
+    def tearDown(self):
+        Configuration.set_default(None)
 
     def test_preload_content_flag(self):
         self.pet_api.add_pet(body=self.pet)
@@ -102,14 +107,14 @@ class PetApiTests(unittest.TestCase):
         mock_pool = MockPoolManager(self)
         self.api_client.rest_client.pool_manager = mock_pool
 
-        mock_pool.expect_request('POST', 'http://petstore.swagger.io/v2/pet',
+        mock_pool.expect_request('POST', 'http://localhost/v2/pet',
                                  body=json.dumps(self.api_client.sanitize_for_serialization(self.pet)),
                                  headers={'Content-Type': 'application/json',
                                           'Authorization': 'Bearer ',
                                           'Accept': 'application/json',
                                           'User-Agent': 'Swagger-Codegen/1.0.0/python'},
                                  preload_content=True, timeout=TimeoutWithEqual(total=5))
-        mock_pool.expect_request('POST', 'http://petstore.swagger.io/v2/pet',
+        mock_pool.expect_request('POST', 'http://localhost/v2/pet',
                                  body=json.dumps(self.api_client.sanitize_for_serialization(self.pet)),
                                  headers={'Content-Type': 'application/json',
                                           'Authorization': 'Bearer ',
@@ -130,29 +135,57 @@ class PetApiTests(unittest.TestCase):
 
         self.assertNotEqual(pet_api.api_client.user_agent, pet_api2.api_client.user_agent)
 
-    def test_separate_default_config_instances(self):
+    def test_default_config(self):
+        default = Configuration()
+        default.host = 'default_host'
+        default.api_key['api_key'] = 'default_key'
+        default.api_key_prefix['prefix'] = 'default_prefix'
+        Configuration.set_default(default)
+
+        configuration = Configuration()
+        self.assertIsNot(configuration, default)
+        self.assertEqual(configuration.host, default.host)
+        self.assertEqual(configuration.api_key['api_key'], default.api_key['api_key'])
+        self.assertEqual(configuration.api_key_prefix['prefix'], default.api_key_prefix['prefix'])
+
+        configuration.host = 'some_host'
+        configuration.api_key['api_key'] = 'some_key'
+        configuration.api_key_prefix['prefix'] = 'some_prefix'
+        self.assertEqual(default.host, 'default_host')
+        self.assertEqual(default.api_key['api_key'], 'default_key')
+        self.assertEqual(default.api_key_prefix['prefix'], 'default_prefix')
+
+    def test_separate_config_instances(self):
         pet_api = petstore_api.PetApi()
         pet_api2 = petstore_api.PetApi()
         self.assertNotEqual(pet_api.api_client.configuration, pet_api2.api_client.configuration)
 
-        pet_api.api_client.configuration.host = 'somehost'
-        pet_api2.api_client.configuration.host = 'someotherhost'
+        pet_api.api_client.configuration.host = 'some_host'
+        pet_api2.api_client.configuration.host = 'some_other_host'
         self.assertNotEqual(pet_api.api_client.configuration.host, pet_api2.api_client.configuration.host)
 
+        pet_api.api_client.configuration.api_key['api_key'] = 'some_key'
+        pet_api2.api_client.configuration.api_key['api_key'] = 'some_other_key'
+        self.assertNotEqual(pet_api.api_client.configuration.api_key['api_key'], pet_api2.api_client.configuration.api_key['api_key'])
+
+        pet_api.api_client.configuration.api_key_prefix['prefix'] = 'some_prefix'
+        pet_api2.api_client.configuration.api_key_prefix['prefix'] = 'some_other_prefix'
+        self.assertNotEqual(pet_api.api_client.configuration.api_key_prefix['prefix'], pet_api2.api_client.configuration.api_key_prefix['prefix'])
+
     def test_async_request(self):
-        thread = self.pet_api.add_pet(body=self.pet, async=True)
+        thread = self.pet_api.add_pet(body=self.pet, async_req=True)
         response = thread.get()
         self.assertIsNone(response)
 
-        thread = self.pet_api.get_pet_by_id(self.pet.id, async=True)
+        thread = self.pet_api.get_pet_by_id(self.pet.id, async_req=True)
         result = thread.get()
         self.assertIsInstance(result, petstore_api.Pet)
 
     def test_async_with_result(self):
-        self.pet_api.add_pet(body=self.pet, async=False)
+        self.pet_api.add_pet(body=self.pet, async_req=False)
 
-        thread = self.pet_api.get_pet_by_id(self.pet.id, async=True)
-        thread2 = self.pet_api.get_pet_by_id(self.pet.id, async=True)
+        thread = self.pet_api.get_pet_by_id(self.pet.id, async_req=True)
+        thread2 = self.pet_api.get_pet_by_id(self.pet.id, async_req=True)
 
         response = thread.get()
         response2 = thread2.get()
@@ -163,7 +196,7 @@ class PetApiTests(unittest.TestCase):
     def test_async_with_http_info(self):
         self.pet_api.add_pet(body=self.pet)
 
-        thread = self.pet_api.get_pet_by_id_with_http_info(self.pet.id, async=True)
+        thread = self.pet_api.get_pet_by_id_with_http_info(self.pet.id, async_req=True)
         data, status, headers = thread.get()
 
         self.assertIsInstance(data, petstore_api.Pet)
@@ -172,7 +205,7 @@ class PetApiTests(unittest.TestCase):
     def test_async_exception(self):
         self.pet_api.add_pet(body=self.pet)
 
-        thread = self.pet_api.get_pet_by_id("-9999999999999", async=True)
+        thread = self.pet_api.get_pet_by_id("-9999999999999", async_req=True)
 
         exception = None
         try:
@@ -220,7 +253,6 @@ class PetApiTests(unittest.TestCase):
             list(map(lambda x: getattr(x, 'id'), self.pet_api.find_pets_by_status(status=[self.pet.status])))
         )
 
-    @unittest.skip("skipping the test as the method sometimes invalid Petstore object with incorrect status")
     def test_find_pets_by_tags(self):
         self.pet_api.add_pet(body=self.pet)
 

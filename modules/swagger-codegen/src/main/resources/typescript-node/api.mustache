@@ -1,5 +1,5 @@
 {{>licenseInfo}}
-import request = require('request');
+import localVarRequest = require('request');
 import http = require('http');
 {{^supportsES6}}
 import Promise = require('bluebird');
@@ -63,7 +63,7 @@ class ObjectSerializer {
         } else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
             let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
             subType = subType.substring(0, subType.length - 1); // Type> => Type
-            let transformedData = [];
+            let transformedData: any[] = [];
             for (let index in data) {
                 let date = data[index];
                 transformedData.push(ObjectSerializer.serialize(date, subType));
@@ -81,7 +81,7 @@ class ObjectSerializer {
 
             // get the map for the correct type.
             let attributeTypes = typeMap[type].getAttributeTypeMap();
-            let instance = {};
+            let instance: {[index: string]: any} = {};
             for (let index in attributeTypes) {
                 let attributeType = attributeTypes[index];
                 instance[attributeType.baseName] = ObjectSerializer.serialize(data[attributeType.name], attributeType.type);
@@ -100,7 +100,7 @@ class ObjectSerializer {
         } else if (type.lastIndexOf("Array<", 0) === 0) { // string.startsWith pre es6
             let subType: string = type.replace("Array<", ""); // Array<Type> => Type>
             subType = subType.substring(0, subType.length - 1); // Type> => Type
-            let transformedData = [];
+            let transformedData: any[] = [];
             for (let index in data) {
                 let date = data[index];
                 transformedData.push(ObjectSerializer.deserialize(date, subType));
@@ -141,16 +141,17 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
     * {{{description}}}
     */
 {{/description}}
-    '{{name}}': {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
 {{/vars}}
 
     {{#discriminator}}
-    static discriminator = {{discriminator}};
+    static discriminator: string | undefined = "{{discriminator}}";
     {{/discriminator}}
     {{^discriminator}}
-    static discriminator = undefined;
+    static discriminator: string | undefined = undefined;
     {{/discriminator}}
 
+    {{^isArrayModel}}
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {{#vars}}
         {
@@ -170,6 +171,7 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
         return {{classname}}.attributeTypeMap;
         {{/parent}}
     }
+    {{/isArrayModel}}    
 }
 
 {{#hasEnums}}
@@ -190,13 +192,13 @@ export namespace {{classname}} {
 {{/model}}
 {{/models}}
 
-let enumsMap = {
+let enumsMap: {[index: string]: any} = {
     {{#models}}
         {{#model}}
             {{#hasEnums}}
                 {{#vars}}
                     {{#isEnum}}
-    "{{datatypeWithEnum}}": {{datatypeWithEnum}},
+        {{#isContainer}}"{{classname}}.{{enumName}}": {{classname}}.{{enumName}}{{/isContainer}}{{#isNotContainer}}"{{datatypeWithEnum}}": {{datatypeWithEnum}}{{/isNotContainer}},
                     {{/isEnum}}
                 {{/vars}}
             {{/hasEnums}}
@@ -204,7 +206,7 @@ let enumsMap = {
     {{/models}}
 }
 
-let typeMap = {
+let typeMap: {[index: string]: any} = {
     {{#models}}
         {{#model}}
     "{{classname}}": {{classname}},
@@ -216,13 +218,14 @@ export interface Authentication {
     /**
     * Apply authentication settings to header and query params.
     */
-    applyToRequest(requestOptions: request.Options): void;
+    applyToRequest(requestOptions: localVarRequest.Options): void;
 }
 
 export class HttpBasicAuth implements Authentication {
-    public username: string;
-    public password: string;
-    applyToRequest(requestOptions: request.Options): void {
+    public username: string = '';
+    public password: string = '';
+
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password
         }
@@ -230,12 +233,12 @@ export class HttpBasicAuth implements Authentication {
 }
 
 export class ApiKeyAuth implements Authentication {
-    public apiKey: string;
+    public apiKey: string = '';
 
     constructor(private location: string, private paramName: string) {
     }
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         if (this.location == "query") {
             (<any>requestOptions.qs)[this.paramName] = this.apiKey;
         } else if (this.location == "header" && requestOptions && requestOptions.headers) {
@@ -245,9 +248,9 @@ export class ApiKeyAuth implements Authentication {
 }
 
 export class OAuth implements Authentication {
-    public accessToken: string;
+    public accessToken: string = '';
 
-    applyToRequest(requestOptions: request.Options): void {
+    applyToRequest(requestOptions: localVarRequest.Options): void {
         if (requestOptions && requestOptions.headers) {
             requestOptions.headers["Authorization"] = "Bearer " + this.accessToken;
         }
@@ -255,9 +258,10 @@ export class OAuth implements Authentication {
 }
 
 export class VoidAuth implements Authentication {
-    public username: string;
-    public password: string;
-    applyToRequest(_: request.Options): void {
+    public username: string = '';
+    public password: string = '';
+
+    applyToRequest(_: localVarRequest.Options): void {
         // Do nothing
     }
 }
@@ -334,8 +338,12 @@ export class {{classname}} {
         return this._basePath;
     }
 
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
     public setApiKey(key: {{classname}}ApiKeys, value: string) {
-        this.authentications[{{classname}}ApiKeys[key]].apiKey = value;
+        (this.authentications as any)[{{classname}}ApiKeys[key]].apiKey = value;
     }
 {{#authMethods}}
 {{#isBasic}}
@@ -356,53 +364,62 @@ export class {{classname}} {
 {{/authMethods}}
 {{#operation}}
     /**
-     * {{summary}}
-     * {{notes}}
-     {{#allParams}}* @param {{paramName}} {{description}}
-     {{/allParams}}*/
-    public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) : Promise<{ response: http.{{#supportsES6}}IncomingMessage{{/supportsES6}}{{^supportsES6}}ClientResponse{{/supportsES6}}; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
+     * {{&notes}}
+     {{#summary}}
+     * @summary {{&summary}}
+     {{/summary}}
+     {{#allParams}}
+     * @param {{paramName}} {{description}}
+     {{/allParams}}
+     * @param {*} [options] Override http request options.
+     */
+    public {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options: any = {}) : Promise<{ response: http.{{#supportsES6}}IncomingMessage{{/supportsES6}}{{^supportsES6}}ClientResponse{{/supportsES6}}; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
         const localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}
-            .replace('{' + '{{baseName}}' + '}', String({{paramName}})){{/pathParams}};
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
+            .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
 
-{{#allParams}}{{#required}}
+{{#allParams}}
+{{#required}}
         // verify required parameter '{{paramName}}' is not null or undefined
         if ({{paramName}} === null || {{paramName}} === undefined) {
             throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
         }
-{{/required}}{{/allParams}}
+
+{{/required}}
+{{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
-            queryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{dataType}}");
+            localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
         }
 
 {{/queryParams}}
 {{#headerParams}}
-        headerParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{dataType}}");
+        localVarHeaderParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
 {{/headerParams}}
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
-        let useFormData = false;
+        let localVarUseFormData = false;
 
 {{#formParams}}
         if ({{paramName}} !== undefined) {
             {{#isFile}}
-            formParams['{{baseName}}'] = {{paramName}};
+            localVarFormParams['{{baseName}}'] = {{paramName}};
             {{/isFile}}
             {{^isFile}}
-            formParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{dataType}}");
+            localVarFormParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
             {{/isFile}}
         }
 {{#isFile}}
-        useFormData = true;
+        localVarUseFormData = true;
 {{/isFile}}
 
 {{/formParams}}
-        let requestOptions: request.Options = {
+        let localVarRequestOptions: localVarRequest.Options = {
             method: '{{httpMethod}}',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
 {{^isResponseFile}}
@@ -412,32 +429,32 @@ export class {{classname}} {
             encoding: null,
 {{/isResponseFile}}
 {{#bodyParam}}
-            body: ObjectSerializer.serialize({{paramName}}, "{{dataType}}")
+            body: ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")
 {{/bodyParam}}
         };
 
 {{#authMethods}}
-        this.authentications.{{name}}.applyToRequest(requestOptions);
+        this.authentications.{{name}}.applyToRequest(localVarRequestOptions);
 
 {{/authMethods}}
-        this.authentications.default.applyToRequest(requestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
 
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
             } else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise<{ response: http.{{#supportsES6}}IncomingMessage{{/supportsES6}}{{^supportsES6}}ClientResponse{{/supportsES6}}; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
                     {{#returnType}}
-                    body = ObjectSerializer.deserialize(body, "{{returnType}}");
+                    body = ObjectSerializer.deserialize(body, "{{{returnType}}}");
                     {{/returnType}}
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
                         reject({ response: response, body: body });

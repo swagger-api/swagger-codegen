@@ -14,9 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -43,6 +49,8 @@ public class Capitalization implements Parcelable {
   @SerializedName("ATT_NAME")
   private String ATT_NAME = null;
 
+  public Capitalization() {
+  }
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
@@ -200,28 +208,18 @@ public class Capitalization implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(smallCamel);
-
     out.writeValue(capitalCamel);
-
     out.writeValue(smallSnake);
-
     out.writeValue(capitalSnake);
-
     out.writeValue(scAETHFlowPoints);
-
     out.writeValue(ATT_NAME);
   }
 
-  public Capitalization() {
-    super();
-  }
-
   Capitalization(Parcel in) {
-    
     smallCamel = (String)in.readValue(null);
     capitalCamel = (String)in.readValue(null);
     smallSnake = (String)in.readValue(null);
@@ -229,7 +227,7 @@ public class Capitalization implements Parcelable {
     scAETHFlowPoints = (String)in.readValue(null);
     ATT_NAME = (String)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

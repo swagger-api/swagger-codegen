@@ -14,9 +14,15 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
 
@@ -49,6 +55,8 @@ public class User implements Parcelable {
   @SerializedName("userStatus")
   private Integer userStatus = null;
 
+  public User() {
+  }
   public User id(Long id) {
     this.id = id;
     return this;
@@ -246,32 +254,20 @@ public class User implements Parcelable {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
+
   public void writeToParcel(Parcel out, int flags) {
-     
     out.writeValue(id);
-
     out.writeValue(username);
-
     out.writeValue(firstName);
-
     out.writeValue(lastName);
-
     out.writeValue(email);
-
     out.writeValue(password);
-
     out.writeValue(phone);
-
     out.writeValue(userStatus);
   }
 
-  public User() {
-    super();
-  }
-
   User(Parcel in) {
-    
     id = (Long)in.readValue(null);
     username = (String)in.readValue(null);
     firstName = (String)in.readValue(null);
@@ -281,7 +277,7 @@ public class User implements Parcelable {
     phone = (String)in.readValue(null);
     userStatus = (Integer)in.readValue(null);
   }
-  
+
   public int describeContents() {
     return 0;
   }

@@ -19,6 +19,7 @@ using IO.Swagger.Api;
 using IO.Swagger.Model;
 using IO.Swagger.Client;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace IO.Swagger.Test
 {
@@ -64,13 +65,14 @@ namespace IO.Swagger.Test
             //Assert.IsInstanceOfType<ModelClient> (instance, "variable 'instance' is a ModelClient");
         }
 
+
         /// <summary>
-        /// Test the property '_Client'
+        /// Test the property '__Client'
         /// </summary>
         [Test]
-        public void _ClientTest()
+        public void __ClientTest()
         {
-            // TODO unit test for the property '_Client'
+            // TODO unit test for the property '__Client'
         }
 
     }

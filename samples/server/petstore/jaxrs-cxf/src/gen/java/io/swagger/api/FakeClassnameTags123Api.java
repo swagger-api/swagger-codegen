@@ -17,11 +17,24 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.jaxrs.PATCH;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
+/**
+ * Swagger Petstore
+ *
+ * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ *
+ */
 @Path("/")
 @Api(value = "/", description = "")
 public interface FakeClassnameTags123Api  {
 
+    /**
+     * To test class name in snake case
+     *
+     * To test class name in snake case
+     *
+     */
     @PATCH
     @Path("/fake_classname_test")
     @Consumes({ "application/json" })
@@ -29,6 +42,6 @@ public interface FakeClassnameTags123Api  {
     @ApiOperation(value = "To test class name in snake case", tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    public Client testClassname(Client body);
+    public Client testClassname(@Valid Client body);
 }
 

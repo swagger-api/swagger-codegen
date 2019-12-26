@@ -1,7 +1,7 @@
 {{>licenseInfo}}
 {{#models}}{{#model}}/*
  * {{classname}}.h
- * 
+ *
  * {{description}}
  */
 
@@ -14,23 +14,26 @@
 {{#imports}}{{{import}}}
 {{/imports}}
 
-#include "SWGObject.h"
+#include "{{prefix}}Object.h"
 
-{{#models}}{{#model}}
-namespace Swagger {
+{{#models}}
+{{#model}}
+{{#cppNamespaceDeclarations}}
+namespace {{this}} {
+{{/cppNamespaceDeclarations}}
 
-class {{classname}}: public SWGObject {
+class {{classname}}: public {{prefix}}Object {
 public:
     {{classname}}();
-    {{classname}}(QString* json);
-    virtual ~{{classname}}();
+    {{classname}}(QString json);
+    ~{{classname}}();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    {{classname}}* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    {{classname}}* fromJson(QString jsonString) override;
 
     {{#vars}}
     {{{datatype}}} {{getter}}();
@@ -38,13 +41,19 @@ public:
 
     {{/vars}}
 
+    virtual bool isSet() override;
+
 private:
     {{#vars}}
     {{{datatype}}} {{name}};
+    bool m_{{name}}_isSet;
+
     {{/vars}}
 };
 
-} /* namespace Swagger */
+{{#cppNamespaceDeclarations}}
+}
+{{/cppNamespaceDeclarations}}
 
 #endif /* {{classname}}_H_ */
 {{/model}}

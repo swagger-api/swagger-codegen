@@ -1,6 +1,6 @@
 # Petstore::FakeClassnameTags123Api
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,10 +12,19 @@ Method | HTTP request | Description
 
 To test class name in snake case
 
+To test class name in snake case
+
 ### Example
 ```ruby
 # load the gem
 require 'petstore'
+# setup authorization
+Petstore.configure do |config|
+  # Configure API key authorization: api_key_query
+  config.api_key['api_key_query'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  #config.api_key_prefix['api_key_query'] = 'Bearer'
+end
 
 api_instance = Petstore::FakeClassnameTags123Api.new
 
@@ -43,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[api_key_query](../README.md#api_key_query)
 
 ### HTTP request headers
 

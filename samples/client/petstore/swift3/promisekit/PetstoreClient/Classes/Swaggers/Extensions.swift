@@ -4,6 +4,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 import PromiseKit
 
@@ -53,7 +54,7 @@ extension Dictionary: JSONEncodable {
     func encodeToJSON() -> Any {
         var dictionary = [AnyHashable: Any]()
         for (key, value) in self {
-            dictionary[key as! NSObject] = encodeIfPossible(value)
+            dictionary[key] = encodeIfPossible(value)
         }
         return dictionary as Any
     }
@@ -67,7 +68,7 @@ extension Data: JSONEncodable {
 
 private let dateFormatter: DateFormatter = {
     let fmt = DateFormatter()
-    fmt.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    fmt.dateFormat = Configuration.dateFormat
     fmt.locale = Locale(identifier: "en_US_POSIX")
     return fmt
 }()

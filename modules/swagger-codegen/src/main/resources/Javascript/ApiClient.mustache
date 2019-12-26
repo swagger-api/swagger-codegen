@@ -91,6 +91,10 @@
       this.agent = new superagent.agent();
     }
 
+    /*
+     * Allow user to override superagent agent
+     */
+    this.requestAgent = null;
   };
 
 {{#emitJSDoc}}  /**
@@ -103,7 +107,7 @@
       return '';
     }
     if (param instanceof Date) {
-      return param.toJSON();
+      return param.toISOString();
     }
     return param.toString();
   };
@@ -168,12 +172,15 @@
    * @returns {Boolean} <code>true</code> if <code>param</code> represents a file.
    */
 {{/emitJSDoc}}  exports.prototype.isFileParam = function(param) {
-    // fs.ReadStream in Node.js (but not in runtime like browserify)
-    if (typeof window === 'undefined' &&
-        typeof require === 'function' &&
-        require('fs') &&
-        param instanceof require('fs').ReadStream) {
-      return true;
+    // fs.ReadStream in Node.js and Electron (but not in runtime like browserify)
+    if (typeof require === 'function') {
+      var fs;
+      try {
+        fs = require('fs');
+      } catch (err) {}
+      if (fs && fs.ReadStream && param instanceof fs.ReadStream) {
+        return true;
+      }
     }
     // Buffer in Node.js
     if (typeof Buffer === 'function' && param instanceof Buffer) {
@@ -405,6 +412,12 @@
     // set header parameters
     request.set(this.defaultHeaders).set(this.normalizeParams(headerParams));
 
+
+    // set requestAgent if it is set by user
+    if (this.requestAgent) {
+      request.agent(this.requestAgent);
+    }
+
     // set request timeout
     request.timeout(this.timeout);
 
@@ -443,6 +456,8 @@
 
     if (returnType === 'Blob') {
       request.responseType('blob');
+    } else if (returnType === 'String') {
+      request.responseType('string');
     }
 
     // Attach previously saved cookies, if enabled
@@ -465,7 +480,7 @@
             if (_this.enableCookies && typeof window === 'undefined'){
               _this.agent.saveCookies(response);
             }
-            resolve({data, response});
+            resolve({data: data, response: response});
           } catch (err) {
             reject(err);
           }
@@ -493,12 +508,15 @@
 {{/usePromises}}  };
 
 {{#emitJSDoc}}  /**
-   * Parses an ISO-8601 string representation of a date value.
-   * @param {String} str The date value as a string.
+   * Parses a string representation of a date value.
+   * @param {String} str The date value as an ISO-8601 full-date or date-time string.
    * @returns {Date} The parsed date object.
    */
 {{/emitJSDoc}}  exports.parseDate = function(str) {
-    return new Date(str.replace(/T/i, ' '));
+    // OpenAPI 2.0 & 3.0 specs state that:
+    // - date values are serialized as ISO-8601 full-date strings. 
+    // - date-time values are serialized as ISO-8601 date-time strings, in which the timezone offset is mandatory. 
+    return new Date(str);
   };
 
 {{#emitJSDoc}}  /**

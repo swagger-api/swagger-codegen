@@ -1,15 +1,10 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -54,6 +49,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         additionalProperties.put("authScheme", authScheme);
         additionalProperties.put("authPreemptive", authPreemptive);
         additionalProperties.put("clientName", clientName);
+        additionalProperties.put(CodegenConstants.STRIP_PACKAGE_NAME, stripPackageName);
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("apiInvoker.mustache",
@@ -81,7 +77,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         importMapping.remove("Map");
 
         importMapping.put("Date", "java.util.Date");
-        importMapping.put("ListBuffer", "scala.collections.mutable.ListBuffer");
+        importMapping.put("ListBuffer", "scala.collection.mutable.ListBuffer");
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("enum", "NSString");
@@ -98,13 +94,10 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
         typeMapping.put("file", "File");
-        //TODO binary should be mapped to byte array
-        // mapped to String as a workaround
-        typeMapping.put("binary", "String");
-        typeMapping.put("ByteArray", "String");
+        typeMapping.put("binary", "Array[Byte]");
+        typeMapping.put("ByteArray", "Array[Byte]");
+        typeMapping.put("ArrayByte", "Array[Byte]");
         typeMapping.put("date-time", "Date");
-//        typeMapping.put("date", "Date");
-//        typeMapping.put("Date", "Date");
         typeMapping.put("DateTime", "Date");
 
         instantiationTypes.put("array", "ListBuffer");
@@ -210,7 +203,7 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
 
     @Override
     public String toModelName(final String name) {
-        final String sanitizedName = sanitizeName(modelNamePrefix + name + modelNameSuffix);
+        final String sanitizedName = sanitizeName(modelNamePrefix + this.stripPackageName(name) + modelNameSuffix);
     
         // camelize the model name
         // phone_number => PhoneNumber
@@ -234,9 +227,8 @@ public class ScalaClientCodegen extends AbstractScalaCodegen implements CodegenC
     }
 
     @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
+    public String toEnumName(CodegenProperty property) {
+        return formatIdentifier(stripPackageName(property.baseName), true);
     }
 
 }

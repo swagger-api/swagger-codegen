@@ -1,7 +1,11 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.SpringCodegen;
+import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
+import io.swagger.models.Tag;
 import io.swagger.parser.SwaggerParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,10 +18,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static io.swagger.codegen.CodegenConstants.TEMPLATE_DIR;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -37,6 +38,7 @@ public class DefaultGeneratorTest {
 
     private static final String LIBRARY_COMMENT = "//overloaded template file within library folder to add this comment";
     private static final String TEMPLATE_COMMENT = "//overloaded main template file to add this comment";
+    private static final String MODEL_DEFAULT_API_FILE = "/src/main/java/io/swagger/client/api/DefaultApi.java";
 
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -207,7 +209,108 @@ public class DefaultGeneratorTest {
 //        assertTrue(pom.exists());
     }
 
-    private boolean containsOverloadedComments(File file, String ...search) throws IOException {
+    @Test
+    public void testIssue9132() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/issue-9132.yaml");
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("jersey1");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, MODEL_DEFAULT_API_FILE);
+        assertTrue(defaultApi.exists());
+
+    }
+
+    @Test
+    public void testIssue9725() throws Exception {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"ResponseEntity<List<GetMarketsRegionIdOrders200Ok>>"));
+    }
+
+    @Test
+    public void testIssue9725Map() throws Exception {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"ResponseEntity<Map<String, GetMarketsRegionIdOrders200Ok>>"));
+    }
+
+    @Test
+    public void testRelativeRefs() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("java");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        additionalProperties.put("library", "feign");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File defaultApi = new File(output, "src/main/java/com/mycompany/generated/client/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertFalse(containsSearchStrings(defaultApi,"RelativeRefnesteddirectorydefinitionsphotosYmldefinitionsPhoto"));
+    }
+
+    private boolean containsSearchStrings(File file, String ...search) throws IOException {
         for (String line : Files.readAllLines(file.toPath(), Charset.defaultCharset())) {
             if (StringUtils.containsAny(line, search)) {
                 return true;
@@ -215,6 +318,10 @@ public class DefaultGeneratorTest {
         }
 
         return false;
+    }
+
+    private boolean containsOverloadedComments(File file, String ...search) throws IOException {
+        return containsSearchStrings(file, search);
     }
 
     @Test
@@ -277,6 +384,236 @@ public class DefaultGeneratorTest {
             for(CodegenOperation op : ops) {
                 assertFalse(opIds.contains(op.operationId));
                 opIds.add(op.operationId);
+            }
+        }
+    }
+
+    @Test
+    public void testResolveTagsAgainstSwaggerTagsDefinition() {
+        final File output = folder.getRoot();
+
+        String spec =
+                "swagger: '2.0'\n" +
+                "info:\n" +
+                "  version: 1.0.0\n" +
+                "  title: Swagger Petstore\n" +
+                "tags:\n" +
+                "  - name: pet\n" +
+                "    description: Everything about your Pets\n" +
+                "    externalDocs:\n" +
+                "      description: Find out more\n" +
+                "      url: 'http://swagger.io'\n" +
+                "    x-vendor-ext: 'tag'\n" +
+                "  - name: store\n" +
+                "    description: Access to Petstore orders\n" +
+                "  - name: user\n" +
+                "    description: Operations about user\n" +
+                "    externalDocs:\n" +
+                "      x-vendor-ext: 'foo'\n" +
+                "paths:\n" +
+                "  /pet:\n" +
+                "    get:\n" +
+                "      tags:\n" +
+                "        - pet\n" +
+                "        - store\n" +
+                "        - user\n" +
+                "      responses:\n" +
+                "        '200':\n" +
+                "          description: OK";
+
+        final List<Tag> expectedTags = new ArrayList<Tag>();
+        expectedTags.add(new Tag().name("pet").description("Everything about your Pets").externalDocs(new ExternalDocs().description("Find out more").url("http://swagger.io")));
+        expectedTags.add(new Tag().name("store").description("Access to Petstore orders"));
+        expectedTags.add(new Tag().name("user").description("Operations about user").externalDocs(new ExternalDocs()));
+
+        expectedTags.get(0).getVendorExtensions().put("x-vendor-ext", "tag");
+        expectedTags.get(2).getExternalDocs().getVendorExtensions().put("x-vendor-ext", "foo");
+
+        final Swagger swagger = new SwaggerParser().readWithInfo(spec).getSwagger();
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.opts(clientOptInput);
+
+        Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
+        assertEquals(3, paths.size());
+
+        List<String> sanitizedTags = Arrays.asList("Pet", "Store", "User");
+        for (String tag : sanitizedTags) {
+            List<CodegenOperation> operations = paths.get(tag);
+            assertNotNull(operations);
+            for (CodegenOperation operation : operations) {
+                assertOperationHasTags(operation, expectedTags);
+            }
+        }
+    }
+
+    @Test
+    public void testResolveTagsNoSwaggerTagsDefinition() {
+        final File output = folder.getRoot();
+
+        String spec =
+                "swagger: '2.0'\n" +
+                "info:\n" +
+                "  version: 1.0.0\n" +
+                "  title: Swagger Petstore\n" +
+                "paths:\n" +
+                "  /pet:\n" +
+                "    get:\n" +
+                "      tags:\n" +
+                "        - pet\n" +
+                "        - store\n" +
+                "        - user\n" +
+                "      responses:\n" +
+                "        '200':\n" +
+                "          description: OK";
+
+        final List<Tag> expectedTags = new ArrayList<Tag>();
+        expectedTags.add(new Tag().name("pet"));
+        expectedTags.add(new Tag().name("store"));
+        expectedTags.add(new Tag().name("user"));
+
+        final Swagger swagger = new SwaggerParser().readWithInfo(spec).getSwagger();
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.opts(clientOptInput);
+
+        Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
+        assertEquals(3, paths.size());
+
+        List<String> sanitizedTags = Arrays.asList("Pet", "Store", "User");
+        for (String tag : sanitizedTags) {
+            List<CodegenOperation> operations = paths.get(tag);
+            assertNotNull(operations);
+            for (CodegenOperation operation : operations) {
+                assertOperationHasTags(operation, expectedTags);
+            }
+        }
+    }
+
+    @Test
+    public void testResolveTagsNoTagsDefined() {
+        final File output = folder.getRoot();
+
+        String spec =
+                "swagger: '2.0'\n" +
+                "info:\n" +
+                "  version: 1.0.0\n" +
+                "  title: Swagger Petstore\n" +
+                "paths:\n" +
+                "  /pet:\n" +
+                "    get:\n" +
+                "      responses:\n" +
+                "        '200':\n" +
+                "          description: OK";
+
+        final List<Tag> expectedTags = new ArrayList<Tag>();
+        expectedTags.add(new Tag().name("default"));
+
+        final Swagger swagger = new SwaggerParser().readWithInfo(spec).getSwagger();
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.opts(clientOptInput);
+
+        Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
+        assertEquals(1, paths.size());
+
+        List<String> sanitizedTags = Collections.singletonList("Default");
+        for (String tag : sanitizedTags) {
+            List<CodegenOperation> operations = paths.get(tag);
+            assertNotNull(operations);
+            for (CodegenOperation operation : operations) {
+                assertOperationHasTags(operation, expectedTags);
+            }
+        }
+    }
+
+    @Test
+    public void testResolveTagNotDefinedInSwaggerTagsDefinition() {
+        final File output = folder.getRoot();
+
+        String spec =
+                "swagger: '2.0'\n" +
+                        "info:\n" +
+                        "  version: 1.0.0\n" +
+                        "  title: Swagger Petstore\n" +
+                        "tags:\n" +
+                        "  - name: pet\n" +
+                        "    description: Everything about your Pets\n" +
+                        "paths:\n" +
+                        "  /pet:\n" +
+                        "    get:\n" +
+                        "      tags:\n" +
+                        "        - pet\n" +
+                        "        - store\n" + // Not defined above
+                        "        - user\n" +  // Not defined above
+                        "      responses:\n" +
+                        "        '200':\n" +
+                        "          description: OK";
+
+        final List<Tag> expectedTags = new ArrayList<Tag>();
+        expectedTags.add(new Tag().name("pet").description("Everything about your Pets"));
+        expectedTags.add(new Tag().name("store"));
+        expectedTags.add(new Tag().name("user"));
+
+        final Swagger swagger = new SwaggerParser().readWithInfo(spec).getSwagger();
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.opts(clientOptInput);
+
+        Map<String, List<CodegenOperation>> paths = generator.processPaths(swagger.getPaths());
+        assertEquals(3, paths.size());
+
+        List<String> sanitizedTags = Arrays.asList("Pet", "Store", "User");
+        for (String tag : sanitizedTags) {
+            List<CodegenOperation> operations = paths.get(tag);
+            assertNotNull(operations);
+            for (CodegenOperation operation : operations) {
+                assertOperationHasTags(operation, expectedTags);
+            }
+        }
+    }
+
+    private void assertOperationHasTags(CodegenOperation op, List<Tag> expectedTags) {
+        assertNotNull(op.tags);
+        assertEquals(op.tags.size(), expectedTags.size());
+
+        for (Tag tag : expectedTags) {
+            Tag foundTag = null;
+
+            for (Tag opTag : op.tags) {
+                if (tag.getName().equals(opTag.getName())) {
+                    foundTag = opTag;
+                    break;
+                }
+            }
+
+            if (foundTag == null) {
+                fail("Expected tag '" + tag.getName() + "' was not found on operation " + op.operationId);
+            }
+
+            assertEquals(tag, foundTag);
+            if (!tag.getVendorExtensions().isEmpty()) {
+                assertEquals(tag.getVendorExtensions(), foundTag.getVendorExtensions());
+            }
+
+            if (tag.getExternalDocs() != null && !tag.getExternalDocs().getVendorExtensions().isEmpty()) {
+                assertEquals(tag.getExternalDocs().getVendorExtensions(), foundTag.getExternalDocs().getVendorExtensions());
             }
         }
     }

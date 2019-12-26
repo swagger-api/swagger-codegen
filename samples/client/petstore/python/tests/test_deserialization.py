@@ -1,5 +1,7 @@
 # coding: utf-8
 
+# flake8: noqa
+
 """
 Run the tests.
 $ pip install nose (optional)
@@ -19,6 +21,28 @@ class DeserializationTests(unittest.TestCase):
     def setUp(self):
         self.api_client = petstore_api.ApiClient()
         self.deserialize = self.api_client._ApiClient__deserialize
+
+    def test_enum_test(self):
+        """ deserialize dict(str, Enum_Test) """
+        data = {
+            'enum_test': {
+                "enum_string": "UPPER",
+                "enum_string_required": "lower",
+                "enum_integer": 1,
+                "enum_number": 1.1,
+                "outerEnum": "placed"
+            }
+        }
+
+        deserialized = self.deserialize(data, 'dict(str, EnumTest)')
+        self.assertTrue(isinstance(deserialized, dict))
+        self.assertTrue(isinstance(deserialized['enum_test'], petstore_api.EnumTest))
+        self.assertEqual(deserialized['enum_test'],
+                         petstore_api.EnumTest(enum_string="UPPER",
+                                               enum_string_required="lower",
+                                               enum_integer=1,
+                                               enum_number=1.1,
+                                               outer_enum=petstore_api.OuterEnum.PLACED))
 
     def test_deserialize_dict_str_pet(self):
         """ deserialize dict(str, Pet) """

@@ -1,15 +1,18 @@
 "use strict";
-var request = require('request');
-var Promise = require('bluebird');
+Object.defineProperty(exports, "__esModule", { value: true });
+var localVarRequest = require("request");
+var Promise = require("bluebird");
 var defaultBasePath = 'http://petstore.swagger.io/v2';
-var primitives = ["string",
+var primitives = [
+    "string",
     "boolean",
     "double",
     "integer",
     "long",
     "float",
     "number",
-    "any"];
+    "any"
+];
 var ObjectSerializer = (function () {
     function ObjectSerializer() {
     }
@@ -119,6 +122,55 @@ var ObjectSerializer = (function () {
     };
     return ObjectSerializer;
 }());
+var Amount = (function () {
+    function Amount() {
+    }
+    Amount.getAttributeTypeMap = function () {
+        return Amount.attributeTypeMap;
+    };
+    Amount.discriminator = undefined;
+    Amount.attributeTypeMap = [
+        {
+            "name": "value",
+            "baseName": "value",
+            "type": "number"
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency"
+        }
+    ];
+    return Amount;
+}());
+exports.Amount = Amount;
+var ApiResponse = (function () {
+    function ApiResponse() {
+    }
+    ApiResponse.getAttributeTypeMap = function () {
+        return ApiResponse.attributeTypeMap;
+    };
+    ApiResponse.discriminator = undefined;
+    ApiResponse.attributeTypeMap = [
+        {
+            "name": "code",
+            "baseName": "code",
+            "type": "number"
+        },
+        {
+            "name": "type",
+            "baseName": "type",
+            "type": "string"
+        },
+        {
+            "name": "message",
+            "baseName": "message",
+            "type": "string"
+        }
+    ];
+    return ApiResponse;
+}());
+exports.ApiResponse = ApiResponse;
 var Category = (function () {
     function Category() {
     }
@@ -136,10 +188,22 @@ var Category = (function () {
             "name": "name",
             "baseName": "name",
             "type": "string"
-        }];
+        }
+    ];
     return Category;
 }());
 exports.Category = Category;
+var Currency = (function () {
+    function Currency() {
+    }
+    Currency.getAttributeTypeMap = function () {
+        return Currency.attributeTypeMap;
+    };
+    Currency.discriminator = undefined;
+    Currency.attributeTypeMap = [];
+    return Currency;
+}());
+exports.Currency = Currency;
 var Order = (function () {
     function Order() {
     }
@@ -177,19 +241,20 @@ var Order = (function () {
             "name": "complete",
             "baseName": "complete",
             "type": "boolean"
-        }];
+        }
+    ];
     return Order;
 }());
 exports.Order = Order;
-var Order;
 (function (Order) {
+    var StatusEnum;
     (function (StatusEnum) {
         StatusEnum[StatusEnum["Placed"] = 'placed'] = "Placed";
         StatusEnum[StatusEnum["Approved"] = 'approved'] = "Approved";
         StatusEnum[StatusEnum["Delivered"] = 'delivered'] = "Delivered";
-    })(Order.StatusEnum || (Order.StatusEnum = {}));
-    var StatusEnum = Order.StatusEnum;
+    })(StatusEnum = Order.StatusEnum || (Order.StatusEnum = {}));
 })(Order = exports.Order || (exports.Order = {}));
+exports.Order = Order;
 var Pet = (function () {
     function Pet() {
     }
@@ -227,19 +292,20 @@ var Pet = (function () {
             "name": "status",
             "baseName": "status",
             "type": "Pet.StatusEnum"
-        }];
+        }
+    ];
     return Pet;
 }());
 exports.Pet = Pet;
-var Pet;
 (function (Pet) {
+    var StatusEnum;
     (function (StatusEnum) {
         StatusEnum[StatusEnum["Available"] = 'available'] = "Available";
         StatusEnum[StatusEnum["Pending"] = 'pending'] = "Pending";
         StatusEnum[StatusEnum["Sold"] = 'sold'] = "Sold";
-    })(Pet.StatusEnum || (Pet.StatusEnum = {}));
-    var StatusEnum = Pet.StatusEnum;
+    })(StatusEnum = Pet.StatusEnum || (Pet.StatusEnum = {}));
 })(Pet = exports.Pet || (exports.Pet = {}));
+exports.Pet = Pet;
 var Tag = (function () {
     function Tag() {
     }
@@ -257,7 +323,8 @@ var Tag = (function () {
             "name": "name",
             "baseName": "name",
             "type": "string"
-        }];
+        }
+    ];
     return Tag;
 }());
 exports.Tag = Tag;
@@ -308,7 +375,8 @@ var User = (function () {
             "name": "userStatus",
             "baseName": "userStatus",
             "type": "number"
-        }];
+        }
+    ];
     return User;
 }());
 exports.User = User;
@@ -317,7 +385,10 @@ var enumsMap = {
     "Pet.StatusEnum": Pet.StatusEnum,
 };
 var typeMap = {
+    "Amount": Amount,
+    "ApiResponse": ApiResponse,
     "Category": Category,
+    "Currency": Currency,
     "Order": Order,
     "Pet": Pet,
     "Tag": Tag,
@@ -325,6 +396,8 @@ var typeMap = {
 };
 var HttpBasicAuth = (function () {
     function HttpBasicAuth() {
+        this.username = '';
+        this.password = '';
     }
     HttpBasicAuth.prototype.applyToRequest = function (requestOptions) {
         requestOptions.auth = {
@@ -338,6 +411,7 @@ var ApiKeyAuth = (function () {
     function ApiKeyAuth(location, paramName) {
         this.location = location;
         this.paramName = paramName;
+        this.apiKey = '';
     }
     ApiKeyAuth.prototype.applyToRequest = function (requestOptions) {
         if (this.location == "query") {
@@ -352,6 +426,7 @@ var ApiKeyAuth = (function () {
 exports.ApiKeyAuth = ApiKeyAuth;
 var OAuth = (function () {
     function OAuth() {
+        this.accessToken = '';
     }
     OAuth.prototype.applyToRequest = function (requestOptions) {
         if (requestOptions && requestOptions.headers) {
@@ -363,19 +438,21 @@ var OAuth = (function () {
 exports.OAuth = OAuth;
 var VoidAuth = (function () {
     function VoidAuth() {
+        this.username = '';
+        this.password = '';
     }
     VoidAuth.prototype.applyToRequest = function (_) {
     };
     return VoidAuth;
 }());
 exports.VoidAuth = VoidAuth;
+var PetApiApiKeys;
 (function (PetApiApiKeys) {
     PetApiApiKeys[PetApiApiKeys["api_key"] = 0] = "api_key";
-})(exports.PetApiApiKeys || (exports.PetApiApiKeys = {}));
-var PetApiApiKeys = exports.PetApiApiKeys;
+})(PetApiApiKeys = exports.PetApiApiKeys || (exports.PetApiApiKeys = {}));
 var PetApi = (function () {
     function PetApi(basePathOrUsername, password, basePath) {
-        this.basePath = defaultBasePath;
+        this._basePath = defaultBasePath;
         this.defaultHeaders = {};
         this._useQuerystring = false;
         this.authentications = {
@@ -401,6 +478,19 @@ var PetApi = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(PetApi.prototype, "basePath", {
+        get: function () {
+            return this._basePath;
+        },
+        set: function (basePath) {
+            this._basePath = basePath;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    PetApi.prototype.setDefaultAuthentication = function (auth) {
+        this.authentications.default = auth;
+    };
     PetApi.prototype.setApiKey = function (key, value) {
         this.authentications[PetApiApiKeys[key]].apiKey = value;
     };
@@ -411,46 +501,41 @@ var PetApi = (function () {
         enumerable: true,
         configurable: true
     });
-    PetApi.prototype.extendObj = function (objA, objB) {
-        for (var key in objB) {
-            if (objB.hasOwnProperty(key)) {
-                objA[key] = objB[key];
-            }
-        }
-        return objA;
-    };
     PetApi.prototype.addPet = function (body) {
         var localVarPath = this.basePath + '/pet';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling addPet.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(body, "Pet")
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -462,40 +547,40 @@ var PetApi = (function () {
     };
     PetApi.prototype.deletePet = function (petId, apiKey) {
         var localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
-        headerParams['api_key'] = ObjectSerializer.serialize(apiKey, "string");
-        var useFormData = false;
-        var requestOptions = {
+        localVarHeaderParams['api_key'] = ObjectSerializer.serialize(apiKey, "string");
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'DELETE',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -507,39 +592,42 @@ var PetApi = (function () {
     };
     PetApi.prototype.findPetsByStatus = function (status) {
         var localVarPath = this.basePath + '/pet/findByStatus';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        if (status !== undefined) {
-            queryParameters['status'] = ObjectSerializer.serialize(status, "Array&lt;string&gt;");
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (status === null || status === undefined) {
+            throw new Error('Required parameter status was null or undefined when calling findPetsByStatus.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        if (status !== undefined) {
+            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<'available' | 'pending' | 'sold'>");
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    body = ObjectSerializer.deserialize(body, "Array&lt;Pet&gt;");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    body = ObjectSerializer.deserialize(body, "Array<Pet>");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -551,39 +639,42 @@ var PetApi = (function () {
     };
     PetApi.prototype.findPetsByTags = function (tags) {
         var localVarPath = this.basePath + '/pet/findByTags';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        if (tags !== undefined) {
-            queryParameters['tags'] = ObjectSerializer.serialize(tags, "Array&lt;string&gt;");
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (tags === null || tags === undefined) {
+            throw new Error('Required parameter tags was null or undefined when calling findPetsByTags.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        if (tags !== undefined) {
+            localVarQueryParameters['tags'] = ObjectSerializer.serialize(tags, "Array<string>");
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    body = ObjectSerializer.deserialize(body, "Array&lt;Pet&gt;");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    body = ObjectSerializer.deserialize(body, "Array<Pet>");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -595,41 +686,40 @@ var PetApi = (function () {
     };
     PetApi.prototype.getPetById = function (petId) {
         var localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.api_key.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.api_key.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Pet");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -641,36 +731,39 @@ var PetApi = (function () {
     };
     PetApi.prototype.updatePet = function (body) {
         var localVarPath = this.basePath + '/pet';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updatePet.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'PUT',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(body, "Pet")
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -682,45 +775,45 @@ var PetApi = (function () {
     };
     PetApi.prototype.updatePetWithForm = function (petId, name, status) {
         var localVarPath = this.basePath + '/pet/{petId}'
-            .replace('{' + 'petId' + '}', String(petId));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
-        var useFormData = false;
+        var localVarUseFormData = false;
         if (name !== undefined) {
-            formParams['name'] = ObjectSerializer.serialize(name, "string");
+            localVarFormParams['name'] = ObjectSerializer.serialize(name, "string");
         }
         if (status !== undefined) {
-            formParams['status'] = ObjectSerializer.serialize(status, "string");
+            localVarFormParams['status'] = ObjectSerializer.serialize(status, "string");
         }
-        var requestOptions = {
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -732,46 +825,47 @@ var PetApi = (function () {
     };
     PetApi.prototype.uploadFile = function (petId, additionalMetadata, file) {
         var localVarPath = this.basePath + '/pet/{petId}/uploadImage'
-            .replace('{' + 'petId' + '}', String(petId));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
-        var useFormData = false;
+        var localVarUseFormData = false;
         if (additionalMetadata !== undefined) {
-            formParams['additionalMetadata'] = ObjectSerializer.serialize(additionalMetadata, "string");
+            localVarFormParams['additionalMetadata'] = ObjectSerializer.serialize(additionalMetadata, "string");
         }
         if (file !== undefined) {
-            formParams['file'] = file;
+            localVarFormParams['file'] = file;
         }
-        useFormData = true;
-        var requestOptions = {
+        localVarUseFormData = true;
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.petstore_auth.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.petstore_auth.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    body = ObjectSerializer.deserialize(body, "ApiResponse");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -784,13 +878,13 @@ var PetApi = (function () {
     return PetApi;
 }());
 exports.PetApi = PetApi;
+var StoreApiApiKeys;
 (function (StoreApiApiKeys) {
     StoreApiApiKeys[StoreApiApiKeys["api_key"] = 0] = "api_key";
-})(exports.StoreApiApiKeys || (exports.StoreApiApiKeys = {}));
-var StoreApiApiKeys = exports.StoreApiApiKeys;
+})(StoreApiApiKeys = exports.StoreApiApiKeys || (exports.StoreApiApiKeys = {}));
 var StoreApi = (function () {
     function StoreApi(basePathOrUsername, password, basePath) {
-        this.basePath = defaultBasePath;
+        this._basePath = defaultBasePath;
         this.defaultHeaders = {};
         this._useQuerystring = false;
         this.authentications = {
@@ -816,6 +910,19 @@ var StoreApi = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(StoreApi.prototype, "basePath", {
+        get: function () {
+            return this._basePath;
+        },
+        set: function (basePath) {
+            this._basePath = basePath;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    StoreApi.prototype.setDefaultAuthentication = function (auth) {
+        this.authentications.default = auth;
+    };
     StoreApi.prototype.setApiKey = function (key, value) {
         this.authentications[StoreApiApiKeys[key]].apiKey = value;
     };
@@ -826,48 +933,40 @@ var StoreApi = (function () {
         enumerable: true,
         configurable: true
     });
-    StoreApi.prototype.extendObj = function (objA, objB) {
-        for (var key in objB) {
-            if (objB.hasOwnProperty(key)) {
-                objA[key] = objB[key];
-            }
-        }
-        return objA;
-    };
     StoreApi.prototype.deleteOrder = function (orderId) {
         var localVarPath = this.basePath + '/store/order/{orderId}'
-            .replace('{' + 'orderId' + '}', String(orderId));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'orderId' + '}', encodeURIComponent(String(orderId)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'DELETE',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -879,36 +978,36 @@ var StoreApi = (function () {
     };
     StoreApi.prototype.getInventory = function () {
         var localVarPath = this.basePath + '/store/inventory';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.api_key.applyToRequest(requestOptions);
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.api_key.applyToRequest(localVarRequestOptions);
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "{ [key: string]: number; }");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -920,39 +1019,39 @@ var StoreApi = (function () {
     };
     StoreApi.prototype.getOrderById = function (orderId) {
         var localVarPath = this.basePath + '/store/order/{orderId}'
-            .replace('{' + 'orderId' + '}', String(orderId));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'orderId' + '}', encodeURIComponent(String(orderId)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Order");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -964,36 +1063,39 @@ var StoreApi = (function () {
     };
     StoreApi.prototype.placeOrder = function (body) {
         var localVarPath = this.basePath + '/store/order';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling placeOrder.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(body, "Order")
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "Order");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1006,13 +1108,13 @@ var StoreApi = (function () {
     return StoreApi;
 }());
 exports.StoreApi = StoreApi;
+var UserApiApiKeys;
 (function (UserApiApiKeys) {
     UserApiApiKeys[UserApiApiKeys["api_key"] = 0] = "api_key";
-})(exports.UserApiApiKeys || (exports.UserApiApiKeys = {}));
-var UserApiApiKeys = exports.UserApiApiKeys;
+})(UserApiApiKeys = exports.UserApiApiKeys || (exports.UserApiApiKeys = {}));
 var UserApi = (function () {
     function UserApi(basePathOrUsername, password, basePath) {
-        this.basePath = defaultBasePath;
+        this._basePath = defaultBasePath;
         this.defaultHeaders = {};
         this._useQuerystring = false;
         this.authentications = {
@@ -1038,6 +1140,19 @@ var UserApi = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(UserApi.prototype, "basePath", {
+        get: function () {
+            return this._basePath;
+        },
+        set: function (basePath) {
+            this._basePath = basePath;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    UserApi.prototype.setDefaultAuthentication = function (auth) {
+        this.authentications.default = auth;
+    };
     UserApi.prototype.setApiKey = function (key, value) {
         this.authentications[UserApiApiKeys[key]].apiKey = value;
     };
@@ -1048,45 +1163,40 @@ var UserApi = (function () {
         enumerable: true,
         configurable: true
     });
-    UserApi.prototype.extendObj = function (objA, objB) {
-        for (var key in objB) {
-            if (objB.hasOwnProperty(key)) {
-                objA[key] = objB[key];
-            }
-        }
-        return objA;
-    };
     UserApi.prototype.createUser = function (body) {
         var localVarPath = this.basePath + '/user';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createUser.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(body, "User")
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1098,35 +1208,38 @@ var UserApi = (function () {
     };
     UserApi.prototype.createUsersWithArrayInput = function (body) {
         var localVarPath = this.basePath + '/user/createWithArray';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(body, "Array&lt;User&gt;")
+            body: ObjectSerializer.serialize(body, "Array<User>")
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1138,35 +1251,38 @@ var UserApi = (function () {
     };
     UserApi.prototype.createUsersWithListInput = function (body) {
         var localVarPath = this.basePath + '/user/createWithList';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(body, "Array&lt;User&gt;")
+            body: ObjectSerializer.serialize(body, "Array<User>")
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1178,38 +1294,38 @@ var UserApi = (function () {
     };
     UserApi.prototype.deleteUser = function (username) {
         var localVarPath = this.basePath + '/user/{username}'
-            .replace('{' + 'username' + '}', String(username));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'username' + '}', encodeURIComponent(String(username)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'DELETE',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1221,39 +1337,39 @@ var UserApi = (function () {
     };
     UserApi.prototype.getUserByName = function (username) {
         var localVarPath = this.basePath + '/user/{username}'
-            .replace('{' + 'username' + '}', String(username));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'username' + '}', encodeURIComponent(String(username)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "User");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1265,41 +1381,47 @@ var UserApi = (function () {
     };
     UserApi.prototype.loginUser = function (username, password) {
         var localVarPath = this.basePath + '/user/login';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling loginUser.');
+        }
+        if (password === null || password === undefined) {
+            throw new Error('Required parameter password was null or undefined when calling loginUser.');
+        }
         if (username !== undefined) {
-            queryParameters['username'] = ObjectSerializer.serialize(username, "string");
+            localVarQueryParameters['username'] = ObjectSerializer.serialize(username, "string");
         }
         if (password !== undefined) {
-            queryParameters['password'] = ObjectSerializer.serialize(password, "string");
+            localVarQueryParameters['password'] = ObjectSerializer.serialize(password, "string");
         }
-        var useFormData = false;
-        var requestOptions = {
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
                     body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1311,34 +1433,34 @@ var UserApi = (function () {
     };
     UserApi.prototype.logoutUser = function () {
         var localVarPath = this.basePath + '/user/logout';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
-        var useFormData = false;
-        var requestOptions = {
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {
@@ -1350,39 +1472,42 @@ var UserApi = (function () {
     };
     UserApi.prototype.updateUser = function (username, body) {
         var localVarPath = this.basePath + '/user/{username}'
-            .replace('{' + 'username' + '}', String(username));
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var formParams = {};
+            .replace('{' + 'username' + '}', encodeURIComponent(String(username)));
+        var localVarQueryParameters = {};
+        var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
+        var localVarFormParams = {};
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser.');
         }
-        var useFormData = false;
-        var requestOptions = {
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateUser.');
+        }
+        var localVarUseFormData = false;
+        var localVarRequestOptions = {
             method: 'PUT',
-            qs: queryParameters,
-            headers: headerParams,
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(body, "User")
         };
-        this.authentications.default.applyToRequest(requestOptions);
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                requestOptions.formData = formParams;
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                localVarRequestOptions.formData = localVarFormParams;
             }
             else {
-                requestOptions.form = formParams;
+                localVarRequestOptions.form = localVarFormParams;
             }
         }
         return new Promise(function (resolve, reject) {
-            request(requestOptions, function (error, response, body) {
+            localVarRequest(localVarRequestOptions, function (error, response, body) {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     }
                     else {

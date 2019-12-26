@@ -8,13 +8,18 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 /**
  * ArrayOfNumberOnly
  */
+@Validated
 
 public class ArrayOfNumberOnly   {
   @JsonProperty("ArrayNumber")
+  @Valid
   private List<BigDecimal> arrayNumber = null;
 
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
@@ -24,17 +29,20 @@ public class ArrayOfNumberOnly   {
 
   public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
     if (this.arrayNumber == null) {
-      this.arrayNumber = new ArrayList<BigDecimal>();
+      this.arrayNumber = new ArrayList<>();
     }
     this.arrayNumber.add(arrayNumberItem);
     return this;
   }
 
-   /**
+  /**
    * Get arrayNumber
    * @return arrayNumber
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }

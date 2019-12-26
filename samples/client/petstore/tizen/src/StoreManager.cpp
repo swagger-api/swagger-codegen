@@ -48,7 +48,7 @@ static gpointer __StoreManagerthreadFunc(gpointer data)
 }
 
 
-bool deleteOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool deleteOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -74,14 +74,14 @@ bool deleteOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, voi
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool deleteOrderHelper(char * accessToken,
+static bool deleteOrderHelper(char * accessToken,
 	std::string orderId, 
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)
@@ -178,7 +178,7 @@ bool StoreManager::deleteOrderSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool getInventoryProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool getInventoryProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	void(* handler)(std::map<string,string>, Error, void* )
@@ -186,7 +186,6 @@ bool getInventoryProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, vo
 	
 	JsonNode* pJson;
 	char * data = p_chunk.memory;
-	printf("%s\n", data);
 
 	std::map<string,string> out;
 	
@@ -205,14 +204,14 @@ bool getInventoryProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, vo
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		 handler(out, error, userData);
 		return false;
 			}
 }
 
-bool getInventoryHelper(char * accessToken,
+static bool getInventoryHelper(char * accessToken,
 	
 	void(* handler)(std::map<string,string>, Error, void* )
 	, void* userData, bool isAsync)
@@ -303,7 +302,7 @@ bool StoreManager::getInventorySync(char * accessToken,
 	handler, userData, false);
 }
 
-bool getOrderByIdProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool getOrderByIdProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	void(* handler)(Order, Error, void* )
@@ -311,7 +310,6 @@ bool getOrderByIdProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, vo
 	
 	JsonNode* pJson;
 	char * data = p_chunk.memory;
-	printf("%s\n", data);
 
 	
 	Order out;
@@ -352,14 +350,14 @@ bool getOrderByIdProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, vo
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		 handler(out, error, userData);
 		return false;
 			}
 }
 
-bool getOrderByIdHelper(char * accessToken,
+static bool getOrderByIdHelper(char * accessToken,
 	long long orderId, 
 	void(* handler)(Order, Error, void* )
 	, void* userData, bool isAsync)
@@ -456,7 +454,7 @@ bool StoreManager::getOrderByIdSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool placeOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool placeOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	void(* handler)(Order, Error, void* )
@@ -464,7 +462,6 @@ bool placeOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void
 	
 	JsonNode* pJson;
 	char * data = p_chunk.memory;
-	printf("%s\n", data);
 
 	
 	Order out;
@@ -505,14 +502,14 @@ bool placeOrderProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		 handler(out, error, userData);
 		return false;
 			}
 }
 
-bool placeOrderHelper(char * accessToken,
+static bool placeOrderHelper(char * accessToken,
 	Order body, 
 	void(* handler)(Order, Error, void* )
 	, void* userData, bool isAsync)

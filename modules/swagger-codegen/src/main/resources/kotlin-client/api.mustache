@@ -1,0 +1,56 @@
+{{>licenseInfo}}
+package {{apiPackage}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+import {{packageName}}.infrastructure.*
+{{#threetenbp}}
+import org.threeten.bp.LocalDateTime
+{{/threetenbp}}
+
+{{#operations}}
+class {{classname}}(basePath: kotlin.String = "{{{basePath}}}") : ApiClient(basePath) {
+
+    {{#operation}}
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#allParams}}* @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+    {{/allParams}}* @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
+    */{{#returnType}}
+    @Suppress("UNCHECKED_CAST"){{/returnType}}
+    fun {{operationId}}({{#allParams}}{{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) : {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}} {
+        val localVariableBody: kotlin.Any? = {{#hasBodyParam}}{{#bodyParams}}{{paramName}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}null{{/hasFormParams}}{{#hasFormParams}}mapOf({{#formParams}}"{{{baseName}}}" to {{paramName}}{{#hasMore}}, {{/hasMore}}{{/formParams}}){{/hasFormParams}}{{/hasBodyParam}}
+        val localVariableQuery: MultiValueMap = {{^hasQueryParams}}mapOf(){{/hasQueryParams}}{{#hasQueryParams}}mapOf({{#queryParams}}"{{baseName}}" to {{#isContainer}}toMultiValue({{paramName}}.toList(), "{{collectionFormat}}"){{/isContainer}}{{^isContainer}}listOf("${{paramName}}"){{/isContainer}}{{#hasMore}}, {{/hasMore}}{{/queryParams}}){{/hasQueryParams}}
+        
+        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf({{#hasFormParams}}"Content-Type" to "multipart/form-data"{{/hasFormParams}})
+        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf({{#hasProduces}}"Accept" to "{{#produces}}{{#isContainer}}{{mediaType}}.joinToString(separator = collectionDelimiter("{{collectionFormat}}"){{/isContainer}}{{^isContainer}}{{mediaType}}{{/isContainer}}{{#hasMore}}, {{/hasMore}}{{/produces}}"{{/hasProduces}})
+        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf({{#hasHeaderParams}}{{#headerParams}}"{{baseName}}" to {{#isContainer}}{{paramName}}.joinToString(separator = collectionDelimiter("{{collectionFormat}}"){{/isContainer}}{{^isContainer}}{{paramName}}{{/isContainer}}{{#hasMore}}, {{/hasMore}}{{/headerParams}}{{/hasHeaderParams}})
+        localVariableHeaders.putAll(contentHeaders)
+        localVariableHeaders.putAll(acceptsHeaders)
+        
+        val localVariableConfig = RequestConfig(
+            RequestMethod.{{httpMethod}},
+            "{{path}}"{{#pathParams}}.replace("{"+"{{baseName}}"+"}", "${{paramName}}"){{/pathParams}},
+            query = localVariableQuery,
+            headers = localVariableHeaders
+        )
+        val response = request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}>(
+            localVariableConfig,
+            localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> {{#returnType}}(response as Success<*>).data as {{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+            else -> throw kotlin.IllegalStateException("Undefined ResponseType.")
+        }
+    }
+
+    {{/operation}}
+}
+{{/operations}}

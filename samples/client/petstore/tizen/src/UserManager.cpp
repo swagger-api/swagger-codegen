@@ -48,7 +48,7 @@ static gpointer __UserManagerthreadFunc(gpointer data)
 }
 
 
-bool createUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool createUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -74,14 +74,14 @@ bool createUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool createUserHelper(char * accessToken,
+static bool createUserHelper(char * accessToken,
 	User body, 
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)
@@ -185,7 +185,7 @@ bool UserManager::createUserSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool createUsersWithArrayInputProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool createUsersWithArrayInputProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -211,14 +211,14 @@ bool createUsersWithArrayInputProcessor(MemoryStruct_s p_chunk, long code, char*
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool createUsersWithArrayInputHelper(char * accessToken,
+static bool createUsersWithArrayInputHelper(char * accessToken,
 	std::list<User> body, 
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)
@@ -334,7 +334,7 @@ bool UserManager::createUsersWithArrayInputSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool createUsersWithListInputProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool createUsersWithListInputProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -360,14 +360,14 @@ bool createUsersWithListInputProcessor(MemoryStruct_s p_chunk, long code, char* 
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool createUsersWithListInputHelper(char * accessToken,
+static bool createUsersWithListInputHelper(char * accessToken,
 	std::list<User> body, 
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)
@@ -483,7 +483,7 @@ bool UserManager::createUsersWithListInputSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool deleteUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool deleteUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -509,14 +509,14 @@ bool deleteUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool deleteUserHelper(char * accessToken,
+static bool deleteUserHelper(char * accessToken,
 	std::string username, 
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)
@@ -613,7 +613,7 @@ bool UserManager::deleteUserSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool getUserByNameProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool getUserByNameProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	void(* handler)(User, Error, void* )
@@ -621,7 +621,6 @@ bool getUserByNameProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, v
 	
 	JsonNode* pJson;
 	char * data = p_chunk.memory;
-	printf("%s\n", data);
 
 	
 	User out;
@@ -662,14 +661,14 @@ bool getUserByNameProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, v
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		 handler(out, error, userData);
 		return false;
 			}
 }
 
-bool getUserByNameHelper(char * accessToken,
+static bool getUserByNameHelper(char * accessToken,
 	std::string username, 
 	void(* handler)(User, Error, void* )
 	, void* userData, bool isAsync)
@@ -766,7 +765,7 @@ bool UserManager::getUserByNameSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool loginUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool loginUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	void(* handler)(std::string, Error, void* )
@@ -774,7 +773,6 @@ bool loginUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void*
 	
 	JsonNode* pJson;
 	char * data = p_chunk.memory;
-	printf("%s\n", data);
 
 	
 	std::string out;
@@ -810,14 +808,14 @@ bool loginUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void*
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		 handler(out, error, userData);
 		return false;
 			}
 }
 
-bool loginUserHelper(char * accessToken,
+static bool loginUserHelper(char * accessToken,
 	std::string username, std::string password, 
 	void(* handler)(std::string, Error, void* )
 	, void* userData, bool isAsync)
@@ -916,7 +914,7 @@ bool UserManager::loginUserSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool logoutUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool logoutUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -942,14 +940,14 @@ bool logoutUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool logoutUserHelper(char * accessToken,
+static bool logoutUserHelper(char * accessToken,
 	
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)
@@ -1040,7 +1038,7 @@ bool UserManager::logoutUserSync(char * accessToken,
 	handler, userData, false);
 }
 
-bool updateUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
+static bool updateUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void* userData,
 	void(* voidHandler)())
 {
 	
@@ -1066,14 +1064,14 @@ bool updateUserProcessor(MemoryStruct_s p_chunk, long code, char* errormsg, void
 		} else if (p_chunk.memory != NULL) {
 			error = Error(code, string(p_chunk.memory));
 		} else {
-			error = Error(code, string("Unkown Error"));
+			error = Error(code, string("Unknown Error"));
 		}
 		handler(error, userData);
 		return false;
 	}
 }
 
-bool updateUserHelper(char * accessToken,
+static bool updateUserHelper(char * accessToken,
 	std::string username, User body, 
 	
 	void(* handler)(Error, void* ) , void* userData, bool isAsync)

@@ -13,6 +13,8 @@ import io.swagger.model.*;
 import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
+import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 
 public class FakeController  {
@@ -21,6 +23,36 @@ public class FakeController  {
    * Directly to operation calls from the routing logic.  Because the inflector
    * Code allows you to implement logic incrementally, they are disabled.
    **/
+
+  /*
+    public ResponseContext fakeOuterBooleanSerialize(RequestContext request , Boolean body) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext fakeOuterCompositeSerialize(RequestContext request , OuterComposite body) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext fakeOuterNumberSerialize(RequestContext request , BigDecimal body) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext fakeOuterStringSerialize(RequestContext request , String body) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext testBodyWithQueryParams(RequestContext request , User body, String query) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
 
   /*
     public ResponseContext testClientModel(RequestContext request , Client body) {
@@ -36,6 +68,18 @@ public class FakeController  {
 
   /*
     public ResponseContext testEnumParameters(RequestContext request , List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext testInlineAdditionalProperties(RequestContext request , Object param) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext testJsonFormData(RequestContext request , String param, String param2) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

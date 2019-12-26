@@ -9,13 +9,18 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 /**
  * MapTest
  */
+@Validated
 
 public class MapTest   {
   @JsonProperty("map_map_of_string")
+  @Valid
   private Map<String, Map<String, String>> mapMapOfString = null;
 
   /**
@@ -50,6 +55,7 @@ public class MapTest   {
   }
 
   @JsonProperty("map_of_enum_string")
+  @Valid
   private Map<String, InnerEnum> mapOfEnumString = null;
 
   public MapTest mapMapOfString(Map<String, Map<String, String>> mapMapOfString) {
@@ -59,17 +65,20 @@ public class MapTest   {
 
   public MapTest putMapMapOfStringItem(String key, Map<String, String> mapMapOfStringItem) {
     if (this.mapMapOfString == null) {
-      this.mapMapOfString = new HashMap<String, Map<String, String>>();
+      this.mapMapOfString = new HashMap<>();
     }
     this.mapMapOfString.put(key, mapMapOfStringItem);
     return this;
   }
 
-   /**
+  /**
    * Get mapMapOfString
    * @return mapMapOfString
   **/
   @ApiModelProperty(value = "")
+
+  @Valid
+
   public Map<String, Map<String, String>> getMapMapOfString() {
     return mapMapOfString;
   }
@@ -85,17 +94,19 @@ public class MapTest   {
 
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
     if (this.mapOfEnumString == null) {
-      this.mapOfEnumString = new HashMap<String, InnerEnum>();
+      this.mapOfEnumString = new HashMap<>();
     }
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
   }
 
-   /**
+  /**
    * Get mapOfEnumString
    * @return mapOfEnumString
   **/
   @ApiModelProperty(value = "")
+
+
   public Map<String, InnerEnum> getMapOfEnumString() {
     return mapOfEnumString;
   }

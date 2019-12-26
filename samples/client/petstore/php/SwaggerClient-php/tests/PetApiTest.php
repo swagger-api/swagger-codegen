@@ -259,7 +259,6 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $response = $this->api->uploadFile($pet_id, 'test meta', __DIR__ . '/../composer.json');
         // return ApiResponse
         $this->assertInstanceOf(ApiResponse::class, $response);
-
     }
 
     /*
@@ -297,7 +296,6 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $new_pet = new Model\Pet;
         // the empty object should be serialised to {}
         $this->assertSame("{}", "$new_pet");
-
     }
 
     // test inheritance in the model
@@ -375,6 +373,18 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('red', $animal->getColor());
     }
 
+    /**
+     * test invalid argument
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Missing the required parameter $status when calling findPetsByStatus
+     */
+    public function testInvalidArgument()
+    {
+        // the argument is required, and we must specify one or some from 'available', 'pending', 'sold'
+        $this->api->findPetsByStatus([]);
+    }
+
 //    Disabled as currently we don't have any endpoint that would return file
 //    For testing I just replaced url and return type in Api method.
 //    public function testDownloadingLargeFile()
@@ -391,5 +401,4 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 //            'path' => sys_get_temp_dir() . '/' . $result->getFilename()
 //        ]);
 //    }
-
 }

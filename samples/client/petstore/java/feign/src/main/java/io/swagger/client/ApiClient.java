@@ -45,6 +45,8 @@ public class ApiClient {
       RequestInterceptor auth;
       if ("api_key".equals(authName)) {
         auth = new ApiKeyAuth("header", "api_key");
+      } else if ("api_key_query".equals(authName)) {
+        auth = new ApiKeyAuth("query", "api_key_query");
       } else if ("http_basic_test".equals(authName)) {
         auth = new HttpBasicAuth();
       } else if ("petstore_auth".equals(authName)) {
@@ -133,6 +135,7 @@ public class ApiClient {
     objectMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
     objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
     objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    objectMapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     objectMapper.setDateFormat(new RFC3339DateFormat());
     ThreeTenModule module = new ThreeTenModule();

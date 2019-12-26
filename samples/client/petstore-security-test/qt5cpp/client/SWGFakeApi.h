@@ -31,15 +31,21 @@ public:
 
     QString host;
     QString basePath;
+    QMap<QString, QString> defaultHeaders;
 
-    void testCodeInject */ &#39; &quot; &#x3D;end  \r\n \n \r(QString* test_code_inject____end____rn_n_r);
+    void testCodeInject____end__rn_n_r(QString* test_code_inject____end____rn_n_r);
     
 private:
-    void testCodeInject */ &#39; &quot; &#x3D;end  \r\n \n \rCallback (HttpRequestWorker * worker);
+    void testCodeInject____end__rn_n_rCallback (HttpRequestWorker * worker);
     
 signals:
-    void testCodeInject */ &#39; &quot; &#x3D;end  \r\n \n \rSignal();
+    void testCodeInject____end__rn_n_rSignal();
+    
+    void testCodeInject____end__rn_n_rSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
+    
+    void testCodeInject____end__rn_n_rSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
     
 };
+
 }
 #endif

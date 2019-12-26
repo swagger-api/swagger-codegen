@@ -22,6 +22,7 @@ using Newtonsoft.Json.Converters;
 using PropertyChanged;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
@@ -35,17 +36,18 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelClient" /> class.
         /// </summary>
-        /// <param name="_Client">_Client.</param>
-        public ModelClient(string _Client = default(string))
+        /// <param name="_client">_client.</param>
+        public ModelClient(string _client = default(string))
         {
-            this._Client = _Client;
+            this.__Client = _client;
         }
         
         /// <summary>
-        /// Gets or Sets _Client
+        /// Gets or Sets __Client
         /// </summary>
         [DataMember(Name="client", EmitDefaultValue=false)]
-        public string _Client { get; set; }
+        public string __Client { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -54,7 +56,7 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class ModelClient {\n");
-            sb.Append("  _Client: ").Append(_Client).Append("\n");
+            sb.Append("  __Client: ").Append(__Client).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -63,7 +65,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -71,30 +73,28 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="obj">Object to be compared</param>
+        /// <param name="input">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as ModelClient);
+            return this.Equals(input as ModelClient);
         }
 
         /// <summary>
         /// Returns true if ModelClient instances are equal
         /// </summary>
-        /// <param name="other">Instance of ModelClient to be compared</param>
+        /// <param name="input">Instance of ModelClient to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ModelClient other)
+        public bool Equals(ModelClient input)
         {
-            // credit: http://stackoverflow.com/a/10454552/677735
-            if (other == null)
+            if (input == null)
                 return false;
 
             return 
                 (
-                    this._Client == other._Client ||
-                    this._Client != null &&
-                    this._Client.Equals(other._Client)
+                    this.__Client == input.__Client ||
+                    (this.__Client != null &&
+                    this.__Client.Equals(input.__Client))
                 );
         }
 
@@ -104,14 +104,12 @@ namespace IO.Swagger.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hash = 41;
-                // Suitable nullity checks etc, of course :)
-                if (this._Client != null)
-                    hash = hash * 59 + this._Client.GetHashCode();
-                return hash;
+                int hashCode = 41;
+                if (this.__Client != null)
+                    hashCode = hashCode * 59 + this.__Client.GetHashCode();
+                return hashCode;
             }
         }
 
@@ -141,7 +139,7 @@ namespace IO.Swagger.Model
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        { 
+        {
             yield break;
         }
     }
