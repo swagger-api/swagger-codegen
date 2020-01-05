@@ -459,6 +459,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else if (dateLibrary.equals("legacy")) {
             additionalProperties.put("legacyDates", true);
         }
+
+        if (this.skipAliasGeneration == null) {
+            this.skipAliasGeneration = Boolean.TRUE;
+        }
     }
 
     private void sanitizeConfig() {

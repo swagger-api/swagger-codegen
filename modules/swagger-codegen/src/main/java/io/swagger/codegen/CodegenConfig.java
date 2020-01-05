@@ -222,4 +222,8 @@ public interface CodegenConfig {
 
     String sanitizeName(String name);
 
+    void setSkipAliasGeneration(Boolean skipAliasGeneration);
+
+    Boolean getSkipAliasGeneration();
+
 }
