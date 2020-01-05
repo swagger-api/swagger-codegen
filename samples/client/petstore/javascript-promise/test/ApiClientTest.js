@@ -12,9 +12,10 @@ describe('ApiClient', function() {
       expect(apiClient).to.be.ok();
       expect(apiClient.basePath).to.be('http://petstore.swagger.io:80/v2');
       expect(apiClient.authentications).to.eql({
-        petstore_auth: {type: 'oauth2'},
+        api_key: {type: 'apiKey', 'in': 'header', name: 'api_key'},
+        api_key_query: {type: 'apiKey', 'in': 'query', name: 'api_key_query'},
         http_basic_test: {type: 'basic'},
-        api_key: {type: 'apiKey', 'in': 'header', name: 'api_key'}
+        petstore_auth: {type: 'oauth2'}
       /* comment out the following as these fake security def (testing purpose)
        * are removed from the spec, we'll add these back after updating the 
        * petstore server

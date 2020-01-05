@@ -114,7 +114,7 @@
     var defs = {}
         {{#models}}
         {{#model}}
-            defs.{{name}} = {{{modelJson}}};
+        defs["{{name}}"] = {{{modelJson}}};
         {{/model}}
     {{/models}}
   </script>

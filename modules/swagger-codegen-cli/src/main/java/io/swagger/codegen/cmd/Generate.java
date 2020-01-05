@@ -172,6 +172,9 @@ public class Generate implements Runnable {
             description = CodegenConstants.REMOVE_OPERATION_ID_PREFIX_DESC)
     private Boolean removeOperationIdPrefix;
 
+    @Option(name = {"--skip-alias-generation"}, title = "skip alias generation.", description = "skip code generation for models identified as alias.")
+    private Boolean skipAliasGeneration;
+
     @Override
     public void run() {
 
@@ -271,6 +274,10 @@ public class Generate implements Runnable {
 
         if (removeOperationIdPrefix != null) {
             configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        }
+
+        if (skipAliasGeneration != null) {
+            configurator.setSkipAliasGeneration(removeOperationIdPrefix);
         }
 
         applySystemPropertiesKvpList(systemProperties, configurator);

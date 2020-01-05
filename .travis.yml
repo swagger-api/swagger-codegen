@@ -1,7 +1,8 @@
 sudo: required
 language: java
+dist: trusty
 jdk:
-  - openjdk7
+  - openjdk8
 
 cache:
   directories:
@@ -35,7 +36,9 @@ addons:
 
 before_install:
   # required when sudo: required for the Ruby petstore tests
-  - gem install bundler
+  - gem install bundler -v '< 2'
+  - gem update --system 2.7.8
+  - gem --version
   - npm install -g typescript
   - npm install -g npm
   - npm config set registry http://registry.npmjs.org/
@@ -88,10 +91,10 @@ script:
 
 after_success:
   # push a snapshot version to maven repo
-  - if [ $SONATYPE_USERNAME ] && [ -z $TRAVIS_TAG ] && [ "$TRAVIS_BRANCH" = "master" ]; then
-      mvn clean deploy --settings .travis/settings.xml;
-      echo "Finished mvn clean deploy for $TRAVIS_BRANCH";
-    fi;
+  #- if [ $SONATYPE_USERNAME ] && [ -z $TRAVIS_TAG ] && [ "$TRAVIS_BRANCH" = "master" ]; then
+  #    mvn clean deploy --settings .travis/settings.xml;
+  #    echo "Finished mvn clean deploy for $TRAVIS_BRANCH";
+  #  fi;
 
 env:
   - DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli

@@ -4,8 +4,6 @@ import io.swagger.codegen.CodegenConstants;
 
 import com.google.common.collect.ImmutableMap;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-
 import java.util.Map;
 
 public class AkkaScalaClientOptionsProvider implements OptionsProvider {
