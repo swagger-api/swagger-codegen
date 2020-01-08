@@ -10,6 +10,7 @@ import { {{classname}} } from '../{{filename}}';
 {{/imports}}
 
 /* tslint:disable:no-unused-variable member-ordering max-line-length */
+/* eslint-disable no-useless-concat */
 
 {{#operations}}
 {{#description}}
@@ -25,7 +26,7 @@ export class {{classname}}Resource {
      * {{notes}}
      {{#allParams}}* @param {{paramName}} {{description}}
      {{/allParams}}*/
-    public {{nickname}}({{#allParams}}{{^isQueryParam}}{{paramName}}{{^required}}?{{/required}}: Partial<{{{dataType}}}>, {{/isQueryParam}}{{/allParams}}{{#hasQueryParams}}query?: { {{#queryParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}},{{/-last}} {{/queryParams}}}, {{/hasQueryParams}}axiosConfig?: AxiosRequestConfig): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+    public {{nickname}}({{#allParams}}{{^isQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isQueryParam}}{{/allParams}}{{#hasQueryParams}}query?: { {{#queryParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}},{{/-last}} {{/queryParams}}}, {{/hasQueryParams}}axiosConfig?: AxiosRequestConfig): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
         const reqPath = '{{path}}'{{#pathParams}}
                     .replace('{' + '{{baseName}}}', String({{paramName}}{{#isDateTime}}.toISOString(){{/isDateTime}})){{/pathParams}};
 {{#hasFormParams}}
