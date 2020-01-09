@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "c:\\github\\swagger-codegen\\samples\\server\\petstore\\nancyfx-async\\src\\IO.Swagger\\IO.Swagger.csproj",
+  "TargetFramework": "v4.5",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}

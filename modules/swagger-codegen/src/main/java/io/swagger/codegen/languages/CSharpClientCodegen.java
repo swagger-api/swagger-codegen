@@ -271,12 +271,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             if (NET35.equals(targetFramework)) {
                 LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is only supported by generated code for .NET 4+.");
                 additionalProperties.remove(CodegenConstants.GENERATE_PROPERTY_CHANGED);
-            } else if (NETSTANDARD.equals(targetFramework)) {
-                LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is not supported in .NET Standard generated code.");
-                additionalProperties.remove(CodegenConstants.GENERATE_PROPERTY_CHANGED);
-            } else if (Boolean.TRUE.equals(netCoreProjectFileFlag)) {
-                LOGGER.warn(CodegenConstants.GENERATE_PROPERTY_CHANGED + " is not supported in .NET Core csproj project format.");
-                additionalProperties.remove(CodegenConstants.GENERATE_PROPERTY_CHANGED);
             } else {
                 setGeneratePropertyChanged(convertPropertyToBooleanAndWriteBack(CodegenConstants.GENERATE_PROPERTY_CHANGED));
             }
@@ -398,10 +392,6 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
                         testPackageFolder + File.separator + "Client",
                         "JsonSubTypesTests.cs"));
             }
-        }
-
-        if (Boolean.TRUE.equals(generatePropertyChanged)) {
-            supportingFiles.add(new SupportingFile("FodyWeavers.xml", packageFolder, "FodyWeavers.xml"));
         }
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));

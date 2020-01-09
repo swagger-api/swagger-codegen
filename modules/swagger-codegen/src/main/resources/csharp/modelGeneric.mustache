@@ -6,10 +6,7 @@
     [Client.SerializableJsonSubtypes(typeof({{classname}}), "{{discriminator}}")]{{#children}}
     [JsonSubtypes.KnownSubType(typeof({{classname}}), "{{^vendorExtensions.x-discriminator-value}}{{name}}{{/vendorExtensions.x-discriminator-value}}{{#vendorExtensions.x-discriminator-value}}{{{vendorExtensions.x-discriminator-value}}}{{/vendorExtensions.x-discriminator-value}}")]{{/children}}
     {{/discriminator}}
-    {{#generatePropertyChanged}}
-    [ImplementPropertyChanged]
-    {{/generatePropertyChanged}}
-    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}{{#generatePropertyChanged}}, INotifyPropertyChanged{{/generatePropertyChanged}}
+    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}{{^parent}}{{#generatePropertyChanged}}, INotifyPropertyChanged{{/generatePropertyChanged}}{{/parent}}
     {
         {{#vars}}
         {{#items.isEnum}}
@@ -31,8 +28,21 @@
         {{#description}}
         /// <value>{{description}}</value>
         {{/description}}
+        {{#generatePropertyChanged}}
+        private {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} _{{name}};
+        {{/generatePropertyChanged}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{emitDefaultValue}})]
-        public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} { get; set; }
+        public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} {{^generatePropertyChanged}} { get; set; } {{/generatePropertyChanged}}
+        {{#generatePropertyChanged}}
+        {
+            get { return _{{name}}; }
+            {{#isReadOnly}}private {{/isReadOnly}}set
+            {
+                _{{name}} = value;
+                OnPropertyChanged(nameof({{name}}));
+            }
+        }
+        {{/generatePropertyChanged}}
         {{/isEnum}}
         {{/vars}}
     {{#hasRequired}}
@@ -100,13 +110,29 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         {{#vars}}
         {{^isInherited}}
         {{^isEnum}}
+        {{#generatePropertyChanged}}
+        private {{{datatype}}} _{{name}};
+        {{/generatePropertyChanged}}
         /// <summary>
         /// {{^description}}Gets or Sets {{{name}}}{{/description}}{{#description}}{{description}}{{/description}}
         /// </summary>{{#description}}
         /// <value>{{description}}</value>{{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{emitDefaultValue}})]{{#isDate}}
         [JsonConverter(typeof(SwaggerDateConverter))]{{/isDate}}
+        {{^generatePropertyChanged}}
         public {{{datatype}}} {{name}} { get; {{#isReadOnly}}private {{/isReadOnly}}set; }
+        {{/generatePropertyChanged}}
+        {{#generatePropertyChanged}}
+        public {{{datatype}}} {{name}} 
+        { 
+            get { return _{{name}}; }
+            {{#isReadOnly}}private {{/isReadOnly}}set
+            {
+                _{{name}} = value;
+                OnPropertyChanged(nameof({{name}}));
+            }
+        }
+        {{/generatePropertyChanged}}
         {{/isEnum}}
         {{/isInherited}}
 
@@ -192,7 +218,7 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
                 return hashCode;
             }
         }
-{{^netStandard}}
+
 {{^parent}}
 {{#generatePropertyChanged}}
         /// <summary>
@@ -206,8 +232,6 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         /// <param name="propertyName">Property Name</param>
         public virtual void OnPropertyChanged(string propertyName)
         {
-            // NOTE: property changed is handled via "code weaving" using Fody.
-            // Properties with setters are modified at compile time to notify of changes.
             var propertyChanged = PropertyChanged;
             if (propertyChanged != null)
             {
@@ -218,6 +242,7 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
 {{/generatePropertyChanged}}
 {{/parent}}
 
+{{^netStandard}}
 {{#validatable}}
 {{#discriminator}}
         /// <summary>
