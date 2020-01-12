@@ -1,6 +1,7 @@
 package io.swagger.codegen.languages;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class SwaggerGenerator extends DefaultCodegen implements CodegenConfig {
 
         try {
             String outputFile = outputFolder + File.separator + this.outputFile;
-            FileUtils.writeStringToFile(new File(outputFile), swaggerString);
+            FileUtils.writeStringToFile(new File(outputFile), swaggerString, StandardCharsets.UTF_8);
             LOGGER.debug("wrote file to " + outputFile);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
