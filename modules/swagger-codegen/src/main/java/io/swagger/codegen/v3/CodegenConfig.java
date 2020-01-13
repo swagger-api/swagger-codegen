@@ -237,4 +237,10 @@ public interface CodegenConfig {
     boolean needsUnflattenedSpec();
 
     void setUnflattenedOpenAPI(OpenAPI unflattenedOpenAPI);
+
+    boolean getIgnoreImportMapping();
+
+    void setIgnoreImportMapping(boolean ignoreImportMapping);
+
+    boolean defaultIgnoreImportMappingOption();
 }
