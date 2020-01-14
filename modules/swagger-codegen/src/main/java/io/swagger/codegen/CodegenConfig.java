@@ -226,4 +226,10 @@ public interface CodegenConfig {
 
     Boolean getSkipAliasGeneration();
 
+    boolean getIgnoreImportMapping();
+
+    void setIgnoreImportMapping(boolean ignoreImportMapping);
+
+    boolean defaultIgnoreImportMappingOption();
+
 }
