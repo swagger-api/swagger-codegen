@@ -80,6 +80,37 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
         // Execute super method
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
+        codegenModel.isPagedResource = true;
+
+        // Check to see if it has all of the interface properties
+        for (String s : Arrays.asList("Entities","PageSize","PageNumber","Total","FirstUri","SelfUri","LastUri","NextUri","PreviousUri","PageCount")) {
+            if (!codegenModel.allVars.stream().anyMatch(var -> var.name.equals(s))) {
+                codegenModel.isPagedResource = false;
+                break;
+            }
+        }
+
+        // Check for other disqualifying conditions
+        if (codegenModel.isPagedResource) {
+            // Get reference to entities property
+            Optional<CodegenProperty> entitiesProperty = codegenModel.allVars.stream().filter(var -> var.name.equals("Entities")).findFirst();
+            if (!entitiesProperty.isPresent()) {
+                codegenModel.isPagedResource = false;
+                return codegenModel;
+            }
+
+            System.out.println(codegenModel.classname + " implements PagedResource");
+
+            // datatypeWithEnum has the correct type including generics. complexType drops them.
+            // E.g. datatypeWithEnum=Map<Object, String> and complexType=Map
+            codegenModel.pagedResourceType = entitiesProperty.get().datatypeWithEnum;
+            if (codegenModel.pagedResourceType.startsWith("List<")) {
+                codegenModel.pagedResourceType = codegenModel.pagedResourceType.substring(5,codegenModel.pagedResourceType.length() - 1);
+                System.out.println("  pagedResourceType truncated to " + codegenModel.pagedResourceType);
+            }
+            codegenModel.imports.add("PagedResource");
+        }
+
         // Use our own values for hasMore
         boolean foundLastValidProperty = false;
         for (int i = codegenModel.vars.size() -1; i >= 0; i--) {
