@@ -3271,6 +3271,10 @@ public class DefaultCodegen {
                     // FIXME: readWriteVars can contain duplicated properties. Debug/breakpoint here while running C# generator (Dog and Cat models)
                     m.readWriteVars.add(cp);
                 }
+
+                if (m.discriminator != null && cp.name.equals(m.discriminator) && cp.isEnum) {
+                    m.vendorExtensions.put("x-discriminator-is-enum", true);
+                }
             }
         }
     }
