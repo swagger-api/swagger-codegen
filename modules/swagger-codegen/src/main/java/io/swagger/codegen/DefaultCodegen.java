@@ -103,6 +103,8 @@ public class DefaultCodegen {
     protected String gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
+    protected Boolean skipAliasGeneration;
+    protected boolean ignoreImportMapping;
     // How to encode special characters like $
     // They are translated to words like "Dollar" and prefixed with '
     // Then translated back during JSON encoding and decoding
@@ -161,6 +163,12 @@ public class DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
             this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
+        }
+
+        if (additionalProperties.get(CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION) != null) {
+            setIgnoreImportMapping(Boolean.parseBoolean( additionalProperties.get(CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION).toString()));
+        } else {
+            setIgnoreImportMapping(defaultIgnoreImportMappingOption());
         }
     }
 
@@ -3277,6 +3285,10 @@ public class DefaultCodegen {
                     // FIXME: readWriteVars can contain duplicated properties. Debug/breakpoint here while running C# generator (Dog and Cat models)
                     m.readWriteVars.add(cp);
                 }
+
+                if (m.discriminator != null && cp.name.equals(m.discriminator) && cp.isEnum) {
+                    m.vendorExtensions.put("x-discriminator-is-enum", true);
+                }
             }
         }
     }
@@ -3461,6 +3473,14 @@ public class DefaultCodegen {
 
     public void setSkipOverwrite(boolean skipOverwrite) {
         this.skipOverwrite = skipOverwrite;
+    }
+
+    public void setSkipAliasGeneration(Boolean skipAliasGeneration) {
+        this.skipAliasGeneration = skipAliasGeneration;
+    }
+
+    public Boolean getSkipAliasGeneration() {
+        return this.skipAliasGeneration;
     }
 
     public boolean isRemoveOperationIdPrefix() {
@@ -3962,5 +3982,17 @@ public class DefaultCodegen {
             }
         }
         codegenOperation.testPath = path;
+    }
+
+    public boolean getIgnoreImportMapping() {
+        return ignoreImportMapping;
+    }
+
+    public void setIgnoreImportMapping(boolean ignoreImportMapping) {
+        this.ignoreImportMapping = ignoreImportMapping;
+    }
+
+    public boolean defaultIgnoreImportMappingOption() {
+        return false;
     }
 }
