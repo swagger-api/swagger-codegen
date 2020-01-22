@@ -13,6 +13,7 @@ from __future__ import absolute_import
 
 import datetime
 import json
+import atexit
 import mimetypes
 from multiprocessing.pool import ThreadPool
 import os
@@ -76,14 +77,16 @@ class ApiClient(object):
         # Set default User-Agent.
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
 
-    def __del__(self):
+    def close(self):
         if self._pool is not None:
             self._pool.close()
             self._pool.join()
+            self._pool = None
 
     @property
     def pool(self):
         if self._pool is None:
+            atexit.register(self.close)
             self._pool = ThreadPool()
         return self._pool
 
