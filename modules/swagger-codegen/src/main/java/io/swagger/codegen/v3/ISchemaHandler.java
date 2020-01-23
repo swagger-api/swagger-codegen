@@ -2,6 +2,8 @@ package io.swagger.codegen.v3;
 
 import io.swagger.v3.oas.models.media.Schema;
 
+import java.util.List;
+
 public interface ISchemaHandler {
 
     /**
@@ -10,4 +12,10 @@ public interface ISchemaHandler {
      * @param schema
      */
     void proccessComposedSchemas(CodegenModel codegenModel, Schema schema);
+
+    /**
+     * retrieve a list of codegen models created from composed schemas found.
+     * @return
+     */
+    List<CodegenModel> getModels();
 }
