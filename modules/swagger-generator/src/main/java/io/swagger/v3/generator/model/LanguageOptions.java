@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HiddenOptions {
+public class LanguageOptions {
     private List<String> clients = new ArrayList<>();
     private List<String> servers = new ArrayList<>();
     private List<String> clientsV3 = new ArrayList<>();
     private List<String> serversV3 = new ArrayList<>();
 
-    public static HiddenOptions getEmpty() {
-        final HiddenOptions empty = new HiddenOptions();
+    public static LanguageOptions getEmpty() {
+        final LanguageOptions empty = new LanguageOptions();
         empty.setClients(Collections.EMPTY_LIST);
         empty.setServers(Collections.EMPTY_LIST);
         empty.setClientsV3(Collections.EMPTY_LIST);
@@ -48,11 +48,11 @@ public class HiddenOptions {
         return serversV3;
     }
 
-    public boolean isHiddenClient(String client) {
+    public boolean isClient(String client) {
         return clients == null ? false : clients.contains(client);
     }
 
-    public boolean isHiddenServer(String server) {
+    public boolean isServer(String server) {
         return servers == null ? false : servers.contains(server);
     }
 
@@ -64,11 +64,11 @@ public class HiddenOptions {
         return servers.toString();
     }
 
-    public boolean isHiddenClientV3(String clientV3) {
+    public boolean isClientV3(String clientV3) {
         return clientsV3 == null ? false : clientsV3.contains(clientV3);
     }
 
-    public boolean isHiddenServerV3(String serverV3) {
+    public boolean isServerV3(String serverV3) {
         return serversV3 == null ? false : serversV3.contains(serverV3);
     }
 
@@ -78,5 +78,9 @@ public class HiddenOptions {
 
     public String serversV3() {
         return serversV3.toString();
+    }
+
+    public boolean wereValuesSpecified(){
+        return !(clients.size() == 0 && clientsV3.size() == 0 && servers.size() == 0 && serversV3.size() == 0);
     }
 }

@@ -9,7 +9,7 @@ import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.service.GeneratorService;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.codegen.v3.service.GenerationRequest;
-import io.swagger.v3.generator.model.HiddenOptions;
+import io.swagger.v3.generator.model.LanguageOptions;
 import io.swagger.v3.generator.util.ZipUtil;
 import io.swagger.oas.inflector.models.RequestContext;
 import io.swagger.oas.inflector.models.ResponseContext;
@@ -37,6 +37,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class GeneratorController {
 
@@ -46,25 +48,26 @@ public class GeneratorController {
     static Map<io.swagger.codegen.CodegenType, List<String>> TYPESV2 = new LinkedHashMap<>();
 
     private static ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
-    private static HiddenOptions hiddenOptions;
+    private static LanguageOptions hiddenOptions;
     private static String HIDDEN_OPTIONS_CONFIG_FILE = "hiddenOptions.yaml";
     private static String PROP_HIDDEN_OPTIONS_PATH = "HIDDEN_OPTIONS_PATH";
     private static String PROP_HIDDEN_OPTIONS = "HIDDEN_OPTIONS";
 
+    private static LanguageOptions availableOptions;
+    private static String AVAILABLE_OPTIONS_CONFIG_FILE = "availableOptions.yaml";
+    private static String PROP_AVAILABLE_OPTIONS_PATH = "AVAILABLE_OPTIONS_PATH";
+    private static String PROP_AVAILABLE_OPTIONS = "AVAILABLE_OPTIONS";
+
     static {
 
-        hiddenOptions = loadHiddenOptions();
+        hiddenOptions = loadLanguageOptions(PROP_HIDDEN_OPTIONS, PROP_HIDDEN_OPTIONS_PATH, HIDDEN_OPTIONS_CONFIG_FILE);
+        availableOptions = loadLanguageOptions(PROP_AVAILABLE_OPTIONS, PROP_AVAILABLE_OPTIONS_PATH, AVAILABLE_OPTIONS_CONFIG_FILE);
+
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
 
         loader.forEach(config -> {
             boolean isServer = CodegenType.SERVER.equals(config.getTag());
-            boolean process = false;
-            if (isServer && !hiddenOptions.isHiddenServerV3(config.getName())) {
-                process = true;
-            } else if (!isServer && !hiddenOptions.isHiddenClientV3(config.getName())) {
-                process = true;
-            }
-            if (process) {
+            if (shouldProcess(isServer, true, config.getName())) {
                 List<String> typeLanguages = TYPES.get(config.getTag());
                 if (typeLanguages == null) {
                     typeLanguages = new ArrayList<>();
@@ -80,13 +83,7 @@ public class GeneratorController {
 
         loaderV2.forEach(config -> {
             boolean isServer = io.swagger.codegen.CodegenType.SERVER.equals(config.getTag());
-            boolean process = false;
-            if (isServer && !hiddenOptions.isHiddenServer(config.getName())) {
-                process = true;
-            } else if (!isServer && !hiddenOptions.isHiddenClient(config.getName())) {
-                process = true;
-            }
-            if (process) {
+            if (shouldProcess(isServer, false, config.getName())) {
                 List<String> typeLanguages = TYPESV2.get(config.getTag());
                 if (typeLanguages == null) {
                     typeLanguages = new ArrayList<>();
@@ -98,43 +95,37 @@ public class GeneratorController {
         TYPESV2.forEach((k, v) -> Collections.sort(v, String.CASE_INSENSITIVE_ORDER));
     }
 
-
-    public static HiddenOptions loadHiddenOptions() {
-        HiddenOptions options = null;
-        String hidden = System.getProperty(PROP_HIDDEN_OPTIONS);
-        if (StringUtils.isNotBlank(hidden)) {
-            options = loadHiddenOptionsFromEnv(hidden);
+    public static LanguageOptions loadLanguageOptions(String languageOptionsKey, String languageOptionsPathKey, String languageOptionsFileKey) {
+        LanguageOptions options = null;
+        String languages = System.getProperty(languageOptionsKey);
+        if (StringUtils.isNotBlank(languages)) {
+            options = loadLanguageOptionsFromEnv(languages);
         }
         if (options == null) {
-            String hiddenPath = System.getProperty(PROP_HIDDEN_OPTIONS_PATH);
-            if (StringUtils.isNotBlank(hiddenPath)) {
-                options = loadHiddenOptions(hiddenPath);
+            String languagesPath = System.getProperty(languageOptionsPathKey);
+            if (StringUtils.isNotBlank(languagesPath)) {
+                options = loadLanguageOptions(languagesPath);
             }
             if (options == null) {
-                InputStream inputStream = GeneratorController.class.getClassLoader().getResourceAsStream(HIDDEN_OPTIONS_CONFIG_FILE);
+                InputStream inputStream = GeneratorController.class.getClassLoader().getResourceAsStream(languageOptionsFileKey);
                 try {
-                    options = yamlMapper.readValue(inputStream, HiddenOptions.class);
+                    options = yamlMapper.readValue(inputStream, LanguageOptions.class);
                 } catch (Exception e) {
-                    LOGGER.info("Failed to parse hidden options configuration file {}", HIDDEN_OPTIONS_CONFIG_FILE, e);
-                    return HiddenOptions.getEmpty();
+                    LOGGER.info("Failed to parse language options configuration file {}", languageOptionsFileKey, e);
+                    return LanguageOptions.getEmpty();
                 }
 
             }
         }
         if (options != null) {
-            LOGGER.debug("Parsed hidden options config");
-            LOGGER.debug("Hidden clients: {}", options.clients());
-            LOGGER.debug("Hidden servers: {}", options.servers());
-            LOGGER.debug("Hidden clientsV3: {}", options.clientsV3());
-            LOGGER.debug("Hidden serversV3: {}", options.serversV3());
             return options;
         }
-        return HiddenOptions.getEmpty();
+        return LanguageOptions.getEmpty();
     }
 
-    public static HiddenOptions loadHiddenOptionsFromEnv(String csv) {
+    public static LanguageOptions loadLanguageOptionsFromEnv(String csv) {
         try {
-            HiddenOptions options = new HiddenOptions();
+            LanguageOptions options = new LanguageOptions();
             String[] sections =csv.split("\\|");
             for (String section: sections) {
                 String [] keyval = section.split("\\:");
@@ -156,11 +147,11 @@ public class GeneratorController {
             }
             return options;
         } catch (Exception e) {
-            LOGGER.info("Failed to parse hidden options. String {}", csv, e);
+            LOGGER.info("Failed to parse language options. String {}", csv, e);
             return null;
         }
     }
-    public static HiddenOptions loadHiddenOptions(String location) {
+    public static LanguageOptions loadLanguageOptions(String location) {
         try {
             String data = "";
             location = location.replaceAll("\\\\", "/");
@@ -180,9 +171,9 @@ public class GeneratorController {
                     data = ClasspathHelper.loadFileFromClasspath(location);
                 }
             }
-            return yamlMapper.readValue(data, HiddenOptions.class);
+            return yamlMapper.readValue(data, LanguageOptions.class);
         } catch (Exception e) {
-            LOGGER.info("Failed to parse hidden options. Path {}", location, e);
+            LOGGER.info("Failed to parse language options. Path {}", location, e);
             return null;
         }
     }
@@ -594,4 +585,71 @@ public class GeneratorController {
                 .contentType(MediaType.TEXT_PLAIN)
                 .entity("Could not generate files.");
     }
+
+    private static boolean shouldProcess(boolean isServer, boolean isV3, String name){
+        if(isServer){
+            return shouldProcessServer(isV3, name);
+        }else{
+            return shouldProcessClient(isV3, name);
+        }
+    }
+
+    private static boolean shouldProcessServer(boolean isV3, String name){
+
+        if(isServerHidden(isV3, name)){
+            return false;
+        }
+
+        if(availableOptions.wereValuesSpecified() && !isServerAvailable(isV3, name)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean shouldProcessClient(boolean isV3, String name){
+        if(isClientHidden(isV3, name)){
+            return false;
+        }
+
+        if(availableOptions.wereValuesSpecified() && !isClientAvailable(isV3, name)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean isClientAvailable(boolean isV3, String name){
+        if(isV3){
+            return availableOptions.isClientV3(name);
+        }else{
+            return availableOptions.isClient(name);
+        }
+    }
+
+    private static boolean isClientHidden(boolean isV3, String name){
+        if (isV3) {
+            return hiddenOptions.isClientV3(name);
+        }else {
+            return hiddenOptions.isClient(name);
+        }
+    }
+
+    private static boolean isServerAvailable(boolean isV3, String name){
+        if(isV3){
+            return availableOptions.isServerV3(name);
+        }else{
+            return availableOptions.isServer(name);
+        }
+    }
+
+    private static boolean isServerHidden(boolean isV3, String name){
+        if (isV3) {
+            return hiddenOptions.isServerV3(name);
+        }else {
+            return hiddenOptions.isServer(name);
+        }
+    }
+
+
 }
