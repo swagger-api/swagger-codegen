@@ -79,7 +79,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                     "assert", "else", "if", "pass", "yield", "break", "except", "import",
                     "print", "class", "exec", "in", "raise", "continue", "finally", "is",
                     "return", "def", "for", "lambda", "try", "self", "None", "True", "False", "nonlocal",
-                    "float", "int", "str", "date", "datetime"));
+                    "float", "int", "str", "date", "datetime", "await", "async"));
 
         // set the output folder here
         outputFolder = "generated-code/connexion";
@@ -255,13 +255,13 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
      * @return the escaped term
      */
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
         return "_" + name; // add an underscore to the name
     }
-    
+
     /**
      * Location to write api files.  You can use the apiPackage() as defined when the class is
      * instantiated
