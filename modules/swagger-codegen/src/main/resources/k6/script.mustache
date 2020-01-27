@@ -1,0 +1,22 @@
+{{>licenseInfo}}
+
+import http from "k6/http";
+import { group, check, fail, sleep } from "k6";
+
+const baseURL = "{{baseURL}}";
+{{#extra}}
+let {{{key}}} = "{{{value}}}";
+{{/extra}}
+
+export default function() {
+    let request;
+    {{#requestGroups}}
+    group("{{{groupName}}}", function() {
+        {{#requests}}
+        request = http.{{method}}(baseURL + `{{{path}}}`{{#body}}, {{=<% %>=}}{<%# parameters%> "<%& key%>": "<%& value%>", <%/parameters%>}<%={{ }}=%>{{/body}}{{#params}}, {{=<% %>=}}{headers: {<%# headers%> "<%& key%>": <%& value%>, <%/headers%>}<%# auth%>, auth: "<%& auth%>"<%/auth%>}<%={{ }}=%>{{/params}});
+        check(request, { "status is 200": (r) => r.status === 200 });
+        sleep(1);
+        {{/requests}}
+    });
+    {{/requestGroups}}
+}
