@@ -1,7 +1,7 @@
 {{>licenseInfo}}
 
 import http from "k6/http";
-import { group, check, fail, sleep } from "k6";
+import { group, check, sleep } from "k6";
 
 const baseURL = "{{baseURL}}";
 {{#extra}}
@@ -9,13 +9,31 @@ let {{{key}}} = "{{{value}}}";
 {{/extra}}
 
 export default function() {
-    let request;
     {{#requestGroups}}
-    group("{{{groupName}}}", function() {
+    group("{{{groupName}}}", () => {
+        {{#variables}}
+        let {{{key}}} = "{{{value}}}";
+        {{/variables}}
         {{#requests}}
-        request = http.{{method}}(baseURL + `{{{path}}}`{{#body}}, {{=<% %>=}}{<%# parameters%> "<%& key%>": "<%& value%>", <%/parameters%>}<%={{ }}=%>{{/body}}{{#params}}, {{=<% %>=}}{headers: {<%# headers%> "<%& key%>": <%& value%>, <%/headers%>}<%# auth%>, auth: "<%& auth%>"<%/auth%>}<%={{ }}=%>{{/params}});
-        check(request, { "status is 200": (r) => r.status === 200 });
+        {{#-first}}let {{/-first}}url = baseURL + `{{{path}}}{{=<% %>=}}<%#query%><%#-first%>?<%/-first%><%& key%>=${<%& value%>}<%^-last%>&<%/-last%><%/query%><%={{ }}=%>`;
+        {{#body}}
+        {{#-first}}let {{/-first}}body = {{#body}}{{=<% %>=}}{<%#parameters%>"<%& key%>": `<%& value%>`<%^-last%>, <%/-last%><%/parameters%>}<%={{ }}=%>{{/body}};
+        {{/body}}
+        {{#params}}
+        {{#-first}}let {{/-first}}params = {{#params}}{{=<% %>=}}{headers: {<%# headers%>"<%& key%>": `<%& value%>`<%^-last%>, <%/-last%><%/headers%>}<%# auth%>, auth: "<%& auth%>"<%/auth%>}<%={{ }}=%>{{/params}};
+        {{/params}}
+        {{#-first}}let {{/-first}}request = http.{{method}}(url{{#body}}, body{{/body}}{{#params}}, params{{/params}});
+        {{#k6Checks}}
+        {{=<% %>=}}
+        check(request, {
+            "<%& description%>": (r) => r.status === <%& status%>
+        });
+        <%={{ }}=%>
+        {{/k6Checks}}
         sleep(1);
+        {{^-last}}
+
+        {{/-last}}
         {{/requests}}
     });
     {{/requestGroups}}

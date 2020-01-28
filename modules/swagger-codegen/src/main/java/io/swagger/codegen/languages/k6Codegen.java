@@ -1,12 +1,12 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
-import io.swagger.models.Info;
-import io.swagger.models.License;
-import io.swagger.models.Swagger;
-import io.swagger.models.Scheme;
-import io.swagger.models.Operation;
-import io.swagger.models.HttpMethod;
+import io.swagger.models.*;
+import io.swagger.models.parameters.BodyParameter;
+import io.swagger.models.parameters.HeaderParameter;
+import io.swagger.models.parameters.PathParameter;
+import io.swagger.models.parameters.QueryParameter;
+import io.swagger.models.properties.Property;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +48,6 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
         public HTTPBody(List<Parameter> parameters) {
             this.parameters = parameters;
         }
-
-        public boolean hasMoreParameters() {
-            return parameters.size() > 1;
-        }
     }
 
     static class HTTPParameters {
@@ -91,21 +87,15 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
 
         public HTTPParameters() {
         }
+    }
 
-        public boolean hasMoreCookies() {
-            return cookies.size() > 1;
-        }
+    static class k6Check {
+        Integer status;
+        String description;
 
-        public boolean hasMoreHeaders() {
-            return headers.size() > 1;
-        }
-
-        public boolean hasMoreJar() {
-            return jar.size() > 1;
-        }
-
-        public boolean hasMoreTags() {
-            return tags.size() > 1;
+        public k6Check(Integer status, String description) {
+            this.status = status;
+            this.description = description;
         }
     }
 
@@ -113,28 +103,33 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
         String method;
         String path;
         @Nullable
-        List<String> query;
+        List<Parameter> query;
         @Nullable
         HTTPBody body;
         @Nullable
         HTTPParameters params;
+        @Nullable
+        List<k6Check> k6Checks;
 
-        public HTTPRequest(String method, String path, @Nullable List<String> query, @Nullable HTTPBody body,
-                @Nullable HTTPParameters params) {
+        public HTTPRequest(String method, String path, @Nullable List<Parameter> query, @Nullable HTTPBody body,
+                @Nullable HTTPParameters params, @Nullable List<k6Check> k6Checks) {
             this.method = method;
             this.path = path;
             this.query = query;
             this.body = body;
             this.params = params;
+            this.k6Checks = k6Checks;
         }
     }
 
     static public class HTTPRequestGroup {
         String groupName;
+        Set<Parameter> variables; // query and path parameters
         List<HTTPRequest> requests;
 
-        public HTTPRequestGroup(String groupName, List<HTTPRequest> requests) {
+        public HTTPRequestGroup(String groupName, Set<Parameter> variables, List<HTTPRequest> requests) {
             this.groupName = groupName;
+            this.variables = variables;
             this.requests = requests;
         }
     }
@@ -296,80 +291,87 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
         String scheme = swagger.getSchemes().contains(Scheme.HTTPS) ? "https://" : "http://";
         additionalProperties.put(BASE_URL, scheme + swagger.getHost() + swagger.getBasePath());
 
-        // NOTE: This code sample shows the usage of k6 related data structures.
-        /*
-         final HTTPParameters anythingParams = new HTTPParameters(null, null, new
-         ArrayList() {
-         {
-         add(new Parameter("Accept", "application/json"));
-         }
-         }, null, null, null, null, null, null);
-
-         List<HTTPRequest> anything = new ArrayList<>();
-         anything.add(new HTTPRequest("get", "/anything"));
-         anything.add(new HTTPRequest("post", "/anything", anythingParams));
-
-         final HTTPParameters authParams = new HTTPParameters("digest", null, new
-         ArrayList() {
-         {
-         add(new Parameter("Accept", "application/json"));
-         }
-         }, null, null, null, null, null, null);
-
-         List<HTTPRequest> auth = new ArrayList<>();
-         auth.add(new HTTPRequest("get", "/digest-auth/auth-int/user/passwd",
-         authParams));
-
-         List<HTTPRequestGroup> requestGroups = new ArrayList<HTTPRequestGroup>();
-         requestGroups.add(new HTTPRequestGroup("Anything", anything));
-         requestGroups.add(new HTTPRequestGroup("Auth", auth));
-
-         additionalProperties.put("requestGroups", requestGroups);
-        */
-
-        List<HTTPRequestGroup> requestGroups = new ArrayList<HTTPRequestGroup>();
+        List<HTTPRequestGroup> requestGroups = new ArrayList<>();
         Set<Parameter> extraParameters = new HashSet<>();
+        Map<String, Set<Parameter>> pathVariables = new HashMap<>();
 
         for (String path : swagger.getPaths().keySet()) {
             List<HTTPRequest> requests = new ArrayList<>();
+            Set<Parameter> variables = new HashSet<>();
+
             for (Map.Entry<HttpMethod, Operation> methodop : swagger.getPath(path).getOperationMap().entrySet()) {
                 List<Parameter> httpParams = new ArrayList<>();
-                List<String> queryParams = new ArrayList<>();
+                List<Parameter> queryParams = new ArrayList<>();
                 List<Parameter> bodyParams = new ArrayList<>();
+                List<k6Check> k6Checks = new ArrayList<>();
+
+                for (Map.Entry<String, Response> resp : methodop.getValue().getResponses().entrySet()){
+                    String statusData = resp.getKey().equals("default") ? "200" : resp.getKey();
+                    int status = Integer.parseInt(statusData);
+                    if (status >= 200 && status < 300) {
+                        k6Checks.add(new k6Check(status, resp.getValue().getDescription()));
+                    }
+                }
+
+                @Nullable List<String> contentTypes = methodop.getValue().getConsumes();
+                if (contentTypes != null && contentTypes.contains("application/json"))
+                    // Default content type
+                    httpParams.add(new Parameter("Content-Type", "application/json"));
+                else if (contentTypes != null)
+                    httpParams.add(new Parameter("Content-Type", contentTypes.get(0)));
 
                 for (io.swagger.models.parameters.Parameter p : methodop.getValue().getParameters()) {
                     switch (p.getIn()) {
                         case "header":
-                            httpParams.add(new Parameter(p.getName(), "`${" + p.getName() + "}`"));
+                            httpParams.add(new Parameter(p.getName(), "${" + p.getName() + "}"));
                             extraParameters.add(new Parameter(p.getName(), p.getName().toUpperCase()));
                             break;
                         case "path":
                         case "query":
-                            queryParams.add("`${" + p.getName() + "}`");
-                            extraParameters.add(new Parameter(p.getName(), p.getName().toUpperCase()));
+                            if (p.getIn().equals("query"))
+                                queryParams.add(new Parameter(p.getName(), p.getName()));
+                            variables.add(new Parameter(p.getName(), p.getName().toUpperCase()));
                             break;
                         case "body":
-                            // TODO: should be further extended to include Schema Definition (Model)
-                            bodyParams.add(new Parameter(p.getName(), p.getName()));
+                            try {
+                                List<String> modelDefinition = Arrays.asList(((BodyParameter) p).getSchema().getReference().split("/"));
+                                String modelName = modelDefinition.get(modelDefinition.size() - 1);
+                                Model model = swagger.getDefinitions().get(modelName);
+                                for (Map.Entry<String, Property> prop : model.getProperties().entrySet())
+                                    bodyParams.add(new Parameter(prop.getKey(), prop.getValue().getType().toLowerCase()));
+                            } catch (NullPointerException e) {
+                                // TODO: Body accepts an array of items, and items are schema definitions.
+                            }
                             break;
                         default:
                             break;
                     }
                 }
 
+                pathVariables.put(path, variables);
+
                 final HTTPParameters params = new HTTPParameters(null, null, httpParams, null, null, null, null, null,
                         null);
 
-                if (path.contains("/{")) {
-                    path = path.replace("/{", "/${");
-                }
-
+                assert params.headers != null;
                 requests.add(new HTTPRequest(methodop.getKey().toString().toLowerCase(), path,
                         queryParams.size() > 0 ? queryParams : null,
                         bodyParams.size() > 0 ? new HTTPBody(bodyParams) : null,
-                        params.headers.size() > 0 ? params : null));
+                        params.headers.size() > 0 ? params : null,
+                        k6Checks.size() > 0 ? k6Checks : null));
             }
-            requestGroups.add(new HTTPRequestGroup(path, requests));
+            requestGroups.add(new HTTPRequestGroup(path, pathVariables.get(path), requests));
+        }
+
+        for (HTTPRequestGroup requestGroup : requestGroups) {
+            for (HTTPRequest request : requestGroup.requests) {
+                if (request.path.contains("/{")) {
+                    request.path = request.path.replace("/{", "/${");
+                }
+            }
+            if (requestGroup.groupName.contains("/{")) {
+                requestGroup.groupName = requestGroup.groupName.replace("/{", "/${");
+            }
         }
 
         additionalProperties.put("requestGroups", requestGroups);
