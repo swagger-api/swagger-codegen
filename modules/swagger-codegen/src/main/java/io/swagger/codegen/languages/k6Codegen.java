@@ -3,10 +3,8 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.*;
 import io.swagger.models.*;
 import io.swagger.models.parameters.BodyParameter;
-import io.swagger.models.parameters.HeaderParameter;
-import io.swagger.models.parameters.PathParameter;
-import io.swagger.models.parameters.QueryParameter;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.RefProperty;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,9 +82,6 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
             this.compression = compression;
             this.responseType = responseType;
         }
-
-        public HTTPParameters() {
-        }
     }
 
     static class k6Check {
@@ -141,9 +136,6 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
     public static final String PROJECT_DESCRIPTION = "projectDescription";
     public static final String PROJECT_VERSION = "projectVersion";
     public static final String BASE_URL = "baseURL";
-
-    public static final String LOAD_TEST_DATA_FROM_FILE = "loadTestDataFromFile";
-    public static final String TEST_DATA_FILE = "testDataFile";
     public static final String PRESERVE_LEADING_PARAM_CHAR = "preserveLeadingParamChar";
     static final Collection<String> INVOKER_PKG_SUPPORTING_FILES = Arrays.asList("script.mustache", "README.mustache");
     static final String[][] JAVASCRIPT_SUPPORTING_FILES = new String[][] {
@@ -161,9 +153,6 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
     protected String sourceFolder = "";
     protected String localVariablePrefix = "";
     private String modelPropertyNaming = "camelCase";
-
-    protected boolean loadTestDataFromFile = false;
-    protected File testDataFile = null;
     protected boolean preserveLeadingParamChar = false;
 
     @Override
@@ -216,22 +205,6 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
         }
         boolean preserveLeadingParamChar = convertPropertyToBooleanAndWriteBack(PRESERVE_LEADING_PARAM_CHAR);
         this.setPreserveLeadingParamChar(preserveLeadingParamChar);
-    }
-
-    private String trimBrackets(String s) {
-        if (s != null) {
-            int beginIdx = s.charAt(0) == '[' ? 1 : 0;
-            int endIdx = s.length();
-            if (s.charAt(endIdx - 1) == ']')
-                endIdx--;
-            return s.substring(beginIdx, endIdx);
-        }
-        return null;
-    }
-
-    private String getModelledType(String dataType) {
-        return "module:" + (StringUtils.isEmpty(invokerPackage) ? "" : (invokerPackage + "/"))
-                + (StringUtils.isEmpty(modelPackage) ? "" : (modelPackage + "/")) + dataType;
     }
 
     @Override
@@ -299,13 +272,13 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
             List<HTTPRequest> requests = new ArrayList<>();
             Set<Parameter> variables = new HashSet<>();
 
-            for (Map.Entry<HttpMethod, Operation> methodop : swagger.getPath(path).getOperationMap().entrySet()) {
+            for (Map.Entry<HttpMethod, Operation> methodOperation : swagger.getPath(path).getOperationMap().entrySet()) {
                 List<Parameter> httpParams = new ArrayList<>();
                 List<Parameter> queryParams = new ArrayList<>();
                 List<Parameter> bodyParams = new ArrayList<>();
                 List<k6Check> k6Checks = new ArrayList<>();
 
-                for (Map.Entry<String, Response> resp : methodop.getValue().getResponses().entrySet()){
+                for (Map.Entry<String, Response> resp : methodOperation.getValue().getResponses().entrySet()){
                     String statusData = resp.getKey().equals("default") ? "200" : resp.getKey();
                     int status = Integer.parseInt(statusData);
                     if (status >= 200 && status < 300) {
@@ -313,34 +286,46 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                     }
                 }
 
-                @Nullable List<String> contentTypes = methodop.getValue().getConsumes();
-                if (contentTypes != null && contentTypes.contains("application/json"))
-                    // Default content type
-                    httpParams.add(new Parameter("Content-Type", "application/json"));
-                else if (contentTypes != null)
-                    httpParams.add(new Parameter("Content-Type", contentTypes.get(0)));
+                @Nullable List<String> consumes = methodOperation.getValue().getConsumes();
+                Parameter contentType = new Parameter("Content-Type", "application/json");
+                if (consumes != null && !consumes.isEmpty() && !consumes.contains("application/json"))
+                    contentType.value = consumes.get(0);
+                httpParams.add(contentType);
 
-                for (io.swagger.models.parameters.Parameter p : methodop.getValue().getParameters()) {
-                    switch (p.getIn()) {
+                String responseType = "application/json";
+                @Nullable List<String> produces = methodOperation.getValue().getProduces();
+                if (produces != null && !produces.isEmpty() && !produces.contains("application/json"))
+                    responseType = produces.get(0);
+
+                for (io.swagger.models.parameters.Parameter parameter : methodOperation.getValue().getParameters()) {
+                    switch (parameter.getIn()) {
                         case "header":
-                            httpParams.add(new Parameter(p.getName(), "${" + p.getName() + "}"));
-                            extraParameters.add(new Parameter(p.getName(), p.getName().toUpperCase()));
+                            httpParams.add(new Parameter(parameter.getName(), "${" + parameter.getName() + "}"));
+                            extraParameters.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
                             break;
                         case "path":
                         case "query":
-                            if (p.getIn().equals("query"))
-                                queryParams.add(new Parameter(p.getName(), p.getName()));
-                            variables.add(new Parameter(p.getName(), p.getName().toUpperCase()));
+                            if (parameter.getIn().equals("query"))
+                                queryParams.add(new Parameter(parameter.getName(), parameter.getName()));
+                            variables.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
                             break;
                         case "body":
                             try {
-                                List<String> modelDefinition = Arrays.asList(((BodyParameter) p).getSchema().getReference().split("/"));
+                                List<String> modelDefinition = Arrays.asList(((BodyParameter) parameter).getSchema().getReference().split("/"));
                                 String modelName = modelDefinition.get(modelDefinition.size() - 1);
                                 Model model = swagger.getDefinitions().get(modelName);
-                                for (Map.Entry<String, Property> prop : model.getProperties().entrySet())
-                                    bodyParams.add(new Parameter(prop.getKey(), prop.getValue().getType().toLowerCase()));
+                                for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
+                                    String identifier = entry.getKey();
+                                    Property currentProperty = entry.getValue();
+                                    String reference = "";
+                                    if (currentProperty.getType().equals("ref")) {
+                                        reference = generateNestedModelTemplate(swagger, (RefProperty) currentProperty, reference);
+                                    }
+                                    bodyParams.add(new Parameter(identifier,
+                                            !reference.isEmpty() ? reference : currentProperty.getType().toLowerCase()));
+                                }
                             } catch (NullPointerException e) {
-                                // TODO: Body accepts an array of items, and items are schema definitions.
+                                // TODO: Body responseType an array of items, and items are schema definitions, aka. models.
                             }
                             break;
                         default:
@@ -351,10 +336,10 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                 pathVariables.put(path, variables);
 
                 final HTTPParameters params = new HTTPParameters(null, null, httpParams, null, null, null, null, null,
-                        null);
+                        responseType);
 
                 assert params.headers != null;
-                requests.add(new HTTPRequest(methodop.getKey().toString().toLowerCase(), path,
+                requests.add(new HTTPRequest(methodOperation.getKey().toString().toLowerCase(), path,
                         queryParams.size() > 0 ? queryParams : null,
                         bodyParams.size() > 0 ? new HTTPBody(bodyParams) : null,
                         params.headers.size() > 0 ? params : null,
@@ -377,8 +362,7 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
         additionalProperties.put("requestGroups", requestGroups);
         additionalProperties.put("extra", extraParameters);
 
-        String[][] supportingTemplateFiles = JAVASCRIPT_SUPPORTING_FILES;
-        for (String[] supportingTemplateFile : supportingTemplateFiles) {
+        for (String[] supportingTemplateFile : JAVASCRIPT_SUPPORTING_FILES) {
             String templateFile = supportingTemplateFile[0];
             String folder;
             if (INVOKER_PKG_SUPPORTING_FILES.contains(templateFile))
@@ -389,6 +373,20 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                 folder = "";
             supportingFiles.add(new SupportingFile(templateFile, folder, supportingTemplateFile[1]));
         }
+    }
+
+    private String generateNestedModelTemplate(Swagger swagger, RefProperty currentProperty, String reference) {
+        Model refModel = swagger.getDefinitions().get(currentProperty.getSimpleRef());
+        Integer refModelEntrySetSize = refModel.getProperties().entrySet().size();
+        for (Map.Entry<String, Property> refEntry : refModel.getProperties().entrySet()) {
+            reference += "\"" + refEntry.getKey() + "\": " + refEntry.getValue().getType().toLowerCase();
+            if (refModelEntrySetSize > 1)
+                reference += ", ";
+        }
+        reference = "{" + reference;
+        reference = reference + "}";
+        reference = reference.replace(", }", "}");
+        return reference;
     }
 
     /**

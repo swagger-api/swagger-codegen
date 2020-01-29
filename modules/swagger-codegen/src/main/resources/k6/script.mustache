@@ -4,6 +4,7 @@ import http from "k6/http";
 import { group, check, sleep } from "k6";
 
 const baseURL = "{{baseURL}}";
+// Global variables should be initialized.
 {{#extra}}
 let {{{key}}} = "{{{value}}}";
 {{/extra}}
@@ -15,8 +16,12 @@ export default function() {
         let {{{key}}} = "{{{value}}}";
         {{/variables}}
         {{#requests}}
-        {{#-first}}let {{/-first}}url = baseURL + `{{{path}}}{{=<% %>=}}<%#query%><%#-first%>?<%/-first%><%& key%>=${<%& value%>}<%^-last%>&<%/-last%><%/query%><%={{ }}=%>`;
+        {{#-first}}let url = baseURL + `{{{path}}}{{=<% %>=}}<%#query%><%#-first%>?<%/-first%><%& key%>=${<%& value%>}<%^-last%>&<%/-last%><%/query%><%={{ }}=%>`;{{/-first}}
         {{#body}}
+        {{#-first}}
+        // Body variable is included as a reference for a schema definition, and
+        // should be initialized with proper values. Nested schema is not converted.
+        {{/-first}}
         {{#-first}}let {{/-first}}body = {{#body}}{{=<% %>=}}{<%#parameters%>"<%& key%>": `<%& value%>`<%^-last%>, <%/-last%><%/parameters%>}<%={{ }}=%>{{/body}};
         {{/body}}
         {{#params}}
@@ -25,15 +30,15 @@ export default function() {
         {{#-first}}let {{/-first}}request = http.{{method}}(url{{#body}}, body{{/body}}{{#params}}, params{{/params}});
         {{#k6Checks}}
         {{=<% %>=}}
+        <%#-first%>
+        // Checks for errors and failures should be added manually.
+        <%/-first%>
         check(request, {
             "<%& description%>": (r) => r.status === <%& status%>
         });
         <%={{ }}=%>
         {{/k6Checks}}
         sleep(1);
-        {{^-last}}
-
-        {{/-last}}
         {{/requests}}
     });
     {{/requestGroups}}
