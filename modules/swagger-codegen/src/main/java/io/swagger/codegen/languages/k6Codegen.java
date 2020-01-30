@@ -333,13 +333,15 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                                 // aka. models.
                             }
                         case "formData":
-                            if (parameter.getName().toLowerCase().contains("file"))
+                            if (parameter.getName().toLowerCase().contains("file")) {
                                 bodyParams.add(new Parameter(parameter.getName(),
                                         "http.file(open(\"/path/to/file.bin\", \"b\"), \"test.bin\")"));
-                            else
-                                bodyParams.add(
-                                        new Parameter(parameter.getName(),
-                                                getDoubleQuotedString(parameter.getDescription().length() > 0 ? parameter.getDescription() : "this is a standard form field")));
+                            } else {
+                                String description = "this is a standard form field";
+                                if (parameter.getDescription() != null && !parameter.getDescription().isEmpty())
+                                    description = parameter.getDescription();
+                                bodyParams.add(new Parameter(parameter.getName(), getDoubleQuotedString(description)));
+                            }
                             break;
                         default:
                             break;
