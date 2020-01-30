@@ -3,42 +3,63 @@
 import http from "k6/http";
 import { group, check, sleep } from "k6";
 
-const baseURL = "{{baseURL}}";
+const BASE_URL = "{{baseURL}}";
+// Sleep duration between successive requests.
+// You might want to edit the value of this variable or remove calls to the sleep function on the script.
+const SLEEP_DURATION = 0.1;
 // Global variables should be initialized.
 {{#extra}}
-let {{{key}}} = "{{{value}}}";
+let {{{key}}} = "TODO_EDIT_THE_{{{value}}}";
 {{/extra}}
 
 export default function() {
     {{#requestGroups}}
     group("{{{groupName}}}", () => {
         {{#variables}}
-        let {{{key}}} = "{{{value}}}";
+        let {{{key}}} = "TODO_EDIT_THE_{{{value}}}";
         {{/variables}}
         {{#requests}}
-        {{#-first}}let url = baseURL + `{{{path}}}{{=<% %>=}}<%#query%><%#-first%>?<%/-first%><%& key%>=${<%& value%>}<%^-last%>&<%/-last%><%/query%><%={{ }}=%>`;{{/-first}}
-        {{#body}}
         {{#-first}}
-        // Body variable is included as a reference for a schema definition, and
-        // should be initialized with proper values. Nested schema is not converted.
-        {{/-first}}
-        {{#-first}}let {{/-first}}body = {{#body}}{{=<% %>=}}{<%#parameters%>"<%& key%>": `<%& value%>`<%^-last%>, <%/-last%><%/parameters%>}<%={{ }}=%>{{/body}};
+        let url = BASE_URL + `{{{path}}}{{=<% %>=}}<%#query%><%#-first%>?<%/-first%><%& key%>=<%& value%><%^-last%>&<%/-last%><%/query%><%={{ }}=%>`;
+        // Request No. {{-index}}
+        {{#body}}
+        // TODO: edit the parameters of the request body.
+        let body = {{#body}}{{=<% %>=}}{<%#parameters%>"<%& key%>": <%& value%><%^-last%>, <%/-last%><%/parameters%>}<%={{ }}=%>{{/body}};
         {{/body}}
         {{#params}}
-        {{#-first}}let {{/-first}}params = {{#params}}{{=<% %>=}}{headers: {<%# headers%>"<%& key%>": `<%& value%>`<%^-last%>, <%/-last%><%/headers%>}<%# auth%>, auth: "<%& auth%>"<%/auth%>}<%={{ }}=%>{{/params}};
+        let params = {{#params}}{{=<% %>=}}{headers: {<%# headers%>"<%& key%>": <%& value%><%^-last%>, <%/-last%><%/headers%>}<%# auth%>, auth: "<%& auth%>"<%/auth%>}<%={{ }}=%>{{/params}};
         {{/params}}
-        {{#-first}}let {{/-first}}request = http.{{method}}(url{{#body}}, body{{/body}}{{#params}}, params{{/params}});
+        let request = http.{{method}}(url{{#body}}, body{{/body}}{{#params}}, params{{/params}});
         {{#k6Checks}}
         {{=<% %>=}}
-        <%#-first%>
-        // Checks for errors and failures should be added manually.
-        <%/-first%>
         check(request, {
             "<%& description%>": (r) => r.status === <%& status%>
         });
         <%={{ }}=%>
         {{/k6Checks}}
-        sleep(1);
+        {{/-first}}
+        {{^-first}}
+        // Request No. {{-index}}
+        {{#body}}
+        // TODO: edit the parameters of the request body.
+        body = {{#body}}{{=<% %>=}}{<%#parameters%>"<%& key%>": <%& value%><%^-last%>, <%/-last%><%/parameters%>}<%={{ }}=%>{{/body}};
+        {{/body}}
+        {{#params}}
+        params = {{#params}}{{=<% %>=}}{headers: {<%# headers%>"<%& key%>": <%& value%><%^-last%>, <%/-last%><%/headers%>}<%# auth%>, auth: "<%& auth%>"<%/auth%>}<%={{ }}=%>{{/params}};
+        {{/params}}
+        request = http.{{method}}(url{{#body}}, body{{/body}}{{#params}}, params{{/params}});
+        {{#k6Checks}}
+        {{=<% %>=}}
+        check(request, {
+            "<%& description%>": (r) => r.status === <%& status%>
+        });
+        <%={{ }}=%>
+        {{/k6Checks}}
+        {{/-first}}
+        sleep(SLEEP_DURATION);
+        {{^-last}}
+
+        {{/-last}}
         {{/requests}}
     });
     {{/requestGroups}}

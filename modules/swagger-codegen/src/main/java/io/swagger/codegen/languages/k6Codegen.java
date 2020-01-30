@@ -139,9 +139,7 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
     public static final String PRESERVE_LEADING_PARAM_CHAR = "preserveLeadingParamChar";
     static final Collection<String> INVOKER_PKG_SUPPORTING_FILES = Arrays.asList("script.mustache", "README.mustache");
     static final String[][] JAVASCRIPT_SUPPORTING_FILES = new String[][] {
-            new String[] { "script.mustache", "script.js" },
-            new String[] { "README.mustache", "README.md" }
-    };
+            new String[] { "script.mustache", "script.js" }, new String[] { "README.mustache", "README.md" } };
 
     protected String projectName;
     protected String moduleName;
@@ -272,13 +270,14 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
             List<HTTPRequest> requests = new ArrayList<>();
             Set<Parameter> variables = new HashSet<>();
 
-            for (Map.Entry<HttpMethod, Operation> methodOperation : swagger.getPath(path).getOperationMap().entrySet()) {
+            for (Map.Entry<HttpMethod, Operation> methodOperation : swagger.getPath(path).getOperationMap()
+                    .entrySet()) {
                 List<Parameter> httpParams = new ArrayList<>();
                 List<Parameter> queryParams = new ArrayList<>();
                 List<Parameter> bodyParams = new ArrayList<>();
                 List<k6Check> k6Checks = new ArrayList<>();
 
-                for (Map.Entry<String, Response> resp : methodOperation.getValue().getResponses().entrySet()){
+                for (Map.Entry<String, Response> resp : methodOperation.getValue().getResponses().entrySet()) {
                     String statusData = resp.getKey().equals("default") ? "200" : resp.getKey();
                     int status = Integer.parseInt(statusData);
                     if (status >= 200 && status < 300) {
@@ -286,50 +285,55 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                     }
                 }
 
-                @Nullable List<String> consumes = methodOperation.getValue().getConsumes();
-                Parameter contentType = new Parameter("Content-Type", "application/json");
+                @Nullable
+                List<String> consumes = methodOperation.getValue().getConsumes();
+                Parameter contentType = new Parameter("Content-Type", getDoubleQuotedString("application/json"));
                 if (consumes != null && !consumes.isEmpty() && !consumes.contains("application/json"))
-                    contentType.value = consumes.get(0);
+                    contentType.value = getDoubleQuotedString(consumes.get(0));
                 httpParams.add(contentType);
 
                 String responseType = "application/json";
-                @Nullable List<String> produces = methodOperation.getValue().getProduces();
+                @Nullable
+                List<String> produces = methodOperation.getValue().getProduces();
                 if (produces != null && !produces.isEmpty() && !produces.contains("application/json"))
-                    responseType = produces.get(0);
+                    responseType = getDoubleQuotedString(produces.get(0));
 
                 for (io.swagger.models.parameters.Parameter parameter : methodOperation.getValue().getParameters()) {
                     switch (parameter.getIn()) {
-                        case "header":
-                            httpParams.add(new Parameter(parameter.getName(), "${" + parameter.getName() + "}"));
-                            extraParameters.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
-                            break;
-                        case "path":
-                        case "query":
-                            if (parameter.getIn().equals("query"))
-                                queryParams.add(new Parameter(parameter.getName(), parameter.getName()));
-                            variables.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
-                            break;
-                        case "body":
-                            try {
-                                List<String> modelDefinition = Arrays.asList(((BodyParameter) parameter).getSchema().getReference().split("/"));
-                                String modelName = modelDefinition.get(modelDefinition.size() - 1);
-                                Model model = swagger.getDefinitions().get(modelName);
-                                for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
-                                    String identifier = entry.getKey();
-                                    Property currentProperty = entry.getValue();
-                                    String reference = "";
-                                    if (currentProperty.getType().equals("ref")) {
-                                        reference = generateNestedModelTemplate(swagger, (RefProperty) currentProperty, reference);
-                                    }
-                                    bodyParams.add(new Parameter(identifier,
-                                            !reference.isEmpty() ? reference : currentProperty.getType().toLowerCase()));
+                    case "header":
+                        httpParams.add(new Parameter(parameter.getName(), getTemplateString(parameter.getName())));
+                        extraParameters.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
+                        break;
+                    case "path":
+                    case "query":
+                        if (parameter.getIn().equals("query"))
+                            queryParams.add(new Parameter(parameter.getName(), getVariable(parameter.getName())));
+                        variables.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
+                        break;
+                    case "body":
+                        try {
+                            List<String> modelDefinition = Arrays
+                                    .asList(((BodyParameter) parameter).getSchema().getReference().split("/"));
+                            String modelName = modelDefinition.get(modelDefinition.size() - 1);
+                            Model model = swagger.getDefinitions().get(modelName);
+                            for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
+                                String identifier = entry.getKey();
+                                Property currentProperty = entry.getValue();
+                                String reference = "";
+                                if (currentProperty.getType().equals("ref")) {
+                                    reference = generateNestedModelTemplate(swagger, (RefProperty) currentProperty,
+                                            reference);
                                 }
-                            } catch (NullPointerException e) {
-                                // TODO: Body responseType an array of items, and items are schema definitions, aka. models.
+                                bodyParams.add(new Parameter(identifier, !reference.isEmpty() ? reference
+                                        : getDoubleQuotedString(currentProperty.getType().toLowerCase())));
                             }
-                            break;
-                        default:
-                            break;
+                        } catch (NullPointerException e) {
+                            // TODO: Body responseType an array of items, and items are schema definitions,
+                            // aka. models.
+                        }
+                        break;
+                    default:
+                        break;
                     }
                 }
 
@@ -342,8 +346,7 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                 requests.add(new HTTPRequest(methodOperation.getKey().toString().toLowerCase(), path,
                         queryParams.size() > 0 ? queryParams : null,
                         bodyParams.size() > 0 ? new HTTPBody(bodyParams) : null,
-                        params.headers.size() > 0 ? params : null,
-                        k6Checks.size() > 0 ? k6Checks : null));
+                        params.headers.size() > 0 ? params : null, k6Checks.size() > 0 ? k6Checks : null));
             }
             requestGroups.add(new HTTPRequestGroup(path, pathVariables.get(path), requests));
         }
@@ -354,9 +357,9 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                     request.path = request.path.replace("/{", "/${");
                 }
             }
-            if (requestGroup.groupName.contains("/{")) {
-                requestGroup.groupName = requestGroup.groupName.replace("/{", "/${");
-            }
+            // if (requestGroup.groupName.contains("/{")) {
+            // requestGroup.groupName = requestGroup.groupName.replace("/{", "/${");
+            // }
         }
 
         additionalProperties.put("requestGroups", requestGroups);
@@ -379,14 +382,26 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
         Model refModel = swagger.getDefinitions().get(currentProperty.getSimpleRef());
         Integer refModelEntrySetSize = refModel.getProperties().entrySet().size();
         for (Map.Entry<String, Property> refEntry : refModel.getProperties().entrySet()) {
-            reference += "\"" + refEntry.getKey() + "\": " + refEntry.getValue().getType().toLowerCase();
+            reference += getDoubleQuotedString(refEntry.getKey()) + ": "
+                    + getDoubleQuotedString(refEntry.getValue().getType().toLowerCase());
             if (refModelEntrySetSize > 1)
                 reference += ", ";
         }
-        reference = "{" + reference;
-        reference = reference + "}";
+        reference = "{" + reference + "}";
         reference = reference.replace(", }", "}");
         return reference;
+    }
+
+    private String getVariable(String input) {
+        return "${" + input + "}";
+    }
+
+    private String getTemplateString(String input) {
+        return "`" + getVariable(input) + "`";
+    }
+
+    private String getDoubleQuotedString(String input) {
+        return "\"" + input + "\"";
     }
 
     /**
