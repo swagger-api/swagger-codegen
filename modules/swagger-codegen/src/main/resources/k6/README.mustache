@@ -6,6 +6,8 @@ Global header variables are defined at the top of the file, like `api_key`. Each
 
 k6 specific parameters are in the [`params`](https://docs.k6.io/docs/params-k6http) object, and `body` contains the [request](https://docs.k6.io/docs/http-requests) body which is in the form of `identifier: type`, which the `type` should be substituted by a proper value. Then goes the request and the check.
 
-[Check](https://docs.k6.io/docs/checks) are like asserts but differ in that they don't halt execution, instead they just store the result of the check, pass or fail, and let the script execution continue. The check is also followed by a 0.1 second [sleep](https://docs.k6.io/docs/sleep-t-1) to prevent the script execution from flooding the system with too many requests simultaneously.
+[Check](https://docs.k6.io/docs/checks) are like asserts but differ in that they don't halt execution, instead they just store the result of the check, pass or fail, and let the script execution continue.
+
+Each request is always followed by a 0.1 second [sleep](https://docs.k6.io/docs/sleep-t-1) to prevent the script execution from flooding the system with too many requests simultaneously.
 
 Note that the default iteration count and VU count is 1. So each request in each group will be executed once. For more information, see the [k6 options](https://docs.k6.io/docs/options).
