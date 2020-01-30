@@ -292,7 +292,7 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
                     contentType.value = getDoubleQuotedString(consumes.get(0));
                 httpParams.add(contentType);
 
-                String responseType = "application/json";
+                String responseType = getDoubleQuotedString("application/json");
                 @Nullable
                 List<String> produces = methodOperation.getValue().getProduces();
                 if (produces != null && !produces.isEmpty() && !produces.contains("application/json"))
@@ -300,47 +300,56 @@ public class k6Codegen extends DefaultCodegen implements CodegenConfig {
 
                 for (io.swagger.models.parameters.Parameter parameter : methodOperation.getValue().getParameters()) {
                     switch (parameter.getIn()) {
-                    case "header":
-                        httpParams.add(new Parameter(parameter.getName(), getTemplateString(parameter.getName())));
-                        extraParameters.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
-                        break;
-                    case "path":
-                    case "query":
-                        if (parameter.getIn().equals("query"))
-                            queryParams.add(new Parameter(parameter.getName(), getVariable(parameter.getName())));
-                        variables.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
-                        break;
-                    case "body":
-                        try {
-                            List<String> modelDefinition = Arrays
-                                    .asList(((BodyParameter) parameter).getSchema().getReference().split("/"));
-                            String modelName = modelDefinition.get(modelDefinition.size() - 1);
-                            Model model = swagger.getDefinitions().get(modelName);
-                            for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
-                                String identifier = entry.getKey();
-                                Property currentProperty = entry.getValue();
-                                String reference = "";
-                                if (currentProperty.getType().equals("ref")) {
-                                    reference = generateNestedModelTemplate(swagger, (RefProperty) currentProperty,
-                                            reference);
+                        case "header":
+                            httpParams.add(new Parameter(parameter.getName(), getTemplateString(parameter.getName())));
+                            extraParameters.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
+                            break;
+                        case "path":
+                        case "query":
+                            if (parameter.getIn().equals("query"))
+                                queryParams.add(new Parameter(parameter.getName(), getVariable(parameter.getName())));
+                            variables.add(new Parameter(parameter.getName(), parameter.getName().toUpperCase()));
+                            break;
+                        case "body":
+                            try {
+                                BodyParameter bodyParameter = (BodyParameter) parameter;
+                                List<String> modelDefinition = Arrays
+                                        .asList(bodyParameter.getSchema().getReference().split("/"));
+                                String modelName = modelDefinition.get(modelDefinition.size() - 1);
+                                Model model = swagger.getDefinitions().get(modelName);
+                                for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
+                                    String identifier = entry.getKey();
+                                    Property currentProperty = entry.getValue();
+                                    String reference = "";
+                                    if (currentProperty.getType().equals("ref")) {
+                                        reference = generateNestedModelTemplate(swagger, (RefProperty) currentProperty,
+                                                reference);
+                                    }
+                                    bodyParams.add(new Parameter(identifier, !reference.isEmpty() ? reference
+                                            : getDoubleQuotedString(currentProperty.getType().toLowerCase())));
                                 }
-                                bodyParams.add(new Parameter(identifier, !reference.isEmpty() ? reference
-                                        : getDoubleQuotedString(currentProperty.getType().toLowerCase())));
+                            } catch (NullPointerException e) {
+                                // TODO: Body responseType an array of items, and items are schema definitions,
+                                // aka. models.
                             }
-                        } catch (NullPointerException e) {
-                            // TODO: Body responseType an array of items, and items are schema definitions,
-                            // aka. models.
-                        }
-                        break;
-                    default:
-                        break;
+                        case "formData":
+                            if (parameter.getName().toLowerCase().contains("file"))
+                                bodyParams.add(new Parameter(parameter.getName(),
+                                        "http.file(open(\"/path/to/file.bin\", \"b\"), \"test.bin\")"));
+                            else
+                                bodyParams.add(
+                                        new Parameter(parameter.getName(),
+                                                getDoubleQuotedString(parameter.getDescription().length() > 0 ? parameter.getDescription() : "this is a standard form field")));
+                            break;
+                        default:
+                            break;
                     }
                 }
 
                 pathVariables.put(path, variables);
 
                 final HTTPParameters params = new HTTPParameters(null, null, httpParams, null, null, null, null, null,
-                        responseType);
+                        responseType.length() > 0 ? responseType : null);
 
                 assert params.headers != null;
                 requests.add(new HTTPRequest(methodOperation.getKey().toString().toLowerCase(), path,
