@@ -28,11 +28,16 @@ class JmsSerializer implements SerializerInterface
     public function deserialize($data, $type, $format)
     {
         if ($format == 'string') {
-            return $this->deserializeString($data, $type);           
+            return $this->deserializeString($data, $type);
+        }
+
+        // No format for deserialization with JMS serializer found, return raw data.
+        if (!$deserializationFormat = $this->convertFormat($format)) {
+            return $data;
         }
 
         // If we end up here, let JMS serializer handle the deserialization
-        return $this->serializer->deserialize($data, $type, $this->convertFormat($format));
+        return $this->serializer->deserialize($data, $type, $deserializationFormat);
     }
 
     private function convertFormat($format)
