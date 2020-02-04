@@ -604,7 +604,7 @@ open class FakeAPI {
      - parameter param: (body) request body 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testInlineAdditionalProperties(param: Any, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+    open class func testInlineAdditionalProperties(param: JSONValue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
         testInlineAdditionalPropertiesWithRequestBuilder(param: param).execute { (response, error) -> Void in
             if error == nil {
                 completion((), error)
@@ -620,7 +620,7 @@ open class FakeAPI {
      - parameter param: (body) request body 
      - returns: Promise<Void>
      */
-    open class func testInlineAdditionalProperties( param: Any) -> Promise<Void> {
+    open class func testInlineAdditionalProperties( param: JSONValue) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         testInlineAdditionalProperties(param: param) { data, error in
             if let error = error {
@@ -641,7 +641,7 @@ open class FakeAPI {
 
      - returns: RequestBuilder<Void> 
      */
-    open class func testInlineAdditionalPropertiesWithRequestBuilder(param: Any) -> RequestBuilder<Void> {
+    open class func testInlineAdditionalPropertiesWithRequestBuilder(param: JSONValue) -> RequestBuilder<Void> {
         let path = "/fake/inline-additionalProperties"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: param)
