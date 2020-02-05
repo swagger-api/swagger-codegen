@@ -43,7 +43,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        templateDir = "go";
+        embeddedTemplateDir = templateDir = "go";
 
         setReservedWordsLowerCase(
             Arrays.asList(
@@ -80,8 +80,6 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
             );
 
         instantiationTypes.clear();
-        /*instantiationTypes.put("array", "GoArray");
-        instantiationTypes.put("map", "GoMap");*/
 
         typeMapping.clear();
         typeMapping.put("integer", "int32");
@@ -115,7 +113,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public void processOpts() {
-        //super.processOpts();
+        super.processOpts();
 
         if (additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             setPackageName((String) additionalProperties.get(CodegenConstants.PACKAGE_NAME));
@@ -141,12 +139,9 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
-        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", "", "configuration.go"));
-        supportingFiles.add(new SupportingFile("api_client.mustache", "", "api_client.go"));
-        supportingFiles.add(new SupportingFile("api_response.mustache", "", "api_response.go"));
-        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", "/pkg/platformclientv2", "configuration.go"));
+        supportingFiles.add(new SupportingFile("apiclient.mustache", "/pkg/platformclientv2", "apiclient.go"));
+        supportingFiles.add(new SupportingFile("apiresponse.mustache", "/pkg/platformclientv2", "apiresponse.go"));
     }
 
     @Override
