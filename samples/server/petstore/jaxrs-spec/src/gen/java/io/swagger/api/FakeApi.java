@@ -23,7 +23,7 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-10-08T21:26:13.815+02:00[Europe/Rome]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-12-03T16:48:38.057+01:00[Europe/Paris]")
 public class FakeApi {
 
     @POST

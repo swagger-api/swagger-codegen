@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class GeneratorServiceTest {
@@ -239,6 +240,31 @@ public class GeneratorServiceTest {
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
         Assert.assertFalse(files.isEmpty());
+    }
+
+    @Test(description = "test generator service with spring and different scopes per endpoint")
+    public void testGeneratorServiceSpringWithDifferentSecurityScopes() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("spring")
+                .spec(loadSpecAsNode("3_0_0/petstore-multi-scopes.json", false, false))
+                .options(
+                        new Options()
+                                .outputDir(path).addAdditionalProperty("hideGenerationTimestamp",true)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/PetApi.java".equals(relPath)) {
+                String result = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("3_0_0/PetApiMultiScopes.result"), StandardCharsets.UTF_8.name());
+                Assert.assertEquals(FileUtils.readFileToString(f),result);
+            }
+        }
     }
 
     @Test

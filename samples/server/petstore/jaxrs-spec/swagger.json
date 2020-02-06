@@ -128,8 +128,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ "available", "pending", "sold" ],
-              "default" : "available"
+              "default" : "available",
+              "enum" : [ "available", "pending", "sold" ]
             }
           }
         } ],
@@ -833,8 +833,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ ">", "$" ],
-              "default" : "$"
+              "default" : "$",
+              "enum" : [ ">", "$" ]
             }
           }
         }, {
@@ -843,8 +843,8 @@
           "description" : "Header parameter enum test (string)",
           "schema" : {
             "type" : "string",
-            "enum" : [ "_abc", "-efg", "(xyz)" ],
-            "default" : "-efg"
+            "default" : "-efg",
+            "enum" : [ "_abc", "-efg", "(xyz)" ]
           }
         }, {
           "name" : "enum_query_string_array",
@@ -856,8 +856,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ ">", "$" ],
-              "default" : "$"
+              "default" : "$",
+              "enum" : [ ">", "$" ]
             }
           }
         }, {
@@ -866,8 +866,8 @@
           "description" : "Query parameter enum test (string)",
           "schema" : {
             "type" : "string",
-            "enum" : [ "_abc", "-efg", "(xyz)" ],
-            "default" : "-efg"
+            "default" : "-efg",
+            "enum" : [ "_abc", "-efg", "(xyz)" ]
           }
         }, {
           "name" : "enum_query_integer",
@@ -889,15 +889,15 @@
                     "description" : "Form parameter enum test (string array)",
                     "items" : {
                       "type" : "string",
-                      "enum" : [ ">", "$" ],
-                      "default" : "$"
+                      "default" : "$",
+                      "enum" : [ ">", "$" ]
                     }
                   },
                   "enum_form_string" : {
                     "type" : "string",
                     "description" : "Form parameter enum test (string)",
-                    "enum" : [ "_abc", "-efg", "(xyz)" ],
-                    "default" : "-efg"
+                    "default" : "-efg",
+                    "enum" : [ "_abc", "-efg", "(xyz)" ]
                   },
                   "enum_query_double" : {
                     "type" : "number",
@@ -1721,8 +1721,8 @@
       },
       "EnumClass" : {
         "type" : "string",
-        "enum" : [ "_abc", "-efg", "(xyz)" ],
-        "default" : "-efg"
+        "default" : "-efg",
+        "enum" : [ "_abc", "-efg", "(xyz)" ]
       },
       "Enum_Test" : {
         "type" : "object",
