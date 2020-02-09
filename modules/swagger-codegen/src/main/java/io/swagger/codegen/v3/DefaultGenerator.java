@@ -386,13 +386,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 throw new RuntimeException("Could not process model '" + name + "'" + ".Please make sure that your schema is correct!", e);
             }
         }
-        final List<CodegenModel> composedModels = null;
-        /** todo: uncomment once generator repo is updated
+
         final ISchemaHandler schemaHandler = config.getSchemaHandler();
         schemaHandler.readProcessedModels(allProcessedModels);
 
         final List<CodegenModel> composedModels = schemaHandler.getModels();
-         */
+
          if (composedModels != null && !composedModels.isEmpty()) {
             for (CodegenModel composedModel : composedModels) {
                 final Map<String, Object> models = processModel(composedModel, config, schemas);
