@@ -243,4 +243,6 @@ public interface CodegenConfig {
     void setIgnoreImportMapping(boolean ignoreImportMapping);
 
     boolean defaultIgnoreImportMappingOption();
+
+    ISchemaHandler getSchemaHandler();
 }
