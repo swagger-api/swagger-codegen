@@ -139,6 +139,7 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("configuration.mustache", "/pkg/platformclientv2", "configuration.go"));
         supportingFiles.add(new SupportingFile("apiclient.mustache", "/pkg/platformclientv2", "apiclient.go"));
         supportingFiles.add(new SupportingFile("apiresponse.mustache", "/pkg/platformclientv2", "apiresponse.go"));
