@@ -62,11 +62,11 @@ public class PureCloudGoClientCodegen extends GoClientCodegen {
     }
 
     public String apiFileFolder() {
-        return (outputFolder + "/pkg/platformclientv2").replace('/', File.separatorChar);
+        return (outputFolder + "/platformclientv2").replace('/', File.separatorChar);
     }
 
     public String modelFileFolder() {
-        return (outputFolder + "/pkg/platformclientv2").replace('/', File.separatorChar);
+        return (outputFolder + "/platformclientv2").replace('/', File.separatorChar);
     }
 
     @Override
