@@ -29,20 +29,20 @@ namespace IO.Swagger.Model
     public partial class EnumArrays :  IEquatable<EnumArrays>
     {
         /// <summary>
-        /// Gets or Sets JustSymbol
+        /// Defines JustSymbol
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum JustSymbolEnum
         {
             
             /// <summary>
-            /// Enum GreaterThanOrEqualTo for ">="
+            /// Enum GreaterThanOrEqualTo for value: >=
             /// </summary>
             [EnumMember(Value = ">=")]
             GreaterThanOrEqualTo = 1,
             
             /// <summary>
-            /// Enum Dollar for "$"
+            /// Enum Dollar for value: $
             /// </summary>
             [EnumMember(Value = "$")]
             Dollar = 2
@@ -54,20 +54,20 @@ namespace IO.Swagger.Model
         [DataMember(Name="just_symbol", EmitDefaultValue=false)]
         public JustSymbolEnum? JustSymbol { get; set; }
         /// <summary>
-        /// Gets or Sets ArrayEnum
+        /// Defines ArrayEnum
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum ArrayEnumEnum
         {
             
             /// <summary>
-            /// Enum Fish for "fish"
+            /// Enum Fish for value: fish
             /// </summary>
             [EnumMember(Value = "fish")]
             Fish = 1,
             
             /// <summary>
-            /// Enum Crab for "crab"
+            /// Enum Crab for value: crab
             /// </summary>
             [EnumMember(Value = "crab")]
             Crab = 2
@@ -82,12 +82,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArrays" /> class.
         /// </summary>
-        /// <param name="JustSymbol">JustSymbol.</param>
-        /// <param name="ArrayEnum">ArrayEnum.</param>
-        public EnumArrays(JustSymbolEnum? JustSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> ArrayEnum = default(List<ArrayEnumEnum>))
+        /// <param name="justSymbol">justSymbol.</param>
+        /// <param name="arrayEnum">arrayEnum.</param>
+        public EnumArrays(JustSymbolEnum? justSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> arrayEnum = default(List<ArrayEnumEnum>))
         {
-            this.JustSymbol = JustSymbol;
-            this.ArrayEnum = ArrayEnum;
+            this.JustSymbol = justSymbol;
+            this.ArrayEnum = arrayEnum;
         }
         
 
@@ -110,7 +110,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

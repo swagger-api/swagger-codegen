@@ -1,0 +1,97 @@
+swagger: '2.0'
+info:
+  title: Photos API
+  description: Photo service
+
+schemes:
+  - http
+
+produces:
+  - application/json
+
+# prefix for all paths
+# for breaking changes, we need to change the basePath and add a second swagger file
+basePath: /v1
+
+paths:
+  /photo/photos:
+    post:
+      operationId: getPhotos
+      description: Retrieve photos by ids
+      parameters:
+        - name: photosRequest
+          in: body
+          required: true
+          description: The photos being requested
+          schema:
+            $ref: '#/definitions/PhotosRequest'
+      responses:
+        200:
+          description: A collection of Photos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Photo'
+
+definitions:
+  Photo:
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: The photo id (always present in the response)
+      caption:
+        type: string
+        description: |
+          Caption to be shown for the photo in the UI.
+      uploadDate:
+        type: string
+        format: date
+        description: The upload date for the image (requested using PhotoField.UPLOAD_DATE)
+      uploadDateTime:
+        type: string
+        format: date-time
+        description: The upload date-time (in UTC) for the image (requested using PhotoField.UPLOAD_DATETIME)
+
+  PhotosRequest:
+    required:
+      - photoIds
+      - photoFields
+    properties:
+      photoIds:
+        type: array
+        items:
+          type: integer
+          format: int32
+      photoFields:
+        description: |
+          The fields of a photo object to be retrieved.
+          If none are specified, only the id comes back
+        type: array
+        items:
+          $ref: '#/definitions/PhotoField'
+
+  PhotoField:
+    type: string
+    enum:
+      - CAPTION
+      - UPLOAD_DATE
+      - UPLOAD_DATETIME
+
+  PhotoThumbnailsRequest:
+    required:
+      - ids
+      - photoFields
+    properties:
+      ids:
+        type: array
+        items:
+          type: integer
+          format: int32
+      photoFields:
+        description: |
+          The fields of a photo object to be retrieved.
+          If none are specified, only the id comes back
+        type: array
+        items:
+          $ref: '#/definitions/PhotoField'

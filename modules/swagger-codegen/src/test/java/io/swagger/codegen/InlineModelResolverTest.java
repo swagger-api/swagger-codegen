@@ -187,19 +187,27 @@ public class InlineModelResolverTest {
     public void testInlineResponseModel() throws Exception {
         Swagger swagger = new Swagger();
 
+        ModelImpl responseSchema = new ModelImpl().type("object").property("name", new StringProperty());
+        responseSchema.setVendorExtension("x-ext", "ext-prop");
+        ModelImpl responseSchemaBaz = new ModelImpl().type("object").property("name", new StringProperty());
+        responseSchemaBaz.setVendorExtension("x-ext", "ext-prop");
         swagger.path("/foo/bar", new Path()
             .get(new Operation()
                     .response(200, new Response()
                             .description("it works!")
-                            .schema(new ObjectProperty()
-                                    .property("name", new StringProperty()).vendorExtension("x-ext", "ext-prop")))))
+                            .responseSchema(responseSchema)
+                    )
+            )
+        )
         .path("/foo/baz", new Path()
                 .get(new Operation()
                         .response(200, new Response()
                                 .vendorExtension("x-foo", "bar")
                                 .description("it works!")
-                                .schema(new ObjectProperty()
-                                        .property("name", new StringProperty()).vendorExtension("x-ext", "ext-prop")))));
+                                .responseSchema(responseSchemaBaz)
+                        )
+                )
+        );
         new InlineModelResolver().flatten(swagger);
 
         Map<String, Response> responses = swagger.getPaths().get("/foo/bar").getGet().getResponses();
@@ -208,13 +216,13 @@ public class InlineModelResolverTest {
         assertNotNull(response);
         Property schema = response.getSchema();
         assertTrue(schema instanceof RefProperty);
-        assertEquals(1, schema.getVendorExtensions().size());
-        assertEquals("ext-prop", schema.getVendorExtensions().get("x-ext"));
 
         ModelImpl model = (ModelImpl)swagger.getDefinitions().get("inline_response_200");
         assertTrue(model.getProperties().size() == 1);
         assertNotNull(model.getProperties().get("name"));
         assertTrue(model.getProperties().get("name") instanceof StringProperty);
+        assertEquals(1, model.getVendorExtensions().size());
+        assertEquals("ext-prop", model.getVendorExtensions().get("x-ext"));
     }
 
     
@@ -222,20 +230,23 @@ public class InlineModelResolverTest {
     public void testInlineResponseModelWithTitle() throws Exception {
         Swagger swagger = new Swagger();
 
+
         String responseTitle = "GetBarResponse";
-    swagger.path("/foo/bar", new Path()
+        ModelImpl responseSchema = new ModelImpl().type("object").property("name", new StringProperty());
+        responseSchema.setTitle(responseTitle);
+        ModelImpl responseSchemaBaz = new ModelImpl().type("object").property("name", new StringProperty());
+
+        swagger.path("/foo/bar", new Path()
             .get(new Operation()
                     .response(200, new Response()
                             .description("it works!")
-                            .schema(new ObjectProperty().title(responseTitle)
-                                    .property("name", new StringProperty())))))
+                            .responseSchema(responseSchema))))
         .path("/foo/baz", new Path()
                 .get(new Operation()
                         .response(200, new Response()
                                 .vendorExtension("x-foo", "bar")
                                 .description("it works!")
-                                .schema(new ObjectProperty()
-                                        .property("name", new StringProperty())))));
+                                .responseSchema(responseSchemaBaz))));
         new InlineModelResolver().flatten(swagger);
 
         Map<String, Response> responses = swagger.getPaths().get("/foo/bar").getGet().getResponses();

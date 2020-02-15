@@ -14,6 +14,21 @@ import java.util.List;
 
 public class CodegenTest {
 
+    @Test(description = "handle simple composition")
+    public void  propertiesInComposedModelTest() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/allOfProperties.yaml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        codegen.supportsInheritance = true;
+        final Model model = swagger.getDefinitions().get("RedisResource");
+        CodegenModel composed = codegen.fromModel("RedisResource", model, swagger.getDefinitions());
+
+        Assert.assertEquals(composed.vars.size(), 3);
+        Assert.assertEquals(composed.vars.get(0).baseName, "modelOneProp");
+        Assert.assertEquals(composed.vars.get(1).baseName, "properties");
+        Assert.assertEquals(composed.vars.get(2).baseName, "zones");
+        Assert.assertNull(composed.parent);
+    }
+
     @Test(description = "test sanitizeTag")
     public void sanitizeTagTest() {
         final DefaultCodegen codegen = new DefaultCodegen();
@@ -47,7 +62,7 @@ public class CodegenTest {
         Assert.assertEquals(codegen.camelize(".foo.bar"), "FooBar");
         Assert.assertEquals(codegen.camelize("foo$bar"), "Foo$bar");
         Assert.assertEquals(codegen.camelize("foo_$bar"), "Foo$bar");
-        
+
         Assert.assertEquals(codegen.camelize("foo_bar"), "FooBar");
         Assert.assertEquals(codegen.camelize("foo_bar_baz"), "FooBarBaz");
         Assert.assertEquals(codegen.camelize("foo/bar.baz"), "FooBarBaz");
@@ -232,7 +247,7 @@ public class CodegenTest {
         Assert.assertTrue(op.responses.get(0).isFile);
         Assert.assertTrue(op.isResponseFile);
     }
-    
+
     @Test(description = "discriminator is present")
     public void discriminatorTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/discriminatorTest.json");
@@ -366,6 +381,50 @@ public class CodegenTest {
         Assert.assertEquals(child.parent, "ChildOfComposedParent");
     }
 
+    @Test(description = "use relative $ref for definitions of parameters")
+    public void relativeDefinitionsInParameterTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/getPhotos";
+        final Operation p = model.getPaths().get(path).getPost();
+        CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("PhotosRequest"));
+
+    }
+
+    @Test(description = "use relative $ref for definitions of response")
+    public void relativeDefinitionsInResponseTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/{id}";
+        final Operation p = model.getPaths().get(path).getGet();
+        CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("integer"));
+
+    }
+
+    @Test(description = "use relative $ref for definitions of response")
+    public void relativeDefinitionsMapInResponseTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/photo/thumbnails";
+        final Operation p = model.getPaths().get(path).getPost();
+        CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions(), model);
+
+        Assert.assertNotNull(op);
+        Assert.assertNotNull(op.imports);
+        Assert.assertTrue(op.imports.contains("Photo"));
+        Assert.assertTrue(op.imports.contains("PhotoThumbnailsRequest"));
+
+    }
 
     @Test(description = "use operation consumes and produces")
     public void localConsumesAndProducesTest() {
@@ -374,7 +433,7 @@ public class CodegenTest {
         final String path = "/tests/localConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/json");
@@ -382,7 +441,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/json");
     }
-    
+
     @Test(description = "use spec consumes and produces")
     public void globalConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -390,7 +449,7 @@ public class CodegenTest {
         final String path = "/tests/globalConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertTrue(op.hasConsumes);
         Assert.assertEquals(op.consumes.size(), 1);
         Assert.assertEquals(op.consumes.get(0).get("mediaType"), "application/global_consumes");
@@ -398,7 +457,7 @@ public class CodegenTest {
         Assert.assertEquals(op.produces.size(), 1);
         Assert.assertEquals(op.produces.get(0).get("mediaType"), "application/global_produces");
     }
- 
+
     @Test(description = "use operation consumes and produces (reset in operation with empty array)")
     public void localResetConsumesAndProducesTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/globalConsumesAndProduces.json");
@@ -406,7 +465,7 @@ public class CodegenTest {
         final String path = "/tests/localResetConsumesAndProduces";
         final Operation p = model.getPaths().get(path).getGet();
         CodegenOperation op = codegen.fromOperation(path, "get", p, model.getDefinitions(), model);
-        
+
         Assert.assertNotNull(op);
         Assert.assertFalse(op.hasConsumes);
         Assert.assertNull(op.consumes);

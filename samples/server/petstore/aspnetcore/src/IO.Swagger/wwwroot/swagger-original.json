@@ -108,8 +108,8 @@
           "type" : "array",
           "items" : {
             "type" : "string",
-            "default" : "available",
-            "enum" : [ "available", "pending", "sold" ]
+            "enum" : [ "available", "pending", "sold" ],
+            "default" : "available"
           },
           "collectionFormat" : "csv"
         } ],
@@ -516,9 +516,6 @@
         "responses" : {
           "200" : {
             "description" : "successful operation",
-            "schema" : {
-              "type" : "string"
-            },
             "headers" : {
               "X-Rate-Limit" : {
                 "type" : "integer",
@@ -530,6 +527,9 @@
                 "format" : "date-time",
                 "description" : "date in UTC when toekn expires"
               }
+            },
+            "schema" : {
+              "type" : "string"
             }
           },
           "400" : {
@@ -683,17 +683,17 @@
         }
       },
       "title" : "Pet Order",
-      "description" : "An order for a pets from the pet store",
-      "example" : {
-        "petId" : 6,
-        "quantity" : 1,
-        "id" : 0,
-        "shipDate" : "2000-01-23T04:56:07.000+00:00",
-        "complete" : false,
-        "status" : "placed"
-      },
       "xml" : {
         "name" : "Order"
+      },
+      "description" : "An order for a pets from the pet store",
+      "example" : {
+        "id" : 0,
+        "petId" : 6,
+        "complete" : false,
+        "status" : "placed",
+        "quantity" : 1,
+        "shipDate" : "2000-01-23T04:56:07.000+00:00"
       }
     },
     "Category" : {
@@ -708,13 +708,13 @@
         }
       },
       "title" : "Pet category",
-      "description" : "A category for a pet",
-      "example" : {
-        "name" : "name",
-        "id" : 6
-      },
       "xml" : {
         "name" : "Category"
+      },
+      "description" : "A category for a pet",
+      "example" : {
+        "id" : 6,
+        "name" : "name"
       }
     },
     "User" : {
@@ -749,19 +749,19 @@
         }
       },
       "title" : "a User",
-      "description" : "A User who is purchasing from the pet store",
-      "example" : {
-        "firstName" : "firstName",
-        "lastName" : "lastName",
-        "password" : "password",
-        "userStatus" : 6,
-        "phone" : "phone",
-        "id" : 0,
-        "email" : "email",
-        "username" : "username"
-      },
       "xml" : {
         "name" : "User"
+      },
+      "description" : "A User who is purchasing from the pet store",
+      "example" : {
+        "id" : 0,
+        "lastName" : "lastName",
+        "phone" : "phone",
+        "username" : "username",
+        "email" : "email",
+        "userStatus" : 6,
+        "firstName" : "firstName",
+        "password" : "password"
       }
     },
     "Tag" : {
@@ -776,13 +776,13 @@
         }
       },
       "title" : "Pet Tag",
-      "description" : "A tag for a pet",
-      "example" : {
-        "name" : "name",
-        "id" : 1
-      },
       "xml" : {
         "name" : "Tag"
+      },
+      "description" : "A tag for a pet",
+      "example" : {
+        "id" : 1,
+        "name" : "name"
       }
     },
     "Pet" : {
@@ -827,26 +827,26 @@
         }
       },
       "title" : "a Pet",
-      "description" : "A pet for sale in the pet store",
-      "example" : {
-        "photoUrls" : [ "photoUrls", "photoUrls" ],
-        "name" : "doggie",
-        "id" : 0,
-        "category" : {
-          "name" : "name",
-          "id" : 6
-        },
-        "tags" : [ {
-          "name" : "name",
-          "id" : 1
-        }, {
-          "name" : "name",
-          "id" : 1
-        } ],
-        "status" : "available"
-      },
       "xml" : {
         "name" : "Pet"
+      },
+      "description" : "A pet for sale in the pet store",
+      "example" : {
+        "tags" : [ {
+          "id" : 1,
+          "name" : "name"
+        }, {
+          "id" : 1,
+          "name" : "name"
+        } ],
+        "id" : 0,
+        "category" : {
+          "id" : 6,
+          "name" : "name"
+        },
+        "status" : "available",
+        "name" : "doggie",
+        "photoUrls" : [ "photoUrls", "photoUrls" ]
       }
     },
     "ApiResponse" : {
@@ -866,10 +866,32 @@
       "title" : "An uploaded response",
       "description" : "Describes the result of uploading an image resource",
       "example" : {
+        "message" : "message",
         "code" : 0,
-        "type" : "type",
-        "message" : "message"
+        "type" : "type"
       }
+    },
+    "Amount" : {
+      "type" : "object",
+      "required" : [ "currency", "value" ],
+      "properties" : {
+        "value" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "some description\n",
+          "minimum" : 0.01,
+          "maximum" : 1000000000000000
+        },
+        "currency" : {
+          "$ref" : "#/definitions/Currency"
+        }
+      },
+      "description" : "some description\n"
+    },
+    "Currency" : {
+      "type" : "string",
+      "pattern" : "^[A-Z]{3,3}$",
+      "description" : "some description\n"
     }
   },
   "externalDocs" : {
