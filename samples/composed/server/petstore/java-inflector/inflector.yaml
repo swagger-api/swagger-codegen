@@ -1,0 +1,33 @@
+controllerPackage: io.swagger.controllers
+modelPackage:  io.swagger.model
+swaggerUrl: ./src/main/resources/openapi3.yaml
+modelMappings:
+  # to enable explicit mappings, use this syntax:
+  DefinitionFromSwaggerSpecification: fully.qualified.path.to.Model
+  AllPetsResponse : io.swagger.model.AllPetsResponse
+Body : io.swagger.model.Body
+Cat : io.swagger.model.Cat
+Category : io.swagger.model.Category
+Dog : io.swagger.model.Dog
+ModelApiResponse : io.swagger.model.ModelApiResponse
+OneOfAllPetsResponseItems : io.swagger.model.OneOfAllPetsResponseItems
+OneOfPartMasterOrigin : io.swagger.model.OneOfPartMasterOrigin
+OneOfPup : io.swagger.model.OneOfPup
+Order : io.swagger.model.Order
+PartFour : io.swagger.model.PartFour
+PartMaster : io.swagger.model.PartMaster
+PartOne : io.swagger.model.PartOne
+PartThree : io.swagger.model.PartThree
+PartTwo : io.swagger.model.PartTwo
+Pet : io.swagger.model.Pet
+Pup : io.swagger.model.Pup
+Tag : io.swagger.model.Tag
+User : io.swagger.model.User
+ValMemberChoice1 : io.swagger.model.ValMemberChoice1
+ValMemberChoice2 : io.swagger.model.ValMemberChoice2
+ValMembers : io.swagger.model.ValMembers
+
+entityProcessors:
+  - json
+  - xml
+  - yaml
