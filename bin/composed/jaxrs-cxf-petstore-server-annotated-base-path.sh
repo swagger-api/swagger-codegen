@@ -25,7 +25,7 @@ then
 fi
 
 # if you've executed sbt assembly previously it will use that instead.
-export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=../bin/logback.xml"
+export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
 ags="$@ generate --artifact-id swagger-cxf-annotated-basepath -i modules/swagger-codegen/src/test/resources/3_0_0/petstore-with-composed-schemas.yaml -l jaxrs-cxf -o samples/composed/server/petstore/jaxrs-cxf-annotated-base-path -DhideGenerationTimestamp=true,useAnnotatedBasePath=true"
 echo "Removing files and folders under samples/composed/server/petstore/jaxrs-cxf-annotated-base-path/src/main"
 rm -rf samples/composed/server/petstore/jaxrs-cxf-annotated-base-path/src/main
