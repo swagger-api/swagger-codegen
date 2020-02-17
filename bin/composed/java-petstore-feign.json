@@ -1,5 +1,0 @@
-{
-    "library": "feign",
-    "java8": true,
-    "artifactId": "swagger-petstore-feign"
-}
