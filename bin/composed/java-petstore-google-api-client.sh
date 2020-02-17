@@ -25,12 +25,12 @@ then
 fi
 
 # if you've executed sbt assembly previously it will use that instead.
-export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml -l java -c ../bin/java-petstore-google-api-client.json -o samples/client/petstore/java/google-api-client -DhideGenerationTimestamp=true"
+export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=../bin/logback.xml"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore-with-composed-schemas.yaml -l java -c ../bin/java-petstore-google-api-client.json -o samples/composed/client/petstore/java/google-api-client -DhideGenerationTimestamp=true"
 
 echo "Removing files and folders under samples/client/petstore/java/google-api-client/src/main"
-rm -rf samples/client/petstore/java/google-api-client/src/main
-rm -rf samples/client/petstore/java/google-api-client/src/gen
-find samples/client/petstore/java/google-api-client -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
+rm -rf samples/composed/client/petstore/java/google-api-client/src/main
+rm -rf samples/composed/client/petstore/java/google-api-client/src/gen
+find samples/composed/client/petstore/java/google-api-client -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 # TODO: uncomment the java commmand when the issue with this script is fixed, see https://github.com/swagger-api/swagger-codegen-generators/issues/52
 java $JAVA_OPTS -jar $executable $ags
