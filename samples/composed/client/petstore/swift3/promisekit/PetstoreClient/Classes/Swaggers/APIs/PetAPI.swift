@@ -12,6 +12,54 @@ import PromiseKit
 
 open class PetAPI: APIBase {
     /**
+     Add a new parrow to the store
+     - parameter body: (body)  (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func addParrot(body: Body2? = nil, completion: @escaping ((_ data: InlineResponse2001?, _ error: ErrorResponse?) -> Void)) {
+        addParrotWithRequestBuilder(body: body).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     Add a new parrow to the store
+     - parameter body: (body)  (optional)
+     - returns: Promise<InlineResponse2001>
+     */
+    open class func addParrot( body: Body2? = nil) -> Promise<InlineResponse2001> {
+        let deferred = Promise<InlineResponse2001>.pending()
+        addParrot(body: body) { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    /**
+     Add a new parrow to the store
+     - POST /parrot
+
+     - examples: [{contentType=application/json, example=""}]
+     - parameter body: (body)  (optional)
+     - returns: RequestBuilder<InlineResponse2001> 
+     */
+    open class func addParrotWithRequestBuilder(body: Body2? = nil) -> RequestBuilder<InlineResponse2001> {
+        let path = "/parrot"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters = body?.encodeToJSON()
+
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<InlineResponse2001>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
+    }
+
+    /**
      Add a new pet to the store
      - parameter body: (body) Pet object that needs to be added to the store 
      - parameter completion: completion handler to receive the data and the error objects
@@ -325,6 +373,51 @@ open class PetAPI: APIBase {
     }
 
     /**
+     get Parrots
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func getParrots(completion: @escaping ((_ data: [Object]?, _ error: ErrorResponse?) -> Void)) {
+        getParrotsWithRequestBuilder().execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     get Parrots
+     - returns: Promise<[Object]>
+     */
+    open class func getParrots() -> Promise<[Object]> {
+        let deferred = Promise<[Object]>.pending()
+        getParrots() { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    /**
+     get Parrots
+     - GET /parrot
+
+     - examples: [{contentType=application/json, example=[ "", "" ]}]
+     - returns: RequestBuilder<[Object]> 
+     */
+    open class func getParrotsWithRequestBuilder() -> RequestBuilder<[Object]> {
+        let path = "/parrot"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<[Object]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
      Find pet by ID
      - parameter petId: (path) ID of pet to return 
      - parameter completion: completion handler to receive the data and the error objects
@@ -381,6 +474,56 @@ open class PetAPI: APIBase {
         let requestBuilder: RequestBuilder<Pet>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+    }
+
+    /**
+     update parrots
+     - parameter body: (body)  (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func updateParrots(body: Body1? = nil, completion: @escaping ((_ data: InlineResponse200?, _ error: ErrorResponse?) -> Void)) {
+        updateParrotsWithRequestBuilder(body: body).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     update parrots
+     - parameter body: (body)  (optional)
+     - returns: Promise<InlineResponse200>
+     */
+    open class func updateParrots( body: Body1? = nil) -> Promise<InlineResponse200> {
+        let deferred = Promise<InlineResponse200>.pending()
+        updateParrots(body: body) { data, error in
+            if let error = error {
+                deferred.reject(error)
+            } else {
+                deferred.fulfill(data!)
+            }
+        }
+        return deferred.promise
+    }
+
+    /**
+     update parrots
+     - PUT /parrot
+
+     - examples: [{contentType=application/json, example={
+  "parrots" : [ "", "" ]
+}}]
+     - parameter body: (body)  (optional)
+     - returns: RequestBuilder<InlineResponse200> 
+     */
+    open class func updateParrotsWithRequestBuilder(body: Body1? = nil) -> RequestBuilder<InlineResponse200> {
+        let path = "/parrot"
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters = body?.encodeToJSON()
+
+        let url = URLComponents(string: URLString)
+
+        let requestBuilder: RequestBuilder<InlineResponse200>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
