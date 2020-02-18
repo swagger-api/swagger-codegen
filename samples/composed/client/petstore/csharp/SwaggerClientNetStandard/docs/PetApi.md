@@ -4,16 +4,77 @@ All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AddParrot**](PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 [**AddPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 [**DeletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
 [**FeedPet**](PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 [**FindPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**FindPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+[**GetParrots**](PetApi.md#getparrots) | **GET** /parrot | get Parrots
 [**GetPetById**](PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+[**UpdateParrots**](PetApi.md#updateparrots) | **PUT** /parrot | update parrots
 [**UpdatePet**](PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 [**UpdatePetWithForm**](PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**UploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
+<a name="addparrot"></a>
+# **AddParrot**
+> InlineResponse2001 AddParrot (Body2 body = null)
+
+Add a new parrow to the store
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class AddParrotExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+            var body = new Body2(); // Body2 |  (optional) 
+
+            try
+            {
+                // Add a new parrow to the store
+                InlineResponse2001 result = apiInstance.AddParrot(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.AddParrot: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**Body2**](Body2.md)|  | [optional] 
+
+### Return type
+
+[**InlineResponse2001**](InlineResponse2001.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="addpet"></a>
 # **AddPet**
 > void AddPet (Pet body)
@@ -329,6 +390,60 @@ Name | Type | Description  | Notes
  - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="getparrots"></a>
+# **GetParrots**
+> List<> GetParrots ()
+
+get Parrots
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class GetParrotsExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+
+            try
+            {
+                // get Parrots
+                List&lt;&gt; result = apiInstance.GetParrots();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.GetParrots: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<>**](.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="getpetbyid"></a>
 # **GetPetById**
 > Pet GetPetById (long? petId)
@@ -392,6 +507,64 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="updateparrots"></a>
+# **UpdateParrots**
+> InlineResponse200 UpdateParrots (Body1 body = null)
+
+update parrots
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class UpdateParrotsExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+            var body = new Body1(); // Body1 |  (optional) 
+
+            try
+            {
+                // update parrots
+                InlineResponse200 result = apiInstance.UpdateParrots(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.UpdateParrots: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**Body1**](Body1.md)|  | [optional] 
+
+### Return type
+
+[**InlineResponse200**](InlineResponse200.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="updatepet"></a>

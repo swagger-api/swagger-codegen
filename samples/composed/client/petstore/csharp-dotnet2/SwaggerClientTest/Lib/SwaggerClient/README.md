@@ -74,12 +74,15 @@ All URIs are relative to */*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**TestMethod**](docs/DefaultApi.md#testmethod) | **GET** /test | 
+*PetApi* | [**AddParrot**](docs/PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
 *PetApi* | [**FeedPet**](docs/PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+*PetApi* | [**GetParrots**](docs/PetApi.md#getparrots) | **GET** /parrot | get Parrots
 *PetApi* | [**GetPetById**](docs/PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+*PetApi* | [**UpdateParrots**](docs/PetApi.md#updateparrots) | **PUT** /parrot | update parrots
 *PetApi* | [**UpdatePet**](docs/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**UpdatePetWithForm**](docs/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**UploadFile**](docs/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -100,15 +103,23 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [IO.Swagger.Model.AllPetsResponse](docs/AllPetsResponse.md)
+ - [IO.Swagger.Model.AnyOfbody2](docs/AnyOfbody2.md)
  - [IO.Swagger.Model.ApiResponse](docs/ApiResponse.md)
  - [IO.Swagger.Model.Body](docs/Body.md)
+ - [IO.Swagger.Model.Body1](docs/Body1.md)
+ - [IO.Swagger.Model.Body2](docs/Body2.md)
  - [IO.Swagger.Model.Cat](docs/Cat.md)
  - [IO.Swagger.Model.Category](docs/Category.md)
  - [IO.Swagger.Model.Dog](docs/Dog.md)
+ - [IO.Swagger.Model.InlineResponse200](docs/InlineResponse200.md)
+ - [IO.Swagger.Model.InlineResponse2001](docs/InlineResponse2001.md)
+ - [IO.Swagger.Model.Macaw](docs/Macaw.md)
  - [IO.Swagger.Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
  - [IO.Swagger.Model.OneOfPartMasterOrigin](docs/OneOfPartMasterOrigin.md)
  - [IO.Swagger.Model.OneOfPup](docs/OneOfPup.md)
+ - [IO.Swagger.Model.OneOfinlineResponse2001](docs/OneOfinlineResponse2001.md)
  - [IO.Swagger.Model.Order](docs/Order.md)
+ - [IO.Swagger.Model.Parakeet](docs/Parakeet.md)
  - [IO.Swagger.Model.PartFour](docs/PartFour.md)
  - [IO.Swagger.Model.PartMaster](docs/PartMaster.md)
  - [IO.Swagger.Model.PartOne](docs/PartOne.md)
