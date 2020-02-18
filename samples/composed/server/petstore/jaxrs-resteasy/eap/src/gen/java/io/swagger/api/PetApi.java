@@ -37,7 +37,8 @@ public interface PetApi  {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = {
- })
+        @ApiResponse(responseCode = "405", description = "Invalid input")
+         })
     Response addPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext);
 
     @DELETE

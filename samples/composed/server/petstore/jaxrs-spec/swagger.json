@@ -69,6 +69,11 @@
         "requestBody" : {
           "$ref" : "#/components/requestBodies/Pet"
         },
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
@@ -793,6 +798,90 @@
         }
       }
     },
+    "/parrot" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "get Parrots",
+        "operationId" : "getParrots",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "anyOf" : [ {
+                      "$ref" : "#/components/schemas/Macaw"
+                    }, {
+                      "$ref" : "#/components/schemas/Parakeet"
+                    } ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "pet" ],
+        "summary" : "update parrots",
+        "operationId" : "updateParrots",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_1"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          },
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "pet" ],
+        "summary" : "Add a new parrow to the store",
+        "operationId" : "addParrot",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_2"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          },
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/test" : {
       "get" : {
         "operationId" : "testMethod",
@@ -1088,6 +1177,28 @@
           }
         } ]
       },
+      "Macaw" : {
+        "type" : "object",
+        "properties" : {
+          "color" : {
+            "type" : "string"
+          },
+          "singer" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Parakeet" : {
+        "type" : "object",
+        "properties" : {
+          "color" : {
+            "type" : "string"
+          },
+          "soundRepeater" : {
+            "type" : "boolean"
+          }
+        }
+      },
       "val_Members" : {
         "required" : [ "val_member" ],
         "type" : "object",
@@ -1174,6 +1285,50 @@
             "description" : "Updated status of the pet"
           }
         }
+      },
+      "body_1" : {
+        "type" : "object",
+        "properties" : {
+          "parrots" : {
+            "type" : "array",
+            "items" : {
+              "anyOf" : [ {
+                "$ref" : "#/components/schemas/Macaw"
+              }, {
+                "$ref" : "#/components/schemas/Parakeet"
+              } ]
+            }
+          }
+        }
+      },
+      "inline_response_200" : {
+        "type" : "object",
+        "properties" : {
+          "parrots" : {
+            "type" : "array",
+            "items" : {
+              "oneOf" : [ {
+                "$ref" : "#/components/schemas/Macaw"
+              }, {
+                "$ref" : "#/components/schemas/Parakeet"
+              } ]
+            }
+          }
+        }
+      },
+      "body_2" : {
+        "anyOf" : [ {
+          "$ref" : "#/components/schemas/Macaw"
+        }, {
+          "$ref" : "#/components/schemas/Parakeet"
+        } ]
+      },
+      "inline_response_200_1" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/Macaw"
+        }, {
+          "$ref" : "#/components/schemas/Parakeet"
+        } ]
       }
     },
     "requestBodies" : {

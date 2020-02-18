@@ -1,5 +1,9 @@
 package io.swagger.api;
 
+import io.swagger.model.Body1;
+import io.swagger.model.Body2;
+import io.swagger.model.InlineResponse200;
+import io.swagger.model.InlineResponse2001;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
@@ -31,6 +35,20 @@ import javax.validation.Valid;
 public interface PetApi  {
 
     /**
+     * Add a new parrow to the store
+     *
+     */
+    @POST
+    @Path("/parrot")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "Add a new parrow to the store", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input"),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = InlineResponse2001.class))) })
+    public InlineResponse2001 addParrot(@Valid Body2 body);
+
+    /**
      * Add a new pet to the store
      *
      */
@@ -38,7 +56,8 @@ public interface PetApi  {
     @Path("/pet")
     @Consumes({ "application/json", "application/xml" })
     @Operation(summary = "Add a new pet to the store", tags={ "pet" })
-    @ApiResponses(value = {  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input") })
     public void addPet(@Valid Pet body);
 
     /**
@@ -98,6 +117,18 @@ public interface PetApi  {
     public List<Pet> findPetsByTags(@QueryParam("tags") @NotNull List<String> tags);
 
     /**
+     * get Parrots
+     *
+     */
+    @GET
+    @Path("/parrot")
+    @Produces({ "application/json" })
+    @Operation(summary = "get Parrots", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Object.class)))) })
+    public List<Object> getParrots();
+
+    /**
      * Find pet by ID
      *
      * Returns a single pet
@@ -112,6 +143,20 @@ public interface PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found") })
     public Pet getPetById(@PathParam("petId") Long petId);
+
+    /**
+     * update parrots
+     *
+     */
+    @PUT
+    @Path("/parrot")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "update parrots", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input"),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = InlineResponse200.class))) })
+    public InlineResponse200 updateParrots(@Valid Body1 body);
 
     /**
      * Update an existing pet

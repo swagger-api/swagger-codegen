@@ -68,7 +68,8 @@ public class PetApi  {
     @Operation(summary = "Add a new pet to the store", description = "", security = {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
-    @ApiResponses(value = {  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response addPet(@Parameter(in = ParameterIn.DEFAULT, description = "Pet object that needs to be added to the store" ,required=true) Pet body
 
 ,@Context SecurityContext securityContext)
