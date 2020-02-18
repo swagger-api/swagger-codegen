@@ -39,7 +39,7 @@ namespace IO.Swagger.Model {
     /// </summary>
     [DataMember(Name="part", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "part")]
-    public List<> Part { get; set; }
+    public List<OneOfPetPartItems> Part { get; set; }
 
 
     /// <summary>

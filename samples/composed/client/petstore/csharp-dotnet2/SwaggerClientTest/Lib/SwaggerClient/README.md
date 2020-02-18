@@ -103,6 +103,7 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [IO.Swagger.Model.AllPetsResponse](docs/AllPetsResponse.md)
+ - [IO.Swagger.Model.AnyOfbody1ParrotsItems](docs/AnyOfbody1ParrotsItems.md)
  - [IO.Swagger.Model.AnyOfbody2](docs/AnyOfbody2.md)
  - [IO.Swagger.Model.ApiResponse](docs/ApiResponse.md)
  - [IO.Swagger.Model.Body](docs/Body.md)
@@ -115,9 +116,13 @@ Class | Method | HTTP request | Description
  - [IO.Swagger.Model.InlineResponse2001](docs/InlineResponse2001.md)
  - [IO.Swagger.Model.Macaw](docs/Macaw.md)
  - [IO.Swagger.Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
+ - [IO.Swagger.Model.OneOfPartMasterDestination](docs/OneOfPartMasterDestination.md)
  - [IO.Swagger.Model.OneOfPartMasterOrigin](docs/OneOfPartMasterOrigin.md)
+ - [IO.Swagger.Model.OneOfPetPartItems](docs/OneOfPetPartItems.md)
  - [IO.Swagger.Model.OneOfPup](docs/OneOfPup.md)
  - [IO.Swagger.Model.OneOfinlineResponse2001](docs/OneOfinlineResponse2001.md)
+ - [IO.Swagger.Model.OneOfinlineResponse200ParrotsItems](docs/OneOfinlineResponse200ParrotsItems.md)
+ - [IO.Swagger.Model.OneOfvalMembersValMemberItems](docs/OneOfvalMembersValMemberItems.md)
  - [IO.Swagger.Model.Order](docs/Order.md)
  - [IO.Swagger.Model.Parakeet](docs/Parakeet.md)
  - [IO.Swagger.Model.PartFour](docs/PartFour.md)

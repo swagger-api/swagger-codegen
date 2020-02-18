@@ -17,7 +17,7 @@ namespace IO.Swagger.Model {
     /// </summary>
     [DataMember(Name="parrots", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "parrots")]
-    public List<> Parrots { get; set; }
+    public List<AnyOfbody1ParrotsItems> Parrots { get; set; }
 
 
     /// <summary>

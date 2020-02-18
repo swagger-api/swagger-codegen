@@ -33,7 +33,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="InlineResponse200" /> class.
         /// </summary>
         /// <param name="parrots">parrots.</param>
-        public InlineResponse200(List<> parrots = default(List<>))
+        public InlineResponse200(List<OneOfinlineResponse200ParrotsItems> parrots = default(List<OneOfinlineResponse200ParrotsItems>))
         {
             this.Parrots = parrots;
         }
@@ -42,7 +42,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Parrots
         /// </summary>
         [DataMember(Name="parrots", EmitDefaultValue=false)]
-        public List<> Parrots { get; set; }
+        public List<OneOfinlineResponse200ParrotsItems> Parrots { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

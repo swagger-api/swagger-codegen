@@ -18,7 +18,7 @@ namespace IO.Swagger.Model {
     /// <value>Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.</value>
     [DataMember(Name="val_member", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "val_member")]
-    public List<> ValMember { get; set; }
+    public List<OneOfvalMembersValMemberItems> ValMember { get; set; }
 
 
     /// <summary>
