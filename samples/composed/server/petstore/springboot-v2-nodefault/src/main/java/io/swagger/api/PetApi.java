@@ -47,7 +47,8 @@ public interface PetApi {
             @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @AuthorizationScope(scope = "read:pets", description = "read your pets")
             })    }, tags={ "pet", })
-    @ApiResponses(value = {  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 405, message = "Invalid input") })
     @RequestMapping(value = "/pet",
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
