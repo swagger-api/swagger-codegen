@@ -207,12 +207,15 @@ out more about Swagger at
   </ul>
   <h4><a href="#Pet">Pet</a></h4>
   <ul>
+  <li><a href="#addParrot"><code><span class="http-method">post</span> /parrot</code></a></li>
   <li><a href="#addPet"><code><span class="http-method">post</span> /pet</code></a></li>
   <li><a href="#deletePet"><code><span class="http-method">delete</span> /pet/{petId}</code></a></li>
   <li><a href="#feedPet"><code><span class="http-method">post</span> /pet/feed/{petId}</code></a></li>
   <li><a href="#findPetsByStatus"><code><span class="http-method">get</span> /pet/findByStatus</code></a></li>
   <li><a href="#findPetsByTags"><code><span class="http-method">get</span> /pet/findByTags</code></a></li>
+  <li><a href="#getParrots"><code><span class="http-method">get</span> /parrot</code></a></li>
   <li><a href="#getPetById"><code><span class="http-method">get</span> /pet/{petId}</code></a></li>
+  <li><a href="#updateParrots"><code><span class="http-method">put</span> /parrot</code></a></li>
   <li><a href="#updatePet"><code><span class="http-method">put</span> /pet</code></a></li>
   <li><a href="#updatePetWithForm"><code><span class="http-method">post</span> /pet/{petId}</code></a></li>
   <li><a href="#uploadFile"><code><span class="http-method">post</span> /pet/{petId}/uploadImage</code></a></li>
@@ -276,6 +279,58 @@ out more about Swagger at
   </div> <!-- method -->
   <hr/>
   <h1><a name="Pet">Pet</a></h1>
+  <div class="method"><a name="addParrot"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /parrot</code></pre></div>
+    <div class="method-summary">Add a new parrow to the store (<span class="nickname">addParrot</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#body_2">body_2</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">405</h4>
+    Invalid input
+        <a href="#"></a>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="addPet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -307,6 +362,9 @@ out more about Swagger at
 
 
     <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">405</h4>
+    Invalid input
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="deletePet"></a>
@@ -509,6 +567,44 @@ out more about Swagger at
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="getParrots"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /parrot</code></pre></div>
+    <div class="method-summary">get Parrots (<span class="nickname">getParrots</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      array[null]
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ "", "" ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#array[null]">array[null]</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getPetById"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -562,6 +658,60 @@ out more about Swagger at
     <h4 class="field-label">404</h4>
     Pet not found
         <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateParrots"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /parrot</code></pre></div>
+    <div class="method-summary">update parrots (<span class="nickname">updateParrots</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#body_1">body_1</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200">inline_response_200</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "parrots" : [ "", "" ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">405</h4>
+    Invalid input
+        <a href="#"></a>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#inline_response_200">inline_response_200</a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="updatePet"></a>
@@ -1219,8 +1369,10 @@ out more about Swagger at
     <li><a href="#Cat"><code>Cat</code></a></li>
     <li><a href="#Category"><code>Category</code></a></li>
     <li><a href="#Dog"><code>Dog</code></a></li>
+    <li><a href="#Macaw"><code>Macaw</code></a></li>
     <li><a href="#OneOfAllPetsResponseItems"><code>OneOfAllPetsResponseItems</code></a></li>
     <li><a href="#Order"><code>Order</code></a></li>
+    <li><a href="#Parakeet"><code>Parakeet</code></a></li>
     <li><a href="#PartFour"><code>PartFour</code></a></li>
     <li><a href="#PartMaster"><code>PartMaster</code></a></li>
     <li><a href="#PartOne"><code>PartOne</code></a></li>
@@ -1232,6 +1384,10 @@ out more about Swagger at
     <li><a href="#Test"><code>Test</code></a></li>
     <li><a href="#User"><code>User</code></a></li>
     <li><a href="#body"><code>body</code></a></li>
+    <li><a href="#body_1"><code>body_1</code></a></li>
+    <li><a href="#body_2"><code>body_2</code></a></li>
+    <li><a href="#inline_response_200"><code>inline_response_200</code></a></li>
+    <li><a href="#inline_response_200_1"><code>inline_response_200_1</code></a></li>
     <li><a href="#val_MemberChoice1"><code>val_MemberChoice1</code></a></li>
     <li><a href="#val_MemberChoice2"><code>val_MemberChoice2</code></a></li>
     <li><a href="#val_Members"><code>val_Members</code></a></li>
@@ -1302,6 +1458,14 @@ out more about Swagger at
     </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="Macaw"><code>Macaw</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">color (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">singer (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="OneOfAllPetsResponseItems"><code>OneOfAllPetsResponseItems</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
@@ -1319,6 +1483,14 @@ out more about Swagger at
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">placed</div><div class="param-enum">approved</div><div class="param-enum">delivered</div>
 <div class="param">complete (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Parakeet"><code>Parakeet</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">color (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">soundRepeater (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1424,6 +1596,40 @@ out more about Swagger at
       <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Updated name of the pet </div>
 <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Updated status of the pet </div>
     </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="body_1"><code>body_1</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">parrots (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
+              <div class="param-desc"><span class="param-type">items anyOf:</span>
+                  <a href="#Macaw"><code>Macaw</code></a>&nbsp;&nbsp;&nbsp;
+                  <a href="#Parakeet"><code>Parakeet</code></a>&nbsp;&nbsp;&nbsp;
+              </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="body_2"><code>body_2</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200"><code>inline_response_200</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">parrots (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
+              <div class="param-desc"><span class="param-type">items oneOf:</span>
+                  <a href="#Macaw"><code>Macaw</code></a>&nbsp;&nbsp;&nbsp;
+                  <a href="#Parakeet"><code>Parakeet</code></a>&nbsp;&nbsp;&nbsp;
+              </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_1"><code>inline_response_200_1</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="val_MemberChoice1"><code>val_MemberChoice1</code></a> <a class="up" href="#__Models">Up</a></h3>
