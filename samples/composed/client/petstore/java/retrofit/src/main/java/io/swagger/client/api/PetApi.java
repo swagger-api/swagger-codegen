@@ -6,6 +6,10 @@ import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 
+import io.swagger.client.model.Body1;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.InlineResponse200;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 import java.util.ArrayList;
@@ -14,6 +18,28 @@ import java.util.List;
 import java.util.Map;
 
 public interface PetApi {
+  /**
+   * Add a new parrow to the store
+   * Sync method
+   * 
+   * @param body  (optional)
+   * @return InlineResponse2001
+   */
+  @POST("/parrot")
+  InlineResponse2001 addParrot(
+    @retrofit.http.Body Body2 body
+  );
+
+  /**
+   * Add a new parrow to the store
+   * Async method
+   * @param body  (optional)
+   * @param cb callback method
+   */
+  @POST("/parrot")
+  void addParrot(
+    @retrofit.http.Body Body2 body, Callback<InlineResponse2001> cb
+  );
   /**
    * Add a new pet to the store
    * Sync method
@@ -135,6 +161,25 @@ public interface PetApi {
     @retrofit.http.Query("tags") List<String> tags, Callback<List<Pet>> cb
   );
   /**
+   * get Parrots
+   * Sync method
+   * 
+   * @return List&lt;Object&gt;
+   */
+  @GET("/parrot")
+  List<Object> getParrots();
+    
+
+  /**
+   * get Parrots
+   * Async method
+   * @param cb callback method
+   */
+  @GET("/parrot")
+  void getParrots(
+    Callback<List<Object>> cb
+  );
+  /**
    * Find pet by ID
    * Sync method
    * Returns a single pet
@@ -155,6 +200,28 @@ public interface PetApi {
   @GET("/pet/{petId}")
   void getPetById(
     @retrofit.http.Path("petId") Long petId, Callback<Pet> cb
+  );
+  /**
+   * update parrots
+   * Sync method
+   * 
+   * @param body  (optional)
+   * @return InlineResponse200
+   */
+  @PUT("/parrot")
+  InlineResponse200 updateParrots(
+    @retrofit.http.Body Body1 body
+  );
+
+  /**
+   * update parrots
+   * Async method
+   * @param body  (optional)
+   * @param cb callback method
+   */
+  @PUT("/parrot")
+  void updateParrots(
+    @retrofit.http.Body Body1 body, Callback<InlineResponse200> cb
   );
   /**
    * Update an existing pet

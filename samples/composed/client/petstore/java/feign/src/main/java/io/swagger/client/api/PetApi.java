@@ -3,6 +3,10 @@ package io.swagger.client.api;
 import io.swagger.client.ApiClient;
 import io.swagger.client.EncodingUtils;
 
+import io.swagger.client.model.Body1;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.InlineResponse200;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -15,6 +19,18 @@ import feign.*;
 public interface PetApi extends ApiClient.Api {
 
   /**
+   * Add a new parrow to the store
+   * 
+   * @param body  (optional)
+   * @return InlineResponse2001
+   */
+  @RequestLine("POST /parrot")
+  @Headers({
+      "Content-Type: application/json",
+      "Accept: application/json",
+  })
+  InlineResponse2001 addParrot(Body2 body);
+  /**
    * Add a new pet to the store
    * 
    * @param body Pet object that needs to be added to the store (required)
@@ -22,7 +38,7 @@ public interface PetApi extends ApiClient.Api {
   @RequestLine("POST /pet")
   @Headers({
       "Content-Type: application/json",
-      "Accept: application/json",
+      "Accept: */*",
   })
   void addPet(Pet body);
   /**
@@ -186,6 +202,16 @@ public interface PetApi extends ApiClient.Api {
     }
   }
   /**
+   * get Parrots
+   * 
+   * @return List&lt;Object&gt;
+   */
+  @RequestLine("GET /parrot")
+  @Headers({
+      "Accept: application/json",
+  })
+  List<Object> getParrots();
+  /**
    * Find pet by ID
    * Returns a single pet
    * @param petId ID of pet to return (required)
@@ -196,6 +222,18 @@ public interface PetApi extends ApiClient.Api {
       "Accept: application/json",
   })
   Pet getPetById(@Param("petId") Long petId);
+  /**
+   * update parrots
+   * 
+   * @param body  (optional)
+   * @return InlineResponse200
+   */
+  @RequestLine("PUT /parrot")
+  @Headers({
+      "Content-Type: application/json",
+      "Accept: application/json",
+  })
+  InlineResponse200 updateParrots(Body1 body);
   /**
    * Update an existing pet
    * 
