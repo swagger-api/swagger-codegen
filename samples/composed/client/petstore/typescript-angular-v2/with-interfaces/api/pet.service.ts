@@ -20,6 +20,11 @@ import { Observable }                                        from 'rxjs/Observab
 import '../rxjs-operators';
 
 import { ApiResponse } from '../model/apiResponse';
+import { Body1 } from '../model/body1';
+import { Body2 } from '../model/body2';
+import { InlineResponse200 } from '../model/inlineResponse200';
+import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { MacawParakeet } from '../model/macawParakeet';
 import { Pet } from '../model/pet';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -56,6 +61,22 @@ export class PetService implements PetServiceInterface {
             }
         }
         return false;
+    }
+
+    /**
+     * 
+     * @summary Add a new parrow to the store
+     * @param body 
+     */
+    public addParrot(body?: Body2, extraHttpRequestParams?: RequestOptionsArgs): Observable<InlineResponse2001> {
+        return this.addParrotWithHttpInfo(body, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json() || {};
+                }
+            });
     }
 
     /**
@@ -144,12 +165,43 @@ export class PetService implements PetServiceInterface {
     }
 
     /**
+     * 
+     * @summary get Parrots
+     */
+    public getParrots(extraHttpRequestParams?: RequestOptionsArgs): Observable<Array<Macaw | Parakeet>> {
+        return this.getParrotsWithHttpInfo(extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json() || {};
+                }
+            });
+    }
+
+    /**
      * Returns a single pet
      * @summary Find pet by ID
      * @param petId ID of pet to return
      */
     public getPetById(petId: number, extraHttpRequestParams?: RequestOptionsArgs): Observable<Pet> {
         return this.getPetByIdWithHttpInfo(petId, extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json() || {};
+                }
+            });
+    }
+
+    /**
+     * 
+     * @summary update parrots
+     * @param body 
+     */
+    public updateParrots(body?: Body1, extraHttpRequestParams?: RequestOptionsArgs): Observable<InlineResponse200> {
+        return this.updateParrotsWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -210,6 +262,49 @@ export class PetService implements PetServiceInterface {
             });
     }
 
+
+    /**
+     * Add a new parrow to the store
+     * 
+     * @param body 
+     
+     */
+    public addParrotWithHttpInfo(body?: Body2, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
+
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: 'RequestMethod.Post',
+            headers: headers,
+            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            withCredentials: this.configuration.withCredentials
+        });
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(`${this.basePath}/parrot`, requestOptions);
+    }
 
     /**
      * Add a new pet to the store
@@ -510,6 +605,41 @@ export class PetService implements PetServiceInterface {
     }
 
     /**
+     * get Parrots
+     * 
+     
+     */
+    public getParrotsWithHttpInfo(extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: 'RequestMethod.Get',
+            headers: headers,
+            withCredentials: this.configuration.withCredentials
+        });
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(`${this.basePath}/parrot`, requestOptions);
+    }
+
+    /**
      * Find pet by ID
      * Returns a single pet
      * @param petId ID of pet to return
@@ -553,6 +683,49 @@ export class PetService implements PetServiceInterface {
         }
 
         return this.http.request(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`, requestOptions);
+    }
+
+    /**
+     * update parrots
+     * 
+     * @param body 
+     
+     */
+    public updateParrotsWithHttpInfo(body?: Body1, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+
+
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: 'RequestMethod.Put',
+            headers: headers,
+            body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
+            withCredentials: this.configuration.withCredentials
+        });
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(`${this.basePath}/parrot`, requestOptions);
     }
 
     /**

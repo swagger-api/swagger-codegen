@@ -18,6 +18,11 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs/Observable';
 
 import { ApiResponse } from '../model/apiResponse';
+import { Body1 } from '../model/body1';
+import { Body2 } from '../model/body2';
+import { InlineResponse200 } from '../model/inlineResponse200';
+import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { MacawParakeet } from '../model/macawParakeet';
 import { Pet } from '../model/pet';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -55,6 +60,50 @@ export class PetService {
         return false;
     }
 
+
+    /**
+     * Add a new parrow to the store
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addParrot(body?: Body2, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2001>;
+    public addParrot(body?: Body2, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2001>>;
+    public addParrot(body?: Body2, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2001>>;
+    public addParrot(body?: Body2, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<InlineResponse2001>('post',`${this.basePath}/parrot`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Add a new pet to the store
@@ -360,6 +409,42 @@ export class PetService {
     }
 
     /**
+     * get Parrots
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getParrots(observe?: 'body', reportProgress?: boolean): Observable<Array<Macaw | Parakeet>>;
+    public getParrots(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Macaw | Parakeet>>>;
+    public getParrots(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Macaw | Parakeet>>>;
+    public getParrots(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<Macaw | Parakeet>>('get',`${this.basePath}/parrot`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Find pet by ID
      * Returns a single pet
      * @param petId ID of pet to return
@@ -398,6 +483,50 @@ export class PetService {
 
         return this.httpClient.request<Pet>('get',`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * update parrots
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateParrots(body?: Body1, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse200>;
+    public updateParrots(body?: Body1, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
+    public updateParrots(body?: Body1, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
+    public updateParrots(body?: Body1, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<InlineResponse200>('put',`${this.basePath}/parrot`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

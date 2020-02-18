@@ -15,6 +15,11 @@ import { Observable }                                        from 'rxjs/Observab
 
 
 import { ApiResponse } from '../model/apiResponse';
+import { Body1 } from '../model/body1';
+import { Body2 } from '../model/body2';
+import { InlineResponse200 } from '../model/inlineResponse200';
+import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { MacawParakeet } from '../model/macawParakeet';
 import { Pet } from '../model/pet';
 
 
@@ -25,6 +30,13 @@ export interface PetServiceInterface {
     defaultHeaders: Headers;
     configuration: Configuration;
     [others: string]: any;
+
+    /**
+    * Add a new parrow to the store
+    * 
+    * @param body 
+    */
+    addParrot(body?: Body2, extraHttpRequestParams?: any): Observable<InlineResponse2001>;
 
     /**
     * Add a new pet to the store
@@ -68,11 +80,24 @@ export interface PetServiceInterface {
     findPetsByTags(tags: Array<string>, extraHttpRequestParams?: any): Observable<Array<Pet>>;
 
     /**
+    * get Parrots
+    * 
+    */
+    getParrots(extraHttpRequestParams?: any): Observable<Array<Macaw | Parakeet>>;
+
+    /**
     * Find pet by ID
     * Returns a single pet
     * @param petId ID of pet to return
     */
     getPetById(petId: number, extraHttpRequestParams?: any): Observable<Pet>;
+
+    /**
+    * update parrots
+    * 
+    * @param body 
+    */
+    updateParrots(body?: Body1, extraHttpRequestParams?: any): Observable<InlineResponse200>;
 
     /**
     * Update an existing pet
