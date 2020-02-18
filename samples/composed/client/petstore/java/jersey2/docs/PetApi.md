@@ -4,15 +4,61 @@ All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**addParrot**](PetApi.md#addParrot) | **POST** /parrot | Add a new parrow to the store
 [**addPet**](PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 [**deletePet**](PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
 [**feedPet**](PetApi.md#feedPet) | **POST** /pet/feed/{petId} | Find pet by ID
 [**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** /pet/findByTags | Finds Pets by tags
+[**getParrots**](PetApi.md#getParrots) | **GET** /parrot | get Parrots
 [**getPetById**](PetApi.md#getPetById) | **GET** /pet/{petId} | Find pet by ID
+[**updateParrots**](PetApi.md#updateParrots) | **PUT** /parrot | update parrots
 [**updatePet**](PetApi.md#updatePet) | **PUT** /pet | Update an existing pet
 [**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**uploadFile**](PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
+
+<a name="addParrot"></a>
+# **addParrot**
+> InlineResponse2001 addParrot(body)
+
+Add a new parrow to the store
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+Body2 body = new Body2(); // Body2 | 
+try {
+    InlineResponse2001 result = apiInstance.addParrot(body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#addParrot");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**Body2**](Body2.md)|  | [optional]
+
+### Return type
+
+[**InlineResponse2001**](InlineResponse2001.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addPet"></a>
 # **addPet**
@@ -274,6 +320,45 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
 
+<a name="getParrots"></a>
+# **getParrots**
+> List&lt;Object&gt; getParrots()
+
+get Parrots
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+try {
+    List<Object> result = apiInstance.getParrots();
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#getParrots");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**List&lt;Object&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
 <a name="getPetById"></a>
 # **getPetById**
 > Pet getPetById(petId)
@@ -328,6 +413,49 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
+
+<a name="updateParrots"></a>
+# **updateParrots**
+> InlineResponse200 updateParrots(body)
+
+update parrots
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+Body1 body = new Body1(); // Body1 | 
+try {
+    InlineResponse200 result = apiInstance.updateParrots(body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#updateParrots");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**Body1**](Body1.md)|  | [optional]
+
+### Return type
+
+[**InlineResponse200**](InlineResponse200.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updatePet"></a>
 # **updatePet**

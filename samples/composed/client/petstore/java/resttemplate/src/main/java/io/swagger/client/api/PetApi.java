@@ -2,6 +2,10 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 
+import io.swagger.client.model.Body1;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.InlineResponse200;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -46,8 +50,40 @@ public class PetApi {
     }
 
     /**
+     * Add a new parrow to the store
+     * 
+     * <p><b>405</b> - Invalid input
+     * <p><b>200</b> - successful operation
+     * @param body The body parameter
+     * @return InlineResponse2001
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public InlineResponse2001 addParrot(Body2 body) throws RestClientException {
+        Object postBody = body;
+        String path = UriComponentsBuilder.fromPath("/parrot").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { 
+            "application/json"
+         };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { 
+            "application/json"
+         };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<InlineResponse2001> returnType = new ParameterizedTypeReference<InlineResponse2001>() {};
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
      * Add a new pet to the store
      * 
+     * <p><b>405</b> - Invalid input
      * @param body Pet object that needs to be added to the store
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
@@ -238,6 +274,33 @@ public class PetApi {
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     /**
+     * get Parrots
+     * 
+     * <p><b>200</b> - successful operation
+     * @return List&lt;Object&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public List<Object> getParrots() throws RestClientException {
+        Object postBody = null;
+        String path = UriComponentsBuilder.fromPath("/parrot").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { 
+            "application/json"
+         };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = {  };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<List<Object>> returnType = new ParameterizedTypeReference<List<Object>>() {};
+        return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
      * Find pet by ID
      * Returns a single pet
      * <p><b>200</b> - successful operation
@@ -273,6 +336,37 @@ public class PetApi {
 
         ParameterizedTypeReference<Pet> returnType = new ParameterizedTypeReference<Pet>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+    }
+    /**
+     * update parrots
+     * 
+     * <p><b>405</b> - Invalid input
+     * <p><b>200</b> - successful operation
+     * @param body The body parameter
+     * @return InlineResponse200
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public InlineResponse200 updateParrots(Body1 body) throws RestClientException {
+        Object postBody = body;
+        String path = UriComponentsBuilder.fromPath("/parrot").build().toUriString();
+        
+        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] accepts = { 
+            "application/json"
+         };
+        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
+        final String[] contentTypes = { 
+            "application/json"
+         };
+        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+
+        String[] authNames = new String[] {  };
+
+        ParameterizedTypeReference<InlineResponse200> returnType = new ParameterizedTypeReference<InlineResponse200>() {};
+        return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     /**
      * Update an existing pet

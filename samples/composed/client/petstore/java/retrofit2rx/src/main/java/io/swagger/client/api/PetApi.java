@@ -8,6 +8,10 @@ import retrofit2.http.*;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
+import io.swagger.client.model.Body1;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.InlineResponse200;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 
@@ -17,6 +21,20 @@ import java.util.List;
 import java.util.Map;
 
 public interface PetApi {
+  /**
+   * Add a new parrow to the store
+   * 
+   * @param body  (optional)
+   * @return Call&lt;InlineResponse2001&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("parrot")
+  Observable<InlineResponse2001> addParrot(
+                    @retrofit2.http.Body Body2 body    
+  );
+
   /**
    * Add a new pet to the store
    * 
@@ -84,6 +102,15 @@ public interface PetApi {
   );
 
   /**
+   * get Parrots
+   * 
+   * @return Call&lt;List&lt;Object&gt;&gt;
+   */
+  @GET("parrot")
+  Observable<List<Object>> getParrots();
+    
+
+  /**
    * Find pet by ID
    * Returns a single pet
    * @param petId ID of pet to return (required)
@@ -92,6 +119,20 @@ public interface PetApi {
   @GET("pet/{petId}")
   Observable<Pet> getPetById(
             @retrofit2.http.Path("petId") Long petId            
+  );
+
+  /**
+   * update parrots
+   * 
+   * @param body  (optional)
+   * @return Call&lt;InlineResponse200&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @PUT("parrot")
+  Observable<InlineResponse200> updateParrots(
+                    @retrofit2.http.Body Body1 body    
   );
 
   /**
