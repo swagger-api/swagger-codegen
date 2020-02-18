@@ -5,6 +5,10 @@
  */
 package io.swagger.api;
 
+import io.swagger.model.Body1;
+import io.swagger.model.Body2;
+import io.swagger.model.InlineResponse200;
+import io.swagger.model.InlineResponse2001;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.annotations.*;
@@ -27,12 +31,25 @@ import java.util.Map;
 @Api(value = "Pet", description = "the Pet API")
 public interface PetApi {
 
+    @ApiOperation(value = "Add a new parrow to the store", nickname = "addParrot", notes = "", response = InlineResponse2001.class, tags={ "pet", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 405, message = "Invalid input"),
+        @ApiResponse(code = 200, message = "successful operation", response = InlineResponse2001.class) })
+    @RequestMapping(value = "/parrot",
+        produces = "application/json", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<InlineResponse2001>> addParrot(@ApiParam(value = ""  )  @Valid @RequestBody Body2 body
+);
+
+
     @ApiOperation(value = "Add a new pet to the store", nickname = "addPet", notes = "", authorizations = {
         @Authorization(value = "petstore_auth", scopes = { 
             @AuthorizationScope(scope = "write:pets", description = "modify pets in your account"),
             @AuthorizationScope(scope = "read:pets", description = "read your pets")
             })    }, tags={ "pet", })
-    @ApiResponses(value = {  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 405, message = "Invalid input") })
     @RequestMapping(value = "/pet",
         consumes = "application/json",
         method = RequestMethod.POST)
@@ -99,6 +116,15 @@ public interface PetApi {
 );
 
 
+    @ApiOperation(value = "get Parrots", nickname = "getParrots", notes = "", response = Object.class, responseContainer = "List", tags={ "pet", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Object.class, responseContainer = "List") })
+    @RequestMapping(value = "/parrot",
+        produces = "application/json", 
+        method = RequestMethod.GET)
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<List<Object>>> getParrots();
+
+
     @ApiOperation(value = "Find pet by ID", nickname = "getPetById", notes = "Returns a single pet", response = Pet.class, authorizations = {
         @Authorization(value = "api_key")    }, tags={ "pet", })
     @ApiResponses(value = { 
@@ -109,6 +135,18 @@ public interface PetApi {
         produces = "application/json", 
         method = RequestMethod.GET)
     com.netflix.hystrix.HystrixCommand<ResponseEntity<Pet>> getPetById(@ApiParam(value = "ID of pet to return",required=true) @PathVariable("petId") Long petId
+);
+
+
+    @ApiOperation(value = "update parrots", nickname = "updateParrots", notes = "", response = InlineResponse200.class, tags={ "pet", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 405, message = "Invalid input"),
+        @ApiResponse(code = 200, message = "successful operation", response = InlineResponse200.class) })
+    @RequestMapping(value = "/parrot",
+        produces = "application/json", 
+        consumes = "application/json",
+        method = RequestMethod.PUT)
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<InlineResponse200>> updateParrots(@ApiParam(value = ""  )  @Valid @RequestBody Body1 body
 );
 
 
