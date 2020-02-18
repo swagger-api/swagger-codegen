@@ -87,12 +87,12 @@ namespace IO.Swagger.Models
                 (
                     Destination == other.Destination ||
                     Destination != null &&
-                    Destination.SequenceEqual(other.Destination)
+                    Destination.Equals(other.Destination)
                 ) && 
                 (
                     Origin == other.Origin ||
                     Origin != null &&
-                    Origin.SequenceEqual(other.Origin)
+                    Origin.Equals(other.Origin)
                 );
         }
 

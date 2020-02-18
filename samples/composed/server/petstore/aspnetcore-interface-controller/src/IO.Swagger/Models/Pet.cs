@@ -73,7 +73,7 @@ namespace IO.Swagger.Models
         /// Gets or Sets Part
         /// </summary>
         [DataMember(Name="part")]
-        public List<> Part { get; set; }
+        public List<OneOfPetPartItems> Part { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

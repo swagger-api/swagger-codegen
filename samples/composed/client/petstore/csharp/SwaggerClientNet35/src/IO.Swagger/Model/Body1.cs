@@ -33,7 +33,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="Body1" /> class.
         /// </summary>
         /// <param name="parrots">parrots.</param>
-        public Body1(List<> parrots = default(List<>))
+        public Body1(List<AnyOfbody1ParrotsItems> parrots = default(List<AnyOfbody1ParrotsItems>))
         {
             this.Parrots = parrots;
         }
@@ -42,7 +42,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Parrots
         /// </summary>
         [DataMember(Name="parrots", EmitDefaultValue=false)]
-        public List<> Parrots { get; set; }
+        public List<AnyOfbody1ParrotsItems> Parrots { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

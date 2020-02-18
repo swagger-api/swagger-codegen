@@ -1178,8 +1178,7 @@
             "$ref" : "#/components/schemas/Dog"
           }, {
             "$ref" : "#/components/schemas/Cat"
-          } ],
-          "x-model-name" : "OneOfAllPetsResponseItems"
+          } ]
         }
       },
       "Dog" : {

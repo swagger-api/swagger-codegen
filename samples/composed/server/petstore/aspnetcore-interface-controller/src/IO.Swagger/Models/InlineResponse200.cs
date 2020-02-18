@@ -30,7 +30,7 @@ namespace IO.Swagger.Models
         /// Gets or Sets Parrots
         /// </summary>
         [DataMember(Name="parrots")]
-        public List<> Parrots { get; set; }
+        public List<OneOfinlineResponse200ParrotsItems> Parrots { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

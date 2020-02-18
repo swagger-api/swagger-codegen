@@ -96,15 +96,13 @@ namespace IO.Swagger.Model
             return 
                 (
                     this.Destination == input.Destination ||
-                    this.Destination != null &&
-                    input.Destination != null &&
-                    this.Destination.SequenceEqual(input.Destination)
+                    (this.Destination != null &&
+                    this.Destination.Equals(input.Destination))
                 ) && 
                 (
                     this.Origin == input.Origin ||
-                    this.Origin != null &&
-                    input.Origin != null &&
-                    this.Origin.SequenceEqual(input.Origin)
+                    (this.Origin != null &&
+                    this.Origin.Equals(input.Origin))
                 );
         }
 
