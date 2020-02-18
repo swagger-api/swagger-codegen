@@ -1,6 +1,10 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
+import io.swagger.model.Body1;
+import io.swagger.model.Body2;
+import io.swagger.model.InlineResponse200;
+import io.swagger.model.InlineResponse2001;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
@@ -23,6 +27,16 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
  *
  */
 public class PetApiServiceImpl implements PetApi {
+    /**
+     * Add a new parrow to the store
+     *
+     */
+    public InlineResponse2001 addParrot(Body2 body) {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
     /**
      * Add a new pet to the store
      *
@@ -80,12 +94,32 @@ public class PetApiServiceImpl implements PetApi {
     }
     
     /**
+     * get Parrots
+     *
+     */
+    public List<Object> getParrots() {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
+    /**
      * Find pet by ID
      *
      * Returns a single pet
      *
      */
     public Pet getPetById(Long petId) {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
+    /**
+     * update parrots
+     *
+     */
+    public InlineResponse200 updateParrots(Body1 body) {
         // TODO: Implement...
         
         return null;

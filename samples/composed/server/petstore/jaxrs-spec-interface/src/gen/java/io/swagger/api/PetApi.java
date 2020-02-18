@@ -22,7 +22,7 @@ import javax.validation.Valid;
 
 @Path("/pet")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-02-17T00:44:56.202-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-02-17T23:42:47.264-05:00[America/Bogota]")
 public interface PetApi {
 
     @POST
@@ -30,7 +30,8 @@ public interface PetApi {
     @Operation(summary = "Add a new pet to the store", description = "", security = {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
-    @ApiResponses(value = {  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input") })
     void addPet(@Valid Pet body);
     @DELETE
     @Path("/{petId}")

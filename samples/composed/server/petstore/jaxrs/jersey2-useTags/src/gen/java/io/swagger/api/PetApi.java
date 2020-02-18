@@ -14,6 +14,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
+import io.swagger.model.Body1;
+import io.swagger.model.Body2;
+import io.swagger.model.InlineResponse200;
+import io.swagger.model.InlineResponse2001;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
@@ -33,8 +37,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/pet")
 
+@Path("/Pet")
 
 
 public class PetApi  {
@@ -63,12 +67,28 @@ public class PetApi  {
 
     @POST
     
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "Add a new parrow to the store", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input"),
+        
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = InlineResponse2001.class))) })
+    public Response addParrot(@Parameter(in = ParameterIn.DEFAULT, description = "" ) Body2 body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addParrot(body,securityContext);
+    }
+    @POST
+    
     @Consumes({ "application/json", "application/xml" })
     
     @Operation(summary = "Add a new pet to the store", description = "", security = {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
-    @ApiResponses(value = {  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response addPet(@Parameter(in = ParameterIn.DEFAULT, description = "Pet object that needs to be added to the store" ,required=true) Pet body
 
 ,@Context SecurityContext securityContext)
@@ -76,7 +96,7 @@ public class PetApi  {
         return delegate.addPet(body,securityContext);
     }
     @DELETE
-    @Path("/{petId}")
+    
     
     
     @Operation(summary = "Deletes a pet", description = "", security = {
@@ -95,7 +115,7 @@ public class PetApi  {
         return delegate.deletePet(petId,apiKey,securityContext);
     }
     @POST
-    @Path("/feed/{petId}")
+    
     @Consumes({ "application/json", "application/xml" })
     
     @Operation(summary = "Find pet by ID", description = "schedule pet feeding", tags={ "pet" })
@@ -114,7 +134,7 @@ public class PetApi  {
         return delegate.feedPet(body,token,petType,status,petId,securityContext);
     }
     @GET
-    @Path("/findByStatus")
+    
     
     @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", security = {
@@ -131,7 +151,7 @@ public class PetApi  {
         return delegate.findPetsByStatus(status,securityContext);
     }
     @GET
-    @Path("/findByTags")
+    
     
     @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Finds Pets by tags", description = "Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.", security = {
@@ -147,7 +167,18 @@ public class PetApi  {
         return delegate.findPetsByTags(tags,securityContext);
     }
     @GET
-    @Path("/{petId}")
+    
+    
+    @Produces({ "application/json" })
+    @Operation(summary = "get Parrots", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Object.class)))) })
+    public Response getParrots(@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.getParrots(securityContext);
+    }
+    @GET
+    
     
     @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Find pet by ID", description = "Returns a single pet", security = {
@@ -162,6 +193,21 @@ public class PetApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getPetById(petId,securityContext);
+    }
+    @PUT
+    
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "update parrots", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "405", description = "Invalid input"),
+        
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = InlineResponse200.class))) })
+    public Response updateParrots(@Parameter(in = ParameterIn.DEFAULT, description = "" ) Body1 body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateParrots(body,securityContext);
     }
     @PUT
     
@@ -183,7 +229,7 @@ public class PetApi  {
         return delegate.updatePet(body,securityContext);
     }
     @POST
-    @Path("/{petId}")
+    
     @Consumes({ "application/x-www-form-urlencoded" })
     
     @Operation(summary = "Updates a pet in the store with form data", description = "", security = {
@@ -199,7 +245,7 @@ public class PetApi  {
         return delegate.updatePetWithForm(petId,name,status,securityContext);
     }
     @POST
-    @Path("/{petId}/uploadImage")
+    
     @Consumes({ "application/octet-stream" })
     @Produces({ "application/json" })
     @Operation(summary = "uploads an image", description = "", security = {
