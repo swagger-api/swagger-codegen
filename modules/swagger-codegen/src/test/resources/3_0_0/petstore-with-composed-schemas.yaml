@@ -35,7 +35,7 @@ paths:
       summary: Add a new pet to the store
       operationId: addPet
       responses:
-      '405':
+        '405':
           description: Invalid input
       security:
         - petstore_auth:
@@ -576,10 +576,85 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
+  /parrot:
+    post:
+      tags:
+        - pet
+      summary: Add a new parrow to the store
+      operationId: addParrot
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - "$ref": "#/components/schemas/Macaw"
+                  - "$ref": "#/components/schemas/Parakeet"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - "$ref": "#/components/schemas/Macaw"
+                - "$ref": "#/components/schemas/Parakeet"
+
+    put:
+      tags:
+        - pet
+      summary: update parrots
+      operationId: updateParrots
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parrots:
+                    type: array
+                    items:
+                      oneOf:
+                        - "$ref": "#/components/schemas/Macaw"
+                        - "$ref": "#/components/schemas/Parakeet"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parrots:
+                  type: array
+                  items:
+                    anyOf:
+                      - "$ref": "#/components/schemas/Macaw"
+                      - "$ref": "#/components/schemas/Parakeet"
+
+    get:
+      tags:
+        - pet
+      summary: get Parrots
+      operationId: getParrots
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  anyOf:
+                    - "$ref": "#/components/schemas/Macaw"
+                    - "$ref": "#/components/schemas/Parakeet"
   /test:
     get:
       security:
-      - bearer: []
+        - bearer: []
       operationId: testMethod
       responses:
         200:
@@ -784,6 +859,21 @@ components:
               type: boolean
             age:
               type: integer
+    Macaw:
+      type: object
+      properties:
+        color:
+          type: string
+        singer:
+          type: boolean
+
+    Parakeet:
+      type: object
+      properties:
+        color:
+          type: string
+        soundRepeater:
+          type: boolean
 
     val_Members:
       type: object
@@ -800,12 +890,12 @@ components:
             Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
           items:
             oneOf:
-            - "$ref": "#/components/schemas/val_MemberChoice1"
-            - "$ref": "#/components/schemas/val_MemberChoice2"
+              - "$ref": "#/components/schemas/val_MemberChoice1"
+              - "$ref": "#/components/schemas/val_MemberChoice2"
           minItems: 1
           type: array
       required:
-      - val_member
+        - val_member
       xml:
         prefix: val
         name: members
@@ -838,7 +928,7 @@ components:
             prefix: val
             name: leaving_date
       required:
-      - val_date_of_birth
+        - val_date_of_birth
       xml:
         prefix: val
         name: member
