@@ -28,15 +28,46 @@ namespace IO.Swagger.Controllers
     public class PetApiController : ControllerBase, IPetApiController
     { 
         /// <summary>
+        /// Add a new parrow to the store
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="405">Invalid input</response>
+        /// <response code="200">successful operation</response>
+        [HttpPost]
+        [Route("/parrot")]
+        [ValidateModelState]
+        [SwaggerOperation("AddParrot")]
+        [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse2001), description: "successful operation")]
+        public virtual IActionResult AddParrot([FromBody]Body2 body)
+        { 
+            //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(405);
+
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(InlineResponse2001));
+            string exampleJson = null;
+            exampleJson = "\"\"";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<InlineResponse2001>(exampleJson)
+                        : default(InlineResponse2001);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Add a new pet to the store
         /// </summary>
         /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <response code="405">Invalid input</response>
         [HttpPost]
         [Route("/pet")]
         [ValidateModelState]
         [SwaggerOperation("AddPet")]
         public virtual IActionResult AddPet([FromBody]Pet body)
         { 
+            //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(405);
+
             throw new NotImplementedException();
         }
 
@@ -141,6 +172,28 @@ namespace IO.Swagger.Controllers
         }
 
         /// <summary>
+        /// get Parrots
+        /// </summary>
+        /// <response code="200">successful operation</response>
+        [HttpGet]
+        [Route("/parrot")]
+        [ValidateModelState]
+        [SwaggerOperation("GetParrots")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<>), description: "successful operation")]
+        public virtual IActionResult GetParrots()
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(List<>));
+            string exampleJson = null;
+            exampleJson = "[ \"\", \"\" ]";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<List<>>(exampleJson)
+                        : default(List<>);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>Returns a single pet</remarks>
@@ -170,6 +223,33 @@ namespace IO.Swagger.Controllers
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<Pet>(exampleJson)
                         : default(Pet);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
+        /// update parrots
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="405">Invalid input</response>
+        /// <response code="200">successful operation</response>
+        [HttpPut]
+        [Route("/parrot")]
+        [ValidateModelState]
+        [SwaggerOperation("UpdateParrots")]
+        [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse200), description: "successful operation")]
+        public virtual IActionResult UpdateParrots([FromBody]Body1 body)
+        { 
+            //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(405);
+
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(InlineResponse200));
+            string exampleJson = null;
+            exampleJson = "{\n  \"parrots\" : [ \"\", \"\" ]\n}";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<InlineResponse200>(exampleJson)
+                        : default(InlineResponse200);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 

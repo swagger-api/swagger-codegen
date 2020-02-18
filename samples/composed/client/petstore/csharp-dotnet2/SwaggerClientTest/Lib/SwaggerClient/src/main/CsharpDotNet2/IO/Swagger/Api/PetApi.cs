@@ -12,6 +12,12 @@ namespace IO.Swagger.Api
     public interface IPetApi
     {
         /// <summary>
+        /// Add a new parrow to the store 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>InlineResponse2001</returns>
+        InlineResponse2001 AddParrot (Body2 body);
+        /// <summary>
         /// Add a new pet to the store 
         /// </summary>
         /// <param name="body">Pet object that needs to be added to the store</param>
@@ -47,11 +53,22 @@ namespace IO.Swagger.Api
         /// <returns>List&lt;Pet&gt;</returns>
         List<Pet> FindPetsByTags (List<string> tags);
         /// <summary>
+        /// get Parrots 
+        /// </summary>
+        /// <returns>List&lt;&gt;</returns>
+        List<> GetParrots ();
+        /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Pet</returns>
         Pet GetPetById (long? petId);
+        /// <summary>
+        /// update parrots 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>InlineResponse200</returns>
+        InlineResponse200 UpdateParrots (Body1 body);
         /// <summary>
         /// Update an existing pet 
         /// </summary>
@@ -127,6 +144,39 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <value>An instance of the ApiClient</value>
         public ApiClient ApiClient {get; set;}
+    
+        /// <summary>
+        /// Add a new parrow to the store 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>InlineResponse2001</returns>
+        public InlineResponse2001 AddParrot (Body2 body)
+        {
+    
+            var path = "/parrot";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.POST, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling AddParrot: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling AddParrot: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (InlineResponse2001) ApiClient.Deserialize(response.Content, typeof(InlineResponse2001), response.Headers);
+        }
     
         /// <summary>
         /// Add a new pet to the store 
@@ -322,6 +372,37 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
+        /// get Parrots 
+        /// </summary>
+        /// <returns>List&lt;&gt;</returns>
+        public List<> GetParrots ()
+        {
+    
+            var path = "/parrot";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetParrots: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetParrots: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (List<>) ApiClient.Deserialize(response.Content, typeof(List<>), response.Headers);
+        }
+    
+        /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
@@ -354,6 +435,39 @@ namespace IO.Swagger.Api
                 throw new ApiException ((int)response.StatusCode, "Error calling GetPetById: " + response.ErrorMessage, response.ErrorMessage);
     
             return (Pet) ApiClient.Deserialize(response.Content, typeof(Pet), response.Headers);
+        }
+    
+        /// <summary>
+        /// update parrots 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>InlineResponse200</returns>
+        public InlineResponse200 UpdateParrots (Body1 body)
+        {
+    
+            var path = "/parrot";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.PUT, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling UpdateParrots: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling UpdateParrots: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (InlineResponse200) ApiClient.Deserialize(response.Content, typeof(InlineResponse200), response.Headers);
         }
     
         /// <summary>

@@ -94,12 +94,15 @@ All URIs are relative to */*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**TestMethod**](docs/DefaultApi.md#testmethod) | **GET** /test | 
+*PetApi* | [**AddParrot**](docs/PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
 *PetApi* | [**FeedPet**](docs/PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+*PetApi* | [**GetParrots**](docs/PetApi.md#getparrots) | **GET** /parrot | get Parrots
 *PetApi* | [**GetPetById**](docs/PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+*PetApi* | [**UpdateParrots**](docs/PetApi.md#updateparrots) | **PUT** /parrot | update parrots
 *PetApi* | [**UpdatePet**](docs/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**UpdatePetWithForm**](docs/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**UploadFile**](docs/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -120,15 +123,23 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [Model.AllPetsResponse](docs/AllPetsResponse.md)
+ - [Model.AnyOfbody2](docs/AnyOfbody2.md)
  - [Model.ApiResponse](docs/ApiResponse.md)
  - [Model.Body](docs/Body.md)
+ - [Model.Body1](docs/Body1.md)
+ - [Model.Body2](docs/Body2.md)
  - [Model.Cat](docs/Cat.md)
  - [Model.Category](docs/Category.md)
  - [Model.Dog](docs/Dog.md)
+ - [Model.InlineResponse200](docs/InlineResponse200.md)
+ - [Model.InlineResponse2001](docs/InlineResponse2001.md)
+ - [Model.Macaw](docs/Macaw.md)
  - [Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
  - [Model.OneOfPartMasterOrigin](docs/OneOfPartMasterOrigin.md)
  - [Model.OneOfPup](docs/OneOfPup.md)
+ - [Model.OneOfinlineResponse2001](docs/OneOfinlineResponse2001.md)
  - [Model.Order](docs/Order.md)
+ - [Model.Parakeet](docs/Parakeet.md)
  - [Model.PartFour](docs/PartFour.md)
  - [Model.PartMaster](docs/PartMaster.md)
  - [Model.PartOne](docs/PartOne.md)
