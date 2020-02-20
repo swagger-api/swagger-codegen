@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
-public class Macaw  implements AnyOfbody_2, OneOfinline_response_200_1  {
+public class Macaw  implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001  {
   @JsonProperty("color")
   private String color = null;
   @JsonProperty("singer")

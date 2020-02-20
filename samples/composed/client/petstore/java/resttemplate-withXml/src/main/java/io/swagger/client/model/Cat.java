@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "Cat")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Cat")
-public class Cat extends Pet implements OneOfPup, OneOfAllPetsResponseItems {
+public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup {
   @JsonProperty("hunts")
   @JacksonXmlProperty(localName = "hunts")
   @XmlElement(name = "hunts")

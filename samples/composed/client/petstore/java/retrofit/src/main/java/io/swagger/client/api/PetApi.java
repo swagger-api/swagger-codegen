@@ -95,11 +95,12 @@ public interface PetApi {
    * @param petType type of food (required)
    * @param status status (required)
    * @param petId ID of pet to return (required)
+   * @param sessionId session id (required)
    * @return Void
    */
   @POST("/pet/feed/{petId}")
   Void feedPet(
-    @retrofit.http.Body Pet body, @retrofit.http.Header("token") String token, @retrofit.http.Query("petType") String petType, @retrofit.http.Query("status") String status, @retrofit.http.Path("petId") Long petId
+    @retrofit.http.Body Pet body, @retrofit.http.Header("token") String token, @retrofit.http.Query("petType") String petType, @retrofit.http.Query("status") String status, @retrofit.http.Path("petId") Long petId, String sessionId
   );
 
   /**
@@ -110,11 +111,12 @@ public interface PetApi {
    * @param petType type of food (required)
    * @param status status (required)
    * @param petId ID of pet to return (required)
+   * @param sessionId session id (required)
    * @param cb callback method
    */
   @POST("/pet/feed/{petId}")
   void feedPet(
-    @retrofit.http.Body Pet body, @retrofit.http.Header("token") String token, @retrofit.http.Query("petType") String petType, @retrofit.http.Query("status") String status, @retrofit.http.Path("petId") Long petId, Callback<Void> cb
+    @retrofit.http.Body Pet body, @retrofit.http.Header("token") String token, @retrofit.http.Query("petType") String petType, @retrofit.http.Query("status") String status, @retrofit.http.Path("petId") Long petId, String sessionId, Callback<Void> cb
   );
   /**
    * Finds Pets by status

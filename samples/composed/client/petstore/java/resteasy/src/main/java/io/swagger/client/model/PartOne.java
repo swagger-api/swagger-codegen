@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 
 
-public class PartOne {
+public class PartOne implements OneOfPartMasterDestination {
   @JsonProperty("name")
   private String name = null;
 

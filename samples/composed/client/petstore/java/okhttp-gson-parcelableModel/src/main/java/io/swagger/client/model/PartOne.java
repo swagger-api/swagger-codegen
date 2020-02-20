@@ -28,7 +28,7 @@ import android.os.Parcel;
  */
 
 
-public class PartOne implements Parcelable {
+public class PartOne implements Parcelable , OneOfPartMasterDestination {
   @SerializedName("name")
   private String name = null;
 

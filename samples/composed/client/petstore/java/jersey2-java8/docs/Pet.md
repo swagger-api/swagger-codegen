@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **id** | **Long** |  |  [optional]
 **name** | **String** |  | 
 **status** | [**StatusEnum**](#StatusEnum) | pet status in the store |  [optional]
-**part** | **List&lt;Object&gt;** |  |  [optional]
+**part** | **List&lt;OneOfPetPartItems&gt;** |  |  [optional]
 
 <a name="StatusEnum"></a>
 ## Enum: StatusEnum

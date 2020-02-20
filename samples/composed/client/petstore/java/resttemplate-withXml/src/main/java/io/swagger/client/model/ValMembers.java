@@ -33,16 +33,16 @@ public class ValMembers {
   @JsonProperty("val_member")
   // Is a container wrapped=
   // items.name=valMember items.baseName=valMember items.xmlName= items.xmlNamespace=
-  // items.example= items.type=Object
+  // items.example= items.type=OneOfvalMembersValMemberItems
   @XmlElement(name = "valMember")
-  private List<Object> valMember = new ArrayList<Object>();
+  private List<OneOfvalMembersValMemberItems> valMember = new ArrayList<OneOfvalMembersValMemberItems>();
 
-  public ValMembers valMember(List<Object> valMember) {
+  public ValMembers valMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
     return this;
   }
 
-  public ValMembers addValMemberItem(Object valMemberItem) {
+  public ValMembers addValMemberItem(OneOfvalMembersValMemberItems valMemberItem) {
     this.valMember.add(valMemberItem);
     return this;
   }
@@ -52,11 +52,11 @@ public class ValMembers {
    * @return valMember
   **/
   @Schema(required = true, description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
-  public List<Object> getValMember() {
+  public List<OneOfvalMembersValMemberItems> getValMember() {
     return valMember;
   }
 
-  public void setValMember(List<Object> valMember) {
+  public void setValMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
   }
 

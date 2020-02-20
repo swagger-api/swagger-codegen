@@ -17,8 +17,6 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.client.model.OneOfPartMasterDestination;
-import io.swagger.client.model.OneOfPartMasterOrigin;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -43,7 +41,6 @@ public class PartMaster {
    * Get destination
    * @return destination
   **/
-  @Valid
   @Schema(description = "")
   public OneOfPartMasterDestination getDestination() {
     return destination;
@@ -62,7 +59,6 @@ public class PartMaster {
    * Get origin
    * @return origin
   **/
-  @Valid
   @Schema(description = "")
   public OneOfPartMasterOrigin getOrigin() {
     return origin;

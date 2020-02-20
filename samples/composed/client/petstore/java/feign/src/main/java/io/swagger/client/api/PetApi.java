@@ -62,6 +62,7 @@ public interface PetApi extends ApiClient.Api {
    * @param petType type of food (required)
    * @param status status (required)
    * @param petId ID of pet to return (required)
+   * @param sessionId session id (required)
    */
   @RequestLine("POST /pet/feed/{petId}?petType={petType}&status={status}")
   @Headers({
@@ -69,7 +70,7 @@ public interface PetApi extends ApiClient.Api {
       "Accept: */*",
     "token: {token}"
   })
-  void feedPet(Pet body, @Param("token") String token, @Param("petType") String petType, @Param("status") String status, @Param("petId") Long petId);
+  void feedPet(Pet body, @Param("token") String token, @Param("petType") String petType, @Param("status") String status, @Param("petId") Long petId, @Param("sessionId") String sessionId);
 
   /**
    * Find pet by ID
@@ -82,6 +83,7 @@ public interface PetApi extends ApiClient.Api {
    * @param body Pet object that needs to be added to the store (required)
    * @param token status (required)
    * @param petId ID of pet to return (required)
+   * @param sessionId session id (required)
    * @param queryParams Map of query parameters as name-value pairs
    *   <p>The following elements may be specified in the query map:</p>
    *   <ul>
@@ -95,7 +97,7 @@ public interface PetApi extends ApiClient.Api {
       "Content-Type: application/json",
       "token: {token}"
   })
-  void feedPet(Pet body, @Param("token") String token, @Param("petId") Long petId, @QueryMap(encoded=true) Map<String, Object> queryParams);
+  void feedPet(Pet body, @Param("token") String token, @Param("petId") Long petId, @Param("sessionId") String sessionId, @QueryMap(encoded=true) Map<String, Object> queryParams);
 
   /**
    * A convenience class for generating query parameters for the

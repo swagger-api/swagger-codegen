@@ -13,7 +13,6 @@
 package io.swagger.client.model;
 
 import org.apache.commons.lang3.ObjectUtils;
-import io.swagger.client.model.OneOfAllPetsResponseItems;
 import java.util.ArrayList;
 import java.util.List;
 /**

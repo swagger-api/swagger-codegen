@@ -3,4 +3,4 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**parrots** | **List&lt;Object&gt;** |  |  [optional]
+**parrots** | **List&lt;AnyOfbody1ParrotsItems&gt;** |  |  [optional]

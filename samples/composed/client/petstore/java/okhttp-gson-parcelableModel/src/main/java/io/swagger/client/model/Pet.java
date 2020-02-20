@@ -83,7 +83,7 @@ public class Pet implements Parcelable {
   private StatusEnum status = null;
 
   @SerializedName("part")
-  private List<Object> part = null;
+  private List<OneOfPetPartItems> part = null;
 
   public Pet() {
   }
@@ -141,14 +141,14 @@ public class Pet implements Parcelable {
     this.status = status;
   }
 
-  public Pet part(List<Object> part) {
+  public Pet part(List<OneOfPetPartItems> part) {
     this.part = part;
     return this;
   }
 
-  public Pet addPartItem(Object partItem) {
+  public Pet addPartItem(OneOfPetPartItems partItem) {
     if (this.part == null) {
-      this.part = new ArrayList<Object>();
+      this.part = new ArrayList<OneOfPetPartItems>();
     }
     this.part.add(partItem);
     return this;
@@ -159,11 +159,11 @@ public class Pet implements Parcelable {
    * @return part
   **/
   @Schema(description = "")
-  public List<Object> getPart() {
+  public List<OneOfPetPartItems> getPart() {
     return part;
   }
 
-  public void setPart(List<Object> part) {
+  public void setPart(List<OneOfPetPartItems> part) {
     this.part = part;
   }
 
@@ -225,7 +225,7 @@ public class Pet implements Parcelable {
     id = (Long)in.readValue(null);
     name = (String)in.readValue(null);
     status = (StatusEnum)in.readValue(null);
-    part = (List<Object>)in.readValue(null);
+    part = (List<OneOfPetPartItems>)in.readValue(null);
   }
 
   public int describeContents() {

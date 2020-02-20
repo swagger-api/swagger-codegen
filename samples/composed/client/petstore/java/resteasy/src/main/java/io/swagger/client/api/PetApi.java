@@ -159,9 +159,10 @@ public class PetApi {
    * @param petType type of food (required)
    * @param status status (required)
    * @param petId ID of pet to return (required)
+   * @param sessionId session id (required)
    * @throws ApiException if fails to make API call
    */
-  public void feedPet(Pet body, String token, String petType, String status, Long petId) throws ApiException {
+  public void feedPet(Pet body, String token, String petType, String status, Long petId, String sessionId) throws ApiException {
     Object localVarPostBody = body;
     // verify the required parameter 'body' is set
     if (body == null) {
@@ -182,6 +183,10 @@ public class PetApi {
     // verify the required parameter 'petId' is set
     if (petId == null) {
       throw new ApiException(400, "Missing the required parameter 'petId' when calling feedPet");
+    }
+    // verify the required parameter 'sessionId' is set
+    if (sessionId == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionId' when calling feedPet");
     }
     // create path and map variables
     String localVarPath = "/pet/feed/{petId}".replaceAll("\\{format\\}","json")

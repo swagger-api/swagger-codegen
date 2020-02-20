@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 <a name="feedPet"></a>
 # **feedPet**
-> Void feedPet(body, token, petType, status, petId)
+> Void feedPet(body, token, petType, status, petId, sessionId)
 
 Find pet by ID
 
@@ -185,8 +185,9 @@ String token = "token_example"; // String | status
 String petType = "petType_example"; // String | type of food
 String status = "status_example"; // String | status
 Long petId = 789L; // Long | ID of pet to return
+String sessionId = "sessionId_example"; // String | session id
 try {
-    Void result = apiInstance.feedPet(body, token, petType, status, petId);
+    Void result = apiInstance.feedPet(body, token, petType, status, petId, sessionId);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#feedPet");
@@ -203,6 +204,7 @@ Name | Type | Description  | Notes
  **petType** | **String**| type of food |
  **status** | **String**| status |
  **petId** | **Long**| ID of pet to return |
+ **sessionId** | **String**| session id |
 
 ### Return type
 

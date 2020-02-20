@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 
-public class Cat extends Pet implements OneOfPup, OneOfAllPetsResponseItems {
+public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup {
   @SerializedName("hunts")
   private Boolean hunts = null;
 

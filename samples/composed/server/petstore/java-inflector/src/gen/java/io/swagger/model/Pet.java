@@ -50,7 +50,7 @@ public class Pet   {
   @JsonProperty("status")
   private StatusEnum status = null;
   @JsonProperty("part")
-  private List<Object> part = null;
+  private List<OneOfPetPartItems> part = null;
   /**
    **/
   public Pet id(Long id) {
@@ -105,7 +105,7 @@ public class Pet   {
 
   /**
    **/
-  public Pet part(List<Object> part) {
+  public Pet part(List<OneOfPetPartItems> part) {
     this.part = part;
     return this;
   }
@@ -113,10 +113,10 @@ public class Pet   {
   
   @Schema(description = "")
   @JsonProperty("part")
-  public List<Object> getPart() {
+  public List<OneOfPetPartItems> getPart() {
     return part;
   }
-  public void setPart(List<Object> part) {
+  public void setPart(List<OneOfPetPartItems> part) {
     this.part = part;
   }
 

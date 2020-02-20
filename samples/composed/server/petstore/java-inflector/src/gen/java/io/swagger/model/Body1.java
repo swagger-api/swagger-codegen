@@ -11,10 +11,10 @@ import java.util.List;
 
 public class Body1   {
   @JsonProperty("parrots")
-  private List<Object> parrots = null;
+  private List<AnyOfbody1ParrotsItems> parrots = null;
   /**
    **/
-  public Body1 parrots(List<Object> parrots) {
+  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
@@ -22,10 +22,10 @@ public class Body1   {
   
   @Schema(description = "")
   @JsonProperty("parrots")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

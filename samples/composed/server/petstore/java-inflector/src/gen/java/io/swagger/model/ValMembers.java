@@ -14,11 +14,11 @@ import java.util.List;
 
 public class ValMembers   {
   @JsonProperty("val_member")
-  private List<Object> valMember = new ArrayList<Object>();
+  private List<OneOfvalMembersValMemberItems> valMember = new ArrayList<OneOfvalMembersValMemberItems>();
   /**
    * Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
    **/
-  public ValMembers valMember(List<Object> valMember) {
+  public ValMembers valMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
     return this;
   }
@@ -26,10 +26,10 @@ public class ValMembers   {
   
   @Schema(required = true, description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
   @JsonProperty("val_member")
-  public List<Object> getValMember() {
+  public List<OneOfvalMembersValMemberItems> getValMember() {
     return valMember;
   }
-  public void setValMember(List<Object> valMember) {
+  public void setValMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
   }
 

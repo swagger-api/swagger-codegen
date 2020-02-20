@@ -13,6 +13,10 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.Body1;
+import io.swagger.client.model.Body2;
+import io.swagger.client.model.InlineResponse200;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 import org.junit.Test;
@@ -31,6 +35,21 @@ public class PetApiTest {
 
     private final PetApi api = new PetApi();
 
+    /**
+     * Add a new parrow to the store
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void addParrotTest() throws ApiException {
+        Body2 body = null;
+        InlineResponse2001 response = api.addParrot(body);
+
+        // TODO: test validations
+    }
     /**
      * Add a new pet to the store
      *
@@ -77,7 +96,8 @@ public class PetApiTest {
         String petType = null;
         String status = null;
         Long petId = null;
-        api.feedPet(body, token, petType, status, petId);
+        String sessionId = null;
+        api.feedPet(body, token, petType, status, petId, sessionId);
 
         // TODO: test validations
     }
@@ -112,6 +132,20 @@ public class PetApiTest {
         // TODO: test validations
     }
     /**
+     * get Parrots
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getParrotsTest() throws ApiException {
+        List<Object> response = api.getParrots();
+
+        // TODO: test validations
+    }
+    /**
      * Find pet by ID
      *
      * Returns a single pet
@@ -123,6 +157,21 @@ public class PetApiTest {
     public void getPetByIdTest() throws ApiException {
         Long petId = null;
         Pet response = api.getPetById(petId);
+
+        // TODO: test validations
+    }
+    /**
+     * update parrots
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateParrotsTest() throws ApiException {
+        Body1 body = null;
+        InlineResponse200 response = api.updateParrots(body);
 
         // TODO: test validations
     }
