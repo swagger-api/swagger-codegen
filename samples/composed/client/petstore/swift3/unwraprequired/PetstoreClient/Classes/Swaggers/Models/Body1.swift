@@ -9,10 +9,10 @@ import Foundation
 
 
 open class Body1: JSONEncodable {
-    public var parrots: [Object]?
+    public var parrots: [AnyOfbody1ParrotsItems]?
 
 
-    public init(parrots: [Object]?=nil) {
+    public init(parrots: [AnyOfbody1ParrotsItems]?=nil) {
         self.parrots = parrots
     }
     // MARK: JSONEncodable

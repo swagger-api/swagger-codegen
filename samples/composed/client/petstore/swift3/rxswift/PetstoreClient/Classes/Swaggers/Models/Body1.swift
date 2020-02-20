@@ -9,7 +9,7 @@ import Foundation
 
 
 open class Body1: JSONEncodable {
-    public var parrots: [Object]?
+    public var parrots: [AnyOfbody1ParrotsItems]?
 
     public init() {}
 

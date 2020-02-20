@@ -180,10 +180,11 @@ open class PetAPI: APIBase {
      - parameter petType: (query) type of food 
      - parameter status: (query) status 
      - parameter petId: (path) ID of pet to return 
+     - parameter sessionId: () session id 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func feedPet(body: Pet, token: String, petType: String, status: String, petId: Int64, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
-        feedPetWithRequestBuilder(body: body, token: token, petType: petType, status: status, petId: petId).execute { (response, error) -> Void in
+    open class func feedPet(body: Pet, token: String, petType: String, status: String, petId: Int64, sessionId: String, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+        feedPetWithRequestBuilder(body: body, token: token, petType: petType, status: status, petId: petId, sessionId: sessionId).execute { (response, error) -> Void in
             completion(error)
         }
     }
@@ -195,11 +196,12 @@ open class PetAPI: APIBase {
      - parameter petType: (query) type of food 
      - parameter status: (query) status 
      - parameter petId: (path) ID of pet to return 
+     - parameter sessionId: () session id 
      - returns: Observable<Void>
      */
-    open class func feedPet(body: Pet, token: String, petType: String, status: String, petId: Int64) -> Observable<Void> {
+    open class func feedPet(body: Pet, token: String, petType: String, status: String, petId: Int64, sessionId: String) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
-            feedPet(body: body, token: token, petType: petType, status: status, petId: petId) { error in
+            feedPet(body: body, token: token, petType: petType, status: status, petId: petId, sessionId: sessionId) { error in
                 if let error = error {
                     observer.on(.error(error as Error))
                 } else {
@@ -221,9 +223,10 @@ open class PetAPI: APIBase {
      - parameter petType: (query) type of food 
      - parameter status: (query) status 
      - parameter petId: (path) ID of pet to return 
+     - parameter sessionId: () session id 
      - returns: RequestBuilder<Void> 
      */
-    open class func feedPetWithRequestBuilder(body: Pet, token: String, petType: String, status: String, petId: Int64) -> RequestBuilder<Void> {
+    open class func feedPetWithRequestBuilder(body: Pet, token: String, petType: String, status: String, petId: Int64, sessionId: String) -> RequestBuilder<Void> {
         var path = "/pet/feed/{petId}"
         let petIdPreEscape = "\(petId)"
         let petIdPostEscape = petIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

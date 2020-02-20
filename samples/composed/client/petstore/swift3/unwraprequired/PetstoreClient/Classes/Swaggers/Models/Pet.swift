@@ -18,10 +18,10 @@ open class Pet: JSONEncodable {
     public var name: String
     /** pet status in the store */
     public var status: Status?
-    public var part: [Object]?
+    public var part: [OneOfPetPartItems]?
 
 
-    public init(id: Int64?=nil, name: String, status: Status?=nil, part: [Object]?=nil) {
+    public init(id: Int64?=nil, name: String, status: Status?=nil, part: [OneOfPetPartItems]?=nil) {
         self.id = id
         self.name = name
         self.status = status
