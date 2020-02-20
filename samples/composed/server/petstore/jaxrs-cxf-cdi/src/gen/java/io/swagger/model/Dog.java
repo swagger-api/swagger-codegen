@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
 
 
 
-public class Dog extends Pet implements OneOfPup, OneOfAllPetsResponseItems  {
+public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup  {
   private Boolean bark = null;
 @XmlType(name="BreedEnum")
 @XmlEnum(String.class)

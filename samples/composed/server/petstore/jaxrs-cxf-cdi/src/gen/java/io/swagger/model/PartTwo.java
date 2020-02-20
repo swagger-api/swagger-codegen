@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.*;
 
 
 
-public class PartTwo   {
+public class PartTwo  implements OneOfPartMasterDestination  {
   private String id = null;
 
   /**

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class Body2  implements AnyOfbody_2  {
+public class Body2  implements AnyOfbody2  {
 
   @Override
   public String toString() {

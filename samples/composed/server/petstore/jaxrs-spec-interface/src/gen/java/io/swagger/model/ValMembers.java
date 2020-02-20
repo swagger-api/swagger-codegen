@@ -15,12 +15,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Business Term: Scheme Members Definition: Information about the Members of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
 
 public class ValMembers   {
-  private @Valid List<Object> valMember = new ArrayList<Object>();
+  private @Valid List<OneOfvalMembersValMemberItems> valMember = new ArrayList<OneOfvalMembersValMemberItems>();
 
   /**
    * Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
    **/
-  public ValMembers valMember(List<Object> valMember) {
+  public ValMembers valMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
     return this;
   }
@@ -30,10 +30,10 @@ public class ValMembers   {
   @JsonProperty("val_member")
   @NotNull
  @Size(min=1)
-  public List<Object> getValMember() {
+  public List<OneOfvalMembersValMemberItems> getValMember() {
     return valMember;
   }
-  public void setValMember(List<Object> valMember) {
+  public void setValMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
   }
 

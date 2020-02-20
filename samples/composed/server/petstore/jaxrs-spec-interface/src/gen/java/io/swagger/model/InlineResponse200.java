@@ -12,11 +12,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class InlineResponse200   {
-  private @Valid List<Object> parrots = new ArrayList<Object>();
+  private @Valid List<OneOfinlineResponse200ParrotsItems> parrots = new ArrayList<OneOfinlineResponse200ParrotsItems>();
 
   /**
    **/
-  public InlineResponse200 parrots(List<Object> parrots) {
+  public InlineResponse200 parrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
@@ -25,10 +25,10 @@ public class InlineResponse200   {
   @ApiModelProperty(value = "")
   @JsonProperty("parrots")
 
-  public List<Object> getParrots() {
+  public List<OneOfinlineResponse200ParrotsItems> getParrots() {
     return parrots;
   }
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

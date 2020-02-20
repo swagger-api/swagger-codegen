@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class PartOne   {
+public class PartOne  implements OneOfPartMasterDestination  {
   
   @Schema(description = "A test description")
  /**

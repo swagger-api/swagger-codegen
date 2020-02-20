@@ -4,8 +4,6 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.model.OneOfPartMasterDestination;
-import io.swagger.model.OneOfPartMasterOrigin;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 

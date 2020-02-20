@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-public class InlineResponse2001  implements OneOfinline_response_200_1  {
+public class InlineResponse2001  implements OneOfinlineResponse2001  {
 
 
 

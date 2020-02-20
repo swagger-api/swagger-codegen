@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.*;
 
 
 
-public class Macaw  implements AnyOfbody_2, OneOfinline_response_200_1  {
+public class Macaw  implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001  {
   private String color = null;
   private Boolean singer = null;
 

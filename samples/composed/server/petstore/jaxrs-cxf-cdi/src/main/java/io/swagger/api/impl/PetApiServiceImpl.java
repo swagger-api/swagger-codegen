@@ -29,7 +29,7 @@ public class PetApiServiceImpl implements PetApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response feedPet(Pet body, String token, String petType, String status, Long petId, SecurityContext securityContext) {
+      public Response feedPet(Pet body, String token, String petType, String status, Long petId, , SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class InlineResponse2001  implements OneOfinline_response_200_1  {
+public class InlineResponse2001  implements OneOfinlineResponse2001  {
 
   @Override
   public String toString() {

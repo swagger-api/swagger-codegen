@@ -12,7 +12,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Dog extends Pet implements Serializable , OneOfPup, , OneOfAllPetsResponseItems  {
+public class Dog extends Pet implements Serializable , OneOfAllPetsResponseItems, , OneOfPetPartItems, , OneOfPup  {
   private @Valid Boolean bark = null;
 public enum BreedEnum {
 

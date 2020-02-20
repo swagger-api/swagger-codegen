@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-public class PartOne   {
+public class PartOne  implements OneOfPartMasterDestination  {
   private String name = null;
 
   /**

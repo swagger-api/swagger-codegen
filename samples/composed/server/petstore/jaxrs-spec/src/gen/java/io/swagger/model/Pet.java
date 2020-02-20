@@ -47,7 +47,7 @@ public enum StatusEnum {
     }
 }
   private @Valid StatusEnum status = null;
-  private @Valid List<Object> part = new ArrayList<Object>();
+  private @Valid List<OneOfPetPartItems> part = new ArrayList<OneOfPetPartItems>();
 
   /**
    **/
@@ -107,7 +107,7 @@ public enum StatusEnum {
 
   /**
    **/
-  public Pet part(List<Object> part) {
+  public Pet part(List<OneOfPetPartItems> part) {
     this.part = part;
     return this;
   }
@@ -116,10 +116,10 @@ public enum StatusEnum {
   @ApiModelProperty(value = "")
   @JsonProperty("part")
 
-  public List<Object> getPart() {
+  public List<OneOfPetPartItems> getPart() {
     return part;
   }
-  public void setPart(List<Object> part) {
+  public void setPart(List<OneOfPetPartItems> part) {
     this.part = part;
   }
 

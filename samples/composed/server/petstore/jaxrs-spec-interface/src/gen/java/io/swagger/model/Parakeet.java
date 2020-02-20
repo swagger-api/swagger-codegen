@@ -9,7 +9,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Parakeet  implements AnyOfbody_2, OneOfinline_response_200_1  {
+public class Parakeet  implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001  {
   private @Valid String color = null;
   private @Valid Boolean soundRepeater = null;
 

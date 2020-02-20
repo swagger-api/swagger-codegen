@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.*;
 
 @Schema(description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
 
-public class ValMemberChoice2   {
+public class ValMemberChoice2  implements OneOfvalMembersValMemberItems  {
   private LocalDate valLeavingDate = null;
 
   /**

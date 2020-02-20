@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-public class Body2  implements AnyOfbody_2  {
+public class Body2  implements AnyOfbody2  {
 
 
   @Override

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class Dog extends Pet implements OneOfPup, OneOfAllPetsResponseItems  {
+public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup  {
   
   @Schema(description = "")
   private Boolean bark = null;

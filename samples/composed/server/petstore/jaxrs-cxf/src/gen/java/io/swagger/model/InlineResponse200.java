@@ -19,26 +19,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class InlineResponse200   {
   
   @Schema(description = "")
-  private List<Object> parrots = null;
+  private List<OneOfinlineResponse200ParrotsItems> parrots = null;
  /**
    * Get parrots
    * @return parrots
   **/
   @JsonProperty("parrots")
-  public List<Object> getParrots() {
+  public List<OneOfinlineResponse200ParrotsItems> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 
-  public InlineResponse200 parrots(List<Object> parrots) {
+  public InlineResponse200 parrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public InlineResponse200 addParrotsItem(Object parrotsItem) {
+  public InlineResponse200 addParrotsItem(OneOfinlineResponse200ParrotsItems parrotsItem) {
     this.parrots.add(parrotsItem);
     return this;
   }

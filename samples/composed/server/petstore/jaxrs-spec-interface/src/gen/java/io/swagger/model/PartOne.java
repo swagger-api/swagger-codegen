@@ -9,7 +9,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class PartOne   {
+public class PartOne  implements OneOfPartMasterDestination  {
   private @Valid String name = null;
 
   /**

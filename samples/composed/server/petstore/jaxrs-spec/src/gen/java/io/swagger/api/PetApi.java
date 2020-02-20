@@ -22,7 +22,7 @@ import javax.validation.Valid;
 
 @Path("/pet")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-02-17T23:42:41.269-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-02-20T00:57:03.140-05:00[America/Bogota]")
 public class PetApi {
 
     @POST
@@ -73,7 +73,7 @@ public class PetApi {
 , @PathParam("petId")
 
  @Parameter(description = "ID of pet to return") Long petId
-) {
+,) {
         return Response.ok().entity("magic!").build();
     }
     @GET

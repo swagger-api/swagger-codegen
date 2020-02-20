@@ -63,7 +63,7 @@ public class PetApiServiceImpl implements PetApi {
      * schedule pet feeding
      *
      */
-    public void feedPet(Pet body, String token, String petType, String status, Long petId) {
+    public void feedPet(Pet body, String token, String petType, String status, Long petId, ) {
         // TODO: Implement...
         
         

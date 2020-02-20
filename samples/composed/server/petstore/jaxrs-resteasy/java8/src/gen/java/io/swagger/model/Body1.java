@@ -10,17 +10,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 public class Body1   {
-  private List<Object> parrots = new ArrayList<>();
+  private List<AnyOfbody1ParrotsItems> parrots = new ArrayList<>();
 
   /**
    **/
   
   @Schema(description = "")
   @JsonProperty("parrots")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class PartOne  implements Serializable  {
+public class PartOne  implements Serializable , OneOfPartMasterDestination  {
   private @Valid String name = null;
 
   /**

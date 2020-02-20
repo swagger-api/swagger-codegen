@@ -31,7 +31,7 @@ public abstract class PetApiService {
       throws NotFoundException;
       public abstract Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response feedPet(Pet body,String token, @NotNull String petType, @NotNull String status,Long petId,SecurityContext securityContext)
+      public abstract Response feedPet(Pet body,String token, @NotNull String petType, @NotNull String status,Long petId,,SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response findPetsByStatus( @NotNull List<String> status,SecurityContext securityContext)
       throws NotFoundException;
