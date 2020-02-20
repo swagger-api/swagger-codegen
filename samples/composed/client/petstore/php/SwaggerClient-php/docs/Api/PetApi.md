@@ -167,7 +167,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **feedPet**
-> feedPet($body, $token, $pet_type, $status, $pet_id)
+> feedPet($body, $token, $pet_type, $status, $pet_id, $session_id)
 
 Find pet by ID
 
@@ -188,9 +188,10 @@ $token = "token_example"; // string | status
 $pet_type = "pet_type_example"; // string | type of food
 $status = "status_example"; // string | status
 $pet_id = 789; // int | ID of pet to return
+$session_id = "session_id_example"; // string | session id
 
 try {
-    $apiInstance->feedPet($body, $token, $pet_type, $status, $pet_id);
+    $apiInstance->feedPet($body, $token, $pet_type, $status, $pet_id, $session_id);
 } catch (Exception $e) {
     echo 'Exception when calling PetApi->feedPet: ', $e->getMessage(), PHP_EOL;
 }
@@ -206,6 +207,7 @@ Name | Type | Description  | Notes
  **pet_type** | **string**| type of food |
  **status** | **string**| status |
  **pet_id** | **int**| ID of pet to return |
+ **session_id** | **string**| session id |
 
 ### Return type
 

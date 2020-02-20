@@ -108,6 +108,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [AllPetsResponse](docs/Model/AllPetsResponse.md)
+ - [AnyOfbody1ParrotsItems](docs/Model/AnyOfbody1ParrotsItems.md)
  - [AnyOfbody2](docs/Model/AnyOfbody2.md)
  - [ApiResponse](docs/Model/ApiResponse.md)
  - [Body](docs/Model/Body.md)
@@ -120,9 +121,13 @@ Class | Method | HTTP request | Description
  - [InlineResponse2001](docs/Model/InlineResponse2001.md)
  - [Macaw](docs/Model/Macaw.md)
  - [OneOfAllPetsResponseItems](docs/Model/OneOfAllPetsResponseItems.md)
+ - [OneOfPartMasterDestination](docs/Model/OneOfPartMasterDestination.md)
  - [OneOfPartMasterOrigin](docs/Model/OneOfPartMasterOrigin.md)
+ - [OneOfPetPartItems](docs/Model/OneOfPetPartItems.md)
  - [OneOfPup](docs/Model/OneOfPup.md)
  - [OneOfinlineResponse2001](docs/Model/OneOfinlineResponse2001.md)
+ - [OneOfinlineResponse200ParrotsItems](docs/Model/OneOfinlineResponse200ParrotsItems.md)
+ - [OneOfvalMembersValMemberItems](docs/Model/OneOfvalMembersValMemberItems.md)
  - [Order](docs/Model/Order.md)
  - [Parakeet](docs/Model/Parakeet.md)
  - [PartFour](docs/Model/PartFour.md)

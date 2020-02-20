@@ -1,6 +1,6 @@
 <?php
 /**
- * Parakeet
+ * OneOfinlineResponse200ParrotsItems
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * Parakeet Class Doc Comment
+ * OneOfinlineResponse200ParrotsItems Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Parakeet implements ModelInterface, ArrayAccess
+class OneOfinlineResponse200ParrotsItems implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class Parakeet implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'Parakeet';
+    protected static $swaggerModelName = 'OneOfinline_response_200ParrotsItems';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,8 +56,7 @@ class Parakeet implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'color' => 'string',
-'sound_repeater' => 'bool'    ];
+            ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -65,8 +64,7 @@ class Parakeet implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'color' => null,
-'sound_repeater' => null    ];
+            ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -95,8 +93,7 @@ class Parakeet implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'color' => 'color',
-'sound_repeater' => 'soundRepeater'    ];
+            ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -104,8 +101,7 @@ class Parakeet implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'color' => 'setColor',
-'sound_repeater' => 'setSoundRepeater'    ];
+            ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -113,8 +109,7 @@ class Parakeet implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'color' => 'getColor',
-'sound_repeater' => 'getSoundRepeater'    ];
+            ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -174,8 +169,6 @@ class Parakeet implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['color'] = isset($data['color']) ? $data['color'] : null;
-        $this->container['sound_repeater'] = isset($data['sound_repeater']) ? $data['sound_repeater'] : null;
     }
 
     /**
@@ -201,54 +194,6 @@ class Parakeet implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets color
-     *
-     * @return string
-     */
-    public function getColor()
-    {
-        return $this->container['color'];
-    }
-
-    /**
-     * Sets color
-     *
-     * @param string $color color
-     *
-     * @return $this
-     */
-    public function setColor($color)
-    {
-        $this->container['color'] = $color;
-
-        return $this;
-    }
-
-    /**
-     * Gets sound_repeater
-     *
-     * @return bool
-     */
-    public function getSoundRepeater()
-    {
-        return $this->container['sound_repeater'];
-    }
-
-    /**
-     * Sets sound_repeater
-     *
-     * @param bool $sound_repeater sound_repeater
-     *
-     * @return $this
-     */
-    public function setSoundRepeater($sound_repeater)
-    {
-        $this->container['sound_repeater'] = $sound_repeater;
-
-        return $this;
-    }
     /**
      * Returns true if offset exists. False otherwise.
      *
