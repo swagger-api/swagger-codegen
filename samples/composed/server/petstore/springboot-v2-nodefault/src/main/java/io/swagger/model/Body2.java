@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
  * Body2
  */
 @Validated
-public class Body2  implements AnyOfbody_2 {
+public class Body2  implements AnyOfbody2 {
 
   @Override
   public boolean equals(java.lang.Object o) {

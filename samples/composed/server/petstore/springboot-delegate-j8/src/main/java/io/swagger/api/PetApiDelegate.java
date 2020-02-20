@@ -66,7 +66,8 @@ public interface PetApiDelegate {
          String  token,
          String  petType,
          String  status,
-         Long  petId) {
+         Long  petId,
+         String  sessionId) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default PetApi interface so no example is generated");

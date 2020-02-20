@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * Parakeet
  */
 @Validated
-public class Parakeet  implements AnyOfbody_2, OneOfinline_response_200_1 {
+public class Parakeet  implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001 {
   @JsonProperty("color")
   private String color = null;
 

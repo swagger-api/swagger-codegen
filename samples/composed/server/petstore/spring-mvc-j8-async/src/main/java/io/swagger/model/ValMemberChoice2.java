@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
 @Validated
-public class ValMemberChoice2   {
+public class ValMemberChoice2  implements OneOfvalMembersValMemberItems {
   @JsonProperty("val_leaving_date")
   private LocalDate valLeavingDate = null;
 
