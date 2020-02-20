@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
  * InlineResponse2001
  */
 @Validated
-public class InlineResponse2001  implements OneOfinline_response_200_1 {
+public class InlineResponse2001  implements OneOfinlineResponse2001 {
 
   @Override
   public boolean equals(java.lang.Object o) {

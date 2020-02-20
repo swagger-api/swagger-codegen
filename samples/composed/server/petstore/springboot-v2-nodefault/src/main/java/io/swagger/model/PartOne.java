@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * PartOne
  */
 @Validated
-public class PartOne   {
+public class PartOne  implements OneOfPartMasterDestination {
   @JsonProperty("name")
   private String name = null;
 

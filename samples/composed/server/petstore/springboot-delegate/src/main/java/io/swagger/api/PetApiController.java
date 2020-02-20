@@ -44,8 +44,9 @@ public class PetApiController implements PetApi {
 ,@NotNull @ApiParam(value = "type of food", required = true) @Valid @RequestParam(value = "petType", required = true) String petType
 ,@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status
 ,@ApiParam(value = "ID of pet to return",required=true) @PathVariable("petId") Long petId
-) {
-        return delegate.feedPet(body, token, petType, status, petId);
+,
+@ApiParam(value = "session id" ,required=true) @CookieValue(value="sessionId", required=true) String sessionId) {
+        return delegate.feedPet(body, token, petType, status, petId, sessionId);
     }
 
     public ResponseEntity<List<Pet>> findPetsByStatus(@NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @Valid @RequestParam(value = "status", required = true) List<String> status

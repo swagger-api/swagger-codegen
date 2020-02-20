@@ -18,14 +18,14 @@ import javax.validation.constraints.*;
 public class InlineResponse200   {
   @JsonProperty("parrots")
   @Valid
-  private List<Object> parrots = null;
+  private List<OneOfinlineResponse200ParrotsItems> parrots = null;
 
-  public InlineResponse200 parrots(List<Object> parrots) {
+  public InlineResponse200 parrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public InlineResponse200 addParrotsItem(Object parrotsItem) {
+  public InlineResponse200 addParrotsItem(OneOfinlineResponse200ParrotsItems parrotsItem) {
     if (this.parrots == null) {
       this.parrots = new ArrayList<>();
     }
@@ -39,11 +39,11 @@ public class InlineResponse200   {
   **/
   @ApiModelProperty(value = "")
   
-    public List<Object> getParrots() {
+    public List<OneOfinlineResponse200ParrotsItems> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

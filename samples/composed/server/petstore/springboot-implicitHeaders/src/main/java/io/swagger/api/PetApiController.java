@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -53,7 +54,8 @@ public class PetApiController implements PetApi {
 ,@NotNull @ApiParam(value = "type of food", required = true) @Valid @RequestParam(value = "petType", required = true) String petType
 ,@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status
 ,@ApiParam(value = "ID of pet to return",required=true) @PathVariable("petId") Long petId
-) {
+,
+@ApiParam(value = "session id" ,required=true) @CookieValue(value="sessionId", required=true) String sessionId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }

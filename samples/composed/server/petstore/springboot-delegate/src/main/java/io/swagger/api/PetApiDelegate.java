@@ -33,7 +33,8 @@ public interface PetApiDelegate {
          String  token,
          String  petType,
          String  status,
-         Long  petId);
+         Long  petId,
+         String  sessionId);
 
     /**
      * @see PetApi#findPetsByStatus
