@@ -18,7 +18,7 @@ open class Pet: JSONEncodable {
     public var name: String?
     /** pet status in the store */
     public var status: Status?
-    public var part: [Object]?
+    public var part: [OneOfPetPartItems]?
 
     public init() {}
 

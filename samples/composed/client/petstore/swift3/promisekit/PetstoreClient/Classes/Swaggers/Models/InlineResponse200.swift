@@ -9,7 +9,7 @@ import Foundation
 
 
 open class InlineResponse200: JSONEncodable {
-    public var parrots: [Object]?
+    public var parrots: [OneOfinlineResponse200ParrotsItems]?
 
     public init() {}
 

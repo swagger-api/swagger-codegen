@@ -17,6 +17,8 @@ open class PartMaster: JSONEncodable {
     // MARK: JSONEncodable
     open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
+        nillableDictionary["destination"] = self.destination?.encodeToJSON()
+        nillableDictionary["origin"] = self.origin?.encodeToJSON()
 
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
