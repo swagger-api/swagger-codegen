@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 @Path("/parrot")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-02-17T23:42:47.264-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-02-20T00:57:07.355-05:00[America/Bogota]")
 public interface ParrotApi {
 
     @POST

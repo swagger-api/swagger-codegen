@@ -14,11 +14,11 @@ import javax.xml.bind.annotation.*;
 
 
 public class InlineResponse200   {
-  private List<Object> parrots = new ArrayList<Object>();
+  private List<OneOfinlineResponse200ParrotsItems> parrots = new ArrayList<OneOfinlineResponse200ParrotsItems>();
 
   /**
    **/
-  public InlineResponse200 parrots(List<Object> parrots) {
+  public InlineResponse200 parrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
@@ -27,10 +27,10 @@ public class InlineResponse200   {
   
   @Schema(description = "")
   @JsonProperty("parrots")
-  public List<Object> getParrots() {
+  public List<OneOfinlineResponse200ParrotsItems> getParrots() {
     return parrots;
   }
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

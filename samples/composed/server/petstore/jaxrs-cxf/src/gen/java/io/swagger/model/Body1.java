@@ -19,26 +19,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class Body1   {
   
   @Schema(description = "")
-  private List<Object> parrots = null;
+  private List<AnyOfbody1ParrotsItems> parrots = null;
  /**
    * Get parrots
    * @return parrots
   **/
   @JsonProperty("parrots")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 
-  public Body1 parrots(List<Object> parrots) {
+  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public Body1 addParrotsItem(Object parrotsItem) {
+  public Body1 addParrotsItem(AnyOfbody1ParrotsItems parrotsItem) {
     this.parrots.add(parrotsItem);
     return this;
   }

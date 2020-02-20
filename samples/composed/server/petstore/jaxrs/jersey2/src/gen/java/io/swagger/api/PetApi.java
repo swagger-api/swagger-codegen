@@ -110,9 +110,12 @@ public class PetApi  {
 ,@Parameter(in = ParameterIn.QUERY, description = "type of food",required=true) @QueryParam("petType") String petType
 ,@Parameter(in = ParameterIn.QUERY, description = "status",required=true) @QueryParam("status") String status
 ,@Parameter(in = ParameterIn.PATH, description = "ID of pet to return",required=true) @PathParam("petId") Long petId
+,
+
+@Parameter(in = ParameterIn.COOKIE, description = "session id" ,required=true) String sessionId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.feedPet(body,token,petType,status,petId,securityContext);
+        return delegate.feedPet(body,token,petType,status,petId,sessionId,securityContext);
     }
     @GET
     @Path("/findByStatus")

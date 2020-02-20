@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
-public class Dog extends Pet implements OneOfPup, OneOfAllPetsResponseItems  {
+public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup  {
   private Boolean bark = null;
   /**
    * Gets or Sets breed

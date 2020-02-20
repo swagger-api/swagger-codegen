@@ -19,7 +19,7 @@ import javax.ws.rs.core.SecurityContext;
 public interface PetApiService {
       public Response addPet(Pet body, SecurityContext securityContext);
       public Response deletePet(Long petId, String apiKey, SecurityContext securityContext);
-      public Response feedPet(Pet body, String token, String petType, String status, Long petId, SecurityContext securityContext);
+      public Response feedPet(Pet body, String token, String petType, String status, Long petId, , SecurityContext securityContext);
       public Response findPetsByStatus(List<String> status, SecurityContext securityContext);
       public Response findPetsByTags(List<String> tags, SecurityContext securityContext);
       public Response getPetById(Long petId, SecurityContext securityContext);

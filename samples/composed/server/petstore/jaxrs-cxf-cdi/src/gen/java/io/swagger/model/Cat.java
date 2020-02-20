@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
 
 
 
-public class Cat extends Pet implements OneOfPup, OneOfAllPetsResponseItems  {
+public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup  {
   private Boolean hunts = null;
   private Integer age = null;
 

@@ -27,14 +27,14 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Business Term: Scheme Members Definition: Information about the Members of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
 public class ValMembers   {
   @JsonProperty("val_member")
-  private List<Object> valMember = new ArrayList<Object>();
+  private List<OneOfvalMembersValMemberItems> valMember = new ArrayList<OneOfvalMembersValMemberItems>();
 
-  public ValMembers valMember(List<Object> valMember) {
+  public ValMembers valMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
     return this;
   }
 
-  public ValMembers addValMemberItem(Object valMemberItem) {
+  public ValMembers addValMemberItem(OneOfvalMembersValMemberItems valMemberItem) {
     this.valMember.add(valMemberItem);
     return this;
   }
@@ -46,11 +46,11 @@ public class ValMembers   {
   @JsonProperty("val_member")
   @ApiModelProperty(required = true, value = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
   @NotNull
- @Size(min=1)  public List<Object> getValMember() {
+ @Size(min=1)  public List<OneOfvalMembersValMemberItems> getValMember() {
     return valMember;
   }
 
-  public void setValMember(List<Object> valMember) {
+  public void setValMember(List<OneOfvalMembersValMemberItems> valMember) {
     this.valMember = valMember;
   }
 

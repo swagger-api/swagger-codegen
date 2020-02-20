@@ -91,8 +91,8 @@ public class PetApi  {
 @Parameter(description = "status",required=true)  @QueryParam("status") String status
 , 
 @Parameter(description = "ID of pet to return",required=true) @PathParam("petId") Long petId
-) {
-        return delegate.feedPet(body, token, petType, status, petId, securityContext);
+, ) {
+        return delegate.feedPet(body, token, petType, status, petId, sessionId, securityContext);
     }
 
     @GET

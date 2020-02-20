@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Body2  implements Serializable , AnyOfbody_2  {
+public class Body2  implements Serializable , AnyOfbody2  {
 
 
   @Override

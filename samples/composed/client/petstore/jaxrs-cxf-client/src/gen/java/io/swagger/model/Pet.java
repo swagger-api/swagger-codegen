@@ -58,7 +58,7 @@ public class Pet   {
   private StatusEnum status = null;
   
   @Schema(description = "")
-  private List<Object> part = null;
+  private List<OneOfPetPartItems> part = null;
  /**
    * Get id
    * @return id
@@ -121,20 +121,20 @@ public class Pet   {
    * @return part
   **/
   @JsonProperty("part")
-  public List<Object> getPart() {
+  public List<OneOfPetPartItems> getPart() {
     return part;
   }
 
-  public void setPart(List<Object> part) {
+  public void setPart(List<OneOfPetPartItems> part) {
     this.part = part;
   }
 
-  public Pet part(List<Object> part) {
+  public Pet part(List<OneOfPetPartItems> part) {
     this.part = part;
     return this;
   }
 
-  public Pet addPartItem(Object partItem) {
+  public Pet addPartItem(OneOfPetPartItems partItem) {
     this.part.add(partItem);
     return this;
   }

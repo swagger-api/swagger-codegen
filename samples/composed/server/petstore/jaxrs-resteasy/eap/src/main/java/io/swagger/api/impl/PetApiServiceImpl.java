@@ -22,7 +22,7 @@ public class PetApiServiceImpl implements PetApi {
       // do some magic!
       return Response.ok().build();
   }
-      public Response feedPet(Pet body,String token,String petType,String status,Long petId,SecurityContext securityContext) {
+      public Response feedPet(Pet body,String token,String petType,String status,Long petId,,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }

@@ -1,7 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.model.OneOfPartMasterDestination;
-import io.swagger.model.OneOfPartMasterOrigin;
 import java.io.Serializable;
 import javax.validation.constraints.*;
 import javax.validation.Valid;

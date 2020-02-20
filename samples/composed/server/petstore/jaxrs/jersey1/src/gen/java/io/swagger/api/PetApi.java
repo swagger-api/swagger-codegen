@@ -94,9 +94,11 @@ public class PetApi  {
 ,
                 @ApiParam(value = "ID of pet to return",required=true) @PathParam("petId") Long petId        
 ,
+                        
+,
         @Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.feedPet(body,token,petType,status,petId,securityContext);
+        return delegate.feedPet(body,token,petType,status,petId,sessionId,securityContext);
     }
     @GET
     @Path("/findByStatus")

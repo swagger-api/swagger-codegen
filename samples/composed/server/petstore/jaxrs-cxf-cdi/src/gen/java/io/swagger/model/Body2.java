@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.*;
 
 
 
-public class Body2  implements AnyOfbody_2  {
+public class Body2  implements AnyOfbody2  {
 
 
   @Override

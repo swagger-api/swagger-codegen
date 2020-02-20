@@ -19,7 +19,7 @@ public interface PetApiService {
       throws NotFoundException;
       Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
       throws NotFoundException;
-      Response feedPet(Pet body,String token,String petType,String status,Long petId,SecurityContext securityContext)
+      Response feedPet(Pet body,String token,String petType,String status,Long petId,,SecurityContext securityContext)
       throws NotFoundException;
       Response findPetsByStatus(List<String> status,SecurityContext securityContext)
       throws NotFoundException;

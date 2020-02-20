@@ -62,7 +62,7 @@ public interface PetApi  {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation")
          })
-    Response feedPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Parameter(description = "status" ,required=true)@HeaderParam("token") String token, @NotNull @QueryParam("petType") String petType, @NotNull @QueryParam("status") String status, @PathParam("petId") Long petId,@Context SecurityContext securityContext);
+    Response feedPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Parameter(description = "status" ,required=true)@HeaderParam("token") String token, @NotNull @QueryParam("petType") String petType, @NotNull @QueryParam("status") String status, @PathParam("petId") Long petId,,@Context SecurityContext securityContext);
 
     @GET
     @Path("/findByStatus")

@@ -74,9 +74,9 @@ public class PetApi  {
     @Operation(summary = "Find pet by ID", description = "schedule pet feeding", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public Response feedPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Parameter(description = "status" ,required=true)@HeaderParam("token") String token, @NotNull  @QueryParam("petType") String petType, @NotNull  @QueryParam("status") String status, @PathParam("petId") Long petId,@Context SecurityContext securityContext)
+    public Response feedPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body,@Parameter(description = "status" ,required=true)@HeaderParam("token") String token, @NotNull  @QueryParam("petType") String petType, @NotNull  @QueryParam("status") String status, @PathParam("petId") Long petId,,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return service.feedPet(body,token,petType,status,petId,securityContext);
+        return service.feedPet(body,token,petType,status,petId,sessionId,securityContext);
     }
     @GET
     @Path("/findByStatus")

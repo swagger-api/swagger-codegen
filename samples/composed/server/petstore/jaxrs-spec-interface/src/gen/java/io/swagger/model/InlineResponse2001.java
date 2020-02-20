@@ -9,7 +9,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class InlineResponse2001  implements OneOfinline_response_200_1  {
+public class InlineResponse2001  implements OneOfinlineResponse2001  {
 
 
   @Override

@@ -1,7 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.model.OneOfPartMasterDestination;
-import io.swagger.model.OneOfPartMasterOrigin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;

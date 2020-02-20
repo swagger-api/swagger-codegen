@@ -14,11 +14,11 @@ import javax.xml.bind.annotation.*;
 
 
 public class Body1   {
-  private List<Object> parrots = new ArrayList<Object>();
+  private List<AnyOfbody1ParrotsItems> parrots = new ArrayList<AnyOfbody1ParrotsItems>();
 
   /**
    **/
-  public Body1 parrots(List<Object> parrots) {
+  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
@@ -27,10 +27,10 @@ public class Body1   {
   
   @Schema(description = "")
   @JsonProperty("parrots")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

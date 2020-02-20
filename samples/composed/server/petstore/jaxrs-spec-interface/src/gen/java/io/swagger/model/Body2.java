@@ -9,7 +9,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Body2  implements AnyOfbody_2  {
+public class Body2  implements AnyOfbody2  {
 
 
   @Override

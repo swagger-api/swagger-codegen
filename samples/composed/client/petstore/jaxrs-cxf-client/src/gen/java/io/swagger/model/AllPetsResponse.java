@@ -1,6 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.model.OneOfAllPetsResponseItems;
 import java.util.ArrayList;
 import java.util.List;
 

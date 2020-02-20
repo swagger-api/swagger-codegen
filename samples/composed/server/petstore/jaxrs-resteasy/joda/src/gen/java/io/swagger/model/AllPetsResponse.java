@@ -2,7 +2,6 @@ package io.swagger.model;
 
 import java.util.Objects;
 import java.util.ArrayList;
-import io.swagger.model.OneOfAllPetsResponseItems;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;

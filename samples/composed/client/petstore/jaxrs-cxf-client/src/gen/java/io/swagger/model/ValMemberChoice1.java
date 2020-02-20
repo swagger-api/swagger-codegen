@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
   * Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
  **/
 @Schema(description="Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
-public class ValMemberChoice1   {
+public class ValMemberChoice1  implements OneOfvalMembersValMemberItems  {
   
   @Schema(required = true, description = "Business Term: Date Of Birth Definition: The date of birth of the member. Purpose: To be able to uniquely identify a member within a scheme.")
  /**

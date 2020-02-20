@@ -24,6 +24,10 @@
 
 package io.swagger.api;
 
+import io.swagger.model.Body1;
+import io.swagger.model.Body2;
+import io.swagger.model.InlineResponse200;
+import io.swagger.model.InlineResponse2001;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import org.junit.Test;
@@ -71,6 +75,21 @@ public class PetApiTest {
     }
 
     /**
+     * Add a new parrow to the store
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void addParrotTest() {
+        Body2 body = null;
+        //InlineResponse2001 response = api.addParrot(body);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    /**
      * Add a new pet to the store
      *
      * @throws ApiException
@@ -116,7 +135,8 @@ public class PetApiTest {
         String petType = null;
         String status = null;
         Long petId = null;
-        //api.feedPet(body, token, petType, status, petId);
+        String sessionId = null;
+        //api.feedPet(body, token, petType, status, petId, sessionId);
         
         // TODO: test validations
         
@@ -157,6 +177,20 @@ public class PetApiTest {
         
     }
     /**
+     * get Parrots
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getParrotsTest() {
+        //List<Object> response = api.getParrots();
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    /**
      * Find pet by ID
      *
      * Returns a single pet
@@ -168,6 +202,21 @@ public class PetApiTest {
     public void getPetByIdTest() {
         Long petId = null;
         //Pet response = api.getPetById(petId);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    /**
+     * update parrots
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateParrotsTest() {
+        Body1 body = null;
+        //InlineResponse200 response = api.updateParrots(body);
         //assertNotNull(response);
         // TODO: test validations
         

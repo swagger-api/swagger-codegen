@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class InlineResponse2001  implements Serializable , OneOfinline_response_200_1  {
+public class InlineResponse2001  implements Serializable , OneOfinlineResponse2001  {
 
 
   @Override

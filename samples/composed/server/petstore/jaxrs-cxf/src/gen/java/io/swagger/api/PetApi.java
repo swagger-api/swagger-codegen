@@ -84,7 +84,7 @@ public interface PetApi  {
     @Operation(summary = "Find pet by ID", tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public void feedPet(@Valid Pet body, @HeaderParam("token") String token, @QueryParam("petType") @NotNull String petType, @QueryParam("status") @NotNull String status, @PathParam("petId") Long petId);
+    public void feedPet(@Valid Pet body, @HeaderParam("token") String token, @QueryParam("petType") @NotNull String petType, @QueryParam("status") @NotNull String status, @PathParam("petId") Long petId, );
 
     /**
      * Finds Pets by status

@@ -32,7 +32,7 @@ public class Pet   {
       return String.valueOf(value);
     }
   }
-  private StatusEnum status = null;  private List<Object> part = new ArrayList<>();
+  private StatusEnum status = null;  private List<OneOfPetPartItems> part = new ArrayList<>();
 
   /**
    **/
@@ -77,10 +77,10 @@ public class Pet   {
   
   @Schema(description = "")
   @JsonProperty("part")
-  public List<Object> getPart() {
+  public List<OneOfPetPartItems> getPart() {
     return part;
   }
-  public void setPart(List<Object> part) {
+  public void setPart(List<OneOfPetPartItems> part) {
     this.part = part;
   }
 
