@@ -27,14 +27,14 @@ import java.util.List;
 
 public class Body1 {
   @JsonProperty("parrots")
-  private List<Object> parrots = null;
+  private List<AnyOfbody1ParrotsItems> parrots = null;
 
-  public Body1 parrots(List<Object> parrots) {
+  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public Body1 addParrotsItem(Object parrotsItem) {
+  public Body1 addParrotsItem(AnyOfbody1ParrotsItems parrotsItem) {
     if (this.parrots == null) {
       this.parrots = new ArrayList<>();
     }
@@ -47,11 +47,11 @@ public class Body1 {
    * @return parrots
   **/
   @Schema(description = "")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

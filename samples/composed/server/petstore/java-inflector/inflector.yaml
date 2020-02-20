@@ -5,6 +5,7 @@ modelMappings:
   # to enable explicit mappings, use this syntax:
   DefinitionFromSwaggerSpecification: fully.qualified.path.to.Model
   AllPetsResponse : io.swagger.model.AllPetsResponse
+AnyOfbody1ParrotsItems : io.swagger.model.AnyOfbody1ParrotsItems
 AnyOfbody2 : io.swagger.model.AnyOfbody2
 Body : io.swagger.model.Body
 Body1 : io.swagger.model.Body1
@@ -17,9 +18,13 @@ InlineResponse2001 : io.swagger.model.InlineResponse2001
 Macaw : io.swagger.model.Macaw
 ModelApiResponse : io.swagger.model.ModelApiResponse
 OneOfAllPetsResponseItems : io.swagger.model.OneOfAllPetsResponseItems
+OneOfPartMasterDestination : io.swagger.model.OneOfPartMasterDestination
 OneOfPartMasterOrigin : io.swagger.model.OneOfPartMasterOrigin
+OneOfPetPartItems : io.swagger.model.OneOfPetPartItems
 OneOfPup : io.swagger.model.OneOfPup
 OneOfinlineResponse2001 : io.swagger.model.OneOfinlineResponse2001
+OneOfinlineResponse200ParrotsItems : io.swagger.model.OneOfinlineResponse200ParrotsItems
+OneOfvalMembersValMemberItems : io.swagger.model.OneOfvalMembersValMemberItems
 Order : io.swagger.model.Order
 Parakeet : io.swagger.model.Parakeet
 PartFour : io.swagger.model.PartFour

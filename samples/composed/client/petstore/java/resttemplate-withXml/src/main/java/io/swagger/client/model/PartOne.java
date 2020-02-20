@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "PartOne")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "PartOne")
-public class PartOne {
+public class PartOne implements OneOfPartMasterDestination {
   @JsonProperty("name")
   @JacksonXmlProperty(localName = "name")
   @XmlElement(name = "name")

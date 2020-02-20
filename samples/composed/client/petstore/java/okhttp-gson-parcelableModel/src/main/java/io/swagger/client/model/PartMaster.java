@@ -19,8 +19,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.client.model.OneOfPartMasterDestination;
-import io.swagger.client.model.OneOfPartMasterOrigin;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
@@ -124,8 +122,8 @@ public class PartMaster implements Parcelable {
   }
 
   PartMaster(Parcel in) {
-    destination = (OneOfPartMasterDestination)in.readValue(OneOfPartMasterDestination.class.getClassLoader());
-    origin = (OneOfPartMasterOrigin)in.readValue(OneOfPartMasterOrigin.class.getClassLoader());
+    destination = (OneOfPartMasterDestination)in.readValue(null);
+    origin = (OneOfPartMasterOrigin)in.readValue(null);
   }
 
   public int describeContents() {

@@ -73,6 +73,7 @@ public interface PetApi {
    * @param petType type of food (required)
    * @param status status (required)
    * @param petId ID of pet to return (required)
+   * @param sessionId session id (required)
    * @return Call&lt;Void&gt;
    */
   @Headers({
@@ -80,7 +81,7 @@ public interface PetApi {
   })
   @POST("pet/feed/{petId}")
   F.Promise<Response<Void>> feedPet(
-                    @retrofit2.http.Body Pet body    ,             @retrofit2.http.Header("token") String token        ,     @retrofit2.http.Query("petType") String petType                ,     @retrofit2.http.Query("status") String status                ,         @retrofit2.http.Path("petId") Long petId            
+                    @retrofit2.http.Body Pet body    ,             @retrofit2.http.Header("token") String token        ,     @retrofit2.http.Query("petType") String petType                ,     @retrofit2.http.Query("status") String status                ,         @retrofit2.http.Path("petId") Long petId            ,                     String sessionId
   );
 
   /**

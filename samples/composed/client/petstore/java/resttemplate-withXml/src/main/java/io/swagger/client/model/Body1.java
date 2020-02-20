@@ -33,18 +33,18 @@ public class Body1 {
   @JsonProperty("parrots")
   // Is a container wrapped=
   // items.name=parrots items.baseName=parrots items.xmlName= items.xmlNamespace=
-  // items.example= items.type=Object
+  // items.example= items.type=AnyOfbody1ParrotsItems
   @XmlElement(name = "parrots")
-  private List<Object> parrots = null;
+  private List<AnyOfbody1ParrotsItems> parrots = null;
 
-  public Body1 parrots(List<Object> parrots) {
+  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public Body1 addParrotsItem(Object parrotsItem) {
+  public Body1 addParrotsItem(AnyOfbody1ParrotsItems parrotsItem) {
     if (this.parrots == null) {
-      this.parrots = new ArrayList<Object>();
+      this.parrots = new ArrayList<AnyOfbody1ParrotsItems>();
     }
     this.parrots.add(parrotsItem);
     return this;
@@ -55,11 +55,11 @@ public class Body1 {
    * @return parrots
   **/
   @Schema(description = "")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 

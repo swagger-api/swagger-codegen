@@ -25,7 +25,7 @@ import javax.validation.Valid;
  */
 
 
-public class PartOne {
+public class PartOne implements OneOfPartMasterDestination {
   @JsonProperty("name")
   private String name = null;
 

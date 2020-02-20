@@ -156,9 +156,10 @@ public class PetApi {
      * @param petType type of food
      * @param status status
      * @param petId ID of pet to return
+     * @param sessionId session id
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void feedPet(Pet body, String token, String petType, String status, Long petId) throws RestClientException {
+    public void feedPet(Pet body, String token, String petType, String status, Long petId, String sessionId) throws RestClientException {
         Object postBody = body;
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -179,6 +180,10 @@ public class PetApi {
         // verify the required parameter 'petId' is set
         if (petId == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'petId' when calling feedPet");
+        }
+        // verify the required parameter 'sessionId' is set
+        if (sessionId == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'sessionId' when calling feedPet");
         }
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();

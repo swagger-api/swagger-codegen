@@ -30,7 +30,7 @@ import android.os.Parcel;
  */
 
 
-public class Cat extends Pet implements Parcelable , OneOfPup, OneOfAllPetsResponseItems {
+public class Cat extends Pet implements Parcelable , OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup {
   @SerializedName("hunts")
   private Boolean hunts = null;
 

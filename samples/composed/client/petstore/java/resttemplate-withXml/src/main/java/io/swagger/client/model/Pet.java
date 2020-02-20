@@ -80,9 +80,9 @@ public class Pet {
   @JsonProperty("part")
   // Is a container wrapped=
   // items.name=part items.baseName=part items.xmlName= items.xmlNamespace=
-  // items.example= items.type=Object
+  // items.example= items.type=OneOfPetPartItems
   @XmlElement(name = "part")
-  private List<Object> part = null;
+  private List<OneOfPetPartItems> part = null;
 
   public Pet id(Long id) {
     this.id = id;
@@ -138,14 +138,14 @@ public class Pet {
     this.status = status;
   }
 
-  public Pet part(List<Object> part) {
+  public Pet part(List<OneOfPetPartItems> part) {
     this.part = part;
     return this;
   }
 
-  public Pet addPartItem(Object partItem) {
+  public Pet addPartItem(OneOfPetPartItems partItem) {
     if (this.part == null) {
-      this.part = new ArrayList<Object>();
+      this.part = new ArrayList<OneOfPetPartItems>();
     }
     this.part.add(partItem);
     return this;
@@ -156,11 +156,11 @@ public class Pet {
    * @return part
   **/
   @Schema(description = "")
-  public List<Object> getPart() {
+  public List<OneOfPetPartItems> getPart() {
     return part;
   }
 
-  public void setPart(List<Object> part) {
+  public void setPart(List<OneOfPetPartItems> part) {
     this.part = part;
   }
 

@@ -917,7 +917,6 @@ components:
         oneOf:
         - $ref: '#/components/schemas/Dog'
         - $ref: '#/components/schemas/Cat'
-        x-model-name: OneOfAllPetsResponseItems
     Dog:
       allOf:
       - $ref: '#/components/schemas/Pet'

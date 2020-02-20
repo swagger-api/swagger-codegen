@@ -27,7 +27,7 @@ import javax.validation.Valid;
  */
 
 
-public class Cat extends Pet implements OneOfPup, OneOfAllPetsResponseItems {
+public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup {
   @JsonProperty("hunts")
   private Boolean hunts = null;
 

@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 
 
-public class Macaw implements AnyOfbody2, OneOfinlineResponse2001 {
+public class Macaw implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001 {
   @SerializedName("color")
   private String color = null;
 

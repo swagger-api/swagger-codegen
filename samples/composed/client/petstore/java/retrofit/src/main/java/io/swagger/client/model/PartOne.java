@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 
 
-public class PartOne {
+public class PartOne implements OneOfPartMasterDestination {
   @SerializedName("name")
   private String name = null;
 

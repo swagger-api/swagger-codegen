@@ -164,7 +164,7 @@ null (empty response body)
 
 <a name="feedPet"></a>
 # **feedPet**
-> feedPet(body, token, petType, status, petId)
+> feedPet(body, token, petType, status, petId, sessionId)
 
 Find pet by ID
 
@@ -183,8 +183,9 @@ String token = "token_example"; // String | status
 String petType = "petType_example"; // String | type of food
 String status = "status_example"; // String | status
 Long petId = 789L; // Long | ID of pet to return
+String sessionId = "sessionId_example"; // String | session id
 try {
-    apiInstance.feedPet(body, token, petType, status, petId);
+    apiInstance.feedPet(body, token, petType, status, petId, sessionId);
 } catch (ApiException e) {
     System.err.println("Exception when calling PetApi#feedPet");
     e.printStackTrace();
@@ -200,6 +201,7 @@ Name | Type | Description  | Notes
  **petType** | **String**| type of food |
  **status** | **String**| status |
  **petId** | **Long**| ID of pet to return |
+ **sessionId** | **String**| session id |
 
 ### Return type
 

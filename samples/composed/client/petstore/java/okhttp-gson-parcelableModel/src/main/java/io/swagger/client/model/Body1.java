@@ -32,18 +32,18 @@ import android.os.Parcel;
 
 public class Body1 implements Parcelable {
   @SerializedName("parrots")
-  private List<Object> parrots = null;
+  private List<AnyOfbody1ParrotsItems> parrots = null;
 
   public Body1() {
   }
-  public Body1 parrots(List<Object> parrots) {
+  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public Body1 addParrotsItem(Object parrotsItem) {
+  public Body1 addParrotsItem(AnyOfbody1ParrotsItems parrotsItem) {
     if (this.parrots == null) {
-      this.parrots = new ArrayList<Object>();
+      this.parrots = new ArrayList<AnyOfbody1ParrotsItems>();
     }
     this.parrots.add(parrotsItem);
     return this;
@@ -54,11 +54,11 @@ public class Body1 implements Parcelable {
    * @return parrots
   **/
   @Schema(description = "")
-  public List<Object> getParrots() {
+  public List<AnyOfbody1ParrotsItems> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<Object> parrots) {
+  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
     this.parrots = parrots;
   }
 
@@ -108,7 +108,7 @@ public class Body1 implements Parcelable {
   }
 
   Body1(Parcel in) {
-    parrots = (List<Object>)in.readValue(null);
+    parrots = (List<AnyOfbody1ParrotsItems>)in.readValue(null);
   }
 
   public int describeContents() {

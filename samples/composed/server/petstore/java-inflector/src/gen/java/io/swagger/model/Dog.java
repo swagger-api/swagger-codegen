@@ -10,7 +10,7 @@ import java.util.List;
 
 
 
-public class Dog extends Pet implements OneOfPup, OneOfAllPetsResponseItems  {
+public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup  {
   @JsonProperty("bark")
   private Boolean bark = null;
   /**

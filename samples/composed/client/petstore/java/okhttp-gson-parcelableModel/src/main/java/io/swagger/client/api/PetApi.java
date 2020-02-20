@@ -432,12 +432,13 @@ public class PetApi {
      * @param petType type of food (required)
      * @param status status (required)
      * @param petId ID of pet to return (required)
+     * @param sessionId session id (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call feedPetCall(Pet body, String token, String petType, String status, Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call feedPetCall(Pet body, String token, String petType, String status, Long petId, String sessionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -486,7 +487,7 @@ public class PetApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call feedPetValidateBeforeCall(Pet body, String token, String petType, String status, Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call feedPetValidateBeforeCall(Pet body, String token, String petType, String status, Long petId, String sessionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling feedPet(Async)");
@@ -507,8 +508,12 @@ public class PetApi {
         if (petId == null) {
             throw new ApiException("Missing the required parameter 'petId' when calling feedPet(Async)");
         }
+        // verify the required parameter 'sessionId' is set
+        if (sessionId == null) {
+            throw new ApiException("Missing the required parameter 'sessionId' when calling feedPet(Async)");
+        }
         
-        com.squareup.okhttp.Call call = feedPetCall(body, token, petType, status, petId, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = feedPetCall(body, token, petType, status, petId, sessionId, progressListener, progressRequestListener);
         return call;
 
         
@@ -525,10 +530,11 @@ public class PetApi {
      * @param petType type of food (required)
      * @param status status (required)
      * @param petId ID of pet to return (required)
+     * @param sessionId session id (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void feedPet(Pet body, String token, String petType, String status, Long petId) throws ApiException {
-        feedPetWithHttpInfo(body, token, petType, status, petId);
+    public void feedPet(Pet body, String token, String petType, String status, Long petId, String sessionId) throws ApiException {
+        feedPetWithHttpInfo(body, token, petType, status, petId, sessionId);
     }
 
     /**
@@ -539,11 +545,12 @@ public class PetApi {
      * @param petType type of food (required)
      * @param status status (required)
      * @param petId ID of pet to return (required)
+     * @param sessionId session id (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> feedPetWithHttpInfo(Pet body, String token, String petType, String status, Long petId) throws ApiException {
-        com.squareup.okhttp.Call call = feedPetValidateBeforeCall(body, token, petType, status, petId, null, null);
+    public ApiResponse<Void> feedPetWithHttpInfo(Pet body, String token, String petType, String status, Long petId, String sessionId) throws ApiException {
+        com.squareup.okhttp.Call call = feedPetValidateBeforeCall(body, token, petType, status, petId, sessionId, null, null);
         return apiClient.execute(call);
     }
 
@@ -555,11 +562,12 @@ public class PetApi {
      * @param petType type of food (required)
      * @param status status (required)
      * @param petId ID of pet to return (required)
+     * @param sessionId session id (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call feedPetAsync(Pet body, String token, String petType, String status, Long petId, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call feedPetAsync(Pet body, String token, String petType, String status, Long petId, String sessionId, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -580,7 +588,7 @@ public class PetApi {
             };
         }
 
-        com.squareup.okhttp.Call call = feedPetValidateBeforeCall(body, token, petType, status, petId, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = feedPetValidateBeforeCall(body, token, petType, status, petId, sessionId, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }

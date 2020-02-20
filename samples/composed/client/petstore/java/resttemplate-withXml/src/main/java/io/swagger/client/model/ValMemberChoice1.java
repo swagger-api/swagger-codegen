@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "member")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "member")
-public class ValMemberChoice1 {
+public class ValMemberChoice1 implements OneOfvalMembersValMemberItems {
   @JsonProperty("val_date_of_birth")
   @JacksonXmlProperty(localName = "date_of_birth")
   @XmlElement(name = "date_of_birth")
