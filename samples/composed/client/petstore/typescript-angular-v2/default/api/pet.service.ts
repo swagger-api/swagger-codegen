@@ -119,9 +119,10 @@ export class PetService {
      * @param petType type of food
      * @param status status
      * @param petId ID of pet to return
+     * @param sessionId session id
      */
-    public feedPet(body: Pet, token: string, petType: string, status: string, petId: number, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
-        return this.feedPetWithHttpInfo(body, token, petType, status, petId, extraHttpRequestParams)
+    public feedPet(body: Pet, token: string, petType: string, status: string, petId: number, sessionId: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+        return this.feedPetWithHttpInfo(body, token, petType, status, petId, sessionId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -419,9 +420,10 @@ export class PetService {
      * @param petType type of food
      * @param status status
      * @param petId ID of pet to return
+     * @param sessionId session id
      
      */
-    public feedPetWithHttpInfo(body: Pet, token: string, petType: string, status: string, petId: number, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public feedPetWithHttpInfo(body: Pet, token: string, petType: string, status: string, petId: number, sessionId: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling feedPet.');
@@ -441,6 +443,10 @@ export class PetService {
 
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling feedPet.');
+        }
+
+        if (sessionId === null || sessionId === undefined) {
+            throw new Error('Required parameter sessionId was null or undefined when calling feedPet.');
         }
 
         let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());

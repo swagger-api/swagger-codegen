@@ -9,10 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { OneOfPartMasterDestination } from './oneOfPartMasterDestination';
-import { OneOfPartMasterOrigin } from './oneOfPartMasterOrigin';
+import { PartFour } from './partFour';
+import { PartOne } from './partOne';
+import { PartThree } from './partThree';
+import { PartTwo } from './partTwo';
 
 export interface PartMaster { 
-    destination?: OneOfPartMasterDestination;
-    origin?: OneOfPartMasterOrigin;
+    destination?: PartOne | PartTwo;
+    origin?: PartThree | PartFour;
 }
