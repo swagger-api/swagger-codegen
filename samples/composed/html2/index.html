@@ -702,7 +702,8 @@
     } ]
   }
 };
-            defs.AnyOfbody_2 = ;
+            defs.AnyOfbody_1ParrotsItems = {};
+            defs.AnyOfbody_2 = {};
             defs.ApiResponse = {
   "type" : "object",
   "properties" : {
@@ -849,10 +850,14 @@
     }
   }
 };
-            defs.OneOfAllPetsResponseItems = ;
-            defs.OneOfPartMasterOrigin = ;
-            defs.OneOfPup = ;
-            defs.OneOfinline_response_200_1 = ;
+            defs.OneOfAllPetsResponseItems = {};
+            defs.OneOfPartMasterDestination = {};
+            defs.OneOfPartMasterOrigin = {};
+            defs.OneOfPetPartItems = {};
+            defs.OneOfPup = {};
+            defs.OneOfinline_response_200ParrotsItems = {};
+            defs.OneOfinline_response_200_1 = {};
+            defs.OneOfval_MembersVal_memberItems = {};
             defs.Order = {
   "type" : "object",
   "properties" : {
@@ -2475,8 +2480,9 @@ public class PetApiExample {
         String petType = petType_example; // String | type of food
         String status = status_example; // String | status
         Long petId = 789; // Long | ID of pet to return
+        String sessionId = sessionId_example; // String | session id
         try {
-            apiInstance.feedPet(body, token, petType, status, petId);
+            apiInstance.feedPet(body, token, petType, status, petId, sessionId);
         } catch (ApiException e) {
             System.err.println("Exception when calling PetApi#feedPet");
             e.printStackTrace();
@@ -2497,8 +2503,9 @@ public class PetApiExample {
         String petType = petType_example; // String | type of food
         String status = status_example; // String | status
         Long petId = 789; // Long | ID of pet to return
+        String sessionId = sessionId_example; // String | session id
         try {
-            apiInstance.feedPet(body, token, petType, status, petId);
+            apiInstance.feedPet(body, token, petType, status, petId, sessionId);
         } catch (ApiException e) {
             System.err.println("Exception when calling PetApi#feedPet");
             e.printStackTrace();
@@ -2516,6 +2523,7 @@ String *token = token_example; // status
 String *petType = petType_example; // type of food
 String *status = status_example; // status
 Long *petId = 789; // ID of pet to return
+String *sessionId = sessionId_example; // session id
 
 PetApi *apiInstance = [[PetApi alloc] init];
 
@@ -2525,6 +2533,7 @@ PetApi *apiInstance = [[PetApi alloc] init];
     petType:petType
     status:status
     petId:petId
+    sessionId:sessionId
               completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
@@ -2542,6 +2551,7 @@ var token = token_example; // {{String}} status
 var petType = petType_example; // {{String}} type of food
 var status = status_example; // {{String}} status
 var petId = 789; // {{Long}} ID of pet to return
+var sessionId = sessionId_example; // {{String}} session id
 
 var callback = function(error, data, response) {
   if (error) {
@@ -2550,7 +2560,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.feedPet(bodytokenpetTypestatuspetId, callback);
+api.feedPet(bodytokenpetTypestatuspetIdsessionId, callback);
 </code></pre>
                             </div>
 
@@ -2577,11 +2587,12 @@ namespace Example
             var petType = petType_example;  // String | type of food
             var status = status_example;  // String | status
             var petId = 789;  // Long | ID of pet to return
+            var sessionId = sessionId_example;  // String | session id
 
             try
             {
                 // Find pet by ID
-                apiInstance.feedPet(body, token, petType, status, petId);
+                apiInstance.feedPet(body, token, petType, status, petId, sessionId);
             }
             catch (Exception e)
             {
@@ -2603,9 +2614,10 @@ $token = token_example; // String | status
 $petType = petType_example; // String | type of food
 $status = status_example; // String | status
 $petId = 789; // Long | ID of pet to return
+$sessionId = sessionId_example; // String | session id
 
 try {
-    $api_instance->feedPet($body, $token, $petType, $status, $petId);
+    $api_instance->feedPet($body, $token, $petType, $status, $petId, $sessionId);
 } catch (Exception $e) {
     echo 'Exception when calling PetApi->feedPet: ', $e->getMessage(), PHP_EOL;
 }
@@ -2623,9 +2635,10 @@ my $token = token_example; # String | status
 my $petType = petType_example; # String | type of food
 my $status = status_example; # String | status
 my $petId = 789; # Long | ID of pet to return
+my $sessionId = sessionId_example; # String | session id
 
 eval { 
-    $api_instance->feedPet(body => $body, token => $token, petType => $petType, status => $status, petId => $petId);
+    $api_instance->feedPet(body => $body, token => $token, petType => $petType, status => $status, petId => $petId, sessionId => $sessionId);
 };
 if ($@) {
     warn "Exception when calling PetApi->feedPet: $@\n";
@@ -2646,10 +2659,11 @@ token = token_example # String | status
 petType = petType_example # String | type of food
 status = status_example # String | status
 petId = 789 # Long | ID of pet to return
+sessionId = sessionId_example # String | session id
 
 try: 
     # Find pet by ID
-    api_instance.feed_pet(body, token, petType, status, petId)
+    api_instance.feed_pet(body, token, petType, status, petId, sessionId)
 except ApiException as e:
     print("Exception when calling PetApi->feedPet: %s\n" % e)</code></pre>
                             </div>
