@@ -9,8 +9,6 @@ export * from './dog';
 export * from './inlineResponse200';
 export * from './inlineResponse2001';
 export * from './macaw';
-export * from './oneOfAllPetsResponseItems';
-export * from './oneOfPartMasterOrigin';
 export * from './order';
 export * from './parakeet';
 export * from './partFour';
