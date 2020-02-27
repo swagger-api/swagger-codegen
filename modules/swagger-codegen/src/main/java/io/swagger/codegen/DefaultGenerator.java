@@ -378,7 +378,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         for (String name : modelKeys) {
             try {
                 //don't generate models that have an import mapping
-                if (config.importMapping().containsKey(name)) {
+                if (!config.getIgnoreImportMapping() && config.importMapping().containsKey(name)) {
                     LOGGER.info("Model " + name + " not imported due to import mapping");
                     continue;
                 }
@@ -409,7 +409,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             models.put("modelPackage", config.modelPackage());
             try {
                 //don't generate models that have an import mapping
-                if (config.importMapping().containsKey(modelName)) {
+                if (!config.getIgnoreImportMapping() && config.importMapping().containsKey(modelName)) {
                     continue;
                 }
                 Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);

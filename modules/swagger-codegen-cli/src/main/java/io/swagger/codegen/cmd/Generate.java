@@ -175,6 +175,9 @@ public class Generate implements Runnable {
     @Option(name = {"--skip-alias-generation"}, title = "skip alias generation.", description = "skip code generation for models identified as alias.")
     private Boolean skipAliasGeneration;
 
+    @Option(name = {"--ignore-import-mapping"}, title = "ignore import mapping", description = "allow generate model classes using names previously listed on import mappings.")
+    private String ignoreImportMappings;
+
     @Override
     public void run() {
 
@@ -278,6 +281,10 @@ public class Generate implements Runnable {
 
         if (skipAliasGeneration != null) {
             configurator.setSkipAliasGeneration(removeOperationIdPrefix);
+        }
+
+        if (ignoreImportMappings != null) {
+            additionalProperties.add(String.format("%s=%s", CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION, Boolean.parseBoolean(ignoreImportMappings)));
         }
 
         applySystemPropertiesKvpList(systemProperties, configurator);
