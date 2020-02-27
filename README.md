@@ -10,7 +10,7 @@
 [![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-master)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 
-- 3.0.17-SNAPSHOT:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+- 3.0.19-SNAPSHOT:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-3)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=3.0.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 
@@ -70,7 +70,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.16</version>
+    <version>3.0.18</version>
 </dependency>
 ```
 
@@ -134,8 +134,10 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
-3.0.17-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.17-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.16](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.16) (**current stable**) | 2020-01-15   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.16](https://github.com/swagger-api/swagger-codegen/tree/v3.0.16)
+3.0.19-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.19-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.18](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.18) (**current stable**) | 2020-02-26   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.18](https://github.com/swagger-api/swagger-codegen/tree/v3.0.18)
+[3.0.17](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.17) (**current stable**) | 2020-02-23   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.17](https://github.com/swagger-api/swagger-codegen/tree/v3.0.17)
+[3.0.17](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.16) (**current stable**) | 2020-01-15   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.16](https://github.com/swagger-api/swagger-codegen/tree/v3.0.16)
 [3.0.15](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.15) (**current stable**) | 2020-01-03   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.15](https://github.com/swagger-api/swagger-codegen/tree/v3.0.15)
 [3.0.14](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.14) | 2019-11-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.14](https://github.com/swagger-api/swagger-codegen/tree/v3.0.14)
 [3.0.13](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.13) | 2019-10-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.13](https://github.com/swagger-api/swagger-codegen/tree/v3.0.13)
@@ -179,7 +181,11 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 8 runtime at a minimum):
 
 ```sh
+# Download current stable 2.x.x branch (Swagger and OpenAPI version 2)
 wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.12/swagger-codegen-cli-2.4.12.jar -O swagger-codegen-cli.jar
+
+# Download current stable 3.x.x branch (OpenAPI version 3)
+wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.18/swagger-codegen-cli-3.0.18.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 ```
