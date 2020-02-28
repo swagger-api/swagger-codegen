@@ -122,7 +122,6 @@ public class JavaScriptModelEnumTest {
         Assert.assertTrue(prope.items.isEnum);
         Assert.assertEquals(prope.items.allowableValues.get("values"), Arrays.asList("fish", "crab"));
         Assert.assertEquals(prope.items.allowableValues.get("enumVars"), Arrays.asList(fish, crab));
-
     }
 
     @Test(description = "test enum model for values (numeric, string, etc)")
@@ -142,12 +141,11 @@ public class JavaScriptModelEnumTest {
         Assert.assertEquals(prope.allowableValues.get("values"), Arrays.asList(1, -1));
 
         HashMap<String, String> one = new HashMap<String, String>();
-        one.put("name", "1");
+        one.put("name", "_1");
         one.put("value", "1");
         HashMap<String, String> minusOne = new HashMap<String, String>();
-        minusOne.put("name", "-1");
+        minusOne.put("name", "_1_2");
         minusOne.put("value", "-1");
         Assert.assertEquals(prope.allowableValues.get("enumVars"), Arrays.asList(one, minusOne));
-
     }
 }

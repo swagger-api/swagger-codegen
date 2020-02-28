@@ -1,4 +1,4 @@
-FROM jimschubert/8-jdk-alpine-mvn:1.0
+FROM maven:3-jdk-8-alpine
 
 RUN set -x && \
     apk add --no-cache bash
@@ -18,6 +18,7 @@ COPY ./google_checkstyle.xml ${GEN_DIR}
 COPY ./modules/swagger-codegen-maven-plugin ${GEN_DIR}/modules/swagger-codegen-maven-plugin
 COPY ./modules/swagger-codegen-cli ${GEN_DIR}/modules/swagger-codegen-cli
 COPY ./modules/swagger-codegen ${GEN_DIR}/modules/swagger-codegen
+COPY ./modules/swagger-generator ${GEN_DIR}/modules/swagger-generator
 COPY ./pom.xml ${GEN_DIR}
 
 # Pre-compile swagger-codegen-cli
