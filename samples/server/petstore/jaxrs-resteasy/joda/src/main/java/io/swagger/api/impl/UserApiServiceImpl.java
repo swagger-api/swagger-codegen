@@ -51,7 +51,7 @@ public class UserApiServiceImpl implements UserApiService {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
-      public Response updateUser(User body,String username,SecurityContext securityContext)
+      public Response userUsernamePut(User body,String username,SecurityContext securityContext)
       throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();

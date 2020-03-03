@@ -5,9 +5,11 @@ import io.swagger.model.*;
 
 import com.sun.jersey.multipart.FormDataParam;
 
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
 
 import java.util.Map;
 import java.util.List;
@@ -30,7 +32,11 @@ public abstract class PetApiService {
       throws NotFoundException;
       public abstract Response findPetsByTags( @NotNull List<String> tags,SecurityContext securityContext)
       throws NotFoundException;
+      public abstract Response getAllPets(SecurityContext securityContext)
+      throws NotFoundException;
       public abstract Response getPetById(Long petId,SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response getRandomPet(SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response updatePet(Pet body,SecurityContext securityContext)
       throws NotFoundException;

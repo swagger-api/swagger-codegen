@@ -6,6 +6,7 @@ import io.swagger.api.factories.FakeClassnameTags123ApiServiceFactory;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -67,7 +68,7 @@ public class FakeClassnameTags123Api  {
         @SecurityRequirement(name = "api_key_query")    }, tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
-    public Response testClassname(@Parameter(description = "client model" ,required=true) Client body
+    public Response testClassname(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

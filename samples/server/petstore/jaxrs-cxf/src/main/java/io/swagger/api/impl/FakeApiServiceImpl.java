@@ -2,6 +2,10 @@ package io.swagger.api.impl;
 
 import io.swagger.api.*;
 import java.math.BigDecimal;
+import io.swagger.model.Body2;
+import io.swagger.model.Body3;
+import io.swagger.model.Body4;
+import io.swagger.model.Body5;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
 
@@ -66,7 +70,7 @@ public class FakeApiServiceImpl implements FakeApi {
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      *
      */
-    public void testEndpointParameters(Object body) {
+    public void testEndpointParameters(Body2 body) {
         // TODO: Implement...
         
         
@@ -78,7 +82,19 @@ public class FakeApiServiceImpl implements FakeApi {
      * To test enum parameters
      *
      */
-    public void testEnumParameters(Object body, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) {
+    public void testEnumParameters(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) {
+        // TODO: Implement...
+        
+        
+    }
+    
+    /**
+     * To test enum parameters
+     *
+     * To test enum parameters
+     *
+     */
+    public void testEnumRequestBody(Body4 body) {
         // TODO: Implement...
         
         
@@ -98,7 +114,7 @@ public class FakeApiServiceImpl implements FakeApi {
      * test json serialization of form data
      *
      */
-    public void testJsonFormData(Object body) {
+    public void testJsonFormData(Body5 body) {
         // TODO: Implement...
         
         
