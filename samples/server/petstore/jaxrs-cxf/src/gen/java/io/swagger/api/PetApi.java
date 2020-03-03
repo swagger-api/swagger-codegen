@@ -1,8 +1,10 @@
 package io.swagger.api;
 
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -84,6 +86,14 @@ public interface PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid tag value") })
     public List<Pet> findPetsByTags(@QueryParam("tags") @NotNull List<String> tags);
 
+    @GET
+    @Path("/allPets")
+    @Produces({ "application/json" })
+    @Operation(summary = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(schema = @Schema(implementation = AllPetsResponse.class))) })
+    public AllPetsResponse getAllPets();
+
     /**
      * Find pet by ID
      *
@@ -99,6 +109,14 @@ public interface PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found") })
     public Pet getPetById(@PathParam("petId") Long petId);
+
+    @GET
+    @Path("/randomPet")
+    @Produces({ "application/json" })
+    @Operation(summary = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(schema = @Schema(implementation = SinglePetResponse.class))) })
+    public SinglePetResponse getRandomPet();
 
     /**
      * Update an existing pet

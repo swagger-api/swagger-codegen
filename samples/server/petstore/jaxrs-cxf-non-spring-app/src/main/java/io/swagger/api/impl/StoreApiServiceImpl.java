@@ -19,17 +19,17 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 /**
  * Swagger Petstore
  *
- * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * <p>This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  */
 public class StoreApiServiceImpl implements StoreApi {
     /**
      * Delete purchase order by ID
      *
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
      *
      */
-    public void deleteOrder(String orderId) {
+    public void deleteOrder(Long orderId) {
         // TODO: Implement...
         
         
@@ -50,7 +50,7 @@ public class StoreApiServiceImpl implements StoreApi {
     /**
      * Find purchase order by ID
      *
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10.\\ \\ Other values will generated exceptions
      *
      */
     public Order getOrderById(Long orderId) {

@@ -2,7 +2,6 @@ package io.swagger.model;
 
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +17,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-/**
-  * A pet for sale in the pet store
- **/
-@Schema(description="A pet for sale in the pet store")
 public class Pet   {
   
   @Schema(description = "")

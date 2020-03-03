@@ -2,17 +2,14 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-/**
- * An order for a pets from the pet store
- **/
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@Schema(description = "An order for a pets from the pet store")
+
 
 public class Order   {
   private Long id = null;
