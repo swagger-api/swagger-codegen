@@ -1813,17 +1813,16 @@ components:
           id: 1
         status: "available"
 
-  NullableEnumModel:
-    type: object
-    properties:
-      enumProp:
-        type: string
-        nullable: true
-        enum:
-          - a
-          - b
-          - null
-
+    NullableEnumModel:
+      type: object
+      properties:
+        enumProp:
+          type: string
+          nullable: true
+          enum:
+            - a
+            - b
+            - null
     SinglePetResponse:
       type: object
       properties:
