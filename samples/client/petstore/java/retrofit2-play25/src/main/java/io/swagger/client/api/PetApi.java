@@ -9,9 +9,11 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import io.swagger.client.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SinglePetResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,6 +73,15 @@ public interface PetApi {
   );
 
   /**
+   * 
+   * 
+   * @return Call&lt;AllPetsResponse&gt;
+   */
+  @GET("allPets")
+  CompletionStage<Response<AllPetsResponse>> getAllPets();
+    
+
+  /**
    * Find pet by ID
    * Returns a single pet
    * @param petId ID of pet to return (required)
@@ -80,6 +91,15 @@ public interface PetApi {
   CompletionStage<Response<Pet>> getPetById(
             @retrofit2.http.Path("petId") Long petId            
   );
+
+  /**
+   * 
+   * 
+   * @return Call&lt;SinglePetResponse&gt;
+   */
+  @GET("randomPet")
+  CompletionStage<Response<SinglePetResponse>> getRandomPet();
+    
 
   /**
    * Update an existing pet
