@@ -725,6 +725,16 @@ components:
     Test:
       type: string
       example: ""
+    NullableEnumModel:
+      type: object
+      properties:
+        enumProp:
+          type: string
+          nullable: true
+          enum:
+            - a
+            - b
+            - null
   requestBodies:
     Pet:
       content:
