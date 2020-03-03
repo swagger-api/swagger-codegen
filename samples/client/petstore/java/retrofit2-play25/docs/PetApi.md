@@ -8,7 +8,9 @@ Method | HTTP request | Description
 [**deletePet**](PetApi.md#deletePet) | **DELETE** pet/{petId} | Deletes a pet
 [**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** pet/findByStatus | Finds Pets by status
 [**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** pet/findByTags | Finds Pets by tags
+[**getAllPets**](PetApi.md#getAllPets) | **GET** allPets | 
 [**getPetById**](PetApi.md#getPetById) | **GET** pet/{petId} | Find pet by ID
+[**getRandomPet**](PetApi.md#getRandomPet) | **GET** randomPet | 
 [**updatePet**](PetApi.md#updatePet) | **PUT** pet | Update an existing pet
 [**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** pet/{petId} | Updates a pet in the store with form data
 [**uploadFile**](PetApi.md#uploadFile) | **POST** pet/{petId}/uploadImage | uploads an image
@@ -223,6 +225,45 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
 
+<a name="getAllPets"></a>
+# **getAllPets**
+> AllPetsResponse getAllPets()
+
+
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+try {
+    AllPetsResponse result = apiInstance.getAllPets();
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#getAllPets");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AllPetsResponse**](AllPetsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
 <a name="getPetById"></a>
 # **getPetById**
 > Pet getPetById(petId)
@@ -277,6 +318,45 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
+
+<a name="getRandomPet"></a>
+# **getRandomPet**
+> SinglePetResponse getRandomPet()
+
+
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+try {
+    SinglePetResponse result = apiInstance.getRandomPet();
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#getRandomPet");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SinglePetResponse**](SinglePetResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 <a name="updatePet"></a>
 # **updatePet**

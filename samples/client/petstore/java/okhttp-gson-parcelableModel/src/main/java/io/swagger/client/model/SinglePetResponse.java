@@ -19,7 +19,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.client.model.OneOfSinglePetResponsePet;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
@@ -99,7 +98,7 @@ public class SinglePetResponse implements Parcelable {
   }
 
   SinglePetResponse(Parcel in) {
-    pet = (OneOfSinglePetResponsePet)in.readValue(OneOfSinglePetResponsePet.class.getClassLoader());
+    pet = (OneOfSinglePetResponsePet)in.readValue(null);
   }
 
   public int describeContents() {
