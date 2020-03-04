@@ -14,14 +14,19 @@ package io.swagger.client.models
 
 /**
  * 
- * @param code 
- * @param type 
- * @param message 
+ * @param enumProp 
  */
-data class ApiResponse (
+data class NullableEnumModel (
 
-    val code: kotlin.Int? = null,
-    val type: kotlin.String? = null,
-    val message: kotlin.String? = null
+    val enumProp: NullableEnumModel.EnumProp? = null
 ) {
+    /**
+    * 
+    * Values: a,b,`null`
+    */
+    enum class EnumProp(val value: kotlin.String){
+        a("a"),
+        b("b"),
+        `null`(null);
+    }
 }

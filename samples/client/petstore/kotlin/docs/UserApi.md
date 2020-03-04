@@ -1,6 +1,6 @@
 # UserApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**getUserByName**](UserApi.md#getUserByName) | **GET** /user/{username} | Get user by user name
 [**loginUser**](UserApi.md#loginUser) | **GET** /user/login | Logs user into the system
 [**logoutUser**](UserApi.md#logoutUser) | **GET** /user/logout | Logs out current logged in user session
-[**updateUser**](UserApi.md#updateUser) | **PUT** /user/{username} | Updated user
+[**userUsernamePut**](UserApi.md#userUsernamePut) | **PUT** /user/{username} | Updated user
 
 <a name="createUser"></a>
 # **createUser**
@@ -25,7 +25,7 @@ This can only be done by the logged in user.
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
 val body : User =  // User | Created user object
@@ -56,7 +56,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 <a name="createUsersWithArrayInput"></a>
@@ -69,7 +69,7 @@ Creates list of users with given input array
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
 val body : kotlin.Array<User> =  // kotlin.Array<User> | List of user object
@@ -100,7 +100,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 <a name="createUsersWithListInput"></a>
@@ -113,7 +113,7 @@ Creates list of users with given input array
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
 val body : kotlin.Array<User> =  // kotlin.Array<User> | List of user object
@@ -144,7 +144,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 <a name="deleteUser"></a>
@@ -159,10 +159,10 @@ This can only be done by the logged in user.
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
-val username : kotlin.String =  // kotlin.String | The name that needs to be deleted
+val username : kotlin.String = username_example // kotlin.String | The name that needs to be deleted
 try {
     apiInstance.deleteUser(username)
 } catch (e: ClientException) {
@@ -178,7 +178,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**kotlin.String**](.md)| The name that needs to be deleted |
+ **username** | **kotlin.String**| The name that needs to be deleted |
 
 ### Return type
 
@@ -203,10 +203,10 @@ Get user by user name
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
-val username : kotlin.String =  // kotlin.String | The name that needs to be fetched. Use user1 for testing. 
+val username : kotlin.String = username_example // kotlin.String | The name that needs to be fetched. Use user1 for testing.
 try {
     val result : User = apiInstance.getUserByName(username)
     println(result)
@@ -223,7 +223,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**kotlin.String**](.md)| The name that needs to be fetched. Use user1 for testing.  |
+ **username** | **kotlin.String**| The name that needs to be fetched. Use user1 for testing. |
 
 ### Return type
 
@@ -236,7 +236,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="loginUser"></a>
 # **loginUser**
@@ -248,11 +248,11 @@ Logs user into the system
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
-val username : kotlin.String =  // kotlin.String | The user name for login
-val password : kotlin.String =  // kotlin.String | The password for login in clear text
+val username : kotlin.String = username_example // kotlin.String | The user name for login
+val password : kotlin.String = password_example // kotlin.String | The password for login in clear text
 try {
     val result : kotlin.String = apiInstance.loginUser(username, password)
     println(result)
@@ -269,8 +269,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**kotlin.String**](.md)| The user name for login |
- **password** | [**kotlin.String**](.md)| The password for login in clear text |
+ **username** | **kotlin.String**| The user name for login |
+ **password** | **kotlin.String**| The password for login in clear text |
 
 ### Return type
 
@@ -283,7 +283,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="logoutUser"></a>
 # **logoutUser**
@@ -295,7 +295,7 @@ Logs out current logged in user session
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
 try {
@@ -325,9 +325,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
-<a name="updateUser"></a>
-# **updateUser**
-> updateUser(body, username)
+<a name="userUsernamePut"></a>
+# **userUsernamePut**
+> userUsernamePut(body, username)
 
 Updated user
 
@@ -337,18 +337,18 @@ This can only be done by the logged in user.
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = UserApi()
 val body : User =  // User | Updated user object
-val username : kotlin.String =  // kotlin.String | name that need to be deleted
+val username : kotlin.String = username_example // kotlin.String | name that need to be updated
 try {
-    apiInstance.updateUser(body, username)
+    apiInstance.userUsernamePut(body, username)
 } catch (e: ClientException) {
-    println("4xx response calling UserApi#updateUser")
+    println("4xx response calling UserApi#userUsernamePut")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling UserApi#updateUser")
+    println("5xx response calling UserApi#userUsernamePut")
     e.printStackTrace()
 }
 ```
@@ -358,7 +358,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**User**](User.md)| Updated user object |
- **username** | [**kotlin.String**](.md)| name that need to be deleted |
+ **username** | **kotlin.String**| name that need to be updated |
 
 ### Return type
 
@@ -370,6 +370,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 

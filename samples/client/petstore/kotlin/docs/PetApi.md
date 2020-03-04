@@ -1,6 +1,6 @@
 # PetApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,9 @@ Method | HTTP request | Description
 [**deletePet**](PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
 [**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** /pet/findByTags | Finds Pets by tags
+[**getAllPets**](PetApi.md#getAllPets) | **GET** /allPets | 
 [**getPetById**](PetApi.md#getPetById) | **GET** /pet/{petId} | Find pet by ID
+[**getRandomPet**](PetApi.md#getRandomPet) | **GET** /randomPet | 
 [**updatePet**](PetApi.md#updatePet) | **PUT** /pet | Update an existing pet
 [**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**uploadFile**](PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -23,7 +25,7 @@ Add a new pet to the store
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
 val body : Pet =  // Pet | Pet object that needs to be added to the store
@@ -67,11 +69,11 @@ Deletes a pet
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
-val petId : kotlin.Int =  // kotlin.Int | Pet id to delete
-val apiKey : kotlin.String =  // kotlin.String | 
+val petId : kotlin.Long = 789 // kotlin.Long | Pet id to delete
+val apiKey : kotlin.String = apiKey_example // kotlin.String | 
 try {
     apiInstance.deletePet(petId, apiKey)
 } catch (e: ClientException) {
@@ -87,8 +89,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**kotlin.Int**](.md)| Pet id to delete |
- **apiKey** | [**kotlin.String**](.md)|  | [optional]
+ **petId** | **kotlin.Long**| Pet id to delete |
+ **apiKey** | **kotlin.String**|  | [optional]
 
 ### Return type
 
@@ -115,7 +117,7 @@ Multiple status values can be provided with comma separated strings
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
 val status : kotlin.Array<kotlin.String> =  // kotlin.Array<kotlin.String> | Status values that need to be considered for filter
@@ -148,7 +150,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="findPetsByTags"></a>
 # **findPetsByTags**
@@ -156,13 +158,13 @@ Name | Type | Description  | Notes
 
 Finds Pets by tags
 
-Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
 
 ### Example
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
 val tags : kotlin.Array<kotlin.String> =  // kotlin.Array<kotlin.String> | Tags to filter by
@@ -195,7 +197,48 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
+
+<a name="getAllPets"></a>
+# **getAllPets**
+> AllPetsResponse getAllPets()
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = PetApi()
+try {
+    val result : AllPetsResponse = apiInstance.getAllPets()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PetApi#getAllPets")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PetApi#getAllPets")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AllPetsResponse**](AllPetsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 <a name="getPetById"></a>
 # **getPetById**
@@ -209,10 +252,10 @@ Returns a single pet
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
-val petId : kotlin.Int =  // kotlin.Int | ID of pet to return
+val petId : kotlin.Long = 789 // kotlin.Long | ID of pet to return
 try {
     val result : Pet = apiInstance.getPetById(petId)
     println(result)
@@ -229,7 +272,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**kotlin.Int**](.md)| ID of pet to return |
+ **petId** | **kotlin.Long**| ID of pet to return |
 
 ### Return type
 
@@ -242,7 +285,48 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
+
+<a name="getRandomPet"></a>
+# **getRandomPet**
+> SinglePetResponse getRandomPet()
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = PetApi()
+try {
+    val result : SinglePetResponse = apiInstance.getRandomPet()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PetApi#getRandomPet")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PetApi#getRandomPet")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SinglePetResponse**](SinglePetResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 <a name="updatePet"></a>
 # **updatePet**
@@ -254,7 +338,7 @@ Update an existing pet
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
 val body : Pet =  // Pet | Pet object that needs to be added to the store
@@ -298,12 +382,12 @@ Updates a pet in the store with form data
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
-val petId : kotlin.Int =  // kotlin.Int | ID of pet that needs to be updated
-val name : kotlin.String =  // kotlin.String | 
-val status : kotlin.String =  // kotlin.String | 
+val petId : kotlin.Long = 789 // kotlin.Long | ID of pet that needs to be updated
+val name : kotlin.String = name_example // kotlin.String | 
+val status : kotlin.String = status_example // kotlin.String | 
 try {
     apiInstance.updatePetWithForm(petId, name, status)
 } catch (e: ClientException) {
@@ -319,9 +403,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**kotlin.Int**](.md)| ID of pet that needs to be updated |
- **name** | [**kotlin.String**](.md)|  | [optional]
- **status** | [**kotlin.String**](.md)|  | [optional]
+ **petId** | **kotlin.Long**| ID of pet that needs to be updated |
+ **name** | **kotlin.String**|  | [optional]
+ **status** | **kotlin.String**|  | [optional]
 
 ### Return type
 
@@ -338,7 +422,7 @@ null (empty response body)
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> ApiResponse uploadFile(petId, additionalMetadata, file)
+> ApiResponse uploadFile(petId, body)
 
 uploads an image
 
@@ -346,14 +430,13 @@ uploads an image
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = PetApi()
-val petId : kotlin.Int =  // kotlin.Int | ID of pet to update
-val additionalMetadata : kotlin.String =  // kotlin.String | 
-val file : java.io.File = file_example // java.io.File | 
+val petId : kotlin.Long = 789 // kotlin.Long | ID of pet to update
+val body : Object =  // Object | 
 try {
-    val result : ApiResponse = apiInstance.uploadFile(petId, additionalMetadata, file)
+    val result : ApiResponse = apiInstance.uploadFile(petId, body)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PetApi#uploadFile")
@@ -368,9 +451,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**kotlin.Int**](.md)| ID of pet to update |
- **additionalMetadata** | [**kotlin.String**](.md)|  | [optional]
- **file** | **java.io.File**|  | [optional]
+ **petId** | **kotlin.Long**| ID of pet to update |
+ **body** | **Object**|  | [optional]
 
 ### Return type
 
@@ -382,6 +464,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
+ - **Content-Type**: application/octet-stream
  - **Accept**: application/json
 
