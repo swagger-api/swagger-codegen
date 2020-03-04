@@ -140,8 +140,7 @@ public class PetApiTest {
         Pet pet = createRandomPet();
         client.addPet(pet).execute();
 
-        MockMultipartFile filePart = new MockMultipartFile("file", "bar".getBytes());
-        client.uploadFile(pet.getId(), "a test file", filePart).execute();
+        client.uploadFile(pet.getId(), "a test file").execute();
     }
 
     @Test

@@ -79,8 +79,7 @@ public class PetApiControllerIntegrationTest {
     public void uploadFileTest() throws Exception {
         Long petId = 56L;
         String additionalMetadata = "additionalMetadata_example";
-        org.springframework.web.multipart.MultipartFile file = null;
-        ResponseEntity<ModelApiResponse> responseEntity = api.uploadFile(petId, additionalMetadata, file);
+        ResponseEntity<ModelApiResponse> responseEntity = api.uploadFile(petId, additionalMetadata);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 
