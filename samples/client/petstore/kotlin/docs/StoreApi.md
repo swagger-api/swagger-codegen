@@ -1,6 +1,6 @@
 # StoreApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -15,16 +15,16 @@ Method | HTTP request | Description
 
 Delete purchase order by ID
 
-For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
 
 ### Example
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = StoreApi()
-val orderId : kotlin.String =  // kotlin.String | ID of the order that needs to be deleted
+val orderId : kotlin.Long = 789 // kotlin.Long | ID of the order that needs to be deleted
 try {
     apiInstance.deleteOrder(orderId)
 } catch (e: ClientException) {
@@ -40,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | [**kotlin.String**](.md)| ID of the order that needs to be deleted |
+ **orderId** | **kotlin.Long**| ID of the order that needs to be deleted | [enum: ]
 
 ### Return type
 
@@ -67,7 +67,7 @@ Returns a map of status codes to quantities
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = StoreApi()
 try {
@@ -104,16 +104,16 @@ This endpoint does not need any parameter.
 
 Find purchase order by ID
 
-For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10.\\ \\ Other values will generated exceptions
 
 ### Example
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = StoreApi()
-val orderId : kotlin.Int =  // kotlin.Int | ID of pet that needs to be fetched
+val orderId : kotlin.Long = 789 // kotlin.Long | ID of pet that needs to be fetched
 try {
     val result : Order = apiInstance.getOrderById(orderId)
     println(result)
@@ -130,7 +130,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | [**kotlin.Int**](.md)| ID of pet that needs to be fetched |
+ **orderId** | **kotlin.Long**| ID of pet that needs to be fetched | [enum: ]
 
 ### Return type
 
@@ -143,7 +143,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 <a name="placeOrder"></a>
 # **placeOrder**
@@ -155,7 +155,7 @@ Place an order for a pet
 ```kotlin
 // Import classes:
 //import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*
+//import io.swagger.client.models.*;
 
 val apiInstance = StoreApi()
 val body : Order =  // Order | order placed for purchasing the pet
@@ -187,6 +187,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
- - **Accept**: application/xml, application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json, application/xml
 

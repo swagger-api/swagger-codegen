@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/fake_classname_test")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-10-08T21:26:16.639+02:00[Europe/Rome]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-03T12:59:13.967-05:00[America/Bogota]")
 public interface FakeClassnameTestApi {
 
     @PATCH

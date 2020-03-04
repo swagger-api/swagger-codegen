@@ -94,9 +94,9 @@ public interface FakeApi extends ApiClient.Api {
    * To test enum parameters
    * To test enum parameters
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-   * @param enumQueryString Query parameter enum test (string) (optional)
+   * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    */
   @RequestLine("GET /fake?enum_query_string_array={enumQueryStringArray}&enum_query_string={enumQueryString}&enum_query_integer={enumQueryInteger}")
@@ -116,12 +116,12 @@ public interface FakeApi extends ApiClient.Api {
    * used with the {@link TestEnumParametersQueryParams} class that allows for
    * building up this map in a fluent style.
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param queryParams Map of query parameters as name-value pairs
    *   <p>The following elements may be specified in the query map:</p>
    *   <ul>
    *   <li>enumQueryStringArray - Query parameter enum test (string array) (optional)</li>
-   *   <li>enumQueryString - Query parameter enum test (string) (optional)</li>
+   *   <li>enumQueryString - Query parameter enum test (string) (optional, default to -efg)</li>
    *   <li>enumQueryInteger - Query parameter enum test (double) (optional)</li>
    *   </ul>
 

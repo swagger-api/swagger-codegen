@@ -2,17 +2,14 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-/**
- * A User who is purchasing from the pet store
- **/
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@Schema(description = "A User who is purchasing from the pet store")
+
 
 public class User   {
   private Long id = null;

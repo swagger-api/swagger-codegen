@@ -19,7 +19,7 @@ import javax.ws.rs.core.SecurityContext;
 @RequestScoped
 public class StoreApiServiceImpl implements StoreApiService {
       @Override
-      public Response deleteOrder(String orderId, SecurityContext securityContext) {
+      public Response deleteOrder(Long orderId, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

@@ -41,7 +41,7 @@ public class UserApiServiceImpl implements UserApi {
       // do some magic!
       return Response.ok().build();
   }
-      public Response updateUser(User body,String username,SecurityContext securityContext) {
+      public Response userUsernamePut(User body,String username,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }

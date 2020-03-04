@@ -40,17 +40,17 @@ namespace IO.Swagger.Model
             /// Enum Placed for value: placed
             /// </summary>
             [EnumMember(Value = "placed")]
-            Placed = 0,
+            Placed = 1,
             /// <summary>
             /// Enum Approved for value: approved
             /// </summary>
             [EnumMember(Value = "approved")]
-            Approved = 1,
+            Approved = 2,
             /// <summary>
             /// Enum Delivered for value: delivered
             /// </summary>
             [EnumMember(Value = "delivered")]
-            Delivered = 2        }
+            Delivered = 3        }
         /// <summary>
         /// Order Status
         /// </summary>

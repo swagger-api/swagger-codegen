@@ -60,7 +60,8 @@ namespace IO.Swagger
                     opts.SerializerSettings.Converters.Add(new StringEnumConverter {
                         CamelCaseText = true
                     });
-                });
+                })
+                .AddXmlSerializerFormatters();
 
             services.AddAuthentication(ApiKeyAuthenticationHandler.SchemeName)
                 .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationHandler.SchemeName, null);

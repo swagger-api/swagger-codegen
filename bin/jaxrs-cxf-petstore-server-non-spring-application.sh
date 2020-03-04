@@ -26,7 +26,7 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="$@ generate --artifact-id swagger-cxf-server-non-spring -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l jaxrs-cxf -o samples/server/petstore/jaxrs-cxf-non-spring-app -DhideGenerationTimestamp=true,generateNonSpringApplication=true"
+ags="$@ generate --artifact-id swagger-cxf-server-non-spring -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -l jaxrs-cxf -o samples/server/petstore/jaxrs-cxf-non-spring-app -DhideGenerationTimestamp=true,generateNonSpringApplication=true"
 echo "Removing files and folders under samples/server/petstore/jaxrs-cxf-non-spring-app/src/main"
 rm -rf samples/server/petstore/jaxrs-cxf-non-spring-app/src/main
 rm -rf samples/server/petstore/jaxrs-cxf-non-spring-app/src/gen

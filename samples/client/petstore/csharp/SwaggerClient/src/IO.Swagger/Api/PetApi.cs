@@ -110,6 +110,25 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of List&lt;Pet&gt;</returns>
         ApiResponse<List<Pet>> FindPetsByTagsWithHttpInfo (List<string> tags);
         /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>AllPetsResponse</returns>
+        AllPetsResponse GetAllPets ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of AllPetsResponse</returns>
+        ApiResponse<AllPetsResponse> GetAllPetsWithHttpInfo ();
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>
@@ -130,6 +149,25 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to return</param>
         /// <returns>ApiResponse of Pet</returns>
         ApiResponse<Pet> GetPetByIdWithHttpInfo (long? petId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>SinglePetResponse</returns>
+        SinglePetResponse GetRandomPet ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of SinglePetResponse</returns>
+        ApiResponse<SinglePetResponse> GetRandomPetWithHttpInfo ();
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -185,9 +223,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] file = null);
+        ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] _file = null);
 
         /// <summary>
         /// uploads an image
@@ -198,9 +236,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>ApiResponse of ApiResponse</returns>
-        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] file = null);
+        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] _file = null);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -290,6 +328,25 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse (List&lt;Pet&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Pet>>> FindPetsByTagsAsyncWithHttpInfo (List<string> tags);
         /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of AllPetsResponse</returns>
+        System.Threading.Tasks.Task<AllPetsResponse> GetAllPetsAsync ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (AllPetsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AllPetsResponse>> GetAllPetsAsyncWithHttpInfo ();
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>
@@ -310,6 +367,25 @@ namespace IO.Swagger.Api
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Task of ApiResponse (Pet)</returns>
         System.Threading.Tasks.Task<ApiResponse<Pet>> GetPetByIdAsyncWithHttpInfo (long? petId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of SinglePetResponse</returns>
+        System.Threading.Tasks.Task<SinglePetResponse> GetRandomPetAsync ();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (SinglePetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SinglePetResponse>> GetRandomPetAsyncWithHttpInfo ();
         /// <summary>
         /// Update an existing pet
         /// </summary>
@@ -365,9 +441,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, byte[] file = null);
+        System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, byte[] _file = null);
 
         /// <summary>
         /// uploads an image
@@ -378,9 +454,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, byte[] file = null);
+        System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, byte[] _file = null);
         #endregion Asynchronous Operations
     }
 
@@ -1085,6 +1161,125 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>AllPetsResponse</returns>
+        public AllPetsResponse GetAllPets ()
+        {
+             ApiResponse<AllPetsResponse> localVarResponse = GetAllPetsWithHttpInfo();
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of AllPetsResponse</returns>
+        public ApiResponse< AllPetsResponse > GetAllPetsWithHttpInfo ()
+        {
+
+            var localVarPath = "/allPets";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetAllPets", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<AllPetsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (AllPetsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AllPetsResponse)));
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of AllPetsResponse</returns>
+        public async System.Threading.Tasks.Task<AllPetsResponse> GetAllPetsAsync ()
+        {
+             ApiResponse<AllPetsResponse> localVarResponse = await GetAllPetsAsyncWithHttpInfo();
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (AllPetsResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<AllPetsResponse>> GetAllPetsAsyncWithHttpInfo ()
+        {
+
+            var localVarPath = "/allPets";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetAllPets", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<AllPetsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (AllPetsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AllPetsResponse)));
+        }
+
+        /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
@@ -1225,6 +1420,125 @@ namespace IO.Swagger.Api
             return new ApiResponse<Pet>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Pet) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Pet)));
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>SinglePetResponse</returns>
+        public SinglePetResponse GetRandomPet ()
+        {
+             ApiResponse<SinglePetResponse> localVarResponse = GetRandomPetWithHttpInfo();
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of SinglePetResponse</returns>
+        public ApiResponse< SinglePetResponse > GetRandomPetWithHttpInfo ()
+        {
+
+            var localVarPath = "/randomPet";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetRandomPet", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<SinglePetResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (SinglePetResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(SinglePetResponse)));
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of SinglePetResponse</returns>
+        public async System.Threading.Tasks.Task<SinglePetResponse> GetRandomPetAsync ()
+        {
+             ApiResponse<SinglePetResponse> localVarResponse = await GetRandomPetAsyncWithHttpInfo();
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (SinglePetResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<SinglePetResponse>> GetRandomPetAsyncWithHttpInfo ()
+        {
+
+            var localVarPath = "/randomPet";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetRandomPet", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<SinglePetResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (SinglePetResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(SinglePetResponse)));
         }
 
         /// <summary>
@@ -1543,11 +1857,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>ApiResponse</returns>
-        public ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] file = null)
+        public ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] _file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
+             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, _file);
              return localVarResponse.Data;
         }
 
@@ -1557,9 +1871,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>ApiResponse of ApiResponse</returns>
-        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] file = null)
+        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] _file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1589,7 +1903,7 @@ namespace IO.Swagger.Api
 
             if (petId != null) localVarPathParams.Add("petId", this.Configuration.ApiClient.ParameterToString(petId)); // path parameter
             if (additionalMetadata != null) localVarFormParams.Add("additionalMetadata", this.Configuration.ApiClient.ParameterToString(additionalMetadata)); // form parameter
-            if (file != null) localVarFormParams.Add("file", this.Configuration.ApiClient.ParameterToString(file)); // form parameter
+            if (_file != null) localVarFileParams.Add("file", this.Configuration.ApiClient.ParameterToFile("file", _file));
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
@@ -1621,11 +1935,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, byte[] file = null)
+        public async System.Threading.Tasks.Task<ApiResponse> UploadFileAsync (long? petId, string additionalMetadata = null, byte[] _file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, file);
+             ApiResponse<ApiResponse> localVarResponse = await UploadFileAsyncWithHttpInfo(petId, additionalMetadata, _file);
              return localVarResponse.Data;
 
         }
@@ -1636,9 +1950,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="file"> (optional)</param>
+        /// <param name="_file"> (optional)</param>
         /// <returns>Task of ApiResponse (ApiResponse)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, byte[] file = null)
+        public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> UploadFileAsyncWithHttpInfo (long? petId, string additionalMetadata = null, byte[] _file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1668,7 +1982,7 @@ namespace IO.Swagger.Api
 
             if (petId != null) localVarPathParams.Add("petId", this.Configuration.ApiClient.ParameterToString(petId)); // path parameter
             if (additionalMetadata != null) localVarFormParams.Add("additionalMetadata", this.Configuration.ApiClient.ParameterToString(additionalMetadata)); // form parameter
-            if (file != null) localVarFormParams.Add("file", this.Configuration.ApiClient.ParameterToString(file)); // form parameter
+            if (_file != null) localVarFileParams.Add("file", this.Configuration.ApiClient.ParameterToFile("file", _file));
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))

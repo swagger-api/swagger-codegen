@@ -36,15 +36,15 @@ namespace IO.Swagger.Model
                 public enum JustSymbolEnum
         {
             /// <summary>
-            /// Enum _ for value: ">="
+            /// Enum GreaterThanOrEqualTo for value: >=
             /// </summary>
-            [EnumMember(Value = "">="")]
-            _ = 0,
+            [EnumMember(Value = ">=")]
+            GreaterThanOrEqualTo = 1,
             /// <summary>
-            /// Enum _ for value: "$"
+            /// Enum Dollar for value: $
             /// </summary>
-            [EnumMember(Value = ""$"")]
-            _ = 1        }
+            [EnumMember(Value = "$")]
+            Dollar = 2        }
         /// <summary>
         /// Gets or Sets JustSymbol
         /// </summary>
@@ -57,15 +57,15 @@ namespace IO.Swagger.Model
                 public enum ArrayEnumEnum
         {
             /// <summary>
-            /// Enum FISH for value: "fish"
+            /// Enum Fish for value: fish
             /// </summary>
-            [EnumMember(Value = ""fish"")]
-            FISH = 0,
+            [EnumMember(Value = "fish")]
+            Fish = 1,
             /// <summary>
-            /// Enum CRAB for value: "crab"
+            /// Enum Crab for value: crab
             /// </summary>
-            [EnumMember(Value = ""crab"")]
-            CRAB = 1        }
+            [EnumMember(Value = "crab")]
+            Crab = 2        }
         /// <summary>
         /// Gets or Sets ArrayEnum
         /// </summary>
@@ -74,12 +74,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArrays" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public EnumArrays(JustSymbolEnum?  = default(JustSymbolEnum?), List<ArrayEnumEnum>  = default(List<ArrayEnumEnum>))
+        /// <param name="justSymbol">justSymbol.</param>
+        /// <param name="arrayEnum">arrayEnum.</param>
+        public EnumArrays(JustSymbolEnum? justSymbol = default(JustSymbolEnum?), List<ArrayEnumEnum> arrayEnum = default(List<ArrayEnumEnum>))
         {
-            this.JustSymbol = ;
-            this.ArrayEnum = ;
+            this.JustSymbol = justSymbol;
+            this.ArrayEnum = arrayEnum;
         }
         
 
@@ -136,6 +136,7 @@ namespace IO.Swagger.Model
                 (
                     this.ArrayEnum == input.ArrayEnum ||
                     this.ArrayEnum != null &&
+                    input.ArrayEnum != null &&
                     this.ArrayEnum.SequenceEqual(input.ArrayEnum)
                 );
         }

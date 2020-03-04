@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 public interface StoreApiService {
-      Response deleteOrder(String orderId,SecurityContext securityContext)
+      Response deleteOrder(Long orderId,SecurityContext securityContext)
       throws NotFoundException;
       Response getInventory(SecurityContext securityContext)
       throws NotFoundException;

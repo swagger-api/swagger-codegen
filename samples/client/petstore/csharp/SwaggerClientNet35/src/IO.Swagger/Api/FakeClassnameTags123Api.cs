@@ -67,6 +67,17 @@ namespace IO.Swagger.Api
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FakeClassnameTags123Api"/> class
+        /// </summary>
+        /// <returns></returns>
+        public FakeClassnameTags123Api()
+        {
+            this.Configuration = IO.Swagger.Client.Configuration.Default;
+
+            ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FakeClassnameTags123Api"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
@@ -198,7 +209,6 @@ namespace IO.Swagger.Api
             {
                 localVarPostBody = body; // byte array
             }
-
             // authentication (api_key_query) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("api_key_query")))
             {
@@ -219,7 +229,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Client>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 

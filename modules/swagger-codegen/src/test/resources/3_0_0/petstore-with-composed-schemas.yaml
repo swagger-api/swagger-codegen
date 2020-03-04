@@ -954,6 +954,17 @@ components:
         prefix: val
         name: member
       type: object
+    NullableEnumModel:
+      type: object
+      properties:
+        enumProp:
+          type: string
+          nullable: true
+          enum:
+            - a
+            - b
+            - null
+
 
 
   requestBodies:

@@ -39,7 +39,8 @@ class Animal(object):
     }
 
     discriminator_value_class_map = {
-              }
+          'Dog': 'Dog',
+'Cat': 'Cat'    }
 
     def __init__(self, class_name=None, color='red'):  # noqa: E501
         """Animal - a model defined in Swagger"""  # noqa: E501

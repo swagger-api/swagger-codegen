@@ -1,9 +1,11 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -68,6 +70,12 @@ public class PetApiServiceImpl implements PetApi {
         return null;
     }
     
+    public AllPetsResponse getAllPets() {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
     /**
      * Find pet by ID
      *
@@ -75,6 +83,12 @@ public class PetApiServiceImpl implements PetApi {
      *
      */
     public Pet getPetById(Long petId) {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
+    public SinglePetResponse getRandomPet() {
         // TODO: Implement...
         
         return null;

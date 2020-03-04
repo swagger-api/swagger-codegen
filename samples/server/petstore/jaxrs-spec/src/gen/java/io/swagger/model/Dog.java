@@ -11,7 +11,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Dog extends Animal implements Serializable  {
+public class Dog extends Animal implements Serializable , OneOfAllPetsResponseItems, , OneOfSinglePetResponsePet  {
   private @Valid String breed = null;
 
   /**

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.UUID;
 import org.threeten.bp.LocalDate;
@@ -52,10 +53,10 @@ public class FormatTest {
   private String string = null;
 
   @JsonProperty("byte")
-  private String _byte = null;
+  private byte[] _byte = null;
 
   @JsonProperty("binary")
-  private String binary = null;
+  private File binary = null;
 
   @JsonProperty("date")
   private LocalDate date = null;
@@ -207,7 +208,7 @@ public class FormatTest {
     this.string = string;
   }
 
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -217,16 +218,16 @@ public class FormatTest {
    * @return _byte
   **/
   @NotNull
- @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  @Schema(required = true, description = "")
-  public String getByte() {
+  @Schema(required = true, description = "")
+  public byte[] getByte() {
     return _byte;
   }
 
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
 
-  public FormatTest binary(String binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -235,12 +236,13 @@ public class FormatTest {
    * Get binary
    * @return binary
   **/
+  @Valid
   @Schema(description = "")
-  public String getBinary() {
+  public File getBinary() {
     return binary;
   }
 
-  public void setBinary(String binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
 
@@ -338,7 +340,7 @@ public class FormatTest {
         Objects.equals(this._float, formatTest._float) &&
         Objects.equals(this._double, formatTest._double) &&
         Objects.equals(this.string, formatTest.string) &&
-        Objects.equals(this._byte, formatTest._byte) &&
+        Arrays.equals(this._byte, formatTest._byte) &&
         Objects.equals(this.binary, formatTest.binary) &&
         Objects.equals(this.date, formatTest.date) &&
         Objects.equals(this.dateTime, formatTest.dateTime) &&
@@ -348,7 +350,7 @@ public class FormatTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(integer, int32, int64, number, _float, _double, string, _byte, binary, date, dateTime, uuid, password);
+    return Objects.hash(integer, int32, int64, number, _float, _double, string, Arrays.hashCode(_byte), Objects.hashCode(binary), date, dateTime, uuid, password);
   }
 
 

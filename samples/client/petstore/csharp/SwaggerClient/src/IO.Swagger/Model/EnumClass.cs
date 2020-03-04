@@ -33,15 +33,15 @@ namespace IO.Swagger.Model
         /// Enum Abc for value: _abc
         /// </summary>
         [EnumMember(Value = "_abc")]
-        Abc = 0,
+        Abc = 1,
         /// <summary>
         /// Enum Efg for value: -efg
         /// </summary>
         [EnumMember(Value = "-efg")]
-        Efg = 1,
+        Efg = 2,
         /// <summary>
         /// Enum Xyz for value: (xyz)
         /// </summary>
         [EnumMember(Value = "(xyz)")]
-        Xyz = 2    }
+        Xyz = 3    }
 }

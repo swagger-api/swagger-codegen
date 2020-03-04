@@ -1,6 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,10 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-/**
-  * An order for a pets from the pet store
- **/
-@Schema(description="An order for a pets from the pet store")
 public class Order   {
   
   @Schema(description = "")

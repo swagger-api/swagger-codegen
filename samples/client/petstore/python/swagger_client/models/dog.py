@@ -33,14 +33,18 @@ class Dog(object):
         'color': 'str',
         'breed': 'str'
     }
+    if hasattr(Animal, "swagger_types"):
+        swagger_types.update(Animal.swagger_types)
 
     attribute_map = {
         'class_name': 'className',
         'color': 'color',
         'breed': 'breed'
     }
+    if hasattr(Animal, "attribute_map"):
+        attribute_map.update(Animal.attribute_map)
 
-    def __init__(self, class_name=None, color='red', breed=None):  # noqa: E501
+    def __init__(self, class_name=None, color='red', breed=None, *args, **kwargs):  # noqa: E501
         """Dog - a model defined in Swagger"""  # noqa: E501
         self._class_name = None
         self._color = None
@@ -51,6 +55,7 @@ class Dog(object):
             self.color = color
         if breed is not None:
             self.breed = breed
+        Animal.__init__(self, *args, **kwargs)
 
     @property
     def class_name(self):

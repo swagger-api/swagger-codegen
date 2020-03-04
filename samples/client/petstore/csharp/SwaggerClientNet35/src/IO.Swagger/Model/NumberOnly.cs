@@ -32,17 +32,17 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberOnly" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        public NumberOnly(BigDecimal  = default(BigDecimal))
+        /// <param name="justNumber">justNumber.</param>
+        public NumberOnly(decimal? justNumber = default(decimal?))
         {
-            this.JustNumber = ;
+            this.JustNumber = justNumber;
         }
         
         /// <summary>
         /// Gets or Sets JustNumber
         /// </summary>
         [DataMember(Name="JustNumber", EmitDefaultValue=false)]
-        public BigDecimal JustNumber { get; set; }
+        public decimal? JustNumber { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
