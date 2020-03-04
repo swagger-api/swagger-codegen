@@ -14,14 +14,14 @@ package io.swagger.client.models
 
 /**
  * 
- * @param code 
- * @param type 
- * @param message 
+ * @param name Updated name of the pet
+ * @param status Updated status of the pet
  */
-data class ApiResponse (
+data class Body (
 
-    val code: kotlin.Int? = null,
-    val type: kotlin.String? = null,
-    val message: kotlin.String? = null
+    /* Updated name of the pet */
+    val name: kotlin.String? = null,
+    /* Updated status of the pet */
+    val status: kotlin.String? = null
 ) {
 }

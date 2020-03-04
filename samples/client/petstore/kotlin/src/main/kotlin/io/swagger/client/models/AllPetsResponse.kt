@@ -14,14 +14,8 @@ package io.swagger.client.models
 
 /**
  * 
- * @param code 
- * @param type 
- * @param message 
  */
-data class ApiResponse (
+data class AllPetsResponse (
 
-    val code: kotlin.Int? = null,
-    val type: kotlin.String? = null,
-    val message: kotlin.String? = null
 ) {
 }
