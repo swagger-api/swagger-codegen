@@ -37,20 +37,20 @@ namespace IO.Swagger.Model
                 public enum StatusEnum
         {
             /// <summary>
-            /// Enum AVAILABLE for value: "available"
+            /// Enum Available for value: available
             /// </summary>
-            [EnumMember(Value = ""available"")]
-            AVAILABLE = 0,
+            [EnumMember(Value = "available")]
+            Available = 1,
             /// <summary>
-            /// Enum PENDING for value: "pending"
+            /// Enum Pending for value: pending
             /// </summary>
-            [EnumMember(Value = ""pending"")]
-            PENDING = 1,
+            [EnumMember(Value = "pending")]
+            Pending = 2,
             /// <summary>
-            /// Enum SOLD for value: "sold"
+            /// Enum Sold for value: sold
             /// </summary>
-            [EnumMember(Value = ""sold"")]
-            SOLD = 2        }
+            [EnumMember(Value = "sold")]
+            Sold = 3        }
         /// <summary>
         /// pet status in the store
         /// </summary>
@@ -60,36 +60,36 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Pet" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name=""> (required).</param>
-        /// <param name=""> (required).</param>
-        /// <param name="">.</param>
-        /// <param name="">pet status in the store.</param>
-        public Pet(long?  = default(long?), Category  = default(Category), string  = default(string), List<string>  = default(List<string>), List<Tag>  = default(List<Tag>), StatusEnum?  = default(StatusEnum?))
+        /// <param name="id">id.</param>
+        /// <param name="category">category.</param>
+        /// <param name="name">name (required).</param>
+        /// <param name="photoUrls">photoUrls (required).</param>
+        /// <param name="tags">tags.</param>
+        /// <param name="status">pet status in the store.</param>
+        public Pet(long? id = default(long?), Category category = default(Category), string name = default(string), List<string> photoUrls = default(List<string>), List<Tag> tags = default(List<Tag>), StatusEnum? status = default(StatusEnum?))
         {
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "name" is required (not null)
+            if (name == null)
             {
-                throw new InvalidDataException(" is a required property for Pet and cannot be null");
+                throw new InvalidDataException("name is a required property for Pet and cannot be null");
             }
             else
             {
-                this.Name = ;
+                this.Name = name;
             }
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "photoUrls" is required (not null)
+            if (photoUrls == null)
             {
-                throw new InvalidDataException(" is a required property for Pet and cannot be null");
+                throw new InvalidDataException("photoUrls is a required property for Pet and cannot be null");
             }
             else
             {
-                this.PhotoUrls = ;
+                this.PhotoUrls = photoUrls;
             }
-            this.Id = ;
-            this.Category = ;
-            this.Tags = ;
-            this.Status = ;
+            this.Id = id;
+            this.Category = category;
+            this.Tags = tags;
+            this.Status = status;
         }
         
         /// <summary>
@@ -189,11 +189,13 @@ namespace IO.Swagger.Model
                 (
                     this.PhotoUrls == input.PhotoUrls ||
                     this.PhotoUrls != null &&
+                    input.PhotoUrls != null &&
                     this.PhotoUrls.SequenceEqual(input.PhotoUrls)
                 ) && 
                 (
                     this.Tags == input.Tags ||
                     this.Tags != null &&
+                    input.Tags != null &&
                     this.Tags.SequenceEqual(input.Tags)
                 ) && 
                 (
