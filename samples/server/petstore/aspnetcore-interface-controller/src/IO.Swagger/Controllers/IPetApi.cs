@@ -58,6 +58,13 @@ namespace IO.Swagger.Controllers
         IActionResult FindPetsByTags([FromQuery][Required()]List<string> tags);
 
         /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <response code="200">a single random pet</response>
+        IActionResult GetAllPets();
+
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>Returns a single pet</remarks>
@@ -66,6 +73,13 @@ namespace IO.Swagger.Controllers
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Pet not found</response>
         IActionResult GetPetById([FromRoute][Required]long? petId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <response code="200">a single random pet</response>
+        IActionResult GetRandomPet();
 
         /// <summary>
         /// Update an existing pet

@@ -253,7 +253,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="testclientmodel"></a>
 # **TestClientModel**
-> ClientModel TestClientModel (ClientModel body)
+> Client TestClientModel (Client body)
 
 To test \"client\" model
 
@@ -274,12 +274,12 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new ClientModel(); // ClientModel | client model
+            var body = new Client(); // Client | client model
 
             try
             {
                 // To test \"client\" model
-                ClientModel result = apiInstance.TestClientModel(body);
+                Client result = apiInstance.TestClientModel(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -295,11 +295,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ClientModel**](ClientModel.md)| client model | 
+ **body** | [**Client**](Client.md)| client model | 
 
 ### Return type
 
-[**ClientModel**](ClientModel.md)
+[**Client**](Client.md)
 
 ### Authorization
 
@@ -398,9 +398,9 @@ namespace Example
         {
             var apiInstance = new FakeApi();
             var enumHeaderStringArray = new List<string>(); // List<string> | Header parameter enum test (string array) (optional) 
-            var enumHeaderString = enumHeaderString_example;  // string | Header parameter enum test (string) (optional) 
+            var enumHeaderString = enumHeaderString_example;  // string | Header parameter enum test (string) (optional)  (default to -efg)
             var enumQueryStringArray = new List<string>(); // List<string> | Query parameter enum test (string array) (optional) 
-            var enumQueryString = enumQueryString_example;  // string | Query parameter enum test (string) (optional) 
+            var enumQueryString = enumQueryString_example;  // string | Query parameter enum test (string) (optional)  (default to -efg)
             var enumQueryInteger = 56;  // int? | Query parameter enum test (double) (optional) 
 
             try
@@ -422,9 +422,9 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **enumHeaderStringArray** | [**List&lt;string&gt;**](string.md)| Header parameter enum test (string array) | [optional] 
- **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] 
+ **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
  **enumQueryStringArray** | [**List&lt;string&gt;**](string.md)| Query parameter enum test (string array) | [optional] 
- **enumQueryString** | **string**| Query parameter enum test (string) | [optional] 
+ **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
  **enumQueryInteger** | **int?**| Query parameter enum test (double) | [optional] 
 
 ### Return type

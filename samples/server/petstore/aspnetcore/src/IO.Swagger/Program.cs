@@ -24,6 +24,7 @@ namespace IO.Swagger
         /// <returns>IWebHostBuilder</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:8080");
     }
 }

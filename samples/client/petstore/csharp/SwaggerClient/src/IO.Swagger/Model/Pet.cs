@@ -40,17 +40,17 @@ namespace IO.Swagger.Model
             /// Enum Available for value: available
             /// </summary>
             [EnumMember(Value = "available")]
-            Available = 0,
+            Available = 1,
             /// <summary>
             /// Enum Pending for value: pending
             /// </summary>
             [EnumMember(Value = "pending")]
-            Pending = 1,
+            Pending = 2,
             /// <summary>
             /// Enum Sold for value: sold
             /// </summary>
             [EnumMember(Value = "sold")]
-            Sold = 2        }
+            Sold = 3        }
         /// <summary>
         /// pet status in the store
         /// </summary>

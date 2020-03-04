@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 <a name="testclassname"></a>
 # **TestClassname**
-> ClientModel TestClassname (ClientModel body)
+> Client TestClassname (Client body)
 
 To test class name in snake case
 
@@ -32,12 +32,12 @@ namespace Example
             // Configuration.Default.AddApiKeyPrefix("api_key_query", "Bearer");
 
             var apiInstance = new FakeClassnameTags123Api();
-            var body = new ClientModel(); // ClientModel | client model
+            var body = new Client(); // Client | client model
 
             try
             {
                 // To test class name in snake case
-                ClientModel result = apiInstance.TestClassname(body);
+                Client result = apiInstance.TestClassname(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -53,11 +53,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ClientModel**](ClientModel.md)| client model | 
+ **body** | [**Client**](Client.md)| client model | 
 
 ### Return type
 
-[**ClientModel**](ClientModel.md)
+[**Client**](Client.md)
 
 ### Authorization
 

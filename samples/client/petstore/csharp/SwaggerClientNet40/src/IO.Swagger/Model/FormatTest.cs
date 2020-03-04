@@ -32,66 +32,66 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="FormatTest" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name=""> (required).</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name=""> (required).</param>
-        /// <param name="">.</param>
-        /// <param name=""> (required).</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name=""> (required).</param>
-        public FormatTest(int?  = default(int?), int?  = default(int?), long?  = default(long?), BigDecimal  = default(BigDecimal), float?  = default(float?), double?  = default(double?), string  = default(string), string  = default(string), string  = default(string), DateTime?  = default(DateTime?), DateTime?  = default(DateTime?), Guid?  = default(Guid?), string  = default(string))
+        /// <param name="integer">integer.</param>
+        /// <param name="int32">int32.</param>
+        /// <param name="int64">int64.</param>
+        /// <param name="number">number (required).</param>
+        /// <param name="_float">_float.</param>
+        /// <param name="_double">_double.</param>
+        /// <param name="_string">_string.</param>
+        /// <param name="_byte">_byte (required).</param>
+        /// <param name="binary">binary.</param>
+        /// <param name="date">date (required).</param>
+        /// <param name="dateTime">dateTime.</param>
+        /// <param name="uuid">uuid.</param>
+        /// <param name="password">password (required).</param>
+        public FormatTest(int? integer = default(int?), int? int32 = default(int?), long? int64 = default(long?), decimal? number = default(decimal?), float? _float = default(float?), double? _double = default(double?), string _string = default(string), byte[] _byte = default(byte[]), byte[] binary = default(byte[]), DateTime? date = default(DateTime?), DateTime? dateTime = default(DateTime?), Guid? uuid = default(Guid?), string password = default(string))
         {
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "number" is required (not null)
+            if (number == null)
             {
-                throw new InvalidDataException(" is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("number is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Number = ;
+                this.Number = number;
             }
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "_byte" is required (not null)
+            if (_byte == null)
             {
-                throw new InvalidDataException(" is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("_byte is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Byte = ;
+                this.Byte = _byte;
             }
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "date" is required (not null)
+            if (date == null)
             {
-                throw new InvalidDataException(" is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("date is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Date = ;
+                this.Date = date;
             }
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "password" is required (not null)
+            if (password == null)
             {
-                throw new InvalidDataException(" is a required property for FormatTest and cannot be null");
+                throw new InvalidDataException("password is a required property for FormatTest and cannot be null");
             }
             else
             {
-                this.Password = ;
+                this.Password = password;
             }
-            this.Integer = ;
-            this.Int32 = ;
-            this.Int64 = ;
-            this.Float = ;
-            this.Double = ;
-            this.String = ;
-            this.Binary = ;
-            this.DateTime = ;
-            this.Uuid = ;
+            this.Integer = integer;
+            this.Int32 = int32;
+            this.Int64 = int64;
+            this.Float = _float;
+            this.Double = _double;
+            this.String = _string;
+            this.Binary = binary;
+            this.DateTime = dateTime;
+            this.Uuid = uuid;
         }
         
         /// <summary>
@@ -116,7 +116,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Number
         /// </summary>
         [DataMember(Name="number", EmitDefaultValue=false)]
-        public BigDecimal Number { get; set; }
+        public decimal? Number { get; set; }
 
         /// <summary>
         /// Gets or Sets Float
@@ -140,13 +140,13 @@ namespace IO.Swagger.Model
         /// Gets or Sets Byte
         /// </summary>
         [DataMember(Name="byte", EmitDefaultValue=false)]
-        public string Byte { get; set; }
+        public byte[] Byte { get; set; }
 
         /// <summary>
         /// Gets or Sets Binary
         /// </summary>
         [DataMember(Name="binary", EmitDefaultValue=false)]
-        public string Binary { get; set; }
+        public byte[] Binary { get; set; }
 
         /// <summary>
         /// Gets or Sets Date
