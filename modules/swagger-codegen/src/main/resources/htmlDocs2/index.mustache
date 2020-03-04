@@ -138,7 +138,7 @@
                 {{#operations}}
                   <li class="nav-header" data-group="{{baseName}}"><a href="#api-{{baseName}}">API Methods - {{baseName}}</a></li>
                   {{#operation}}
-                    <li data-group="{{baseName}}" data-name="{{nickname}}" class="">
+                    <li data-group="{{baseName}}" data-name="{{nickname}}" class="{{#isDeprecated}}deprecated{{/isDeprecated}}">
                       <a href="#api-{{baseName}}-{{nickname}}">{{nickname}}</a>
                     </li>
                   {{/operation}}
@@ -174,17 +174,17 @@
                   {{#operation}}
                     <div id="api-{{baseName}}-{{nickname}}">
                       <article id="api-{{baseName}}-{{nickname}}-0" data-group="User" data-name="{{nickname}}" data-version="0">
-                        <div class="pull-left">
+                        <div class="pull-left{{#isDeprecated}} deprecated{{/isDeprecated}}">
                           <h1>{{nickname}}</h1>
                           <p>{{summary}}</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">{{notes}}</p>
+                        <p class="marked{{#isDeprecated}} deprecated{{/isDeprecated}}">{{notes}}</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="{{httpMethod}}"><code><span class="pln">{{path}}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted{{#isDeprecated}} deprecated{{/isDeprecated}}" data-type="{{httpMethod}}"><code><span class="pln">{{path}}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -202,7 +202,7 @@
                           <li class=""><a href="#examples-{{baseName}}-{{nickname}}-0-python">Python</a></li>
                         </ul>
 
-                        <div class="tab-content">
+                        <div class="tab-content{{#isDeprecated}} deprecated{{/isDeprecated}}">
                           <div class="tab-pane active" id="examples-{{baseName}}-{{nickname}}-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X {{vendorExtensions.x-codegen-httpMethodUpperCase}}{{#authMethods}}{{#isApiKey}}{{#isKeyInHeader}} -H "{{keyParamName}}: [[apiKey]]"{{/isKeyInHeader}}{{/isApiKey}}{{#isBasic}}{{#hasProduces}} -H "Accept: {{#produces}}{{{mediaType}}}{{#hasMore}},{{/hasMore}}{{/produces}}"{{/hasProduces}}{{#hasConsumes}} -H "Content-Type: {{#consumes}}{{{mediaType}}}{{#hasMore}},{{/hasMore}}{{/consumes}}"{{/hasConsumes}} -H "Authorization: Basic [[basicHash]]"{{/isBasic}}{{/authMethods}} "{{basePath}}{{path}}{{#hasQueryParams}}?{{#queryParams}}{{^-first}}&{{/-first}}{{baseName}}={{vendorExtensions.x-eg}}{{/queryParams}}{{/hasQueryParams}}"</code></pre>
                           </div>
