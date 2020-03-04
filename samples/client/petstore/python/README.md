@@ -192,6 +192,7 @@ Class | Method | HTTP request | Description
  - [Model200Response](docs/Model200Response.md)
  - [ModelReturn](docs/ModelReturn.md)
  - [Name](docs/Name.md)
+ - [NullableEnumModel](docs/NullableEnumModel.md)
  - [NumberOnly](docs/NumberOnly.md)
  - [OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
  - [OneOfSinglePetResponsePet](docs/OneOfSinglePetResponsePet.md)
