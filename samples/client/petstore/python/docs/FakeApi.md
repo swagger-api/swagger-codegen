@@ -320,9 +320,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.FakeApi()
 enum_header_string_array = ['enum_header_string_array_example'] # list[str] | Header parameter enum test (string array) (optional)
-enum_header_string = 'enum_header_string_example' # str | Header parameter enum test (string) (optional)
+enum_header_string = '-efg' # str | Header parameter enum test (string) (optional) (default to -efg)
 enum_query_string_array = ['enum_query_string_array_example'] # list[str] | Query parameter enum test (string array) (optional)
-enum_query_string = 'enum_query_string_example' # str | Query parameter enum test (string) (optional)
+enum_query_string = '-efg' # str | Query parameter enum test (string) (optional) (default to -efg)
 enum_query_integer = 56 # int | Query parameter enum test (double) (optional)
 
 try:
@@ -337,9 +337,9 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **enum_header_string_array** | [**list[str]**](str.md)| Header parameter enum test (string array) | [optional] 
- **enum_header_string** | **str**| Header parameter enum test (string) | [optional] 
+ **enum_header_string** | **str**| Header parameter enum test (string) | [optional] [default to -efg]
  **enum_query_string_array** | [**list[str]**](str.md)| Query parameter enum test (string array) | [optional] 
- **enum_query_string** | **str**| Query parameter enum test (string) | [optional] 
+ **enum_query_string** | **str**| Query parameter enum test (string) | [optional] [default to -efg]
  **enum_query_integer** | **int**| Query parameter enum test (double) | [optional] 
 
 ### Return type
