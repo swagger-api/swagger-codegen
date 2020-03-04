@@ -36,27 +36,27 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Animal" /> class.
         /// </summary>
-        /// <param name=""> (required).</param>
-        /// <param name=""> (default to &quot;red&quot;).</param>
-        public Animal(string  = default(string), string  = "red")
+        /// <param name="className">className (required).</param>
+        /// <param name="color">color (default to &quot;red&quot;).</param>
+        public Animal(string className = default(string), string color = "red")
         {
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "className" is required (not null)
+            if (className == null)
             {
-                throw new InvalidDataException(" is a required property for Animal and cannot be null");
+                throw new InvalidDataException("className is a required property for Animal and cannot be null");
             }
             else
             {
-                this.ClassName = ;
+                this.ClassName = className;
             }
-            // use default value if no "" provided
-            if ( == null)
+            // use default value if no "color" provided
+            if (color == null)
             {
                 this.Color = "red";
             }
             else
             {
-                this.Color = ;
+                this.Color = color;
             }
         }
         

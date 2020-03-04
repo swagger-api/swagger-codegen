@@ -3,4 +3,4 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**pet** | [**OneOfSinglePetResponsePet**](OneOfSinglePetResponsePet.md) |  |  [optional]
+**pet** | **OneOfSinglePetResponsePet** |  |  [optional]

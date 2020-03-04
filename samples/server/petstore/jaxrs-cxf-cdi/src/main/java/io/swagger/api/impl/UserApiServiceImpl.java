@@ -53,7 +53,7 @@ public class UserApiServiceImpl implements UserApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response updateUser(User body, String username, SecurityContext securityContext) {
+      public Response userUsernamePut(User body, String username, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

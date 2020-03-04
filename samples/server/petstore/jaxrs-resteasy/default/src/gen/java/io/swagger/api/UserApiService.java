@@ -28,6 +28,6 @@ public interface UserApiService {
       throws NotFoundException;
       Response logoutUser(SecurityContext securityContext)
       throws NotFoundException;
-      Response updateUser(User body,String username,SecurityContext securityContext)
+      Response userUsernamePut(User body,String username,SecurityContext securityContext)
       throws NotFoundException;
 }

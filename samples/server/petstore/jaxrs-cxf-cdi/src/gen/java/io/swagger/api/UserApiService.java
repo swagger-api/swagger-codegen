@@ -23,5 +23,5 @@ public interface UserApiService {
       public Response getUserByName(String username, SecurityContext securityContext);
       public Response loginUser(String username, String password, SecurityContext securityContext);
       public Response logoutUser(SecurityContext securityContext);
-      public Response updateUser(User body, String username, SecurityContext securityContext);
+      public Response userUsernamePut(User body, String username, SecurityContext securityContext);
 }

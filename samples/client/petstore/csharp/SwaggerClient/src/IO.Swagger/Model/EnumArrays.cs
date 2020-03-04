@@ -39,12 +39,12 @@ namespace IO.Swagger.Model
             /// Enum GreaterThanOrEqualTo for value: >=
             /// </summary>
             [EnumMember(Value = ">=")]
-            GreaterThanOrEqualTo = 0,
+            GreaterThanOrEqualTo = 1,
             /// <summary>
             /// Enum Dollar for value: $
             /// </summary>
             [EnumMember(Value = "$")]
-            Dollar = 1        }
+            Dollar = 2        }
         /// <summary>
         /// Gets or Sets JustSymbol
         /// </summary>
@@ -60,12 +60,12 @@ namespace IO.Swagger.Model
             /// Enum Fish for value: fish
             /// </summary>
             [EnumMember(Value = "fish")]
-            Fish = 0,
+            Fish = 1,
             /// <summary>
             /// Enum Crab for value: crab
             /// </summary>
             [EnumMember(Value = "crab")]
-            Crab = 1        }
+            Crab = 2        }
         /// <summary>
         /// Gets or Sets ArrayEnum
         /// </summary>

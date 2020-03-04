@@ -2,17 +2,14 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
-/**
- * Describes the result of uploading an image resource
- **/
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@Schema(description = "Describes the result of uploading an image resource")
+
 
 public class ModelApiResponse   {
   private Integer code = null;

@@ -1,6 +1,10 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
+import io.swagger.model.Body2;
+import io.swagger.model.Body3;
+import io.swagger.model.Body4;
+import io.swagger.model.Body5;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
 
@@ -95,7 +99,7 @@ public interface FakeApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public void testEndpointParameters(@Valid Object body);
+    public void testEndpointParameters(@Valid Body2 body);
 
     /**
      * To test enum parameters
@@ -105,12 +109,26 @@ public interface FakeApi  {
      */
     @GET
     @Path("/fake")
+    @Operation(summary = "To test enum parameters", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
+        @ApiResponse(responseCode = "404", description = "Not found") })
+    public void testEnumParameters(@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray, @HeaderParam("enum_header_string") String enumHeaderString, @QueryParam("enum_query_string_array") List<String> enumQueryStringArray, @QueryParam("enum_query_string") @DefaultValue("-efg") String enumQueryString, @QueryParam("enum_query_integer") Integer enumQueryInteger);
+
+    /**
+     * To test enum parameters
+     *
+     * To test enum parameters
+     *
+     */
+    @POST
+    @Path("/fake/enum/form")
     @Consumes({ "*/*" })
     @Operation(summary = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found") })
-    public void testEnumParameters(@Valid Object body, @HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray, @HeaderParam("enum_header_string") String enumHeaderString, @QueryParam("enum_query_string_array") List<String> enumQueryStringArray, @QueryParam("enum_query_string") String enumQueryString, @QueryParam("enum_query_integer") Integer enumQueryInteger);
+    public void testEnumRequestBody(@Valid Body4 body);
 
     /**
      * test inline additionalProperties
@@ -128,11 +146,11 @@ public interface FakeApi  {
      * test json serialization of form data
      *
      */
-    @GET
+    @POST
     @Path("/fake/jsonFormData")
     @Consumes({ "application/json" })
     @Operation(summary = "test json serialization of form data", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public void testJsonFormData(@Valid Object body);
+    public void testJsonFormData(@Valid Body5 body);
 }

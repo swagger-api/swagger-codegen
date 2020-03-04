@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.springframework.core.io.Resource;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -40,10 +41,10 @@ public class FormatTest   {
   private String string = null;
 
   @JsonProperty("byte")
-  private String _byte = null;
+  private byte[] _byte = null;
 
   @JsonProperty("binary")
-  private String binary = null;
+  private Resource binary = null;
 
   @JsonProperty("date")
   private LocalDate date = null;
@@ -202,7 +203,7 @@ public class FormatTest   {
     this.string = string;
   }
 
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -214,15 +215,15 @@ public class FormatTest   {
   @ApiModelProperty(required = true, value = "")
       @NotNull
 
-  @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")   public String getByte() {
+    public byte[] getByte() {
     return _byte;
   }
 
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
 
-  public FormatTest binary(String binary) {
+  public FormatTest binary(Resource binary) {
     this.binary = binary;
     return this;
   }
@@ -233,11 +234,12 @@ public class FormatTest   {
   **/
   @ApiModelProperty(value = "")
   
-    public String getBinary() {
+    @Valid
+    public Resource getBinary() {
     return binary;
   }
 
-  public void setBinary(String binary) {
+  public void setBinary(Resource binary) {
     this.binary = binary;
   }
 

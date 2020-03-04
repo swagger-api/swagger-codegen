@@ -841,9 +841,9 @@ class PetApi(object):
         form_params = []
         local_var_files = {}
         if 'name' in params:
-            form_params.append(('name', params['name']))  # noqa: E501
+              # noqa: E501
         if 'status' in params:
-            form_params.append(('status', params['status']))  # noqa: E501
+              # noqa: E501
 
         body_params = None
         # HTTP header `Content-Type`
@@ -942,7 +942,7 @@ class PetApi(object):
         form_params = []
         local_var_files = {}
         if 'additional_metadata' in params:
-            form_params.append(('additionalMetadata', params['additional_metadata']))  # noqa: E501
+              # noqa: E501
         if 'file' in params:
             local_var_files['file'] = params['file']  # noqa: E501
 

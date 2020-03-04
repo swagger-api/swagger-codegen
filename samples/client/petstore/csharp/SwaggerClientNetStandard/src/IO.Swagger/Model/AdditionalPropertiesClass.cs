@@ -30,12 +30,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdditionalPropertiesClass" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public AdditionalPropertiesClass(Dictionary<string, string>  = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>>  = default(Dictionary<string, Dictionary<string, string>>))
+        /// <param name="mapProperty">mapProperty.</param>
+        /// <param name="mapOfMapProperty">mapOfMapProperty.</param>
+        public AdditionalPropertiesClass(Dictionary<string, string> mapProperty = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>> mapOfMapProperty = default(Dictionary<string, Dictionary<string, string>>))
         {
-            this.MapProperty = ;
-            this.MapOfMapProperty = ;
+            this.MapProperty = mapProperty;
+            this.MapOfMapProperty = mapOfMapProperty;
         }
         
         /// <summary>
@@ -97,11 +97,13 @@ namespace IO.Swagger.Model
                 (
                     this.MapProperty == input.MapProperty ||
                     this.MapProperty != null &&
+                    input.MapProperty != null &&
                     this.MapProperty.SequenceEqual(input.MapProperty)
                 ) && 
                 (
                     this.MapOfMapProperty == input.MapOfMapProperty ||
                     this.MapOfMapProperty != null &&
+                    input.MapOfMapProperty != null &&
                     this.MapOfMapProperty.SequenceEqual(input.MapOfMapProperty)
                 );
         }

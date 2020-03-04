@@ -60,6 +60,7 @@ from swagger_client.models.mixed_properties_and_additional_properties_class impo
 from swagger_client.models.model200_response import Model200Response
 from swagger_client.models.model_return import ModelReturn
 from swagger_client.models.name import Name
+from swagger_client.models.nullable_enum_model import NullableEnumModel
 from swagger_client.models.number_only import NumberOnly
 from swagger_client.models.one_of_all_pets_response_items import OneOfAllPetsResponseItems
 from swagger_client.models.one_of_single_pet_response_pet import OneOfSinglePetResponsePet

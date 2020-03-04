@@ -7,12 +7,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description="A pet for sale in the pet store")
+
 public class Pet   {
   private Long id = null;
   private Category category = null;
@@ -24,10 +23,8 @@ public class Pet   {
    */
   public enum StatusEnum {
     AVAILABLE("available"),
-
-        PENDING("pending"),
-
-        SOLD("sold");
+    PENDING("pending"),
+    SOLD("sold");
     private String value;
 
     StatusEnum(String value) {

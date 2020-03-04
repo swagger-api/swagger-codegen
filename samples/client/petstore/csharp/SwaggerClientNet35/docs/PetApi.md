@@ -8,7 +8,9 @@ Method | HTTP request | Description
 [**DeletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
 [**FindPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**FindPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+[**GetAllPets**](PetApi.md#getallpets) | **GET** /allPets | 
 [**GetPetById**](PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+[**GetRandomPet**](PetApi.md#getrandompet) | **GET** /randomPet | 
 [**UpdatePet**](PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 [**UpdatePetWithForm**](PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**UploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -75,7 +77,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="deletepet"></a>
 # **DeletePet**
-> void DeletePet (int? petId, string apiKey = null)
+> void DeletePet (long? petId, string apiKey = null)
 
 Deletes a pet
 
@@ -97,8 +99,8 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | Pet id to delete
-            var apiKey = new string(); // string |  (optional) 
+            var petId = 789;  // long? | Pet id to delete
+            var apiKey = apiKey_example;  // string |  (optional) 
 
             try
             {
@@ -118,8 +120,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](int?.md)| Pet id to delete | 
- **apiKey** | [**string**](string.md)|  | [optional] 
+ **petId** | **long?**| Pet id to delete | 
+ **apiKey** | **string**|  | [optional] 
 
 ### Return type
 
@@ -261,9 +263,62 @@ Name | Type | Description  | Notes
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="getallpets"></a>
+# **GetAllPets**
+> AllPetsResponse GetAllPets ()
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class GetAllPetsExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+
+            try
+            {
+                AllPetsResponse result = apiInstance.GetAllPets();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.GetAllPets: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AllPetsResponse**](AllPetsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="getpetbyid"></a>
 # **GetPetById**
-> Pet GetPetById (int? petId)
+> Pet GetPetById (long? petId)
 
 Find pet by ID
 
@@ -289,7 +344,7 @@ namespace Example
             // Configuration.Default.AddApiKeyPrefix("api_key", "Bearer");
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet to return
+            var petId = 789;  // long? | ID of pet to return
 
             try
             {
@@ -310,7 +365,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](int?.md)| ID of pet to return | 
+ **petId** | **long?**| ID of pet to return | 
 
 ### Return type
 
@@ -324,6 +379,59 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/xml, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="getrandompet"></a>
+# **GetRandomPet**
+> SinglePetResponse GetRandomPet ()
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class GetRandomPetExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+
+            try
+            {
+                SinglePetResponse result = apiInstance.GetRandomPet();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.GetRandomPet: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SinglePetResponse**](SinglePetResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="updatepet"></a>
@@ -388,7 +496,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="updatepetwithform"></a>
 # **UpdatePetWithForm**
-> void UpdatePetWithForm (int? petId, string name = null, string status = null)
+> void UpdatePetWithForm (long? petId, string name = null, string status = null)
 
 Updates a pet in the store with form data
 
@@ -410,9 +518,9 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet that needs to be updated
-            var name = new string(); // string |  (optional) 
-            var status = new string(); // string |  (optional) 
+            var petId = 789;  // long? | ID of pet that needs to be updated
+            var name = name_example;  // string |  (optional) 
+            var status = status_example;  // string |  (optional) 
 
             try
             {
@@ -432,9 +540,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](int?.md)| ID of pet that needs to be updated | 
- **name** | [**string**](string.md)|  | [optional] 
- **status** | [**string**](string.md)|  | [optional] 
+ **petId** | **long?**| ID of pet that needs to be updated | 
+ **name** | **string**|  | [optional] 
+ **status** | **string**|  | [optional] 
 
 ### Return type
 
@@ -452,7 +560,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (int? petId, string additionalMetadata = null, System.IO.Stream file = null)
+> ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] _file = null)
 
 uploads an image
 
@@ -474,14 +582,14 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet to update
-            var additionalMetadata = new string(); // string |  (optional) 
-            var file = file_example;  // System.IO.Stream |  (optional) 
+            var petId = 789;  // long? | ID of pet to update
+            var additionalMetadata = additionalMetadata_example;  // string |  (optional) 
+            var _file = _file_example;  // byte[] |  (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
+                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, _file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -497,9 +605,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](int?.md)| ID of pet to update | 
- **additionalMetadata** | [**string**](string.md)|  | [optional] 
- **file** | **System.IO.Stream****System.IO.Stream**|  | [optional] 
+ **petId** | **long?**| ID of pet to update | 
+ **additionalMetadata** | **string**|  | [optional] 
+ **_file** | **byte[]****byte[]**|  | [optional] 
 
 ### Return type
 
