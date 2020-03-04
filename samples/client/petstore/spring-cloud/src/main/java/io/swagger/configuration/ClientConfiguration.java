@@ -42,7 +42,7 @@ public class ClientConfiguration {
   @ConfigurationProperties("swaggerPetstore.security.petstoreAuth")
   public ImplicitResourceDetails petstoreAuthResourceDetails() {
     ImplicitResourceDetails details = new ImplicitResourceDetails();
-    details.setUserAuthorizationUri("http://petstore.swagger.io/api/oauth/dialog");
+    details.setUserAuthorizationUri("http://petstore.swagger.io/oauth/dialog");
     return details;
   }
 

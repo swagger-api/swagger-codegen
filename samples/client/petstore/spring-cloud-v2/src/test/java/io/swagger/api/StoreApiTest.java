@@ -49,7 +49,7 @@ public class StoreApiTest {
         Order fetched = client.getOrderById(order.getId()).execute().getBody();
         assertEquals(fetched.getId(), order.getId());
 
-        client.deleteOrder(String.valueOf(order.getId())).execute();
+        client.deleteOrder(order.getId()).execute();
 
         try {
             client.getOrderById(order.getId()).execute();

@@ -1,6 +1,10 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
+import io.swagger.model.Body2;
+import io.swagger.model.Body3;
+import io.swagger.model.Body4;
+import io.swagger.model.Body5;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -135,7 +139,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEndpointParameters
      */
-    default ResponseEntity<Void> testEndpointParameters( Object  body) {
+    default ResponseEntity<Void> testEndpointParameters( Body2  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -146,12 +150,22 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEnumParameters
      */
-    default ResponseEntity<Void> testEnumParameters( Object  body,
-         List<String>  enumHeaderStringArray,
+    default ResponseEntity<Void> testEnumParameters( List<String>  enumHeaderStringArray,
          String  enumHeaderString,
          List<String>  enumQueryStringArray,
          String  enumQueryString,
          Integer  enumQueryInteger) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @see FakeApi#testEnumRequestBody
+     */
+    default ResponseEntity<Void> testEnumRequestBody( Body4  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -173,7 +187,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testJsonFormData
      */
-    default ResponseEntity<Void> testJsonFormData( Object  body) {
+    default ResponseEntity<Void> testJsonFormData( Body5  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
