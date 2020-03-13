@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import org.springframework.core.io.Resource;
+import io.swagger.model.SubCategory;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,11 @@ public interface PetApiDelegate {
      */
     ResponseEntity<Void> deletePet( Long  petId,
          String  apiKey);
+
+    /**
+     * @see PetApi#doCategoryStuff
+     */
+    ResponseEntity<ModelApiResponse> doCategoryStuff( SubCategory  body);
 
     /**
      * @see PetApi#findPetsByStatus

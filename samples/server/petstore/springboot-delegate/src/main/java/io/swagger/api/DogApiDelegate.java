@@ -38,7 +38,7 @@ public interface DogApiDelegate {
     /**
      * @see DogApi#updateDogWithForm
      */
-    ResponseEntity<Void> updateDogWithForm( Long  animalId,
+    ResponseEntity<Void> updateDogWithForm( Long  dogId,
          String  name,
          String  status);
 
