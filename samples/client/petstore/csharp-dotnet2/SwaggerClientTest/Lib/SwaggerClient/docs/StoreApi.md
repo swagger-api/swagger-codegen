@@ -33,7 +33,7 @@ namespace Example
         {
 
             var apiInstance = new StoreApi();
-            var orderId = new string(); // string | ID of the order that needs to be deleted
+            var orderId = orderId_example;  // string | ID of the order that needs to be deleted
 
             try
             {
@@ -53,7 +53,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | [**string**](.md)| ID of the order that needs to be deleted | 
+ **orderId** | **string**| ID of the order that needs to be deleted | 
 
 ### Return type
 
@@ -135,7 +135,7 @@ This endpoint does not need any parameter.
 
 <a name="getorderbyid"></a>
 # **GetOrderById**
-> Order GetOrderById (int? orderId)
+> Order GetOrderById (long? orderId)
 
 Find purchase order by ID
 
@@ -157,7 +157,7 @@ namespace Example
         {
 
             var apiInstance = new StoreApi();
-            var orderId = new int?(); // int? | ID of pet that needs to be fetched
+            var orderId = 789;  // long? | ID of pet that needs to be fetched
 
             try
             {
@@ -178,7 +178,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | [**int?**](.md)| ID of pet that needs to be fetched | 
+ **orderId** | **long?**| ID of pet that needs to be fetched | 
 
 ### Return type
 
@@ -250,7 +250,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

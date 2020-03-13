@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,16 @@ public interface PetApi  {
                 @ApiResponse(responseCode = "404", description = "Pet not found")
          })
     Response deletePet( @PathParam("petId") Long petId,@Parameter(description = "" )@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext);
+
+    @POST
+    @Path("/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags={ "pet" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class)))
+         })
+    Response doCategoryStuff(@Parameter(description = "" ) SubCategory body,@Context SecurityContext securityContext);
 
     @GET
     @Path("/findByStatus")

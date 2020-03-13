@@ -92,5 +92,5 @@ public interface DogApi  {
     @Operation(summary = "Updates a dog", tags={ "dog" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public void updateDogWithForm(@PathParam("animalId") Long animalId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
+    public void updateDogWithForm(@PathParam("dogId") Long dogId, @Multipart(value = "name", required = false)  String name, @Multipart(value = "status", required = false)  String status);
 }

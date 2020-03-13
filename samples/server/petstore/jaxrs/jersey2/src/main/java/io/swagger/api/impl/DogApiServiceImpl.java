@@ -38,7 +38,7 @@ public class DogApiServiceImpl extends DogApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response updateDogWithForm(Long animalId, String name, String status, SecurityContext securityContext) throws NotFoundException {
+    public Response updateDogWithForm(Long dogId, String name, String status, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }

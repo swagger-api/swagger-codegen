@@ -7,6 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -83,6 +84,31 @@ public interface PetApi {
 ,@ApiParam(value = "" ) @RequestHeader(value="api_key", required=false) String apiKey
 ) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default PetApi interface so no example is generated");
+        }
+        return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED));
+    }
+
+
+    @ApiOperation(value = "", nickname = "doCategoryStuff", notes = "", response = ModelApiResponse.class, tags={ "pet", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
+    @RequestMapping(value = "/pet/category",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    default CompletableFuture<ResponseEntity<ModelApiResponse>> doCategoryStuff(@ApiParam(value = ""  )  @Valid @RequestBody SubCategory body
+) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return CompletableFuture.completedFuture(new ResponseEntity<>(getObjectMapper().get().readValue("{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}", ModelApiResponse.class), HttpStatus.NOT_IMPLEMENTED));
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+                }
+            }
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default PetApi interface so no example is generated");
         }

@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addPet**](PetApi.md#addPet) | **POST** pet | Add a new pet to the store
 [**deletePet**](PetApi.md#deletePet) | **DELETE** pet/{petId} | Deletes a pet
+[**doCategoryStuff**](PetApi.md#doCategoryStuff) | **POST** pet/category | 
 [**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** pet/findByStatus | Finds Pets by status
 [**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** pet/findByTags | Finds Pets by tags
 [**getAllPets**](PetApi.md#getAllPets) | **GET** allPets | 
@@ -118,6 +119,49 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+<a name="doCategoryStuff"></a>
+# **doCategoryStuff**
+> ModelApiResponse doCategoryStuff(body)
+
+
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+SubCategory body = new SubCategory(); // SubCategory | 
+try {
+    ModelApiResponse result = apiInstance.doCategoryStuff(body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#doCategoryStuff");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional]
+
+### Return type
+
+[**ModelApiResponse**](ModelApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findPetsByStatus"></a>
 # **findPetsByStatus**

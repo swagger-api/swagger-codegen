@@ -28,6 +28,8 @@ from swagger_client.api_client import ApiClient
 from swagger_client.configuration import Configuration
 # import models into sdk package
 from swagger_client.models.additional_properties_class import AdditionalPropertiesClass
+from swagger_client.models.all_of_sub_category_category import AllOfSubCategoryCategory
+from swagger_client.models.all_of_sub_category_pets_items import AllOfSubCategoryPetsItems
 from swagger_client.models.all_pets_response import AllPetsResponse
 from swagger_client.models.animal import Animal
 from swagger_client.models.animal_farm import AnimalFarm
@@ -74,5 +76,6 @@ from swagger_client.models.pet import Pet
 from swagger_client.models.read_only_first import ReadOnlyFirst
 from swagger_client.models.single_pet_response import SinglePetResponse
 from swagger_client.models.special_model_name import SpecialModelName
+from swagger_client.models.sub_category import SubCategory
 from swagger_client.models.tag import Tag
 from swagger_client.models.user import User

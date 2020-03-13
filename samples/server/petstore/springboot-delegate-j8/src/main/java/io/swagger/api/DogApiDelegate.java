@@ -91,7 +91,7 @@ public interface DogApiDelegate {
     /**
      * @see DogApi#updateDogWithForm
      */
-    default ResponseEntity<Void> updateDogWithForm( Long  animalId,
+    default ResponseEntity<Void> updateDogWithForm( Long  dogId,
          String  name,
          String  status) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {

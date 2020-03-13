@@ -4,10 +4,10 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**deleteOrder**](StoreApi.md#deleteOrder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
-[**getInventory**](StoreApi.md#getInventory) | **GET** /store/inventory | Returns pet inventories by status
-[**getOrderById**](StoreApi.md#getOrderById) | **GET** /store/order/{order_id} | Find purchase order by ID
-[**placeOrder**](StoreApi.md#placeOrder) | **POST** /store/order | Place an order for a pet
+[**deleteOrder**](StoreApi.md#deleteorder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
+[**getInventory**](StoreApi.md#getinventory) | **GET** /store/inventory | Returns pet inventories by status
+[**getOrderById**](StoreApi.md#getorderbyid) | **GET** /store/order/{order_id} | Find purchase order by ID
+[**placeOrder**](StoreApi.md#placeorder) | **POST** /store/order | Place an order for a pet
 
 # **deleteOrder**
 > deleteOrder($order_id)
@@ -40,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order_id** | [**string**](../Model/.md)| ID of the order that needs to be deleted |
+ **order_id** | **string**| ID of the order that needs to be deleted |
 
 ### Return type
 
@@ -124,7 +124,7 @@ $apiInstance = new Swagger\Client\Api\StoreApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$order_id = 56; // int | ID of pet that needs to be fetched
+$order_id = 789; // int | ID of pet that needs to be fetched
 
 try {
     $result = $apiInstance->getOrderById($order_id);
@@ -139,7 +139,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **order_id** | [**int**](../Model/.md)| ID of pet that needs to be fetched |
+ **order_id** | **int**| ID of pet that needs to be fetched |
 
 ### Return type
 
