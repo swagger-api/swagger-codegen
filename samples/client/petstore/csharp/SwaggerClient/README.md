@@ -117,6 +117,7 @@ Class | Method | HTTP request | Description
 *FakeClassnameTags123Api* | [**TestClassname**](docs/FakeClassnameTags123Api.md#testclassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**DoCategoryStuff**](docs/PetApi.md#docategorystuff) | **POST** /pet/category | 
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
 *PetApi* | [**GetAllPets**](docs/PetApi.md#getallpets) | **GET** /allPets | 
@@ -142,6 +143,8 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [Model.AdditionalPropertiesClass](docs/AdditionalPropertiesClass.md)
+ - [Model.AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [Model.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
  - [Model.AllPetsResponse](docs/AllPetsResponse.md)
  - [Model.Animal](docs/Animal.md)
  - [Model.AnimalFarm](docs/AnimalFarm.md)
@@ -188,6 +191,7 @@ Class | Method | HTTP request | Description
  - [Model.Return](docs/Return.md)
  - [Model.SinglePetResponse](docs/SinglePetResponse.md)
  - [Model.SpecialModelName](docs/SpecialModelName.md)
+ - [Model.SubCategory](docs/SubCategory.md)
  - [Model.Tag](docs/Tag.md)
  - [Model.User](docs/User.md)
 

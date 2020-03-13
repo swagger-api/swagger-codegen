@@ -116,11 +116,11 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="animalId">ID of dog that needs to be updated</param>
+        /// <param name="dogId">ID of dog that needs to be updated</param>
         /// <param name="name"> (optional)</param>
         /// <param name="status"> (optional)</param>
         /// <returns></returns>
-        void UpdateDogWithForm (long? animalId, string name = null, string status = null);
+        void UpdateDogWithForm (long? dogId, string name = null, string status = null);
 
         /// <summary>
         /// Updates a dog
@@ -129,11 +129,11 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="animalId">ID of dog that needs to be updated</param>
+        /// <param name="dogId">ID of dog that needs to be updated</param>
         /// <param name="name"> (optional)</param>
         /// <param name="status"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdateDogWithFormWithHttpInfo (long? animalId, string name = null, string status = null);
+        ApiResponse<Object> UpdateDogWithFormWithHttpInfo (long? dogId, string name = null, string status = null);
         #endregion Synchronous Operations
     }
 
@@ -525,28 +525,28 @@ namespace IO.Swagger.Api
         /// Updates a dog 
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="animalId">ID of dog that needs to be updated</param>
+        /// <param name="dogId">ID of dog that needs to be updated</param>
         /// <param name="name"> (optional)</param>
         /// <param name="status"> (optional)</param>
         /// <returns></returns>
-        public void UpdateDogWithForm (long? animalId, string name = null, string status = null)
+        public void UpdateDogWithForm (long? dogId, string name = null, string status = null)
         {
-             UpdateDogWithFormWithHttpInfo(animalId, name, status);
+             UpdateDogWithFormWithHttpInfo(dogId, name, status);
         }
 
         /// <summary>
         /// Updates a dog 
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="animalId">ID of dog that needs to be updated</param>
+        /// <param name="dogId">ID of dog that needs to be updated</param>
         /// <param name="name"> (optional)</param>
         /// <param name="status"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> UpdateDogWithFormWithHttpInfo (long? animalId, string name = null, string status = null)
+        public ApiResponse<Object> UpdateDogWithFormWithHttpInfo (long? dogId, string name = null, string status = null)
         {
-            // verify the required parameter 'animalId' is set
-            if (animalId == null)
-                throw new ApiException(400, "Missing required parameter 'animalId' when calling DogApi->UpdateDogWithForm");
+            // verify the required parameter 'dogId' is set
+            if (dogId == null)
+                throw new ApiException(400, "Missing required parameter 'dogId' when calling DogApi->UpdateDogWithForm");
 
             var localVarPath = "/dog/{dogId}";
             var localVarPathParams = new Dictionary<String, String>();
@@ -569,7 +569,7 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (animalId != null) localVarPathParams.Add("animalId", this.Configuration.ApiClient.ParameterToString(animalId)); // path parameter
+            if (dogId != null) localVarPathParams.Add("dogId", this.Configuration.ApiClient.ParameterToString(dogId)); // path parameter
             if (name != null) localVarFormParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // form parameter
             if (status != null) localVarFormParams.Add("status", this.Configuration.ApiClient.ParameterToString(status)); // form parameter
 
