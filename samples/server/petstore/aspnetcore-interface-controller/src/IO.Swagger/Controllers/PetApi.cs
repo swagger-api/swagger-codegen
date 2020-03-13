@@ -67,6 +67,29 @@ namespace IO.Swagger.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        [HttpPost]
+        [Route("/pet/category")]
+        [ValidateModelState]
+        [SwaggerOperation("DoCategoryStuff")]
+        [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
+        public virtual IActionResult DoCategoryStuff([FromBody]SubCategory body)
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(ApiResponse));
+            string exampleJson = null;
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)
+                        : default(ApiResponse);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <remarks>Multiple status values can be provided with comma separated strings</remarks>
