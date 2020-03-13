@@ -5,6 +5,7 @@ import io.swagger.model.*;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -23,6 +24,11 @@ public class PetApiServiceImpl implements PetApiService {
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
   }
       public Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
+      throws NotFoundException {
+      // do some magic!
+      return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+  }
+      public Response doCategoryStuff(SubCategory body,SecurityContext securityContext)
       throws NotFoundException {
       // do some magic!
       return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();

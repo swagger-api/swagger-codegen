@@ -15,6 +15,7 @@ import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -74,6 +75,21 @@ public class PetApi  {
         @Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deletePet(petId,apiKey,securityContext);
+    }
+    @POST
+    
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "", notes = "", response = ModelApiResponse.class, tags={ "pet" })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
+    public Response doCategoryStuff(
+                        @ApiParam(value = "" ) SubCategory body
+        
+,
+        @Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.doCategoryStuff(body,securityContext);
     }
     @GET
     

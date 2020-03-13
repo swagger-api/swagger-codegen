@@ -413,6 +413,33 @@
         }
       }
     },
+    "/pet/category" : {
+      "post" : {
+        "tags" : [ "pet" ],
+        "operationId" : "doCategoryStuff",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SubCategory"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/store/inventory" : {
       "get" : {
         "tags" : [ "store" ],
@@ -1517,7 +1544,7 @@
         "summary" : "Updates a dog",
         "operationId" : "updateDogWithForm",
         "parameters" : [ {
-          "name" : "animalId",
+          "name" : "dogId",
           "in" : "path",
           "description" : "ID of dog that needs to be updated",
           "required" : true,
@@ -2257,6 +2284,43 @@
           }, {
             "$ref" : "#/components/schemas/Cat"
           } ]
+        }
+      },
+      "SubCategory" : {
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Category"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "foo" : {
+                  "type" : "boolean"
+                },
+                "bar" : {
+                  "type" : "integer"
+                },
+                "beer" : {
+                  "type" : "string"
+                },
+                "drunk" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            } ]
+          },
+          "category2" : {
+            "$ref" : "#/components/schemas/Category"
+          },
+          "pets" : {
+            "type" : "array",
+            "items" : {
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/Pet"
+              } ]
+            }
+          }
         }
       },
       "hasOnlyReadOnly" : {

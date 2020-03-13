@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/dog")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-03T12:56:58.733-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-13T07:31:34.535-05:00[America/Bogota]")
 public class DogApi {
 
     @POST
@@ -81,9 +81,9 @@ public class DogApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input")
     })
-    public Response updateDogWithForm( @PathParam("animalId")
+    public Response updateDogWithForm( @PathParam("dogId")
 
- @Parameter(description = "ID of dog that needs to be updated") Long animalId
+ @Parameter(description = "ID of dog that needs to be updated") Long dogId
 ,@FormParam(value = "name")  String name,@FormParam(value = "status")  String status) {
         return Response.ok().entity("magic!").build();
     }}
