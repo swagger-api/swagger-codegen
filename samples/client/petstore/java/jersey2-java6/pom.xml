@@ -199,6 +199,11 @@
       <artifactId>jersey-media-json-jackson</artifactId>
       <version>${jersey-version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
 
     <!-- JSON processing: jackson -->
     <dependency>

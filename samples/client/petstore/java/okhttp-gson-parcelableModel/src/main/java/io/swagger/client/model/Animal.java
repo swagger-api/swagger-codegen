@@ -28,7 +28,6 @@ import android.os.Parcel;
  */
 
 
-
 public class Animal implements Parcelable {
   @SerializedName("className")
   private String className = null;
@@ -37,7 +36,6 @@ public class Animal implements Parcelable {
   private String color = "red";
 
   public Animal() {
-    this.className = this.getClass().getSimpleName();
   }
   public Animal className(String className) {
     this.className = className;

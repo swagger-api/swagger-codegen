@@ -188,7 +188,7 @@ No authorization required
 
 <a name="updateDogWithForm"></a>
 # **updateDogWithForm**
-> Void updateDogWithForm(animalId, name, status)
+> Void updateDogWithForm(dogId, name, status)
 
 Updates a dog
 
@@ -200,11 +200,11 @@ Updates a dog
 
 
 DogApi apiInstance = new DogApi();
-Long animalId = 789L; // Long | ID of dog that needs to be updated
+Long dogId = 789L; // Long | ID of dog that needs to be updated
 String name = "name_example"; // String | 
 String status = "status_example"; // String | 
 try {
-    Void result = apiInstance.updateDogWithForm(animalId, name, status);
+    Void result = apiInstance.updateDogWithForm(dogId, name, status);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DogApi#updateDogWithForm");
@@ -216,7 +216,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **animalId** | **Long**| ID of dog that needs to be updated |
+ **dogId** | **Long**| ID of dog that needs to be updated |
  **name** | **String**|  | [optional]
  **status** | **String**|  | [optional]
 
