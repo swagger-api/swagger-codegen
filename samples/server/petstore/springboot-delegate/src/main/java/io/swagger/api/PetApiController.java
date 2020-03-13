@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import org.springframework.core.io.Resource;
+import io.swagger.model.SubCategory;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,11 @@ public class PetApiController implements PetApi {
 ,@ApiParam(value = "" ) @RequestHeader(value="api_key", required=false) String apiKey
 ) {
         return delegate.deletePet(petId, apiKey);
+    }
+
+    public ResponseEntity<ModelApiResponse> doCategoryStuff(@ApiParam(value = ""  )  @Valid @RequestBody SubCategory body
+) {
+        return delegate.doCategoryStuff(body);
     }
 
     public ResponseEntity<List<Pet>> findPetsByStatus(@NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @Valid @RequestParam(value = "status", required = true) List<String> status

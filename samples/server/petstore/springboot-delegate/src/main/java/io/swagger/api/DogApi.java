@@ -76,7 +76,7 @@ public interface DogApi {
     @RequestMapping(value = "/dog/{dogId}",
         consumes = { "application/x-www-form-urlencoded" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> updateDogWithForm(@ApiParam(value = "ID of dog that needs to be updated",required=true) @PathVariable("animalId") Long animalId
+    ResponseEntity<Void> updateDogWithForm(@ApiParam(value = "ID of dog that needs to be updated",required=true) @PathVariable("dogId") Long dogId
 ,@ApiParam(value = "") @RequestParam(value="name", required=false)  String name
 ,@ApiParam(value = "") @RequestParam(value="status", required=false)  String status
 );
