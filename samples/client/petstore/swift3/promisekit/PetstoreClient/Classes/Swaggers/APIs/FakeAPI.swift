@@ -20,6 +20,7 @@ open class FakeAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      - parameter body: (body) Input boolean as post body (optional)
      - returns: Promise<OuterBoolean>
@@ -37,8 +38,10 @@ open class FakeAPI: APIBase {
     }
 
     /**
-          - POST /fake/outer/boolean
+     - POST /fake/outer/boolean
      - Test serialization of outer boolean types
+
+     - examples: [{contentType=application/json, example=true}]
      - parameter body: (body) Input boolean as post body (optional)
      - returns: RequestBuilder<OuterBoolean> 
      */
@@ -46,10 +49,12 @@ open class FakeAPI: APIBase {
         let path = "/fake/outer/boolean"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body?.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<OuterBoolean>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -61,6 +66,7 @@ open class FakeAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      - parameter body: (body) Input composite as post body (optional)
      - returns: Promise<OuterComposite>
@@ -78,8 +84,14 @@ open class FakeAPI: APIBase {
     }
 
     /**
-          - POST /fake/outer/composite
+     - POST /fake/outer/composite
      - Test serialization of object with outer number type
+
+     - examples: [{contentType=application/json, example={
+  "my_string" : "my_string",
+  "my_number" : 0.8008281904610115,
+  "my_boolean" : true
+}}]
      - parameter body: (body) Input composite as post body (optional)
      - returns: RequestBuilder<OuterComposite> 
      */
@@ -87,10 +99,12 @@ open class FakeAPI: APIBase {
         let path = "/fake/outer/composite"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body?.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<OuterComposite>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -102,6 +116,7 @@ open class FakeAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      - parameter body: (body) Input number as post body (optional)
      - returns: Promise<OuterNumber>
@@ -119,8 +134,10 @@ open class FakeAPI: APIBase {
     }
 
     /**
-          - POST /fake/outer/number
+     - POST /fake/outer/number
      - Test serialization of outer number types
+
+     - examples: [{contentType=application/json, example=0.8008281904610115}]
      - parameter body: (body) Input number as post body (optional)
      - returns: RequestBuilder<OuterNumber> 
      */
@@ -128,10 +145,12 @@ open class FakeAPI: APIBase {
         let path = "/fake/outer/number"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body?.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<OuterNumber>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -143,6 +162,7 @@ open class FakeAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      - parameter body: (body) Input string as post body (optional)
      - returns: Promise<OuterString>
@@ -160,8 +180,10 @@ open class FakeAPI: APIBase {
     }
 
     /**
-          - POST /fake/outer/string
+     - POST /fake/outer/string
      - Test serialization of outer string types
+
+     - examples: [{contentType=application/json, example=""}]
      - parameter body: (body) Input string as post body (optional)
      - returns: RequestBuilder<OuterString> 
      */
@@ -169,10 +191,12 @@ open class FakeAPI: APIBase {
         let path = "/fake/outer/string"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body?.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<OuterString>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -185,6 +209,7 @@ open class FakeAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      To test \"client\" model
      - parameter body: (body) client model 
@@ -206,6 +231,10 @@ open class FakeAPI: APIBase {
      To test \"client\" model
      - PATCH /fake
      - To test \"client\" model
+
+     - examples: [{contentType=application/json, example={
+  "client" : "client"
+}}]
      - parameter body: (body) client model 
      - returns: RequestBuilder<Client> 
      */
@@ -213,10 +242,12 @@ open class FakeAPI: APIBase {
         let path = "/fake"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Client>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -224,17 +255,18 @@ open class FakeAPI: APIBase {
      - parameter body: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testEndpointParameters(body: Object, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+    open class func testEndpointParameters(body: Any, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         testEndpointParametersWithRequestBuilder(body: body).execute { (response, error) -> Void in
             completion(error)
         }
     }
+
     /**
      Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      - parameter body: (body)  
      - returns: Promise<Void>
      */
-    open class func testEndpointParameters( body: Object) -> Promise<Void> {
+    open class func testEndpointParameters( body: Any) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         testEndpointParameters(body: body) { error in
             if let error = error {
@@ -251,19 +283,21 @@ open class FakeAPI: APIBase {
      - POST /fake
      - Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      - BASIC:
-     - type: http
-     - name: http_basic_test
+       - type: http
+       - name: http_basic_test
      - parameter body: (body)  
      - returns: RequestBuilder<Void> 
      */
-    open class func testEndpointParametersWithRequestBuilder(body: Object) -> RequestBuilder<Void> {
+    open class func testEndpointParametersWithRequestBuilder(body: Any) -> RequestBuilder<Void> {
         let path = "/fake"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -273,6 +307,16 @@ open class FakeAPI: APIBase {
         case greaterThan = ">"
         case dollar = "$"
     }
+
+    /**
+     * enum for parameter enumHeaderString
+     */
+    public enum EnumHeaderString_testEnumParameters: String { 
+        case abc = "_abc"
+        case efg = "-efg"
+        case xyz = "(xyz)"
+    }
+
     /**
      * enum for parameter enumQueryStringArray
      */
@@ -280,6 +324,24 @@ open class FakeAPI: APIBase {
         case greaterThan = ">"
         case dollar = "$"
     }
+
+    /**
+     * enum for parameter enumQueryString
+     */
+    public enum EnumQueryString_testEnumParameters: String { 
+        case abc = "_abc"
+        case efg = "-efg"
+        case xyz = "(xyz)"
+    }
+
+    /**
+     * enum for parameter enumQueryInteger
+     */
+    public enum EnumQueryInteger_testEnumParameters: Int32 { 
+        case _1 = 1
+        case number2 = -2
+    }
+
     /**
      To test enum parameters
      - parameter body: (body)  (optional)
@@ -290,11 +352,12 @@ open class FakeAPI: APIBase {
      - parameter enumQueryInteger: (query) Query parameter enum test (double) (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testEnumParameters(body: Object? = nil, enumHeaderStringArray: [String]? = nil, enumHeaderString: String? = nil, enumQueryStringArray: [String]? = nil, enumQueryString: String? = nil, enumQueryInteger: Int32? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+    open class func testEnumParameters(body: Any? = nil, enumHeaderStringArray: [String]? = nil, enumHeaderString: EnumHeaderString_testEnumParameters? = nil, enumQueryStringArray: [String]? = nil, enumQueryString: EnumQueryString_testEnumParameters? = nil, enumQueryInteger: EnumQueryInteger_testEnumParameters? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         testEnumParametersWithRequestBuilder(body: body, enumHeaderStringArray: enumHeaderStringArray, enumHeaderString: enumHeaderString, enumQueryStringArray: enumQueryStringArray, enumQueryString: enumQueryString, enumQueryInteger: enumQueryInteger).execute { (response, error) -> Void in
             completion(error)
         }
     }
+
     /**
      To test enum parameters
      - parameter body: (body)  (optional)
@@ -305,7 +368,7 @@ open class FakeAPI: APIBase {
      - parameter enumQueryInteger: (query) Query parameter enum test (double) (optional)
      - returns: Promise<Void>
      */
-    open class func testEnumParameters( body: Object? = nil,  enumHeaderStringArray: [String]? = nil,  enumHeaderString: String? = nil,  enumQueryStringArray: [String]? = nil,  enumQueryString: String? = nil,  enumQueryInteger: Int32? = nil) -> Promise<Void> {
+    open class func testEnumParameters( body: Any? = nil,  enumHeaderStringArray: [String]? = nil,  enumHeaderString: EnumHeaderString_testEnumParameters? = nil,  enumQueryStringArray: [String]? = nil,  enumQueryString: EnumQueryString_testEnumParameters? = nil,  enumQueryInteger: EnumQueryInteger_testEnumParameters? = nil) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         testEnumParameters(body: body, enumHeaderStringArray: enumHeaderStringArray, enumHeaderString: enumHeaderString, enumQueryStringArray: enumQueryStringArray, enumQueryString: enumQueryString, enumQueryInteger: enumQueryInteger) { error in
             if let error = error {
@@ -321,6 +384,7 @@ open class FakeAPI: APIBase {
      To test enum parameters
      - GET /fake
      - To test enum parameters
+
      - parameter body: (body)  (optional)
      - parameter enumHeaderStringArray: (header) Header parameter enum test (string array) (optional)
      - parameter enumHeaderString: (header) Header parameter enum test (string) (optional)
@@ -329,22 +393,25 @@ open class FakeAPI: APIBase {
      - parameter enumQueryInteger: (query) Query parameter enum test (double) (optional)
      - returns: RequestBuilder<Void> 
      */
-    open class func testEnumParametersWithRequestBuilder(body: Object? = nil, enumHeaderStringArray: [String]? = nil, enumHeaderString: String? = nil, enumQueryStringArray: [String]? = nil, enumQueryString: String? = nil, enumQueryInteger: Int32? = nil) -> RequestBuilder<Void> {
+    open class func testEnumParametersWithRequestBuilder(body: Any? = nil, enumHeaderStringArray: [String]? = nil, enumHeaderString: EnumHeaderString_testEnumParameters? = nil, enumQueryStringArray: [String]? = nil, enumQueryString: EnumQueryString_testEnumParameters? = nil, enumQueryInteger: EnumQueryInteger_testEnumParameters? = nil) -> RequestBuilder<Void> {
         let path = "/fake"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body?.encodeToJSON()
-        let url = URLComponents(string: URLString)
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+                        "enum_query_string_array": enumQueryStringArray,
+                        "enum_query_string": enumQueryString?.rawValue,
+                        "enum_query_integer": enumQueryInteger?.rawValue
+        ])
         let nillableHeaders: [String: Any?] = [
                         "enum_header_string_array": enumHeaderStringArray,
-
-
-                        "enum_header_string": enumHeaderString
+                        "enum_header_string": enumHeaderString?.rawValue
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: , headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true, headers: headerParameters)
     }
 
     /**
@@ -357,6 +424,7 @@ open class FakeAPI: APIBase {
             completion(error)
         }
     }
+
     /**
      test inline additionalProperties
      - parameter body: (body) request body 
@@ -377,6 +445,7 @@ open class FakeAPI: APIBase {
     /**
      test inline additionalProperties
      - POST /fake/inline-additionalProperties
+
      - parameter body: (body) request body 
      - returns: RequestBuilder<Void> 
      */
@@ -384,10 +453,12 @@ open class FakeAPI: APIBase {
         let path = "/fake/inline-additionalProperties"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -395,17 +466,18 @@ open class FakeAPI: APIBase {
      - parameter body: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func testJsonFormData(body: Object, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+    open class func testJsonFormData(body: Any, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         testJsonFormDataWithRequestBuilder(body: body).execute { (response, error) -> Void in
             completion(error)
         }
     }
+
     /**
      test json serialization of form data
      - parameter body: (body)  
      - returns: Promise<Void>
      */
-    open class func testJsonFormData( body: Object) -> Promise<Void> {
+    open class func testJsonFormData( body: Any) -> Promise<Void> {
         let deferred = Promise<Void>.pending()
         testJsonFormData(body: body) { error in
             if let error = error {
@@ -420,17 +492,20 @@ open class FakeAPI: APIBase {
     /**
      test json serialization of form data
      - GET /fake/jsonFormData
+
      - parameter body: (body)  
      - returns: RequestBuilder<Void> 
      */
-    open class func testJsonFormDataWithRequestBuilder(body: Object) -> RequestBuilder<Void> {
+    open class func testJsonFormDataWithRequestBuilder(body: Any) -> RequestBuilder<Void> {
         let path = "/fake/jsonFormData"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
 }
