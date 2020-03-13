@@ -10,7 +10,7 @@ npm run build
 
 ### publishing
 
-First build the package than run ```npm publish```
+First build the package than run ```npm publish dist``` (don't forget to specify the `dist` folder!)
 
 ### consuming
 
@@ -25,12 +25,12 @@ npm install @swagger/angular2-typescript-petstore@0.0.1 --save
 _without publishing (not recommended):_
 
 ```
-npm install PATH_TO_GENERATED_PACKAGE --save
-```
+npm install PATH_TO_GENERATED_PACKAGE/dist.tgz --save
+It's important to take the tgz file, otherwise you'll get trouble with links on windows.  
 
 _using `npm link`:_
 
-In PATH_TO_GENERATED_PACKAGE:
+In PATH_TO_GENERATED_PACKAGE/dist:
 ```
 npm link
 ```
