@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -93,6 +94,19 @@ public class PetApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deletePet(petId,apiKey,securityContext);
+    }
+    @POST
+    @Path("/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+    public Response doCategoryStuff(@Parameter(in = ParameterIn.DEFAULT, description = "" ) SubCategory body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.doCategoryStuff(body,securityContext);
     }
     @GET
     @Path("/findByStatus")

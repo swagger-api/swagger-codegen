@@ -5,6 +5,7 @@ import io.swagger.model.*;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -18,6 +19,8 @@ public interface PetApiService {
       Response addPet(Pet body,SecurityContext securityContext)
       throws NotFoundException;
       Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
+      throws NotFoundException;
+      Response doCategoryStuff(SubCategory body,SecurityContext securityContext)
       throws NotFoundException;
       Response findPetsByStatus(List<String> status,SecurityContext securityContext)
       throws NotFoundException;

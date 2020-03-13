@@ -21,6 +21,7 @@ open class AnotherFakeAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      To test special tags
      - parameter body: (body) client model 
@@ -42,6 +43,10 @@ open class AnotherFakeAPI: APIBase {
      To test special tags
      - PATCH /another-fake/dummy
      - To test special tags
+
+     - examples: [{contentType=application/json, example={
+  "client" : "client"
+}}]
      - parameter body: (body) client model 
      - returns: RequestBuilder<Client> 
      */
@@ -49,10 +54,12 @@ open class AnotherFakeAPI: APIBase {
         let path = "/another-fake/dummy"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Client>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
 }

@@ -23,7 +23,7 @@ namespace IO.Swagger.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
         /// <returns></returns>
-        void DeletePet (int? petId, string apiKey);
+        void DeletePet (long? petId, string apiKey);
         /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
         /// </summary>
@@ -41,7 +41,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Pet</returns>
-        Pet GetPetById (int? petId);
+        Pet GetPetById (long? petId);
         /// <summary>
         /// Update an existing pet 
         /// </summary>
@@ -55,15 +55,15 @@ namespace IO.Swagger.Api
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        void UpdatePetWithForm (int? petId, string name, string status);
+        void UpdatePetWithForm (long? petId, string name, string status);
         /// <summary>
         /// uploads an image 
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"></param>
-        /// <param name="file"></param>
+        /// <param name="_file"></param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (int? petId, string additionalMetadata, System.IO.Stream file);
+        ApiResponse UploadFile (long? petId, string additionalMetadata, byte[] _file);
     }
   
     /// <summary>
@@ -160,7 +160,7 @@ namespace IO.Swagger.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
         /// <returns></returns>
-        public void DeletePet (int? petId, string apiKey)
+        public void DeletePet (long? petId, string apiKey)
         {
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling DeletePet");
@@ -266,7 +266,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Pet</returns>
-        public Pet GetPetById (int? petId)
+        public Pet GetPetById (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling GetPetById");
@@ -338,7 +338,7 @@ namespace IO.Swagger.Api
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public void UpdatePetWithForm (int? petId, string name, string status)
+        public void UpdatePetWithForm (long? petId, string name, string status)
         {
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling UpdatePetWithForm");
@@ -375,9 +375,9 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"></param>
-        /// <param name="file"></param>
+        /// <param name="_file"></param>
         /// <returns>ApiResponse</returns>
-        public ApiResponse UploadFile (int? petId, string additionalMetadata, System.IO.Stream file)
+        public ApiResponse UploadFile (long? petId, string additionalMetadata, byte[] _file)
         {
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling UploadFile");
@@ -393,7 +393,7 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
             String postBody = null;
     
                                     if (additionalMetadata != null) formParams.Add("additionalMetadata", ApiClient.ParameterToString(additionalMetadata)); // form parameter
-if (file != null) fileParams.Add("file", ApiClient.ParameterToFile("file", file));
+if (_file != null) fileParams.Add("file", ApiClient.ParameterToFile("file", _file));
                 
             // authentication setting, if any
             String[] authSettings = new String[] { "petstore_auth" };

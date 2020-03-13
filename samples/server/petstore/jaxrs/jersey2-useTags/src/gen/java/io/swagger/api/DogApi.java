@@ -128,11 +128,11 @@ public class DogApi  {
     @Operation(summary = "Updates a dog", description = "", tags={ "dog" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updateDogWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of dog that needs to be updated",required=true) @PathParam("animalId") Long animalId
+    public Response updateDogWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of dog that needs to be updated",required=true) @PathParam("dogId") Long dogId
 ,@Parameter(description = "")  @FormParam("name")  String name
 ,@Parameter(description = "")  @FormParam("status")  String status
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.updateDogWithForm(animalId,name,status,securityContext);
+        return delegate.updateDogWithForm(dogId,name,status,securityContext);
     }
 }

@@ -2952,8 +2952,8 @@ public class PetApiExample {
 
         PetApi apiInstance = new PetApi();
         Long petId = 789; // Long | ID of pet that needs to be updated
-        String name = ; // String | 
-        String status = ; // String | 
+        String name = name_example; // String | 
+        String status = status_example; // String | 
         try {
             apiInstance.updatePetWithForm(petId, name, status);
         } catch (ApiException e) {
@@ -2972,8 +2972,8 @@ public class PetApiExample {
     public static void main(String[] args) {
         PetApi apiInstance = new PetApi();
         Long petId = 789; // Long | ID of pet that needs to be updated
-        String name = ; // String | 
-        String status = ; // String | 
+        String name = name_example; // String | 
+        String status = status_example; // String | 
         try {
             apiInstance.updatePetWithForm(petId, name, status);
         } catch (ApiException e) {
@@ -2992,8 +2992,8 @@ public class PetApiExample {
 // Configure OAuth2 access token for authorization: (authentication scheme: petstore_auth)
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 Long *petId = 789; // ID of pet that needs to be updated
-String *name = ; //  (optional)
-String *status = ; //  (optional)
+String *name = name_example; //  (optional)
+String *status = status_example; //  (optional)
 
 PetApi *apiInstance = [[PetApi alloc] init];
 
@@ -3053,8 +3053,8 @@ namespace Example
 
             var apiInstance = new PetApi();
             var petId = 789;  // Long | ID of pet that needs to be updated
-            var name = new String(); // String |  (optional) 
-            var status = new String(); // String |  (optional) 
+            var name = name_example;  // String |  (optional) 
+            var status = status_example;  // String |  (optional) 
 
             try
             {
@@ -3080,8 +3080,8 @@ Swagger\Client\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_AC
 
 $api_instance = new Swagger\Client\ApiPetApi();
 $petId = 789; // Long | ID of pet that needs to be updated
-$name = ; // String | 
-$status = ; // String | 
+$name = name_example; // String | 
+$status = status_example; // String | 
 
 try {
     $api_instance->updatePetWithForm($petId, $name, $status);
@@ -3101,8 +3101,8 @@ $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
 my $api_instance = WWW::SwaggerClient::PetApi->new();
 my $petId = 789; # Long | ID of pet that needs to be updated
-my $name = ; # String | 
-my $status = ; # String | 
+my $name = name_example; # String | 
+my $status = status_example; # String | 
 
 eval { 
     $api_instance->updatePetWithForm(petId => $petId, name => $name, status => $status);
@@ -3125,8 +3125,8 @@ swagger_client.configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # create an instance of the API class
 api_instance = swagger_client.PetApi()
 petId = 789 # Long | ID of pet that needs to be updated
-name =  # String |  (optional)
-status =  # String |  (optional)
+name = name_example # String |  (optional)
+status = status_example # String |  (optional)
 
 try: 
     # Updates a pet in the store with form data
@@ -3280,8 +3280,8 @@ public class PetApiExample {
 
         PetApi apiInstance = new PetApi();
         Long petId = 789; // Long | ID of pet to update
-        String additionalMetadata = ; // String | 
-        File file = file_example; // File | 
+        String additionalMetadata = additionalMetadata_example; // String | 
+        byte[] file = file_example; // byte[] | 
         try {
             ApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
             System.out.println(result);
@@ -3301,8 +3301,8 @@ public class PetApiExample {
     public static void main(String[] args) {
         PetApi apiInstance = new PetApi();
         Long petId = 789; // Long | ID of pet to update
-        String additionalMetadata = ; // String | 
-        File file = file_example; // File | 
+        String additionalMetadata = additionalMetadata_example; // String | 
+        byte[] file = file_example; // byte[] | 
         try {
             ApiResponse result = apiInstance.uploadFile(petId, additionalMetadata, file);
             System.out.println(result);
@@ -3322,8 +3322,8 @@ public class PetApiExample {
 // Configure OAuth2 access token for authorization: (authentication scheme: petstore_auth)
 [apiConfig setAccessToken:@"YOUR_ACCESS_TOKEN"];
 Long *petId = 789; // ID of pet to update
-String *additionalMetadata = ; //  (optional)
-File *file = file_example; //  (optional)
+String *additionalMetadata = additionalMetadata_example; //  (optional)
+byte[] *file = file_example; //  (optional)
 
 PetApi *apiInstance = [[PetApi alloc] init];
 
@@ -3386,8 +3386,8 @@ namespace Example
 
             var apiInstance = new PetApi();
             var petId = 789;  // Long | ID of pet to update
-            var additionalMetadata = new String(); // String |  (optional) 
-            var file = file_example;  // File |  (optional) 
+            var additionalMetadata = additionalMetadata_example;  // String |  (optional) 
+            var file = file_example;  // byte[] |  (optional) 
 
             try
             {
@@ -3414,8 +3414,8 @@ Swagger\Client\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_AC
 
 $api_instance = new Swagger\Client\ApiPetApi();
 $petId = 789; // Long | ID of pet to update
-$additionalMetadata = ; // String | 
-$file = file_example; // File | 
+$additionalMetadata = additionalMetadata_example; // String | 
+$file = file_example; // byte[] | 
 
 try {
     $result = $api_instance->uploadFile($petId, $additionalMetadata, $file);
@@ -3436,8 +3436,8 @@ $WWW::SwaggerClient::Configuration::access_token = 'YOUR_ACCESS_TOKEN';
 
 my $api_instance = WWW::SwaggerClient::PetApi->new();
 my $petId = 789; # Long | ID of pet to update
-my $additionalMetadata = ; # String | 
-my $file = file_example; # File | 
+my $additionalMetadata = additionalMetadata_example; # String | 
+my $file = file_example; # byte[] | 
 
 eval { 
     my $result = $api_instance->uploadFile(petId => $petId, additionalMetadata => $additionalMetadata, file => $file);
@@ -3461,8 +3461,8 @@ swagger_client.configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # create an instance of the API class
 api_instance = swagger_client.PetApi()
 petId = 789 # Long | ID of pet to update
-additionalMetadata =  # String |  (optional)
-file = file_example # File |  (optional)
+additionalMetadata = additionalMetadata_example # String |  (optional)
+file = file_example # byte[] |  (optional)
 
 try: 
     # uploads an image
@@ -3540,7 +3540,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      File
+                                                      byte[]
                                                   </span>
                                                       <span class="format">
                                                           (binary)
@@ -4705,7 +4705,7 @@ except ApiException as e:
                                   var schemaWrapper = {
   "description" : "order placed for purchasing the pet",
   "content" : {
-    "*/*" : {
+    "application/json" : {
       "schema" : {
         "$ref" : "#/components/schemas/Order"
       }
@@ -4713,7 +4713,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["*/*"].schema;
+                                  var schema = schemaWrapper.content["application/json"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
@@ -5021,7 +5021,7 @@ except ApiException as e:
                                   var schemaWrapper = {
   "description" : "Created user object",
   "content" : {
-    "*/*" : {
+    "application/json" : {
       "schema" : {
         "$ref" : "#/components/schemas/User"
       }
@@ -5029,7 +5029,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["*/*"].schema;
+                                  var schema = schemaWrapper.content["application/json"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
@@ -5281,7 +5281,7 @@ except ApiException as e:
                                   var schemaWrapper = {
   "description" : "List of user object",
   "content" : {
-    "*/*" : {
+    "application/json" : {
       "schema" : {
         "type" : "array",
         "items" : {
@@ -5292,7 +5292,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["*/*"].schema;
+                                  var schema = schemaWrapper.content["application/json"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
@@ -5544,7 +5544,7 @@ except ApiException as e:
                                   var schemaWrapper = {
   "description" : "List of user object",
   "content" : {
-    "*/*" : {
+    "application/json" : {
       "schema" : {
         "type" : "array",
         "items" : {
@@ -5555,7 +5555,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["*/*"].schema;
+                                  var schema = schemaWrapper.content["application/json"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {

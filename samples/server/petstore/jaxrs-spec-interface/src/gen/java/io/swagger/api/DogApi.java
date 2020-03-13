@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/dog")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-03T12:59:13.967-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-13T07:31:40.002-05:00[America/Bogota]")
 public interface DogApi {
 
     @POST
@@ -68,7 +68,7 @@ public interface DogApi {
     @Operation(summary = "Updates a dog", description = "", tags={ "dog" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    void updateDogWithForm( @PathParam("animalId")
+    void updateDogWithForm( @PathParam("dogId")
 
- @Parameter(description = "ID of dog that needs to be updated") Long animalId
+ @Parameter(description = "ID of dog that needs to be updated") Long dogId
 ,@FormParam(value = "name")  String name,@FormParam(value = "status")  String status);}

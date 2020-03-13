@@ -10,6 +10,7 @@
 exports.fakeOuterBooleanSerialize = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = true;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -28,6 +29,11 @@ exports.fakeOuterBooleanSerialize = function(body) {
 exports.fakeOuterCompositeSerialize = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "my_string" : "my_string",
+  "my_number" : 0.8008281904610115,
+  "my_boolean" : true
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -46,6 +52,7 @@ exports.fakeOuterCompositeSerialize = function(body) {
 exports.fakeOuterNumberSerialize = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = 0.8008281904610115;
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -64,6 +71,7 @@ exports.fakeOuterNumberSerialize = function(body) {
 exports.fakeOuterStringSerialize = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = "";
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -83,6 +91,9 @@ exports.fakeOuterStringSerialize = function(body) {
 exports.testClientModel = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "client" : "client"
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

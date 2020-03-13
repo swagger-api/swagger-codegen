@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_pet**](PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
 [**delete_pet**](PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
+[**do_category_stuff**](PetApi.md#do_category_stuff) | **POST** /pet/category | 
 [**find_pets_by_status**](PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
 [**find_pets_by_tags**](PetApi.md#find_pets_by_tags) | **GET** /pet/findByTags | Finds Pets by tags
 [**get_all_pets**](PetApi.md#get_all_pets) | **GET** /allPets | 
@@ -112,6 +113,51 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **do_category_stuff**
+> ApiResponse do_category_stuff(body=body)
+
+
+
+### Example
+```python
+from __future__ import print_function
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.PetApi()
+body = swagger_client.SubCategory() # SubCategory |  (optional)
+
+try:
+    api_response = api_instance.do_category_stuff(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling PetApi->do_category_stuff: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional] 
+
+### Return type
+
+[**ApiResponse**](ApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

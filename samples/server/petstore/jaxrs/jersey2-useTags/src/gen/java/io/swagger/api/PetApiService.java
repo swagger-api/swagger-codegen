@@ -10,6 +10,7 @@ import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.validation.constraints.*;
 public abstract class PetApiService {
     public abstract Response addPet(Pet body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deletePet(Long petId,String apiKey,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response doCategoryStuff(SubCategory body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findPetsByStatus( @NotNull List<String> status,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findPetsByTags( @NotNull List<String> tags,SecurityContext securityContext) throws NotFoundException;
     public abstract Response getAllPets(SecurityContext securityContext) throws NotFoundException;

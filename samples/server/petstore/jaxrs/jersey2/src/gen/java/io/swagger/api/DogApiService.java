@@ -21,5 +21,5 @@ public abstract class DogApiService {
     public abstract Response deleteDog(Long dogId,String apiKey,SecurityContext securityContext) throws NotFoundException;
     public abstract Response getDogById(Long dogId,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateDog(Dog body,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response updateDogWithForm(Long animalId,String name,String status,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response updateDogWithForm(Long dogId,String name,String status,SecurityContext securityContext) throws NotFoundException;
 }

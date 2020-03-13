@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -50,6 +51,21 @@ public class PetApiController implements PetApi {
 ) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<ModelApiResponse> doCategoryStuff(@ApiParam(value = ""  )  @Valid @RequestBody SubCategory body
+) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<ModelApiResponse>(objectMapper.readValue("{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}", ModelApiResponse.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<ModelApiResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<ModelApiResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<List<Pet>> findPetsByStatus(@NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @Valid @RequestParam(value = "status", required = true) List<String> status

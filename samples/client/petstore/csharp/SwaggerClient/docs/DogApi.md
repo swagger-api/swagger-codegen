@@ -245,7 +245,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="updatedogwithform"></a>
 # **UpdateDogWithForm**
-> void UpdateDogWithForm (long? animalId, string name = null, string status = null)
+> void UpdateDogWithForm (long? dogId, string name = null, string status = null)
 
 Updates a dog
 
@@ -264,14 +264,14 @@ namespace Example
         public void main()
         {
             var apiInstance = new DogApi();
-            var animalId = 789;  // long? | ID of dog that needs to be updated
+            var dogId = 789;  // long? | ID of dog that needs to be updated
             var name = name_example;  // string |  (optional) 
             var status = status_example;  // string |  (optional) 
 
             try
             {
                 // Updates a dog
-                apiInstance.UpdateDogWithForm(animalId, name, status);
+                apiInstance.UpdateDogWithForm(dogId, name, status);
             }
             catch (Exception e)
             {
@@ -286,7 +286,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **animalId** | **long?**| ID of dog that needs to be updated | 
+ **dogId** | **long?**| ID of dog that needs to be updated | 
  **name** | **string**|  | [optional] 
  **status** | **string**|  | [optional] 
 

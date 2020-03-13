@@ -9,6 +9,7 @@ import io.swagger.model.AllPetsResponse;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -55,6 +56,17 @@ public interface PetApi {
         method = RequestMethod.DELETE)
     com.netflix.hystrix.HystrixCommand<ResponseEntity<Void>> deletePet(@ApiParam(value = "Pet id to delete",required=true) @PathVariable("petId") Long petId
 ,@ApiParam(value = "" ) @RequestHeader(value="api_key", required=false) String apiKey
+);
+
+
+    @ApiOperation(value = "", nickname = "doCategoryStuff", notes = "", response = ModelApiResponse.class, tags={ "pet", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
+    @RequestMapping(value = "/pet/category",
+        produces = "application/json", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    com.netflix.hystrix.HystrixCommand<ResponseEntity<ModelApiResponse>> doCategoryStuff(@ApiParam(value = ""  )  @Valid @RequestBody SubCategory body
 );
 
 
