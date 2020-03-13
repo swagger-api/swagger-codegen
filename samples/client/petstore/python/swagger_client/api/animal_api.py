@@ -479,9 +479,9 @@ class AnimalApi(object):
         form_params = []
         local_var_files = {}
         if 'name' in params:
-              # noqa: E501
+            form_params.append(('name', params['name']))  # noqa: E501
         if 'status' in params:
-              # noqa: E501
+            form_params.append(('status', params['status']))  # noqa: E501
 
         body_params = None
         # HTTP header `Content-Type`

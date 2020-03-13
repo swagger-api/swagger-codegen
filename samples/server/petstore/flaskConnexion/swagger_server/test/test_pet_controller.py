@@ -9,6 +9,7 @@ from swagger_server.models.all_pets_response import AllPetsResponse  # noqa: E50
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.pet import Pet  # noqa: E501
 from swagger_server.models.single_pet_response import SinglePetResponse  # noqa: E501
+from swagger_server.models.sub_category import SubCategory  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
@@ -39,6 +40,20 @@ class TestPetController(BaseTestCase):
             '/pet/{petId}'.format(pet_id=789),
             method='DELETE',
             headers=headers)
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_do_category_stuff(self):
+        """Test case for do_category_stuff
+
+        
+        """
+        body = SubCategory()
+        response = self.client.open(
+            '/pet/category',
+            method='POST',
+            data=json.dumps(body),
+            content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

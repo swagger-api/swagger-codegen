@@ -196,7 +196,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_dog_with_form**
-> update_dog_with_form(animal_id, name=name, status=status)
+> update_dog_with_form(dog_id, name=name, status=status)
 
 Updates a dog
 
@@ -210,13 +210,13 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.DogApi()
-animal_id = 789 # int | ID of dog that needs to be updated
+dog_id = 789 # int | ID of dog that needs to be updated
 name = 'name_example' # str |  (optional)
 status = 'status_example' # str |  (optional)
 
 try:
     # Updates a dog
-    api_instance.update_dog_with_form(animal_id, name=name, status=status)
+    api_instance.update_dog_with_form(dog_id, name=name, status=status)
 except ApiException as e:
     print("Exception when calling DogApi->update_dog_with_form: %s\n" % e)
 ```
@@ -225,7 +225,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **animal_id** | **int**| ID of dog that needs to be updated | 
+ **dog_id** | **int**| ID of dog that needs to be updated | 
  **name** | **str**|  | [optional] 
  **status** | **str**|  | [optional] 
 
