@@ -4,6 +4,7 @@ import io.swagger.model.AllPetsResponse;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -53,6 +54,15 @@ public interface PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found") })
     public void deletePet(@PathParam("petId") Long petId, @HeaderParam("api_key") String apiKey);
+
+    @POST
+    @Path("/pet/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+    public ModelApiResponse doCategoryStuff(SubCategory body);
 
     /**
      * Finds Pets by status

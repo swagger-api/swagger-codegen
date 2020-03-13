@@ -8,6 +8,7 @@ import com.sun.jersey.multipart.FormDataParam;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -30,6 +31,12 @@ public class PetApiServiceImpl extends PetApiService {
     }
     @Override
     public Response deletePet(Long petId, String apiKey, SecurityContext securityContext)
+    throws NotFoundException {
+        // do some magic!
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
+    public Response doCategoryStuff(SubCategory body, SecurityContext securityContext)
     throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
