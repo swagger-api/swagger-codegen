@@ -13,7 +13,7 @@
   "license": "Unlicense",
   "dependencies": {
     "request": "^2.60.0",
-    "angular": "^1.4.3"
+    "angular": "^1.7.9"
   },
   "devDependencies": {
     "tsd": "^0.6.3",
