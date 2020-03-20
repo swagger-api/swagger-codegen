@@ -4,7 +4,7 @@
     <artifactId>swagger-cxf-annotated-basepath</artifactId>
     <packaging>war</packaging>
     <name>swagger-cxf-annotated-basepath</name>
-    <description>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key &#x60;special-key&#x60; to test the authorization filters.</description>
+    <description>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.</description>
     <version>1.0.0</version>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -184,7 +184,7 @@
         <java.version>1.7</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <swagger-core-version>1.5.18</swagger-core-version>
+        <swagger-core-version>1.6.0</swagger-core-version>
         <jetty-version>9.2.9.v20150224</jetty-version>
         <junit-version>4.12</junit-version>
         <logback-version>1.1.7</logback-version>
