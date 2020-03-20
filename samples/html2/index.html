@@ -1875,6 +1875,14 @@ except ApiException as e:
                                   <div id='responses-findPetsByStatus-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-findPetsByStatus-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-findPetsByStatus-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -1887,19 +1895,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-findPetsByStatus-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-findPetsByStatus-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -2205,6 +2212,14 @@ except ApiException as e:
                                   <div id='responses-findPetsByTags-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-findPetsByTags-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-findPetsByTags-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -2217,19 +2232,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-findPetsByTags-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-findPetsByTags-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -2552,6 +2566,14 @@ except ApiException as e:
                                   <div id='responses-getPetById-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-getPetById-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-getPetById-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -2561,19 +2583,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getPetById-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getPetById-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -3605,6 +3626,14 @@ except ApiException as e:
                                   <div id='responses-uploadFile-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-uploadFile-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-uploadFile-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -3614,19 +3643,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-uploadFile-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-uploadFile-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -4157,6 +4185,14 @@ except ApiException as e:
                                   <div id='responses-getInventory-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-getInventory-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-getInventory-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -4170,19 +4206,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getInventory-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getInventory-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -4456,6 +4491,14 @@ except ApiException as e:
                                   <div id='responses-getOrderById-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-getOrderById-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-getOrderById-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -4465,19 +4508,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getOrderById-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getOrderById-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -4776,6 +4818,14 @@ $(document).ready(function() {
                                   <div id='responses-placeOrder-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-placeOrder-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-placeOrder-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -4785,19 +4835,18 @@ $(document).ready(function() {
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-placeOrder-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-placeOrder-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -6121,6 +6170,14 @@ except ApiException as e:
                                   <div id='responses-getUserByName-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-getUserByName-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-getUserByName-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "schema" : {
@@ -6130,19 +6187,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getUserByName-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getUserByName-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -6465,6 +6521,14 @@ except ApiException as e:
                                   <div id='responses-loginUser-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
+                                        var renderSchema = function(schema) {
+                                          //console.log(JSON.stringify(schema));
+                                          var view = new JSONSchemaView(schema, 3);
+                                          $('#responses-loginUser-200-schema-data').val(stringify(schema));
+                                          var result = $('#responses-loginUser-200-schema-200');
+                                          result.empty();
+                                          result.append(view.render());
+                                        }
                                         var schemaWrapper = {
   "description" : "successful operation",
   "headers" : {
@@ -6486,19 +6550,18 @@ except ApiException as e:
                                         var schema = schemaWrapper.schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
+                                          renderSchema(schema);
                                         } else {
                                           schemaWrapper.definitions = defs;
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
+                                          $RefParser.dereference(schemaWrapper).then(
+                                            function(res) {
+                                              renderSchema(schema);
+                                            },
+                                            function(err) {
+                                              console.log(err);
+                                            }
+                                          );
                                         }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-loginUser-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-loginUser-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
                                       });
                                     </script>
                                   </div>
@@ -8260,6 +8323,12 @@ var JSONSchemaView = (function () {
       if (!this.schema) {
         return this.element;
       }
+
+        if (this.schema && this.schema.example) {
+            var exampleDiv = document.createElement('div');
+            exampleDiv.innerHTML = '<div style="display: block" class="example">\n          <span style="color: #808080" class="name">example: ' + this.schema.example + '</span>\n        </div>';
+            this.element.appendChild(exampleDiv.querySelector('.example'));
+        }
 
       if (!this.isCollapsed) {
         this.appendChildren(this.element);
