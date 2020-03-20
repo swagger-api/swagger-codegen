@@ -1,8 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import io.swagger.models.Operation;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
@@ -189,5 +187,21 @@ public class PureCloudGoClientCodegen extends GoClientCodegen {
                 markRecursiveProperties(codegenModelMap.get(cp.datatype), lineageArray);
             }
         }
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        objs = super.postProcessOperations(objs);
+        if (objs == null) return objs;
+
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation operation : ops) {
+                if (operation.httpMethod != null)
+                    operation.httpMethod = operation.httpMethod.toUpperCase();
+            }
+        }
+        return objs;
     }
 }
