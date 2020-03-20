@@ -40,8 +40,9 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelTemplateFiles.put("model.mustache", ".go");
         apiTemplateFiles.put("api.mustache", ".go");
 
-        modelDocTemplateFiles.put("model_doc.mustache", ".md");
-        apiDocTemplateFiles.put("api_doc.mustache", ".md");
+        // The OOTB doc templates suck. Using hosted auto-docs instead.
+//        modelDocTemplateFiles.put("model_doc.mustache", ".md");
+//        apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
         embeddedTemplateDir = templateDir = "go";
 
