@@ -11,6 +11,7 @@ import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.languages.JavascriptClientCodegen;
 
 import java.io.File;
+import java.io.IOException;
 
 public class JavascriptClientCodegenTest {
 
@@ -50,40 +51,24 @@ public class JavascriptClientCodegenTest {
     }
 
     @Test
-    public void testRecursiveModel() {
-        //final TemporaryFolder folder = new TemporaryFolder();
+    public void testRecursiveModel() throws IOException {
+        final TemporaryFolder folder = new TemporaryFolder();
 
-        //folder.create();
-        //final File output = folder.getRoot();
+        folder.create();
+        final File output = folder.getRoot();
 
         final CodegenConfigurator configurator = new CodegenConfigurator()
                 .setLang("javascript")
                 .setInputSpec("src/test/resources/2_0/recursive_model.yaml")
-                .setOutputDir("/Users/hugomercado/Dropbox/Documents/swagger-codegen/output");
+                .setOutputDir(output.getAbsolutePath());
 
         final ClientOptInput clientOptInput = configurator.toClientOptInput();
         new DefaultGenerator().opts(clientOptInput).generate();
 
+        final File orderFile = new File(output, "src/api/TestClassApi.js");
+        Assert.assertTrue(orderFile.exists());
 
-        //folder.delete();
-
-//        final TemporaryFolder folder = new TemporaryFolder();
-//
-//        folder.create();
-//        final File output = folder.getRoot();
-//
-//        final CodegenConfigurator configurator = new CodegenConfigurator()
-//                .setLang("javascript")
-//                .setInputSpec("src/test/resources/2_0/recursive_model.yaml")
-//                .setOutputDir(output.getAbsolutePath());
-//
-//        final ClientOptInput clientOptInput = configurator.toClientOptInput();
-//        new DefaultGenerator().opts(clientOptInput).generate();
-//
-//        final File orderFile = new File(output, "src/api/TestClassApi.js");
-//        Assert.assertTrue(orderFile.exists());
-//
-//        folder.delete();
+        folder.delete();
 
     }
 
