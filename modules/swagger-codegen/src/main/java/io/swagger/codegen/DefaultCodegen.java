@@ -2710,6 +2710,7 @@ public class DefaultCodegen {
                 p.isPrimitiveType = cp.isPrimitiveType;
                 p.isContainer = true;
                 p.isListContainer = true;
+                p.uniqueItems = impl.getUniqueItems() == null ? false : impl.getUniqueItems();
 
                 // set boolean flag (e.g. isString)
                 setParameterBooleanFlagWithCodegenProperty(p, cp);
