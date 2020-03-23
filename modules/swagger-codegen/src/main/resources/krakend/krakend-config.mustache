@@ -1,0 +1,37 @@
+{
+    "version": 2,
+    "name": "{{classname}}",
+    "port": {{krakendPort}},
+    "cache_ttl": "3600s",
+    "timeout": "3s",
+    "extra_config": {
+      {{#krakendDebug}}
+      "github_com/devopsfaith/krakend-gologging": {
+        "level":  "DEBUG",
+        "prefix": "[KRAKEND]",
+        "syslog": false,
+        "stdout": true
+      },
+      {{/krakendDebug}}
+      {{#krakendMetering}}
+      "github_com/devopsfaith/krakend-metrics": {
+        "collection_time": "60s",
+        "proxy_disabled": false,
+        "router_disabled": false,
+        "backend_disabled": false,
+        "endpoint_disabled": false,
+        "listen_address": ":8090"
+      },
+      {{/krakendMetering}}
+    },
+    {{#operations}}
+    "endpoints": [
+    {{#operation}}
+        {
+            "endpoint": "{{path}}",
+            "method": "{{httpMethod}}"
+        }{{^-last}},{{/-last}}
+    {{/operation}}
+    ]
+    {{/operations}}
+}
