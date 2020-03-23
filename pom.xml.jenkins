@@ -853,7 +853,7 @@
             </modules>
         </profile>
         <profile>
-            <id>samples</id>
+            <id>samples< /id>
             <activation>
                 <property>
                     <name>env</name>
@@ -868,7 +868,7 @@
                 <module>samples/client/petstore/akka-scala</module>
                 <module>samples/client/petstore/scala</module>
                 <!--<module>samples/client/petstore/scalaz</module>-->
-                <module>samples/client/petstore/clojure</module>
+                <!--<module>samples/client/petstore/clojure</module>-->
                 <module>samples/client/petstore/java/feign</module>
                 <module>samples/client/petstore/java/jersey1</module>
                 <module>samples/client/petstore/java/jersey2</module>
