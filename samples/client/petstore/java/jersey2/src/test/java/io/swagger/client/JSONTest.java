@@ -45,7 +45,7 @@ public class JSONTest {
     @Test
     public void testSqlDateSerialization() throws Exception {
         String str = json.getContext(null).writeValueAsString(new java.sql.Date(10));
-        assertEquals("\"1970-01-01\"", str);
+        assertEquals("\"1969-12-31\"", str);
     }
 
     @Test
