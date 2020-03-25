@@ -1,0 +1,25 @@
+package {{invokerPackage}}.auth
+
+import {{invokerPackage}}.Pair
+
+class ApiKeyAuth(val location: String, private val paramName: String) : Authentication {
+    var apiKey: String? = null
+    var apiKeyPrefix: String? = null
+
+    override fun applyToParams(queryParams: MutableList<Pair?>, headerParams: MutableMap<String?, String?>) {
+        if (apiKey == null) {
+            return
+        }
+        val value: String
+        value = if (apiKeyPrefix != null) {
+            "$apiKeyPrefix $apiKey"
+        } else {
+            apiKey!!
+        }
+        if (location === "query") {
+            queryParams.add(Pair(paramName, value))
+        } else if (location === "header") {
+            headerParams[paramName] = value
+        }
+    }
+}

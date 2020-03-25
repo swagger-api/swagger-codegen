@@ -1,0 +1,24 @@
+package {{invokerPackage}};
+
+class Pair(name: String, value: String) {
+    var name = ""
+        private set(name) {
+            if (!isValidString(name)) return
+            field = name
+        }
+    var value = ""
+        private set(value) {
+            if (!isValidString(value)) return
+            field = value
+        }
+
+    private fun isValidString(arg: String?): Boolean {
+        if (arg == null) return false
+        return arg.trim { it <= ' ' }.isNotEmpty()
+    }
+
+    init {
+        this.name = name
+        this.value = value
+    }
+}

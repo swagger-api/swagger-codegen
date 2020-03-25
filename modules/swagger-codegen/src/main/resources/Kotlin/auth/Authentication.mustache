@@ -1,0 +1,8 @@
+package {{invokerPackage}}.auth;
+
+import {{invokerPackage}}.Pair;
+
+interface Authentication {
+  /** Apply authentication settings to header and query params.  */
+  fun applyToParams(queryParams: MutableList<Pair?>, headerParams: MutableMap<String?, String?>)
+}

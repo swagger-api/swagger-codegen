@@ -1,0 +1,13 @@
+package {{invokerPackage}}.auth
+
+import {{invokerPackage}}.Pair
+
+class OAuth : Authentication {
+    var accessToken: String? = null
+
+    override fun applyToParams(queryParams: MutableList<Pair?>, headerParams: MutableMap<String?, String?>) {
+        if (accessToken != null) {
+            headerParams["Authorization"] = "Bearer $accessToken"
+        }
+    }
+}
