@@ -1,5 +1,9 @@
 package io.swagger.codegen.javascript;
 
+import java.io.File;
+
+import org.testng.Assert;
+
 import io.swagger.codegen.AbstractOptionsTest;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.options.JavaScriptOptionsProvider;
@@ -27,6 +31,13 @@ public class JavaScriptClientOptionsTest extends AbstractOptionsTest {
 
     @Override
     protected void setExpectations() {
+        final File testDataFile;
+        try {
+            testDataFile = new File(JavaScriptOptionsProvider.TEST_DATA_FILE_VALUE).getCanonicalFile();
+        } catch (Exception e) {
+            Assert.fail("Failed to canonicalise file " + JavaScriptOptionsProvider.TEST_DATA_FILE_VALUE, e);
+            return;
+        }
         // Commented generic options not yet supported by JavaScript codegen.
         new Expectations(clientCodegen) {{
             clientCodegen.setInvokerPackage(JavaScriptOptionsProvider.INVOKER_PACKAGE_VALUE);
@@ -70,6 +81,12 @@ public class JavaScriptClientOptionsTest extends AbstractOptionsTest {
             clientCodegen.setUseES6(Boolean.valueOf(JavaScriptOptionsProvider.USE_ES6_VALUE));
             times = 1;
             clientCodegen.setModelPropertyNaming(JavaScriptOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
+            times = 1;
+            clientCodegen.setLoadTestDataFromFile(Boolean.valueOf(JavaScriptOptionsProvider.LOAD_TEST_DATA_FROM_FILE_VALUE));
+            times = 1;
+            clientCodegen.setTestDataFile(testDataFile);
+            times = 1;
+            clientCodegen.setPreserveLeadingParamChar(Boolean.valueOf(JavaScriptOptionsProvider.PRESERVE_LEADING_PARAM_CHAR_VALUE));
             times = 1;
         }};
     }
