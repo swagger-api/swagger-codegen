@@ -63,15 +63,10 @@ definitions:
         type: "integer"
         format: "int32"
         description: "property description  */ ' \" =end -- \\r\\n \\n \\r"
-<<<<<<< HEAD
     description: "Model for testing reserved words  */ ' \" =end -- \\r\\n \\n \\r"
     xml:
       name: "Return"
-=======
-    xml:
-      name: "Return"
-    description: "Model for testing reserved words  */ ' \" =end -- \\r\\n \\n \\r"
->>>>>>> be8a5d44b898ae043444f6a78792e96dbde6fe8b
+
 externalDocs:
   description: "Find out more about Swagger  */ ' \" =end -- \\r\\n \\n \\r"
   url: "http://swagger.io"
