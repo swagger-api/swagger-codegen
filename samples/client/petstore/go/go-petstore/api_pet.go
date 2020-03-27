@@ -674,7 +674,7 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	if localVarOptionals != nil && localVarOptionals.AdditionalMetadata.IsSet() {
 		localVarFormParams.Add("additionalMetadata", parameterToString(localVarOptionals.AdditionalMetadata.Value(), ""))
 	}
-	var localVarFile *os.File
+    var localVarFile *os.File
 	if localVarOptionals != nil && localVarOptionals.File.IsSet() {
 		localVarFileOk := false
 		localVarFile, localVarFileOk = localVarOptionals.File.Value().(*os.File)
