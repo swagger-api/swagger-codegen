@@ -27,7 +27,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Order</returns>
-        Order GetOrderById (int? orderId);
+        Order GetOrderById (long? orderId);
         /// <summary>
         /// Place an order for a pet 
         /// </summary>
@@ -160,7 +160,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Order</returns>
-        public Order GetOrderById (int? orderId)
+        public Order GetOrderById (long? orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null) throw new ApiException(400, "Missing required parameter 'orderId' when calling GetOrderById");

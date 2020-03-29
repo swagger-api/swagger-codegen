@@ -68,7 +68,7 @@ public class DogApiServiceImpl implements DogApi {
      * Updates a dog
      *
      */
-    public void updateDogWithForm(Long animalId, String name, String status) {
+    public void updateDogWithForm(Long dogId, String name, String status) {
         // TODO: Implement...
         
         

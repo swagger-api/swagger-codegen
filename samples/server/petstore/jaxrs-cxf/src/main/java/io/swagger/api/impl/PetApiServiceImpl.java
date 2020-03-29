@@ -6,6 +6,7 @@ import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -44,6 +45,12 @@ public class PetApiServiceImpl implements PetApi {
         // TODO: Implement...
         
         
+    }
+    
+    public ModelApiResponse doCategoryStuff(SubCategory body) {
+        // TODO: Implement...
+        
+        return null;
     }
     
     /**

@@ -69,7 +69,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -128,7 +128,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -187,7 +187,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -216,7 +216,7 @@ namespace Example
         {
 
             var apiInstance = new UserApi();
-            var username = new string(); // string | The name that needs to be deleted
+            var username = username_example;  // string | The name that needs to be deleted
 
             try
             {
@@ -236,7 +236,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**string**](.md)| The name that needs to be deleted | 
+ **username** | **string**| The name that needs to be deleted | 
 
 ### Return type
 
@@ -275,7 +275,7 @@ namespace Example
         {
 
             var apiInstance = new UserApi();
-            var username = new string(); // string | The name that needs to be fetched. Use user1 for testing. 
+            var username = username_example;  // string | The name that needs to be fetched. Use user1 for testing. 
 
             try
             {
@@ -296,7 +296,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**string**](.md)| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **string**| The name that needs to be fetched. Use user1 for testing.  | 
 
 ### Return type
 
@@ -335,8 +335,8 @@ namespace Example
         {
 
             var apiInstance = new UserApi();
-            var username = new string(); // string | The user name for login
-            var password = new string(); // string | The password for login in clear text
+            var username = username_example;  // string | The user name for login
+            var password = password_example;  // string | The password for login in clear text
 
             try
             {
@@ -357,8 +357,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | [**string**](.md)| The user name for login | 
- **password** | [**string**](.md)| The password for login in clear text | 
+ **username** | **string**| The user name for login | 
+ **password** | **string**| The password for login in clear text | 
 
 ### Return type
 
@@ -455,7 +455,7 @@ namespace Example
 
             var apiInstance = new UserApi();
             var body = new User(); // User | Updated user object
-            var username = new string(); // string | name that need to be deleted
+            var username = username_example;  // string | name that need to be deleted
 
             try
             {
@@ -476,7 +476,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**User**](User.md)| Updated user object | 
- **username** | [**string**](.md)| name that need to be deleted | 
+ **username** | **string**| name that need to be deleted | 
 
 ### Return type
 

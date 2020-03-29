@@ -49,11 +49,11 @@ public class DogApiController implements DogApi {
         return delegate.updateDog(body);
     }
 
-    public ResponseEntity<Void> updateDogWithForm(@ApiParam(value = "ID of dog that needs to be updated",required=true) @PathVariable("animalId") Long animalId
+    public ResponseEntity<Void> updateDogWithForm(@ApiParam(value = "ID of dog that needs to be updated",required=true) @PathVariable("dogId") Long dogId
 ,@ApiParam(value = "") @RequestParam(value="name", required=false)  String name
 ,@ApiParam(value = "") @RequestParam(value="status", required=false)  String status
 ) {
-        return delegate.updateDogWithForm(animalId, name, status);
+        return delegate.updateDogWithForm(dogId, name, status);
     }
 
 }

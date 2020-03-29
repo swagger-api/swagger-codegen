@@ -4,15 +4,15 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**fakeOuterBooleanSerialize**](FakeApi.md#fakeOuterBooleanSerialize) | **POST** /fake/outer/boolean | 
-[**fakeOuterCompositeSerialize**](FakeApi.md#fakeOuterCompositeSerialize) | **POST** /fake/outer/composite | 
-[**fakeOuterNumberSerialize**](FakeApi.md#fakeOuterNumberSerialize) | **POST** /fake/outer/number | 
-[**fakeOuterStringSerialize**](FakeApi.md#fakeOuterStringSerialize) | **POST** /fake/outer/string | 
-[**testClientModel**](FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
-[**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
-[**testEnumParameters**](FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
-[**testInlineAdditionalProperties**](FakeApi.md#testInlineAdditionalProperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
-[**testJsonFormData**](FakeApi.md#testJsonFormData) | **GET** /fake/jsonFormData | test json serialization of form data
+[**fakeOuterBooleanSerialize**](FakeApi.md#fakeouterbooleanserialize) | **POST** /fake/outer/boolean | 
+[**fakeOuterCompositeSerialize**](FakeApi.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
+[**fakeOuterNumberSerialize**](FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
+[**fakeOuterStringSerialize**](FakeApi.md#fakeouterstringserialize) | **POST** /fake/outer/string | 
+[**testClientModel**](FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
+[**testEndpointParameters**](FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+[**testEnumParameters**](FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
+[**testInlineAdditionalProperties**](FakeApi.md#testinlineadditionalproperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
+[**testJsonFormData**](FakeApi.md#testjsonformdata) | **GET** /fake/jsonFormData | test json serialization of form data
 
 # **fakeOuterBooleanSerialize**
 > \Swagger\Client\Model\OuterBoolean fakeOuterBooleanSerialize($body)
@@ -129,7 +129,7 @@ $apiInstance = new Swagger\Client\Api\FakeApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$body = new \Swagger\Client\Model\BigDecimal(); // BigDecimal | Input number as post body
+$body = 3.4; // float | Input number as post body
 
 try {
     $result = $apiInstance->fakeOuterNumberSerialize($body);
@@ -144,7 +144,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**BigDecimal**](../Model/BigDecimal.md)| Input number as post body | [optional]
+ **body** | [**float**](../Model/float.md)| Input number as post body | [optional]
 
 ### Return type
 
@@ -282,7 +282,7 @@ $apiInstance = new Swagger\Client\Api\FakeApi(
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \Swagger\Client\Model\null(); //  | 
+$body = new \stdClass; // object | 
 
 try {
     $apiInstance->testEndpointParameters($body);
@@ -296,7 +296,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [****](../Model/.md)|  |
+ **body** | [**object**](../Model/object.md)|  |
 
 ### Return type
 
@@ -330,7 +330,7 @@ $apiInstance = new Swagger\Client\Api\FakeApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$body = new \Swagger\Client\Model\null(); //  | 
+$body = new \stdClass; // object | 
 $enum_header_string_array = array("enum_header_string_array_example"); // string[] | Header parameter enum test (string array)
 $enum_header_string = "enum_header_string_example"; // string | Header parameter enum test (string)
 $enum_query_string_array = array("enum_query_string_array_example"); // string[] | Query parameter enum test (string array)
@@ -349,12 +349,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [****](../Model/.md)|  | [optional]
+ **body** | [**object**](../Model/object.md)|  | [optional]
  **enum_header_string_array** | [**string[]**](../Model/string.md)| Header parameter enum test (string array) | [optional]
- **enum_header_string** | [**string**](../Model/.md)| Header parameter enum test (string) | [optional]
+ **enum_header_string** | **string**| Header parameter enum test (string) | [optional]
  **enum_query_string_array** | [**string[]**](../Model/string.md)| Query parameter enum test (string array) | [optional]
- **enum_query_string** | [**string**](../Model/.md)| Query parameter enum test (string) | [optional]
- **enum_query_integer** | [**int**](../Model/.md)| Query parameter enum test (double) | [optional]
+ **enum_query_string** | **string**| Query parameter enum test (string) | [optional]
+ **enum_query_integer** | **int**| Query parameter enum test (double) | [optional]
 
 ### Return type
 
@@ -432,7 +432,7 @@ $apiInstance = new Swagger\Client\Api\FakeApi(
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client()
 );
-$body = new \Swagger\Client\Model\null(); //  | 
+$body = new \stdClass; // object | 
 
 try {
     $apiInstance->testJsonFormData($body);
@@ -446,7 +446,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [****](../Model/.md)|  |
+ **body** | [**object**](../Model/object.md)|  |
 
 ### Return type
 

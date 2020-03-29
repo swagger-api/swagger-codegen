@@ -64,6 +64,16 @@ exports.deleteUser = function(username) {
 exports.getUserByName = function(username) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "id" : 0,
+  "username" : "hugomario",
+  "firstName" : "hugo",
+  "lastName" : "mercado",
+  "email" : "hugo.mercado.aws@gmail.com",
+  "password" : "*****",
+  "phone" : "000-00000000",
+  "userStatus" : 1
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -83,6 +93,7 @@ exports.getUserByName = function(username) {
 exports.loginUser = function(username,password) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = "";
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

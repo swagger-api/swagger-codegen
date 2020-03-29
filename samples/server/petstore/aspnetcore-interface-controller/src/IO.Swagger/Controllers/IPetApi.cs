@@ -40,6 +40,14 @@ namespace IO.Swagger.Controllers
         IActionResult DeletePet([FromRoute][Required]long? petId, [FromHeader]string apiKey);
 
         /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        IActionResult DoCategoryStuff([FromBody]SubCategory body);
+
+        /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <remarks>Multiple status values can be provided with comma separated strings</remarks>

@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 import io.swagger.api.PetApiService;
 
 import javax.ws.rs.*;
@@ -72,6 +73,19 @@ public class PetApi  {
 @Parameter(description = "" )@HeaderParam("api_key") String apiKey
 ) {
         return delegate.deletePet(petId, apiKey, securityContext);
+    }
+
+    @POST
+    @Path("/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+    public Response doCategoryStuff(
+@Parameter(description = "" ) SubCategory body
+) {
+        return delegate.doCategoryStuff(body, securityContext);
     }
 
     @GET

@@ -8,6 +8,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import javax.ws.rs.core.SecurityContext;
 public interface PetApiService {
       public Response addPet(Pet body, SecurityContext securityContext);
       public Response deletePet(Long petId, String apiKey, SecurityContext securityContext);
+      public Response doCategoryStuff(SubCategory body, SecurityContext securityContext);
       public Response findPetsByStatus(List<String> status, SecurityContext securityContext);
       public Response findPetsByTags(List<String> tags, SecurityContext securityContext);
       public Response getPetById(Long petId, SecurityContext securityContext);
