@@ -264,15 +264,19 @@ An example of running the container:
 
 `docker pull swaggerapi/swagger-generator-v3`
 
-`docker run -e "HIDDEN_OPTIONS=servers:foo,bar|clientsV3:fgf,sdsd" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3`
+`docker run -e "HIDDEN_OPTIONS=servers:foo,bar|clientsV3:fgf,sdsd" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 -v /tmp:/jetty_home/lib/shared swaggerapi/swagger-generator-v3`
 
 or
 
-`docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 swaggerapi/swagger-generator-v3`
+`docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3  -v /tmp:/jetty_home/lib/shared swaggerapi/swagger-generator-v3`
 
-This docker image supports custom generators by dropping the generator jar into `/jetty_home/lib/ext` directory (typically via a docker volume); e.g having on host `/my/custom/coolgenerator.jar` and `/my/custom/weirdgenerator.jar`  the following would have them added to generator service generators:
+This docker image supports custom generators by dropping the generator jar into `/jetty_home/lib/shared` directory (typically via a docker volume); e.g having on host `/my/custom/coolgenerator.jar` and `/my/custom/weirdgenerator.jar`  the following would have them added to generator service generators:
 
 `docker run -e "HIDDEN_OPTIONS_PATH=/hiddenOptions.yaml" -e "JAVA_MEM=1024m" -e "HTTP_PORT=80" -p 80:80 --name swagger-generator-v3 -v /my/custom:/jetty_home/lib/shared swaggerapi/swagger-generator-v3`
+
+
+Please note that up to version 3.0.18 you need to provide`-v /{WHATEVER_DIR}:/jetty_home/lib/shared` even if not using custom generators.
+
 
 ##### Swagger Generator "Minimal" Docker Image
 
