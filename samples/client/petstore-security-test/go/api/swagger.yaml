@@ -66,6 +66,7 @@ definitions:
     description: "Model for testing reserved words  */ ' \" =end -- \\r\\n \\n \\r"
     xml:
       name: "Return"
+
 externalDocs:
   description: "Find out more about Swagger  */ ' \" =end -- \\r\\n \\n \\r"
   url: "http://swagger.io"
