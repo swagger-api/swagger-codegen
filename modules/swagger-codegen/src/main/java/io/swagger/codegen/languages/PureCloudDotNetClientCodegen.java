@@ -48,6 +48,7 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
         supportingFiles.add(new SupportingFile("test-AssemblyInfo.mustache", "", "src/" + this.packageName + ".Tests/Properties/AssemblyInfo.cs"));
         supportingFiles.add(new SupportingFile("test-csproj.mustache", "", "src/" + this.packageName + ".Tests/" + this.packageName + ".Tests.csproj"));
         supportingFiles.add(new SupportingFile("test-SdkTests.mustache", "", "src/" + this.packageName + ".Tests/SdkTests.cs"));
+        supportingFiles.add(new SupportingFile("test-ApiClientTests.mustache", "", "src/" + this.packageName + ".Tests/ApiClientTests.cs"));
     }
 
     @Override
