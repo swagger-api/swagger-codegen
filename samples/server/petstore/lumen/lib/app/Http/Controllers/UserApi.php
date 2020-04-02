@@ -171,7 +171,7 @@ class UserApi extends Controller
      *
      * Get user by user name.
      *
-     * @param string $username The name that needs to be fetched. Use user1 for testing.  (required)
+     * @param string $username The name that needs to be fetched. Use user1 for testing. (required)
      *
      * @return Http response
      */

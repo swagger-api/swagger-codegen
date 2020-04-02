@@ -1,0 +1,104 @@
+swagger: '2.0'
+info:
+  title: API Definition with Relative models
+  description: This is an example
+schemes:
+  - https
+  - http
+
+produces:
+  - application/json
+
+basePath: /v1
+
+paths:
+  /photo/getPhotos:
+    post:
+      operationId: getPhotos
+      description: Retrieve photos by ids
+      parameters:
+        - name: photosRequest
+          in: body
+          required: true
+          description: The photos being requested
+          schema:
+            $ref: '../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/PhotosRequest'
+      responses:
+        200:
+          description: A collection of Photos
+          schema:
+            type: array
+            items:
+              $ref: '../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/Photo'
+
+  /photo/{id}:
+    get:
+      operationId: get photo by Id
+      description: Retrieve photo by id
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "id"
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: A collection of Photos
+          schema:
+            type: array
+            items:
+              $ref: '../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/Photo'
+
+  /photo/getPhotoPreview/{id}:
+    post:
+      operationId: getPhotoPreview
+      description: get thumbnail preview of a photo
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          minimum: 1
+          required: true
+          description: the id of photo thumbnail requested
+      responses:
+        200:
+          description: the response containing a preview thumbnail, along with some additional information about the photo
+          schema:
+            $ref: '#/definitions/PhotoPreview'
+
+  /photo/thumbnails:
+    post:
+      operationId: getThumbnails
+      description: Retrieve photo thumbnails by  ids
+      parameters:
+        - name: photoThumbnailsRequest
+          in: body
+          required: true
+          description: The photos being requested
+          schema:
+            $ref: '../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/PhotoThumbnailsRequest'
+      responses:
+        200:
+          description: |
+            A map of id -> photo for requested ids.
+          schema:
+            type: object
+            additionalProperties:
+              $ref: '../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/Photo'
+
+definitions:
+  PhotoPreview:
+    type: object
+    properties:
+      id:
+        description: the id of the newly inserted photo
+        type: integer
+        format: int32
+      caption:
+        description: the caption of the photo
+        type: string
+      thumbnail:
+        description: The media binary of thumbnail
+        type: string
+        format: byte

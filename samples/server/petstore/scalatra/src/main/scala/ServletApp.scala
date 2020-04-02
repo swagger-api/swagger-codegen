@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  */
 
-
 package io.swagger.app
 
 import org.scalatra.swagger.{ ApiInfo, SwaggerWithAuth, Swagger }

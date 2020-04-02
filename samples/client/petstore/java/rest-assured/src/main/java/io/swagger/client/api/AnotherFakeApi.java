@@ -14,17 +14,25 @@
 package io.swagger.client.api;
 
 import com.google.gson.reflect.TypeToken;
+import io.swagger.client.model.Client;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
-import io.swagger.client.model.Client;
 
 import java.lang.reflect.Type;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
+import io.swagger.client.JSON;
 
-import static io.restassured.http.Method.PATCH;
+import static io.restassured.http.Method.*;
 
 public class AnotherFakeApi {
 

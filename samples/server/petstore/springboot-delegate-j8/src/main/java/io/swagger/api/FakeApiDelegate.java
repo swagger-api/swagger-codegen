@@ -5,6 +5,7 @@ import io.swagger.model.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -109,6 +110,18 @@ public interface FakeApiDelegate {
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    /**
+     * @see FakeApi#testBodyWithQueryParams
+     */
+    default ResponseEntity<Void> testBodyWithQueryParams( User  body,
+         String  query) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
         }

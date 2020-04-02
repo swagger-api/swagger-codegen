@@ -15,8 +15,10 @@
 
 #include "SWGObject.h"
 
+#include "SWGAmount.h"
 #include "SWGApiResponse.h"
 #include "SWGCategory.h"
+#include "SWGCurrency.h"
 #include "SWGOrder.h"
 #include "SWGPet.h"
 #include "SWGTag.h"
@@ -25,11 +27,17 @@
 namespace Swagger {
 
   inline void* create(QString type) {
+    if(QString("SWGAmount").compare(type) == 0) {
+      return new SWGAmount();
+    }
     if(QString("SWGApiResponse").compare(type) == 0) {
       return new SWGApiResponse();
     }
     if(QString("SWGCategory").compare(type) == 0) {
       return new SWGCategory();
+    }
+    if(QString("SWGCurrency").compare(type) == 0) {
+      return new SWGCurrency();
     }
     if(QString("SWGOrder").compare(type) == 0) {
       return new SWGOrder();
