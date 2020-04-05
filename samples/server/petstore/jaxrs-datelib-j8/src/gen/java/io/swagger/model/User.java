@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
  * User
  */
 
+
 public class User  implements Serializable {
   @JsonProperty("id")
   private Long id = null;

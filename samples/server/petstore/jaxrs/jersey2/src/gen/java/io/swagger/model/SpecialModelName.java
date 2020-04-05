@@ -24,6 +24,7 @@ import javax.validation.constraints.*;
  * SpecialModelName
  */
 
+
 public class SpecialModelName   {
   @JsonProperty("$special[property.name]")
   private Long specialPropertyName = null;

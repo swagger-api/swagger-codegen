@@ -29,6 +29,7 @@ import javax.validation.constraints.*;
  * FormatTest
  */
 
+
 public class FormatTest  implements Serializable {
   @JsonProperty("integer")
   private Integer integer = null;

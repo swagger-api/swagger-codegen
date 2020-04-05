@@ -28,6 +28,7 @@ import javax.validation.constraints.*;
  * MapTest
  */
 
+
 public class MapTest   {
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;

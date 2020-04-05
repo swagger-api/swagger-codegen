@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing reserved words")
 
+
 public class ModelReturn   {
   @JsonProperty("return")
   private Integer _return = null;

@@ -13,43 +13,25 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 
 
-public class Tag  implements Serializable {
+public class List  implements Serializable {
   
-  private @Valid Long id = null;
-  private @Valid String name = null;
+  private @Valid String _123List = null;
 
   /**
    **/
-  public Tag id(Long id) {
-    this.id = id;
+  public List _123List(String _123List) {
+    this._123List = _123List;
     return this;
   }
 
   
   @ApiModelProperty(value = "")
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
+  @JsonProperty("123-list")
+  public String get123List() {
+    return _123List;
   }
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  /**
-   **/
-  public Tag name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("name")
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
+  public void set123List(String _123List) {
+    this._123List = _123List;
   }
 
 
@@ -61,23 +43,21 @@ public class Tag  implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(id, tag.id) &&
-        Objects.equals(name, tag.name);
+    List list = (List) o;
+    return Objects.equals(_123List, list._123List);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(_123List);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class List {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    _123List: ").append(toIndentedString(_123List)).append("\n");
     sb.append("}");
     return sb.toString();
   }

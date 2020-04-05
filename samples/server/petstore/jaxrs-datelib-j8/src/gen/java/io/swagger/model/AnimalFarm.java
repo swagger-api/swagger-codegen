@@ -24,6 +24,7 @@ import javax.validation.constraints.*;
  * AnimalFarm
  */
 
+
 public class AnimalFarm extends ArrayList<Animal> implements Serializable {
 
   @Override

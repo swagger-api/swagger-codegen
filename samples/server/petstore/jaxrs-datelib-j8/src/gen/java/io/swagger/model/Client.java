@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
  * Client
  */
 
+
 public class Client  implements Serializable {
   @JsonProperty("client")
   private String client = null;

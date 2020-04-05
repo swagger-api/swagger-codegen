@@ -18,45 +18,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 import javax.validation.constraints.*;
 
 /**
- * ArrayOfNumberOnly
+ * List
  */
 
 
-public class ArrayOfNumberOnly   {
-  @JsonProperty("ArrayNumber")
-  private List<BigDecimal> arrayNumber = null;
+public class List  implements Serializable {
+  @JsonProperty("123-list")
+  private String _123List = null;
 
-  public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
-    this.arrayNumber = arrayNumber;
-    return this;
-  }
-
-  public ArrayOfNumberOnly addArrayNumberItem(BigDecimal arrayNumberItem) {
-    if (this.arrayNumber == null) {
-      this.arrayNumber = new ArrayList<BigDecimal>();
-    }
-    this.arrayNumber.add(arrayNumberItem);
+  public List _123List(String _123List) {
+    this._123List = _123List;
     return this;
   }
 
   /**
-   * Get arrayNumber
-   * @return arrayNumber
+   * Get _123List
+   * @return _123List
    **/
-  @JsonProperty("ArrayNumber")
+  @JsonProperty("123-list")
   @ApiModelProperty(value = "")
-  public List<BigDecimal> getArrayNumber() {
-    return arrayNumber;
+  public String get123List() {
+    return _123List;
   }
 
-  public void setArrayNumber(List<BigDecimal> arrayNumber) {
-    this.arrayNumber = arrayNumber;
+  public void set123List(String _123List) {
+    this._123List = _123List;
   }
 
 
@@ -68,22 +58,22 @@ public class ArrayOfNumberOnly   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ArrayOfNumberOnly arrayOfNumberOnly = (ArrayOfNumberOnly) o;
-    return Objects.equals(this.arrayNumber, arrayOfNumberOnly.arrayNumber);
+    List list = (List) o;
+    return Objects.equals(this._123List, list._123List);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(arrayNumber);
+    return Objects.hash(_123List);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ArrayOfNumberOnly {\n");
+    sb.append("class List {\n");
     
-    sb.append("    arrayNumber: ").append(toIndentedString(arrayNumber)).append("\n");
+    sb.append("    _123List: ").append(toIndentedString(_123List)).append("\n");
     sb.append("}");
     return sb.toString();
   }

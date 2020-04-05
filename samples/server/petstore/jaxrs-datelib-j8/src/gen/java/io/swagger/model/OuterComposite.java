@@ -26,6 +26,7 @@ import javax.validation.constraints.*;
  * OuterComposite
  */
 
+
 public class OuterComposite  implements Serializable {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;

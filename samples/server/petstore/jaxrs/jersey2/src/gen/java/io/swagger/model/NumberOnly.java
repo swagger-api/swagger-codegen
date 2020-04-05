@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
  * NumberOnly
  */
 
+
 public class NumberOnly   {
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;

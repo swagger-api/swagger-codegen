@@ -26,6 +26,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing model name same as property name")
 
+
 public class Name  implements Serializable {
   @JsonProperty("name")
   private Integer name = null;

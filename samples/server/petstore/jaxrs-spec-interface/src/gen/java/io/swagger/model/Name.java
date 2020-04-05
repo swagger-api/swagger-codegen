@@ -11,9 +11,12 @@ import javax.validation.Valid;
  **/
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-@ApiModel(description = "Model for testing model name same as property name")
+import com.fasterxml.jackson.annotation.JsonValue;
 
+
+@ApiModel(description = "Model for testing model name same as property name")
 public class Name  implements Serializable {
   
   private @Valid Integer name = null;

@@ -27,6 +27,7 @@ import javax.validation.constraints.*;
  * AdditionalPropertiesClass
  */
 
+
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = null;

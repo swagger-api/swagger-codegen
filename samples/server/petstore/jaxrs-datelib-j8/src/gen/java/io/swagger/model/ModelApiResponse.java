@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
  * ModelApiResponse
  */
 
+
 public class ModelApiResponse  implements Serializable {
   @JsonProperty("code")
   private Integer code = null;

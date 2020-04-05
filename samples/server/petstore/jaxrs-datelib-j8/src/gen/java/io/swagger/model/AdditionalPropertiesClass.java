@@ -28,6 +28,7 @@ import javax.validation.constraints.*;
  * AdditionalPropertiesClass
  */
 
+
 public class AdditionalPropertiesClass  implements Serializable {
   @JsonProperty("map_property")
   private Map<String, String> mapProperty = null;

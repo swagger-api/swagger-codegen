@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
  * Tag
  */
 
+
 public class Tag  implements Serializable {
   @JsonProperty("id")
   private Long id = null;

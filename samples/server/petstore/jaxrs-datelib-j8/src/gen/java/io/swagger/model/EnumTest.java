@@ -27,6 +27,7 @@ import javax.validation.constraints.*;
  * EnumTest
  */
 
+
 public class EnumTest  implements Serializable {
   /**
    * Gets or Sets enumString

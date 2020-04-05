@@ -30,6 +30,7 @@ import javax.validation.constraints.*;
  * Pet
  */
 
+
 public class Pet  implements Serializable {
   @JsonProperty("id")
   private Long id = null;

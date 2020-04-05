@@ -28,6 +28,7 @@ import javax.validation.constraints.*;
  * ArrayOfArrayOfNumberOnly
  */
 
+
 public class ArrayOfArrayOfNumberOnly  implements Serializable {
   @JsonProperty("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = null;

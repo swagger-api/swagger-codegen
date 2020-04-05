@@ -11,9 +11,12 @@ import javax.validation.Valid;
  **/
 import io.swagger.annotations.*;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-@ApiModel(description = "Model for testing reserved words")
+import com.fasterxml.jackson.annotation.JsonValue;
 
+
+@ApiModel(description = "Model for testing reserved words")
 public class ModelReturn  implements Serializable {
   
   private @Valid Integer _return = null;

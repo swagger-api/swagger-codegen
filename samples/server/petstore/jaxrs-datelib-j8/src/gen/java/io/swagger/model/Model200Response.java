@@ -26,6 +26,7 @@ import javax.validation.constraints.*;
  */
 @ApiModel(description = "Model for testing model name starting with number")
 
+
 public class Model200Response  implements Serializable {
   @JsonProperty("name")
   private Integer name = null;
