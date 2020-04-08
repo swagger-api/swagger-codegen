@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -166,7 +167,7 @@ public class MetaGenerator extends AbstractGenerator {
                     files.add(new File(outputFilename));
                 } else {
                     String template = readTemplate(templateDir + File.separator + support.templateFile);
-                    FileUtils.writeStringToFile(new File(outputFilename), template);
+                    FileUtils.writeStringToFile(new File(outputFilename), template, StandardCharsets.UTF_8);
                     LOGGER.info("copying file to " + outputFilename);
                     files.add(new File(outputFilename));
                 }
