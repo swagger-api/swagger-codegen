@@ -510,6 +510,19 @@ public class CodegenTest {
                 break;
             }
         }
+    }
 
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
+    public void testRefKeepsFormat() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("Test");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("Test", test, swagger.getDefinitions());
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            Assert.assertTrue(codegenProperty.isDateTime);
+        }
     }
 }

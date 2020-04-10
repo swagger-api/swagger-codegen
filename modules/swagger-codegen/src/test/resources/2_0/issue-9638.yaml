@@ -1,0 +1,26 @@
+swagger: "2.0"
+info:
+  title: "Test"
+  version: "2"
+paths:
+  /test:
+    get:
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/Test"
+definitions:
+  Date:
+    type: "string"
+    format: "date-time"
+  Test:
+    type: "object"
+    properties:
+      date1:
+        type: "string"
+        format: "date-time"
+      date2:
+        $ref: '#/definitions/Date'
