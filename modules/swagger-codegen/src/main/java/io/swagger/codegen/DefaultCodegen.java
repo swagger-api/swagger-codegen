@@ -3212,6 +3212,56 @@ public class DefaultCodegen {
         }
     }
 
+    private void putProperty(Map<PropertyBuilder.PropertyId, Object> args, PropertyId propertyId, Object value) {
+        if (value != null) {
+          args.put(propertyId, value);
+        }
+    }
+
+    private Property resolveRef(Property prop, Map<String, Model> allDefinitions) {
+        if (prop == null || allDefinitions == null || !(prop instanceof RefProperty)) {
+            return prop;
+        }
+        RefProperty refProperty = (RefProperty) prop;
+        Model model =  allDefinitions.get(refProperty.getSimpleRef());
+        if (!(model instanceof ModelImpl)) {
+            return prop;
+        }
+        ModelImpl modelImpl = (ModelImpl) model;
+        if ((modelImpl.getEnum() != null && !modelImpl.getEnum().isEmpty()) || modelImpl.getDiscriminator() != null) {
+            return prop;
+        }
+        Map<PropertyBuilder.PropertyId, Object> args = new HashMap<PropertyBuilder.PropertyId, Object>();
+        // putProperty(args, PropertyId.ENUM, modelImpl.getEnum());
+        putProperty(args, PropertyId.TITLE, modelImpl.getTitle());
+        putProperty(args, PropertyId.DESCRIPTION, modelImpl.getDescription());
+        putProperty(args, PropertyId.DEFAULT, modelImpl.getDefaultValue());
+        putProperty(args, PropertyId.PATTERN, modelImpl.getPattern());
+        // putProperty(args, PropertyId.DESCRIMINATOR, modelImpl.getDiscriminator());
+        putProperty(args, PropertyId.MIN_LENGTH, modelImpl.getMinLength());
+        putProperty(args, PropertyId.MAX_LENGTH, modelImpl.getMaxLength());
+        putProperty(args, PropertyId.MINIMUM, modelImpl.getMinimum());
+        putProperty(args, PropertyId.MAXIMUM, modelImpl.getMaximum());
+        putProperty(args, PropertyId.EXCLUSIVE_MINIMUM, modelImpl.getExclusiveMinimum());
+        putProperty(args, PropertyId.EXCLUSIVE_MAXIMUM, modelImpl.getExclusiveMaximum());
+        putProperty(args, PropertyId.UNIQUE_ITEMS, modelImpl.getUniqueItems());
+        putProperty(args, PropertyId.EXAMPLE, modelImpl.getExample());
+        putProperty(args, PropertyId.REQUIRED, modelImpl.getRequired());
+        putProperty(args, PropertyId.VENDOR_EXTENSIONS, modelImpl.getVendorExtensions());
+        putProperty(args, PropertyId.ALLOW_EMPTY_VALUE, modelImpl.getAllowEmptyValue());
+        putProperty(args, PropertyId.MULTIPLE_OF, modelImpl.getMultipleOf());
+
+        // according to the spec this shouldn't be parsed, kept for compat:
+        putProperty(args, PropertyId.EXAMPLE, refProperty.getExample());
+        putProperty(args, PropertyId.REQUIRED, refProperty.getRequired());
+        putProperty(args, PropertyId.DESCRIPTION, refProperty.getDescription());
+        putProperty(args, PropertyId.TITLE, refProperty.getTitle());
+
+        Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), args);
+        p.setXml(refProperty.getXml());
+        return p;
+    }
+
     private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory, Map<String, Model> allDefinitions) {
         // convert set to list so that we can access the next entry in the loop
         List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
@@ -3220,12 +3270,16 @@ public class DefaultCodegen {
             Map.Entry<String, Property> entry = propertyList.get(i);
 
             final String key = entry.getKey();
-            final Property prop = entry.getValue();
+            final Property maybeRefProp = entry.getValue();
+            final Property prop = resolveRef(maybeRefProp, allDefinitions);
 
             if (prop == null) {
                 LOGGER.warn("null property for " + key);
             } else {
                 final CodegenProperty cp = fromProperty(key, prop);
+                if (prop != maybeRefProp) {
+                    cp.jsonSchema = Json.pretty(maybeRefProp); // restore original schema
+                }
                 cp.required = mandatory.contains(key) ? true : false;
                 m.hasRequired = m.hasRequired || cp.required;
                 m.hasOptional = m.hasOptional || !cp.required;
@@ -3233,17 +3287,6 @@ public class DefaultCodegen {
                     // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
                     // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
                     m.hasEnums = true;
-                }
-
-                if (allDefinitions != null && prop instanceof RefProperty) {
-                    RefProperty refProperty = (RefProperty) prop;
-                    Model model =  allDefinitions.get(refProperty.getSimpleRef());
-                    if (model instanceof ModelImpl) {
-                        ModelImpl modelImpl = (ModelImpl) model;
-                        cp.pattern = modelImpl.getPattern();
-                        cp.minLength = modelImpl.getMinLength();
-                        cp.maxLength = modelImpl.getMaxLength();
-                    }
                 }
 
                 // set model's hasOnlyReadOnly to false if the property is read-only
