@@ -3232,12 +3232,10 @@ public class DefaultCodegen {
             return prop;
         }
         Map<PropertyBuilder.PropertyId, Object> args = new HashMap<PropertyBuilder.PropertyId, Object>();
-        // putProperty(args, PropertyId.ENUM, modelImpl.getEnum());
         putProperty(args, PropertyId.TITLE, modelImpl.getTitle());
         putProperty(args, PropertyId.DESCRIPTION, modelImpl.getDescription());
         putProperty(args, PropertyId.DEFAULT, modelImpl.getDefaultValue());
         putProperty(args, PropertyId.PATTERN, modelImpl.getPattern());
-        // putProperty(args, PropertyId.DESCRIMINATOR, modelImpl.getDiscriminator());
         putProperty(args, PropertyId.MIN_LENGTH, modelImpl.getMinLength());
         putProperty(args, PropertyId.MAX_LENGTH, modelImpl.getMaxLength());
         putProperty(args, PropertyId.MINIMUM, modelImpl.getMinimum());
@@ -3251,7 +3249,7 @@ public class DefaultCodegen {
         putProperty(args, PropertyId.ALLOW_EMPTY_VALUE, modelImpl.getAllowEmptyValue());
         putProperty(args, PropertyId.MULTIPLE_OF, modelImpl.getMultipleOf());
 
-        // according to the spec this shouldn't be parsed, kept for compat:
+        // according to the spec these shouldn't be parsed, kept for compat:
         putProperty(args, PropertyId.EXAMPLE, refProperty.getExample());
         putProperty(args, PropertyId.REQUIRED, refProperty.getRequired());
         putProperty(args, PropertyId.DESCRIPTION, refProperty.getDescription());
