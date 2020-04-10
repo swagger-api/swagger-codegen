@@ -193,35 +193,35 @@ export declare class PetApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: PetApiApiKeys, value: string): void;
     accessToken: string;
-    addPet(body: Pet): Promise<{
+    addPet(body: Pet, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    deletePet(petId: number, apiKey?: string): Promise<{
+    deletePet(petId: number, apiKey?: string, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>): Promise<{
+    findPetsByStatus(status: Array<'available' | 'pending' | 'sold'>, options?: any): Promise<{
         response: http.ClientResponse;
         body: Array<Pet>;
     }>;
-    findPetsByTags(tags: Array<string>): Promise<{
+    findPetsByTags(tags: Array<string>, options?: any): Promise<{
         response: http.ClientResponse;
         body: Array<Pet>;
     }>;
-    getPetById(petId: number): Promise<{
+    getPetById(petId: number, options?: any): Promise<{
         response: http.ClientResponse;
         body: Pet;
     }>;
-    updatePet(body: Pet): Promise<{
+    updatePet(body: Pet, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    updatePetWithForm(petId: number, name?: string, status?: string): Promise<{
+    updatePetWithForm(petId: number, name?: string, status?: string, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    uploadFile(petId: number, additionalMetadata?: string, file?: Buffer): Promise<{
+    uploadFile(petId: number, additionalMetadata?: string, file?: Buffer, options?: any): Promise<{
         response: http.ClientResponse;
         body: ApiResponse;
     }>;
@@ -244,21 +244,21 @@ export declare class StoreApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: StoreApiApiKeys, value: string): void;
     accessToken: string;
-    deleteOrder(orderId: string): Promise<{
+    deleteOrder(orderId: string, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    getInventory(): Promise<{
+    getInventory(options?: any): Promise<{
         response: http.ClientResponse;
         body: {
             [key: string]: number;
         };
     }>;
-    getOrderById(orderId: number): Promise<{
+    getOrderById(orderId: number, options?: any): Promise<{
         response: http.ClientResponse;
         body: Order;
     }>;
-    placeOrder(body: Order): Promise<{
+    placeOrder(body: Order, options?: any): Promise<{
         response: http.ClientResponse;
         body: Order;
     }>;
@@ -281,35 +281,35 @@ export declare class UserApi {
     setDefaultAuthentication(auth: Authentication): void;
     setApiKey(key: UserApiApiKeys, value: string): void;
     accessToken: string;
-    createUser(body: User): Promise<{
+    createUser(body: User, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    createUsersWithArrayInput(body: Array<User>): Promise<{
+    createUsersWithArrayInput(body: Array<User>, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    createUsersWithListInput(body: Array<User>): Promise<{
+    createUsersWithListInput(body: Array<User>, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    deleteUser(username: string): Promise<{
+    deleteUser(username: string, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    getUserByName(username: string): Promise<{
+    getUserByName(username: string, options?: any): Promise<{
         response: http.ClientResponse;
         body: User;
     }>;
-    loginUser(username: string, password: string): Promise<{
+    loginUser(username: string, password: string, options?: any): Promise<{
         response: http.ClientResponse;
         body: string;
     }>;
-    logoutUser(): Promise<{
+    logoutUser(options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
-    updateUser(username: string, body: User): Promise<{
+    updateUser(username: string, body: User, options?: any): Promise<{
         response: http.ClientResponse;
         body?: any;
     }>;
