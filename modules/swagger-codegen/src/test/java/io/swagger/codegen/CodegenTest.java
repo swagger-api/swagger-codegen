@@ -522,7 +522,11 @@ public class CodegenTest {
 
         final CodegenModel codegenModel = codegen.fromModel("Test", test, swagger.getDefinitions());
         for (CodegenProperty codegenProperty : codegenModel.vars) {
-            Assert.assertTrue(codegenProperty.isDateTime);
+            if (codegenProperty.isContainer) {
+                Assert.assertTrue(codegenProperty.items.isDateTime);
+            } else {
+                Assert.assertTrue(codegenProperty.isDateTime);
+            }
         }
     }
 }

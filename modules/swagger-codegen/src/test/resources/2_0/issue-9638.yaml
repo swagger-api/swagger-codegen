@@ -13,14 +13,32 @@ paths:
           schema:
             $ref: "#/definitions/Test"
 definitions:
-  Date:
+  DateTime:
     type: "string"
     format: "date-time"
   Test:
     type: "object"
     properties:
-      date1:
+      date:
         type: "string"
         format: "date-time"
-      date2:
-        $ref: '#/definitions/Date'
+      dateRef:
+        $ref: '#/definitions/DateTime'
+      dateArr:
+        type: array
+        items:
+          type: "string"
+          format: "date-time"
+      dateRefArr:
+        type: array
+        items:
+          $ref: '#/definitions/DateTime'
+      dateMap:
+        type: object
+        additionalProperties:
+          type: "string"
+          format: "date-time"
+      dateRefMap:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/DateTime'
