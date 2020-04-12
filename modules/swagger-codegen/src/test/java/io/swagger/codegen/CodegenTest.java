@@ -1,5 +1,6 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
@@ -526,6 +527,28 @@ public class CodegenTest {
                 Assert.assertTrue(codegenProperty.items.isDateTime);
             } else {
                 Assert.assertTrue(codegenProperty.isDateTime);
+            }
+        }
+    }
+
+    @Test(description = "extension of https://github.com/swagger-api/swagger-codegen/issues/9638, datatype should be kept for arrays")
+    public void testRefKeepsFormatJavaList() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("Test");
+        ModelImpl dateTime = (ModelImpl) swagger.getDefinitions().get("CustomDateTime");
+        Assert.assertNotNull(test);
+
+        final JavaClientCodegen codegen = new JavaClientCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("Test", test, swagger.getDefinitions());
+        final CodegenModel dateTimeModel = codegen.fromModel("CustomDateTime", dateTime, swagger.getDefinitions());
+        final String dateDataType = dateTimeModel.dataType;
+        Assert.assertNotEquals(dateDataType, "String");
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            if (codegenProperty.isContainer) {
+                Assert.assertTrue(codegenProperty.datatype.contains(dateDataType));
+            } else {
+                Assert.assertEquals(codegenProperty.datatype, dateDataType);
             }
         }
     }

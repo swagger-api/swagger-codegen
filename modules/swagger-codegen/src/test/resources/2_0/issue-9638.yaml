@@ -13,7 +13,7 @@ paths:
           schema:
             $ref: "#/definitions/Test"
 definitions:
-  DateTime:
+  CustomDateTime:
     type: "string"
     format: "date-time"
   Test:
@@ -23,7 +23,7 @@ definitions:
         type: "string"
         format: "date-time"
       dateRef:
-        $ref: '#/definitions/DateTime'
+        $ref: '#/definitions/CustomDateTime'
       dateArr:
         type: array
         items:
@@ -32,7 +32,7 @@ definitions:
       dateRefArr:
         type: array
         items:
-          $ref: '#/definitions/DateTime'
+          $ref: '#/definitions/CustomDateTime'
       dateMap:
         type: object
         additionalProperties:
@@ -41,4 +41,4 @@ definitions:
       dateRefMap:
         type: object
         additionalProperties:
-          $ref: '#/definitions/DateTime'
+          $ref: '#/definitions/CustomDateTime'
