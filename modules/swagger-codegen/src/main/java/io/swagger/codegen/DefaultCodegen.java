@@ -3337,7 +3337,7 @@ public class DefaultCodegen {
      * @param allDefinitions The complete set of model definitions.
      * @return A mapping from model name to type alias
      */
-    private static Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
+    private Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
         Map<String, String> aliases = new HashMap<>();
         if (allDefinitions != null) {
             for (Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
@@ -3348,7 +3348,9 @@ public class DefaultCodegen {
                     if (impl.getType() != null &&
                             !impl.getType().equals("object") &&
                             impl.getEnum() == null) {
-                        aliases.put(swaggerName, impl.getType());
+                        Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
+                        String swaggerType = getSwaggerType(p);
+                        aliases.put(swaggerName, swaggerType);
                     }
                 }
             }
