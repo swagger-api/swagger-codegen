@@ -1604,21 +1604,22 @@ public class DefaultCodegen {
      * @return Codegen Property object
      */
     public CodegenProperty fromProperty(String name, Property p) {
-        return fromProperty(name, p, null);
+        return fromProperty(name, p, null, null);
     }
     /**
      * Convert Swagger Property object to Codegen Property object
      *
      * @param name name of the property
-     * @param p Swagger property object
+     * @param maybeRefProp Swagger property object, which may be a $ref
      * @param itemsDepth the depth in nested containers or null
      * @return Codegen Property object
      */
-    private CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
-        if (p == null) {
+    private CodegenProperty fromProperty(String name, Property maybeRefProp, Integer itemsDepth, Map<String, Model> allDefinitions) {
+        if (maybeRefProp == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
         }
+        Property p = resolveRef(maybeRefProp, allDefinitions);
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
         property.itemsDepth = itemsDepth;
@@ -1636,7 +1637,7 @@ public class DefaultCodegen {
         }
         property.defaultValue = toDefaultValue(p);
         property.defaultValueWithParam = toDefaultValueWithParam(name, p);
-        property.jsonSchema = Json.pretty(p);
+        property.jsonSchema = Json.pretty(maybeRefProp);
         if (p.getReadOnly() != null) {
             property.isReadOnly = p.getReadOnly();
         }
@@ -1885,7 +1886,7 @@ public class DefaultCodegen {
                 itemName = property.name;
             }
             CodegenProperty cp = fromProperty(itemName, ap.getItems(),
-                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1, allDefinitions);
             updatePropertyForArray(property, cp);
         } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -1899,12 +1900,60 @@ public class DefaultCodegen {
 
             // handle inner property
             CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties(),
-                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1, allDefinitions);
             updatePropertyForMap(property, cp);
         } else {
             setNonArrayMapProperty(property, type);
         }
         return property;
+    }
+
+    private void putProperty(Map<PropertyBuilder.PropertyId, Object> args, PropertyId propertyId, Object value) {
+        if (value != null) {
+            args.put(propertyId, value);
+        }
+    }
+
+    private Property resolveRef(Property prop, Map<String, Model> allDefinitions) {
+        if (prop == null || allDefinitions == null || !(prop instanceof RefProperty)) {
+            return prop;
+        }
+        RefProperty refProperty = (RefProperty) prop;
+        Model model =  allDefinitions.get(refProperty.getSimpleRef());
+        if (!(model instanceof ModelImpl)) {
+            return prop;
+        }
+        ModelImpl modelImpl = (ModelImpl) model;
+        if ((modelImpl.getEnum() != null && !modelImpl.getEnum().isEmpty())) {
+            return prop;
+        }
+        Map<PropertyBuilder.PropertyId, Object> args = new HashMap<PropertyBuilder.PropertyId, Object>();
+        putProperty(args, PropertyId.TITLE, modelImpl.getTitle());
+        putProperty(args, PropertyId.DESCRIPTION, modelImpl.getDescription());
+        putProperty(args, PropertyId.DEFAULT, modelImpl.getDefaultValue());
+        putProperty(args, PropertyId.PATTERN, modelImpl.getPattern());
+        putProperty(args, PropertyId.MIN_LENGTH, modelImpl.getMinLength());
+        putProperty(args, PropertyId.MAX_LENGTH, modelImpl.getMaxLength());
+        putProperty(args, PropertyId.MINIMUM, modelImpl.getMinimum());
+        putProperty(args, PropertyId.MAXIMUM, modelImpl.getMaximum());
+        putProperty(args, PropertyId.EXCLUSIVE_MINIMUM, modelImpl.getExclusiveMinimum());
+        putProperty(args, PropertyId.EXCLUSIVE_MAXIMUM, modelImpl.getExclusiveMaximum());
+        putProperty(args, PropertyId.UNIQUE_ITEMS, modelImpl.getUniqueItems());
+        putProperty(args, PropertyId.EXAMPLE, modelImpl.getExample());
+        putProperty(args, PropertyId.REQUIRED, modelImpl.getRequired());
+        putProperty(args, PropertyId.VENDOR_EXTENSIONS, modelImpl.getVendorExtensions());
+        putProperty(args, PropertyId.ALLOW_EMPTY_VALUE, modelImpl.getAllowEmptyValue());
+        putProperty(args, PropertyId.MULTIPLE_OF, modelImpl.getMultipleOf());
+
+        // according to the spec these shouldn't be parsed, kept for compat:
+        FIXME:
+        putProperty(args, PropertyId.DESCRIPTION, refProperty.getDescription());
+        putProperty(args, PropertyId.TITLE, refProperty.getTitle());
+        putProperty(args, PropertyId.READ_ONLY, refProperty.getReadOnly());
+
+        Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), args);
+        p.setXml(refProperty.getXml());
+        return p;
     }
 
     /**
@@ -3212,54 +3261,6 @@ public class DefaultCodegen {
         }
     }
 
-    private void putProperty(Map<PropertyBuilder.PropertyId, Object> args, PropertyId propertyId, Object value) {
-        if (value != null) {
-          args.put(propertyId, value);
-        }
-    }
-
-    private Property resolveRef(Property prop, Map<String, Model> allDefinitions) {
-        if (prop == null || allDefinitions == null || !(prop instanceof RefProperty)) {
-            return prop;
-        }
-        RefProperty refProperty = (RefProperty) prop;
-        Model model =  allDefinitions.get(refProperty.getSimpleRef());
-        if (!(model instanceof ModelImpl)) {
-            return prop;
-        }
-        ModelImpl modelImpl = (ModelImpl) model;
-        if ((modelImpl.getEnum() != null && !modelImpl.getEnum().isEmpty())) {
-            return prop;
-        }
-        Map<PropertyBuilder.PropertyId, Object> args = new HashMap<PropertyBuilder.PropertyId, Object>();
-        putProperty(args, PropertyId.TITLE, modelImpl.getTitle());
-        putProperty(args, PropertyId.DESCRIPTION, modelImpl.getDescription());
-        putProperty(args, PropertyId.DEFAULT, modelImpl.getDefaultValue());
-        putProperty(args, PropertyId.PATTERN, modelImpl.getPattern());
-        putProperty(args, PropertyId.MIN_LENGTH, modelImpl.getMinLength());
-        putProperty(args, PropertyId.MAX_LENGTH, modelImpl.getMaxLength());
-        putProperty(args, PropertyId.MINIMUM, modelImpl.getMinimum());
-        putProperty(args, PropertyId.MAXIMUM, modelImpl.getMaximum());
-        putProperty(args, PropertyId.EXCLUSIVE_MINIMUM, modelImpl.getExclusiveMinimum());
-        putProperty(args, PropertyId.EXCLUSIVE_MAXIMUM, modelImpl.getExclusiveMaximum());
-        putProperty(args, PropertyId.UNIQUE_ITEMS, modelImpl.getUniqueItems());
-        putProperty(args, PropertyId.EXAMPLE, modelImpl.getExample());
-        putProperty(args, PropertyId.REQUIRED, modelImpl.getRequired());
-        putProperty(args, PropertyId.VENDOR_EXTENSIONS, modelImpl.getVendorExtensions());
-        putProperty(args, PropertyId.ALLOW_EMPTY_VALUE, modelImpl.getAllowEmptyValue());
-        putProperty(args, PropertyId.MULTIPLE_OF, modelImpl.getMultipleOf());
-
-        // according to the spec these shouldn't be parsed, kept for compat:
-        putProperty(args, PropertyId.EXAMPLE, refProperty.getExample());
-        putProperty(args, PropertyId.REQUIRED, refProperty.getRequired());
-        putProperty(args, PropertyId.DESCRIPTION, refProperty.getDescription());
-        putProperty(args, PropertyId.TITLE, refProperty.getTitle());
-
-        Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), args);
-        p.setXml(refProperty.getXml());
-        return p;
-    }
-
     private void addVars(CodegenModel m, List<CodegenProperty> vars, Map<String, Property> properties, Set<String> mandatory, Map<String, Model> allDefinitions) {
         // convert set to list so that we can access the next entry in the loop
         List<Map.Entry<String, Property>> propertyList = new ArrayList<Map.Entry<String, Property>>(properties.entrySet());
@@ -3268,16 +3269,12 @@ public class DefaultCodegen {
             Map.Entry<String, Property> entry = propertyList.get(i);
 
             final String key = entry.getKey();
-            final Property maybeRefProp = entry.getValue();
-            final Property prop = resolveRef(maybeRefProp, allDefinitions);
+            final Property prop = entry.getValue();
 
             if (prop == null) {
                 LOGGER.warn("null property for " + key);
             } else {
-                final CodegenProperty cp = fromProperty(key, prop);
-                if (prop != maybeRefProp) {
-                    cp.jsonSchema = Json.pretty(maybeRefProp); // restore original schema
-                }
+                final CodegenProperty cp = fromProperty(key, prop, null, allDefinitions);
                 cp.required = mandatory.contains(key) ? true : false;
                 m.hasRequired = m.hasRequired || cp.required;
                 m.hasOptional = m.hasOptional || !cp.required;
