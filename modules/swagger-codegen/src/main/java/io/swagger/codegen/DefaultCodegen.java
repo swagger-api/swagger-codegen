@@ -1938,7 +1938,6 @@ public class DefaultCodegen {
         putProperty(args, PropertyId.MAXIMUM, modelImpl.getMaximum());
         putProperty(args, PropertyId.EXCLUSIVE_MINIMUM, modelImpl.getExclusiveMinimum());
         putProperty(args, PropertyId.EXCLUSIVE_MAXIMUM, modelImpl.getExclusiveMaximum());
-        putProperty(args, PropertyId.UNIQUE_ITEMS, modelImpl.getUniqueItems());
         putProperty(args, PropertyId.EXAMPLE, modelImpl.getExample());
         putProperty(args, PropertyId.REQUIRED, modelImpl.getRequired());
         putProperty(args, PropertyId.VENDOR_EXTENSIONS, modelImpl.getVendorExtensions());
