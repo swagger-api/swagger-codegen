@@ -222,4 +222,14 @@ public interface CodegenConfig {
 
     String sanitizeName(String name);
 
+    void setSkipAliasGeneration(Boolean skipAliasGeneration);
+
+    Boolean getSkipAliasGeneration();
+
+    boolean getIgnoreImportMapping();
+
+    void setIgnoreImportMapping(boolean ignoreImportMapping);
+
+    boolean defaultIgnoreImportMappingOption();
+
 }
