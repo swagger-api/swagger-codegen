@@ -1944,8 +1944,7 @@ public class DefaultCodegen {
         putProperty(args, PropertyId.ALLOW_EMPTY_VALUE, modelImpl.getAllowEmptyValue());
         putProperty(args, PropertyId.MULTIPLE_OF, modelImpl.getMultipleOf());
 
-        // according to the spec these shouldn't be parsed, kept for compat:
-        FIXME:
+        // FIXME: according to the spec these shouldn't be parsed, kept for compat:
         putProperty(args, PropertyId.DESCRIPTION, refProperty.getDescription());
         putProperty(args, PropertyId.TITLE, refProperty.getTitle());
         putProperty(args, PropertyId.READ_ONLY, refProperty.getReadOnly());
