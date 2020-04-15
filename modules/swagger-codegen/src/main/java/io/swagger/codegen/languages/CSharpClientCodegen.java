@@ -310,9 +310,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_METHOD_ARGUMENT)) {
             setOptionalMethodArgumentFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.OPTIONAL_METHOD_ARGUMENT));
-        } else {
-            additionalProperties.put(CodegenConstants.OPTIONAL_METHOD_ARGUMENT, optionalMethodArgumentFlag);
         }
+        additionalProperties.put(CodegenConstants.OPTIONAL_METHOD_ARGUMENT, optionalMethodArgumentFlag);
 
         if (additionalProperties.containsKey(CodegenConstants.OPTIONAL_ASSEMBLY_INFO)) {
             setOptionalAssemblyInfoFlag(convertPropertyToBooleanAndWriteBack(CodegenConstants.OPTIONAL_ASSEMBLY_INFO));
@@ -322,9 +321,8 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         if (additionalProperties.containsKey(CodegenConstants.NON_PUBLIC_API)) {
             setNonPublicApi(convertPropertyToBooleanAndWriteBack(CodegenConstants.NON_PUBLIC_API));
-        } else {
-            additionalProperties.put(CodegenConstants.NON_PUBLIC_API, isNonPublicApi());
         }
+        additionalProperties.put(CodegenConstants.NON_PUBLIC_API, isNonPublicApi());
 
         final String testPackageName = testPackageName();
         String packageFolder = sourceFolder + File.separator + packageName;
