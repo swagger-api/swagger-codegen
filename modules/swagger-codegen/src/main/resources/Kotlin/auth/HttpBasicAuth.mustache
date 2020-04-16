@@ -1,0 +1,24 @@
+package {{invokerPackage}}.auth
+
+import {{invokerPackage}}.Pair
+
+import com.migcomponents.migbase64.Base64
+
+import java.io.UnsupportedEncodingException
+
+class HttpBasicAuth : Authentication {
+    var username: String? = null
+    var password: String? = null
+
+    override fun applyToParams(queryParams: MutableList<Pair?>, headerParams: MutableMap<String?, String?>) {
+        if (username == null && password == null) {
+            return
+        }
+        val str = (if (username == null) "" else username) + ":" + if (password == null) "" else password
+        try {
+            headerParams["Authorization"] = "Basic " + Base64.encodeToString(str.toByteArray(charset("UTF-8")), false)
+        } catch (e: UnsupportedEncodingException) {
+            throw RuntimeException(e)
+        }
+    }
+}
