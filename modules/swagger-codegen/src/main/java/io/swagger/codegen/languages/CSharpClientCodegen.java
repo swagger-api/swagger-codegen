@@ -491,7 +491,7 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if (p instanceof RefProperty) {
+        if (p instanceof RefProperty && this.swagger != null) {
             final Map<String, Model> allDefinitions = this.swagger.getDefinitions();
             final Model referencedModel = allDefinitions.get(swaggerType);
             if (referencedModel == null) {
