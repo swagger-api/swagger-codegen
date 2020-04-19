@@ -1115,6 +1115,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     private boolean isAliasVerifierGenerator(String name) {
         return name.equalsIgnoreCase("java")
                 || name.equalsIgnoreCase("inflector")
+                || name.equalsIgnoreCase("csharp")
                 || name.equalsIgnoreCase("go")
                 || name.equalsIgnoreCase("go-server");
     }
