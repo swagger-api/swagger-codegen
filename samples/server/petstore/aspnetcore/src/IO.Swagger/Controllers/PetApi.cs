@@ -89,7 +89,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<Pet>\n  <id>123456789</id>\n  <name>doggie</name>\n  <photoUrls>\n    <photoUrls>aeiou</photoUrls>\n  </photoUrls>\n  <tags>\n  </tags>\n  <status>aeiou</status>\n</Pet>";
-            exampleJson = "[ {\n  \"tags\" : [ {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  }, {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  } ],\n  \"id\" : 0,\n  \"category\" : {\n    \"id\" : 6,\n    \"name\" : \"name\"\n  },\n  \"status\" : \"available\",\n  \"name\" : \"doggie\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ]\n}, {\n  \"tags\" : [ {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  }, {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  } ],\n  \"id\" : 0,\n  \"category\" : {\n    \"id\" : 6,\n    \"name\" : \"name\"\n  },\n  \"status\" : \"available\",\n  \"name\" : \"doggie\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ]\n} ]";
+            exampleJson = "[ {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}, {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n} ]";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<List<Pet>>(exampleJson)
@@ -120,7 +120,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<Pet>\n  <id>123456789</id>\n  <name>doggie</name>\n  <photoUrls>\n    <photoUrls>aeiou</photoUrls>\n  </photoUrls>\n  <tags>\n  </tags>\n  <status>aeiou</status>\n</Pet>";
-            exampleJson = "[ {\n  \"tags\" : [ {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  }, {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  } ],\n  \"id\" : 0,\n  \"category\" : {\n    \"id\" : 6,\n    \"name\" : \"name\"\n  },\n  \"status\" : \"available\",\n  \"name\" : \"doggie\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ]\n}, {\n  \"tags\" : [ {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  }, {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  } ],\n  \"id\" : 0,\n  \"category\" : {\n    \"id\" : 6,\n    \"name\" : \"name\"\n  },\n  \"status\" : \"available\",\n  \"name\" : \"doggie\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ]\n} ]";
+            exampleJson = "[ {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}, {\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n} ]";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<List<Pet>>(exampleJson)
@@ -156,7 +156,7 @@ namespace IO.Swagger.Controllers
 
             string exampleJson = null;
             exampleJson = "<Pet>\n  <id>123456789</id>\n  <name>doggie</name>\n  <photoUrls>\n    <photoUrls>aeiou</photoUrls>\n  </photoUrls>\n  <tags>\n  </tags>\n  <status>aeiou</status>\n</Pet>";
-            exampleJson = "{\n  \"tags\" : [ {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  }, {\n    \"id\" : 1,\n    \"name\" : \"name\"\n  } ],\n  \"id\" : 0,\n  \"category\" : {\n    \"id\" : 6,\n    \"name\" : \"name\"\n  },\n  \"status\" : \"available\",\n  \"name\" : \"doggie\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ]\n}";
+            exampleJson = "{\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"name\" : \"doggie\",\n  \"id\" : 0,\n  \"category\" : {\n    \"name\" : \"name\",\n    \"id\" : 6\n  },\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 1\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 1\n  } ],\n  \"status\" : \"available\"\n}";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<Pet>(exampleJson)
@@ -219,20 +219,20 @@ namespace IO.Swagger.Controllers
         
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server</param>
-        /// <param name="file">file to upload</param>
+        /// <param name="_file">file to upload</param>
         /// <response code="200">successful operation</response>
         [HttpPost]
         [Route("/v2/pet/{petId}/uploadImage")]
         [ValidateModelState]
         [SwaggerOperation("UploadFile")]
         [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
-        public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream file)
+        public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream _file)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(ApiResponse));
 
             string exampleJson = null;
-            exampleJson = "{\n  \"message\" : \"message\",\n  \"code\" : 0,\n  \"type\" : \"type\"\n}";
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
             
             var example = exampleJson != null
             ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)
