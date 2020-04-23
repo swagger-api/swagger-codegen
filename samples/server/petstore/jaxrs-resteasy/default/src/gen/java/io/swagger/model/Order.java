@@ -5,22 +5,19 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description="An order for a pets from the pet store")
+
 public class Order   {
   private Long id = null;  private Long petId = null;  private Integer quantity = null;  private Date shipDate = null;  /**
    * Order Status
    */
   public enum StatusEnum {
     PLACED("placed"),
-
-        APPROVED("approved"),
-
-        DELIVERED("delivered");
+    APPROVED("approved"),
+    DELIVERED("delivered");
     private String value;
 
     StatusEnum(String value) {

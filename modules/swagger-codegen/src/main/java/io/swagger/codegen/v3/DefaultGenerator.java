@@ -365,7 +365,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         for (String name : modelKeys) {
             try {
                 //don't generate models that have an import mapping
-                if(config.importMapping().containsKey(name)) {
+                if(!config.getIgnoreImportMapping() && config.importMapping().containsKey(name)) {
                     LOGGER.info("Model " + name + " not imported due to import mapping");
                     continue;
                 }
@@ -382,26 +382,22 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 if (modelList == null || modelList.isEmpty()) {
                     continue;
                 }
-
-                for (Object object : modelList) {
-                    Map<String, Object> modelMap = (Map<String, Object>) object;
-                    CodegenModel codegenModel = null;
-                    if (modelMap.containsKey("oneOf-model")) {
-                        codegenModel = (CodegenModel) modelMap.get("oneOf-model");
-                    }
-                    if (modelMap.containsKey("anyOf-model")) {
-                        codegenModel = (CodegenModel) modelMap.get("anyOf-model");
-                    }
-                    if (codegenModel != null) {
-                        models = processModel(codegenModel, config, schemas);
-                        models.put("classname", config.toModelName(codegenModel.name));
-                        models.putAll(config.additionalProperties());
-                        allProcessedModels.put(codegenModel.name, models);
-                        break;
-                    }
-                }
             } catch (Exception e) {
                 throw new RuntimeException("Could not process model '" + name + "'" + ".Please make sure that your schema is correct!", e);
+            }
+        }
+
+        final ISchemaHandler schemaHandler = config.getSchemaHandler();
+        schemaHandler.readProcessedModels(allProcessedModels);
+
+        final List<CodegenModel> composedModels = schemaHandler.getModels();
+
+         if (composedModels != null && !composedModels.isEmpty()) {
+            for (CodegenModel composedModel : composedModels) {
+                final Map<String, Object> models = processModel(composedModel, config, schemas);
+                models.put("classname", config.toModelName(composedModel.name));
+                models.putAll(config.additionalProperties());
+                allProcessedModels.put(composedModel.name, models);
             }
         }
 
@@ -413,11 +409,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             Map<String, Object> models = (Map<String, Object>)allProcessedModels.get(modelName);
             try {
                 //don't generate models that have an import mapping
-                if(config.importMapping().containsKey(modelName)) {
+                if(!config.getIgnoreImportMapping() && config.importMapping().containsKey(modelName)) {
                     continue;
                 }
                 Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);
-                if (isJavaCodegen(config.getName())) {
+                if (isAliasVerifierGenerator(config.getName())) {
                     // Special handling of aliases only applies to Java
                     if (modelTemplate != null && modelTemplate.containsKey("model")) {
                         CodegenModel codegenModel = (CodegenModel) modelTemplate.get("model");
@@ -1015,7 +1011,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             CodegenModel cm = config.fromModel(key, schema, allDefinitions);
             Map<String, Object> mo = new HashMap<>();
             mo.put("model", cm);
+            mo.put("schema", schema);
             mo.put("importPath", config.toModelImport(cm.classname));
+            /**
             if (cm.vendorExtensions.containsKey("oneOf-model")) {
                 CodegenModel oneOfModel = (CodegenModel) cm.vendorExtensions.get("oneOf-model");
                 mo.put("oneOf-model", oneOfModel);
@@ -1024,6 +1022,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 CodegenModel anyOfModel = (CodegenModel) cm.vendorExtensions.get("anyOf-model");
                 mo.put("anyOf-model", anyOfModel);
             }
+            */
             models.add(mo);
 
             allImports.addAll(cm.imports);
@@ -1060,9 +1059,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         objs.put("package", config.modelPackage());
         List<Object> models = new ArrayList<>();
 
-        if (codegenModel.vendorExtensions.containsKey("x-is-composed-model")) {
-            objs.put("x-is-composed-model", codegenModel.vendorExtensions.get("x-is-composed-model"));
-        }
+        objs.put("x-is-composed-model", codegenModel.isComposedModel);
 
         Map<String, Object> modelObject = new HashMap<>();
         modelObject.put("model", codegenModel);
@@ -1115,9 +1112,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return authMethods;
     }
 
-    private boolean isJavaCodegen(String name) {
+    private boolean isAliasVerifierGenerator(String name) {
         return name.equalsIgnoreCase("java")
-                || name.equalsIgnoreCase("inflector");
+                || name.equalsIgnoreCase("inflector")
+                || name.equalsIgnoreCase("csharp")
+                || name.equalsIgnoreCase("go")
+                || name.equalsIgnoreCase("go-server");
     }
 
     private Boolean getCustomOptionBooleanValue(String option) {

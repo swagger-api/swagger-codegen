@@ -1,6 +1,5 @@
 package io.swagger.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,10 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-/**
-  * Describes the result of uploading an image resource
- **/
-@Schema(description="Describes the result of uploading an image resource")
 public class ModelApiResponse   {
   
   @Schema(description = "")

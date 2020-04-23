@@ -406,16 +406,16 @@ class DogApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_dog_with_form(self, animal_id, **kwargs):  # noqa: E501
+    def update_dog_with_form(self, dog_id, **kwargs):  # noqa: E501
         """Updates a dog  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_dog_with_form(animal_id, async_req=True)
+        >>> thread = api.update_dog_with_form(dog_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param int animal_id: ID of dog that needs to be updated (required)
+        :param int dog_id: ID of dog that needs to be updated (required)
         :param str name:
         :param str status:
         :return: None
@@ -424,21 +424,21 @@ class DogApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.update_dog_with_form_with_http_info(animal_id, **kwargs)  # noqa: E501
+            return self.update_dog_with_form_with_http_info(dog_id, **kwargs)  # noqa: E501
         else:
-            (data) = self.update_dog_with_form_with_http_info(animal_id, **kwargs)  # noqa: E501
+            (data) = self.update_dog_with_form_with_http_info(dog_id, **kwargs)  # noqa: E501
             return data
 
-    def update_dog_with_form_with_http_info(self, animal_id, **kwargs):  # noqa: E501
+    def update_dog_with_form_with_http_info(self, dog_id, **kwargs):  # noqa: E501
         """Updates a dog  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_dog_with_form_with_http_info(animal_id, async_req=True)
+        >>> thread = api.update_dog_with_form_with_http_info(dog_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param int animal_id: ID of dog that needs to be updated (required)
+        :param int dog_id: ID of dog that needs to be updated (required)
         :param str name:
         :param str status:
         :return: None
@@ -446,7 +446,7 @@ class DogApi(object):
                  returns the request thread.
         """
 
-        all_params = ['animal_id', 'name', 'status']  # noqa: E501
+        all_params = ['dog_id', 'name', 'status']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -461,16 +461,16 @@ class DogApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'animal_id' is set
-        if ('animal_id' not in params or
-                params['animal_id'] is None):
-            raise ValueError("Missing the required parameter `animal_id` when calling `update_dog_with_form`")  # noqa: E501
+        # verify the required parameter 'dog_id' is set
+        if ('dog_id' not in params or
+                params['dog_id'] is None):
+            raise ValueError("Missing the required parameter `dog_id` when calling `update_dog_with_form`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'animal_id' in params:
-            path_params['animalId'] = params['animal_id']  # noqa: E501
+        if 'dog_id' in params:
+            path_params['dogId'] = params['dog_id']  # noqa: E501
 
         query_params = []
 

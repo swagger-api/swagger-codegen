@@ -21,9 +21,5 @@
     "filesGlob": [
         "./model/*.ts",
         "./api/*.ts"
-    ],
-    "angularCompilerOptions": {
-       "genDir": "dist",
-       "skipTemplateCodegen": true
-    }
+    ]
 }

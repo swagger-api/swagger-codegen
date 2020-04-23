@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 public class StoreApiServiceImpl implements StoreApi {
-      public Response deleteOrder(String orderId,SecurityContext securityContext) {
+      public Response deleteOrder(Long orderId,SecurityContext securityContext) {
       // do some magic!
       return Response.ok().build();
   }

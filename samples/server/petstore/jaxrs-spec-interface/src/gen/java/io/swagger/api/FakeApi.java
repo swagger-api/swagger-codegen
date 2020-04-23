@@ -1,6 +1,10 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
+import io.swagger.model.Body2;
+import io.swagger.model.Body3;
+import io.swagger.model.Body4;
+import io.swagger.model.Body5;
 import io.swagger.model.Client;
 import io.swagger.model.OuterComposite;
 
@@ -23,7 +27,7 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-10-08T21:26:16.639+02:00[Europe/Rome]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-13T07:31:40.002-05:00[America/Bogota]")
 public interface FakeApi {
 
     @POST
@@ -72,23 +76,22 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
-    void testEndpointParameters(@Valid Object body);
+    void testEndpointParameters(@Valid Body2 body);
     @GET
-    @Consumes({ "*/*" })
     @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found") })
-    void testEnumParameters(@Valid Object body,  @HeaderParam("enum_header_string_array") 
+    void testEnumParameters(  @HeaderParam("enum_header_string_array") 
 
  @Parameter(description = "Header parameter enum test (string array)") List<String> enumHeaderStringArray
-,  @HeaderParam("enum_header_string") 
+,  @HeaderParam("enum_header_string") @DefaultValue("-efg") 
 
  @Parameter(description = "Header parameter enum test (string)") String enumHeaderString
 ,  @QueryParam("enum_query_string_array") 
 
  @Parameter(description = "Query parameter enum test (string array)")  List<String> enumQueryStringArray
-,  @QueryParam("enum_query_string") 
+,  @QueryParam("enum_query_string") @DefaultValue("-efg") 
 
  @Parameter(description = "Query parameter enum test (string)")  String enumQueryString
 ,  @QueryParam("enum_query_integer") 
@@ -96,16 +99,24 @@ public interface FakeApi {
  @Parameter(description = "Query parameter enum test (double)")  Integer enumQueryInteger
 );
     @POST
+    @Path("/enum/form")
+    @Consumes({ "*/*" })
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
+        @ApiResponse(responseCode = "404", description = "Not found") })
+    void testEnumRequestBody(@Valid Body4 body);
+    @POST
     @Path("/inline-additionalProperties")
     @Consumes({ "application/json" })
     @Operation(summary = "test inline additionalProperties", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     void testInlineAdditionalProperties(@Valid Map<String, String> body);
-    @GET
+    @POST
     @Path("/jsonFormData")
     @Consumes({ "application/json" })
     @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    void testJsonFormData(@Valid Object body);}
+    void testJsonFormData(@Valid Body5 body);}

@@ -32,10 +32,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassModel" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        public ClassModel(string  = default(string))
+        /// <param name="_class">_class.</param>
+        public ClassModel(string _class = default(string))
         {
-            this.Class = ;
+            this.Class = _class;
         }
         
         /// <summary>

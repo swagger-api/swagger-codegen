@@ -33,14 +33,18 @@ class Cat(object):
         'color': 'str',
         'declawed': 'bool'
     }
+    if hasattr(Animal, "swagger_types"):
+        swagger_types.update(Animal.swagger_types)
 
     attribute_map = {
         'class_name': 'className',
         'color': 'color',
         'declawed': 'declawed'
     }
+    if hasattr(Animal, "attribute_map"):
+        attribute_map.update(Animal.attribute_map)
 
-    def __init__(self, class_name=None, color='red', declawed=None):  # noqa: E501
+    def __init__(self, class_name=None, color='red', declawed=None, *args, **kwargs):  # noqa: E501
         """Cat - a model defined in Swagger"""  # noqa: E501
         self._class_name = None
         self._color = None
@@ -51,6 +55,7 @@ class Cat(object):
             self.color = color
         if declawed is not None:
             self.declawed = declawed
+        Animal.__init__(self, *args, **kwargs)
 
     @property
     def class_name(self):

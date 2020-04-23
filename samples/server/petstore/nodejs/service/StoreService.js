@@ -24,6 +24,9 @@ exports.deleteOrder = function(order_id) {
 exports.getInventory = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "key" : 0
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -43,6 +46,14 @@ exports.getInventory = function() {
 exports.getOrderById = function(order_id) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "petId" : 6,
+  "quantity" : 1,
+  "id" : 0,
+  "shipDate" : "2000-01-23T04:56:07.000+00:00",
+  "complete" : false,
+  "status" : "placed"
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -61,6 +72,14 @@ exports.getOrderById = function(order_id) {
 exports.placeOrder = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "petId" : 6,
+  "quantity" : 1,
+  "id" : 0,
+  "shipDate" : "2000-01-23T04:56:07.000+00:00",
+  "complete" : false,
+  "status" : "placed"
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

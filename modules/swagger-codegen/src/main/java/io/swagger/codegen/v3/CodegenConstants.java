@@ -236,6 +236,7 @@ public class CodegenConstants {
 
     public static final String TEMPLATE_ENGINE = "templateEngine";
     public static final String DISABLE_EXAMPLES_OPTION = "disableExample";
+    public static final String IGNORE_IMPORT_MAPPING_OPTION = "ignoreImportMappings";
 
     public static final String IS_ENUM_EXT_NAME = PREFIX_IS + "enum";
     public static final String IS_ALIAS_EXT_NAME = PREFIX_IS + "alias";

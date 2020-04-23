@@ -39,12 +39,12 @@ public class StoreApi  {
     @Path("/order/{orderId}")
     
     
-    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store" })
+    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response deleteOrder( @PathParam("orderId") String orderId,@Context SecurityContext securityContext)
+    public Response deleteOrder( @Min(1L) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.deleteOrder(orderId,securityContext);
     }
@@ -64,22 +64,22 @@ public class StoreApi  {
     @GET
     @Path("/order/{orderId}")
     
-    @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
+    @Produces({ "application/json", "application/xml" })
+    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value >= 1 and <= 10.\\ \\ Other values will generated exceptions", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response getOrderById( @Min(1L) @Max(5L) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext)
+    public Response getOrderById( @Min(1L) @Max(10L) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getOrderById(orderId,securityContext);
     }
     @POST
     @Path("/order")
     @Consumes({ "application/json" })
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),

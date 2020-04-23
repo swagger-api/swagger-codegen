@@ -184,20 +184,20 @@ public class DogApi {
      * Updates a dog
      * 
      * <p><b>405</b> - Invalid input
-     * @param animalId ID of dog that needs to be updated
+     * @param dogId ID of dog that needs to be updated
      * @param name The name parameter
      * @param status The status parameter
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void updateDogWithForm(Long animalId, String name, String status) throws RestClientException {
+    public void updateDogWithForm(Long dogId, String name, String status) throws RestClientException {
         Object postBody = null;
-        // verify the required parameter 'animalId' is set
-        if (animalId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'animalId' when calling updateDogWithForm");
+        // verify the required parameter 'dogId' is set
+        if (dogId == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'dogId' when calling updateDogWithForm");
         }
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("animalId", animalId);
+        uriVariables.put("dogId", dogId);
         String path = UriComponentsBuilder.fromPath("/dog/{dogId}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();

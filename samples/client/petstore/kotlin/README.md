@@ -31,15 +31,18 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**testMethod**](docs/DefaultApi.md#testmethod) | **GET** /test | 
 *PetApi* | [**addPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**deletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
 *PetApi* | [**findPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**findPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+*PetApi* | [**getAllPets**](docs/PetApi.md#getallpets) | **GET** /allPets | 
 *PetApi* | [**getPetById**](docs/PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+*PetApi* | [**getRandomPet**](docs/PetApi.md#getrandompet) | **GET** /randomPet | 
 *PetApi* | [**updatePet**](docs/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**updatePetWithForm**](docs/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**uploadFile**](docs/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -54,16 +57,25 @@ Class | Method | HTTP request | Description
 *UserApi* | [**getUserByName**](docs/UserApi.md#getuserbyname) | **GET** /user/{username} | Get user by user name
 *UserApi* | [**loginUser**](docs/UserApi.md#loginuser) | **GET** /user/login | Logs user into the system
 *UserApi* | [**logoutUser**](docs/UserApi.md#logoutuser) | **GET** /user/logout | Logs out current logged in user session
-*UserApi* | [**updateUser**](docs/UserApi.md#updateuser) | **PUT** /user/{username} | Updated user
+*UserApi* | [**userUsernamePut**](docs/UserApi.md#userusernameput) | **PUT** /user/{username} | Updated user
 
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [io.swagger.client.models.AllPetsResponse](docs/AllPetsResponse.md)
  - [io.swagger.client.models.ApiResponse](docs/ApiResponse.md)
+ - [io.swagger.client.models.Body](docs/Body.md)
+ - [io.swagger.client.models.Cat](docs/Cat.md)
  - [io.swagger.client.models.Category](docs/Category.md)
+ - [io.swagger.client.models.Dog](docs/Dog.md)
+ - [io.swagger.client.models.NullableEnumModel](docs/NullableEnumModel.md)
+ - [io.swagger.client.models.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
+ - [io.swagger.client.models.OneOfSinglePetResponsePet](docs/OneOfSinglePetResponsePet.md)
  - [io.swagger.client.models.Order](docs/Order.md)
  - [io.swagger.client.models.Pet](docs/Pet.md)
+ - [io.swagger.client.models.SinglePetResponse](docs/SinglePetResponse.md)
  - [io.swagger.client.models.Tag](docs/Tag.md)
+ - [io.swagger.client.models.Test](docs/Test.md)
  - [io.swagger.client.models.User](docs/User.md)
 
 <a name="documentation-for-authorization"></a>
@@ -73,12 +85,16 @@ Class | Method | HTTP request | Description
 ### api_key
 
 
+<a name="bearer"></a>
+### bearer
+
+
 <a name="petstore_auth"></a>
 ### petstore_auth
 
 - **Type**: OAuth
 - **Flow**: implicit
-- **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
+- **Authorization URL**: http://petstore.swagger.io/oauth/dialog
 - **Scopes**: 
   - : 
 

@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -42,10 +43,10 @@ public class FormatTest   {
   private String string = null;
   
   @Schema(required = true, description = "")
-  private String _byte = null;
+  private byte[] _byte = null;
   
   @Schema(description = "")
-  private String binary = null;
+  private File binary = null;
   
   @Schema(required = true, description = "")
   private LocalDate date = null;
@@ -201,15 +202,15 @@ public class FormatTest   {
   **/
   @JsonProperty("byte")
   @NotNull
- @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public String getByte() {
+  public byte[] getByte() {
     return _byte;
   }
 
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
 
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -219,15 +220,15 @@ public class FormatTest   {
    * @return binary
   **/
   @JsonProperty("binary")
-  public String getBinary() {
+  public File getBinary() {
     return binary;
   }
 
-  public void setBinary(String binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
 
-  public FormatTest binary(String binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }

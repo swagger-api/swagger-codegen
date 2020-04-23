@@ -4,11 +4,10 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description="A User who is purchasing from the pet store")
+
 public class User   {
   private Long id = null;  private String username = null;  private String firstName = null;  private String lastName = null;  private String email = null;  private String password = null;  private String phone = null;  private Integer userStatus = null;
 

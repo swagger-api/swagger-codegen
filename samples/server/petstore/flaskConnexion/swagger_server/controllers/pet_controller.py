@@ -1,8 +1,11 @@
 import connexion
 import six
 
+from swagger_server.models.all_pets_response import AllPetsResponse  # noqa: E501
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.pet import Pet  # noqa: E501
+from swagger_server.models.single_pet_response import SinglePetResponse  # noqa: E501
+from swagger_server.models.sub_category import SubCategory  # noqa: E501
 from swagger_server import util
 
 
@@ -36,6 +39,21 @@ def delete_pet(pet_id, api_key=None):  # noqa: E501
     return 'do some magic!'
 
 
+def do_category_stuff(body=None):  # noqa: E501
+    """do_category_stuff
+
+     # noqa: E501
+
+    :param body: 
+    :type body: dict | bytes
+
+    :rtype: ApiResponse
+    """
+    if connexion.request.is_json:
+        body = SubCategory.from_dict(connexion.request.get_json())  # noqa: E501
+    return 'do some magic!'
+
+
 def find_pets_by_status(status):  # noqa: E501
     """Finds Pets by status
 
@@ -62,6 +80,17 @@ def find_pets_by_tags(tags):  # noqa: E501
     return 'do some magic!'
 
 
+def get_all_pets():  # noqa: E501
+    """get_all_pets
+
+     # noqa: E501
+
+
+    :rtype: AllPetsResponse
+    """
+    return 'do some magic!'
+
+
 def get_pet_by_id(pet_id):  # noqa: E501
     """Find pet by ID
 
@@ -71,6 +100,17 @@ def get_pet_by_id(pet_id):  # noqa: E501
     :type pet_id: int
 
     :rtype: Pet
+    """
+    return 'do some magic!'
+
+
+def get_random_pet():  # noqa: E501
+    """get_random_pet
+
+     # noqa: E501
+
+
+    :rtype: SinglePetResponse
     """
     return 'do some magic!'
 

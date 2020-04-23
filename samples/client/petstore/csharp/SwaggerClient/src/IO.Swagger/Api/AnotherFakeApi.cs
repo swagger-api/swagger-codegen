@@ -31,8 +31,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ClientModel</returns>
-        ClientModel TestSpecialTags (ClientModel body);
+        /// <returns>Client</returns>
+        Client TestSpecialTags (Client body);
 
         /// <summary>
         /// To test special tags
@@ -42,8 +42,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ClientModel</returns>
-        ApiResponse<ClientModel> TestSpecialTagsWithHttpInfo (ClientModel body);
+        /// <returns>ApiResponse of Client</returns>
+        ApiResponse<Client> TestSpecialTagsWithHttpInfo (Client body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -54,8 +54,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ClientModel</returns>
-        System.Threading.Tasks.Task<ClientModel> TestSpecialTagsAsync (ClientModel body);
+        /// <returns>Task of Client</returns>
+        System.Threading.Tasks.Task<Client> TestSpecialTagsAsync (Client body);
 
         /// <summary>
         /// To test special tags
@@ -65,8 +65,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ClientModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ClientModel>> TestSpecialTagsAsyncWithHttpInfo (ClientModel body);
+        /// <returns>Task of ApiResponse (Client)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Client>> TestSpecialTagsAsyncWithHttpInfo (Client body);
         #endregion Asynchronous Operations
     }
 
@@ -183,10 +183,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ClientModel</returns>
-        public ClientModel TestSpecialTags (ClientModel body)
+        /// <returns>Client</returns>
+        public Client TestSpecialTags (Client body)
         {
-             ApiResponse<ClientModel> localVarResponse = TestSpecialTagsWithHttpInfo(body);
+             ApiResponse<Client> localVarResponse = TestSpecialTagsWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -195,8 +195,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ClientModel</returns>
-        public ApiResponse< ClientModel > TestSpecialTagsWithHttpInfo (ClientModel body)
+        /// <returns>ApiResponse of Client</returns>
+        public ApiResponse< Client > TestSpecialTagsWithHttpInfo (Client body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -246,9 +246,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ClientModel>(localVarStatusCode,
+            return new ApiResponse<Client>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ClientModel) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ClientModel)));
+                (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 
         /// <summary>
@@ -256,10 +256,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ClientModel</returns>
-        public async System.Threading.Tasks.Task<ClientModel> TestSpecialTagsAsync (ClientModel body)
+        /// <returns>Task of Client</returns>
+        public async System.Threading.Tasks.Task<Client> TestSpecialTagsAsync (Client body)
         {
-             ApiResponse<ClientModel> localVarResponse = await TestSpecialTagsAsyncWithHttpInfo(body);
+             ApiResponse<Client> localVarResponse = await TestSpecialTagsAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -269,8 +269,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ClientModel)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ClientModel>> TestSpecialTagsAsyncWithHttpInfo (ClientModel body)
+        /// <returns>Task of ApiResponse (Client)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Client>> TestSpecialTagsAsyncWithHttpInfo (Client body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -320,9 +320,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ClientModel>(localVarStatusCode,
+            return new ApiResponse<Client>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ClientModel) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ClientModel)));
+                (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 
     }

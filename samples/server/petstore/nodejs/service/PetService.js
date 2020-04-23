@@ -29,6 +29,28 @@ exports.deletePet = function(petId,api_key) {
 
 
 /**
+ *
+ * body SubCategory  (optional)
+ * returns ApiResponse
+ **/
+exports.doCategoryStuff = function(body) {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = {
+  "code" : 0,
+  "type" : "type",
+  "message" : "message"
+};
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+  });
+}
+
+
+/**
  * Finds Pets by status
  * Multiple status values can be provided with comma separated strings
  *
@@ -38,6 +60,39 @@ exports.deletePet = function(petId,api_key) {
 exports.findPetsByStatus = function(status) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = [ {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+}, {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ];
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -57,6 +112,56 @@ exports.findPetsByStatus = function(status) {
 exports.findPetsByTags = function(tags) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = [ {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+}, {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ];
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+  });
+}
+
+
+/**
+ *
+ * returns AllPetsResponse
+ **/
+exports.getAllPets = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = [ "", "" ];
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -76,6 +181,42 @@ exports.findPetsByTags = function(tags) {
 exports.getPetById = function(petId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+};
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+  });
+}
+
+
+/**
+ *
+ * returns SinglePetResponse
+ **/
+exports.getRandomPet = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = {
+  "pet" : ""
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -101,12 +242,12 @@ exports.updatePet = function(body) {
 /**
  * Updates a pet in the store with form data
  *
- * petId Long ID of pet that needs to be updated
  * name String  (optional)
  * status String  (optional)
+ * petId Long ID of pet that needs to be updated
  * no response value expected for this operation
  **/
-exports.updatePetWithForm = function(petId,name,status) {
+exports.updatePetWithForm = function(name,status,petId) {
   return new Promise(function(resolve, reject) {
     resolve();
   });
@@ -116,14 +257,19 @@ exports.updatePetWithForm = function(petId,name,status) {
 /**
  * uploads an image
  *
- * petId Long ID of pet to update
  * additionalMetadata String  (optional)
  * file byte[]  (optional)
+ * petId Long ID of pet to update
  * returns ApiResponse
  **/
-exports.uploadFile = function(petId,additionalMetadata,file) {
+exports.uploadFile = function(additionalMetadata,file,petId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
+    examples['application/json'] = {
+  "code" : 0,
+  "type" : "type",
+  "message" : "message"
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

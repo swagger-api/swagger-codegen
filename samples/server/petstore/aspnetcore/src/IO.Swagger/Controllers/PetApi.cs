@@ -67,6 +67,29 @@ namespace IO.Swagger.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        [HttpPost]
+        [Route("/pet/category")]
+        [ValidateModelState]
+        [SwaggerOperation("DoCategoryStuff")]
+        [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
+        public virtual IActionResult DoCategoryStuff([FromBody]SubCategory body)
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(ApiResponse));
+            string exampleJson = null;
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)
+                        : default(ApiResponse);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <remarks>Multiple status values can be provided with comma separated strings</remarks>
@@ -123,6 +146,28 @@ namespace IO.Swagger.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <response code="200">a single random pet</response>
+        [HttpGet]
+        [Route("/allPets")]
+        [ValidateModelState]
+        [SwaggerOperation("GetAllPets")]
+        [SwaggerResponse(statusCode: 200, type: typeof(AllPetsResponse), description: "a single random pet")]
+        public virtual IActionResult GetAllPets()
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(AllPetsResponse));
+            string exampleJson = null;
+            exampleJson = "[ \"\", \"\" ]";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<AllPetsResponse>(exampleJson)
+                        : default(AllPetsResponse);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>Returns a single pet</remarks>
@@ -156,6 +201,28 @@ namespace IO.Swagger.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <response code="200">a single random pet</response>
+        [HttpGet]
+        [Route("/randomPet")]
+        [ValidateModelState]
+        [SwaggerOperation("GetRandomPet")]
+        [SwaggerResponse(statusCode: 200, type: typeof(SinglePetResponse), description: "a single random pet")]
+        public virtual IActionResult GetRandomPet()
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(SinglePetResponse));
+            string exampleJson = null;
+            exampleJson = "{\n  \"pet\" : \"\"\n}";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<SinglePetResponse>(exampleJson)
+                        : default(SinglePetResponse);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Update an existing pet
         /// </summary>
         /// <param name="body">Pet object that needs to be added to the store</param>
@@ -180,24 +247,6 @@ namespace IO.Swagger.Controllers
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Updates a pet in the store with form data
-        /// </summary>
-        /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"></param>
-        /// <param name="status"></param>
-        /// <response code="405">Invalid input</response>
-        [HttpPost]
-        [Route("/pet/{petId}")]
-        [ValidateModelState]
-        [SwaggerOperation("UpdatePetWithForm")]
-        public virtual IActionResult UpdatePetWithForm([FromRoute][Required]long? petId, [FromForm]string name, [FromForm]string status)
-        { 
-            //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(405);
-
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// uploads an image

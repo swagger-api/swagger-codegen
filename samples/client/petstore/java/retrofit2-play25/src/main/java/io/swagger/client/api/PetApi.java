@@ -9,9 +9,12 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
+import io.swagger.client.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SinglePetResponse;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +52,20 @@ public interface PetApi {
   );
 
   /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return Call&lt;ModelApiResponse&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("pet/category")
+  CompletionStage<Response<ModelApiResponse>> doCategoryStuff(
+                    @retrofit2.http.Body SubCategory body    
+  );
+
+  /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings
    * @param status Status values that need to be considered for filter (required)
@@ -71,6 +88,15 @@ public interface PetApi {
   );
 
   /**
+   * 
+   * 
+   * @return Call&lt;AllPetsResponse&gt;
+   */
+  @GET("allPets")
+  CompletionStage<Response<AllPetsResponse>> getAllPets();
+    
+
+  /**
    * Find pet by ID
    * Returns a single pet
    * @param petId ID of pet to return (required)
@@ -80,6 +106,15 @@ public interface PetApi {
   CompletionStage<Response<Pet>> getPetById(
             @retrofit2.http.Path("petId") Long petId            
   );
+
+  /**
+   * 
+   * 
+   * @return Call&lt;SinglePetResponse&gt;
+   */
+  @GET("randomPet")
+  CompletionStage<Response<SinglePetResponse>> getRandomPet();
+    
 
   /**
    * Update an existing pet
