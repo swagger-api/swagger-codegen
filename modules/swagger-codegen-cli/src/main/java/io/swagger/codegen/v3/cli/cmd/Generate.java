@@ -75,6 +75,7 @@ public class Generate implements Runnable {
     protected String ignoreFileOverride;
     protected Boolean removeOperationIdPrefix;
     protected Boolean disableExamples;
+    protected Boolean resolveFully;
     private String url;
     private List<CodegenArgument> codegenArguments;
 
@@ -217,6 +218,10 @@ public class Generate implements Runnable {
     public void setDisableExamples(Boolean disableExamples) {
         this.disableExamples = disableExamples;
     }
+    
+    public void setResolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
+    }
 
     @Override
     public void run() {
@@ -331,6 +336,10 @@ public class Generate implements Runnable {
 
         if (disableExamples != null && disableExamples) {
             additionalProperties.add(String.format("%s=%s", CodegenConstants.DISABLE_EXAMPLES_OPTION, disableExamples.toString()));
+        }
+
+        if (resolveFully != null) {
+            configurator.setResolveFully(resolveFully);
         }
 
         if (CodegenConstants.MUSTACHE_TEMPLATE_ENGINE.equalsIgnoreCase(templateEngine)) {

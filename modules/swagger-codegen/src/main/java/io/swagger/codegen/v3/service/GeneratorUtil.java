@@ -231,6 +231,9 @@ public class GeneratorUtil {
         if (options.getSkipOverride() != null) {
             configurator.setSkipOverwrite(options.getSkipOverride());
         }
+        if (options.getResolveFully() != null) {
+            configurator.setResolveFully(options.getResolveFully());
+        }        
         if (isNotEmpty(options.getArtifactVersion())) {
             configurator.setArtifactVersion(options.getArtifactVersion());
         }
