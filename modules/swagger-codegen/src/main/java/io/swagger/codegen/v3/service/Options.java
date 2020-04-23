@@ -36,6 +36,7 @@ public class Options {
     private Boolean removeOperationIdPrefix;
     private Boolean skipOverride;
     private String outputDir = "";
+    private Boolean resolveFully;
 
     private Map<String, String> codegenArguments = new LinkedHashMap<>();
 
@@ -427,5 +428,18 @@ public class Options {
 
     public void setSkipOverride(Boolean skipOverride) {
         this.skipOverride = skipOverride;
+    }
+    
+    public Options resolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
+        return this;
+    }
+
+    public Boolean getResolveFully() {
+        return resolveFully;
+    }
+
+    public void setResolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
     }
 }

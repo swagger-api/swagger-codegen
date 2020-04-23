@@ -463,6 +463,24 @@ public class GeneratorServiceTest {
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
         Assert.assertTrue(spec.contains("#/components/schemas/inline_response_200"));
         Assert.assertTrue(spec.contains("#/components/schemas/body"));
+        
+        path = getTmpFolder().getAbsolutePath();
+        request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.DOCUMENTATION)
+                .lang("openapi-yaml")
+                .specURL("src/test/resources/3_0_0/resolvefullytest.yaml")
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .resolveFully(true)
+                );
+
+
+        new GeneratorService().generationRequest(request).generate();
+        spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
+        Assert.assertTrue(spec.contains("additionalProperties: true"));
 
     }
 
