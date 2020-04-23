@@ -47,18 +47,17 @@ namespace Example
     {
         public void main()
         {
-            var apiInstance = new AnotherFakeApi();
-            var body = new Client(); // Client | client model
+            var apiInstance = new AnimalApi();
+            var body = new Animal(); // Animal | Animal object that needs to be added to the store
 
             try
             {
-                // To test special tags
-                Client result = apiInstance.TestSpecialTags(body);
-                Debug.WriteLine(result);
+                // Add a new animal to the store
+                apiInstance.AddAnimal(body);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling AnotherFakeApi.TestSpecialTags: " + e.Message );
+                Debug.Print("Exception when calling AnimalApi.AddAnimal: " + e.Message );
             }
         }
     }
@@ -72,7 +71,17 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AnimalApi* | [**AddAnimal**](docs/AnimalApi.md#addanimal) | **POST** /animal | Add a new animal to the store
+*AnimalApi* | [**DeleteAnimal**](docs/AnimalApi.md#deleteanimal) | **DELETE** /animal/{animalId} | Deletes a animal
+*AnimalApi* | [**GetAnimalById**](docs/AnimalApi.md#getanimalbyid) | **GET** /animal/{animalId} | Find animal by ID
+*AnimalApi* | [**UpdateAnimal**](docs/AnimalApi.md#updateanimal) | **PUT** /animal | Update an existing animal
+*AnimalApi* | [**UpdateAnimalWithForm**](docs/AnimalApi.md#updateanimalwithform) | **POST** /animal/{animalId} | Updates a animal
 *AnotherFakeApi* | [**TestSpecialTags**](docs/AnotherFakeApi.md#testspecialtags) | **PATCH** /another-fake/dummy | To test special tags
+*DogApi* | [**AddDog**](docs/DogApi.md#adddog) | **POST** /dog | Add a new dog to the store
+*DogApi* | [**DeleteDog**](docs/DogApi.md#deletedog) | **DELETE** /dog/{dogId} | Deletes a dog
+*DogApi* | [**GetDogById**](docs/DogApi.md#getdogbyid) | **GET** /dog/{dogId} | Find dog by ID
+*DogApi* | [**UpdateDog**](docs/DogApi.md#updatedog) | **PUT** /dog | Update an existing dog
+*DogApi* | [**UpdateDogWithForm**](docs/DogApi.md#updatedogwithform) | **POST** /dog/{dogId} | Updates a dog
 *FakeApi* | [**FakeOuterBooleanSerialize**](docs/FakeApi.md#fakeouterbooleanserialize) | **POST** /fake/outer/boolean | 
 *FakeApi* | [**FakeOuterCompositeSerialize**](docs/FakeApi.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
 *FakeApi* | [**FakeOuterNumberSerialize**](docs/FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
@@ -80,14 +89,18 @@ Class | Method | HTTP request | Description
 *FakeApi* | [**TestClientModel**](docs/FakeApi.md#testclientmodel) | **PATCH** /fake | To test \"client\" model
 *FakeApi* | [**TestEndpointParameters**](docs/FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *FakeApi* | [**TestEnumParameters**](docs/FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
+*FakeApi* | [**TestEnumRequestBody**](docs/FakeApi.md#testenumrequestbody) | **POST** /fake/enum/form | To test enum parameters
 *FakeApi* | [**TestInlineAdditionalProperties**](docs/FakeApi.md#testinlineadditionalproperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
-*FakeApi* | [**TestJsonFormData**](docs/FakeApi.md#testjsonformdata) | **GET** /fake/jsonFormData | test json serialization of form data
+*FakeApi* | [**TestJsonFormData**](docs/FakeApi.md#testjsonformdata) | **POST** /fake/jsonFormData | test json serialization of form data
 *FakeClassnameTags123Api* | [**TestClassname**](docs/FakeClassnameTags123Api.md#testclassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**DoCategoryStuff**](docs/PetApi.md#docategorystuff) | **POST** /pet/category | 
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+*PetApi* | [**GetAllPets**](docs/PetApi.md#getallpets) | **GET** /allPets | 
 *PetApi* | [**GetPetById**](docs/PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+*PetApi* | [**GetRandomPet**](docs/PetApi.md#getrandompet) | **GET** /randomPet | 
 *PetApi* | [**UpdatePet**](docs/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**UpdatePetWithForm**](docs/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**UploadFile**](docs/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -108,12 +121,23 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [Model.AdditionalPropertiesClass](docs/AdditionalPropertiesClass.md)
+ - [Model.AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [Model.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
+ - [Model.AllPetsResponse](docs/AllPetsResponse.md)
  - [Model.Animal](docs/Animal.md)
  - [Model.AnimalFarm](docs/AnimalFarm.md)
  - [Model.ApiResponse](docs/ApiResponse.md)
  - [Model.ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [Model.ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [Model.ArrayTest](docs/ArrayTest.md)
+ - [Model.Body](docs/Body.md)
+ - [Model.Body1](docs/Body1.md)
+ - [Model.Body2](docs/Body2.md)
+ - [Model.Body3](docs/Body3.md)
+ - [Model.Body4](docs/Body4.md)
+ - [Model.Body5](docs/Body5.md)
+ - [Model.Body6](docs/Body6.md)
+ - [Model.Body7](docs/Body7.md)
  - [Model.Capitalization](docs/Capitalization.md)
  - [Model.Cat](docs/Cat.md)
  - [Model.Category](docs/Category.md)
@@ -130,7 +154,10 @@ Class | Method | HTTP request | Description
  - [Model.MixedPropertiesAndAdditionalPropertiesClass](docs/MixedPropertiesAndAdditionalPropertiesClass.md)
  - [Model.Model200Response](docs/Model200Response.md)
  - [Model.Name](docs/Name.md)
+ - [Model.NullableEnumModel](docs/NullableEnumModel.md)
  - [Model.NumberOnly](docs/NumberOnly.md)
+ - [Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
+ - [Model.OneOfSinglePetResponsePet](docs/OneOfSinglePetResponsePet.md)
  - [Model.Order](docs/Order.md)
  - [Model.OuterBoolean](docs/OuterBoolean.md)
  - [Model.OuterComposite](docs/OuterComposite.md)
@@ -140,7 +167,9 @@ Class | Method | HTTP request | Description
  - [Model.Pet](docs/Pet.md)
  - [Model.ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [Model.Return](docs/Return.md)
+ - [Model.SinglePetResponse](docs/SinglePetResponse.md)
  - [Model.SpecialModelName](docs/SpecialModelName.md)
+ - [Model.SubCategory](docs/SubCategory.md)
  - [Model.Tag](docs/Tag.md)
  - [Model.User](docs/User.md)
 

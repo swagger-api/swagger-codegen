@@ -6,6 +6,7 @@ import io.swagger.api.factories.PetApiServiceFactory;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -70,7 +72,7 @@ public class PetApi  {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response addPet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
+    public Response addPet(@Parameter(in = ParameterIn.DEFAULT, description = "Pet object that needs to be added to the store" ,required=true) Pet body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -85,13 +87,26 @@ public class PetApi  {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
-    public Response deletePet(@Parameter(description = "Pet id to delete",required=true) @PathParam("petId") Long petId
+    public Response deletePet(@Parameter(in = ParameterIn.PATH, description = "Pet id to delete",required=true) @PathParam("petId") Long petId
 ,
-@Parameter(description = "" )@HeaderParam("api_key") String apiKey
+@Parameter(in = ParameterIn.HEADER, description = "" )@HeaderParam("api_key") String apiKey
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deletePet(petId,apiKey,securityContext);
+    }
+    @POST
+    @Path("/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+    public Response doCategoryStuff(@Parameter(in = ParameterIn.DEFAULT, description = "" ) SubCategory body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.doCategoryStuff(body,securityContext);
     }
     @GET
     @Path("/findByStatus")
@@ -104,7 +119,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
         @ApiResponse(responseCode = "400", description = "Invalid status value") })
-    public Response findPetsByStatus(@Parameter(description = "Status values that need to be considered for filter",required=true, schema=@Schema(allowableValues={ "available", "pending", "sold" })
+    public Response findPetsByStatus(@Parameter(in = ParameterIn.QUERY, description = "Status values that need to be considered for filter",required=true, schema=@Schema(allowableValues={ "available", "pending", "sold" })
 ) @QueryParam("status") List<String> status
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -121,7 +136,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
         @ApiResponse(responseCode = "400", description = "Invalid tag value") })
-    public Response findPetsByTags(@Parameter(description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
+    public Response findPetsByTags(@Parameter(in = ParameterIn.QUERY, description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByTags(tags,securityContext);
@@ -138,7 +153,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Response getPetById(@Parameter(description = "ID of pet to return",required=true) @PathParam("petId") Long petId
+    public Response getPetById(@Parameter(in = ParameterIn.PATH, description = "ID of pet to return",required=true) @PathParam("petId") Long petId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getPetById(petId,securityContext);
@@ -156,7 +171,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "404", description = "Pet not found"),
         
         @ApiResponse(responseCode = "405", description = "Validation exception") })
-    public Response updatePet(@Parameter(description = "Pet object that needs to be added to the store" ,required=true) Pet body
+    public Response updatePet(@Parameter(in = ParameterIn.DEFAULT, description = "Pet object that needs to be added to the store" ,required=true) Pet body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -171,7 +186,7 @@ public class PetApi  {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updatePetWithForm(@Parameter(description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Long petId
+    public Response updatePetWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Long petId
 ,@Parameter(description = "")  @FormParam("name")  String name
 ,@Parameter(description = "")  @FormParam("status")  String status
 ,@Context SecurityContext securityContext)
@@ -187,7 +202,7 @@ public class PetApi  {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
-    public Response uploadFile(@Parameter(description = "ID of pet to update",required=true) @PathParam("petId") Long petId
+    public Response uploadFile(@Parameter(in = ParameterIn.PATH, description = "ID of pet to update",required=true) @PathParam("petId") Long petId
 ,@Parameter(description = "")  @FormParam("additionalMetadata")  String additionalMetadata
 ,@FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail

@@ -71,8 +71,8 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | Pet id to delete
-            var apiKey = new string(); // string |  (optional) 
+            var petId = 789;  // long? | Pet id to delete
+            var apiKey = apiKey_example;  // string |  (optional) 
 
             try
             {
@@ -130,7 +130,7 @@ namespace Example
             // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet to return
+            var petId = 789;  // long? | ID of pet to return
 
             try
             {
@@ -167,9 +167,9 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet that needs to be updated
-            var name = new string(); // string |  (optional) 
-            var status = new string(); // string |  (optional) 
+            var petId = 789;  // long? | ID of pet that needs to be updated
+            var name = name_example;  // string |  (optional) 
+            var status = status_example;  // string |  (optional) 
 
             try
             {
@@ -187,14 +187,14 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet to update
-            var additionalMetadata = new string(); // string |  (optional) 
-            var file = file_example;  // System.IO.Stream |  (optional) 
+            var petId = 789;  // long? | ID of pet to update
+            var additionalMetadata = additionalMetadata_example;  // string |  (optional) 
+            var _file = _file_example;  // byte[] |  (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
+                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, _file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)

@@ -31,8 +31,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ClientModel</returns>
-        ClientModel TestClassname (ClientModel body);
+        /// <returns>Client</returns>
+        Client TestClassname (Client body);
 
         /// <summary>
         /// To test class name in snake case
@@ -42,8 +42,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ClientModel</returns>
-        ApiResponse<ClientModel> TestClassnameWithHttpInfo (ClientModel body);
+        /// <returns>ApiResponse of Client</returns>
+        ApiResponse<Client> TestClassnameWithHttpInfo (Client body);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -54,8 +54,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ClientModel</returns>
-        System.Threading.Tasks.Task<ClientModel> TestClassnameAsync (ClientModel body);
+        /// <returns>Task of Client</returns>
+        System.Threading.Tasks.Task<Client> TestClassnameAsync (Client body);
 
         /// <summary>
         /// To test class name in snake case
@@ -65,8 +65,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ClientModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ClientModel>> TestClassnameAsyncWithHttpInfo (ClientModel body);
+        /// <returns>Task of ApiResponse (Client)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Client>> TestClassnameAsyncWithHttpInfo (Client body);
         #endregion Asynchronous Operations
     }
 
@@ -183,10 +183,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ClientModel</returns>
-        public ClientModel TestClassname (ClientModel body)
+        /// <returns>Client</returns>
+        public Client TestClassname (Client body)
         {
-             ApiResponse<ClientModel> localVarResponse = TestClassnameWithHttpInfo(body);
+             ApiResponse<Client> localVarResponse = TestClassnameWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -195,8 +195,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ClientModel</returns>
-        public ApiResponse< ClientModel > TestClassnameWithHttpInfo (ClientModel body)
+        /// <returns>ApiResponse of Client</returns>
+        public ApiResponse< Client > TestClassnameWithHttpInfo (Client body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -251,9 +251,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ClientModel>(localVarStatusCode,
+            return new ApiResponse<Client>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ClientModel) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ClientModel)));
+                (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 
         /// <summary>
@@ -261,10 +261,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ClientModel</returns>
-        public async System.Threading.Tasks.Task<ClientModel> TestClassnameAsync (ClientModel body)
+        /// <returns>Task of Client</returns>
+        public async System.Threading.Tasks.Task<Client> TestClassnameAsync (Client body)
         {
-             ApiResponse<ClientModel> localVarResponse = await TestClassnameAsyncWithHttpInfo(body);
+             ApiResponse<Client> localVarResponse = await TestClassnameAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -274,8 +274,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ClientModel)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ClientModel>> TestClassnameAsyncWithHttpInfo (ClientModel body)
+        /// <returns>Task of ApiResponse (Client)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Client>> TestClassnameAsyncWithHttpInfo (Client body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -330,9 +330,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ClientModel>(localVarStatusCode,
+            return new ApiResponse<Client>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ClientModel) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ClientModel)));
+                (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 
     }

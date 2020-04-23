@@ -2,11 +2,10 @@ package io.swagger.api;
 
 import io.swagger.api.*;
 import io.swagger.model.*;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
-import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -21,6 +20,8 @@ public interface PetApiService {
       throws NotFoundException;
       Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
       throws NotFoundException;
+      Response doCategoryStuff(SubCategory body,SecurityContext securityContext)
+      throws NotFoundException;
       Response findPetsByStatus(List<String> status,SecurityContext securityContext)
       throws NotFoundException;
       Response findPetsByTags(List<String> tags,SecurityContext securityContext)
@@ -31,6 +32,6 @@ public interface PetApiService {
       throws NotFoundException;
       Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext)
       throws NotFoundException;
-      Response uploadFile(MultipartFormDataInput input,Long petId,SecurityContext securityContext)
+      Response uploadFile(Long petId,Object body,SecurityContext securityContext)
       throws NotFoundException;
 }

@@ -42,6 +42,7 @@ public class CodegenModel extends CodegenObject {
 
     public Set<String> imports = new TreeSet<String>();
     public boolean emptyVars;
+    public boolean isComposedModel;
     public ExternalDocumentation externalDocumentation;
 
     //The type of the value from additional properties. Used in map like objects.
@@ -470,5 +471,13 @@ public class CodegenModel extends CodegenObject {
 
     public void setAdditionalPropertiesType(String additionalPropertiesType) {
         this.additionalPropertiesType = additionalPropertiesType;
+    }
+
+    public boolean getIsComposedModel() {
+        return isComposedModel;
+    }
+
+    public void setIsComposedModel(boolean isComposedModel) {
+        this.isComposedModel = isComposedModel;
     }
 }

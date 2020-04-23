@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Cat extends Animal  {
+public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet  {
   private @Valid Boolean declawed = null;
 
   /**

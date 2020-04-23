@@ -107,7 +107,7 @@ public interface DogApi {
    * Updates a dog
    * Sync method
    * 
-   * @param animalId ID of dog that needs to be updated (required)
+   * @param dogId ID of dog that needs to be updated (required)
    * @param name  (optional)
    * @param status  (optional)
    * @return Void
@@ -115,13 +115,13 @@ public interface DogApi {
   @retrofit.http.FormUrlEncoded
   @POST("/dog/{dogId}")
   Void updateDogWithForm(
-    @retrofit.http.Path("animalId") Long animalId, @retrofit.http.Field("name") String name, @retrofit.http.Field("status") String status
+    @retrofit.http.Path("dogId") Long dogId, @retrofit.http.Field("name") String name, @retrofit.http.Field("status") String status
   );
 
   /**
    * Updates a dog
    * Async method
-   * @param animalId ID of dog that needs to be updated (required)
+   * @param dogId ID of dog that needs to be updated (required)
    * @param name  (optional)
    * @param status  (optional)
    * @param cb callback method
@@ -129,6 +129,6 @@ public interface DogApi {
   @retrofit.http.FormUrlEncoded
   @POST("/dog/{dogId}")
   void updateDogWithForm(
-    @retrofit.http.Path("animalId") Long animalId, @retrofit.http.Field("name") String name, @retrofit.http.Field("status") String status, Callback<Void> cb
+    @retrofit.http.Path("dogId") Long dogId, @retrofit.http.Field("name") String name, @retrofit.http.Field("status") String status, Callback<Void> cb
   );
 }

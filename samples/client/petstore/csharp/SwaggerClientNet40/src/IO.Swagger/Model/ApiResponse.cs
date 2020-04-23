@@ -32,14 +32,14 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiResponse" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public ApiResponse(int?  = default(int?), string  = default(string), string  = default(string))
+        /// <param name="code">code.</param>
+        /// <param name="type">type.</param>
+        /// <param name="message">message.</param>
+        public ApiResponse(int? code = default(int?), string type = default(string), string message = default(string))
         {
-            this.Code = ;
-            this.Type = ;
-            this.Message = ;
+            this.Code = code;
+            this.Type = type;
+            this.Message = message;
         }
         
         /// <summary>

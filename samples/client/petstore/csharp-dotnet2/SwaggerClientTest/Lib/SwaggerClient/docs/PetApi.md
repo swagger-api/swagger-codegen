@@ -77,7 +77,7 @@ void (empty response body)
 
 <a name="deletepet"></a>
 # **DeletePet**
-> void DeletePet (int? petId, string apiKey)
+> void DeletePet (long? petId, string apiKey)
 
 Deletes a pet
 
@@ -100,8 +100,8 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | Pet id to delete
-            var apiKey = new string(); // string |  (optional) 
+            var petId = 789;  // long? | Pet id to delete
+            var apiKey = apiKey_example;  // string |  (optional) 
 
             try
             {
@@ -121,8 +121,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](.md)| Pet id to delete | 
- **apiKey** | [**string**](.md)|  | [optional] 
+ **petId** | **long?**| Pet id to delete | 
+ **apiKey** | **string**|  | [optional] 
 
 ### Return type
 
@@ -271,7 +271,7 @@ Name | Type | Description  | Notes
 
 <a name="getpetbyid"></a>
 # **GetPetById**
-> Pet GetPetById (int? petId)
+> Pet GetPetById (long? petId)
 
 Find pet by ID
 
@@ -298,7 +298,7 @@ namespace Example
             // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet to return
+            var petId = 789;  // long? | ID of pet to return
 
             try
             {
@@ -319,7 +319,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](.md)| ID of pet to return | 
+ **petId** | **long?**| ID of pet to return | 
 
 ### Return type
 
@@ -400,7 +400,7 @@ void (empty response body)
 
 <a name="updatepetwithform"></a>
 # **UpdatePetWithForm**
-> void UpdatePetWithForm (int? petId, string name, string status)
+> void UpdatePetWithForm (long? petId, string name, string status)
 
 Updates a pet in the store with form data
 
@@ -423,9 +423,9 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet that needs to be updated
-            var name = new string(); // string |  (optional) 
-            var status = new string(); // string |  (optional) 
+            var petId = 789;  // long? | ID of pet that needs to be updated
+            var name = name_example;  // string |  (optional) 
+            var status = status_example;  // string |  (optional) 
 
             try
             {
@@ -445,9 +445,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](.md)| ID of pet that needs to be updated | 
- **name** | [**string**](.md)|  | [optional] 
- **status** | [**string**](.md)|  | [optional] 
+ **petId** | **long?**| ID of pet that needs to be updated | 
+ **name** | **string**|  | [optional] 
+ **status** | **string**|  | [optional] 
 
 ### Return type
 
@@ -466,7 +466,7 @@ void (empty response body)
 
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (int? petId, string additionalMetadata, System.IO.Stream file)
+> ApiResponse UploadFile (long? petId, string additionalMetadata, byte[] _file)
 
 uploads an image
 
@@ -489,14 +489,14 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PetApi();
-            var petId = new int?(); // int? | ID of pet to update
-            var additionalMetadata = new string(); // string |  (optional) 
-            var file = file_example;  // System.IO.Stream |  (optional) 
+            var petId = 789;  // long? | ID of pet to update
+            var additionalMetadata = additionalMetadata_example;  // string |  (optional) 
+            var _file = _file_example;  // byte[] |  (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
+                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, _file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -512,9 +512,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **petId** | [**int?**](.md)| ID of pet to update | 
- **additionalMetadata** | [**string**](.md)|  | [optional] 
- **file** | **System.IO.Stream****System.IO.Stream**|  | [optional] 
+ **petId** | **long?**| ID of pet to update | 
+ **additionalMetadata** | **string**|  | [optional] 
+ **_file** | **byte[]****byte[]**|  | [optional] 
 
 ### Return type
 

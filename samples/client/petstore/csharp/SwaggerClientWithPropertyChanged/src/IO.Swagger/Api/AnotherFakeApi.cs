@@ -90,6 +90,17 @@ namespace IO.Swagger.Api
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnotherFakeApi"/> class
+        /// </summary>
+        /// <returns></returns>
+        public AnotherFakeApi()
+        {
+            this.Configuration = IO.Swagger.Client.Configuration.Default;
+
+            ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnotherFakeApi"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
@@ -222,7 +233,6 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -237,7 +247,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Client>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 
@@ -297,7 +307,6 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.PATCH, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -312,7 +321,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Client>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
         }
 

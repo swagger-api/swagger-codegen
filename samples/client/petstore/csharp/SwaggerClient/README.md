@@ -117,9 +117,12 @@ Class | Method | HTTP request | Description
 *FakeClassnameTags123Api* | [**TestClassname**](docs/FakeClassnameTags123Api.md#testclassname) | **PATCH** /fake_classname_test | To test class name in snake case
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**DoCategoryStuff**](docs/PetApi.md#docategorystuff) | **POST** /pet/category | 
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+*PetApi* | [**GetAllPets**](docs/PetApi.md#getallpets) | **GET** /allPets | 
 *PetApi* | [**GetPetById**](docs/PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+*PetApi* | [**GetRandomPet**](docs/PetApi.md#getrandompet) | **GET** /randomPet | 
 *PetApi* | [**UpdatePet**](docs/PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**UpdatePetWithForm**](docs/PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**UploadFile**](docs/PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -140,6 +143,9 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [Model.AdditionalPropertiesClass](docs/AdditionalPropertiesClass.md)
+ - [Model.AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [Model.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
+ - [Model.AllPetsResponse](docs/AllPetsResponse.md)
  - [Model.Animal](docs/Animal.md)
  - [Model.AnimalFarm](docs/AnimalFarm.md)
  - [Model.ApiResponse](docs/ApiResponse.md)
@@ -158,7 +164,7 @@ Class | Method | HTTP request | Description
  - [Model.Cat](docs/Cat.md)
  - [Model.Category](docs/Category.md)
  - [Model.ClassModel](docs/ClassModel.md)
- - [Model.ClientModel](docs/ClientModel.md)
+ - [Model.Client](docs/Client.md)
  - [Model.Dog](docs/Dog.md)
  - [Model.EnumArrays](docs/EnumArrays.md)
  - [Model.EnumClass](docs/EnumClass.md)
@@ -170,7 +176,10 @@ Class | Method | HTTP request | Description
  - [Model.MixedPropertiesAndAdditionalPropertiesClass](docs/MixedPropertiesAndAdditionalPropertiesClass.md)
  - [Model.Model200Response](docs/Model200Response.md)
  - [Model.Name](docs/Name.md)
+ - [Model.NullableEnumModel](docs/NullableEnumModel.md)
  - [Model.NumberOnly](docs/NumberOnly.md)
+ - [Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
+ - [Model.OneOfSinglePetResponsePet](docs/OneOfSinglePetResponsePet.md)
  - [Model.Order](docs/Order.md)
  - [Model.OuterBoolean](docs/OuterBoolean.md)
  - [Model.OuterComposite](docs/OuterComposite.md)
@@ -180,7 +189,9 @@ Class | Method | HTTP request | Description
  - [Model.Pet](docs/Pet.md)
  - [Model.ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [Model.Return](docs/Return.md)
+ - [Model.SinglePetResponse](docs/SinglePetResponse.md)
  - [Model.SpecialModelName](docs/SpecialModelName.md)
+ - [Model.SubCategory](docs/SubCategory.md)
  - [Model.Tag](docs/Tag.md)
  - [Model.User](docs/User.md)
 

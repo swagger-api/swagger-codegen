@@ -26,7 +26,7 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l spring -o samples/server/petstore/springboot-v2-nodefault -DhideGenerationTimestamp=true --additional-properties springBootVersion=2.1.7.RELEASE,java8=true,defaultInterfaces=false"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -l spring -o samples/server/petstore/springboot-v2-nodefault -DhideGenerationTimestamp=true --additional-properties springBootVersion=2.1.7.RELEASE,java8=true,defaultInterfaces=false"
 
 echo "Removing files and folders under samples/server/petstore/springboot-v2-nodefault/src/main"
 rm -rf samples/server/petstore/springboot-v2-nodefault/src/main

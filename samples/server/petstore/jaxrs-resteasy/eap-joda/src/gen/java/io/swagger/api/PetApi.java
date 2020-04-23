@@ -11,9 +11,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @Path("/pet")
 
 
@@ -51,14 +50,25 @@ public interface PetApi  {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "400", description = "Invalid pet value")
+        @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
+                @ApiResponse(responseCode = "404", description = "Pet not found")
          })
     Response deletePet( @PathParam("petId") Long petId,@Parameter(description = "" )@HeaderParam("api_key") String apiKey,@Context SecurityContext securityContext);
+
+    @POST
+    @Path("/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags={ "pet" })
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class)))
+         })
+    Response doCategoryStuff(@Parameter(description = "" ) SubCategory body,@Context SecurityContext securityContext);
 
     @GET
     @Path("/findByStatus")
     
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Finds Pets by status", description = "Multiple status values can be provided with comma separated strings", security = {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
@@ -71,8 +81,8 @@ public interface PetApi  {
     @GET
     @Path("/findByTags")
     
-    @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Finds Pets by tags", description = "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.", security = {
+    @Produces({ "application/json", "application/xml" })
+    @Operation(summary = "Finds Pets by tags", description = "Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.", security = {
         @SecurityRequirement(name = "petstore_auth", scopes = {
             ""        })    }, tags={ "pet" })
     @ApiResponses(value = {
@@ -84,7 +94,7 @@ public interface PetApi  {
     @GET
     @Path("/{petId}")
     
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Find pet by ID", description = "Returns a single pet", security = {
         @SecurityRequirement(name = "api_key")    }, tags={ "pet" })
     @ApiResponses(value = {
@@ -122,7 +132,7 @@ public interface PetApi  {
 
     @POST
     @Path("/{petId}/uploadImage")
-    @Consumes({ "multipart/form-data" })
+    @Consumes({ "application/octet-stream" })
     @Produces({ "application/json" })
     @Operation(summary = "uploads an image", description = "", security = {
         @SecurityRequirement(name = "petstore_auth", scopes = {
@@ -130,6 +140,6 @@ public interface PetApi  {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class)))
          })
-    Response uploadFile(MultipartFormDataInput input, @PathParam("petId") Long petId,@Context SecurityContext securityContext);
+    Response uploadFile( @PathParam("petId") Long petId,@Parameter(description = "" ) Object body,@Context SecurityContext securityContext);
 
 }

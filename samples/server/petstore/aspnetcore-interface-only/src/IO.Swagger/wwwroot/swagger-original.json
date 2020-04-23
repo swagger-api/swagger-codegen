@@ -347,6 +347,69 @@
         } ]
       }
     },
+    "/randomPet" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "operationId" : "getRandomPet",
+        "responses" : {
+          "200" : {
+            "description" : "a single random pet",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SinglePetResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/allPets" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "operationId" : "getAllPets",
+        "responses" : {
+          "200" : {
+            "description" : "a single random pet",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AllPetsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/category" : {
+      "post" : {
+        "tags" : [ "pet" ],
+        "operationId" : "doCategoryStuff",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SubCategory"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/store/inventory" : {
       "get" : {
         "tags" : [ "store" ],
@@ -934,6 +997,68 @@
           "name" : "Pet"
         }
       },
+      "SinglePetResponse" : {
+        "type" : "object",
+        "properties" : {
+          "pet" : {
+            "discriminator" : {
+              "propertyName" : "pet_type"
+            },
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/Dog"
+            }, {
+              "$ref" : "#/components/schemas/Cat"
+            } ]
+          }
+        },
+        "example" : {
+          "pet" : ""
+        }
+      },
+      "AllPetsResponse" : {
+        "type" : "array",
+        "items" : {
+          "discriminator" : {
+            "propertyName" : "pet_type"
+          },
+          "oneOf" : [ {
+            "$ref" : "#/components/schemas/Dog"
+          }, {
+            "$ref" : "#/components/schemas/Cat"
+          } ]
+        }
+      },
+      "Dog" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Pet"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "bark" : {
+              "type" : "boolean"
+            },
+            "breed" : {
+              "type" : "string",
+              "enum" : [ "Dingo", "Husky", "Retriever", "Shepherd" ]
+            }
+          }
+        } ]
+      },
+      "Cat" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Pet"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "hunts" : {
+              "type" : "boolean"
+            },
+            "age" : {
+              "type" : "integer"
+            }
+          }
+        } ]
+      },
       "ApiResponse" : {
         "type" : "object",
         "properties" : {
@@ -956,6 +1081,53 @@
       },
       "Test" : {
         "type" : "string"
+      },
+      "NullableEnumModel" : {
+        "type" : "object",
+        "properties" : {
+          "enumProp" : {
+            "type" : "string",
+            "nullable" : true,
+            "enum" : [ "a", "b", null ]
+          }
+        }
+      },
+      "SubCategory" : {
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Category"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "foo" : {
+                  "type" : "boolean"
+                },
+                "bar" : {
+                  "type" : "integer"
+                },
+                "beer" : {
+                  "type" : "string"
+                },
+                "drunk" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            } ]
+          },
+          "category2" : {
+            "$ref" : "#/components/schemas/Category"
+          },
+          "pets" : {
+            "type" : "array",
+            "items" : {
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/Pet"
+              } ]
+            }
+          }
+        }
       },
       "body" : {
         "type" : "object",

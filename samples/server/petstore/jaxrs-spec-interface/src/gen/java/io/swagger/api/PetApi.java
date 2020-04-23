@@ -3,6 +3,7 @@ package io.swagger.api;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -23,7 +24,7 @@ import javax.validation.Valid;
 
 @Path("/pet")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-10-08T21:26:16.639+02:00[Europe/Rome]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-13T07:31:40.002-05:00[America/Bogota]")
 public interface PetApi {
 
     @POST
@@ -48,6 +49,14 @@ public interface PetApi {
 
  String apiKey
 );
+    @POST
+    @Path("/category")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags={ "pet" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+    ModelApiResponse doCategoryStuff(@Valid SubCategory body);
     @GET
     @Path("/findByStatus")
     @Produces({ "application/xml", "application/json" })

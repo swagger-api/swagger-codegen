@@ -9,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets OuterEnum
  */
 public enum OuterEnum {
-PLACED("placed"),
+  PLACED("placed"),
+  
   APPROVED("approved"),
+  
   DELIVERED("delivered");
 
   private String value;

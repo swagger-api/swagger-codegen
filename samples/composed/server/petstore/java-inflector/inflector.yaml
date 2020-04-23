@@ -1,0 +1,46 @@
+controllerPackage: io.swagger.controllers
+modelPackage:  io.swagger.model
+swaggerUrl: ./src/main/resources/openapi3.yaml
+modelMappings:
+  # to enable explicit mappings, use this syntax:
+  DefinitionFromSwaggerSpecification: fully.qualified.path.to.Model
+  AllPetsResponse : io.swagger.model.AllPetsResponse
+AnyOfbody1ParrotsItems : io.swagger.model.AnyOfbody1ParrotsItems
+AnyOfbody2 : io.swagger.model.AnyOfbody2
+Body : io.swagger.model.Body
+Body1 : io.swagger.model.Body1
+Body2 : io.swagger.model.Body2
+Cat : io.swagger.model.Cat
+Category : io.swagger.model.Category
+Dog : io.swagger.model.Dog
+InlineResponse200 : io.swagger.model.InlineResponse200
+InlineResponse2001 : io.swagger.model.InlineResponse2001
+Macaw : io.swagger.model.Macaw
+ModelApiResponse : io.swagger.model.ModelApiResponse
+OneOfAllPetsResponseItems : io.swagger.model.OneOfAllPetsResponseItems
+OneOfPartMasterDestination : io.swagger.model.OneOfPartMasterDestination
+OneOfPartMasterOrigin : io.swagger.model.OneOfPartMasterOrigin
+OneOfPetPartItems : io.swagger.model.OneOfPetPartItems
+OneOfPup : io.swagger.model.OneOfPup
+OneOfinlineResponse2001 : io.swagger.model.OneOfinlineResponse2001
+OneOfinlineResponse200ParrotsItems : io.swagger.model.OneOfinlineResponse200ParrotsItems
+OneOfvalMembersValMemberItems : io.swagger.model.OneOfvalMembersValMemberItems
+Order : io.swagger.model.Order
+Parakeet : io.swagger.model.Parakeet
+PartFour : io.swagger.model.PartFour
+PartMaster : io.swagger.model.PartMaster
+PartOne : io.swagger.model.PartOne
+PartThree : io.swagger.model.PartThree
+PartTwo : io.swagger.model.PartTwo
+Pet : io.swagger.model.Pet
+Pup : io.swagger.model.Pup
+Tag : io.swagger.model.Tag
+User : io.swagger.model.User
+ValMemberChoice1 : io.swagger.model.ValMemberChoice1
+ValMemberChoice2 : io.swagger.model.ValMemberChoice2
+ValMembers : io.swagger.model.ValMembers
+
+entityProcessors:
+  - json
+  - xml
+  - yaml

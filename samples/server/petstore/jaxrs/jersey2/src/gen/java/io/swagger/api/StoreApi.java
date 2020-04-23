@@ -6,6 +6,7 @@ import io.swagger.api.factories.StoreApiServiceFactory;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -69,7 +70,7 @@ public class StoreApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response deleteOrder(@Parameter(description = "ID of the order that needs to be deleted",required=true) @PathParam("order_id") String orderId
+    public Response deleteOrder(@Parameter(in = ParameterIn.PATH, description = "ID of the order that needs to be deleted",required=true) @PathParam("order_id") String orderId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteOrder(orderId,securityContext);
@@ -97,7 +98,7 @@ public class StoreApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Response getOrderById(@Parameter(description = "ID of pet that needs to be fetched",required=true, schema=@Schema(allowableValues={  }, minimum="1", maximum="5")
+    public Response getOrderById(@Parameter(in = ParameterIn.PATH, description = "ID of pet that needs to be fetched",required=true, schema=@Schema(allowableValues={  }, minimum="1", maximum="5")
 ) @PathParam("order_id") Long orderId
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -112,7 +113,7 @@ public class StoreApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
-    public Response placeOrder(@Parameter(description = "order placed for purchasing the pet" ,required=true) Order body
+    public Response placeOrder(@Parameter(in = ParameterIn.DEFAULT, description = "order placed for purchasing the pet" ,required=true) Order body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
