@@ -1,0 +1,73 @@
+openapi: 3.0.2
+info:
+  title: CC-20272 test - OAS3
+  version: 1.0.0
+paths:
+  /something:
+    get:
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bar'
+components:
+  schemas:
+    Foo:
+      type: object
+      properties:
+        foo:
+          type: string
+    Bar:
+      type: object
+      properties:
+        foo1:
+          description: An instance of Foo
+          allOf:
+            - $ref: '#/components/schemas/Foo'
+        foo2:
+          $ref: '#/components/schemas/Foo'
+    Test:
+      oneOf:
+        - $ref: "#/components/schemas/Foo"
+        - type: object
+          properties:
+            foo:
+              type: string
+    contact-base-model:
+      allOf:
+        - type: object
+          required:
+            - lastName
+            - email
+          properties:
+            contactId:
+              type: string
+              readOnly: true
+            fullName:
+              type: string
+              readOnly: true
+            firstName:
+              type: string
+            lastName:
+              type: string
+            title:
+              type: string
+            email:
+              type: string
+              format: email
+            passCode:
+              type: string
+              format: password
+            indivId:
+              type: string
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Foo'
+            phones:
+              type: array
+              items:
+                $ref: '#/components/schemas/Bar'
+        - $ref: '#/components/schemas/Test'

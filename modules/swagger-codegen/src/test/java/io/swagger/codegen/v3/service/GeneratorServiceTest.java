@@ -18,6 +18,37 @@ import java.util.List;
 
 public class GeneratorServiceTest {
 
+
+    @Test(description = "test generator oneOf ComposedSchema Properties")
+    public void testGenerator_FlattenInlineComposedSchema() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/FlattenComposedInlineSchema.yaml", true, false))
+                .flattenInlineComposedSchema(true)
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/ContactbasemodelAllOf1.java".equals(relPath)) {
+                Assert.assertTrue("/src/main/java/io/swagger/client/model/ContactbasemodelAllOf1.java".equals(relPath));
+            }
+            if ("/src/main/java/io/swagger/client/model/TestOneOf2.java".equals(relPath)) {
+                Assert.assertTrue("/src/main/java/io/swagger/client/model/TestOneOf2.java".equals(relPath));
+            }
+        }
+
+    }
+
     @Test(description = "test generator oneOf ComposedSchema Properties")
     public void testGenerator_OneOf_ComposedSchemaProperties() throws IOException {
 
