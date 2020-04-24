@@ -196,6 +196,7 @@ public class GeneratorUtil {
         configurator.setOutputDir(generationRequest.getOptions().getOutputDir());
         configurator.setInputSpec(inputSpec);
         configurator.setInputSpecURL(inputSpecURL);
+        configurator.setFlattenInlineSchema(generationRequest.isFlattenInlineComposedSchemas());
 
         if (isNotEmpty(lang)) {
             configurator.setLang(lang);

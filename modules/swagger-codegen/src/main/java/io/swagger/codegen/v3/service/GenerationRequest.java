@@ -11,6 +11,11 @@ public class GenerationRequest implements Serializable {
     private Options options = new Options();
     private Type type;
     private CodegenVersion codegenVersion = CodegenVersion.V3;
+    private boolean flattenInlineComposedSchemas = false;
+
+    public boolean isFlattenInlineComposedSchemas() {
+        return flattenInlineComposedSchemas;
+    }
 
     public enum Type {
         CLIENT("client"), SERVER("server"), DOCUMENTATION("documentation"), CONFIG("config");
@@ -37,6 +42,11 @@ public class GenerationRequest implements Serializable {
 
     public enum CodegenVersion {
         V2, V3;
+    }
+
+    public GenerationRequest flattenInlineComposedSchema(boolean flattenInlineComposedSchemas) {
+        this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
+        return this;
     }
 
     public GenerationRequest lang(String lang) {
