@@ -93,8 +93,8 @@ using IO.Swagger.Models;
         
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server</param>
-        /// <param name="file">file to upload</param>
+        /// <param name="_file">file to upload</param>
         /// <response code="200">successful operation</response>
-        IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream file);
+        IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream _file);
     }
 }
