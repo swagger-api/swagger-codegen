@@ -107,7 +107,7 @@
       return '';
     }
     if (param instanceof Date) {
-      return param.toJSON();
+      return param.toISOString();
     }
     return param.toString();
   };
@@ -508,12 +508,15 @@
 {{/usePromises}}  };
 
 {{#emitJSDoc}}  /**
-   * Parses an ISO-8601 string representation of a date value.
-   * @param {String} str The date value as a string.
+   * Parses a string representation of a date value.
+   * @param {String} str The date value as an ISO-8601 full-date or date-time string.
    * @returns {Date} The parsed date object.
    */
 {{/emitJSDoc}}  exports.parseDate = function(str) {
-    return new Date(str.replace(/T/i, ' '));
+    // OpenAPI 2.0 & 3.0 specs state that:
+    // - date values are serialized as ISO-8601 full-date strings. 
+    // - date-time values are serialized as ISO-8601 date-time strings, in which the timezone offset is mandatory. 
+    return new Date(str);
   };
 
 {{#emitJSDoc}}  /**

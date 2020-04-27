@@ -24,7 +24,7 @@ Add a new pet to the store
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth
@@ -74,7 +74,7 @@ Deletes a pet
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth
@@ -128,7 +128,7 @@ Multiple status values can be provided with comma separated strings
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth
@@ -178,7 +178,7 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth
@@ -228,7 +228,7 @@ Returns a single pet
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure API key authorization: api_key
@@ -280,7 +280,7 @@ Update an existing pet
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth
@@ -330,7 +330,7 @@ Updates a pet in the store with form data
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth
@@ -386,7 +386,7 @@ uploads an image
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: petstore_auth

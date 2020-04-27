@@ -10,18 +10,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
+using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using IO.Swagger.Attributes;
+using IO.Swagger.Security;
+using Microsoft.AspNetCore.Authorization;
 using IO.Swagger.Models;
 
 namespace IO.Swagger.Controllers
@@ -29,7 +25,8 @@ namespace IO.Swagger.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class PetApiController : Controller
+    [ApiController]
+    public class PetApiController : ControllerBase
     { 
         /// <summary>
         /// Add a new pet to the store
@@ -142,6 +139,7 @@ namespace IO.Swagger.Controllers
         /// <response code="404">Pet not found</response>
         [HttpGet]
         [Route("/v2/pet/{petId}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetPetById")]
         [SwaggerResponse(statusCode: 200, type: typeof(Pet), description: "successful operation")]
@@ -221,14 +219,14 @@ namespace IO.Swagger.Controllers
         
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server</param>
-        /// <param name="file">file to upload</param>
+        /// <param name="_file">file to upload</param>
         /// <response code="200">successful operation</response>
         [HttpPost]
         [Route("/v2/pet/{petId}/uploadImage")]
         [ValidateModelState]
         [SwaggerOperation("UploadFile")]
         [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
-        public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream file)
+        public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromForm]string additionalMetadata, [FromForm]System.IO.Stream _file)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(ApiResponse));

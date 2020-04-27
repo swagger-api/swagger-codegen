@@ -175,6 +175,8 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         // Libraries generated with v2.x of ng-packagr will ship with AoT metadata in v4, which is intended for Angular v5 (and Angular v6).
         additionalProperties.put("useOldNgPackagr", !ngVersion.atLeast("5.0.0"));
 
+        additionalProperties.put("supportedNgVersion", ngVersion.atLeast("6.0.0"));
+
         //Files for building our lib
         supportingFiles.add(new SupportingFile("package.mustache", getIndexDirectory(), "package.json"));
         supportingFiles.add(new SupportingFile("typings.mustache", getIndexDirectory(), "typings.json"));

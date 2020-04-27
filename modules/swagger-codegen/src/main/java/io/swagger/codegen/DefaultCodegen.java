@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -102,6 +103,8 @@ public class DefaultCodegen {
     protected String gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
+    protected Boolean skipAliasGeneration;
+    protected boolean ignoreImportMapping;
     // How to encode special characters like $
     // They are translated to words like "Dollar" and prefixed with '
     // Then translated back during JSON encoding and decoding
@@ -160,6 +163,12 @@ public class DefaultCodegen {
         if (additionalProperties.containsKey(CodegenConstants.REMOVE_OPERATION_ID_PREFIX)) {
             this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
+        }
+
+        if (additionalProperties.get(CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION) != null) {
+            setIgnoreImportMapping(Boolean.parseBoolean( additionalProperties.get(CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION).toString()));
+        } else {
+            setIgnoreImportMapping(defaultIgnoreImportMappingOption());
         }
     }
 
@@ -229,6 +238,7 @@ public class DefaultCodegen {
      */
     public Map<String, Object> postProcessModelsEnum(Map<String, Object> objs) {
         List<Object> models = (List<Object>) objs.get("models");
+        Map<String, Integer> uniqueNames = new HashMap<>();
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
@@ -240,6 +250,7 @@ public class DefaultCodegen {
                 List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
                 String commonPrefix = findCommonPrefixOfVars(values);
                 int truncateIdx = commonPrefix.length();
+                uniqueNames.clear();
                 for (Object value : values) {
                     Map<String, String> enumVar = new HashMap<String, String>();
                     String enumName;
@@ -251,7 +262,8 @@ public class DefaultCodegen {
                             enumName = value.toString();
                         }
                     }
-                    enumVar.put("name", toEnumVarName(enumName, cm.dataType));
+                    String varName = toEnumVarName(enumName, cm.dataType);
+                    enumVar.put("name", ensureUniqueName(uniqueNames, varName));
                     enumVar.put("value", toEnumValue(value.toString(), cm.dataType));
                     enumVars.add(enumVar);
                 }
@@ -263,7 +275,11 @@ public class DefaultCodegen {
             for (CodegenProperty var : cm.vars) {
                 updateCodegenPropertyEnum(var);
             }
-
+            if (cm.vars != cm.allVars) {
+                for (CodegenProperty var : cm.allVars) {
+                    updateCodegenPropertyEnum(var);
+                }
+            }
         }
         return objs;
     }
@@ -288,6 +304,19 @@ public class DefaultCodegen {
             }
         }
         return "";
+    }
+
+    /**
+     * If necessary, appends a suffix to enforce uniqueness of names within a namespace.
+     * @param uniqueNames Counts name occurrences within a namespace.
+     * @param name The proposed name.
+     * @return <code>name</code>, uniquely suffixed as necessary.
+     */
+    protected String ensureUniqueName(Map<String, Integer> uniqueNames, String name) {
+        int count = uniqueNames.containsKey(name) ? uniqueNames.get(name) + 1 : 1;
+        if (uniqueNames.put(name, count) != null)
+            name = name + '_' + count;
+        return name;
     }
 
     /**
@@ -1158,8 +1187,9 @@ public class DefaultCodegen {
             try {
                 RefProperty r = (RefProperty) p;
                 datatype = r.get$ref();
-                if (datatype.indexOf("#/definitions/") == 0) {
-                    datatype = datatype.substring("#/definitions/".length());
+                // '#/definitions' or ../../../../relative-ref/nested/directory/definitions/photos.yml#/definitions/
+                if (datatype.indexOf("#/definitions/") >= 0) {
+                    datatype = datatype.substring(datatype.indexOf("#/definitions/") + "#/definitions/".length());
                 }
             } catch (Exception e) {
                 LOGGER.warn("Error obtaining the datatype from RefProperty:" + p + ". Datatype default to Object");
@@ -1168,6 +1198,8 @@ public class DefaultCodegen {
             }
         } else if (p instanceof StringProperty) {
             datatype = "string";
+        } else if(p instanceof UntypedProperty){
+            datatype = "object";
         } else {
             if (p != null) {
                 datatype = p.getType();
@@ -1334,7 +1366,9 @@ public class DefaultCodegen {
         if (model instanceof ModelImpl) {
             ModelImpl modelImpl = (ModelImpl) model;
             m.discriminator = modelImpl.getDiscriminator();
-
+            if (m.discriminator != null) {
+                m.discriminatorClassVarName = toParamName(m.discriminator);
+            }
             if (modelImpl.getXml() != null) {
                 m.xmlPrefix = modelImpl.getXml().getPrefix();
                 m.xmlNamespace = modelImpl.getXml().getNamespace();
@@ -1366,6 +1400,9 @@ public class DefaultCodegen {
                         ModelImpl modelImpl = (ModelImpl) innerModel;
                         if (m.discriminator == null) {
                             m.discriminator = modelImpl.getDiscriminator();
+                            if (m.discriminator != null) {
+                                m.discriminatorClassVarName = toParamName(m.discriminator);
+                            }
                         }
                         if (modelImpl.getXml() != null) {
                             m.xmlPrefix = modelImpl.getXml().getPrefix();
@@ -1445,6 +1482,10 @@ public class DefaultCodegen {
                 }
             }
 
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
+
             // child model (properties owned by the model itself)
             Model child = composed.getChild();
             if (child != null && child instanceof RefModel && allDefinitions != null) {
@@ -1457,6 +1498,7 @@ public class DefaultCodegen {
                     addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
+
             addVars(m, properties, required, allDefinitions, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
@@ -1527,9 +1569,14 @@ public class DefaultCodegen {
             }
         } else if (model instanceof RefModel) {
             String interfaceRef = ((RefModel) model).getSimpleRef();
-            Model interfaceModel = allDefinitions.get(interfaceRef);
-            addProperties(properties, required, interfaceModel, allDefinitions);
+            if (allDefinitions != null) {
+                Model interfaceModel = allDefinitions.get(interfaceRef);
+                addProperties(properties, required, interfaceModel, allDefinitions);
+            }
         } else if (model instanceof ComposedModel) {
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
             for (Model component :((ComposedModel) model).getAllOf()) {
                 addProperties(properties, required, component, allDefinitions);
             }
@@ -1557,12 +1604,24 @@ public class DefaultCodegen {
      * @return Codegen Property object
      */
     public CodegenProperty fromProperty(String name, Property p) {
+        return fromProperty(name, p, null);
+    }
+    /**
+     * Convert Swagger Property object to Codegen Property object
+     *
+     * @param name name of the property
+     * @param p Swagger property object
+     * @param itemsDepth the depth in nested containers or null
+     * @return Codegen Property object
+     */
+    private CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
         if (p == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
         }
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
+        property.itemsDepth = itemsDepth;
         property.name = toVarName(name);
         property.baseName = name;
         property.nameInCamelCase = camelize(property.name, false);
@@ -1666,6 +1725,7 @@ public class DefaultCodegen {
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
             property.isInteger = true;
+            property.isNumeric = true;
             if (sp.getEnum() != null) {
                 List<Integer> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1824,7 +1884,8 @@ public class DefaultCodegen {
             if (itemName == null) {
                 itemName = property.name;
             }
-            CodegenProperty cp = fromProperty(itemName, ap.getItems());
+            CodegenProperty cp = fromProperty(itemName, ap.getItems(),
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForArray(property, cp);
         } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -1837,7 +1898,8 @@ public class DefaultCodegen {
             property.maxItems = ap.getMaxProperties();
 
             // handle inner property
-            CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
+            CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties(),
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForMap(property, cp);
         } else {
             setNonArrayMapProperty(property, type);
@@ -1998,7 +2060,7 @@ public class DefaultCodegen {
     /**
      * Override with any special handling of response codes
      * @param responses Swagger Operation's responses
-     * @return default method response or <tt>null</tt> if not found
+     * @return default method response or &lt;tt&gt;null&lt;/tt&gt; if not found
      */
     protected Response findMethodResponse(Map<String, Response> responses) {
 
@@ -2332,7 +2394,8 @@ public class DefaultCodegen {
         op.isRestfulDestroy = op.isRestfulDestroy();
         op.isRestful = op.isRestful();
 
-        configureDataForTestTemplate(op);
+        // TODO: fix error with resolved yaml/json generators in order to enable this again.
+        //configureDataForTestTemplate(op);
 
         return op;
     }
@@ -2682,6 +2745,10 @@ public class DefaultCodegen {
                         name = getTypeDeclaration(name);
                     }
                     p.dataType = name;
+                } else {
+                    if (sub instanceof ComposedModel) {
+                        p.dataType = "object";
+                    }
                 }
             }
             p.paramName = toParamName(bp.getName());
@@ -2714,8 +2781,13 @@ public class DefaultCodegen {
 
         // set the example value
         // if not specified in x-example, generate a default value
-        if (p.vendorExtensions.containsKey("x-example")) {
-            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+        if (p.vendorExtensions != null && p.vendorExtensions.containsKey("x-example")) {
+            boolean isObject = "object".equalsIgnoreCase(p.baseType) || "object".equalsIgnoreCase(p.dataType);
+            if (isObject) {
+                p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+            } else {
+                p.example = p.vendorExtensions.get("x-example").toString();
+            }
         } else if (Boolean.TRUE.equals(p.isUuid) && (Boolean.TRUE.equals(p.isString))) {
             p.example = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
         } else if (Boolean.TRUE.equals(p.isString)) {
@@ -3030,10 +3102,10 @@ public class DefaultCodegen {
     }
 
     private void addParentContainer(CodegenModel m, String name, Property property) {
-        final CodegenProperty tmp = fromProperty(name, property);
-        addImport(m, tmp.complexType);
+        m.parentContainer = fromProperty(name, property);
+        addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
-        final String containerType = tmp.containerType;
+        final String containerType = m.parentContainer.containerType;
         final String instantiationType = instantiationTypes.get(containerType);
         if (instantiationType != null) {
             addImport(m, instantiationType);
@@ -3212,6 +3284,10 @@ public class DefaultCodegen {
                 } else { // else add to readWriteVars (list of properties)
                     // FIXME: readWriteVars can contain duplicated properties. Debug/breakpoint here while running C# generator (Dog and Cat models)
                     m.readWriteVars.add(cp);
+                }
+
+                if (m.discriminator != null && cp.name.equals(m.discriminator) && cp.isEnum) {
+                    m.vendorExtensions.put("x-discriminator-is-enum", true);
                 }
             }
         }
@@ -3399,6 +3475,14 @@ public class DefaultCodegen {
         this.skipOverwrite = skipOverwrite;
     }
 
+    public void setSkipAliasGeneration(Boolean skipAliasGeneration) {
+        this.skipAliasGeneration = skipAliasGeneration;
+    }
+
+    public Boolean getSkipAliasGeneration() {
+        return this.skipAliasGeneration;
+    }
+
     public boolean isRemoveOperationIdPrefix() {
         return removeOperationIdPrefix;
     }
@@ -3580,10 +3664,9 @@ public class DefaultCodegen {
 
         // remove everything else other than word, number and _
         // $php_variable => php_variable
-        if (allowUnicodeIdentifiers) { //could be converted to a single line with ?: operator
+        if (allowUnicodeIdentifiers) { // could be converted to a single line with ?: operator
             name = Pattern.compile("\\W", Pattern.UNICODE_CHARACTER_CLASS).matcher(name).replaceAll("");
-        }
-        else {
+        } else {
             name = name.replaceAll("\\W", "");
         }
 
@@ -3719,6 +3802,7 @@ public class DefaultCodegen {
         List<Map<String, String>> enumVars = new ArrayList<Map<String, String>>();
         String commonPrefix = findCommonPrefixOfVars(values);
         int truncateIdx = commonPrefix.length();
+        Map<String, Integer> uniqueNames = new HashMap<>();
         for (Object value : values) {
             Map<String, String> enumVar = new HashMap<String, String>();
             String enumName;
@@ -3730,7 +3814,8 @@ public class DefaultCodegen {
                     enumName = value.toString();
                 }
             }
-            enumVar.put("name", toEnumVarName(enumName, var.datatype));
+            String varName = toEnumVarName(enumName, var.datatype);
+            enumVar.put("name", ensureUniqueName(uniqueNames, varName));
             enumVar.put("value", toEnumValue(value.toString(), var.datatype));
             enumVars.add(enumVar);
         }
@@ -3897,5 +3982,27 @@ public class DefaultCodegen {
             }
         }
         codegenOperation.testPath = path;
+    }
+
+    public boolean getIgnoreImportMapping() {
+        return ignoreImportMapping;
+    }
+
+    public void setIgnoreImportMapping(boolean ignoreImportMapping) {
+        this.ignoreImportMapping = ignoreImportMapping;
+    }
+
+    public boolean defaultIgnoreImportMappingOption() {
+        return false;
+    }
+
+    protected boolean isModelObject(ModelImpl model) {
+        if ("object".equalsIgnoreCase(model.getType())) {
+            return true;
+        }
+        if ((StringUtils.EMPTY.equalsIgnoreCase(model.getType()) || model.getType() == null) && (model.getProperties() != null && !model.getProperties().isEmpty())) {
+            return true;
+        }
+        return false;
     }
 }
