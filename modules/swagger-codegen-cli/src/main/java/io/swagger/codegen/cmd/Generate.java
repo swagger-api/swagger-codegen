@@ -280,7 +280,7 @@ public class Generate implements Runnable {
         }
 
         if (skipAliasGeneration != null) {
-            configurator.setSkipAliasGeneration(removeOperationIdPrefix);
+            configurator.setSkipAliasGeneration(skipAliasGeneration);
         }
 
         if (ignoreImportMappings != null) {
