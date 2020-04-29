@@ -80,7 +80,7 @@ public class {{classname}} {
   @Deprecated
   {{/isDeprecated}}
   public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws ApiException {
-    {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}({{{dataType}}}) null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
   }
 
   /**
@@ -163,7 +163,7 @@ public class {{classname}} {
   @Deprecated
   {{/isDeprecated}}
   public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws ApiException {
-    return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}({{{dataType}}}) null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
   }
 
   /**

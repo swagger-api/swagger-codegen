@@ -203,7 +203,7 @@ public class PetApi {
      * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call deletePetCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        return deletePetCall(petId, (String) null, progressListener, progressRequestListener);
+        return deletePetCall(petId, null, progressListener, progressRequestListener);
     }
 
     /**
@@ -296,7 +296,7 @@ public class PetApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public void deletePet(Long petId) throws ApiException {
-        deletePet(petId, (String) null);
+        deletePet(petId, null);
     }
 
     /**
@@ -331,7 +331,7 @@ public class PetApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> deletePetWithHttpInfo(Long petId) throws ApiException {
-        return deletePetWithHttpInfo(petId, (String) null);
+        return deletePetWithHttpInfo(petId, null);
     }
 
     /**
@@ -370,7 +370,7 @@ public class PetApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call deletePetAsync(Long petId, final ApiCallback<Void> callback) throws ApiException {
-        return deletePetAsync(petId, (String) null, callback);
+        return deletePetAsync(petId, null, callback);
     }
 
     /**
@@ -976,7 +976,7 @@ public class PetApi {
      * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call updatePetWithFormCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        return updatePetWithFormCall(petId, (String) null, (String) null, progressListener, progressRequestListener);
+        return updatePetWithFormCall(petId, null, null, progressListener, progressRequestListener);
     }
 
     /**
@@ -1072,7 +1072,7 @@ public class PetApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public void updatePetWithForm(Long petId) throws ApiException {
-        updatePetWithForm(petId, (String) null, (String) null);
+        updatePetWithForm(petId, null, null);
     }
 
     /**
@@ -1108,7 +1108,7 @@ public class PetApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Void> updatePetWithFormWithHttpInfo(Long petId) throws ApiException {
-        return updatePetWithFormWithHttpInfo(petId, (String) null, (String) null);
+        return updatePetWithFormWithHttpInfo(petId, null, null);
     }
 
     /**
@@ -1148,7 +1148,7 @@ public class PetApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call updatePetWithFormAsync(Long petId, final ApiCallback<Void> callback) throws ApiException {
-        return updatePetWithFormAsync(petId, (String) null, (String) null, callback);
+        return updatePetWithFormAsync(petId, null, null, callback);
     }
 
     /**
@@ -1237,7 +1237,7 @@ public class PetApi {
      * @throws ApiException If fail to serialize the request body object
      */
     public com.squareup.okhttp.Call uploadFileCall(Long petId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        return uploadFileCall(petId, (String) null, (File) null, progressListener, progressRequestListener);
+        return uploadFileCall(petId, null, null, progressListener, progressRequestListener);
     }
 
     /**
@@ -1334,7 +1334,7 @@ public class PetApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ModelApiResponse uploadFile(Long petId) throws ApiException {
-        return uploadFile(petId, (String) null, (File) null);
+        return uploadFile(petId, null, null);
     }
 
     /**
@@ -1374,7 +1374,7 @@ public class PetApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<ModelApiResponse> uploadFileWithHttpInfo(Long petId) throws ApiException {
-        return uploadFileWithHttpInfo(petId, (String) null, (File) null);
+        return uploadFileWithHttpInfo(petId, null, null);
     }
 
     /**
@@ -1416,7 +1416,7 @@ public class PetApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call uploadFileAsync(Long petId, final ApiCallback<ModelApiResponse> callback) throws ApiException {
-        return uploadFileAsync(petId, (String) null, (File) null, callback);
+        return uploadFileAsync(petId, null, null, callback);
     }
 
     /**

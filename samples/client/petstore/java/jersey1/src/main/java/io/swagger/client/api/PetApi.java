@@ -115,7 +115,7 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public void deletePet(Long petId) throws ApiException {
-    deletePet(petId, (String) null);
+    deletePet(petId, null);
   }
 
   /**
@@ -390,7 +390,7 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public void updatePetWithForm(Long petId) throws ApiException {
-    updatePetWithForm(petId, (String) null, (String) null);
+    updatePetWithForm(petId, null, null);
   }
 
   /**
@@ -489,7 +489,7 @@ if (status != null)
    * @throws ApiException if fails to make API call
    */
   public ModelApiResponse uploadFile(Long petId) throws ApiException {
-    return uploadFile(petId, (String) null, (File) null);
+    return uploadFile(petId, null, null);
   }
 
   /**

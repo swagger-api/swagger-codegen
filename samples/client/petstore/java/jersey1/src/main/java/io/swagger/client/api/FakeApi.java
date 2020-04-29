@@ -75,7 +75,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public Boolean fakeOuterBooleanSerialize() throws ApiException {
-    return fakeOuterBooleanSerialize((Boolean) null);
+    return fakeOuterBooleanSerialize(null);
   }
 
   /**
@@ -151,7 +151,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public OuterComposite fakeOuterCompositeSerialize() throws ApiException {
-    return fakeOuterCompositeSerialize((OuterComposite) null);
+    return fakeOuterCompositeSerialize(null);
   }
 
   /**
@@ -227,7 +227,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public BigDecimal fakeOuterNumberSerialize() throws ApiException {
-    return fakeOuterNumberSerialize((BigDecimal) null);
+    return fakeOuterNumberSerialize(null);
   }
 
   /**
@@ -303,7 +303,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public String fakeOuterStringSerialize() throws ApiException {
-    return fakeOuterStringSerialize((String) null);
+    return fakeOuterStringSerialize(null);
   }
 
   /**
@@ -575,7 +575,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte) throws ApiException {
-    testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, (Integer) null, (Integer) null, (Long) null, (Float) null, (String) null, (byte[]) null, (LocalDate) null, (OffsetDateTime) null, (String) null, (String) null);
+    testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -790,7 +790,7 @@ if (paramCallback != null)
    * @throws ApiException if fails to make API call
    */
   public void testEnumParameters() throws ApiException {
-    testEnumParameters((List<String>) null, (String) null, (List<String>) null, (String) null, (List<String>) null, (String) null, (Integer) null, (Double) null);
+    testEnumParameters(null, null, null, null, null, null, null, null);
   }
 
   /**

@@ -217,7 +217,7 @@ public class PetApiTest {
         api.addPet(pet);
 
         Pet fetched = api.getPetById(pet.getId());
-        api.deletePet(fetched.getId(), (String) null);
+        api.deletePet(fetched.getId(), null);
 
         try {
             fetched = api.getPetById(fetched.getId());
