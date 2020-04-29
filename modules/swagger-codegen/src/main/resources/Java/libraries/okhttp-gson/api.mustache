@@ -100,7 +100,7 @@ public class {{classname}} {
     @Deprecated
     {{/isDeprecated}}
     public com.squareup.okhttp.Call {{operationId}}Call({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        return {{operationId}}Call({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}, {{/allParams}}progressListener, progressRequestListener);
+        return {{operationId}}Call({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}({{{dataType}}}) null{{/required}}, {{/allParams}}progressListener, progressRequestListener);
     }
 
     /**
@@ -122,7 +122,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public com.squareup.okhttp.Call {{operationId}}Call({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call {{operationId}}UsingOptionalsObjCall({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }
@@ -260,7 +260,7 @@ public class {{classname}} {
     @Deprecated
     {{/isDeprecated}}
     public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws ApiException {
-        return {{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}({{{dataType}}}) null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     }
 
     /**
@@ -281,11 +281,11 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}UsingOptionalsObj({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }
-        return {{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     }
     {{/hasOptionalParams}}
 
@@ -330,14 +330,14 @@ public class {{classname}} {
     @Deprecated
     {{/isDeprecated}}
     public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws ApiException {
-        return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}({{{dataType}}}) null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     }
 
     /**
      * {{summary}}
      * {{notes}}{{#requiredParams}}
-     * @param {{paramName}} {{description}} (required){{/requiredParams}}{{#returnType}}
-     * @param optionals An object containing the optional parameters for this API call.
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param optionals An object containing the optional parameters for this API call.{{#returnType}}
      * @return {{returnType}}{{/returnType}}
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      {{#isDeprecated}}
@@ -351,7 +351,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}UsingOptionalsObjWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }
@@ -402,7 +402,7 @@ public class {{classname}} {
     @Deprecated
     {{/isDeprecated}}
     public com.squareup.okhttp.Call {{operationId}}Async({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
-        return {{operationId}}Async({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}, {{/allParams}}{{localVariablePrefix}}callback);
+        return {{operationId}}Async({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}({{{dataType}}}) null{{/required}}, {{/allParams}}{{localVariablePrefix}}callback);
     }
 
     /**
@@ -424,7 +424,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public com.squareup.okhttp.Call {{operationId}}Async({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
+    public com.squareup.okhttp.Call {{operationId}}UsingOptionalsObjAsync({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }

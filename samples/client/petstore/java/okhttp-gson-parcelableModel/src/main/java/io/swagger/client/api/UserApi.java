@@ -54,6 +54,8 @@ public class UserApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for createUser
      * @param body Created user object (required)
@@ -117,6 +119,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Create user
      * This can only be done by the logged in user.
@@ -126,6 +129,7 @@ public class UserApi {
     public void createUser(User body) throws ApiException {
         createUserWithHttpInfo(body);
     }
+
 
     /**
      * Create user
@@ -138,6 +142,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = createUserValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Create user (asynchronously)
@@ -172,6 +177,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for createUsersWithArrayInput
      * @param body List of user object (required)
@@ -235,6 +242,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Creates list of users with given input array
      * 
@@ -244,6 +252,7 @@ public class UserApi {
     public void createUsersWithArrayInput(List<User> body) throws ApiException {
         createUsersWithArrayInputWithHttpInfo(body);
     }
+
 
     /**
      * Creates list of users with given input array
@@ -256,6 +265,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = createUsersWithArrayInputValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Creates list of users with given input array (asynchronously)
@@ -290,6 +300,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for createUsersWithListInput
      * @param body List of user object (required)
@@ -353,6 +365,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Creates list of users with given input array
      * 
@@ -362,6 +375,7 @@ public class UserApi {
     public void createUsersWithListInput(List<User> body) throws ApiException {
         createUsersWithListInputWithHttpInfo(body);
     }
+
 
     /**
      * Creates list of users with given input array
@@ -374,6 +388,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = createUsersWithListInputValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Creates list of users with given input array (asynchronously)
@@ -408,6 +423,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for deleteUser
      * @param username The name that needs to be deleted (required)
@@ -472,6 +489,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Delete user
      * This can only be done by the logged in user.
@@ -481,6 +499,7 @@ public class UserApi {
     public void deleteUser(String username) throws ApiException {
         deleteUserWithHttpInfo(username);
     }
+
 
     /**
      * Delete user
@@ -493,6 +512,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = deleteUserValidateBeforeCall(username, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Delete user (asynchronously)
@@ -527,6 +547,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for getUserByName
      * @param username The name that needs to be fetched. Use user1 for testing. (required)
@@ -591,6 +613,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Get user by user name
      * 
@@ -602,6 +625,7 @@ public class UserApi {
         ApiResponse<User> resp = getUserByNameWithHttpInfo(username);
         return resp.getData();
     }
+
 
     /**
      * Get user by user name
@@ -615,6 +639,7 @@ public class UserApi {
         Type localVarReturnType = new TypeToken<User>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Get user by user name (asynchronously)
@@ -650,6 +675,8 @@ public class UserApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for loginUser
      * @param username The user name for login (required)
@@ -723,6 +750,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Logs user into the system
      * 
@@ -735,6 +763,7 @@ public class UserApi {
         ApiResponse<String> resp = loginUserWithHttpInfo(username, password);
         return resp.getData();
     }
+
 
     /**
      * Logs user into the system
@@ -749,6 +778,7 @@ public class UserApi {
         Type localVarReturnType = new TypeToken<String>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Logs user into the system (asynchronously)
@@ -785,6 +815,8 @@ public class UserApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for logoutUser
      * @param progressListener Progress listener
@@ -842,6 +874,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Logs out current logged in user session
      * 
@@ -850,6 +883,7 @@ public class UserApi {
     public void logoutUser() throws ApiException {
         logoutUserWithHttpInfo();
     }
+
 
     /**
      * Logs out current logged in user session
@@ -861,6 +895,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = logoutUserValidateBeforeCall(null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Logs out current logged in user session (asynchronously)
@@ -894,6 +929,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for updateUser
      * @param username name that need to be deleted (required)
@@ -964,6 +1001,7 @@ public class UserApi {
 
     }
 
+
     /**
      * Updated user
      * This can only be done by the logged in user.
@@ -974,6 +1012,7 @@ public class UserApi {
     public void updateUser(String username, User body) throws ApiException {
         updateUserWithHttpInfo(username, body);
     }
+
 
     /**
      * Updated user
@@ -987,6 +1026,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = updateUserValidateBeforeCall(username, body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Updated user (asynchronously)

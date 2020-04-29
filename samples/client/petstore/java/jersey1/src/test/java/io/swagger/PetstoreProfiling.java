@@ -2,6 +2,7 @@ package io.swagger;
 
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import io.swagger.client.*;
 import io.swagger.client.api.*;

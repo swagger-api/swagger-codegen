@@ -54,6 +54,8 @@ public class AnotherFakeApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for testSpecialTags
      * @param body client model (required)
@@ -117,6 +119,7 @@ public class AnotherFakeApi {
 
     }
 
+
     /**
      * To test special tags
      * To test special tags
@@ -128,6 +131,7 @@ public class AnotherFakeApi {
         ApiResponse<Client> resp = testSpecialTagsWithHttpInfo(body);
         return resp.getData();
     }
+
 
     /**
      * To test special tags
@@ -141,6 +145,7 @@ public class AnotherFakeApi {
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * To test special tags (asynchronously)
