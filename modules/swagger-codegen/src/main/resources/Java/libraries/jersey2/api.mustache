@@ -105,7 +105,7 @@ public class {{classname}} {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}UsingOptionalsObj({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}Opts({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new {{operationIdCamelCase}}Optionals();
     }
@@ -186,7 +186,7 @@ public class {{classname}} {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}UsingOptionalsObjWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+  public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}OptsWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new {{operationIdCamelCase}}Optionals();
     }

@@ -122,7 +122,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public com.squareup.okhttp.Call {{operationId}}UsingOptionalsObjCall({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call {{operationId}}OptsCall({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }
@@ -281,7 +281,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}UsingOptionalsObj({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}Opts({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }
@@ -351,7 +351,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}UsingOptionalsObjWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}OptsWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }
@@ -424,7 +424,7 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public com.squareup.okhttp.Call {{operationId}}UsingOptionalsObjAsync({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
+    public com.squareup.okhttp.Call {{operationId}}OptsAsync({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
         if (optionals == null) {
             optionals = new {{operationIdCamelCase}}Optionals();
         }

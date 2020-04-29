@@ -125,7 +125,7 @@ public class PetApi {
    * @param optionals An object containing the optional parameters for this API call.
    * @throws ApiException if fails to make API call
    */
-  public void deletePetUsingOptionalsObj(Long petId, DeletePetOptionals optionals) throws ApiException {
+  public void deletePetOpts(Long petId, DeletePetOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new DeletePetOptionals();
     }
@@ -400,7 +400,7 @@ public class PetApi {
    * @param optionals An object containing the optional parameters for this API call.
    * @throws ApiException if fails to make API call
    */
-  public void updatePetWithFormUsingOptionalsObj(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
+  public void updatePetWithFormOpts(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new UpdatePetWithFormOptionals();
     }
@@ -500,7 +500,7 @@ if (status != null)
    * @return ModelApiResponse
    * @throws ApiException if fails to make API call
    */
-  public ModelApiResponse uploadFileUsingOptionalsObj(Long petId, UploadFileOptionals optionals) throws ApiException {
+  public ModelApiResponse uploadFileOpts(Long petId, UploadFileOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new UploadFileOptionals();
     }

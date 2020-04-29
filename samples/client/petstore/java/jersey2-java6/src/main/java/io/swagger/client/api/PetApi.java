@@ -113,7 +113,7 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public void deletePet(Long petId) throws ApiException {
-    deletePet(petId, (String) null);
+    deletePet(petId, null);
   }
 
   /**
@@ -123,7 +123,7 @@ public class PetApi {
    * @param optionals An object containing the optional parameters for this API call.
    * @throws ApiException if fails to make API call
    */
-  public void deletePetUsingOptionalsObj(Long petId, DeletePetOptionals optionals) throws ApiException {
+  public void deletePetOpts(Long petId, DeletePetOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new DeletePetOptionals();
     }
@@ -150,7 +150,7 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<Void> deletePetWithHttpInfo(Long petId) throws ApiException {
-    return deletePetWithHttpInfo(petId, (String) null);
+    return deletePetWithHttpInfo(petId, null);
   }
 
   /**
@@ -161,7 +161,7 @@ public class PetApi {
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> deletePetUsingOptionalsObjWithHttpInfo(Long petId, DeletePetOptionals optionals) throws ApiException {
+  public ApiResponse<Void> deletePetOptsWithHttpInfo(Long petId, DeletePetOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new DeletePetOptionals();
     }
@@ -471,7 +471,7 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public void updatePetWithForm(Long petId) throws ApiException {
-    updatePetWithForm(petId, (String) null, (String) null);
+    updatePetWithForm(petId, null, null);
   }
 
   /**
@@ -481,7 +481,7 @@ public class PetApi {
    * @param optionals An object containing the optional parameters for this API call.
    * @throws ApiException if fails to make API call
    */
-  public void updatePetWithFormUsingOptionalsObj(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
+  public void updatePetWithFormOpts(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new UpdatePetWithFormOptionals();
     }
@@ -509,7 +509,7 @@ public class PetApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<Void> updatePetWithFormWithHttpInfo(Long petId) throws ApiException {
-    return updatePetWithFormWithHttpInfo(petId, (String) null, (String) null);
+    return updatePetWithFormWithHttpInfo(petId, null, null);
   }
 
   /**
@@ -520,7 +520,7 @@ public class PetApi {
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> updatePetWithFormUsingOptionalsObjWithHttpInfo(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
+  public ApiResponse<Void> updatePetWithFormOptsWithHttpInfo(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new UpdatePetWithFormOptionals();
     }
@@ -608,7 +608,7 @@ if (status != null)
    * @throws ApiException if fails to make API call
    */
   public ModelApiResponse uploadFile(Long petId) throws ApiException {
-    return uploadFile(petId, (String) null, (File) null);
+    return uploadFile(petId, null, null);
   }
 
   /**
@@ -619,7 +619,7 @@ if (status != null)
    * @return ModelApiResponse
    * @throws ApiException if fails to make API call
    */
-  public ModelApiResponse uploadFileUsingOptionalsObj(Long petId, UploadFileOptionals optionals) throws ApiException {
+  public ModelApiResponse uploadFileOpts(Long petId, UploadFileOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new UploadFileOptionals();
     }
@@ -647,7 +647,7 @@ if (status != null)
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<ModelApiResponse> uploadFileWithHttpInfo(Long petId) throws ApiException {
-    return uploadFileWithHttpInfo(petId, (String) null, (File) null);
+    return uploadFileWithHttpInfo(petId, null, null);
   }
 
   /**
@@ -658,7 +658,7 @@ if (status != null)
    * @return ApiResponse&lt;ModelApiResponse&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ModelApiResponse> uploadFileUsingOptionalsObjWithHttpInfo(Long petId, UploadFileOptionals optionals) throws ApiException {
+  public ApiResponse<ModelApiResponse> uploadFileOptsWithHttpInfo(Long petId, UploadFileOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new UploadFileOptionals();
     }

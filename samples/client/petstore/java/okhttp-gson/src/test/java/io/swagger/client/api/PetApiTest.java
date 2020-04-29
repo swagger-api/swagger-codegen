@@ -312,18 +312,72 @@ public class PetApiTest {
     }
 
     @Test
-    public void testUpdatePetWithFormUsingOptionalsObj() throws Exception {
+    public void testUpdatePetWithFormOpts() throws Exception {
         Pet pet = createRandomPet();
         pet.setName("frank");
         api.addPet(pet);
 
         Pet fetched = api.getPetById(pet.getId());
 
-        api.updatePetWithFormUsingOptionalsObj(
+        api.updatePetWithFormOpts(
             fetched.getId(),
             new PetApi.UpdatePetWithFormOptionals().name("furt"));
         Pet updated = api.getPetById(fetched.getId());
 
+        assertEquals(updated.getName(), "furt");
+    }
+
+    @Test
+    public void testUpdatePetWithFormOptsAsync() throws Exception {
+        Pet pet = createRandomPet();
+        pet.setName("frank");
+        api.addPet(pet);
+
+        Pet fetched = api.getPetById(pet.getId());
+
+        // to store returned Pet or error message/exception
+        final Map<String, Object> result = new HashMap<String, Object>();
+
+        api.updatePetWithFormOptsAsync(
+            fetched.getId(),
+            new PetApi.UpdatePetWithFormOptionals().name("furt"),
+            new ApiCallback<Void>() {
+                @Override
+                public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                    result.put("error", e.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Void v, int statusCode, Map<String, List<String>> responseHeaders) {
+                    result.put("resp", v);
+                }
+
+                @Override
+                public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                    //empty
+                }
+
+                @Override
+                public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                    //empty
+                }
+            }
+        );
+        // the API call should be executed asynchronously, so result should be empty at the moment
+        assertTrue(result.isEmpty());
+
+        // wait for the asynchronous call to finish (at most 10 seconds)
+        final int maxTry = 10;
+        int tryCount = 1;
+        do {
+            if (tryCount > maxTry) fail("have not got result of updatePetWithFormOptsAsync after 10 seconds");
+            Thread.sleep(1000);
+            tryCount += 1;
+            if (result.get("error") != null) fail((String) result.get("error"));
+            if (result.get("resp") != null) break;
+        } while (result.isEmpty());
+
+        Pet updated = api.getPetById(fetched.getId());
         assertEquals(updated.getName(), "furt");
     }
 
@@ -373,7 +427,7 @@ public class PetApiTest {
     }
 
     @Test
-    public void testUploadFileUsingOptionalsObj() throws Exception {
+    public void testUploadFileOpts() throws Exception {
         Pet pet = createRandomPet();
         api.addPet(pet);
 
@@ -382,7 +436,7 @@ public class PetApiTest {
         writer.write("Hello world!");
         writer.close();
 
-        api.uploadFileUsingOptionalsObj(
+        api.uploadFileOpts(
             pet.getId(),
             new PetApi.UploadFileOptionals()
                 .additionalMetadata("a test file")

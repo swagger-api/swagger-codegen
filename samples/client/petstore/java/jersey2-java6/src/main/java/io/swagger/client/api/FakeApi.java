@@ -62,7 +62,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public Boolean fakeOuterBooleanSerialize() throws ApiException {
-    return fakeOuterBooleanSerialize((Boolean) null);
+    return fakeOuterBooleanSerialize(null);
   }
 
   /**
@@ -72,7 +72,7 @@ public class FakeApi {
    * @return Boolean
    * @throws ApiException if fails to make API call
    */
-  public Boolean fakeOuterBooleanSerializeUsingOptionalsObj(FakeOuterBooleanSerializeOptionals optionals) throws ApiException {
+  public Boolean fakeOuterBooleanSerializeOpts(FakeOuterBooleanSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterBooleanSerializeOptionals();
     }
@@ -97,7 +97,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<Boolean> fakeOuterBooleanSerializeWithHttpInfo() throws ApiException {
-    return fakeOuterBooleanSerializeWithHttpInfo((Boolean) null);
+    return fakeOuterBooleanSerializeWithHttpInfo(null);
   }
 
   /**
@@ -107,7 +107,7 @@ public class FakeApi {
    * @return ApiResponse&lt;Boolean&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Boolean> fakeOuterBooleanSerializeUsingOptionalsObjWithHttpInfo(FakeOuterBooleanSerializeOptionals optionals) throws ApiException {
+  public ApiResponse<Boolean> fakeOuterBooleanSerializeOptsWithHttpInfo(FakeOuterBooleanSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterBooleanSerializeOptionals();
     }
@@ -172,7 +172,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public OuterComposite fakeOuterCompositeSerialize() throws ApiException {
-    return fakeOuterCompositeSerialize((OuterComposite) null);
+    return fakeOuterCompositeSerialize(null);
   }
 
   /**
@@ -182,7 +182,7 @@ public class FakeApi {
    * @return OuterComposite
    * @throws ApiException if fails to make API call
    */
-  public OuterComposite fakeOuterCompositeSerializeUsingOptionalsObj(FakeOuterCompositeSerializeOptionals optionals) throws ApiException {
+  public OuterComposite fakeOuterCompositeSerializeOpts(FakeOuterCompositeSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterCompositeSerializeOptionals();
     }
@@ -207,7 +207,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<OuterComposite> fakeOuterCompositeSerializeWithHttpInfo() throws ApiException {
-    return fakeOuterCompositeSerializeWithHttpInfo((OuterComposite) null);
+    return fakeOuterCompositeSerializeWithHttpInfo(null);
   }
 
   /**
@@ -217,7 +217,7 @@ public class FakeApi {
    * @return ApiResponse&lt;OuterComposite&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<OuterComposite> fakeOuterCompositeSerializeUsingOptionalsObjWithHttpInfo(FakeOuterCompositeSerializeOptionals optionals) throws ApiException {
+  public ApiResponse<OuterComposite> fakeOuterCompositeSerializeOptsWithHttpInfo(FakeOuterCompositeSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterCompositeSerializeOptionals();
     }
@@ -282,7 +282,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public BigDecimal fakeOuterNumberSerialize() throws ApiException {
-    return fakeOuterNumberSerialize((BigDecimal) null);
+    return fakeOuterNumberSerialize(null);
   }
 
   /**
@@ -292,7 +292,7 @@ public class FakeApi {
    * @return BigDecimal
    * @throws ApiException if fails to make API call
    */
-  public BigDecimal fakeOuterNumberSerializeUsingOptionalsObj(FakeOuterNumberSerializeOptionals optionals) throws ApiException {
+  public BigDecimal fakeOuterNumberSerializeOpts(FakeOuterNumberSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterNumberSerializeOptionals();
     }
@@ -317,7 +317,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<BigDecimal> fakeOuterNumberSerializeWithHttpInfo() throws ApiException {
-    return fakeOuterNumberSerializeWithHttpInfo((BigDecimal) null);
+    return fakeOuterNumberSerializeWithHttpInfo(null);
   }
 
   /**
@@ -327,7 +327,7 @@ public class FakeApi {
    * @return ApiResponse&lt;BigDecimal&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<BigDecimal> fakeOuterNumberSerializeUsingOptionalsObjWithHttpInfo(FakeOuterNumberSerializeOptionals optionals) throws ApiException {
+  public ApiResponse<BigDecimal> fakeOuterNumberSerializeOptsWithHttpInfo(FakeOuterNumberSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterNumberSerializeOptionals();
     }
@@ -392,7 +392,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public String fakeOuterStringSerialize() throws ApiException {
-    return fakeOuterStringSerialize((String) null);
+    return fakeOuterStringSerialize(null);
   }
 
   /**
@@ -402,7 +402,7 @@ public class FakeApi {
    * @return String
    * @throws ApiException if fails to make API call
    */
-  public String fakeOuterStringSerializeUsingOptionalsObj(FakeOuterStringSerializeOptionals optionals) throws ApiException {
+  public String fakeOuterStringSerializeOpts(FakeOuterStringSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterStringSerializeOptionals();
     }
@@ -427,7 +427,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<String> fakeOuterStringSerializeWithHttpInfo() throws ApiException {
-    return fakeOuterStringSerializeWithHttpInfo((String) null);
+    return fakeOuterStringSerializeWithHttpInfo(null);
   }
 
   /**
@@ -437,7 +437,7 @@ public class FakeApi {
    * @return ApiResponse&lt;String&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<String> fakeOuterStringSerializeUsingOptionalsObjWithHttpInfo(FakeOuterStringSerializeOptionals optionals) throws ApiException {
+  public ApiResponse<String> fakeOuterStringSerializeOptsWithHttpInfo(FakeOuterStringSerializeOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new FakeOuterStringSerializeOptionals();
     }
@@ -721,7 +721,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte) throws ApiException {
-    testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, (Integer) null, (Integer) null, (Long) null, (Float) null, (String) null, (byte[]) null, (LocalDate) null, (OffsetDateTime) null, (String) null, (String) null);
+    testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -734,7 +734,7 @@ public class FakeApi {
    * @param optionals An object containing the optional parameters for this API call.
    * @throws ApiException if fails to make API call
    */
-  public void testEndpointParametersUsingOptionalsObj(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, TestEndpointParametersOptionals optionals) throws ApiException {
+  public void testEndpointParametersOpts(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, TestEndpointParametersOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new TestEndpointParametersOptionals();
     }
@@ -776,7 +776,7 @@ public class FakeApi {
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<Void> testEndpointParametersWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte) throws ApiException {
-    return testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, (Integer) null, (Integer) null, (Long) null, (Float) null, (String) null, (byte[]) null, (LocalDate) null, (OffsetDateTime) null, (String) null, (String) null);
+    return testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -790,7 +790,7 @@ public class FakeApi {
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> testEndpointParametersUsingOptionalsObjWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, TestEndpointParametersOptionals optionals) throws ApiException {
+  public ApiResponse<Void> testEndpointParametersOptsWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, TestEndpointParametersOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new TestEndpointParametersOptionals();
     }
@@ -991,7 +991,7 @@ if (paramCallback != null)
    * @throws ApiException if fails to make API call
    */
   public void testEnumParameters() throws ApiException {
-    testEnumParameters((List<String>) null, (String) null, (List<String>) null, (String) null, (List<String>) null, (String) null, (Integer) null, (Double) null);
+    testEnumParameters(null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1000,7 +1000,7 @@ if (paramCallback != null)
    * @param optionals An object containing the optional parameters for this API call.
    * @throws ApiException if fails to make API call
    */
-  public void testEnumParametersUsingOptionalsObj(TestEnumParametersOptionals optionals) throws ApiException {
+  public void testEnumParametersOpts(TestEnumParametersOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new TestEnumParametersOptionals();
     }
@@ -1032,7 +1032,7 @@ if (paramCallback != null)
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<Void> testEnumParametersWithHttpInfo() throws ApiException {
-    return testEnumParametersWithHttpInfo((List<String>) null, (String) null, (List<String>) null, (String) null, (List<String>) null, (String) null, (Integer) null, (Double) null);
+    return testEnumParametersWithHttpInfo(null, null, null, null, null, null, null, null);
   }
 
   /**
@@ -1042,7 +1042,7 @@ if (paramCallback != null)
    * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Void> testEnumParametersUsingOptionalsObjWithHttpInfo(TestEnumParametersOptionals optionals) throws ApiException {
+  public ApiResponse<Void> testEnumParametersOptsWithHttpInfo(TestEnumParametersOptionals optionals) throws ApiException {
     if (optionals == null) {
       optionals = new TestEnumParametersOptionals();
     }

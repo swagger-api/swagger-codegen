@@ -215,7 +215,7 @@ public class PetApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deletePetUsingOptionalsObjCall(Long petId, DeletePetOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deletePetOptsCall(Long petId, DeletePetOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         if (optionals == null) {
             optionals = new DeletePetOptionals();
         }
@@ -306,7 +306,7 @@ public class PetApi {
      * @param optionals An object containing the optional parameters for this API call.
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deletePetUsingOptionalsObj(Long petId, DeletePetOptionals optionals) throws ApiException {
+    public void deletePetOpts(Long petId, DeletePetOptionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new DeletePetOptionals();
         }
@@ -341,7 +341,7 @@ public class PetApi {
      * @param optionals An object containing the optional parameters for this API call.
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deletePetUsingOptionalsObjWithHttpInfo(Long petId, DeletePetOptionals optionals) throws ApiException {
+    public ApiResponse<Void> deletePetOptsWithHttpInfo(Long petId, DeletePetOptionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new DeletePetOptionals();
         }
@@ -382,7 +382,7 @@ public class PetApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deletePetUsingOptionalsObjAsync(Long petId, DeletePetOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deletePetOptsAsync(Long petId, DeletePetOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
         if (optionals == null) {
             optionals = new DeletePetOptionals();
         }
@@ -988,7 +988,7 @@ public class PetApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updatePetWithFormUsingOptionalsObjCall(Long petId, UpdatePetWithFormOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updatePetWithFormOptsCall(Long petId, UpdatePetWithFormOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         if (optionals == null) {
             optionals = new UpdatePetWithFormOptionals();
         }
@@ -1082,7 +1082,7 @@ public class PetApi {
      * @param optionals An object containing the optional parameters for this API call.
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void updatePetWithFormUsingOptionalsObj(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
+    public void updatePetWithFormOpts(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new UpdatePetWithFormOptionals();
         }
@@ -1118,7 +1118,7 @@ public class PetApi {
      * @param optionals An object containing the optional parameters for this API call.
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> updatePetWithFormUsingOptionalsObjWithHttpInfo(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
+    public ApiResponse<Void> updatePetWithFormOptsWithHttpInfo(Long petId, UpdatePetWithFormOptionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new UpdatePetWithFormOptionals();
         }
@@ -1160,7 +1160,7 @@ public class PetApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updatePetWithFormUsingOptionalsObjAsync(Long petId, UpdatePetWithFormOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call updatePetWithFormOptsAsync(Long petId, UpdatePetWithFormOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
         if (optionals == null) {
             optionals = new UpdatePetWithFormOptionals();
         }
@@ -1249,7 +1249,7 @@ public class PetApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call uploadFileUsingOptionalsObjCall(Long petId, UploadFileOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call uploadFileOptsCall(Long petId, UploadFileOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         if (optionals == null) {
             optionals = new UploadFileOptionals();
         }
@@ -1345,7 +1345,7 @@ public class PetApi {
      * @return ModelApiResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ModelApiResponse uploadFileUsingOptionalsObj(Long petId, UploadFileOptionals optionals) throws ApiException {
+    public ModelApiResponse uploadFileOpts(Long petId, UploadFileOptionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new UploadFileOptionals();
         }
@@ -1385,7 +1385,7 @@ public class PetApi {
      * @return ModelApiResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ModelApiResponse> uploadFileUsingOptionalsObjWithHttpInfo(Long petId, UploadFileOptionals optionals) throws ApiException {
+    public ApiResponse<ModelApiResponse> uploadFileOptsWithHttpInfo(Long petId, UploadFileOptionals optionals) throws ApiException {
         if (optionals == null) {
             optionals = new UploadFileOptionals();
         }
@@ -1428,7 +1428,7 @@ public class PetApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call uploadFileUsingOptionalsObjAsync(Long petId, UploadFileOptionals optionals, final ApiCallback<ModelApiResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call uploadFileOptsAsync(Long petId, UploadFileOptionals optionals, final ApiCallback<ModelApiResponse> callback) throws ApiException {
         if (optionals == null) {
             optionals = new UploadFileOptionals();
         }

@@ -196,14 +196,14 @@ public class PetApiTest {
     }
 
     @Test
-    public void testUpdatePetWithFormUsingOptionalsObj() throws Exception {
+    public void testUpdatePetWithFormOpts() throws Exception {
         Pet pet = createRandomPet();
         pet.setName("frank");
         api.addPet(pet);
 
         Pet fetched = api.getPetById(pet.getId());
 
-        api.updatePetWithFormUsingOptionalsObj(
+        api.updatePetWithFormOpts(
             fetched.getId(),
             new PetApi.UpdatePetWithFormOptionals().name("furt"));
         Pet updated = api.getPetById(fetched.getId());
@@ -257,7 +257,7 @@ public class PetApiTest {
     }
 
     @Test
-    public void testUploadFileUsingOptionalsObj() throws Exception {
+    public void testUploadFileOpts() throws Exception {
         Pet pet = createRandomPet();
         api.addPet(pet);
 
@@ -266,7 +266,7 @@ public class PetApiTest {
         writer.write("Hello world!");
         writer.close();
 
-        api.uploadFileUsingOptionalsObj(
+        api.uploadFileOpts(
             pet.getId(),
             new PetApi.UploadFileOptionals()
                 .additionalMetadata("a test file")
