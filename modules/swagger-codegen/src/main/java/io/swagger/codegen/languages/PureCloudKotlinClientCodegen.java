@@ -123,9 +123,9 @@ public class PureCloudKotlinClientCodegen extends KotlinClientCodegen {
             // Iterate through properties
             for (CodegenProperty cp : cm.allVars) {
                 // Enums with values only
-                // Fixes issue in a model where there is a name class with a method
-                if (cp.name.equals("paid")) {
-                    cp.name = "paid1";
+                // Fixes issue in a model where there is a name clash with a method
+                if (cp.name.equals("isPaid")) {
+                    cp.description = "isPaid";
                 }
 
                 if (cp.baseType.equals("MutableList")) {
