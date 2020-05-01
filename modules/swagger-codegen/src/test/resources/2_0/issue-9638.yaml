@@ -13,6 +13,16 @@ paths:
           schema:
             $ref: "#/definitions/Test"
 definitions:
+  ComplexType:
+    type: object
+    properties:
+      id:
+        type: string
+  ComplexPropTest:
+    type: object
+    properties:
+      complexProp:
+        $ref: '#/definitions/ComplexType'
   CustomDateTime:
     type: "string"
     format: "date-time"

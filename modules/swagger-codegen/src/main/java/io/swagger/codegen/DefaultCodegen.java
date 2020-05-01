@@ -1924,7 +1924,7 @@ public class DefaultCodegen {
             return prop;
         }
         ModelImpl modelImpl = (ModelImpl) model;
-        if (modelImpl.getEnum() != null) {
+        if ("object".equals(modelImpl.getType()) || modelImpl.getEnum() != null) {
             return prop;
         }
         Map<PropertyBuilder.PropertyId, Object> args = new HashMap<PropertyBuilder.PropertyId, Object>();

@@ -513,6 +513,20 @@ public class CodegenTest {
         }
     }
 
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638, regression")
+    public void testRefKeepsComplexType() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("ComplexPropTest");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("ComplexPropTest", test, swagger.getDefinitions());
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            Assert.assertTrue(codegenProperty.complexType.equals("ComplexType"));
+        }
+    }
+
     @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
     public void testRefKeepsFormat() {
         final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
