@@ -4033,4 +4033,14 @@ public class DefaultCodegen {
     public boolean defaultIgnoreImportMappingOption() {
         return false;
     }
+
+    protected boolean isModelObject(ModelImpl model) {
+        if ("object".equalsIgnoreCase(model.getType())) {
+            return true;
+        }
+        if ((StringUtils.EMPTY.equalsIgnoreCase(model.getType()) || model.getType() == null) && (model.getProperties() != null && !model.getProperties().isEmpty())) {
+            return true;
+        }
+        return false;
+    }
 }
