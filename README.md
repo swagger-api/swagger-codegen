@@ -917,6 +917,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [MailMojo](https://mailmojo.no/)
 - [Metaswitch](https://www.metaswitch.com/)
 - [Mindera](http://mindera.com/)
+- [ModuleQ](https://moduleq.com)
 - [Mporium](http://mporium.com/)
 - [Neverfail](https://neverfail.com/)
 - [NexCap](http://www.nexess-solutions.com/fr/plateforme-iot/)
