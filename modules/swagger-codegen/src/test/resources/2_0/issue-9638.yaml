@@ -18,11 +18,17 @@ definitions:
     properties:
       id:
         type: string
+  ComplexTypeWithoutType:
+    properties:
+      id:
+        type: string
   ComplexPropTest:
     type: object
     properties:
       complexProp:
         $ref: '#/definitions/ComplexType'
+      complexPropWithoutType:
+        $ref: '#/definitions/ComplexTypeWithoutType'
   CustomDateTime:
     type: "string"
     format: "date-time"

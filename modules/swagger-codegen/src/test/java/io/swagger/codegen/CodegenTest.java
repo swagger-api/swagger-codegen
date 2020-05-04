@@ -523,7 +523,7 @@ public class CodegenTest {
 
         final CodegenModel codegenModel = codegen.fromModel("ComplexPropTest", test, swagger.getDefinitions());
         for (CodegenProperty codegenProperty : codegenModel.vars) {
-            Assert.assertTrue(codegenProperty.complexType.equals("ComplexType"));
+            Assert.assertTrue(codegenProperty.complexType.startsWith("ComplexType"));
         }
     }
 
