@@ -44,6 +44,8 @@ public class UserApi {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * Create user
    * This can only be done by the logged in user.
@@ -82,6 +84,8 @@ public class UserApi {
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Creates list of users with given input array
    * 
@@ -120,6 +124,8 @@ public class UserApi {
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Creates list of users with given input array
    * 
@@ -158,6 +164,8 @@ public class UserApi {
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Delete user
    * This can only be done by the logged in user.
@@ -197,6 +205,8 @@ public class UserApi {
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Get user by user name
    * 
@@ -238,6 +248,8 @@ public class UserApi {
     GenericType<User> localVarReturnType = new GenericType<User>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
+
+
   /**
    * Logs user into the system
    * 
@@ -285,6 +297,8 @@ public class UserApi {
     GenericType<String> localVarReturnType = new GenericType<String>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
+
+
   /**
    * Logs out current logged in user session
    * 
@@ -318,6 +332,8 @@ public class UserApi {
 
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Updated user
    * This can only be done by the logged in user.

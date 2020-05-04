@@ -53,6 +53,8 @@ public class DogApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for addDog
      * @param body Dog object that needs to be added to the store (required)
@@ -63,7 +65,7 @@ public class DogApi {
      */
     public com.squareup.okhttp.Call addDogCall(Dog body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/dog";
 
@@ -101,22 +103,23 @@ public class DogApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call addDogValidateBeforeCall(Dog body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling addDog(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = addDogCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Add a new dog to the store
@@ -127,6 +130,7 @@ public class DogApi {
     public void addDog(Dog body) throws ApiException {
         addDogWithHttpInfo(body);
     }
+
 
     /**
      * Add a new dog to the store
@@ -139,6 +143,7 @@ public class DogApi {
         com.squareup.okhttp.Call call = addDogValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Add a new dog to the store (asynchronously)
@@ -173,6 +178,47 @@ public class DogApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    public static class DeleteDogOptionals {
+        public String apiKey() {
+            return this.apiKey;
+        }
+
+        public DeleteDogOptionals apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        private String apiKey = null;
+    }
+
+    /**
+     * Build call for deleteDog
+     * @param dogId Dog id to delete (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call deleteDogCall(Long dogId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return deleteDogCall(dogId, null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for deleteDog
+     * @param dogId Dog id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call deleteDogOptsCall(Long dogId, DeleteDogOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteDogOptionals();
+        }
+        return deleteDogCall(dogId, optionals.apiKey(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for deleteDog
      * @param dogId Dog id to delete (required)
@@ -184,7 +230,7 @@ public class DogApi {
      */
     public com.squareup.okhttp.Call deleteDogCall(Long dogId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/dog/{dogId}"
             .replaceAll("\\{" + "dogId" + "\\}", apiClient.escapeString(dogId.toString()));
@@ -225,21 +271,45 @@ public class DogApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call deleteDogValidateBeforeCall(Long dogId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'dogId' is set
         if (dogId == null) {
             throw new ApiException("Missing the required parameter 'dogId' when calling deleteDog(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = deleteDogCall(dogId, apiKey, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * Deletes a dog
+     * 
+     * @param dogId Dog id to delete (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void deleteDog(Long dogId) throws ApiException {
+        deleteDog(dogId, null);
+    }
+
+    /**
+     * Deletes a dog
+     * 
+     * @param dogId Dog id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void deleteDogOpts(Long dogId, DeleteDogOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteDogOptionals();
+        }
+        deleteDog(dogId, optionals.apiKey());
     }
 
     /**
@@ -257,6 +327,30 @@ public class DogApi {
      * Deletes a dog
      * 
      * @param dogId Dog id to delete (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> deleteDogWithHttpInfo(Long dogId) throws ApiException {
+        return deleteDogWithHttpInfo(dogId, null);
+    }
+
+    /**
+     * Deletes a dog
+     * 
+     * @param dogId Dog id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> deleteDogOptsWithHttpInfo(Long dogId, DeleteDogOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteDogOptionals();
+        }
+        return deleteDogWithHttpInfo(dogId, optionals.apiKey());
+    }
+
+    /**
+     * Deletes a dog
+     * 
+     * @param dogId Dog id to delete (required)
      * @param apiKey  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -264,6 +358,34 @@ public class DogApi {
     public ApiResponse<Void> deleteDogWithHttpInfo(Long dogId, String apiKey) throws ApiException {
         com.squareup.okhttp.Call call = deleteDogValidateBeforeCall(dogId, apiKey, null, null);
         return apiClient.execute(call);
+    }
+
+    /**
+     * Deletes a dog (asynchronously)
+     * 
+     * @param dogId Dog id to delete (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call deleteDogAsync(Long dogId, final ApiCallback<Void> callback) throws ApiException {
+        return deleteDogAsync(dogId, null, callback);
+    }
+
+    /**
+     * Deletes a dog (asynchronously)
+     * 
+     * @param dogId Dog id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call deleteDogOptsAsync(Long dogId, DeleteDogOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteDogOptionals();
+        }
+        return deleteDogAsync(dogId, optionals.apiKey(), callback);
     }
 
     /**
@@ -300,6 +422,8 @@ public class DogApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for getDogById
      * @param dogId ID of dog to return (required)
@@ -310,7 +434,7 @@ public class DogApi {
      */
     public com.squareup.okhttp.Call getDogByIdCall(Long dogId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/dog/{dogId}"
             .replaceAll("\\{" + "dogId" + "\\}", apiClient.escapeString(dogId.toString()));
@@ -349,22 +473,23 @@ public class DogApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call getDogByIdValidateBeforeCall(Long dogId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'dogId' is set
         if (dogId == null) {
             throw new ApiException("Missing the required parameter 'dogId' when calling getDogById(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = getDogByIdCall(dogId, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Find dog by ID
@@ -378,6 +503,7 @@ public class DogApi {
         return resp.getData();
     }
 
+
     /**
      * Find dog by ID
      * Returns a single dog
@@ -390,6 +516,7 @@ public class DogApi {
         Type localVarReturnType = new TypeToken<Dog>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Find dog by ID (asynchronously)
@@ -425,6 +552,8 @@ public class DogApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for updateDog
      * @param body Dog object that needs to be added. (required)
@@ -435,7 +564,7 @@ public class DogApi {
      */
     public com.squareup.okhttp.Call updateDogCall(Dog body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/dog";
 
@@ -473,22 +602,23 @@ public class DogApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updateDogValidateBeforeCall(Dog body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateDog(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = updateDogCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Update an existing dog
@@ -499,6 +629,7 @@ public class DogApi {
     public void updateDog(Dog body) throws ApiException {
         updateDogWithHttpInfo(body);
     }
+
 
     /**
      * Update an existing dog
@@ -511,6 +642,7 @@ public class DogApi {
         com.squareup.okhttp.Call call = updateDogValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Update an existing dog (asynchronously)
@@ -545,6 +677,57 @@ public class DogApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    public static class UpdateDogWithFormOptionals {
+        public String name() {
+            return this.name;
+        }
+
+        public UpdateDogWithFormOptionals name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String name = null;
+        public String status() {
+            return this.status;
+        }
+
+        public UpdateDogWithFormOptionals status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        private String status = null;
+    }
+
+    /**
+     * Build call for updateDogWithForm
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call updateDogWithFormCall(Long dogId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return updateDogWithFormCall(dogId, null, null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for updateDogWithForm
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call updateDogWithFormOptsCall(Long dogId, UpdateDogWithFormOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateDogWithFormOptionals();
+        }
+        return updateDogWithFormCall(dogId, optionals.name(), optionals.status(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for updateDogWithForm
      * @param dogId ID of dog that needs to be updated (required)
@@ -557,7 +740,7 @@ public class DogApi {
      */
     public com.squareup.okhttp.Call updateDogWithFormCall(Long dogId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/dog/{dogId}"
             .replaceAll("\\{" + "dogId" + "\\}", apiClient.escapeString(dogId.toString()));
@@ -600,21 +783,45 @@ public class DogApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updateDogWithFormValidateBeforeCall(Long dogId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'dogId' is set
         if (dogId == null) {
             throw new ApiException("Missing the required parameter 'dogId' when calling updateDogWithForm(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = updateDogWithFormCall(dogId, name, status, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * Updates a dog
+     * 
+     * @param dogId ID of dog that needs to be updated (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void updateDogWithForm(Long dogId) throws ApiException {
+        updateDogWithForm(dogId, null, null);
+    }
+
+    /**
+     * Updates a dog
+     * 
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void updateDogWithFormOpts(Long dogId, UpdateDogWithFormOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateDogWithFormOptionals();
+        }
+        updateDogWithForm(dogId, optionals.name(), optionals.status());
     }
 
     /**
@@ -633,6 +840,30 @@ public class DogApi {
      * Updates a dog
      * 
      * @param dogId ID of dog that needs to be updated (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> updateDogWithFormWithHttpInfo(Long dogId) throws ApiException {
+        return updateDogWithFormWithHttpInfo(dogId, null, null);
+    }
+
+    /**
+     * Updates a dog
+     * 
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> updateDogWithFormOptsWithHttpInfo(Long dogId, UpdateDogWithFormOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateDogWithFormOptionals();
+        }
+        return updateDogWithFormWithHttpInfo(dogId, optionals.name(), optionals.status());
+    }
+
+    /**
+     * Updates a dog
+     * 
+     * @param dogId ID of dog that needs to be updated (required)
      * @param name  (optional)
      * @param status  (optional)
      * @return ApiResponse&lt;Void&gt;
@@ -641,6 +872,34 @@ public class DogApi {
     public ApiResponse<Void> updateDogWithFormWithHttpInfo(Long dogId, String name, String status) throws ApiException {
         com.squareup.okhttp.Call call = updateDogWithFormValidateBeforeCall(dogId, name, status, null, null);
         return apiClient.execute(call);
+    }
+
+    /**
+     * Updates a dog (asynchronously)
+     * 
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call updateDogWithFormAsync(Long dogId, final ApiCallback<Void> callback) throws ApiException {
+        return updateDogWithFormAsync(dogId, null, null, callback);
+    }
+
+    /**
+     * Updates a dog (asynchronously)
+     * 
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call updateDogWithFormOptsAsync(Long dogId, UpdateDogWithFormOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateDogWithFormOptionals();
+        }
+        return updateDogWithFormAsync(dogId, optionals.name(), optionals.status(), callback);
     }
 
     /**
