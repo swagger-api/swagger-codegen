@@ -1,0 +1,80 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "async",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/async-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "charcode",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "1.0"
+    },
+    {
+      "name": "collection",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "http",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/http-0.11.3+17",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "meta",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/meta-1.1.7",
+      "packageUri": "lib/",
+      "languageVersion": "1.12"
+    },
+    {
+      "name": "path",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "source_span",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/source_span-1.5.5",
+      "packageUri": "lib/",
+      "languageVersion": "1.8"
+    },
+    {
+      "name": "string_scanner",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "term_glyph",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "1.8"
+    },
+    {
+      "name": "typed_data",
+      "rootUri": "file:///Users/michael/.pub-cache/hosted/pub.dartlang.org/typed_data-1.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "swagger",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "1.1"
+    }
+  ],
+  "generated": "2020-05-04T03:43:35.447772Z",
+  "generator": "pub",
+  "generatorVersion": "2.7.0"
+}
