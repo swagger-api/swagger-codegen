@@ -67,6 +67,7 @@ export class StoreService {
     public deleteOrder(orderId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public deleteOrder(orderId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public deleteOrder(orderId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
@@ -111,7 +112,7 @@ export class StoreService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
+        if (this.configuration.apiKeys && this.configuration.apiKeys["api_key"]) {
             headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
 
@@ -149,6 +150,7 @@ export class StoreService {
     public getOrderById(orderId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
     public getOrderById(orderId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
     public getOrderById(orderId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
@@ -190,6 +192,7 @@ export class StoreService {
     public placeOrder(body: Order, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
     public placeOrder(body: Order, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
     public placeOrder(body: Order, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }

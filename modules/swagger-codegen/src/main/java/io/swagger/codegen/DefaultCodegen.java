@@ -2,6 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -1604,12 +1607,24 @@ public class DefaultCodegen {
      * @return Codegen Property object
      */
     public CodegenProperty fromProperty(String name, Property p) {
+        return fromProperty(name, p, null);
+    }
+    /**
+     * Convert Swagger Property object to Codegen Property object
+     *
+     * @param name name of the property
+     * @param p Swagger property object
+     * @param itemsDepth the depth in nested containers or null
+     * @return Codegen Property object
+     */
+    private CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
         if (p == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
         }
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
+        property.itemsDepth = itemsDepth;
         property.name = toVarName(name);
         property.baseName = name;
         property.nameInCamelCase = camelize(property.name, false);
@@ -1872,7 +1887,8 @@ public class DefaultCodegen {
             if (itemName == null) {
                 itemName = property.name;
             }
-            CodegenProperty cp = fromProperty(itemName, ap.getItems());
+            CodegenProperty cp = fromProperty(itemName, ap.getItems(),
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForArray(property, cp);
         } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -1885,7 +1901,8 @@ public class DefaultCodegen {
             property.maxItems = ap.getMaxProperties();
 
             // handle inner property
-            CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
+            CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties(),
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForMap(property, cp);
         } else {
             setNonArrayMapProperty(property, type);
@@ -2717,6 +2734,11 @@ public class DefaultCodegen {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
                     String name = ((RefModel) sub).getSimpleRef();
+                    try {
+                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+                    } catch (UnsupportedEncodingException e) {
+                        LOGGER.error("Could not decoded string: " + name, e);
+                    }
                     name = getAlias(name);
                     if (typeMapping.containsKey(name)) {
                         name = typeMapping.get(name);
@@ -3088,10 +3110,10 @@ public class DefaultCodegen {
     }
 
     private void addParentContainer(CodegenModel m, String name, Property property) {
-        final CodegenProperty tmp = fromProperty(name, property);
-        addImport(m, tmp.complexType);
+        m.parentContainer = fromProperty(name, property);
+        addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
-        final String containerType = tmp.containerType;
+        final String containerType = m.parentContainer.containerType;
         final String instantiationType = instantiationTypes.get(containerType);
         if (instantiationType != null) {
             addImport(m, instantiationType);
@@ -3979,6 +4001,16 @@ public class DefaultCodegen {
     }
 
     public boolean defaultIgnoreImportMappingOption() {
+        return false;
+    }
+
+    protected boolean isModelObject(ModelImpl model) {
+        if ("object".equalsIgnoreCase(model.getType())) {
+            return true;
+        }
+        if ((StringUtils.EMPTY.equalsIgnoreCase(model.getType()) || model.getType() == null) && (model.getProperties() != null && !model.getProperties().isEmpty())) {
+            return true;
+        }
         return false;
     }
 }
