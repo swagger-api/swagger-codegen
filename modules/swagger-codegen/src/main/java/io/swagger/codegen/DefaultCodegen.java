@@ -2,6 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -2731,6 +2734,11 @@ public class DefaultCodegen {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
                     String name = ((RefModel) sub).getSimpleRef();
+                    try {
+                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+                    } catch (UnsupportedEncodingException e) {
+                        LOGGER.error("Could not decoded string: " + name, e);
+                    }
                     name = getAlias(name);
                     if (typeMapping.containsKey(name)) {
                         name = typeMapping.get(name);
