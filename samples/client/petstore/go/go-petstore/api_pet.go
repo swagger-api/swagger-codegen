@@ -1,3 +1,4 @@
+
 /*
  * Swagger Petstore
  *
@@ -105,17 +106,17 @@ PetApiService Deletes a pet
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param petId Pet id to delete
- * @param optional nil or *DeletePetOpts - Optional Parameters:
+ * @param optional nil or *PetApiDeletePetOpts - Optional Parameters:
      * @param "ApiKey" (optional.String) - 
 
 
 */
 
-type DeletePetOpts struct { 
+type PetApiDeletePetOpts struct { 
 	ApiKey optional.String
 }
 
-func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals *DeletePetOpts) (*http.Response, error) {
+func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals *PetApiDeletePetOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -538,19 +539,19 @@ PetApiService Updates a pet in the store with form data
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param petId ID of pet that needs to be updated
- * @param optional nil or *UpdatePetWithFormOpts - Optional Parameters:
+ * @param optional nil or *PetApiUpdatePetWithFormOpts - Optional Parameters:
      * @param "Name" (optional.String) -  Updated name of the pet
      * @param "Status" (optional.String) -  Updated status of the pet
 
 
 */
 
-type UpdatePetWithFormOpts struct { 
+type PetApiUpdatePetWithFormOpts struct { 
 	Name optional.String
 	Status optional.String
 }
 
-func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals *UpdatePetWithFormOpts) (*http.Response, error) {
+func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals *PetApiUpdatePetWithFormOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -624,19 +625,19 @@ PetApiService uploads an image
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param petId ID of pet to update
- * @param optional nil or *UploadFileOpts - Optional Parameters:
+ * @param optional nil or *PetApiUploadFileOpts - Optional Parameters:
      * @param "AdditionalMetadata" (optional.String) -  Additional data to pass to server
      * @param "File" (optional.Interface of *os.File) -  file to upload
 
 @return ModelApiResponse
 */
 
-type UploadFileOpts struct { 
+type PetApiUploadFileOpts struct { 
 	AdditionalMetadata optional.String
 	File optional.Interface
 }
 
-func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals *UploadFileOpts) (ModelApiResponse, *http.Response, error) {
+func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals *PetApiUploadFileOpts) (ModelApiResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -673,7 +674,7 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	if localVarOptionals != nil && localVarOptionals.AdditionalMetadata.IsSet() {
 		localVarFormParams.Add("additionalMetadata", parameterToString(localVarOptionals.AdditionalMetadata.Value(), ""))
 	}
-	var localVarFile *os.File
+    var localVarFile *os.File
 	if localVarOptionals != nil && localVarOptionals.File.IsSet() {
 		localVarFileOk := false
 		localVarFile, localVarFileOk = localVarOptionals.File.Value().(*os.File)

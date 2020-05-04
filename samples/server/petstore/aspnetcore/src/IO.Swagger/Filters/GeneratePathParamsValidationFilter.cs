@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
 
 namespace IO.Swagger.Filters
 {
@@ -16,7 +17,7 @@ namespace IO.Swagger.Filters
         /// </summary>
         /// <param name="operation">Operation</param>
         /// <param name="context">OperationFilterContext</param>
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var pars = context.ApiDescription.ParameterDescriptions;
 
@@ -40,9 +41,9 @@ namespace IO.Swagger.Filters
                     if (regexAttr != null)
                     {
                         string regex = (string)regexAttr.ConstructorArguments[0].Value;
-                        if (swaggerParam is NonBodyParameter)
+                        if (swaggerParam is OpenApiParameter)
                         {
-                            ((NonBodyParameter)swaggerParam).Pattern = regex;
+                            ((OpenApiParameter)swaggerParam).Schema.Pattern = regex;
                         }
                     }
 
@@ -70,10 +71,10 @@ namespace IO.Swagger.Filters
                         maxLength = (int)maxLengthAttr.ConstructorArguments[0].Value;
                     }
 
-                    if (swaggerParam is NonBodyParameter)
+                    if (swaggerParam is OpenApiParameter)
                     {
-                        ((NonBodyParameter)swaggerParam).MinLength = minLenght;
-                        ((NonBodyParameter)swaggerParam).MaxLength = maxLength;
+                        ((OpenApiParameter)swaggerParam).Schema.MinLength = minLenght;
+                        ((OpenApiParameter)swaggerParam).Schema.MaxLength = maxLength;
                     }
 
                     // Range [Range]
@@ -83,10 +84,10 @@ namespace IO.Swagger.Filters
                         int rangeMin = (int)rangeAttr.ConstructorArguments[0].Value;
                         int rangeMax = (int)rangeAttr.ConstructorArguments[1].Value;
 
-                        if (swaggerParam is NonBodyParameter)
+                        if (swaggerParam is OpenApiParameter)
                         {
-                            ((NonBodyParameter)swaggerParam).Minimum = rangeMin;
-                            ((NonBodyParameter)swaggerParam).Maximum = rangeMax;
+                            ((OpenApiParameter)swaggerParam).Schema.Minimum = rangeMin;
+                            ((OpenApiParameter)swaggerParam).Schema.Maximum = rangeMax;
                         }
                     }
                 }
