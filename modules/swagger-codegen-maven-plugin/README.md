@@ -63,7 +63,8 @@ mvn clean compile
 
 ### Custom Generator
 
-Specifying a custom generator is a bit different. It doesn't support the classpath:/ syntax, but it does support the fully qualified name of the package. You can also specify your custom templates, which also get pulled in. Notice the dependency on a project, in the plugin scope. That would be your generator/template jar.
+Specifying a custom generator is a bit different. It doesn't support the classpath:/ syntax, but it does support the fully qualified name of the package. You can also specify your custom templates, whi
+ch also get pulled in. Notice the dependency on a project, in the plugin scope. That would be your generator/template jar.
 
 ```xml
 <plugin>

@@ -217,6 +217,13 @@
             <artifactId>spring-web</artifactId>
             <version>${spring-web-version}</version>
         </dependency>
+        {{#spring5}}
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-web-version}</version>
+        </dependency>
+        {{/spring5}}
 
         <!-- JSON processing: jackson -->
         <dependency>
@@ -287,6 +294,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <swagger-annotations-version>1.5.17</swagger-annotations-version>
+        {{#spring5}}
+        <spring-web-version>5.1.5.RELEASE</spring-web-version>
+        <jackson-version>2.9.9</jackson-version>
+        {{/spring5}}
+        {{^spring5}}
         <spring-web-version>4.3.9.RELEASE</spring-web-version>
         <jackson-version>2.10.1</jackson-version>
         {{#joda}}
