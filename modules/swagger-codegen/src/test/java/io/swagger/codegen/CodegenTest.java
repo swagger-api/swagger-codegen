@@ -1,6 +1,7 @@
 package io.swagger.codegen;
 
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.models.ArrayModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
@@ -543,6 +544,34 @@ public class CodegenTest {
                 Assert.assertTrue(codegenProperty.isDateTime);
             }
         }
+    }
+
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
+    public void testRefKeepsFormatInParentArray() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ArrayModel test = (ArrayModel) swagger.getDefinitions().get("DateTimeRefArr");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("DateTimeRefArr", test, swagger.getDefinitions());
+        Assert.assertNotNull(codegenModel.parentContainer);
+        Assert.assertNotNull(codegenModel.parentContainer.items);
+        Assert.assertTrue(codegenModel.parentContainer.items.isDateTime);
+    }
+
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
+    public void testRefKeepsFormatInParentMap() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("DateTimeRefMap");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("DateTimeRefMap", test, swagger.getDefinitions());
+        Assert.assertNotNull(codegenModel.parentContainer);
+        Assert.assertNotNull(codegenModel.parentContainer.items);
+        Assert.assertTrue(codegenModel.parentContainer.items.isDateTime);
     }
 
     @Test(description = "extension of https://github.com/swagger-api/swagger-codegen/issues/9638, datatype should be kept for arrays")

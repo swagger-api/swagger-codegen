@@ -32,6 +32,14 @@ definitions:
   CustomDateTime:
     type: "string"
     format: "date-time"
+  DateTimeRefArr:
+    type: "array"
+    items:
+      $ref: '#/definitions/CustomDateTime'
+  DateTimeRefMap:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/CustomDateTime'
   Test:
     type: "object"
     properties:

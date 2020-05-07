@@ -114,6 +114,8 @@ public class DefaultCodegen {
     protected Map<String, String> specialCharReplacements = new HashMap<String, String>();
     // When a model is an alias for a simple type
     protected Map<String, String> typeAliases = null;
+    // a map of all Swagger models from the spec
+    protected Map<String, Model> allDefinitions = null;
 
     protected String ignoreFilePathOverride;
 
@@ -1345,6 +1347,7 @@ public class DefaultCodegen {
      * @return Codegen Model object
      */
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        this.allDefinitions = allDefinitions;
         if (typeAliases == null) {
             // Only do this once during first call
             typeAliases = getAllAliases(allDefinitions);
@@ -1607,7 +1610,7 @@ public class DefaultCodegen {
      * @return Codegen Property object
      */
     public CodegenProperty fromProperty(String name, Property p) {
-        return fromProperty(name, p, null, null);
+        return fromProperty(name, p, null);
     }
     /**
      * Convert Swagger Property object to Codegen Property object
@@ -1617,12 +1620,12 @@ public class DefaultCodegen {
      * @param itemsDepth the depth in nested containers or null
      * @return Codegen Property object
      */
-    private CodegenProperty fromProperty(String name, Property maybeRefProp, Integer itemsDepth, Map<String, Model> allDefinitions) {
+    private CodegenProperty fromProperty(String name, Property maybeRefProp, Integer itemsDepth) {
         if (maybeRefProp == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
         }
-        Property p = resolveRef(maybeRefProp, allDefinitions);
+        Property p = resolveRef(maybeRefProp);
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
         property.itemsDepth = itemsDepth;
@@ -1889,7 +1892,7 @@ public class DefaultCodegen {
                 itemName = property.name;
             }
             CodegenProperty cp = fromProperty(itemName, ap.getItems(),
-                itemsDepth == null ? 1 : itemsDepth.intValue() + 1, allDefinitions);
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForArray(property, cp);
         } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -1903,7 +1906,7 @@ public class DefaultCodegen {
 
             // handle inner property
             CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties(),
-                itemsDepth == null ? 1 : itemsDepth.intValue() + 1, allDefinitions);
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForMap(property, cp);
         } else {
             setNonArrayMapProperty(property, type);
@@ -1917,7 +1920,7 @@ public class DefaultCodegen {
         }
     }
 
-    private Property resolveRef(Property prop, Map<String, Model> allDefinitions) {
+    private Property resolveRef(Property prop) {
         if (prop == null || allDefinitions == null || !(prop instanceof RefProperty)) {
             return prop;
         }
@@ -1935,6 +1938,7 @@ public class DefaultCodegen {
         putProperty(args, PropertyId.DESCRIPTION, modelImpl.getDescription());
         putProperty(args, PropertyId.DEFAULT, modelImpl.getDefaultValue());
         putProperty(args, PropertyId.PATTERN, modelImpl.getPattern());
+        putProperty(args, PropertyId.FORMAT, modelImpl.getFormat());
         putProperty(args, PropertyId.MIN_LENGTH, modelImpl.getMinLength());
         putProperty(args, PropertyId.MAX_LENGTH, modelImpl.getMaxLength());
         putProperty(args, PropertyId.MINIMUM, modelImpl.getMinimum());
@@ -3280,7 +3284,7 @@ public class DefaultCodegen {
             if (prop == null) {
                 LOGGER.warn("null property for " + key);
             } else {
-                final CodegenProperty cp = fromProperty(key, prop, null, allDefinitions);
+                final CodegenProperty cp = fromProperty(key, prop);
                 cp.required = mandatory.contains(key) ? true : false;
                 m.hasRequired = m.hasRequired || cp.required;
                 m.hasOptional = m.hasOptional || !cp.required;
