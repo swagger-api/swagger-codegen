@@ -71,6 +71,7 @@ public class CodegenConfigurator implements Serializable {
     private String artifactVersion;
     private String library;
     private String ignoreFileOverride;
+    private boolean resolveFully;
     private List<CodegenArgument> codegenArguments = new ArrayList<>();
     private Map<String, String> systemProperties = new HashMap<String, String>();
     private Map<String, String> instantiationTypes = new HashMap<String, String>();
@@ -418,6 +419,15 @@ public class CodegenConfigurator implements Serializable {
         this.ignoreFileOverride = ignoreFileOverride;
         return this;
     }
+    
+    public boolean isResolveFully() {
+        return resolveFully;
+    }
+
+    public CodegenConfigurator setResolveFully(boolean resolveFully) {
+        this.resolveFully = resolveFully;
+        return this;
+    }    
 
     public String loadSpecContent(String location, List<AuthorizationValue> auths) throws Exception{
             location = location.replaceAll("\\\\","/");
@@ -465,6 +475,7 @@ public class CodegenConfigurator implements Serializable {
             ParseOptions options = new ParseOptions();
             options.setResolve(true);
             options.setFlatten(true);
+            options.setResolveFully(resolveFully);
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
 
@@ -500,6 +511,7 @@ public class CodegenConfigurator implements Serializable {
             ParseOptions options = new ParseOptions();
             options.setResolve(true);
             options.setFlatten(true);
+            options.setResolveFully(resolveFully);
             SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
             LOGGER.debug("getClientOptInput - parsed inputSpecURL " + inputSpecURL);
