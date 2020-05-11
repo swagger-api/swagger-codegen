@@ -24,178 +24,178 @@ import io.swagger.codegen.v3.generators.DefaultCodegenConfig;
 
 public class HandlebarTemplateEngineTest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(HandlebarTemplateEngineTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HandlebarTemplateEngineTest.class);
 
-	private static final String API_JAVA_CUSOM_EXPECTED = readFileToString(
-			"src/test/expected/api.java.custom.expected");
+    private static final String API_JAVA_CUSOM_EXPECTED = readFileToString(
+            "src/test/expected/api.java.custom.expected");
 
-	private static final String API_JAVA_EMBEDED_EXPECTED = readFileToString(
-			"src/test/expected/api.java.embedded.expected");
+    private static final String API_JAVA_EMBEDED_EXPECTED = readFileToString(
+            "src/test/expected/api.java.embedded.expected");
 
-	private static String MODEL_JAVA_CUSTOM_EXTECTED = readFileToString("src/test/expected/model.java.custom.expected");
+    private static String MODEL_JAVA_CUSTOM_EXTECTED = readFileToString("src/test/expected/model.java.custom.expected");
 
-	private HandlebarTemplateEngine engine;
+    private HandlebarTemplateEngine engine;
 
-	private String templateFile;
+    private String templateFile;
 
-	@Spy
-	private DefaultCodegenConfig config;
+    @Spy
+    private DefaultCodegenConfig config;
 
-	@Mock
-	private Map<String, Object> additionalProperties;
+    @Mock
+    private Map<String, Object> additionalProperties;
 
-	private Map<String, Object> templateData;
+    private Map<String, Object> templateData;
 
-	private static String readFileToString(String filePath) {
-		StringBuilder contentBuilder = new StringBuilder();
-		try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
-			stream.forEach(s -> contentBuilder.append(s).append("\n"));
-		} catch (IOException e) {
-			throw new IllegalStateException(" readFileToString :: ", e);
-		}
+    private static String readFileToString(String filePath) {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> contentBuilder.append(s).append("\n"));
+        } catch (IOException e) {
+            throw new IllegalStateException(" readFileToString :: ", e);
+        }
 
-		contentBuilder.deleteCharAt(contentBuilder.length() - 1);
+        contentBuilder.deleteCharAt(contentBuilder.length() - 1);
 
-		return contentBuilder.toString();
-	}
+        return contentBuilder.toString();
+    }
 
-	protected String getTemplateDir() {
-		return new StringBuilder().append(CodegenConstants.HANDLEBARS_TEMPLATE_ENGINE).append(File.separatorChar)
-				.append(getDefaultTemplateDir()).toString();
-	}
+    protected String getTemplateDir() {
+        return new StringBuilder().append(CodegenConstants.HANDLEBARS_TEMPLATE_ENGINE).append(File.separatorChar)
+                .append(getDefaultTemplateDir()).toString();
+    }
 
-	private String getDefaultTemplateDir() {
-		return "Java";
-	}
+    private String getDefaultTemplateDir() {
+        return "Java";
+    }
 
-	@BeforeMethod
-	public void setUp() throws IOException {
-		MockitoAnnotations.initMocks(this);
+    @BeforeMethod
+    public void setUp() throws IOException {
+        MockitoAnnotations.initMocks(this);
 
-//		Files.write(Paths.get("src/test/expected/api.java.custom.expected"), API_JAVA_CUSOM_EXPECTED.getBytes());
-//		Files.write(Paths.get("src/test/expected/api.java.embedded.expected"), API_JAVA_EMBEDED_EXPECTED.getBytes());
-//		Files.write(Paths.get("src/test/expected/model.java.custom.expected"), MODEL_JAVA_CUSTOM_EXTECTED.getBytes());
+//        Files.write(Paths.get("src/test/expected/api.java.custom.expected"), API_JAVA_CUSOM_EXPECTED.getBytes());
+//        Files.write(Paths.get("src/test/expected/api.java.embedded.expected"), API_JAVA_EMBEDED_EXPECTED.getBytes());
+//        Files.write(Paths.get("src/test/expected/model.java.custom.expected"), MODEL_JAVA_CUSTOM_EXTECTED.getBytes());
 
-		templateFile = "src/test/dir/templates/handlebars/Java/libraries/jersey2/api.mustache";
+        templateFile = "src/test/dir/templates/handlebars/Java/libraries/jersey2/api.mustache";
 
-		engine = new HandlebarTemplateEngine(config);
+        engine = new HandlebarTemplateEngine(config);
 
-	}
+    }
 
-	@Test
-	public void testGetRendered_with_custom_template_dir01_and_exists_in() throws Exception {
+    @Test
+    public void testGetRendered_with_custom_template_dir01_and_exists_in() throws Exception {
 
-		String templateDir = "src/test/dir_01/templates/handlebars/Java";
-		when(config.templateDir()).thenReturn(templateDir);
-		when(config.getDefaultTemplateDir()).thenReturn("Java");
+        String templateDir = "src/test/dir_01/templates/handlebars/Java";
+        when(config.templateDir()).thenReturn(templateDir);
+        when(config.getDefaultTemplateDir()).thenReturn("Java");
 
-		//
-		when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
+        //
+        when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
 
-		when(config.additionalProperties()).thenReturn(additionalProperties);
-		when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
+        when(config.additionalProperties()).thenReturn(additionalProperties);
+        when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
 
-		templateFile = templateDir + "/libraries/jersey2/api.mustache";
+        templateFile = templateDir + "/libraries/jersey2/api.mustache";
 
-		String actual = engine.getRendered(templateFile, templateData);
+        String actual = engine.getRendered(templateFile, templateData);
 
-		assertEquals(actual, API_JAVA_CUSOM_EXPECTED);
-	}
+        assertEquals(actual, API_JAVA_CUSOM_EXPECTED);
+    }
 
-	@Test
-	public void testGetRendered_with_custom_template_dir01_and_exists_in_without_templatedir_prefix() throws Exception {
+    @Test
+    public void testGetRendered_with_custom_template_dir01_and_exists_in_without_templatedir_prefix() throws Exception {
 
-		String templateDir = "src/test/dir_01/templates/handlebars/Java";
-		when(config.templateDir()).thenReturn(templateDir);
-		when(config.getDefaultTemplateDir()).thenReturn("Java");
+        String templateDir = "src/test/dir_01/templates/handlebars/Java";
+        when(config.templateDir()).thenReturn(templateDir);
+        when(config.getDefaultTemplateDir()).thenReturn("Java");
 
-		//
-		when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
+        //
+        when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
 
-		when(config.additionalProperties()).thenReturn(additionalProperties);
-		when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
+        when(config.additionalProperties()).thenReturn(additionalProperties);
+        when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
 
-		templateFile = "/libraries/jersey2/api.mustache";
+        templateFile = "/libraries/jersey2/api.mustache";
 
-		String actual = engine.getRendered(templateFile, templateData);
+        String actual = engine.getRendered(templateFile, templateData);
 
-		assertEquals(actual, API_JAVA_CUSOM_EXPECTED);
-	}
-	
-	
-	
-	@Test
-	public void testGetRendered_with_custom_template_dir02_and_not_exists() throws Exception {
+        assertEquals(actual, API_JAVA_CUSOM_EXPECTED);
+    }
+    
+    
+    
+    @Test
+    public void testGetRendered_with_custom_template_dir02_and_not_exists() throws Exception {
 
-		String templateDir = "src/test/dir_02/templates/handlebars/Java";
-		when(config.templateDir()).thenReturn(templateDir);
-		when(config.getDefaultTemplateDir()).thenReturn("Java");
-		when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
-		when(config.additionalProperties()).thenReturn(additionalProperties);
-		when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
+        String templateDir = "src/test/dir_02/templates/handlebars/Java";
+        when(config.templateDir()).thenReturn(templateDir);
+        when(config.getDefaultTemplateDir()).thenReturn("Java");
+        when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
+        when(config.additionalProperties()).thenReturn(additionalProperties);
+        when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
 
-		templateFile = config.embeddedTemplateDir() + "/libraries/jersey2/api.mustache";
+        templateFile = config.embeddedTemplateDir() + "/libraries/jersey2/api.mustache";
 
-		String actual = engine.getRendered(templateFile, templateData);
+        String actual = engine.getRendered(templateFile, templateData);
 
-		assertEquals(actual, API_JAVA_EMBEDED_EXPECTED);
-	}
+        assertEquals(actual, API_JAVA_EMBEDED_EXPECTED);
+    }
 
-	@Test
-	public void testGetRendered_without_custom_template_dir() throws Exception {
+    @Test
+    public void testGetRendered_without_custom_template_dir() throws Exception {
 
-		String templateDir = "";// "src/test/dir/templates/handlebars/Java";
-		when(config.templateDir()).thenReturn(templateDir);
-		when(config.getDefaultTemplateDir()).thenReturn("Java");
-		when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
-		when(config.additionalProperties()).thenReturn(additionalProperties);
-		when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(null);
+        String templateDir = "";// "src/test/dir/templates/handlebars/Java";
+        when(config.templateDir()).thenReturn(templateDir);
+        when(config.getDefaultTemplateDir()).thenReturn("Java");
+        when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
+        when(config.additionalProperties()).thenReturn(additionalProperties);
+        when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(null);
 
-		templateFile = config.embeddedTemplateDir() + "/libraries/jersey2/api.mustache";
+        templateFile = config.embeddedTemplateDir() + "/libraries/jersey2/api.mustache";
 
-		String actual = engine.getRendered(templateFile, templateData);
+        String actual = engine.getRendered(templateFile, templateData);
 
-		assertEquals(actual, API_JAVA_EMBEDED_EXPECTED);
-	}
+        assertEquals(actual, API_JAVA_EMBEDED_EXPECTED);
+    }
 
-	@Test
-	public void testGetRendered_without_custom_template_dir_without_templatedir_prefix() throws Exception {
+    @Test
+    public void testGetRendered_without_custom_template_dir_without_templatedir_prefix() throws Exception {
 
-		String templateDir = "";// "src/test/dir/templates/handlebars/Java";
-		when(config.templateDir()).thenReturn(templateDir);
-		when(config.getDefaultTemplateDir()).thenReturn("Java");
-		when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
-		when(config.additionalProperties()).thenReturn(additionalProperties);
-		when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(null);
+        String templateDir = "";// "src/test/dir/templates/handlebars/Java";
+        when(config.templateDir()).thenReturn(templateDir);
+        when(config.getDefaultTemplateDir()).thenReturn("Java");
+        when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
+        when(config.additionalProperties()).thenReturn(additionalProperties);
+        when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(null);
 
-		templateFile = "/libraries/jersey2/api.mustache";
+        templateFile = "/libraries/jersey2/api.mustache";
 
-		String actual = engine.getRendered(templateFile, templateData);
+        String actual = engine.getRendered(templateFile, templateData);
 
-		assertEquals(actual, API_JAVA_EMBEDED_EXPECTED);
-	}
+        assertEquals(actual, API_JAVA_EMBEDED_EXPECTED);
+    }
 
-	@Test
-	public void testGetRendered_with_custom_template_dir_file_with_partial() throws Exception {
+    @Test
+    public void testGetRendered_with_custom_template_dir_file_with_partial() throws Exception {
 
-		String templateDir = "src/test/dir_01/templates/handlebars/Java";
-		when(config.templateDir()).thenReturn(templateDir);
-		when(config.getDefaultTemplateDir()).thenReturn("Java");
-		when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
-		when(config.additionalProperties()).thenReturn(additionalProperties);
-		when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
+        String templateDir = "src/test/dir_01/templates/handlebars/Java";
+        when(config.templateDir()).thenReturn(templateDir);
+        when(config.getDefaultTemplateDir()).thenReturn("Java");
+        when(config.embeddedTemplateDir()).thenReturn(getTemplateDir());
+        when(config.additionalProperties()).thenReturn(additionalProperties);
+        when(additionalProperties.get(CodegenConstants.TEMPLATE_DIR)).thenReturn(templateDir);
 
-		// templateFile = config.embeddedTemplateDir()+ "/model.mustache";
+        // templateFile = config.embeddedTemplateDir()+ "/model.mustache";
 
-		templateFile = templateDir + "/model.mustache";
+        templateFile = templateDir + "/model.mustache";
 
-		System.out.println(templateFile);
-		LOGGER.info(templateFile);
+        System.out.println(templateFile);
+        LOGGER.info(templateFile);
 
-		String actual = engine.getRendered(templateFile, templateData);
+        String actual = engine.getRendered(templateFile, templateData);
 
-		assertEquals(actual, MODEL_JAVA_CUSTOM_EXTECTED);
+        assertEquals(actual, MODEL_JAVA_CUSTOM_EXTECTED);
 
-	}
+    }
 
 }
