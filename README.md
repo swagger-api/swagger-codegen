@@ -204,7 +204,7 @@ To build from source, you need the following installed and available in your `$P
 * [Apache maven 3.3.3 or greater](http://maven.apache.org/)
 
 #### OS X Users
-Don't forget to install Java 8+. 
+Don't forget to install Java 8+.
 
 Export `JAVA_HOME` in order to use the supported Java version:
 ```sh
@@ -259,6 +259,9 @@ Once built, `run-in-docker.sh` will act as an executable for swagger-codegen-cli
 ./run-in-docker.sh generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml \
     -l go -o /gen/out/go-petstore -DpackageName=petstore # generates go client, outputs locally to ./out/go-petstore
 ```
+#### Standalone generator Development in docker
+
+See [standalone generator development](https://github.com/swagger-api/swagger-codegen/blob/master/standalone-gen-dev/standalone-generator-development.md)
 
 #### Run Docker in Vagrant
 Prerequisite: install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
@@ -457,6 +460,8 @@ java -cp output/myLibrary/target/myClientCodegen-swagger-codegen-1.0.0.jar:modul
   -i http://petstore.swagger.io/v2/swagger.json \
   -o myClient
 ```
+
+See also [standalone generator development](https://github.com/swagger-api/swagger-codegen/blob/master/standalone-gen-dev/standalone-generator-development.md)
 
 ### Where is Javascript???
 See our [javascript library](http://github.com/swagger-api/swagger-js)--it's completely dynamic and doesn't require
