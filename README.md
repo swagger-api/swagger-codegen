@@ -231,6 +231,10 @@ Once built, `run-in-docker.sh` will act as an executable for swagger-codegen-cli
     -l go -o /gen/out/go-petstore -DpackageName=petstore # generates go client, outputs locally to ./out/go-petstore
 ```
 
+#### Standalone generator Development in docker
+
+See [standalone generator development](https://github.com/swagger-api/swagger-codegen/blob/3.0.0/standalone-gen-dev/standalone-generator-development.md)
+
 #### Run Docker in Vagrant
 Prerequisite: install [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
  ```sh
@@ -467,6 +471,9 @@ java -cp output/myLibrary/target/myClientCodegen-swagger-codegen-1.0.0.jar:modul
   -i http://petstore.swagger.io/v2/swagger.json \
   -o myClient
 ```
+
+See also [standalone generator development](https://github.com/swagger-api/swagger-codegen/blob/3.0.0/standalone-gen-dev/standalone-generator-development.md)
+
 
 ### Generating a client from local files
 If you don't want to call your server, you can save the OpenAPI Spec files into a directory and pass an argument
