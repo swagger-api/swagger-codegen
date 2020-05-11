@@ -1,0 +1,19 @@
+package ;
+
+import .ApiException;
+import .ApiClient;
+import .ApiClient.ApiResponse;
+import .Configuration;
+import .Pair;
+
+import javax.ws.rs.core.GenericType;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+//SI1A TEST OK SME Handlebars
+
+@javax.annotation.Generated(value = "", date = "")

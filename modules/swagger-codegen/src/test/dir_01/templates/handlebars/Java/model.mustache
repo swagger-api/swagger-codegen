@@ -1,0 +1,47 @@
+{{>licenseInfo}}
+
+package {{package}};
+
+//SI1A TEST OK SME Handlebars
+
+{{^x-is-composed-model}}
+{{^supportJava6}}
+import java.util.Objects;
+import java.util.Arrays;
+{{/supportJava6}}
+{{#supportJava6}}
+import org.apache.commons.lang3.ObjectUtils;
+{{/supportJava6}}
+{{#imports}}
+import {{import}};
+{{/imports}}
+{{#serializableModel}}
+import java.io.Serializable;
+{{/serializableModel}}
+{{#jackson}}
+{{#withXml}}
+import com.fasterxml.jackson.dataformat.xml.annotation.*;
+{{/withXml}}
+{{/jackson}}
+{{#withXml}}
+import javax.xml.bind.annotation.*;
+{{/withXml}}
+{{#parcelableModel}}
+import android.os.Parcelable;
+import android.os.Parcel;
+{{/parcelableModel}}
+{{#useBeanValidation}}
+import javax.validation.constraints.*;
+import javax.validation.Valid;
+{{/useBeanValidation}}
+{{/x-is-composed-model}}
+{{#models}}
+{{#model}}
+{{#isComposedModel}}
+{{>interface}}
+{{/isComposedModel}}
+{{^isComposedModel}}
+{{#is this 'enum'}}{{>modelEnum}}{{/is}}{{#isNot this 'enum'}}{{>pojo}}{{/isNot}}
+{{/isComposedModel}}
+{{/model}}
+{{/models}}
