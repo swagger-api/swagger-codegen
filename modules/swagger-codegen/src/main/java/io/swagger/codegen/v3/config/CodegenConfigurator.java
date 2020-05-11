@@ -480,7 +480,6 @@ public class CodegenConfigurator implements Serializable {
             options.setFlattenComposedSchemas(flattenInlineSchema);
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
-
             if (config.needsUnflattenedSpec()) {
                 ParseOptions optionsUnflattened = new ParseOptions();
                 optionsUnflattened.setResolve(true);

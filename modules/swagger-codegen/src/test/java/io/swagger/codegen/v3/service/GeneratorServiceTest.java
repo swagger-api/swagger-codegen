@@ -29,9 +29,9 @@ public class GeneratorServiceTest {
                 .type(GenerationRequest.Type.CLIENT)
                 .lang("java")
                 .spec(loadSpecAsNode("3_0_0/FlattenComposedInlineSchema.yaml", true, false))
-                .flattenInlineComposedSchema(true)
                 .options(
                         new Options()
+                                .flattenInlineComposedSchema(true)
                                 .outputDir(path)
                 );
 
