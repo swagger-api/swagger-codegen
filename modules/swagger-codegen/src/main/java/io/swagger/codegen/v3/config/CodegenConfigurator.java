@@ -57,6 +57,7 @@ public class CodegenConfigurator implements Serializable {
     private boolean verbose;
     private boolean skipOverwrite;
     private boolean removeOperationIdPrefix;
+    private boolean notNullJacksonAnnotation;
     private String templateDir;
     private String templateVersion;
     private String auth;
@@ -640,4 +641,11 @@ public class CodegenConfigurator implements Serializable {
         return null;
     }
 
+    public boolean isNotNullJacksonAnnotation() {
+        return notNullJacksonAnnotation;
+    }
+
+    public void setNotNullJacksonAnnotation(boolean notNullJacksonAnnotation) {
+        this.notNullJacksonAnnotation = notNullJacksonAnnotation;
+    }
 }

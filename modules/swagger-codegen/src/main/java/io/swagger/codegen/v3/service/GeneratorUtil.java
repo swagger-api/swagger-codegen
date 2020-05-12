@@ -197,6 +197,11 @@ public class GeneratorUtil {
         configurator.setInputSpec(inputSpec);
         configurator.setInputSpecURL(inputSpecURL);
 
+        Boolean notNullJacksonAnnotation = ((Boolean) generationRequest.getOptions().getAdditionalProperties().get("notNullJacksonAnnotation"));
+        if (notNullJacksonAnnotation != null) {
+            configurator.setNotNullJacksonAnnotation(notNullJacksonAnnotation.booleanValue());
+        }
+
         if (isNotEmpty(lang)) {
             configurator.setLang(lang);
             readCodegenArguments(configurator, options);
