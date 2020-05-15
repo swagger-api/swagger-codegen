@@ -338,6 +338,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setFullJavaUtil(Boolean.valueOf(additionalProperties.get(FULL_JAVA_UTIL).toString()));
         }
 
+        if(additionalProperties.containsKey(CodegenConstants.NOT_NULL_JACKSON_ANNOTATION)){
+            this.setNotNullJacksonAnnotation((Boolean.parseBoolean( additionalProperties.get(CodegenConstants.NOT_NULL_JACKSON_ANNOTATION).toString())));
+        }
+
+
         if (fullJavaUtil) {
             javaUtilPrefix = "java.util.";
         }
@@ -399,6 +404,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         // import JsonCreator if JsonProperty is imported
         // used later in recursive import in postProcessingModels
         importMapping.put("com.fasterxml.jackson.annotation.JsonProperty", "com.fasterxml.jackson.annotation.JsonCreator");
+
+        if(this.isNotNullJacksonAnnotation()){
+            importMapping.put("JsonInclude","com.fasterxml.jackson.annotation.JsonInclude");
+        }
 
         if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
@@ -897,6 +906,9 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
         if(codegenModel.description != null) {
             codegenModel.imports.add("ApiModel");
+        }
+        if(this.isNotNullJacksonAnnotation()){
+            codegenModel.imports.add("JsonInclude");
         }
         if (codegenModel.discriminator != null && additionalProperties.containsKey("jackson")) {
             codegenModel.imports.add("JsonSubTypes");

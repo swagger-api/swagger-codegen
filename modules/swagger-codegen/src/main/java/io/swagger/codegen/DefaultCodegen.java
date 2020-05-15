@@ -116,6 +116,7 @@ public class DefaultCodegen {
     protected Map<String, String> typeAliases = null;
 
     protected String ignoreFilePathOverride;
+    private boolean notNullJacksonAnnotation;
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -173,6 +174,14 @@ public class DefaultCodegen {
         } else {
             setIgnoreImportMapping(defaultIgnoreImportMappingOption());
         }
+
+        if(additionalProperties.containsKey(CodegenConstants.NOT_NULL_JACKSON_ANNOTATION)){
+            this.setNotNullJacksonAnnotation((Boolean.parseBoolean( additionalProperties.get(CodegenConstants.NOT_NULL_JACKSON_ANNOTATION).toString())));
+        }
+    }
+
+    protected void setNotNullJacksonAnnotation(boolean notNullJacksonAnnotation) {
+        this.notNullJacksonAnnotation = notNullJacksonAnnotation;
     }
 
     // override with any special post-processing for all models
@@ -4012,5 +4021,9 @@ public class DefaultCodegen {
             return true;
         }
         return false;
+    }
+
+    public boolean isNotNullJacksonAnnotation() {
+        return notNullJacksonAnnotation;
     }
 }
