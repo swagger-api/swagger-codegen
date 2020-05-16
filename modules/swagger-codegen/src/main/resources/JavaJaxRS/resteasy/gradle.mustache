@@ -20,8 +20,13 @@ dependencies {
 {{#useBeanValidation}}
     providedCompile 'javax.validation:validation-api:1.1.0.Final'
 {{/useBeanValidation}}
-    compile         'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.1'
+{{#java8}}
+    compile         'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'
+{{/java8}}
+{{^java8}}
+    compile         'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.10.1'
     compile         'joda-time:joda-time:2.7'
+{{/java8}}
     //TODO: swaggerFeature
     compile 'io.swagger:swagger-jaxrs:1.5.12'
 

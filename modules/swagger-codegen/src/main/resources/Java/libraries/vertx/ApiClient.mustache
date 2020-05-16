@@ -553,7 +553,7 @@ public class ApiClient {
                             handleFileDownload(httpResponse, handler);
                             return;
                         } else {
-                            resultContent = Json.decodeValue(httpResponse.body(), returnType);
+                            resultContent = (T) Json.decodeValue(httpResponse.body(), returnType);
                         }
                         result = Future.succeededFuture(resultContent);
                     }
