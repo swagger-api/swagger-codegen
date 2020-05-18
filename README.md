@@ -1177,7 +1177,7 @@ Who is eligible? Those who want to join must have at least 3 PRs merged into a g
 | Android |  |
 | Apex  |     |
 | Bash  | @kenjones-cisco (2017/09) |
-| C++      | @fvarose (2017/11) |
+| C++      | |
 | C#        | @mandrean (2017/08) |
 | Clojure   |  |
 | Dart      | @ircecho (2017/07) |
