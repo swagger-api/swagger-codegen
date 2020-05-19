@@ -39,10 +39,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.add_pet(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param Pet body: Pet object that needs to be added to the store (required)
         :return: None
                  If the method is called asynchronously,
@@ -61,10 +62,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.add_pet_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param Pet body: Pet object that needs to be added to the store (required)
         :return: None
                  If the method is called asynchronously,
@@ -138,10 +140,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.delete_pet(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: Pet id to delete (required)
         :param str api_key:
         :return: None
@@ -161,10 +164,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.delete_pet_with_http_info(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: Pet id to delete (required)
         :param str api_key:
         :return: None
@@ -237,10 +241,11 @@ class PetApi(object):
         Multiple status values can be provided with comma separated strings  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.find_pets_by_status(status, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[str] status: Status values that need to be considered for filter (required)
         :return: list[Pet]
                  If the method is called asynchronously,
@@ -259,10 +264,11 @@ class PetApi(object):
         Multiple status values can be provided with comma separated strings  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.find_pets_by_status_with_http_info(status, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[str] status: Status values that need to be considered for filter (required)
         :return: list[Pet]
                  If the method is called asynchronously,
@@ -333,10 +339,11 @@ class PetApi(object):
         Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.find_pets_by_tags(tags, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[str] tags: Tags to filter by (required)
         :return: list[Pet]
                  If the method is called asynchronously,
@@ -355,10 +362,11 @@ class PetApi(object):
         Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.find_pets_by_tags_with_http_info(tags, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[str] tags: Tags to filter by (required)
         :return: list[Pet]
                  If the method is called asynchronously,
@@ -429,10 +437,11 @@ class PetApi(object):
         Returns a single pet  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_pet_by_id(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: ID of pet to return (required)
         :return: Pet
                  If the method is called asynchronously,
@@ -451,10 +460,11 @@ class PetApi(object):
         Returns a single pet  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_pet_by_id_with_http_info(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: ID of pet to return (required)
         :return: Pet
                  If the method is called asynchronously,
@@ -524,10 +534,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.update_pet(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param Pet body: Pet object that needs to be added to the store (required)
         :return: None
                  If the method is called asynchronously,
@@ -546,10 +557,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.update_pet_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param Pet body: Pet object that needs to be added to the store (required)
         :return: None
                  If the method is called asynchronously,
@@ -623,10 +635,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.update_pet_with_form(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: ID of pet that needs to be updated (required)
         :param str name: Updated name of the pet
         :param str status: Updated status of the pet
@@ -647,10 +660,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.update_pet_with_form_with_http_info(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: ID of pet that needs to be updated (required)
         :param str name: Updated name of the pet
         :param str status: Updated status of the pet
@@ -730,10 +744,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.upload_file(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: ID of pet to update (required)
         :param str additional_metadata: Additional data to pass to server
         :param file file: file to upload
@@ -754,10 +769,11 @@ class PetApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.upload_file_with_http_info(pet_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int pet_id: ID of pet to update (required)
         :param str additional_metadata: Additional data to pass to server
         :param file file: file to upload

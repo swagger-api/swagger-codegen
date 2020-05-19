@@ -39,10 +39,11 @@ class UserApi(object):
         This can only be done by the logged in user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.create_user(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param User body: Created user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -61,10 +62,11 @@ class UserApi(object):
         This can only be done by the logged in user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.create_user_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param User body: Created user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -134,10 +136,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.create_users_with_array_input(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -156,10 +159,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.create_users_with_array_input_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -229,10 +233,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.create_users_with_list_input(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -251,10 +256,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.create_users_with_list_input_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param list[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
@@ -324,10 +330,11 @@ class UserApi(object):
         This can only be done by the logged in user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.delete_user(username, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: The name that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -346,10 +353,11 @@ class UserApi(object):
         This can only be done by the logged in user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.delete_user_with_http_info(username, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: The name that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -419,10 +427,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_user_by_name(username, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: The name that needs to be fetched. Use user1 for testing. (required)
         :return: User
                  If the method is called asynchronously,
@@ -441,10 +450,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_user_by_name_with_http_info(username, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: The name that needs to be fetched. Use user1 for testing. (required)
         :return: User
                  If the method is called asynchronously,
@@ -514,10 +524,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.login_user(username, password, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: The user name for login (required)
         :param str password: The password for login in clear text (required)
         :return: str
@@ -537,10 +548,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.login_user_with_http_info(username, password, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: The user name for login (required)
         :param str password: The password for login in clear text (required)
         :return: str
@@ -617,10 +629,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.logout_user(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -638,10 +651,11 @@ class UserApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.logout_user_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -704,10 +718,11 @@ class UserApi(object):
         This can only be done by the logged in user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.update_user(username, body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: name that need to be deleted (required)
         :param User body: Updated user object (required)
         :return: None
@@ -727,10 +742,11 @@ class UserApi(object):
         This can only be done by the logged in user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.update_user_with_http_info(username, body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str username: name that need to be deleted (required)
         :param User body: Updated user object (required)
         :return: None
