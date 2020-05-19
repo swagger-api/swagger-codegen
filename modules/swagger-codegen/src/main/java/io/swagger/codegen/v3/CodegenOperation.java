@@ -69,6 +69,10 @@ public class CodegenOperation extends CodegenObject {
             return true;
         }
 
+        if (authMethods == null || authMethods.isEmpty()) {
+            return false;
+        }
+
         // Check if one of the authMethods is a query param
         for (CodegenSecurity sec : authMethods) {
             if (sec.isKeyInQuery) {
