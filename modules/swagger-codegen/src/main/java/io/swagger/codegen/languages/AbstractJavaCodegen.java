@@ -939,6 +939,33 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     }
 
     @Override
+    protected void fixUpParentAndInterfaces(CodegenModel codegenModel, Map<String, CodegenModel> allModels) {
+        super.fixUpParentAndInterfaces(codegenModel, allModels);
+        if (codegenModel.vars == null || codegenModel.vars.isEmpty() || codegenModel.parentModel == null) {
+            return;
+        }
+        CodegenModel parentModel = codegenModel.parentModel;
+
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            while (parentModel != null) {
+                if (parentModel.vars == null || parentModel.vars.isEmpty()) {
+                    parentModel = parentModel.parentModel;
+                    continue;
+                }
+                boolean hasConflict = parentModel.vars.stream()
+                        .anyMatch(parentProperty -> parentProperty.name.equals(codegenProperty.name) && !parentProperty.datatype.equals(codegenProperty.datatype));
+                if (hasConflict) {
+                    codegenProperty.name = toVarName(codegenModel.name + "_" + codegenProperty.name);
+                    codegenProperty.getter = toGetter(codegenProperty.name);
+                    codegenProperty.setter = toGetter(codegenProperty.name);
+                    break;
+                }
+                parentModel = parentModel.parentModel;
+            }
+        }
+    }
+
+    @Override
     public void postProcessParameter(CodegenParameter parameter) { }
 
     @Override
