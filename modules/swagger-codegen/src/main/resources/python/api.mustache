@@ -34,6 +34,7 @@ class {{classname}}(object):
 {{/notes}}
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
 {{#sortParamsByRequiredFlag}}
         >>> thread = api.{{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}async_req=True)
 {{/sortParamsByRequiredFlag}}
@@ -42,7 +43,7 @@ class {{classname}}(object):
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
 {{#allParams}}
         :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
 {{/allParams}}
@@ -65,6 +66,7 @@ class {{classname}}(object):
 {{/notes}}
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
 {{#sortParamsByRequiredFlag}}
         >>> thread = api.{{operationId}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}async_req=True)
 {{/sortParamsByRequiredFlag}}
@@ -73,7 +75,7 @@ class {{classname}}(object):
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
 {{#allParams}}
         :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/optional}}
 {{/allParams}}
