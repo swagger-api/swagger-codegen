@@ -133,19 +133,19 @@ export class {{classname}} {
     public {{nickname}}WithHttpInfo({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
     {{/useHttpClient}}
 {{#allParams}}
-
 {{#required}}
         {{#isConstEnumParam}}
         let {{paramName}} = {{{dataType}}};
+
         {{/isConstEnumParam}}
         {{^isConstEnumParam}}
         if ({{paramName}} === null || {{paramName}} === undefined) {
             throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
         }
+
         {{/isConstEnumParam}}
 {{/required}}
 {{/allParams}}
-
 {{#hasQueryParams}}
         {{#useHttpClient}}
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
