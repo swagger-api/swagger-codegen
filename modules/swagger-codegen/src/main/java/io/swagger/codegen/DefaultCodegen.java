@@ -2,6 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -187,41 +190,46 @@ public class DefaultCodegen {
                     allModels.put(modelName, cm);
                 }
             }
-            // Fix up all parent and interface CodegenModel references.
-            for (CodegenModel cm : allModels.values()) {
-                if (cm.parent != null) {
-                    cm.parentModel = allModels.get(cm.parent);
-                }
-                if (cm.interfaces != null && !cm.interfaces.isEmpty()) {
-                    cm.interfaceModels = new ArrayList<CodegenModel>(cm.interfaces.size());
-                    for (String intf : cm.interfaces) {
-                        CodegenModel intfModel = allModels.get(intf);
-                        if (intfModel != null) {
-                            cm.interfaceModels.add(intfModel);
-                        }
-                    }
-                }
-            }
-            // Let parent know about all its children
+
             for (String name : allModels.keySet()) {
-                CodegenModel cm = allModels.get(name);
-                CodegenModel parent = allModels.get(cm.parent);
-                // if a discriminator exists on the parent, don't add this child to the inheritance hierarchy
-                // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
-                while (parent != null) {
-                    if (parent.children == null) {
-                        parent.children = new ArrayList<CodegenModel>();
-                    }
-                    parent.children.add(cm);
-                    if (parent.discriminator == null) {
-                        parent = allModels.get(parent.parent);
-                    } else {
-                        parent = null;
-                    }
-                }
+                CodegenModel codegenModel = allModels.get(name);
+                fixUpParentAndInterfaces(codegenModel, allModels);
             }
         }
         return objs;
+    }
+
+    /**
+     * Fix up all parent and interface CodegenModel references.
+     * @param allModels
+     */
+    protected void fixUpParentAndInterfaces(CodegenModel codegenModel, Map<String, CodegenModel> allModels) {
+        if (codegenModel.parent != null) {
+            codegenModel.parentModel = allModels.get(codegenModel.parent);
+        }
+        if (codegenModel.interfaces != null && !codegenModel.interfaces.isEmpty()) {
+            codegenModel.interfaceModels = new ArrayList<CodegenModel>(codegenModel.interfaces.size());
+            for (String intf : codegenModel.interfaces) {
+                CodegenModel intfModel = allModels.get(intf);
+                if (intfModel != null) {
+                    codegenModel.interfaceModels.add(intfModel);
+                }
+            }
+        }
+        CodegenModel parent = codegenModel.parentModel;
+        // if a discriminator exists on the parent, don't add this child to the inheritance hierarchy
+        // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
+        while (parent != null) {
+            if (parent.children == null) {
+                parent.children = new ArrayList<CodegenModel>();
+            }
+            parent.children.add(codegenModel);
+            if (parent.discriminator == null) {
+                parent = allModels.get(parent.parent);
+            } else {
+                parent = null;
+            }
+        }
     }
 
     // override with any special post-processing
@@ -2731,6 +2739,11 @@ public class DefaultCodegen {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
                     String name = ((RefModel) sub).getSimpleRef();
+                    try {
+                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+                    } catch (UnsupportedEncodingException e) {
+                        LOGGER.error("Could not decoded string: " + name, e);
+                    }
                     name = getAlias(name);
                     if (typeMapping.containsKey(name)) {
                         name = typeMapping.get(name);
