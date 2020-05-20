@@ -1,0 +1,54 @@
+swagger: "2.0"
+info:
+  description: "This is sample to test the functionalities"
+  version: "1.0.0"
+  title: "Swagger openwathermap"
+
+  contact:
+    email: "mahalakshmip@vuram.com"
+  license:
+    name: "Apache 2.0"
+   
+host: "api.openweathermap.org"
+basePath: "/data/2.5"
+
+schemes:
+- "https"
+- "http"
+paths:
+ /weather:
+   
+    get:
+      tags:
+      - "weather"
+      summary: "Finds weather"
+      description: "Will show weather map of particular city"
+     
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "q"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      - name: "APPID"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+        default: "f47c37625fb589a0e50dc35df1b6413d"
+        
+      responses:
+        "200":
+          description: "successful operation"
+         
+          
+             
+        "400":
+          description: "Invalid status value"
+     
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
