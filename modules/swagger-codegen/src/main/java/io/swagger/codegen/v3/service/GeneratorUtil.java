@@ -197,6 +197,8 @@ public class GeneratorUtil {
         configurator.setInputSpec(inputSpec);
         configurator.setInputSpecURL(inputSpecURL);
 
+        configurator.setFlattenInlineSchema(generationRequest.getOptions().isFlattenInlineComposedSchemas());
+
         if (isNotEmpty(lang)) {
             configurator.setLang(lang);
             readCodegenArguments(configurator, options);
@@ -231,6 +233,9 @@ public class GeneratorUtil {
         if (options.getSkipOverride() != null) {
             configurator.setSkipOverwrite(options.getSkipOverride());
         }
+        if (options.getResolveFully() != null) {
+            configurator.setResolveFully(options.getResolveFully());
+        }        
         if (isNotEmpty(options.getArtifactVersion())) {
             configurator.setArtifactVersion(options.getArtifactVersion());
         }

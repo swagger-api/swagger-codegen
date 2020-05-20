@@ -206,6 +206,11 @@ components:
           title: "disable examples"
           description: "avoid writing json/xml examples on generated operations."
           x-option: "--disable-examples"
+        resolveFully:
+          type: "boolean"
+          title: "fully resolve schemas"
+          description: "fully resolves json schemas when loading definitions."
+          x-option: "--resolve-fully"          
     ConfigHelp:
       x-command: "config-help"
       x-command-description: "Config help for chosen lang"

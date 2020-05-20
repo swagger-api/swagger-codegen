@@ -36,8 +36,11 @@ public class Options {
     private Boolean removeOperationIdPrefix;
     private Boolean skipOverride;
     private String outputDir = "";
+    private Boolean resolveFully;
 
     private Map<String, String> codegenArguments = new LinkedHashMap<>();
+
+    private boolean flattenInlineComposedSchemas = false;
 
     public Options authorizationValue(AuthorizationValue authorizationValue) {
         this.authorizationValue = authorizationValue;
@@ -427,5 +430,29 @@ public class Options {
 
     public void setSkipOverride(Boolean skipOverride) {
         this.skipOverride = skipOverride;
+    }
+
+    public Options resolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
+        return this;
+    }
+
+    public Boolean getResolveFully() {
+        return resolveFully;
+    }
+
+    public void setResolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
+    }
+
+    public boolean isFlattenInlineComposedSchemas() {
+        return flattenInlineComposedSchemas;
+    }
+    public void setFlattenInlineComposedSchema(boolean flattenInlineComposedSchemas) {
+        this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
+    }
+    public Options flattenInlineComposedSchema(boolean flattenInlineComposedSchemas) {
+        this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
+        return this;
     }
 }
