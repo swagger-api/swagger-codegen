@@ -40,7 +40,7 @@ public class CodegenConfigurator implements Serializable {
     public static final Logger LOGGER = LoggerFactory.getLogger(CodegenConfigurator.class);
 
     private String lang;
-    private String inputSpec;
+    private List<String> inputSpec;
     private String outputDir;
     private boolean verbose;
     private boolean skipOverwrite;
@@ -82,12 +82,12 @@ public class CodegenConfigurator implements Serializable {
         return this;
     }
 
-    public CodegenConfigurator setInputSpec(String inputSpec) {
+    public CodegenConfigurator setInputSpec(List<String> inputSpec) {
         this.inputSpec = inputSpec;
         return this;
     }
 
-    public String getInputSpec() {
+    public List<String> getInputSpec() {
         return inputSpec;
     }
 
@@ -434,10 +434,12 @@ public class CodegenConfigurator implements Serializable {
 
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
 
-        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, true);
+        inputSpec.forEach(spec -> {
+            Swagger swagger = new SwaggerParser().read(spec, authorizationValues, true);
 
-        input.opts(new ClientOpts())
-                .swagger(swagger);
+            input.opts(new ClientOpts())
+                    .swagger(swagger);
+        });
 
         return input;
     }

@@ -69,7 +69,7 @@ import io.swagger.util.Json;
 public class DefaultCodegen {
     protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultCodegen.class);
 
-    protected String inputSpec;
+    protected List<String> inputSpec;
     protected String outputFolder = "";
     protected Set<String> defaultIncludes = new HashSet<String>();
     protected Map<String, String> typeMapping = new HashMap<String, String>();
@@ -602,11 +602,11 @@ public class DefaultCodegen {
         return outputFolder();
     }
 
-    public String getInputSpec() {
+    public List<String> getInputSpec() {
         return inputSpec;
     }
 
-    public void setInputSpec(String inputSpec) {
+    public void setInputSpec(List<String> inputSpec) {
         this.inputSpec = inputSpec;
     }
 

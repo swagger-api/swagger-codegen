@@ -1,5 +1,6 @@
 package io.swagger.codegen;
 
+import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.codegen.languages.SpringCodegen;
@@ -57,7 +58,7 @@ public class DefaultGeneratorTest {
         final File output = folder.getRoot();
 
         CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
-        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setInputSpec(ImmutableList.of("src/test/resources/2_0/allOfTest.yaml"));
         codegenConfigurator.setOutputDir(output.getAbsolutePath());
         codegenConfigurator.setLang("java");
 
@@ -106,7 +107,7 @@ public class DefaultGeneratorTest {
         final File output = folder.getRoot();
 
         CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
-        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setInputSpec(ImmutableList.of("src/test/resources/2_0/allOfTest.yaml"));
         codegenConfigurator.setOutputDir(output.getAbsolutePath());
         codegenConfigurator.setLang("java");
 
@@ -155,7 +156,7 @@ public class DefaultGeneratorTest {
         final File output = folder.getRoot();
 
         CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
-        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setInputSpec(ImmutableList.of("src/test/resources/2_0/allOfTest.yaml"));
         codegenConfigurator.setOutputDir(output.getAbsolutePath());
         codegenConfigurator.setLang("spring");
 
@@ -204,7 +205,7 @@ public class DefaultGeneratorTest {
         final File output = folder.getRoot();
 
         CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
-        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setInputSpec(ImmutableList.of("src/test/resources/2_0/allOfTest.yaml"));
         codegenConfigurator.setOutputDir(output.getAbsolutePath());
         codegenConfigurator.setLang("spring");
 
@@ -464,7 +465,7 @@ public class DefaultGeneratorTest {
         final File output = folder.getRoot();
 
         CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
-        codegenConfigurator.setInputSpec("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        codegenConfigurator.setInputSpec(ImmutableList.of("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml"));
         codegenConfigurator.setOutputDir(output.getAbsolutePath());
         codegenConfigurator.setLang("java");
 

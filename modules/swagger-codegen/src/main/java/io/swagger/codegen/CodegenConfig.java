@@ -79,9 +79,9 @@ public interface CodegenConfig {
 
     List<SupportingFile> supportingFiles();
 
-    String getInputSpec();
+    List<String> getInputSpec();
 
-    void setInputSpec(String inputSpec);
+    void setInputSpec(List<String> inputSpec);
 
     String getOutputDir();
 

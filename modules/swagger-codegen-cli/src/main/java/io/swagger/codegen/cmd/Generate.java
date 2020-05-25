@@ -182,7 +182,7 @@ public class Generate implements Runnable {
     public void run() {
 
         // attempt to read from config file
-        CodegenConfigurator configurator = CodegenConfigurator.fromFile(configFile);
+        CodegenConfigurator configurator = CodegenConfigurator.fromFiles(configFile);
 
         // if a config file wasn't specified or we were unable to read it
         if (configurator == null) {

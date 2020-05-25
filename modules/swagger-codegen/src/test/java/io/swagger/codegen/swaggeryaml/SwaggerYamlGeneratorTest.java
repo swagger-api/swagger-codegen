@@ -1,5 +1,6 @@
 package io.swagger.codegen.swaggeryaml;
 
+import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultGenerator;
@@ -29,7 +30,7 @@ public class SwaggerYamlGeneratorTest {
         final File output = folder.getRoot();
         final CodegenConfigurator configurator = new CodegenConfigurator()
                 .setLang("swagger-yaml")
-                .setInputSpec("src/test/resources/2_0/long_description_issue_7839.json")
+                .setInputSpec(ImmutableList.of("src/test/resources/2_0/long_description_issue_7839.json"))
                 .setOutputDir(output.getAbsolutePath());
 
         final ClientOptInput clientOptInput = configurator.toClientOptInput();
@@ -54,7 +55,7 @@ public class SwaggerYamlGeneratorTest {
         final File output = folder.getRoot();
         final CodegenConfigurator configurator = new CodegenConfigurator()
                 .setLang("swagger-yaml")
-                .setInputSpec("src/test/resources/2_0/petstore_issue_7999.json")
+                .setInputSpec(ImmutableList.of("src/test/resources/2_0/petstore_issue_7999.json"))
                 .setOutputDir(output.getAbsolutePath());
 
         final ClientOptInput clientOptInput = configurator.toClientOptInput();

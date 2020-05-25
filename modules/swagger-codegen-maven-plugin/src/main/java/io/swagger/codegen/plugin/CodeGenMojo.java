@@ -14,31 +14,10 @@ package io.swagger.codegen.plugin;
  * the License.
  */
 
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.ClientOptInput;
@@ -46,6 +25,26 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
+
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsv;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvp;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
@@ -73,7 +72,7 @@ public class CodeGenMojo extends AbstractMojo {
      * Location of the swagger spec, as URL or file.
      */
     @Parameter(name = "inputSpec", required = true)
-    private String inputSpec;
+    private List<String> inputSpec;
 
     /**
      * Git user ID, e.g. swagger-api.
@@ -342,7 +341,7 @@ public class CodeGenMojo extends AbstractMojo {
             configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
         }
 
-        if (isNotEmpty(inputSpec)) {
+        if (inputSpec.size() > 0) {
             configurator.setInputSpec(inputSpec);
         }
 

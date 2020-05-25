@@ -499,7 +499,7 @@ public class GenerateTest {
 
             new Expectations() {
                 {
-                    CodegenConfigurator.fromFile(configFile);
+                    CodegenConfigurator.fromFiles(configFile);
                     times = 1;
                     result = configurator;
                 }
@@ -508,7 +508,7 @@ public class GenerateTest {
         } else {
             new Expectations() {
                 {
-                    CodegenConfigurator.fromFile(anyString);
+                    CodegenConfigurator.fromFiles(anyString);
                     result = null;
 
                     new CodegenConfigurator();

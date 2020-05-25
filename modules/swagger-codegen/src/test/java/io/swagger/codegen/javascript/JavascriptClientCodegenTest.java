@@ -1,5 +1,6 @@
 package io.swagger.codegen.javascript;
 
+import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
@@ -59,7 +60,7 @@ public class JavascriptClientCodegenTest {
 
         final CodegenConfigurator configurator = new CodegenConfigurator()
                 .setLang("javascript")
-                .setInputSpec("src/test/resources/2_0/recursive_model.yaml")
+                .setInputSpec(ImmutableList.of("src/test/resources/2_0/recursive_model.yaml"))
                 .setOutputDir(output.getAbsolutePath());
 
         final ClientOptInput clientOptInput = configurator.toClientOptInput();

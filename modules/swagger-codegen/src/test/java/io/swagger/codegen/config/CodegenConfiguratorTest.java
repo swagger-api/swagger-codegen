@@ -1,5 +1,10 @@
 package io.swagger.codegen.config;
 
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConfigLoader;
@@ -17,10 +22,6 @@ import mockit.StrictExpectations;
 import mockit.Tested;
 import org.apache.commons.lang3.SerializationUtils;
 import org.testng.annotations.Test;
-
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -261,7 +262,7 @@ public class CodegenConfiguratorTest {
         final CodegenConfigurator configurator = CodegenConfigurator.fromFile("src/test/resources/sampleConfig.json");
 
         assertEquals(configurator.getLang(), "java");
-        assertEquals(configurator.getInputSpec(), "swagger.yaml");
+        assertEquals(configurator.getInputSpec().get(0), "swagger.yaml");
         assertEquals(configurator.getOutputDir(), toAbsolutePathDir("src/gen/java"));
         assertEquals(configurator.isVerbose(), true);
         assertEquals(configurator.isSkipOverwrite(), true);
@@ -318,7 +319,7 @@ public class CodegenConfiguratorTest {
 
         configurator.setLang(lang)
                 .setOutputDir(outputDir)
-                .setInputSpec(spec)
+                .setInputSpec(ImmutableList.of(spec))
                 .setAuth(expectedAuth);
 
         final CodegenConfig config = new JavaClientCodegen();
