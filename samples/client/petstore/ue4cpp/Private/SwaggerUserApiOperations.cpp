@@ -42,9 +42,7 @@ void SwaggerUserApi::CreateUserRequest::SetupHttpRequest(const TSharedRef<IHttpR
 		FString JsonBody;
 		JsonWriter Writer = TJsonWriterFactory<>::Create(&JsonBody);
 
-		Writer->WriteObjectStart();
-		Writer->WriteIdentifierPrefix(TEXT("body")); WriteJsonValue(Writer, Body);
-		Writer->WriteObjectEnd();
+		WriteJsonValue(Writer, Body);
 		Writer->Close();
 
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
@@ -101,9 +99,7 @@ void SwaggerUserApi::CreateUsersWithArrayInputRequest::SetupHttpRequest(const TS
 		FString JsonBody;
 		JsonWriter Writer = TJsonWriterFactory<>::Create(&JsonBody);
 
-		Writer->WriteObjectStart();
-		Writer->WriteIdentifierPrefix(TEXT("body")); WriteJsonValue(Writer, Body);
-		Writer->WriteObjectEnd();
+		WriteJsonValue(Writer, Body);
 		Writer->Close();
 
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
@@ -160,9 +156,7 @@ void SwaggerUserApi::CreateUsersWithListInputRequest::SetupHttpRequest(const TSh
 		FString JsonBody;
 		JsonWriter Writer = TJsonWriterFactory<>::Create(&JsonBody);
 
-		Writer->WriteObjectStart();
-		Writer->WriteIdentifierPrefix(TEXT("body")); WriteJsonValue(Writer, Body);
-		Writer->WriteObjectEnd();
+		WriteJsonValue(Writer, Body);
 		Writer->Close();
 
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
@@ -432,9 +426,7 @@ void SwaggerUserApi::UpdateUserRequest::SetupHttpRequest(const TSharedRef<IHttpR
 		FString JsonBody;
 		JsonWriter Writer = TJsonWriterFactory<>::Create(&JsonBody);
 
-		Writer->WriteObjectStart();
-		Writer->WriteIdentifierPrefix(TEXT("body")); WriteJsonValue(Writer, Body);
-		Writer->WriteObjectEnd();
+		WriteJsonValue(Writer, Body);
 		Writer->Close();
 
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
