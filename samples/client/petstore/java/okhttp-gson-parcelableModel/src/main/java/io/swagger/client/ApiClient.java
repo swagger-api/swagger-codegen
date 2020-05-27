@@ -78,6 +78,7 @@ public class ApiClient {
      */
     public ApiClient() {
         httpClient = new OkHttpClient();
+        addProgressInterceptor();
 
 
         verifyingSsl = true;
@@ -134,6 +135,7 @@ public class ApiClient {
      */
     public ApiClient setHttpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
+        addProgressInterceptor();
         return this;
     }
 
@@ -941,12 +943,12 @@ public class ApiClient {
      * @param headerParams The header parameters
      * @param formParams The form parameters
      * @param authNames The authentications to apply
-     * @param progressRequestListener Progress request listener
+     * @param callback Callback for upload/download progress
      * @return The HTTP call
      * @throws ApiException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
+    public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ApiCallback callback) throws ApiException {
+        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, callback);
 
         return httpClient.newCall(request);
     }
@@ -962,11 +964,11 @@ public class ApiClient {
      * @param headerParams The header parameters
      * @param formParams The form parameters
      * @param authNames The authentications to apply
-     * @param progressRequestListener Progress request listener
+     * @param callback Callback for upload/download progress
      * @return The HTTP request 
      * @throws ApiException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ApiCallback callback) throws ApiException {
         updateParamsForAuth(authNames, queryParams, headerParams);
 
         final String url = buildUrl(path, queryParams, collectionQueryParams);
@@ -998,10 +1000,14 @@ public class ApiClient {
             reqBody = serialize(body, contentType);
         }
 
+        // Associate callback with request (if not null) so interceptor can
+        // access it when creating ProgressResponseBody
+        reqBuilder.tag(callback);
+
         Request request = null;
 
-        if(progressRequestListener != null && reqBody != null) {
-            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, progressRequestListener);
+        if(callback != null && reqBody != null) {
+            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, callback);
             request = reqBuilder.method(method, progressRequestBody).build();
         } else {
             request = reqBuilder.method(method, reqBody).build();
@@ -1141,6 +1147,27 @@ public class ApiClient {
         } else {
             return contentType;
         }
+    }
+
+    /**
+     * Add network interceptor to httpClient to track download progress for
+     * async requests.
+     */
+    private void addProgressInterceptor() {
+        httpClient.networkInterceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Interceptor.Chain chain) throws IOException {
+                final Request request = chain.request();
+                final Response originalResponse = chain.proceed(request);
+                if (request.tag() instanceof ApiCallback) {
+                    final ApiCallback callback = (ApiCallback) request.tag();
+                    return originalResponse.newBuilder()
+                        .body(new ProgressResponseBody(originalResponse.body(), callback))
+                        .build();
+                }
+                return originalResponse;
+            }
+        });
     }
 
     /**
