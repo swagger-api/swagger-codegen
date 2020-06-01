@@ -54,7 +54,7 @@
     <dependency>
       <groupId>org.wso2.msf4j</groupId>
       <artifactId>msf4j-all</artifactId>
-      <version>2.0.0</version>
+      <version>2.7.7</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
