@@ -14,7 +14,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "superagent": "3.7.0",
+    "superagent": "3.8.3",
     "querystring": "0.2.0"
   },
   "devDependencies": {
