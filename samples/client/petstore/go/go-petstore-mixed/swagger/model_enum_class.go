@@ -9,8 +9,11 @@
  */
 package swagger
 
-type Pup struct {
-	Id int64 `json:"id,omitempty"`
-	Category2 *Category `json:"category2,omitempty"`
-	Pets []SubCategoryPets `json:"pets,omitempty"`
-}
+type EnumClass string
+
+// List of EnumClass
+const (
+	ABC_EnumClass EnumClass = "_abc"
+	EFG_EnumClass EnumClass = "-efg"
+	XYZ_EnumClass EnumClass = "(xyz)"
+)

@@ -41,7 +41,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetParrots**
-> []Object GetParrots(ctx, )
+> []InlineResponseItems200 GetParrots(ctx, )
 get Parrots
 
 ### Required Parameters
@@ -49,7 +49,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**[]Object**
+[**[]InlineResponseItems200**](inline_response_items200.md)
 
 ### Authorization
 

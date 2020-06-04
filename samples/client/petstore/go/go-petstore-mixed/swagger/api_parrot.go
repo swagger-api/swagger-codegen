@@ -32,8 +32,8 @@ ParrotApiService Add a new parrow to the store
 @return InlineResponse2001
 */
 
-type ParrotApiAddParrotOpts struct { 
-	Body optional.Interface
+type ParrotApiAddParrotOpts struct {
+    Body optional.Interface
 }
 
 func (a *ParrotApiService) AddParrot(ctx context.Context, localVarOptionals *ParrotApiAddParrotOpts) (InlineResponse2001, *http.Response, error) {
@@ -122,15 +122,15 @@ func (a *ParrotApiService) AddParrot(ctx context.Context, localVarOptionals *Par
 /*
 ParrotApiService get Parrots
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-@return []Object
+@return []InlineResponseItems200
 */
-func (a *ParrotApiService) GetParrots(ctx context.Context) ([]Object, *http.Response, error) {
+func (a *ParrotApiService) GetParrots(ctx context.Context) ([]InlineResponseItems200, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []Object
+		localVarReturnValue []InlineResponseItems200
 	)
 
 	// create path and map variables
@@ -187,7 +187,7 @@ func (a *ParrotApiService) GetParrots(ctx context.Context) ([]Object, *http.Resp
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []Object
+			var v []InlineResponseItems200
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -209,8 +209,8 @@ ParrotApiService update parrots
 @return InlineResponse200
 */
 
-type ParrotApiUpdateParrotsOpts struct { 
-	Body optional.Interface
+type ParrotApiUpdateParrotsOpts struct {
+    Body optional.Interface
 }
 
 func (a *ParrotApiService) UpdateParrots(ctx context.Context, localVarOptionals *ParrotApiUpdateParrotsOpts) (InlineResponse200, *http.Response, error) {

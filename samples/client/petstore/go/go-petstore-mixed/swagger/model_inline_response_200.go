@@ -10,5 +10,5 @@
 package swagger
 
 type InlineResponse200 struct {
-	Parrots []OneOfinlineResponse200ParrotsItems `json:"parrots,omitempty"`
+	Parrots []InlineResponse2001 `json:"parrots,omitempty"`
 }

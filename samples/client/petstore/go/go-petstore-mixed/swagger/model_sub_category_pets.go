@@ -9,8 +9,12 @@
  */
 package swagger
 
-type Pup struct {
+type SubCategoryPets struct {
 	Id int64 `json:"id,omitempty"`
-	Category2 *Category `json:"category2,omitempty"`
-	Pets []SubCategoryPets `json:"pets,omitempty"`
+	Category *Category `json:"category,omitempty"`
+	Name string `json:"name"`
+	PhotoUrls []string `json:"photoUrls"`
+	Tags []Tag `json:"tags,omitempty"`
+	// pet status in the store
+	Status string `json:"status,omitempty"`
 }
