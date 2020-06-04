@@ -62,7 +62,7 @@ If the entry is not part of the container, an exception should be thrown (as req
 - Calls to the `has` method should only return *true* if the entry is part of the container.
 If the entry is not part of the container, *false* should be returned.
  - Finally, the important part: if the entry we are fetching has dependencies,
-**instead** of perfoming the dependency lookup in the container, the lookup is performed on the *delegate container*.
+**instead** of performing the dependency lookup in the container, the lookup is performed on the *delegate container*.
 
 Important! By default, the lookup should be performed on the delegate container **only**, not on the container itself.
 
@@ -178,7 +178,7 @@ class CompositeContainer {
 
 Cons have been extensively discussed [here](https://github.com/container-interop/container-interop/pull/8#issuecomment-51721777).
 Basically, forcing a setter into an interface is a bad idea. Setters are similar to constructor arguments,
-and it's a bad idea to standardize a constructor: how the delegate container is configured into a container is an implementation detail. This outweights the benefits of the interface.
+and it's a bad idea to standardize a constructor: how the delegate container is configured into a container is an implementation detail. This outweighs the benefits of the interface.
 
 ### 4.4 Alternative: no exception case for delegate lookups
 

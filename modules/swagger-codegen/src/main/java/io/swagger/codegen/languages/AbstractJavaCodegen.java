@@ -10,6 +10,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,6 +44,7 @@ import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
 
+import static io.swagger.codegen.languages.features.NotNullAnnotationFeatures.NOT_NULL_JACKSON_ANNOTATION;
 
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -88,6 +90,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
     protected boolean disableHtmlEscaping = false;
+    private NotNullAnnotationFeatures notNullOption;
 
     public AbstractJavaCodegen() {
         super();
@@ -98,8 +101,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
 
-        hideGenerationTimestamp = false; 
-        
+        hideGenerationTimestamp = false;
+
         setReservedWordsLowerCase(
             Arrays.asList(
                 // used as internal variables, can collide with parameter names
@@ -161,12 +164,15 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(CliOption.newBoolean(FULL_JAVA_UTIL, "whether to use fully qualified name for classes under java.util. This option only works for Java API client"));
         cliOptions.add(new CliOption("hideGenerationTimestamp", "hides the timestamp when files were generated"));
         cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
-
+        if(this instanceof NotNullAnnotationFeatures){
+            cliOptions.add(CliOption.newBoolean(NOT_NULL_JACKSON_ANNOTATION, "adds @JsonInclude(JsonInclude.Include.NON_NULL) annotation to model classes"));
+        }
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
         dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+) - note: this also sets \"" + JAVA8_MODE + "\" to true");
         dateOptions.put("threetenbp", "Backport of JSR310 (preferred for jdk < 1.8)");
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
+        dateOptions.put("java8-instant", "Java 8 using Instant");
         dateOptions.put("joda", "Joda (for legacy app only)");
         dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp");
         dateLibrary.setEnum(dateOptions);
@@ -337,6 +343,17 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setFullJavaUtil(Boolean.valueOf(additionalProperties.get(FULL_JAVA_UTIL).toString()));
         }
 
+        if (this instanceof NotNullAnnotationFeatures) {
+            notNullOption = (NotNullAnnotationFeatures)this;
+            if (additionalProperties.containsKey(NOT_NULL_JACKSON_ANNOTATION)) {
+                notNullOption.setNotNullJacksonAnnotation(convertPropertyToBoolean(NOT_NULL_JACKSON_ANNOTATION));
+                writePropertyBack(NOT_NULL_JACKSON_ANNOTATION, notNullOption.isNotNullJacksonAnnotation());
+                if (notNullOption.isNotNullJacksonAnnotation()) {
+                    importMapping.put("JsonInclude", "com.fasterxml.jackson.annotation.JsonInclude");
+                }
+            }
+        }
+
         if (fullJavaUtil) {
             javaUtilPrefix = "java.util.";
         }
@@ -402,7 +419,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (additionalProperties.containsKey(JAVA8_MODE)) {
             setJava8Mode(Boolean.parseBoolean(additionalProperties.get(JAVA8_MODE).toString()));
             if ( java8Mode ) {
-                additionalProperties.put("java8", "true");
+                additionalProperties.put("java8", true);
             }
         }
 
@@ -425,32 +442,42 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         if ("threetenbp".equals(dateLibrary)) {
-            additionalProperties.put("threetenbp", "true");
+            additionalProperties.put("threetenbp", true);
             additionalProperties.put("jsr310", "true");
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "OffsetDateTime");
             importMapping.put("LocalDate", "org.threeten.bp.LocalDate");
             importMapping.put("OffsetDateTime", "org.threeten.bp.OffsetDateTime");
         } else if ("joda".equals(dateLibrary)) {
-            additionalProperties.put("joda", "true");
+            additionalProperties.put("joda", true);
             typeMapping.put("date", "LocalDate");
             typeMapping.put("DateTime", "DateTime");
             importMapping.put("LocalDate", "org.joda.time.LocalDate");
             importMapping.put("DateTime", "org.joda.time.DateTime");
         } else if (dateLibrary.startsWith("java8")) {
-            additionalProperties.put("java8", "true");
+            additionalProperties.put("java8", true);
             additionalProperties.put("jsr310", "true");
-            typeMapping.put("date", "LocalDate");
-            importMapping.put("LocalDate", "java.time.LocalDate");
             if ("java8-localdatetime".equals(dateLibrary)) {
+                typeMapping.put("date", "LocalDate");
                 typeMapping.put("DateTime", "LocalDateTime");
+                importMapping.put("LocalDate", "java.time.LocalDate");
                 importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+            } else if ("java8-instant".equals(dateLibrary)) {
+                typeMapping.put("date", "Instant");
+                typeMapping.put("DateTime", "Instant");
+                importMapping.put("Instant", "java.time.Instant");
             } else {
+                typeMapping.put("date", "LocalDate");
                 typeMapping.put("DateTime", "OffsetDateTime");
+                importMapping.put("LocalDate", "java.time.LocalDate");
                 importMapping.put("OffsetDateTime", "java.time.OffsetDateTime");
             }
         } else if (dateLibrary.equals("legacy")) {
-            additionalProperties.put("legacyDates", "true");
+            additionalProperties.put("legacyDates", true);
+        }
+
+        if (this.skipAliasGeneration == null) {
+            this.skipAliasGeneration = Boolean.TRUE;
         }
     }
 
@@ -592,7 +619,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public String toModelName(final String name) {
         // We need to check if import-mapping has a different model for this class, so we use it
         // instead of the auto-generated one.
-        if (importMapping.containsKey(name)) {
+        if (!getIgnoreImportMapping() && importMapping.containsKey(name)) {
             return importMapping.get(name);
         }
 
@@ -896,6 +923,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel);
             codegenModel = AbstractJavaCodegen.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
+        if (this instanceof NotNullAnnotationFeatures) {
+            if (this instanceof NotNullAnnotationFeatures) {
+                notNullOption = (NotNullAnnotationFeatures)this;
+                if (additionalProperties.containsKey(NOT_NULL_JACKSON_ANNOTATION)) {
+                    if (notNullOption.isNotNullJacksonAnnotation()) {
+                        codegenModel.imports.add("JsonInclude");
+                    }
+                }
+            }
+        }
         return codegenModel;
     }
 
@@ -924,6 +961,33 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             // needed by all pojos, but not enums
             model.imports.add("ApiModelProperty");
             model.imports.add("ApiModel");
+        }
+    }
+
+    @Override
+    protected void fixUpParentAndInterfaces(CodegenModel codegenModel, Map<String, CodegenModel> allModels) {
+        super.fixUpParentAndInterfaces(codegenModel, allModels);
+        if (codegenModel.vars == null || codegenModel.vars.isEmpty() || codegenModel.parentModel == null) {
+            return;
+        }
+        CodegenModel parentModel = codegenModel.parentModel;
+
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            while (parentModel != null) {
+                if (parentModel.vars == null || parentModel.vars.isEmpty()) {
+                    parentModel = parentModel.parentModel;
+                    continue;
+                }
+                boolean hasConflict = parentModel.vars.stream()
+                        .anyMatch(parentProperty -> parentProperty.name.equals(codegenProperty.name) && !parentProperty.datatype.equals(codegenProperty.datatype));
+                if (hasConflict) {
+                    codegenProperty.name = toVarName(codegenModel.name + "_" + codegenProperty.name);
+                    codegenProperty.getter = toGetter(codegenProperty.name);
+                    codegenProperty.setter = toGetter(codegenProperty.name);
+                    break;
+                }
+                parentModel = parentModel.parentModel;
+            }
         }
     }
 
@@ -1336,6 +1400,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             tag = "Class" + tag;
         }
         return tag;
+    }
+
+    public boolean defaultIgnoreImportMappingOption() {
+        return true;
     }
 
 }

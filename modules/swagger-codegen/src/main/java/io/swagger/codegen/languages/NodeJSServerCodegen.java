@@ -158,9 +158,13 @@ public class NodeJSServerCodegen extends DefaultCodegen implements CodegenConfig
         String result = super.apiFilename(templateName, tag);
 
         if (templateName.equals("service.mustache")) {
-            String stringToMatch = File.separator + "controllers" + File.separator;
-            String replacement = File.separator + implFolder + File.separator;
-            result = result.replaceAll(Pattern.quote(stringToMatch), replacement);
+            String regexFileSep = File.separator;
+            if (regexFileSep.equals("\\")) {
+                regexFileSep = "\\\\";
+            }
+            String stringToMatch = regexFileSep + "controllers" + regexFileSep;
+            String replacement = regexFileSep + implFolder + regexFileSep;
+            result = result.replaceAll(stringToMatch, replacement);
         }
         return result;
     }

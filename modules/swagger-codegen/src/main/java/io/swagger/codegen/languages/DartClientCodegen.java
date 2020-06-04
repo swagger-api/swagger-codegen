@@ -103,7 +103,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
- 
+        typeMapping.put("ByteArray", "String");
         cliOptions.add(new CliOption(BROWSER_CLIENT, "Is the client browser based"));
 
         CliOption modelPropertyNaming = new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC);

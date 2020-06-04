@@ -13,14 +13,15 @@
     "author": "Swagger Codegen Contributors",
     "license": "Unlicense",
     "dependencies": {
-        "@types/bluebird": "*",
-        "@types/request": "*",
         "bluebird": "^3.5.0",
         "request": "^2.81.0",
+        "@types/bluebird": "*",
+        "@types/request": "*",
         "rewire": "^3.0.2"
     },
     "devDependencies": {
-        "typescript": "^2.4.2"
+        "typescript": "^2.4.2",
+        "minimist": "^1.2.5"
     },
     "publishConfig": {
         "registry": "https://skimdb.npmjs.com/registry"
