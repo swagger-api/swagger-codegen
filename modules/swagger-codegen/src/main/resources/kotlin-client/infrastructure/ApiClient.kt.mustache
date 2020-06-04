@@ -144,6 +144,11 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String,String> = 
                     response.code(),
                     response.headers().toMultimap()
             )
+            response.code() == 202 -> return RetryResponse(
+                    responseBody(response, accept),
+                    response.code(),
+                    response.headers().toMultimap()
+            )
             response.isSuccessful -> return Success(
                     responseBody(response, accept),
                     response.code(),

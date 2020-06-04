@@ -50,6 +50,7 @@ class {{classname}}(basePath: kotlin.String = "{{{basePath}}}", baseHeaders: Map
             ResponseType.Success -> {{#returnType}}(response as Success<*>).data as {{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
+            ResponseType.Retry -> throw RetryException((response as RetryResponse<*>).body as? String ?: "Retry request")
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
             ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
             else -> throw kotlin.IllegalStateException("Undefined ResponseType.")
