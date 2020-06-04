@@ -2726,7 +2726,7 @@ public class DefaultCodegen {
                     innerCp = innerCp.items;
                 }
 
-                p.items = cp;
+                p.items = cp.items;
                 p.dataType = cp.datatype;
                 p.baseType = cp.complexType;
                 p.isPrimitiveType = cp.isPrimitiveType;
