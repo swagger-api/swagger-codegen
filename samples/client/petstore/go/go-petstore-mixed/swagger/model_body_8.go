@@ -10,5 +10,5 @@
 package swagger
 
 type Body8 struct {
-	Parrots []AnyOfbody8ParrotsItems `json:"parrots,omitempty"`
+	Parrots []InlineResponseItems200 `json:"parrots,omitempty"`
 }

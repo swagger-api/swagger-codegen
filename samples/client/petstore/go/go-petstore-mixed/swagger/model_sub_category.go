@@ -12,5 +12,5 @@ package swagger
 type SubCategory struct {
 	Category *AllOfSubCategoryCategory `json:"category,omitempty"`
 	Category2 *Category `json:"category2,omitempty"`
-	Pets []AllOfSubCategoryPetsItems `json:"pets,omitempty"`
+	Pets []SubCategoryPets `json:"pets,omitempty"`
 }

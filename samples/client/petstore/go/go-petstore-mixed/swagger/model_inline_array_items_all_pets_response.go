@@ -9,8 +9,5 @@
  */
 package swagger
 
-type Pup struct {
-	Id int64 `json:"id,omitempty"`
-	Category2 *Category `json:"category2,omitempty"`
-	Pets []SubCategoryPets `json:"pets,omitempty"`
+type InlineArrayItemsAllPetsResponse struct {
 }

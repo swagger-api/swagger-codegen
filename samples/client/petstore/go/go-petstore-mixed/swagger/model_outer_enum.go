@@ -9,8 +9,11 @@
  */
 package swagger
 
-type Pup struct {
-	Id int64 `json:"id,omitempty"`
-	Category2 *Category `json:"category2,omitempty"`
-	Pets []SubCategoryPets `json:"pets,omitempty"`
-}
+type OuterEnum string
+
+// List of OuterEnum
+const (
+	PLACED_OuterEnum OuterEnum = "placed"
+	APPROVED_OuterEnum OuterEnum = "approved"
+	DELIVERED_OuterEnum OuterEnum = "delivered"
+)

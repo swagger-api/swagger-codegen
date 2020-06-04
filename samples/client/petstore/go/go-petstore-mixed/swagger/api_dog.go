@@ -103,8 +103,8 @@ DogApiService Deletes a dog
 
 */
 
-type DogApiDeleteDogOpts struct { 
-	ApiKey optional.String
+type DogApiDeleteDogOpts struct {
+    ApiKey optional.String
 }
 
 func (a *DogApiService) DeleteDog(ctx context.Context, dogId int64, localVarOptionals *DogApiDeleteDogOpts) (*http.Response, error) {
@@ -334,9 +334,9 @@ DogApiService Updates a dog
 
 */
 
-type DogApiUpdateDogWithFormOpts struct { 
-	Name optional.String
-	Status optional.String
+type DogApiUpdateDogWithFormOpts struct {
+    Name optional.String
+    Status optional.String
 }
 
 func (a *DogApiService) UpdateDogWithForm(ctx context.Context, dogId int64, localVarOptionals *DogApiUpdateDogWithFormOpts) (*http.Response, error) {

@@ -1249,9 +1249,7 @@ paths:
               schema:
                 type: array
                 items:
-                  anyOf:
-                  - $ref: '#/components/schemas/Macaw'
-                  - $ref: '#/components/schemas/Parakeet'
+                  $ref: '#/components/schemas/inline_response_items200'
                 x-content-type: application/json
       security:
       - jwt: []
@@ -1495,10 +1493,7 @@ components:
     Dog:
       allOf:
       - $ref: '#/components/schemas/Animal'
-      - type: object
-        properties:
-          breed:
-            type: string
+      - $ref: '#/components/schemas/DogAllOf_2'
     Enum_Test:
       type: object
       properties:
@@ -1743,10 +1738,7 @@ components:
     Cat:
       allOf:
       - $ref: '#/components/schemas/Animal'
-      - type: object
-        properties:
-          declawed:
-            type: boolean
+      - $ref: '#/components/schemas/CatAllOf_2'
     MapTest:
       type: object
       properties:
@@ -1854,11 +1846,8 @@ components:
     AllPetsResponse:
       type: array
       items:
-        discriminator:
-          propertyName: pet_type
-        oneOf:
-        - $ref: '#/components/schemas/Dog'
-        - $ref: '#/components/schemas/Cat'
+        $ref: '#/components/schemas/inline_array_items_AllPetsResponse'
+      x-schema-name: AllPetsResponse
     SubCategory:
       type: object
       properties:
@@ -1880,8 +1869,7 @@ components:
         pets:
           type: array
           items:
-            allOf:
-            - $ref: '#/components/schemas/Pet'
+            $ref: '#/components/schemas/SubCategory_pets'
     Macaw:
       type: object
       properties:
@@ -1909,9 +1897,7 @@ components:
             Definition: Information about a Member of the Scheme.
             Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
           items:
-            oneOf:
-            - $ref: '#/components/schemas/val_MemberChoice1'
-            - $ref: '#/components/schemas/val_MemberChoice2'
+            $ref: '#/components/schemas/val_Members_val_member'
       additionalProperties: false
       description: |-
         Business Term: Scheme Members
@@ -1984,8 +1970,7 @@ components:
         pets:
           type: array
           items:
-            allOf:
-            - $ref: '#/components/schemas/Pet'
+            $ref: '#/components/schemas/SubCategory_pets'
       oneOf:
       - $ref: '#/components/schemas/Dog'
       - $ref: '#/components/schemas/Cat'
@@ -2240,24 +2225,24 @@ components:
         status:
           type: string
           description: Updated status of the dog
+    inline_response_items200:
+      anyOf:
+      - $ref: '#/components/schemas/Macaw'
+      - $ref: '#/components/schemas/Parakeet'
     body_8:
       type: object
       properties:
         parrots:
           type: array
           items:
-            anyOf:
-            - $ref: '#/components/schemas/Macaw'
-            - $ref: '#/components/schemas/Parakeet'
+            $ref: '#/components/schemas/inline_response_items200'
     inline_response_200:
       type: object
       properties:
         parrots:
           type: array
           items:
-            oneOf:
-            - $ref: '#/components/schemas/Macaw'
-            - $ref: '#/components/schemas/Parakeet'
+            $ref: '#/components/schemas/inline_response_200_1'
       example:
         parrots:
         - ""
@@ -2270,6 +2255,29 @@ components:
       oneOf:
       - $ref: '#/components/schemas/Macaw'
       - $ref: '#/components/schemas/Parakeet'
+    DogAllOf_2:
+      type: object
+      properties:
+        breed:
+          type: string
+    CatAllOf_2:
+      type: object
+      properties:
+        declawed:
+          type: boolean
+    inline_array_items_AllPetsResponse:
+      discriminator:
+        propertyName: pet_type
+      oneOf:
+      - $ref: '#/components/schemas/Dog'
+      - $ref: '#/components/schemas/Cat'
+    SubCategory_pets:
+      allOf:
+      - $ref: '#/components/schemas/Pet'
+    val_Members_val_member:
+      oneOf:
+      - $ref: '#/components/schemas/val_MemberChoice1'
+      - $ref: '#/components/schemas/val_MemberChoice2'
   securitySchemes:
     petstore_auth:
       type: oauth2
