@@ -551,7 +551,7 @@ public class UserApi {
   /**
   * Get user by user name
   * 
-   * @param username The name that needs to be fetched. Use user1 for testing. 
+   * @param username The name that needs to be fetched. Use user1 for testing.
    * @return User
   */
   public User getUserByName (String username) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
@@ -613,7 +613,7 @@ public class UserApi {
       /**
    * Get user by user name
    * 
-   * @param username The name that needs to be fetched. Use user1 for testing. 
+   * @param username The name that needs to be fetched. Use user1 for testing.
   */
   public void getUserByName (String username, final Response.Listener<User> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;

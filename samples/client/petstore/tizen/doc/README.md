@@ -94,8 +94,10 @@ Method | HTTP request | Description
 ## What are the Model files for the data structures/objects?
 Class | Description
 ------------- | -------------
+ *Amount* | some description 
  *ApiResponse* | Describes the result of uploading an image resource
  *Category* | A category for a pet
+ *Currency* | some description 
  *Order* | An order for a pets from the pet store
  *Pet* | A pet for sale in the pet store
  *Tag* | A tag for a pet

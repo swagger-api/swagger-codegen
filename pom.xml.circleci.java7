@@ -10,7 +10,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>2.4.15-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -910,6 +910,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit-version}</version>
@@ -939,14 +944,14 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.36</swagger-parser-version>
+        <swagger-parser-version>1.0.51</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.5.20</swagger-core-version>
+        <swagger-core-version>1.6.1</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
         <junit-version>4.8.1</junit-version>
-        <jackson-version>2.8.9</jackson-version>
+        <jackson-version>2.10.1</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.12</slf4j-version>
@@ -955,6 +960,7 @@
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.19.1</surefire-version>
         <jmockit-version>1.25</jmockit-version>
-        <reflections-version>0.9.10</reflections-version>
+        <reflections-version>0.9.11</reflections-version>
+        <snakeyaml-version>1.24</snakeyaml-version>
     </properties>
 </project>

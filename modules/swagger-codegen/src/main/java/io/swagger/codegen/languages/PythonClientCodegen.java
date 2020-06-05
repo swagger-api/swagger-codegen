@@ -21,8 +21,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PACKAGE_URL = "packageUrl";
     public static final String DEFAULT_LIBRARY = "urllib3";
@@ -113,7 +111,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                     "assert", "else", "if", "pass", "yield", "break", "except", "import",
                     "print", "class", "exec", "in", "raise", "continue", "finally", "is",
                     "return", "def", "for", "lambda", "try", "self", "nonlocal", "None", "True", "nonlocal",
-                    "float", "int", "str", "date", "datetime"));
+                    "float", "int", "str", "date", "datetime", "False", "await", "async"));
 
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IGNORECASE");
@@ -269,8 +267,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
             //Must follow Perl /pattern/modifiers convention
             if(pattern.charAt(0) != '/' || i < 2) {
-                throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+                pattern = String.format("/%s/", pattern);
+                i = pattern.lastIndexOf('/');
             }
 
             String regex = pattern.substring(1, i).replace("'", "\\'");

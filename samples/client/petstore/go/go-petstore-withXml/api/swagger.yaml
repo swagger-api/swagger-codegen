@@ -492,8 +492,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            type: "string"
           headers:
             X-Rate-Limit:
               type: "integer"
@@ -503,6 +501,8 @@ paths:
               type: "string"
               format: "date-time"
               description: "date in UTC when token expires"
+          schema:
+            type: "string"
         400:
           description: "Invalid username/password supplied"
   /user/logout:
@@ -1105,6 +1105,8 @@ definitions:
       complete:
         type: "boolean"
         default: false
+    xml:
+      name: "Order"
     example:
       petId: 6
       quantity: 1
@@ -1112,8 +1114,6 @@ definitions:
       shipDate: "2000-01-23T04:56:07.000+00:00"
       complete: false
       status: "placed"
-    xml:
-      name: "Order"
   Category:
     type: "object"
     properties:
@@ -1122,11 +1122,11 @@ definitions:
         format: "int64"
       name:
         type: "string"
+    xml:
+      name: "Category"
     example:
       name: "name"
       id: 6
-    xml:
-      name: "Category"
   User:
     type: "object"
     properties:
@@ -1150,6 +1150,8 @@ definitions:
         type: "integer"
         format: "int32"
         description: "User Status"
+    xml:
+      name: "User"
     example:
       firstName: "firstName"
       lastName: "lastName"
@@ -1159,8 +1161,6 @@ definitions:
       id: 0
       email: "email"
       username: "username"
-    xml:
-      name: "User"
   Tag:
     type: "object"
     properties:
@@ -1169,11 +1169,11 @@ definitions:
         format: "int64"
       name:
         type: "string"
+    xml:
+      name: "Tag"
     example:
       name: "name"
       id: 1
-    xml:
-      name: "Tag"
   Pet:
     type: "object"
     required:
@@ -1210,6 +1210,8 @@ definitions:
         - "available"
         - "pending"
         - "sold"
+    xml:
+      name: "Pet"
     example:
       photoUrls:
       - "photoUrls"
@@ -1225,8 +1227,6 @@ definitions:
       - name: "name"
         id: 1
       status: "available"
-    xml:
-      name: "Pet"
   ApiResponse:
     type: "object"
     properties:
@@ -1253,9 +1253,9 @@ definitions:
       return:
         type: "integer"
         format: "int32"
-    description: "Model for testing reserved words"
     xml:
       name: "Return"
+    description: "Model for testing reserved words"
   Name:
     required:
     - "name"
@@ -1272,9 +1272,9 @@ definitions:
       123Number:
         type: "integer"
         readOnly: true
-    description: "Model for testing model name same as property name"
     xml:
       name: "Name"
+    description: "Model for testing model name same as property name"
   200_response:
     properties:
       name:
@@ -1282,9 +1282,9 @@ definitions:
         format: "int32"
       class:
         type: "string"
-    description: "Model for testing model name starting with number"
     xml:
       name: "Name"
+    description: "Model for testing model name starting with number"
   ClassModel:
     properties:
       _class:

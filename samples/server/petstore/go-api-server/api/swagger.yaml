@@ -108,11 +108,11 @@ paths:
         type: "array"
         items:
           type: "string"
+          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
-          default: "available"
         collectionFormat: "csv"
         x-exportParamName: "Status"
       responses:
@@ -217,12 +217,14 @@ paths:
         required: false
         type: "string"
         x-exportParamName: "Name"
+        x-optionalDataType: "String"
       - name: "status"
         in: "formData"
         description: "Updated status of the pet"
         required: false
         type: "string"
         x-exportParamName: "Status"
+        x-optionalDataType: "String"
       responses:
         405:
           description: "Invalid input"
@@ -245,6 +247,7 @@ paths:
         required: false
         type: "string"
         x-exportParamName: "ApiKey"
+        x-optionalDataType: "String"
       - name: "petId"
         in: "path"
         description: "Pet id to delete"
@@ -284,6 +287,7 @@ paths:
         required: false
         type: "string"
         x-exportParamName: "AdditionalMetadata"
+        x-optionalDataType: "String"
       - name: "file"
         in: "formData"
         description: "file to upload"
@@ -489,8 +493,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            type: "string"
           headers:
             X-Rate-Limit:
               type: "integer"
@@ -500,6 +502,8 @@ paths:
               type: "string"
               format: "date-time"
               description: "date in UTC when toekn expires"
+          schema:
+            type: "string"
         400:
           description: "Invalid username/password supplied"
   /user/logout:
@@ -529,7 +533,7 @@ paths:
       parameters:
       - name: "username"
         in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
+        description: "The name that needs to be fetched. Use user1 for testing."
         required: true
         type: "string"
         x-exportParamName: "Username"
@@ -630,6 +634,8 @@ definitions:
         type: "boolean"
         default: false
     title: "Pet Order"
+    xml:
+      name: "Order"
     description: "An order for a pets from the pet store"
     example:
       petId: 6
@@ -638,8 +644,6 @@ definitions:
       shipDate: "2000-01-23T04:56:07.000+00:00"
       complete: false
       status: "placed"
-    xml:
-      name: "Order"
   Category:
     type: "object"
     properties:
@@ -649,12 +653,12 @@ definitions:
       name:
         type: "string"
     title: "Pet category"
+    xml:
+      name: "Category"
     description: "A category for a pet"
     example:
       name: "name"
       id: 6
-    xml:
-      name: "Category"
   User:
     type: "object"
     properties:
@@ -678,6 +682,8 @@ definitions:
         format: "int32"
         description: "User Status"
     title: "a User"
+    xml:
+      name: "User"
     description: "A User who is purchasing from the pet store"
     example:
       firstName: "firstName"
@@ -688,8 +694,6 @@ definitions:
       id: 0
       email: "email"
       username: "username"
-    xml:
-      name: "User"
   Tag:
     type: "object"
     properties:
@@ -699,12 +703,12 @@ definitions:
       name:
         type: "string"
     title: "Pet Tag"
+    xml:
+      name: "Tag"
     description: "A tag for a pet"
     example:
       name: "name"
       id: 1
-    xml:
-      name: "Tag"
   Pet:
     type: "object"
     required:
@@ -741,6 +745,8 @@ definitions:
         - "pending"
         - "sold"
     title: "a Pet"
+    xml:
+      name: "Pet"
     description: "A pet for sale in the pet store"
     example:
       photoUrls:
@@ -757,8 +763,6 @@ definitions:
       - name: "name"
         id: 1
       status: "available"
-    xml:
-      name: "Pet"
   ApiResponse:
     type: "object"
     properties:
@@ -775,6 +779,25 @@ definitions:
       code: 0
       type: "type"
       message: "message"
+  Amount:
+    type: "object"
+    required:
+    - "currency"
+    - "value"
+    properties:
+      value:
+        type: "number"
+        format: "double"
+        description: "some description\n"
+        minimum: 0.01
+        maximum: 1000000000000000
+      currency:
+        $ref: "#/definitions/Currency"
+    description: "some description\n"
+  Currency:
+    type: "string"
+    pattern: "^[A-Z]{3,3}$"
+    description: "some description\n"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
