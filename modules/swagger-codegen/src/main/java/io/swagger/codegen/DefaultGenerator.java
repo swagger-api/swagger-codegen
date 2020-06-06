@@ -424,8 +424,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
                 allModels.add(modelTemplate);
                 for (String templateName : config.modelTemplateFiles().keySet()) {
-                    String suffix = config.modelTemplateFiles().get(templateName);
-                    String filename = config.modelFileFolder() + File.separator + config.toModelFilename(modelName) + suffix;
+                    String filename = config.modelFilename(templateName, modelName);
                     if (!config.shouldOverwrite(filename)) {
                         LOGGER.info("Skipped overwriting " + filename);
                         continue;
