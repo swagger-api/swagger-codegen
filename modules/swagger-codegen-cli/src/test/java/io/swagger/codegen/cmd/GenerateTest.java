@@ -1,5 +1,6 @@
 package io.swagger.codegen.cmd;
 
+import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.SwaggerCodegen;
@@ -499,7 +500,7 @@ public class GenerateTest {
 
             new Expectations() {
                 {
-                    CodegenConfigurator.fromFiles(configFile);
+                    CodegenConfigurator.fromFile(configFile);
                     times = 1;
                     result = configurator;
                 }
@@ -508,7 +509,7 @@ public class GenerateTest {
         } else {
             new Expectations() {
                 {
-                    CodegenConfigurator.fromFiles(anyString);
+                    CodegenConfigurator.fromFile(anyString);
                     result = null;
 
                     new CodegenConfigurator();
@@ -545,7 +546,7 @@ public class GenerateTest {
             {
                 configurator.setLang(lang);
                 times = 1;
-                configurator.setInputSpec(spec);
+                configurator.setInputSpec(ImmutableList.of(spec));
                 times = 1;
                 configurator.setOutputDir(outputDir);
             }

@@ -37,7 +37,7 @@ public class Generate implements Runnable {
 
     @Option(name = {"-i", "--input-spec"}, title = "spec file", required = true,
             description = "location of the swagger spec, as URL or file (required)")
-    private String spec;
+    private List<String> spec;
 
     @Option(name = {"-t", "--template-dir"}, title = "template directory",
             description = "folder containing the template files")
@@ -182,7 +182,7 @@ public class Generate implements Runnable {
     public void run() {
 
         // attempt to read from config file
-        CodegenConfigurator configurator = CodegenConfigurator.fromFiles(configFile);
+        CodegenConfigurator configurator = CodegenConfigurator.fromFile(configFile);
 
         // if a config file wasn't specified or we were unable to read it
         if (configurator == null) {
@@ -199,7 +199,7 @@ public class Generate implements Runnable {
             configurator.setSkipOverwrite(skipOverwrite);
         }
 
-        if (isNotEmpty(spec)) {
+        if (spec != null) {
             configurator.setInputSpec(spec);
         }
 
