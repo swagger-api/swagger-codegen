@@ -1,5 +1,8 @@
 package io.swagger.codegen.cmd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import io.swagger.codegen.ClientOptInput;
@@ -9,11 +12,14 @@ import io.swagger.codegen.config.CodegenConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.swagger.codegen.config.CodegenConfiguratorUtils.*;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyAdditionalPropertiesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyImportMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyInstantiationTypesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyLanguageSpecificPrimitivesCsvList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyReservedWordsMappingsKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applySystemPropertiesKvpList;
+import static io.swagger.codegen.config.CodegenConfiguratorUtils.applyTypeMappingsKvpList;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: lanwen Date: 24.03.15 Time: 20:22
@@ -199,7 +205,7 @@ public class Generate implements Runnable {
             configurator.setSkipOverwrite(skipOverwrite);
         }
 
-        if (spec != null) {
+        if (spec.size() > 0) {
             configurator.setInputSpec(spec);
         }
 
