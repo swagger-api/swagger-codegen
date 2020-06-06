@@ -1,6 +1,6 @@
 {
     "lang" : "java",
-    "inputSpec" : "swagger.yaml",
+    "inputSpec" : [ "swagger.yaml" ],
     "outputDir" : "src/gen/java",
     "verbose" : true,
     "skipOverwrite" : true,
