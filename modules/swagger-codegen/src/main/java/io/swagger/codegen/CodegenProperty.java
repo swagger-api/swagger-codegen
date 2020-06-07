@@ -56,6 +56,7 @@ public class CodegenProperty implements Cloneable {
     public String enumName;
     public Integer maxItems;
     public Integer minItems;
+    public boolean uniqueItems;
 
     // XML
     public boolean isXmlAttribute = false;
