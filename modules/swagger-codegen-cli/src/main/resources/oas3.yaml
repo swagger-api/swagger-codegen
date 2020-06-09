@@ -210,7 +210,12 @@ components:
           type: "boolean"
           title: "fully resolve schemas"
           description: "fully resolves json schemas when loading definitions."
-          x-option: "--resolve-fully"          
+          x-option: "--resolve-fully"
+        flattenInlineSchema:
+          type: "boolean"
+          title: "flatten inline schemas"
+          description: "flattens inline composed schemas."
+          x-option: "--flatten-inline-schema"
     ConfigHelp:
       x-command: "config-help"
       x-command-description: "Config help for chosen lang"
