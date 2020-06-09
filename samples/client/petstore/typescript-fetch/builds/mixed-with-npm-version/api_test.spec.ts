@@ -120,9 +120,9 @@ describe("FakeApi", () => {
     return expect(instance.testEndpointParameters(body, {})).resolves.toBe(null)
   })
   test("testEnumParameters", () => {
-    const enumHeaderStringArray: api.Array<string> = undefined
+    const enumHeaderStringArray: Array<string> = undefined
     const enumHeaderString: string = "enumHeaderString_example"
-    const enumQueryStringArray: api.Array<string> = undefined
+    const enumQueryStringArray: Array<string> = undefined
     const enumQueryString: string = "enumQueryString_example"
     const enumQueryInteger: number = 56
     return expect(instance.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, {})).resolves.toBe(null)
@@ -132,7 +132,7 @@ describe("FakeApi", () => {
     return expect(instance.testEnumRequestBody(body, {})).resolves.toBe(null)
   })
   test("testInlineAdditionalProperties", () => {
-    const body: api.{ [key: string]: string; } = undefined
+    const body: { [key: string]: string; } = undefined
     return expect(instance.testInlineAdditionalProperties(body, {})).resolves.toBe(null)
   })
   test("testJsonFormData", () => {
@@ -203,11 +203,11 @@ describe("PetApi", () => {
     return expect(instance.doCategoryStuff(body, {})).resolves.toBe(null)
   })
   test("findPetsByStatus", () => {
-    const status: api.Array<string> = undefined
+    const status: Array<string> = undefined
     return expect(instance.findPetsByStatus(status, {})).resolves.toBe(null)
   })
   test("findPetsByTags", () => {
-    const tags: api.Array<string> = undefined
+    const tags: Array<string> = undefined
     return expect(instance.findPetsByTags(tags, {})).resolves.toBe(null)
   })
   test("getAllPets", () => {
@@ -233,7 +233,7 @@ describe("PetApi", () => {
   test("uploadFile", () => {
     const petId: number = 789
     const additionalMetadata: string = "additionalMetadata_example"
-    const file: api.Blob = "file_example"
+    const file: Blob = "file_example"
     return expect(instance.uploadFile(petId, additionalMetadata, file, {})).resolves.toBe(null)
   })
 })
@@ -272,11 +272,11 @@ describe("UserApi", () => {
     return expect(instance.createUser(body, {})).resolves.toBe(null)
   })
   test("createUsersWithArrayInput", () => {
-    const body: api.Array<User> = undefined
+    const body: Array<api.User> = undefined
     return expect(instance.createUsersWithArrayInput(body, {})).resolves.toBe(null)
   })
   test("createUsersWithListInput", () => {
-    const body: api.Array<User> = undefined
+    const body: Array<api.User> = undefined
     return expect(instance.createUsersWithListInput(body, {})).resolves.toBe(null)
   })
   test("deleteUser", () => {
