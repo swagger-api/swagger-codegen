@@ -163,6 +163,8 @@ public interface CodegenConfig {
 
     String apiFilename(String templateName, String tag);
 
+    String modelFilename(String templateName, String modelName);
+
     String apiTestFilename(String templateName, String tag);
 
     String apiDocFilename(String templateName, String tag);
