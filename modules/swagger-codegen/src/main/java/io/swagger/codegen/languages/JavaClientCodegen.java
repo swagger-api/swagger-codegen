@@ -139,7 +139,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         		    this.setUseRxJava2(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA2).toString()));
         		}
         		if(additionalProperties.containsKey(USE_RX_JAVA3)){
-        		    this.setUseRxJava3(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA3).toString()));
+                    this.setUseRxJava3(Boolean.valueOf(additionalProperties.get(USE_RX_JAVA3).toString()));
                 }
             }
         	
