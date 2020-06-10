@@ -675,6 +675,6 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
 	@Override
 	public boolean isNotNullJacksonAnnotation() {
-		return notNullJacksonAnnotation;
-	}
+        return notNullJacksonAnnotation;
+    }
 }
