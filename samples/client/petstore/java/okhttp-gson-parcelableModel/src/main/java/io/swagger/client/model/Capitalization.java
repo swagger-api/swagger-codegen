@@ -30,6 +30,9 @@ import android.os.Parcel;
  * Capitalization
  */
 
+
+
+
 public class Capitalization implements Parcelable {
   @SerializedName("smallCamel")
   private String smallCamel = null;

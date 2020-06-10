@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "ReadOnlyFirst")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ReadOnlyFirst")
+
+
+
 public class ReadOnlyFirst {
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")

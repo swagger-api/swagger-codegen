@@ -26,6 +26,9 @@ import io.swagger.client.model.Animal;
  * Cat
  */
 
+
+
+
 public class Cat extends Animal {
   @JsonProperty("declawed")
   private Boolean declawed = null;

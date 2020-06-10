@@ -31,6 +31,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "NumberOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "NumberOnly")
+
+
+
 public class NumberOnly {
   @JsonProperty("JustNumber")
   @JacksonXmlProperty(localName = "JustNumber")

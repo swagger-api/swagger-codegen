@@ -28,6 +28,9 @@ import javax.validation.Valid;
  * Order
  */
 
+
+
+
 public class Order {
   @JsonProperty("id")
   private Long id = null;

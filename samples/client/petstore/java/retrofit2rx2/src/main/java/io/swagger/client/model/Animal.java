@@ -29,6 +29,9 @@ import java.io.IOException;
  */
 
 
+
+
+
 public class Animal {
   @SerializedName("className")
   private String className = null;

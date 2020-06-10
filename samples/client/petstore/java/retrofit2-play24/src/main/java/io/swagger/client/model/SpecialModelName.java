@@ -27,6 +27,9 @@ import javax.validation.Valid;
  * SpecialModelName
  */
 
+
+
+
 public class SpecialModelName {
   @JsonProperty("$special[property.name]")
   private Long specialPropertyName = null;

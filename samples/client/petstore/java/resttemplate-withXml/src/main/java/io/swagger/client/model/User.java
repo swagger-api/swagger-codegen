@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "User")
+
+
+
 public class User {
   @JsonProperty("id")
   @JacksonXmlProperty(localName = "id")

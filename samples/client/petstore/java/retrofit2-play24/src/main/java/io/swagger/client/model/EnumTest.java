@@ -28,6 +28,9 @@ import javax.validation.Valid;
  * EnumTest
  */
 
+
+
+
 public class EnumTest {
   /**
    * Gets or Sets enumString

@@ -28,6 +28,9 @@ import java.io.IOException;
  * ReadOnlyFirst
  */
 
+
+
+
 public class ReadOnlyFirst {
   @SerializedName("bar")
   private String bar = null;

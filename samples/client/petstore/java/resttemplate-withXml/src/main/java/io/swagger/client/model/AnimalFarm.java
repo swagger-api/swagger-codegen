@@ -28,6 +28,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "AnimalFarm")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "AnimalFarm")
+
+
+
 public class AnimalFarm extends ArrayList<Animal> {
 
   @Override

@@ -32,6 +32,9 @@ import org.threeten.bp.OffsetDateTime;
  * FormatTest
  */
 
+
+
+
 public class FormatTest {
   @SerializedName("integer")
   private Integer integer = null;

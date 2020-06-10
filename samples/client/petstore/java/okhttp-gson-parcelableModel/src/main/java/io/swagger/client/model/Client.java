@@ -30,6 +30,9 @@ import android.os.Parcel;
  * Client
  */
 
+
+
+
 public class Client implements Parcelable {
   @SerializedName("client")
   private String client = null;
