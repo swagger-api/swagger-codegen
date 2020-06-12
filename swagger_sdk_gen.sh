@@ -3,8 +3,8 @@ if $Build_Codegen ; then
 fi
 if [ "$Branch" = "snapshot" ]
   then
-    url="http://crm-nightly-new.cc.capillarytech.com/swagger.json"
-    version="http://crm-nightly-new.cc.capillarytech.com/version.json"
+    url="https://intouch-api-swagger.crm-nightly-new.cc.capillarytech.com/swagger.json"
+    version="https://api.crm-nightly-new.cc.capillarytech.com/version"
 elif [ "$Branch" = "production" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
