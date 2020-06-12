@@ -3,12 +3,12 @@ if $Build_Codegen ; then
 fi
 if [ "$Branch" = "snapshot" ]
   then
-    url="http://crm-nightly-new.cc.capillarytech.com/tl-docs/v2/api-docs"
-    version="https://crm-nightly-new.cc.capillarytech.com/v3/meta/version"
+    url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v2/api-docs"
+    version="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/meta/version"
 elif [ "$Branch" = "production" ]
   then
-    url="http://crm-nightly-new.cc.capillarytech.com/tl-docs/v2/api-docs"
-    version="https://crm-nightly-new.cc.capillarytech.com/v3/meta/version"
+    url="http://newapi.staging.capillary.in/tl-docs/v2/api-docs"
+    version="http://newapi.staging.capillary.in/v3/meta/version"
 else " No Branch is selected"
 fi
 curl -k $version -o config.json
