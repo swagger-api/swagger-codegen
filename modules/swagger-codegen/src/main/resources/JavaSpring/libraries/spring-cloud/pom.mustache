@@ -10,6 +10,9 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <swagger-core-version>1.5.18</swagger-core-version>
+        {{#isOpenFeign}}
+        <spring-cloud-starter-openfeign-version>2.2.3.RELEASE</spring-cloud-starter-openfeign-version>
+        {{/isOpenFeign}}
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -38,10 +41,19 @@
             <artifactId>swagger-annotations</artifactId>
             <version>${swagger-core-version}</version>
         </dependency>
+        {{^isOpenFeign}}
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
+        {{/isOpenFeign}}
+        {{#isOpenFeign}}
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${spring-cloud-starter-openfeign-version}</version>
+        </dependency>
+        {{/isOpenFeign}}
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-security</artifactId>
