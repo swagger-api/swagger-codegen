@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from api.animal_api import AnimalApi  # noqa: E501
+from swagger_client.api.animal_api import AnimalApi  # noqa: E501
 from swagger_client.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestAnimalApi(unittest.TestCase):
     """AnimalApi unit test stubs"""
 
     def setUp(self):
-        self.api = api.animal_api.AnimalApi()  # noqa: E501
+        self.api = AnimalApi()  # noqa: E501
 
     def tearDown(self):
         pass

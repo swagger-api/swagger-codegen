@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.mixed_properties_and_additional_properties_class import MixedPropertiesAndAdditionalPropertiesClass  # noqa: E501
+from swagger_client.models.mixed_properties_and_additional_properties_class import MixedPropertiesAndAdditionalPropertiesClass  # noqa: E501
 from swagger_client.rest import ApiException
 
 

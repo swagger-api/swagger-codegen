@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.model200_response import Model200Response  # noqa: E501
+from swagger_client.models.model200_response import Model200Response  # noqa: E501
 from swagger_client.rest import ApiException
 
 
