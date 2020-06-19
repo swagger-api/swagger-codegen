@@ -18,6 +18,57 @@ import java.util.List;
 
 public class GeneratorServiceTest {
 
+    @Test(description = "test generator service with html2")
+    public void testGeneratorService_HTML2_Bearer() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("html2")
+                .spec(loadSpecAsNode("3_0_0/html2BearerAuthIssue.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/index.html".equals(relPath)) {
+                //api key
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("curl -X GET\\\n" +
+                        "-H \"api_key: [[apiKey]]\"\\"));
+                //basic
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("curl -X POST\\\n" +
+                        " -H \"Authorization: Basic [[basicHash]]\"\\"));
+                //bearer
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("curl -X PUT\\\n" +
+                        " -H \"Authorization: Bearer [[accessToken]]\"\\"));
+            }
+        }
+
+    }
+
+    @Test(description = "test generator service with html2")
+    public void testGeneratorService_HTML2() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("html2")
+                .spec(loadSpecAsNode("3_0_0/swos196.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+    }
 
     @Test(description = "test generator service with java")
     public void testGeneratorService_notNullJacksonAnnotationJava_True() throws IOException {
