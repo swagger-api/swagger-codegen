@@ -95,6 +95,13 @@
             <artifactId>validation-api</artifactId>
         </dependency>
 {{/useBeanValidation}}
+        {{#notNullJacksonAnnotation}}
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.10.1</version>
+            </dependency>
+        {{/notNullJacksonAnnotation}}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
