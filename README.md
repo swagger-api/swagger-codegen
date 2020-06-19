@@ -928,6 +928,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Mporium](http://mporium.com/)
 - [Neverfail](https://neverfail.com/)
 - [NexCap](http://www.nexess-solutions.com/fr/plateforme-iot/)
+- [Norwegian Air Shuttle](https://www.norwegian.com/)
 - [NTT DATA](http://www.nttdata.com/)
 - [nViso](http://www.nviso.ch/)
 - [Okiok](https://www.okiok.com)
@@ -992,6 +993,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
 - [zooplus](https://www.zooplus.com/)
+- [Trifork](https://www.trifork.com/)
 
 Presentations/Videos/Tutorials/Books
 ----------------------------------------
@@ -1177,7 +1179,7 @@ Who is eligible? Those who want to join must have at least 3 PRs merged into a g
 | Android |  |
 | Apex  |     |
 | Bash  | @kenjones-cisco (2017/09) |
-| C++      | @fvarose (2017/11) |
+| C++      | |
 | C#        | @mandrean (2017/08) |
 | Clojure   |  |
 | Dart      | @ircecho (2017/07) |
