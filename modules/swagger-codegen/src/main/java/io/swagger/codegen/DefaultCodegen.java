@@ -2,6 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -103,6 +106,8 @@ public class DefaultCodegen {
     protected String gitUserId, gitRepoId, releaseNote;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
+    protected Boolean skipAliasGeneration;
+    protected boolean ignoreImportMapping;
     // How to encode special characters like $
     // They are translated to words like "Dollar" and prefixed with '
     // Then translated back during JSON encoding and decoding
@@ -162,6 +167,12 @@ public class DefaultCodegen {
             this.setRemoveOperationIdPrefix(Boolean.valueOf(additionalProperties
                     .get(CodegenConstants.REMOVE_OPERATION_ID_PREFIX).toString()));
         }
+
+        if (additionalProperties.get(CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION) != null) {
+            setIgnoreImportMapping(Boolean.parseBoolean( additionalProperties.get(CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION).toString()));
+        } else {
+            setIgnoreImportMapping(defaultIgnoreImportMappingOption());
+        }
     }
 
     // override with any special post-processing for all models
@@ -179,41 +190,46 @@ public class DefaultCodegen {
                     allModels.put(modelName, cm);
                 }
             }
-            // Fix up all parent and interface CodegenModel references.
-            for (CodegenModel cm : allModels.values()) {
-                if (cm.parent != null) {
-                    cm.parentModel = allModels.get(cm.parent);
-                }
-                if (cm.interfaces != null && !cm.interfaces.isEmpty()) {
-                    cm.interfaceModels = new ArrayList<CodegenModel>(cm.interfaces.size());
-                    for (String intf : cm.interfaces) {
-                        CodegenModel intfModel = allModels.get(intf);
-                        if (intfModel != null) {
-                            cm.interfaceModels.add(intfModel);
-                        }
-                    }
-                }
-            }
-            // Let parent know about all its children
+
             for (String name : allModels.keySet()) {
-                CodegenModel cm = allModels.get(name);
-                CodegenModel parent = allModels.get(cm.parent);
-                // if a discriminator exists on the parent, don't add this child to the inheritance hierarchy
-                // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
-                while (parent != null) {
-                    if (parent.children == null) {
-                        parent.children = new ArrayList<CodegenModel>();
-                    }
-                    parent.children.add(cm);
-                    if (parent.discriminator == null) {
-                        parent = allModels.get(parent.parent);
-                    } else {
-                        parent = null;
-                    }
-                }
+                CodegenModel codegenModel = allModels.get(name);
+                fixUpParentAndInterfaces(codegenModel, allModels);
             }
         }
         return objs;
+    }
+
+    /**
+     * Fix up all parent and interface CodegenModel references.
+     * @param allModels
+     */
+    protected void fixUpParentAndInterfaces(CodegenModel codegenModel, Map<String, CodegenModel> allModels) {
+        if (codegenModel.parent != null) {
+            codegenModel.parentModel = allModels.get(codegenModel.parent);
+        }
+        if (codegenModel.interfaces != null && !codegenModel.interfaces.isEmpty()) {
+            codegenModel.interfaceModels = new ArrayList<CodegenModel>(codegenModel.interfaces.size());
+            for (String intf : codegenModel.interfaces) {
+                CodegenModel intfModel = allModels.get(intf);
+                if (intfModel != null) {
+                    codegenModel.interfaceModels.add(intfModel);
+                }
+            }
+        }
+        CodegenModel parent = codegenModel.parentModel;
+        // if a discriminator exists on the parent, don't add this child to the inheritance hierarchy
+        // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
+        while (parent != null) {
+            if (parent.children == null) {
+                parent.children = new ArrayList<CodegenModel>();
+            }
+            parent.children.add(codegenModel);
+            if (parent.discriminator == null) {
+                parent = allModels.get(parent.parent);
+            } else {
+                parent = null;
+            }
+        }
     }
 
     // override with any special post-processing
@@ -1474,6 +1490,10 @@ public class DefaultCodegen {
                 }
             }
 
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
+
             // child model (properties owned by the model itself)
             Model child = composed.getChild();
             if (child != null && child instanceof RefModel && allDefinitions != null) {
@@ -1486,6 +1506,7 @@ public class DefaultCodegen {
                     addProperties(allProperties, allRequired, child, allDefinitions);
                 }
             }
+
             addVars(m, properties, required, allDefinitions, allProperties, allRequired);
         } else {
             ModelImpl impl = (ModelImpl) model;
@@ -1556,9 +1577,14 @@ public class DefaultCodegen {
             }
         } else if (model instanceof RefModel) {
             String interfaceRef = ((RefModel) model).getSimpleRef();
-            Model interfaceModel = allDefinitions.get(interfaceRef);
-            addProperties(properties, required, interfaceModel, allDefinitions);
+            if (allDefinitions != null) {
+                Model interfaceModel = allDefinitions.get(interfaceRef);
+                addProperties(properties, required, interfaceModel, allDefinitions);
+            }
         } else if (model instanceof ComposedModel) {
+            if (model.getProperties() != null) {
+                properties.putAll(model.getProperties());
+            }
             for (Model component :((ComposedModel) model).getAllOf()) {
                 addProperties(properties, required, component, allDefinitions);
             }
@@ -1586,12 +1612,24 @@ public class DefaultCodegen {
      * @return Codegen Property object
      */
     public CodegenProperty fromProperty(String name, Property p) {
+        return fromProperty(name, p, null);
+    }
+    /**
+     * Convert Swagger Property object to Codegen Property object
+     *
+     * @param name name of the property
+     * @param p Swagger property object
+     * @param itemsDepth the depth in nested containers or null
+     * @return Codegen Property object
+     */
+    private CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
         if (p == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
         }
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
+        property.itemsDepth = itemsDepth;
         property.name = toVarName(name);
         property.baseName = name;
         property.nameInCamelCase = camelize(property.name, false);
@@ -1695,6 +1733,7 @@ public class DefaultCodegen {
         if (p instanceof IntegerProperty) {
             IntegerProperty sp = (IntegerProperty) p;
             property.isInteger = true;
+            property.isNumeric = true;
             if (sp.getEnum() != null) {
                 List<Integer> _enum = sp.getEnum();
                 property._enum = new ArrayList<String>();
@@ -1853,7 +1892,8 @@ public class DefaultCodegen {
             if (itemName == null) {
                 itemName = property.name;
             }
-            CodegenProperty cp = fromProperty(itemName, ap.getItems());
+            CodegenProperty cp = fromProperty(itemName, ap.getItems(),
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForArray(property, cp);
         } else if (p instanceof MapProperty) {
             MapProperty ap = (MapProperty) p;
@@ -1866,7 +1906,8 @@ public class DefaultCodegen {
             property.maxItems = ap.getMaxProperties();
 
             // handle inner property
-            CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties());
+            CodegenProperty cp = fromProperty("inner", ap.getAdditionalProperties(),
+                itemsDepth == null ? 1 : itemsDepth.intValue() + 1);
             updatePropertyForMap(property, cp);
         } else {
             setNonArrayMapProperty(property, type);
@@ -2698,6 +2739,11 @@ public class DefaultCodegen {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
                     String name = ((RefModel) sub).getSimpleRef();
+                    try {
+                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+                    } catch (UnsupportedEncodingException e) {
+                        LOGGER.error("Could not decoded string: " + name, e);
+                    }
                     name = getAlias(name);
                     if (typeMapping.containsKey(name)) {
                         name = typeMapping.get(name);
@@ -3069,10 +3115,10 @@ public class DefaultCodegen {
     }
 
     private void addParentContainer(CodegenModel m, String name, Property property) {
-        final CodegenProperty tmp = fromProperty(name, property);
-        addImport(m, tmp.complexType);
+        m.parentContainer = fromProperty(name, property);
+        addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
-        final String containerType = tmp.containerType;
+        final String containerType = m.parentContainer.containerType;
         final String instantiationType = instantiationTypes.get(containerType);
         if (instantiationType != null) {
             addImport(m, instantiationType);
@@ -3252,6 +3298,10 @@ public class DefaultCodegen {
                     // FIXME: readWriteVars can contain duplicated properties. Debug/breakpoint here while running C# generator (Dog and Cat models)
                     m.readWriteVars.add(cp);
                 }
+
+                if (m.discriminator != null && cp.name.equals(m.discriminator) && cp.isEnum) {
+                    m.vendorExtensions.put("x-discriminator-is-enum", true);
+                }
             }
         }
     }
@@ -3400,6 +3450,11 @@ public class DefaultCodegen {
         return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
     }
 
+    public String modelFilename(String templateName, String modelName) {
+        String suffix = modelTemplateFiles().get(templateName);
+        return modelFileFolder() + File.separator + toModelFilename(modelName) + suffix;
+    }
+
     /**
      * Return the full path and API documentation file
      *
@@ -3436,6 +3491,14 @@ public class DefaultCodegen {
 
     public void setSkipOverwrite(boolean skipOverwrite) {
         this.skipOverwrite = skipOverwrite;
+    }
+
+    public void setSkipAliasGeneration(Boolean skipAliasGeneration) {
+        this.skipAliasGeneration = skipAliasGeneration;
+    }
+
+    public Boolean getSkipAliasGeneration() {
+        return this.skipAliasGeneration;
     }
 
     public boolean isRemoveOperationIdPrefix() {
@@ -3937,5 +4000,27 @@ public class DefaultCodegen {
             }
         }
         codegenOperation.testPath = path;
+    }
+
+    public boolean getIgnoreImportMapping() {
+        return ignoreImportMapping;
+    }
+
+    public void setIgnoreImportMapping(boolean ignoreImportMapping) {
+        this.ignoreImportMapping = ignoreImportMapping;
+    }
+
+    public boolean defaultIgnoreImportMappingOption() {
+        return false;
+    }
+
+    protected boolean isModelObject(ModelImpl model) {
+        if ("object".equalsIgnoreCase(model.getType())) {
+            return true;
+        }
+        if ((StringUtils.EMPTY.equalsIgnoreCase(model.getType()) || model.getType() == null) && (model.getProperties() != null && !model.getProperties().isEmpty())) {
+            return true;
+        }
+        return false;
     }
 }
