@@ -3,8 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** |  | [optional] 
-**name** | **str** |  | [optional] 
 **foo** | **bool** |  | [optional] 
 **bar** | **int** |  | [optional] 
 **beer** | **str** |  | [optional] 
