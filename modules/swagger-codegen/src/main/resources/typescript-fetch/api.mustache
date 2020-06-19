@@ -29,7 +29,7 @@ export interface FetchAPI {
 }
 
 /**
- *  
+ *
  * @export
  * @interface FetchArgs
  */
@@ -39,7 +39,7 @@ export interface FetchArgs {
 }
 
 /**
- * 
+ *
  * @export
  * @class BaseAPI
  */
@@ -55,7 +55,7 @@ export class BaseAPI {
 };
 
 /**
- * 
+ *
  * @export
  * @class RequiredError
  * @extends {Error}
@@ -164,7 +164,9 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
                 {{/isDateTime}}
                 {{^isDateTime}}
                 {{#isDate}}
-                localVarQueryParameter['{{baseName}}'] = ({{paramName}} as any).toISOString();
+                localVarQueryParameter['{{baseName}}'] = ({{paramName}} as any instanceof Date) ?
+                    ({{paramName}} as any).toISOString().substr(0,10) :
+                    {{paramName}};
                 {{/isDate}}
                 {{^isDate}}
                 localVarQueryParameter['{{baseName}}'] = {{paramName}};

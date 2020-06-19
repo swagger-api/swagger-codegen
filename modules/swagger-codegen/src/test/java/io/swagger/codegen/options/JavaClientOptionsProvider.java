@@ -27,6 +27,7 @@ public class JavaClientOptionsProvider extends JavaOptionsProvider {
         options.put(JavaClientCodegen.USE_GZIP_FEATURE, "false");
         options.put(JavaClientCodegen.USE_RUNTIME_EXCEPTION, "false");
         options.put(JavaClientCodegen.JAVA8_MODE, "false");
+        options.put(JavaClientCodegen.NOT_NULL_JACKSON_ANNOTATION, "false");
         return options;
     }
 

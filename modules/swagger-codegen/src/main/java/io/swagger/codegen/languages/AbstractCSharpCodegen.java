@@ -516,6 +516,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
         if (objs != null) {
+            boolean hasAuthMethods = false;
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
@@ -564,8 +565,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                     }
 
                     processOperation(operation);
+
+                    if (operation.hasAuthMethods) {
+                        hasAuthMethods = true;
+                    }
                 }
             }
+            objs.put("hasAuthMethods", hasAuthMethods);
         }
 
         return objs;
