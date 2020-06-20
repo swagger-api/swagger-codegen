@@ -3,6 +3,9 @@
  */{{#description}}
 @ApiModel(description = "{{{description}}}"){{/description}}
 {{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{>xmlAnnotation}}
+
+{{#notNullJacksonAnnotation}}@JsonInclude(JsonInclude.Include.NON_NULL){{/notNullJacksonAnnotation}}
+
 public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcelableModel}}implements Parcelable {{#serializableModel}}, Serializable {{/serializableModel}}{{/parcelableModel}}{{^parcelableModel}}{{#serializableModel}}implements Serializable {{/serializableModel}}{{/parcelableModel}}{
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
@@ -74,7 +77,9 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
   {{/parent}}
   {{#gson}}
   {{#discriminator}}
+  {{^vendorExtensions.x-discriminator-is-enum}}
     this.{{discriminatorClassVarName}} = this.getClass().getSimpleName();
+  {{/vendorExtensions.x-discriminator-is-enum}}
   {{/discriminator}}
   {{/gson}}
   }
@@ -82,9 +87,11 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
   {{^parcelableModel}}
   {{#gson}}
   {{#discriminator}}
+  {{^vendorExtensions.x-discriminator-is-enum}}
   public {{classname}}() {
     this.{{discriminatorClassVarName}} = this.getClass().getSimpleName();
   }
+  {{/vendorExtensions.x-discriminator-is-enum}}
   {{/discriminator}}
   {{/gson}}
   {{/parcelableModel}}
