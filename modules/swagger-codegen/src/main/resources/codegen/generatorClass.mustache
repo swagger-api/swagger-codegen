@@ -134,6 +134,7 @@ public class {{generatorClass}} extends DefaultCodegen implements CodegenConfig 
    * Location to write model files.  You can use the modelPackage() as defined when the class is
    * instantiated
    */
+  @Override
   public String modelFileFolder() {
     return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
   }
