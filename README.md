@@ -89,7 +89,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
 
 # Table of contents
 
-  - [Swagger Code Generator](#swagger-code-generator)
+  - [Versioning](#versioning)
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
   - Installation
