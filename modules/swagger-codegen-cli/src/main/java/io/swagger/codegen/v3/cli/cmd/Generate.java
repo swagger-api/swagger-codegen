@@ -75,7 +75,9 @@ public class Generate implements Runnable {
     protected String ignoreFileOverride;
     protected Boolean removeOperationIdPrefix;
     protected Boolean disableExamples;
+    protected Boolean resolveFully;
     protected Boolean ignoreImportMappings;
+    protected Boolean flattenInlineSchema;
     private String url;
     private List<CodegenArgument> codegenArguments;
 
@@ -218,6 +220,14 @@ public class Generate implements Runnable {
     public void setDisableExamples(Boolean disableExamples) {
         this.disableExamples = disableExamples;
     }
+    
+    public void setResolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
+    }
+
+    public void setFlattenInlineSchema(Boolean flattenInlineSchema) {
+        this.flattenInlineSchema = flattenInlineSchema;
+    }
 
     public void setIgnoreImportMappings(Boolean ignoreImportMappings) {
         this.ignoreImportMappings = ignoreImportMappings;
@@ -326,6 +336,10 @@ public class Generate implements Runnable {
             configurator.setIgnoreFileOverride(ignoreFileOverride);
         }
 
+        if (flattenInlineSchema != null) {
+            configurator.setFlattenInlineSchema(flattenInlineSchema);
+        }
+
         if (removeOperationIdPrefix != null) {
             configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
         }
@@ -342,6 +356,10 @@ public class Generate implements Runnable {
             additionalProperties.add(String.format("%s=%s", CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION, Boolean.parseBoolean(ignoreImportMappings.toString())));
         }
 
+        if (resolveFully != null) {
+            configurator.setResolveFully(resolveFully);
+        }
+      
         if (CodegenConstants.MUSTACHE_TEMPLATE_ENGINE.equalsIgnoreCase(templateEngine)) {
             additionalProperties.add(String.format("%s=%s", CodegenConstants.TEMPLATE_ENGINE, CodegenConstants.MUSTACHE_TEMPLATE_ENGINE));
         } else {

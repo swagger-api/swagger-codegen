@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  version: "v2.0"
+  title: Resolve Fully Test
+paths:
+  /product:
+    get:
+      operationId: getProduct
+      summary: Gets a Product by ID.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./product.yaml#/Product"
+    put:
+      operationId: updateProduct
+      summary: Updates a Product by ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./product.yaml#/ProductRef"
+      responses:
+        '201':
+          description: Created
