@@ -1477,7 +1477,7 @@ public class DefaultCodegen {
 
                 if(parentName != null) {
                     m.parentSchema = parentName;
-                    m.parent = toModelName(parentName);
+                    m.parent = typeMapping.containsKey(parentName) ? typeMapping.get(parentName): toModelName(parentName);
                     addImport(m, m.parent);
                     if (allDefinitions != null) {
                         final Model parentModel = allDefinitions.get(m.parentSchema);
