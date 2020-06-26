@@ -87,7 +87,7 @@ public class MustacheTemplateEngine implements TemplateEngine {
 
     public String getFullTemplateFile(CodegenConfig config, String templateFile) {
         final String library = config.getLibrary();
-        final String libTemplateFile = new StringBuilder(config.templateDir())
+        final String libTemplateFile = new StringBuilder(config.customTemplateDir())
                 .append(File.separator)
                 .append("libraries")
                 .append(File.separator)
@@ -98,7 +98,7 @@ public class MustacheTemplateEngine implements TemplateEngine {
                 return libTemplateFile;
             }
         }
-        final String template = config.templateDir() + File.separator + templateFile;
+        final String template = config.customTemplateDir() + File.separator + templateFile;
         if (new File(template).exists()) {
             return template;
         }
