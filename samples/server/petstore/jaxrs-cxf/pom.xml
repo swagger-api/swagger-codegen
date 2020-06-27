@@ -4,7 +4,7 @@
     <artifactId>swagger-cxf-server</artifactId>
     <packaging>war</packaging>
     <name>swagger-cxf-server</name>
-    <description>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \&quot; \\</description>
+    <description>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\</description>
     <version>1.0.0</version>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -190,7 +190,7 @@
         <logback-version>1.1.7</logback-version>
         <servlet-api-version>2.5</servlet-api-version>
         <beanvalidation-version>1.1.0.Final</beanvalidation-version>
-        <cxf-version>3.2.1</cxf-version>
+        <cxf-version>3.3.6</cxf-version>
         <jackson-jaxrs-version>2.10.1</jackson-jaxrs-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
