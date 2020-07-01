@@ -75,7 +75,7 @@ func TestGetPetByIdWithInvalidID(t *testing.T) {
 }
 
 func TestUpdatePetWithForm(t *testing.T) {
-	r, err := client.PetApi.UpdatePetWithForm(context.Background(), 12830, &sw.UpdatePetWithFormOpts{
+	r, err := client.PetApi.UpdatePetWithForm(context.Background(), 12830, &sw.PetApiUpdatePetWithFormOpts{
 		Name:   optional.NewString("golang"),
 		Status: optional.NewString("available"),
 	})
@@ -104,7 +104,7 @@ func TestFindPetsByTag(t *testing.T) {
 			assert := assert.New(t)
 			for i := 0; i < len(resp); i++ {
 				if resp[i].Id == 12830 {
-					assert.Equal(resp[i].Status, "pending", "Pet status should be `pending`")
+					assert.Equal(resp[i].Status, "available", "Pet status should be `available`")
 					found = true
 				}
 			}
@@ -145,7 +145,7 @@ func TestFindPetsByStatus(t *testing.T) {
 func TestUploadFile(t *testing.T) {
 	file, _ := os.Open("../python/testfiles/foo.png")
 
-	_, r, err := client.PetApi.UploadFile(context.Background(), 12830, &sw.UploadFileOpts{
+	_, r, err := client.PetApi.UploadFile(context.Background(), 12830, &sw.PetApiUploadFileOpts{
 		AdditionalMetadata: optional.NewString("golang"),
 		File:               optional.NewInterface(file),
 	})

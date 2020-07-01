@@ -5,6 +5,27 @@ namespace Swagger\Client;
 // test object serializer
 class ObjectSerializerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test the sanitizeForSerialization method with a stdClass.
+     */
+    public function testSanitizeForSerializationWithStdClass()
+    {
+        // Initialize the ObjectSerializer.
+        $s = new ObjectSerializer();
+        
+        // Build a stdClass object.
+        $obj = new \stdClass();
+        $obj->prop1 = 'val1';
+        $obj->prop2 = 'val2';
+        
+        // Call the method.
+        $serialized = $s->sanitizeForSerialization($obj);
+
+        // Assert that the stdClass object is sanitized as expected.
+        $this->assertEquals('val1', $serialized->prop1);
+        $this->assertEquals('val2', $serialized->prop2);
+    }
+    
     // test sanitizeFilename
     public function testSanitizeFilename()
     {

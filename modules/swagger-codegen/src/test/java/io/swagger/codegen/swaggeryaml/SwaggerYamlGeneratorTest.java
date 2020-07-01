@@ -1,16 +1,23 @@
 package io.swagger.codegen.swaggeryaml;
 
 import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.TemporaryFolder;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
 
 public class SwaggerYamlGeneratorTest {
+
+    @AfterClass
+    public void cleanup() {
+        System.clearProperty(CodegenConstants.SUPPORTING_FILES);
+    }
 
     @Test
     public void testLongText() throws Exception {
