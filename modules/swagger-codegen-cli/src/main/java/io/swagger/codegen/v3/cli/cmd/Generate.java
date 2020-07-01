@@ -77,6 +77,7 @@ public class Generate implements Runnable {
     protected Boolean disableExamples;
     protected Boolean resolveFully;
     protected Boolean ignoreImportMappings;
+    protected Boolean flattenInlineSchema;
     private String url;
     private List<CodegenArgument> codegenArguments;
 
@@ -224,6 +225,10 @@ public class Generate implements Runnable {
         this.resolveFully = resolveFully;
     }
 
+    public void setFlattenInlineSchema(Boolean flattenInlineSchema) {
+        this.flattenInlineSchema = flattenInlineSchema;
+    }
+
     public void setIgnoreImportMappings(Boolean ignoreImportMappings) {
         this.ignoreImportMappings = ignoreImportMappings;
     }
@@ -329,6 +334,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(ignoreFileOverride)) {
             configurator.setIgnoreFileOverride(ignoreFileOverride);
+        }
+
+        if (flattenInlineSchema != null) {
+            configurator.setFlattenInlineSchema(flattenInlineSchema);
         }
 
         if (removeOperationIdPrefix != null) {
