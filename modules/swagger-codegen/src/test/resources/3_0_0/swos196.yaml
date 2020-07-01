@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Test in html2
+paths:
+  /access-profile:
+    post:
+      operationId: createProfile
+      summary: Create Profile
+      description: create Profile Html2
+      tags:
+        - Access Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/access-profile"
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                foo:
+                  value:
+                    {
+                      "id": 0
+                    }
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    access-profile:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+        companyId:
+          type: "string"
+        status:
+          type: "boolean"
+        permissionId:
+          type: "string"
+          format: "uuid"
+    Error:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+        message:
+          type: "string"
