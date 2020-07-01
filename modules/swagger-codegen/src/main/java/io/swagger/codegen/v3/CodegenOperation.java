@@ -75,7 +75,7 @@ public class CodegenOperation extends CodegenObject {
 
         // Check if one of the authMethods is a query param
         for (CodegenSecurity sec : authMethods) {
-            if (sec.isKeyInQuery) {
+            if (sec.getIsKeyInQuery()) {
                 return true;
             }
         }
