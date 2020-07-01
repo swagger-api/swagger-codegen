@@ -65,7 +65,22 @@ public class CodegenOperation extends CodegenObject {
      * @return true if query parameter exists, false otherwise
      */
     public boolean getHasQueryParams() {
-        return nonempty(queryParams);
+        if (nonempty(queryParams)) {
+            return true;
+        }
+
+        if (authMethods == null || authMethods.isEmpty()) {
+            return false;
+        }
+
+        // Check if one of the authMethods is a query param
+        for (CodegenSecurity sec : authMethods) {
+            if (sec.getIsKeyInQuery()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
