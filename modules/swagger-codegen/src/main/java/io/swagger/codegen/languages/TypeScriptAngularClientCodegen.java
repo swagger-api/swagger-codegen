@@ -127,8 +127,16 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
             taggedUnions = Boolean.parseBoolean(additionalProperties.get(TAGGED_UNIONS).toString());
         }
 
-        if (additionalProperties.containsKey(PROVIDED_IN_ROOT) && !ngVersion.atLeast("6.0.0")) {
-            additionalProperties.put(PROVIDED_IN_ROOT,false);
+        if (ngVersion.atLeast("6.0.0")) {
+            if (!additionalProperties.containsKey(PROVIDED_IN_ROOT)) {
+                additionalProperties.put(PROVIDED_IN_ROOT, true);
+            } else {
+                additionalProperties.put(PROVIDED_IN_ROOT, Boolean.parseBoolean(
+                    additionalProperties.get(PROVIDED_IN_ROOT).toString()
+                ));
+            }
+        } else {
+            additionalProperties.put(PROVIDED_IN_ROOT, false);
         }
 
         additionalProperties.put(NG_VERSION, ngVersion);
