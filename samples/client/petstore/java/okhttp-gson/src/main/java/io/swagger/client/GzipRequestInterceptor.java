@@ -13,7 +13,11 @@
 
 package io.swagger.client;
 
-import com.squareup.okhttp.*;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import okio.Buffer;
 import okio.BufferedSink;
 import okio.GzipSink;
