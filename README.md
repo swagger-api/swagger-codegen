@@ -982,6 +982,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Trexle](https://trexle.com/)
 - [Upwork](http://upwork.com/)
 - [uShip](https://www.uship.com/)
+- [Variograma](https://variograma.pt)
 - [VMware](https://vmware.com/)
 - [Viavi Solutions Inc.](https://www.viavisolutions.com)
 - [W.UP](http://wup.hu/?siteLang=en)
