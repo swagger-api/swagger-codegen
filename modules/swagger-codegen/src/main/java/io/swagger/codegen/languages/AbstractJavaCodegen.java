@@ -57,6 +57,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
     public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
+    public static final String ERROR_ON_UNKNOWN_ENUM = "errorOnUnknownEnum";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -364,6 +365,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setWithXml(Boolean.valueOf(additionalProperties.get(WITH_XML).toString()));
         }
         additionalProperties.put(WITH_XML, withXml);
+
+        if (additionalProperties.containsKey(ERROR_ON_UNKNOWN_ENUM)) {
+            boolean errorOnUnknownEnum = Boolean.parseBoolean(additionalProperties.get(ERROR_ON_UNKNOWN_ENUM).toString());
+            additionalProperties.put(ERROR_ON_UNKNOWN_ENUM, errorOnUnknownEnum);
+        }
 
         // make api and model doc path available in mustache template
         additionalProperties.put("apiDocPath", apiDocPath);
