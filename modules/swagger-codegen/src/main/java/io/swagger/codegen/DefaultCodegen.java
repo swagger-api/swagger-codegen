@@ -1398,6 +1398,12 @@ public class DefaultCodegen {
             List<String> required = new ArrayList<String>();
             Map<String, Property> allProperties;
             List<String> allRequired;
+
+            List<Model> allComponents = composed.getAllOf();
+            if (allComponents.size() > 0 && composed.getParent() == null) {
+                composed.setParent(allComponents.get(0));
+            }
+
             if (supportsInheritance || supportsMixins) {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
