@@ -1401,7 +1401,7 @@ public class DefaultCodegen {
 
             List<Model> allComponents = composed.getAllOf();
             if (allComponents.size() > 0 && composed.getParent() == null) {
-                composed.setParent(allComponents.get(0));
+                rebuildComponents(composed);
             }
 
             if (supportsInheritance || supportsMixins) {
@@ -1538,6 +1538,30 @@ public class DefaultCodegen {
             }
         }
         return m;
+    }
+
+    private void rebuildComponents(ComposedModel composedModel) {
+        List<Model> allComponents = composedModel.getAllOf();
+        if (allComponents.size() >= 1) {
+            composedModel.setParent(allComponents.get(0));
+            if (allComponents.size() >= 2) {
+                composedModel.setChild(allComponents.get(allComponents.size() - 1));
+                List<RefModel> interfaces = new ArrayList();
+                int size = allComponents.size();
+                Iterator modelIterator = allComponents.subList(1, size - 1).iterator();
+
+                while(modelIterator.hasNext()) {
+                    Model model = (Model)modelIterator.next();
+                    if (model instanceof RefModel) {
+                        RefModel ref = (RefModel)model;
+                        interfaces.add(ref);
+                    }
+                }
+                composedModel.setInterfaces(interfaces);
+            } else {
+                composedModel.setChild(new ModelImpl());
+            }
+        }
     }
 
     /**
