@@ -1398,6 +1398,12 @@ public class DefaultCodegen {
             List<String> required = new ArrayList<String>();
             Map<String, Property> allProperties;
             List<String> allRequired;
+
+            List<Model> allComponents = composed.getAllOf();
+            if (allComponents.size() > 0 && composed.getParent() == null) {
+                rebuildComponents(composed);
+            }
+
             if (supportsInheritance || supportsMixins) {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
@@ -1477,7 +1483,7 @@ public class DefaultCodegen {
 
                 if(parentName != null) {
                     m.parentSchema = parentName;
-                    m.parent = toModelName(parentName);
+                    m.parent = typeMapping.containsKey(parentName) ? typeMapping.get(parentName): toModelName(parentName);
                     addImport(m, m.parent);
                     if (allDefinitions != null) {
                         final Model parentModel = allDefinitions.get(m.parentSchema);
@@ -1532,6 +1538,30 @@ public class DefaultCodegen {
             }
         }
         return m;
+    }
+
+    private void rebuildComponents(ComposedModel composedModel) {
+        List<Model> allComponents = composedModel.getAllOf();
+        if (allComponents.size() >= 1) {
+            composedModel.setParent(allComponents.get(0));
+            if (allComponents.size() >= 2) {
+                composedModel.setChild(allComponents.get(allComponents.size() - 1));
+                List<RefModel> interfaces = new ArrayList();
+                int size = allComponents.size();
+                Iterator modelIterator = allComponents.subList(1, size - 1).iterator();
+
+                while(modelIterator.hasNext()) {
+                    Model model = (Model)modelIterator.next();
+                    if (model instanceof RefModel) {
+                        RefModel ref = (RefModel)model;
+                        interfaces.add(ref);
+                    }
+                }
+                composedModel.setInterfaces(interfaces);
+            } else {
+                composedModel.setChild(new ModelImpl());
+            }
+        }
     }
 
     /**
