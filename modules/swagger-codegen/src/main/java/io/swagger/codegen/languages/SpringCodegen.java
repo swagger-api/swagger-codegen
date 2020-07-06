@@ -4,6 +4,7 @@ import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
+import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
 import io.swagger.codegen.languages.features.OptionalFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
@@ -17,7 +18,7 @@ import java.util.regex.Matcher;
 
 
 public class SpringCodegen extends AbstractJavaCodegen
-        implements BeanValidationFeatures, OptionalFeatures {
+        implements BeanValidationFeatures, OptionalFeatures, NotNullAnnotationFeatures {
     public static final String DEFAULT_LIBRARY = "spring-boot";
     public static final String TITLE = "title";
     public static final String CONFIG_PACKAGE = "configPackage";
@@ -53,6 +54,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean useOptional = false;
     protected boolean openFeign = false;
     protected boolean defaultInterfaces = true;
+    private boolean notNullJacksonAnnotation;
 
     public SpringCodegen() {
         super();
@@ -497,6 +499,16 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
 
         return objs;
+    }
+
+    @Override
+    public void setNotNullJacksonAnnotation(boolean notNullJacksonAnnotation) {
+        this.notNullJacksonAnnotation = notNullJacksonAnnotation;
+    }
+
+    @Override
+    public boolean isNotNullJacksonAnnotation() {
+        return notNullJacksonAnnotation;
     }
 
     private interface DataTypeAssigner {
