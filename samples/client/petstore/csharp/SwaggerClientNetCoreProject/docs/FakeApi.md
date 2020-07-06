@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**FakeOuterCompositeSerialize**](FakeApi.md#fakeoutercompositeserialize) | **POST** /fake/outer/composite | 
 [**FakeOuterNumberSerialize**](FakeApi.md#fakeouternumberserialize) | **POST** /fake/outer/number | 
 [**FakeOuterStringSerialize**](FakeApi.md#fakeouterstringserialize) | **POST** /fake/outer/string | 
+[**TestBodyWithQueryParams**](FakeApi.md#testbodywithqueryparams) | **PUT** /fake/body-with-query-params | 
 [**TestClientModel**](FakeApi.md#testclientmodel) | **PATCH** /fake | To test \&quot;client\&quot; model
 [**TestEndpointParameters**](FakeApi.md#testendpointparameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**TestEnumParameters**](FakeApi.md#testenumparameters) | **GET** /fake | To test enum parameters
@@ -255,6 +256,65 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="testbodywithqueryparams"></a>
+# **TestBodyWithQueryParams**
+> void TestBodyWithQueryParams (User body, string query)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class TestBodyWithQueryParamsExample
+    {
+        public void main()
+        {
+            var apiInstance = new FakeApi();
+            var body = new User(); // User | 
+            var query = query_example;  // string | 
+
+            try
+            {
+                apiInstance.TestBodyWithQueryParams(body, query);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling FakeApi.TestBodyWithQueryParams: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**User**](User.md)|  | 
+ **query** | **string**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="testclientmodel"></a>
 # **TestClientModel**
 > ModelClient TestClientModel (ModelClient body)
@@ -429,11 +489,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var enumFormStringArray = new List<string>(); // List<string> | Form parameter enum test (string array) (optional) 
+            var enumFormStringArray = enumFormStringArray_example;  // List<string> | Form parameter enum test (string array) (optional) 
             var enumFormString = enumFormString_example;  // string | Form parameter enum test (string) (optional)  (default to -efg)
-            var enumHeaderStringArray = new List<string>(); // List<string> | Header parameter enum test (string array) (optional) 
+            var enumHeaderStringArray = enumHeaderStringArray_example;  // List<string> | Header parameter enum test (string array) (optional) 
             var enumHeaderString = enumHeaderString_example;  // string | Header parameter enum test (string) (optional)  (default to -efg)
-            var enumQueryStringArray = new List<string>(); // List<string> | Query parameter enum test (string array) (optional) 
+            var enumQueryStringArray = enumQueryStringArray_example;  // List<string> | Query parameter enum test (string array) (optional) 
             var enumQueryString = enumQueryString_example;  // string | Query parameter enum test (string) (optional)  (default to -efg)
             var enumQueryInteger = 56;  // int? | Query parameter enum test (double) (optional) 
             var enumQueryDouble = 1.2;  // double? | Query parameter enum test (double) (optional) 
@@ -456,11 +516,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enumFormStringArray** | [**List&lt;string&gt;**](string.md)| Form parameter enum test (string array) | [optional] 
+ **enumFormStringArray** | **List&lt;string&gt;**| Form parameter enum test (string array) | [optional] 
  **enumFormString** | **string**| Form parameter enum test (string) | [optional] [default to -efg]
- **enumHeaderStringArray** | [**List&lt;string&gt;**](string.md)| Header parameter enum test (string array) | [optional] 
+ **enumHeaderStringArray** | **List&lt;string&gt;**| Header parameter enum test (string array) | [optional] 
  **enumHeaderString** | **string**| Header parameter enum test (string) | [optional] [default to -efg]
- **enumQueryStringArray** | [**List&lt;string&gt;**](string.md)| Query parameter enum test (string array) | [optional] 
+ **enumQueryStringArray** | **List&lt;string&gt;**| Query parameter enum test (string array) | [optional] 
  **enumQueryString** | **string**| Query parameter enum test (string) | [optional] [default to -efg]
  **enumQueryInteger** | **int?**| Query parameter enum test (double) | [optional] 
  **enumQueryDouble** | **double?**| Query parameter enum test (double) | [optional] 

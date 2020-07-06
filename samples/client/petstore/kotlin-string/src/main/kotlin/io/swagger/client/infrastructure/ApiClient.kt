@@ -2,6 +2,8 @@ package io.swagger.client.infrastructure
 
 import okhttp3.*
 import java.io.File
+import java.io.IOException
+import java.util.regex.Pattern
 
 open class ApiClient(val baseUrl: String) {
     companion object {
@@ -32,13 +34,22 @@ open class ApiClient(val baseUrl: String) {
                     MediaType.parse(mediaType), content
             )
         } else if(mediaType == FormDataMediaType) {
-            var builder = FormBody.Builder()
+           val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
             // content's type *must* be Map<String, Any>
             @Suppress("UNCHECKED_CAST")
-            (content as Map<String,String>).forEach { key, value ->
-                builder = builder.add(key, value)
+            (content as Map<String,Any>).forEach { key, value ->
+                if(value::class == File::class) {
+                    val file = value as File
+                    requestBodyBuilder.addFormDataPart(key, file.name, RequestBody.create(MediaType.parse("application/octet-stream"), file))
+                } else {
+                    val stringValue = value as String
+                    requestBodyBuilder.addFormDataPart(key, stringValue)
+                }
+                TODO("Handle other types inside FormDataMediaType")
             }
-            return builder.build()
+
+            return requestBodyBuilder.build()
         }  else if(mediaType == JsonMediaType) {
             return RequestBody.create(
                     MediaType.parse(mediaType), Serializer.moshi.adapter(T::class.java).toJson(content)
@@ -51,12 +62,33 @@ open class ApiClient(val baseUrl: String) {
         TODO("requestBody currently only supports JSON body and File body.")
     }
 
-    inline protected fun <reified T: Any?> responseBody(body: ResponseBody?, mediaType: String = JsonMediaType): T? {
-        if(body == null) return null
-        return when(mediaType) {
-            JsonMediaType -> Serializer.moshi.adapter(T::class.java).fromJson(body.source())
-            else -> TODO()
+    inline protected fun <reified T: Any?> responseBody(response: Response, mediaType: String = JsonMediaType): T? {
+        if(response.body() == null) return null
+        
+        if(T::class.java == java.io.File::class.java){
+            return downloadFileFromResponse(response) as T
+        } else if(T::class == kotlin.Unit::class) {
+            return kotlin.Unit as T
         }
+        
+        var contentType = response.headers().get("Content-Type")
+        
+        if(contentType == null) {
+            contentType = JsonMediaType
+        }
+
+		if(isJsonMime(contentType)){
+            return Serializer.moshi.adapter(T::class.java).fromJson(response.body()?.source())
+        } else if(contentType.equals(String.javaClass)){
+            return response.body().toString() as T
+        } else {
+            TODO("Fill in more types!")
+        }
+    }
+    
+    fun isJsonMime(mime: String?): Boolean {
+        val jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$"
+        return mime != null && (mime.matches(jsonMime.toRegex()) || mime == "*/*")
     }
 
     inline protected fun <reified T: Any?> request(requestConfig: RequestConfig, body : Any? = null): ApiInfrastructureResponse<T?> {
@@ -72,7 +104,7 @@ open class ApiClient(val baseUrl: String) {
         }
 
         val url = urlBuilder.build()
-        val headers = requestConfig.headers + defaultHeaders
+        val headers = defaultHeaders + requestConfig.headers
 
         if(headers[ContentType] ?: "" == "") {
             throw kotlin.IllegalStateException("Missing Content-Type header. This is required.")
@@ -113,7 +145,7 @@ open class ApiClient(val baseUrl: String) {
                     response.headers().toMultimap()
             )
             response.isSuccessful -> return Success(
-                    responseBody(response.body(), accept),
+                    responseBody(response, accept),
                     response.code(),
                     response.headers().toMultimap()
             )
@@ -129,5 +161,51 @@ open class ApiClient(val baseUrl: String) {
                     response.headers().toMultimap()
             )
         }
+    }
+    
+    @Throws(IOException::class)
+    fun downloadFileFromResponse(response: Response): File {
+        val file = prepareDownloadFile(response)
+
+        response.body()?.byteStream().use{ input ->
+            File(file.path).outputStream().use { input?.copyTo(it) }
+        }
+
+        return file
+    }
+
+    @Throws(IOException::class)
+    fun prepareDownloadFile(response: Response): File {
+        var filename: String? = null
+        var contentDisposition = response.headers().get("Content-Disposition")
+
+        if(contentDisposition != null && contentDisposition != ""){
+            val pattern = Pattern.compile("filename=['\"]?([^'\"\\s]+)['\"]?")
+            val matcher = pattern.matcher(contentDisposition)
+
+            if (matcher.find())
+                filename = matcher.group(1)
+        }
+        var prefix: String
+        var suffix: String? = null
+
+        if (filename == null) {
+            prefix = "download-"
+            suffix = ""
+        } else {
+            val pos = filename.lastIndexOf('.')
+
+            if (pos == -1) {
+            prefix = filename + "-";
+            } else {
+                prefix = filename.substring(0, pos) + "-"
+                suffix = filename.substring(pos)
+            }
+            // File.createTempFile requires the prefix to be at least three characters long
+        if (prefix.length < 3)
+            prefix = "download-"
+        }
+
+        return File.createTempFile(prefix, suffix);
     }
 }

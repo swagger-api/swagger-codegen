@@ -1,3 +1,4 @@
+
 /*
  * Swagger Petstore
  *
@@ -11,11 +12,11 @@
 package petstore
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"context"
 )
 
 // Linger please

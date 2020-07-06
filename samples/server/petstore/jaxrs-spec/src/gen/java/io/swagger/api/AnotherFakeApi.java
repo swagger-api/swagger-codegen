@@ -22,7 +22,8 @@ public class AnotherFakeApi {
     @Produces({ "application/json" })
     @ApiOperation(value = "To test special tags", notes = "To test special tags", response = Client.class, tags={ "$another-fake?" })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Client.class) })
+        @ApiResponse(code = 200, message = "successful operation", response = Client.class)
+    })
     public Response testSpecialTags(@Valid Client body) {
         return Response.ok().entity("magic!").build();
     }
