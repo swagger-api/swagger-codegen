@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**FakeOuterCompositeSerialize**](FakeApi.md#FakeOuterCompositeSerialize) | **Post** /fake/outer/composite | 
 [**FakeOuterNumberSerialize**](FakeApi.md#FakeOuterNumberSerialize) | **Post** /fake/outer/number | 
 [**FakeOuterStringSerialize**](FakeApi.md#FakeOuterStringSerialize) | **Post** /fake/outer/string | 
+[**TestBodyWithQueryParams**](FakeApi.md#TestBodyWithQueryParams) | **Put** /fake/body-with-query-params | 
 [**TestClientModel**](FakeApi.md#TestClientModel) | **Patch** /fake | To test \&quot;client\&quot; model
 [**TestEndpointParameters**](FakeApi.md#TestEndpointParameters) | **Post** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**TestEnumParameters**](FakeApi.md#TestEnumParameters) | **Get** /fake | To test enum parameters
@@ -26,10 +27,10 @@ Test serialization of outer boolean types
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***FakeOuterBooleanSerializeOpts** | optional parameters | nil if no parameters
+ **optional** | ***FakeApiFakeOuterBooleanSerializeOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a FakeOuterBooleanSerializeOpts struct
+Optional parameters are passed through a pointer to a FakeApiFakeOuterBooleanSerializeOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -61,10 +62,10 @@ Test serialization of object with outer number type
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***FakeOuterCompositeSerializeOpts** | optional parameters | nil if no parameters
+ **optional** | ***FakeApiFakeOuterCompositeSerializeOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a FakeOuterCompositeSerializeOpts struct
+Optional parameters are passed through a pointer to a FakeApiFakeOuterCompositeSerializeOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -96,10 +97,10 @@ Test serialization of outer number types
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***FakeOuterNumberSerializeOpts** | optional parameters | nil if no parameters
+ **optional** | ***FakeApiFakeOuterNumberSerializeOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a FakeOuterNumberSerializeOpts struct
+Optional parameters are passed through a pointer to a FakeApiFakeOuterNumberSerializeOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -131,10 +132,10 @@ Test serialization of outer string types
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***FakeOuterStringSerializeOpts** | optional parameters | nil if no parameters
+ **optional** | ***FakeApiFakeOuterStringSerializeOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a FakeOuterStringSerializeOpts struct
+Optional parameters are passed through a pointer to a FakeApiFakeOuterStringSerializeOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -151,6 +152,33 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **TestBodyWithQueryParams**
+> TestBodyWithQueryParams(ctx, body, query)
+
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**User**](User.md)|  | 
+  **query** | **string**|  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -198,10 +226,10 @@ Name | Type | Description  | Notes
   **double** | **float64**| None | 
   **patternWithoutDelimiter** | **string**| None | 
   **byte_** | **string**| None | 
- **optional** | ***TestEndpointParametersOpts** | optional parameters | nil if no parameters
+ **optional** | ***FakeApiTestEndpointParametersOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a TestEndpointParametersOpts struct
+Optional parameters are passed through a pointer to a FakeApiTestEndpointParametersOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -246,10 +274,10 @@ To test enum parameters
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***TestEnumParametersOpts** | optional parameters | nil if no parameters
+ **optional** | ***FakeApiTestEnumParametersOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a TestEnumParametersOpts struct
+Optional parameters are passed through a pointer to a FakeApiTestEnumParametersOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

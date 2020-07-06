@@ -104,7 +104,7 @@ private:
     /// <remarks>
     /// 
     /// </remarks>
-    /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+    /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
     virtual void get_user_by_name(const std::string &username, Pistache::Http::ResponseWriter &response) = 0;
 
     /// <summary>

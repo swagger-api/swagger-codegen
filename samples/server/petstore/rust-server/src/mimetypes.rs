@@ -61,10 +61,6 @@ pub mod requests {
     lazy_static! {
         pub static ref TEST_SPECIAL_TAGS: Mime = "application/json".parse().unwrap();
     }
-   /// Create Mime objects for the request content types for TestBodyWithQueryParams
-    lazy_static! {
-        pub static ref TEST_BODY_WITH_QUERY_PARAMS: Mime = "application/json".parse().unwrap();
-    }
    /// Create Mime objects for the request content types for FakeOuterBooleanSerialize
     lazy_static! {
         pub static ref FAKE_OUTER_BOOLEAN_SERIALIZE: Mime = "application/json".parse().unwrap();
@@ -80,6 +76,10 @@ pub mod requests {
    /// Create Mime objects for the request content types for FakeOuterStringSerialize
     lazy_static! {
         pub static ref FAKE_OUTER_STRING_SERIALIZE: Mime = "application/json".parse().unwrap();
+    }
+   /// Create Mime objects for the request content types for TestBodyWithQueryParams
+    lazy_static! {
+        pub static ref TEST_BODY_WITH_QUERY_PARAMS: Mime = "application/json".parse().unwrap();
     }
    /// Create Mime objects for the request content types for TestClientModel
     lazy_static! {

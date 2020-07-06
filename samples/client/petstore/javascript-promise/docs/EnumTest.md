@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enumString** | **String** |  | [optional] 
+**enumStringRequired** | **String** |  | 
 **enumInteger** | **Number** |  | [optional] 
 **enumNumber** | **Number** |  | [optional] 
 **outerEnum** | [**OuterEnum**](OuterEnum.md) |  | [optional] 
@@ -22,13 +23,26 @@ Name | Type | Description | Notes
 
 
 
+<a name="EnumStringRequiredEnum"></a>
+## Enum: EnumStringRequiredEnum
+
+
+* `UPPER` (value: `"UPPER"`)
+
+* `lower` (value: `"lower"`)
+
+* `empty` (value: `""`)
+
+
+
+
 <a name="EnumIntegerEnum"></a>
 ## Enum: EnumIntegerEnum
 
 
-* `1` (value: `1`)
+* `_1` (value: `1`)
 
-* `-1` (value: `-1`)
+* `_1_2` (value: `-1`)
 
 
 
@@ -37,9 +51,9 @@ Name | Type | Description | Notes
 ## Enum: EnumNumberEnum
 
 
-* `1.1` (value: `1.1`)
+* `_11` (value: `1.1`)
 
-* `-1.2` (value: `-1.2`)
+* `_12` (value: `-1.2`)
 
 
 

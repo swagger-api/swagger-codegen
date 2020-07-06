@@ -13,6 +13,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -227,6 +228,65 @@ public class FakeApi {
     GenericType<String> localVarReturnType = new GenericType<String>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
+  /**
+   * 
+   * 
+   * @param body  (required)
+   * @param query  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void testBodyWithQueryParams(User body, String query) throws ApiException {
+
+    testBodyWithQueryParamsWithHttpInfo(body, query);
+  }
+
+  /**
+   * 
+   * 
+   * @param body  (required)
+   * @param query  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> testBodyWithQueryParamsWithHttpInfo(User body, String query) throws ApiException {
+    Object localVarPostBody = body;
+    
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling testBodyWithQueryParams");
+    }
+    
+    // verify the required parameter 'query' is set
+    if (query == null) {
+      throw new ApiException(400, "Missing the required parameter 'query' when calling testBodyWithQueryParams");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/fake/body-with-query-params";
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "query", query));
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    return apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
   /**
    * To test \&quot;client\&quot; model
    * To test \&quot;client\&quot; model
