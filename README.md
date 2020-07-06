@@ -89,7 +89,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
 
 # Table of contents
 
-  - [Swagger Code Generator](#swagger-code-generator)
+  - [Versioning](#versioning)
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
   - Installation
@@ -982,6 +982,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Trexle](https://trexle.com/)
 - [Upwork](http://upwork.com/)
 - [uShip](https://www.uship.com/)
+- [Variograma](https://variograma.pt)
 - [VMware](https://vmware.com/)
 - [Viavi Solutions Inc.](https://www.viavisolutions.com)
 - [W.UP](http://wup.hu/?siteLang=en)
@@ -993,6 +994,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Zalando](https://tech.zalando.com)
 - [ZEEF.com](https://zeef.com/)
 - [zooplus](https://www.zooplus.com/)
+- [Trifork](https://www.trifork.com/)
 
 Presentations/Videos/Tutorials/Books
 ----------------------------------------
