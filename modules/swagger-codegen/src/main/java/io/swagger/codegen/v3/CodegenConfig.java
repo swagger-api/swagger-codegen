@@ -247,4 +247,8 @@ public interface CodegenConfig {
     boolean defaultIgnoreImportMappingOption();
 
     ISchemaHandler getSchemaHandler();
+
+    default boolean checkAliasModel() {
+        return false;
+    }
 }
