@@ -413,7 +413,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     continue;
                 }
                 Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);
-                if (isAliasVerifierGenerator(config.getName())) {
+                if (config.checkAliasModel()) {
                     // Special handling of aliases only applies to Java
                     if (modelTemplate != null && modelTemplate.containsKey("model")) {
                         CodegenModel codegenModel = (CodegenModel) modelTemplate.get("model");
@@ -1110,14 +1110,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             }
         }
         return authMethods;
-    }
-
-    private boolean isAliasVerifierGenerator(String name) {
-        return name.equalsIgnoreCase("java")
-                || name.equalsIgnoreCase("inflector")
-                || name.equalsIgnoreCase("csharp")
-                || name.equalsIgnoreCase("go")
-                || name.equalsIgnoreCase("go-server");
     }
 
     private Boolean getCustomOptionBooleanValue(String option) {
