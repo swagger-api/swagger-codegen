@@ -34,6 +34,25 @@ import { Configuration }                                     from '../configurat
 import { {{classname}}Interface }                            from './{{classFilename}}Interface';
 {{/withInterfaces}}
 
+{{#useHttpClient}}
+    import { HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent }                           from '@angular/common/http';
+    import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+{{/useHttpClient}}
+{{^useHttpClient}}
+    import { Http, Headers, URLSearchParams }                    from '@angular/http';
+    import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
+    import { Response, ResponseContentType }                     from '@angular/http';
+    import { CustomQueryEncoderHelper }                          from '../encoder';
+{{/useHttpClient}}
+
+
+type FormParams = URLSearchParams | FormData{{#useHttpClient}} | HttpParams{{/useHttpClient}};
+
+function append(formParams: FormParams, param: string, value: any) {
+    return {{#useHttpClient}}formParams.append(param, value){{/useHttpClient}}{{^useHttpClient}}formParams.append(param, value), formParams{{/useHttpClient}}
+};
+
 {{#operations}}
 
 {{#description}}
@@ -262,7 +281,7 @@ export class {{classname}} {
 {{#hasFormParams}}
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
         let useForm = false;
         let convertFormParamsToString = false;
 {{#formParams}}
@@ -286,23 +305,22 @@ export class {{classname}} {
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
 {{/useHttpClient}}
         }
-
 {{#formParams}}
         {{#isListContainer}}
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element) => {
-                {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>element){{#useHttpClient}} || formParams{{/useHttpClient}};
+                {{#useHttpClient}}formParams = {{/useHttpClient}}append(formParams, '{{baseName}}', <any>element);
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}formParams = {{/useHttpClient}}append(formParams, '{{baseName}}', {{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}']));
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
-            {{#useHttpClient}}formParams = {{/useHttpClient}}formParams.append('{{baseName}}', <any>{{paramName}}){{#useHttpClient}} || formParams{{/useHttpClient}};
+            {{#useHttpClient}}formParams = {{/useHttpClient}}append(formParams, '{{baseName}}', <any>{{paramName}});
         }
         {{/isListContainer}}
 {{/formParams}}
