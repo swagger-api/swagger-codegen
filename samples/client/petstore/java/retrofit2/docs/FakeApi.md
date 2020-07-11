@@ -320,8 +320,8 @@ Long int64 = 789L; // Long | None
 Float _float = 3.4F; // Float | None
 String string = "string_example"; // String | None
 byte[] binary = B; // byte[] | None
-LocalDate date = new LocalDate(); // LocalDate | None
-OffsetDateTime dateTime = new OffsetDateTime(); // OffsetDateTime | None
+LocalDate date = LocalDate.now(); // LocalDate | None
+OffsetDateTime dateTime = OffsetDateTime.now(); // OffsetDateTime | None
 String password = "password_example"; // String | None
 String paramCallback = "paramCallback_example"; // String | None
 try {

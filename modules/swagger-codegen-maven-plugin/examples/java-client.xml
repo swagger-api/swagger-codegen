@@ -119,8 +119,8 @@
     
     <properties>
         <swagger-annotations-version>1.5.21</swagger-annotations-version>
-        <jersey-version>2.25.1</jersey-version>
-        <jackson-version>2.9.5</jackson-version>
+        <jersey-version>2.29.1</jersey-version>
+        <jackson-version>2.10.1</jackson-version>
         <jodatime-version>2.7</jodatime-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.8.1</junit-version>
