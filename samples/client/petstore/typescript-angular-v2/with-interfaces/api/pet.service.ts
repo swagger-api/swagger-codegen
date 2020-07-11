@@ -558,7 +558,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void | HttpParams; };
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -634,7 +634,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void | HttpParams; };
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
