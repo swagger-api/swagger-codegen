@@ -1,6 +1,8 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
@@ -36,6 +38,7 @@ public class DefaultGeneratorTest {
 
     private static final String LIBRARY_COMMENT = "//overloaded template file within library folder to add this comment";
     private static final String TEMPLATE_COMMENT = "//overloaded main template file to add this comment";
+    private static final String MODEL_DEFAULT_API_FILE = "/src/main/java/io/swagger/client/api/DefaultApi.java";
 
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -47,6 +50,202 @@ public class DefaultGeneratorTest {
     @AfterMethod
     public void tearDown() throws Exception {
         folder.delete();
+    }
+
+    @Test
+    public void testNotNullJacksonAnnotationJava_True() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("java");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        //additionalProperties.put("library", "feign");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+        additionalProperties.put("notNullJacksonAnnotation", true);
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File model = new File(output, "src/main/java/com/mycompany/generated/client/model/ModelOne.java");
+        assertTrue(model.exists());
+        assertTrue(FileUtils.readFileToString(model).contains("@JsonInclude(JsonInclude.Include.NON_NULL)"));
+        assertTrue(FileUtils.readFileToString(model).contains("import com.fasterxml.jackson.annotation.JsonInclude;"));
+    }
+
+    @Test
+    public void testNotNullJacksonAnnotationJava_False() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("java");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        additionalProperties.put("library", "feign");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+        additionalProperties.put("notNullJacksonAnnotation", false);
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File model = new File(output, "src/main/java/com/mycompany/generated/client/model/ModelOne.java");
+        assertTrue(model.exists());
+        assertFalse(FileUtils.readFileToString(model).contains("@JsonInclude(JsonInclude.Include.NON_NULL)"));
+        assertFalse(FileUtils.readFileToString(model).contains("import com.fasterxml.jackson.annotation.JsonInclude;"));
+    }
+
+    @Test
+    public void testNotNullJacksonAnnotationSpring_True() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("spring");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        //additionalProperties.put("library", "feign");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+        additionalProperties.put("notNullJacksonAnnotation", true);
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File model = new File(output, "src/main/java/com/mycompany/generated/client/model/ModelOne.java");
+        assertTrue(model.exists());
+        assertTrue(FileUtils.readFileToString(model).contains("@JsonInclude(JsonInclude.Include.NON_NULL)"));
+        assertTrue(FileUtils.readFileToString(model).contains("import com.fasterxml.jackson.annotation.JsonInclude;"));
+    }
+
+    @Test
+    public void testNotNullJacksonAnnotationSpring_False() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("spring");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        additionalProperties.put("library", "spring-boot");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+        additionalProperties.put("notNullJacksonAnnotation", false);
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File model = new File(output, "src/main/java/com/mycompany/generated/client/model/ModelOne.java");
+        assertTrue(model.exists());
+        assertFalse(FileUtils.readFileToString(model).contains("@JsonInclude(JsonInclude.Include.NON_NULL)"));
+        assertFalse(FileUtils.readFileToString(model).contains("import com.fasterxml.jackson.annotation.JsonInclude;"));
     }
 
     @Test
@@ -206,7 +405,108 @@ public class DefaultGeneratorTest {
 //        assertTrue(pom.exists());
     }
 
-    private boolean containsOverloadedComments(File file, String ...search) throws IOException {
+    @Test
+    public void testIssue9132() throws Exception {
+        final File output = folder.getRoot();
+
+        final Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/issue-9132.yaml");
+        CodegenConfig codegenConfig = new JavaClientCodegen();
+        codegenConfig.setLibrary("jersey1");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, MODEL_DEFAULT_API_FILE);
+        assertTrue(defaultApi.exists());
+
+    }
+
+    @Test
+    public void testIssue9725() throws Exception {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"ResponseEntity<List<GetMarketsRegionIdOrders200Ok>>"));
+    }
+
+    @Test
+    public void testIssue9725Map() throws Exception {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"ResponseEntity<Map<String, GetMarketsRegionIdOrders200Ok>>"));
+    }
+
+    @Test
+    public void testRelativeRefs() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/relative-ref/nested/directory/main/relative-refs.yml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("java");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        additionalProperties.put("library", "feign");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File defaultApi = new File(output, "src/main/java/com/mycompany/generated/client/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertFalse(containsSearchStrings(defaultApi,"RelativeRefnesteddirectorydefinitionsphotosYmldefinitionsPhoto"));
+    }
+
+    private boolean containsSearchStrings(File file, String ...search) throws IOException {
         for (String line : Files.readAllLines(file.toPath(), Charset.defaultCharset())) {
             if (StringUtils.containsAny(line, search)) {
                 return true;
@@ -214,6 +514,10 @@ public class DefaultGeneratorTest {
         }
 
         return false;
+    }
+
+    private boolean containsOverloadedComments(File file, String ...search) throws IOException {
+        return containsSearchStrings(file, search);
     }
 
     @Test

@@ -59,8 +59,7 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "x-is-post-method" : true
+        } ]
       },
       "put" : {
         "tags" : [ "pet" ],
@@ -91,8 +90,7 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "x-is-put-method" : true
+        } ]
       }
     },
     "/pet/findByStatus" : {
@@ -131,8 +129,7 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "x-is-get-method" : true
+        } ]
       }
     },
     "/pet/findByTags" : {
@@ -170,8 +167,7 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ],
-        "deprecated" : true,
-        "x-is-get-method" : true
+        "deprecated" : true
       }
     },
     "/pet/{petId}" : {
@@ -205,8 +201,7 @@
         },
         "security" : [ {
           "api_key" : [ ]
-        } ],
-        "x-is-get-method" : true
+        } ]
       },
       "post" : {
         "tags" : [ "pet" ],
@@ -242,8 +237,7 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "x-is-post-method" : true
+        } ]
       },
       "delete" : {
         "tags" : [ "pet" ],
@@ -271,8 +265,7 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "x-is-delete-method" : true
+        } ]
       }
     },
     "/pet/{petId}/uploadImage" : {
@@ -313,8 +306,7 @@
         },
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "x-is-post-method" : true
+        } ]
       }
     },
     "/store/inventory" : {
@@ -339,8 +331,7 @@
         },
         "security" : [ {
           "api_key" : [ ]
-        } ],
-        "x-is-get-method" : true
+        } ]
       }
     },
     "/store/order" : {
@@ -369,8 +360,7 @@
           "400" : {
             "description" : "Invalid Order"
           }
-        },
-        "x-is-post-method" : true
+        }
       }
     },
     "/store/order/{orderId}" : {
@@ -403,8 +393,7 @@
           "404" : {
             "description" : "Order not found"
           }
-        },
-        "x-is-get-method" : true
+        }
       },
       "delete" : {
         "tags" : [ "store" ],
@@ -426,8 +415,7 @@
           "404" : {
             "description" : "Order not found"
           }
-        },
-        "x-is-delete-method" : true
+        }
       }
     },
     "/user" : {
@@ -450,8 +438,7 @@
           "default" : {
             "description" : "successful operation"
           }
-        },
-        "x-is-post-method" : true
+        }
       }
     },
     "/user/createWithArray" : {
@@ -477,8 +464,7 @@
           "default" : {
             "description" : "successful operation"
           }
-        },
-        "x-is-post-method" : true
+        }
       }
     },
     "/user/createWithList" : {
@@ -504,8 +490,7 @@
           "default" : {
             "description" : "successful operation"
           }
-        },
-        "x-is-post-method" : true
+        }
       }
     },
     "/user/login" : {
@@ -550,8 +535,7 @@
           "400" : {
             "description" : "Invalid username/password supplied"
           }
-        },
-        "x-is-get-method" : true
+        }
       }
     },
     "/user/logout" : {
@@ -566,8 +550,7 @@
           "default" : {
             "description" : "successful operation"
           }
-        },
-        "x-is-get-method" : true
+        }
       }
     },
     "/user/{username}" : {
@@ -597,8 +580,7 @@
           "404" : {
             "description" : "User not found"
           }
-        },
-        "x-is-get-method" : true
+        }
       },
       "put" : {
         "tags" : [ "user" ],
@@ -628,8 +610,7 @@
           "404" : {
             "description" : "User not found"
           }
-        },
-        "x-is-put-method" : true
+        }
       },
       "delete" : {
         "tags" : [ "user" ],
@@ -651,8 +632,7 @@
           "404" : {
             "description" : "User not found"
           }
-        },
-        "x-is-delete-method" : true
+        }
       }
     }
   },

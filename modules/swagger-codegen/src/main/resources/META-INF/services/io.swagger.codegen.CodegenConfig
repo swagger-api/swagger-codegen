@@ -74,6 +74,7 @@ io.swagger.codegen.languages.StaticHtml2Generator
 io.swagger.codegen.languages.StaticHtmlGenerator
 io.swagger.codegen.languages.SwaggerGenerator
 io.swagger.codegen.languages.SwaggerYamlGenerator
+io.swagger.codegen.languages.Swift5Codegen
 io.swagger.codegen.languages.Swift4Codegen
 io.swagger.codegen.languages.Swift3Codegen
 io.swagger.codegen.languages.SwiftCodegen
@@ -86,6 +87,7 @@ io.swagger.codegen.languages.TypeScriptAngularJsClientCodegen
 io.swagger.codegen.languages.TypeScriptFetchClientCodegen
 io.swagger.codegen.languages.TypeScriptJqueryClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen
+io.swagger.codegen.languages.UE4CPPGenerator
 io.swagger.codegen.languages.UndertowCodegen
 io.swagger.codegen.languages.ZendExpressivePathHandlerServerCodegen
 io.swagger.codegen.languages.KotlinServerCodegen
