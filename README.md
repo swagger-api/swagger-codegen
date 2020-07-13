@@ -353,7 +353,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 
 You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.0/swagger-codegen-cli-2.3.0.jar)
 
-To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
+To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate --help`
 
 To get a list of PHP specified options (which can be passed to the generator with a config file via the `-c` option), please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l php`
 
@@ -377,7 +377,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/client/petstore/java
 ```
 
-with a number of options. You can get the options with the `help generate` command (below only shows partal results):
+with a number of options. You can get the options with the `generate --help` command (below only shows partal results):
 
 ```
 NAME
