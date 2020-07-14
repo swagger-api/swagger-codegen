@@ -70,7 +70,7 @@ class ObjectSerializer {
             }
             return transformedData;
         } else if (type === "Date") {
-            return data.toString();
+            return typeof data.toISOString === "function" ? data.toISOString() : data.toString();
         } else {
             if (enumsMap[type]) {
                 return data;
