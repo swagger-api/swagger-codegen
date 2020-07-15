@@ -27,6 +27,12 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 import { PetServiceInterface }                            from './pet.serviceInterface';
 
+type FormParams = HttpParams | URLSearchParams | FormData;
+
+function getAppender(useReturnValue = false) {
+    return (formParams: FormParams, param: string, value: any) =>
+    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
+}
 
 @Injectable()
 export class PetService implements PetServiceInterface {
@@ -558,7 +564,8 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
+        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -570,12 +577,11 @@ export class PetService implements PetServiceInterface {
             // set the content-type explicitly to avoid having it set to 'text/plain'
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
         }
-
         if (name !== undefined) {
-            formParams.append('name', <any>name);
+            append(formParams, 'name', <any>name);
         }
         if (status !== undefined) {
-            formParams.append('status', <any>status);
+            append(formParams, 'status', <any>status);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
@@ -634,7 +640,8 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: FormParams;
+        let append = getAppender();
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
@@ -649,12 +656,11 @@ export class PetService implements PetServiceInterface {
             // set the content-type explicitly to avoid having it set to 'text/plain'
             headers.set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
         }
-
         if (additionalMetadata !== undefined) {
-            formParams.append('additionalMetadata', <any>additionalMetadata);
+            append(formParams, 'additionalMetadata', <any>additionalMetadata);
         }
         if (file !== undefined) {
-            formParams.append('file', <any>file);
+            append(formParams, 'file', <any>file);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
