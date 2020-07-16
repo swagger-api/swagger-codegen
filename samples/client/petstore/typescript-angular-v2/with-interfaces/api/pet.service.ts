@@ -27,12 +27,12 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 import { PetServiceInterface }                            from './pet.serviceInterface';
 
-type FormParams = HttpParams | URLSearchParams | FormData;
+type FormParams = URLSearchParams | FormData;
 
-function getAppender(useReturnValue = false) {
-    return (formParams: FormParams, param: string, value: any) =>
-    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
-}
+function append(formParams: FormParams, param: string, value: any) {
+    return formParams.append(param, value), formParams
+};
+
 
 @Injectable()
 export class PetService implements PetServiceInterface {
@@ -564,8 +564,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: FormParams;
-        let append = getAppender();
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -640,8 +639,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: FormParams;
-        let append = getAppender();
+        let formParams: { append(param: string, value: any): void; };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"

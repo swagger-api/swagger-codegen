@@ -25,12 +25,12 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 import { PetServiceInterface }                            from './pet.serviceInterface';
 
-type FormParams = HttpParams | URLSearchParams | FormData;
+type FormParams = URLSearchParams | FormData | HttpParams;
 
-function getAppender(useReturnValue = false) {
-    return (formParams: FormParams, param: string, value: any) =>
-    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
-}
+function append(formParams: FormParams, param: string, value: any) {
+    return formParams.append(param, value)
+};
+
 
 @Injectable()
 export class PetService implements PetServiceInterface {
@@ -439,15 +439,13 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: FormParams;
-        let append = getAppender();
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-            append = getAppender(true);
         }
         if (name !== undefined) {
             formParams = append(formParams, 'name', <any>name);
@@ -513,9 +511,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: FormParams;
-        let append = getAppender();
-
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"
@@ -525,7 +521,6 @@ export class PetService implements PetServiceInterface {
             formParams = new FormData();
         } else {
             formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-            append = getAppender(true);
         }
         if (additionalMetadata !== undefined) {
             formParams = append(formParams, 'additionalMetadata', <any>additionalMetadata);

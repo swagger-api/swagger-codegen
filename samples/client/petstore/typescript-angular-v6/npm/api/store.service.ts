@@ -23,12 +23,12 @@ import { Order } from '../model/order';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
-type FormParams = HttpParams | URLSearchParams | FormData;
+type FormParams = URLSearchParams | FormData | HttpParams;
 
-function getAppender(useReturnValue = false) {
-    return (formParams: FormParams, param: string, value: any) =>
-    useReturnValue ? formParams.append(param, value) : formParams.append(param, value), formParams;
-}
+function append(formParams: FormParams, param: string, value: any) {
+    return formParams.append(param, value)
+};
+
 
 @Injectable()
 export class StoreService {
