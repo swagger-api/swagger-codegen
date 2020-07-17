@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Api(value = "pet", description = "the pet API")
+@RequestMapping(value = "/v2")
 public interface PetApi {
 
     @ApiOperation(value = "Add a new pet to the store", nickname = "addPet", notes = "", authorizations = {

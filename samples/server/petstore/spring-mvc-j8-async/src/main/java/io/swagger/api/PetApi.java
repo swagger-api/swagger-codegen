@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Api(value = "pet", description = "the pet API")
+@RequestMapping(value = "/v2")
 public interface PetApi {
 
     Logger log = LoggerFactory.getLogger(PetApi.class);

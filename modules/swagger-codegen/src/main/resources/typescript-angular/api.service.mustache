@@ -197,13 +197,13 @@ export class {{classname}} {
         // authentication ({{name}}) required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-        if (this.configuration.apiKeys["{{keyParamName}}"]) {
+        if (this.configuration.apiKeys && this.configuration.apiKeys["{{keyParamName}}"]) {
             {{#useHttpClient}}headers = {{/useHttpClient}}headers.set('{{keyParamName}}', this.configuration.apiKeys["{{keyParamName}}"]);
         }
 
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-        if (this.configuration.apiKeys["{{keyParamName}}"]) {
+        if (this.configuration.apiKeys && this.configuration.apiKeys["{{keyParamName}}"]) {
             {{#useHttpClient}}queryParameters = {{/useHttpClient}}queryParameters.set('{{keyParamName}}', this.configuration.apiKeys["{{keyParamName}}"]);
         }
 
@@ -262,7 +262,12 @@ export class {{classname}} {
 {{#hasFormParams}}
         const canConsumeForm = this.canConsumeForm(consumes);
 
+{{^useHttpClient}}
         let formParams: { append(param: string, value: any): void; };
+{{/useHttpClient}}
+{{#useHttpClient}}
+        let formParams: { append(param: string, value: any): void | HttpParams; };
+{{/useHttpClient}}
         let useForm = false;
         let convertFormParamsToString = false;
 {{#formParams}}

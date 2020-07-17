@@ -23,7 +23,7 @@ import static java.util.UUID.randomUUID;
 public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
 
     private String packageGuid = "{" + randomUUID().toString().toUpperCase() + "}";
-    private final String DEFAULT_ASP_NET_CORE_VERSION = "2.2";
+    private final String DEFAULT_ASP_NET_CORE_VERSION = "3.0";
     private String aspNetCoreVersion;
 
     @SuppressWarnings("hiding")
@@ -64,7 +64,7 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
                 sourceFolder);
 
         addOption(CodegenConstants.ASP_NET_CORE_VERSION,
-                "aspnetcore version to use, current options are: 2.0, 2.1 and 2.2 (default)",
+                "aspnetcore version to use, current options are: 2.0, 2.1, 2.2 and 3.0 (default)",
                 this.aspNetCoreVersion);
 
         addOption(CodegenConstants.INTERFACE_ONLY,
@@ -133,16 +133,35 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
             apiTemplateFiles.put("controller.mustache", ".cs");
             addInterfaceControllerTemplate(interfaceOnly, interfaceController);
 
+            supportingFiles.add(new SupportingFile("Filters" + File.separator + "BasePathFilter.mustache", packageFolder + File.separator + "Filters", "BasePathFilter.cs"));
+            supportingFiles.add(new SupportingFile("Filters" + File.separator + "GeneratePathParamsValidationFilter.mustache", packageFolder + File.separator + "Filters", "GeneratePathParamsValidationFilter.cs"));
+
+            supportingFiles.add(new SupportingFile("Startup.mustache", packageFolder, "Startup.cs"));
             supportingFiles.add(new SupportingFile("Program.mustache", packageFolder, "Program.cs"));
             supportingFiles.add(new SupportingFile("Project.csproj.mustache", packageFolder, this.packageName + ".csproj"));
             supportingFiles.add(new SupportingFile("Dockerfile.mustache", packageFolder, "Dockerfile"));
-        } else {
+        } else if (this.aspNetCoreVersion.equals("2.1") || this.aspNetCoreVersion.equals("2.2")) {
             apiTemplateFiles.put("2.1/controller.mustache", ".cs");
             addInterfaceControllerTemplate(interfaceOnly, interfaceController);
 
+            supportingFiles.add(new SupportingFile("Filters" + File.separator + "BasePathFilter.mustache", packageFolder + File.separator + "Filters", "BasePathFilter.cs"));
+            supportingFiles.add(new SupportingFile("Filters" + File.separator + "GeneratePathParamsValidationFilter.mustache", packageFolder + File.separator + "Filters", "GeneratePathParamsValidationFilter.cs"));
+            
+            supportingFiles.add(new SupportingFile("Startup.mustache", packageFolder, "Startup.cs"));
             supportingFiles.add(new SupportingFile("2.1/Program.mustache", packageFolder, "Program.cs"));
             supportingFiles.add(new SupportingFile("2.1/Project.csproj.mustache", packageFolder, this.packageName + ".csproj"));
             supportingFiles.add(new SupportingFile("2.1/Dockerfile.mustache", packageFolder, "Dockerfile"));
+        } else {
+            apiTemplateFiles.put("3.0/controller.mustache", ".cs");
+            addInterfaceControllerTemplate(interfaceOnly, interfaceController);
+
+            supportingFiles.add(new SupportingFile("3.0" + File.separator + "Filters" + File.separator + "BasePathFilter.mustache", packageFolder + File.separator + "Filters", "BasePathFilter.cs"));
+            supportingFiles.add(new SupportingFile("3.0" + File.separator + "Filters" + File.separator + "GeneratePathParamsValidationFilter.mustache", packageFolder + File.separator + "Filters", "GeneratePathParamsValidationFilter.cs"));
+
+            supportingFiles.add(new SupportingFile("3.0/Startup.mustache", packageFolder, "Startup.cs"));
+            supportingFiles.add(new SupportingFile("3.0/Program.mustache", packageFolder, "Program.cs"));
+            supportingFiles.add(new SupportingFile("3.0/Project.csproj.mustache", packageFolder, this.packageName + ".csproj"));
+            supportingFiles.add(new SupportingFile("3.0/Dockerfile.mustache", packageFolder, "Dockerfile"));
         }
 
         additionalProperties.put("aspNetCoreVersion", aspNetCoreVersion);
@@ -159,20 +178,14 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("build.bat.mustache", "", "build.bat"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("Solution.mustache", "", this.packageName + ".sln"));
-        supportingFiles.add(new SupportingFile("Dockerfile.mustache", packageFolder, "Dockerfile"));
         supportingFiles.add(new SupportingFile("gitignore", packageFolder, ".gitignore"));
         supportingFiles.add(new SupportingFile("appsettings.json", packageFolder, "appsettings.json"));
 
-        supportingFiles.add(new SupportingFile("Startup.mustache", packageFolder, "Startup.cs"));
         supportingFiles.add(new SupportingFile("validateModel.mustache", packageFolder + File.separator + "Attributes", "ValidateModelStateAttribute.cs"));
         supportingFiles.add(new SupportingFile("web.config", packageFolder, "web.config"));
 
         supportingFiles.add(new SupportingFile("Properties" + File.separator + "launchSettings.json", packageFolder + File.separator + "Properties", "launchSettings.json"));
 
-        supportingFiles.add(new SupportingFile("Filters" + File.separator + "BasePathFilter.mustache", packageFolder + File.separator + "Filters", "BasePathFilter.cs"));
-        supportingFiles.add(new SupportingFile("Filters" + File.separator + "GeneratePathParamsValidationFilter.mustache", packageFolder + File.separator + "Filters", "GeneratePathParamsValidationFilter.cs"));
-
-        supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "README.md", packageFolder + File.separator + "wwwroot", "README.md"));
         supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "index.html", packageFolder + File.separator + "wwwroot", "index.html"));
         supportingFiles.add(new SupportingFile("wwwroot" + File.separator + "web.config", packageFolder + File.separator + "wwwroot", "web.config"));
 
@@ -301,7 +314,7 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
             return;
         }
         this.aspNetCoreVersion = optionValue;
-        if (!this.aspNetCoreVersion.equals("2.0") && !this.aspNetCoreVersion.equals("2.1") && !this.aspNetCoreVersion.equals("2.2")) {
+        if (!this.aspNetCoreVersion.equals("2.0") && !this.aspNetCoreVersion.equals("2.1") && !this.aspNetCoreVersion.equals("2.2") && !this.aspNetCoreVersion.equals("3.0")) {
             LOGGER.error("version '" + this.aspNetCoreVersion + "' is not supported, switching to default version: '" + DEFAULT_ASP_NET_CORE_VERSION + "'");
             this.aspNetCoreVersion = DEFAULT_ASP_NET_CORE_VERSION;
         }

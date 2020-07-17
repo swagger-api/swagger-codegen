@@ -47,6 +47,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
     private static final String LIBRARY_PROMISE_KIT = "PromiseKit";
     private static final String LIBRARY_RX_SWIFT = "RxSwift";
     private static final String[] RESPONSE_LIBRARIES = {LIBRARY_PROMISE_KIT, LIBRARY_RX_SWIFT};
+    protected static final String MODEL_CLASSES = "modelClasses";
     protected String projectName = "SwaggerClient";
     private boolean unwrapRequired;
     private boolean objcCompatible = false;
@@ -192,7 +193,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("float", "Float");
         typeMapping.put("number", "Double");
         typeMapping.put("double", "Double");
-        typeMapping.put("object", "Any");
+        typeMapping.put("object", "JSONValue");
         typeMapping.put("file", "URL");
         typeMapping.put("binary", "Data");
         typeMapping.put("ByteArray", "Data");
@@ -289,6 +290,10 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
             additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
         }
 
+        if (additionalProperties.containsKey(MODEL_CLASSES)) {
+            additionalProperties.put("useModelClasses", true);
+        }
+
         setLenientTypeCast(convertPropertyToBooleanAndWriteBack(LENIENT_TYPE_CAST));
 
         supportingFiles.add(new SupportingFile("Podspec.mustache",
@@ -324,6 +329,9 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("JSONEncodingHelper.mustache",
                                                sourceFolder,
                                                "JSONEncodingHelper.swift"));
+        supportingFiles.add(new SupportingFile("JSONValue.mustache",
+                                               sourceFolder,
+                                               "JSONValue.swift"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache",
                                                "",
                                                "git_push.sh"));
