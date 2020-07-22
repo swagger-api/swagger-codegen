@@ -89,7 +89,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
 
 # Table of contents
 
-  - [Swagger Code Generator](#swagger-code-generator)
+  - [Versioning](#versioning)
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
   - Installation
@@ -186,10 +186,12 @@ If you're looking for the latest stable version, you can grab it directly from M
 # Download current stable 2.x.x branch (Swagger and OpenAPI version 2)
 wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.14/swagger-codegen-cli-2.4.14.jar -O swagger-codegen-cli.jar
 
+java -jar swagger-codegen-cli.jar help
+
 # Download current stable 3.x.x branch (OpenAPI version 3)
 wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.20/swagger-codegen-cli-3.0.20.jar -O swagger-codegen-cli.jar
 
-java -jar swagger-codegen-cli.jar help
+java -jar swagger-codegen-cli.jar --help
 ```
 
 For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.14/swagger-codegen-cli-2.4.14.jar`
@@ -342,7 +344,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 
 You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.14/swagger-codegen-cli-2.4.14.jar)
 
-To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate`
+To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate` (for version 3.x check [3.0.0 branch](https://github.com/swagger-api/swagger-codegen/tree/3.0.0))
 
 To get a list of PHP specified options (which can be passed to the generator with a config file via the `-c` option), please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l php`
 
@@ -982,6 +984,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Trexle](https://trexle.com/)
 - [Upwork](http://upwork.com/)
 - [uShip](https://www.uship.com/)
+- [Variograma](https://variograma.pt)
 - [VMware](https://vmware.com/)
 - [Viavi Solutions Inc.](https://www.viavisolutions.com)
 - [W.UP](http://wup.hu/?siteLang=en)
