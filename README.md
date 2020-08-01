@@ -293,20 +293,34 @@ The Swagger Generator image can act as a self-hosted web application and API for
 Example usage (note this assumes `jq` is installed for command line processing of JSON):
 
 ```sh
+#!/usr/bin/env bash
+
+# strict-mode
+set -euo pipefail
+IFS=$'\n\t'
+
+cleanup() {
+  # Shutdown the swagger generator image
+  docker stop $CID && docker rm $CID
+}
+
+trap cleanup INT TERM EXIT
+
 # Start container and save the container id
-CID=$(docker run -d swaggerapi/swagger-generator)
+CID=$(docker run -d -p 8188:8080 swaggerapi/swagger-generator)
 # allow for startup
 sleep 5
 # Get the IP of the running container
 GEN_IP=$(docker inspect --format '{{.NetworkSettings.IPAddress}}'  $CID)
 # Execute an HTTP request and store the download link
-RESULT=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+RESULT=$(curl --fail -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
   "swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"
 }' 'http://localhost:8188/api/gen/clients/javascript' | jq '.link' | tr -d '"')
+
+RESULT="$(echo $RESULT | sed -e 's/https:\/\/generator.swaggerhub.com\/api\/swagger.json/http:\/\/localhost:8188/g')"
 # Download the generated zip and redirect to a file
-curl $RESULT > result.zip
-# Shutdown the swagger generator image
-docker stop $CID && docker rm $CID
+curl --fail $RESULT > result.zip
+unzip -t result.zip
 ```
 
 In the example above, `result.zip` will contain the generated client.
