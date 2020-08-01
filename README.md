@@ -302,7 +302,7 @@ GEN_IP=$(docker inspect --format '{{.NetworkSettings.IPAddress}}'  $CID)
 # Execute an HTTP request and store the download link
 RESULT=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
   "swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"
-}' 'http://localhost:8188/api/gen/clients/javascript' | jq '.link' | tr -d '"')
+}' "http://$GEN_IP:8080/api/gen/clients/javascript" | jq '.link' | tr -d '"')
 # Download the generated zip and redirect to a file
 curl $RESULT > result.zip
 # Shutdown the swagger generator image
