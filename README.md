@@ -236,7 +236,7 @@ To install, run `brew install swagger-codegen`
 
 Here is an example usage:
 ```sh
-swagger-codegen generate -i http://petstore.swagger.io/v2/swagger.json -l ruby -o /tmp/test/
+swagger-codegen generate -i https://petstore.swagger.io/v2/swagger.json -l ruby -o /tmp/test/
 ```
 
 ### Docker
@@ -301,7 +301,7 @@ sleep 5
 GEN_IP=$(docker inspect --format '{{.NetworkSettings.IPAddress}}'  $CID)
 # Execute an HTTP request and store the download link
 RESULT=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-  "swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"
+  "swaggerUrl": "https://petstore.swagger.io/v2/swagger.json"
 }' 'http://localhost:8188/api/gen/clients/javascript' | jq '.link' | tr -d '"')
 # Download the generated zip and redirect to a file
 curl $RESULT > result.zip
@@ -321,7 +321,7 @@ Example:
 
 ```sh
 docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
-    -i http://petstore.swagger.io/v2/swagger.json \
+    -i https://petstore.swagger.io/v2/swagger.json \
     -l go \
     -o /local/out/go
 ```
@@ -332,17 +332,17 @@ The generated code will be located under `./out/go` in the current directory.
 
 ## Getting Started
 
-To generate a PHP client for http://petstore.swagger.io/v2/swagger.json, please run the following
+To generate a PHP client for https://petstore.swagger.io/v2/swagger.json, please run the following
 ```sh
 git clone https://github.com/swagger-api/swagger-codegen
 cd swagger-codegen
 mvn clean package
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-   -i http://petstore.swagger.io/v2/swagger.json \
+   -i https://petstore.swagger.io/v2/swagger.json \
    -l php \
    -o /var/tmp/php_api_client
 ```
-(if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
+(if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i https://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
 You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.15/swagger-codegen-cli-2.4.15.jar)
 
@@ -353,7 +353,7 @@ To get a list of PHP specified options (which can be passed to the generator wit
 ## Generators
 
 ### To generate a sample client library
-You can build a client against the swagger sample [petstore](http://petstore.swagger.io) API as follows:
+You can build a client against the swagger sample [petstore](https://petstore.swagger.io) API as follows:
 
 ```sh
 ./bin/java-petstore.sh
@@ -365,7 +365,7 @@ This will run the generator with this command:
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i http://petstore.swagger.io/v2/swagger.json \
+  -i https://petstore.swagger.io/v2/swagger.json \
   -l java \
   -o samples/client/petstore/java
 ```
@@ -463,7 +463,7 @@ Note the `myClientCodegen` is an option now, and you can use the usual arguments
 ```sh
 java -cp output/myLibrary/target/myClientCodegen-swagger-codegen-1.0.0.jar:modules/swagger-codegen-cli/target/swagger-codegen-cli.jar \
   io.swagger.codegen.SwaggerCodegen generate -l myClientCodegen\
-  -i http://petstore.swagger.io/v2/swagger.json \
+  -i https://petstore.swagger.io/v2/swagger.json \
   -o myClient
 ```
 
@@ -595,7 +595,7 @@ Each of these files creates reasonable defaults so you can get running quickly. 
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i http://petstore.swagger.io/v2/swagger.json \
+  -i https://petstore.swagger.io/v2/swagger.json \
   -l java \
   -o samples/client/petstore/java \
   -c path/to/config.json
@@ -699,7 +699,7 @@ or
 
 You have options.  The easiest is to use our [online validator](https://github.com/swagger-api/validator-badge) which not only will let you validate your spec, but with the debug flag, you can see what's wrong with your spec.  For example:
 
-http://online.swagger.io/validator/debug?url=http://petstore.swagger.io/v2/swagger.json
+http://online.swagger.io/validator/debug?url=https://petstore.swagger.io/v2/swagger.json
 
 ### Generating dynamic html api documentation
 
@@ -775,7 +775,7 @@ One can also generate API client or server using the online generators (https://
 
 For example, to generate Ruby API client, simply send the following HTTP request using curl:
 ```sh
-curl -X POST -H "content-type:application/json" -d '{"swaggerUrl":"http://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/ruby
+curl -X POST -H "content-type:application/json" -d '{"swaggerUrl":"https://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/ruby
 ```
 Then you will receive a JSON response with the URL to download the zipped code.
 
@@ -783,7 +783,7 @@ To customize the SDK, you can `POST` to `https://generator.swagger.io/gen/client
 ```json
 {
   "options": {},
-  "swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"
+  "swaggerUrl": "https://petstore.swagger.io/v2/swagger.json"
 }
 ```
 in which the `options` for a language can be obtained by submitting a `GET` request to `https://generator.swagger.io/api/gen/clients/{language}`:
@@ -817,12 +817,12 @@ To set package name to `pet_store`, the HTTP body of the request is as follows:
   "options": {
     "packageName": "pet_store"
   },
-  "swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"
+  "swaggerUrl": "https://petstore.swagger.io/v2/swagger.json"
 }
 ```
 and here is the curl command:
 ```sh
-curl -H "Content-type: application/json" -X POST -d '{"options": {"packageName": "pet_store"},"swaggerUrl": "http://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/python
+curl -H "Content-type: application/json" -X POST -d '{"options": {"packageName": "pet_store"},"swaggerUrl": "https://petstore.swagger.io/v2/swagger.json"}' https://generator.swagger.io/api/gen/clients/python
 ```
 
 Instead of using `swaggerUrl` with an URL to the OpenAPI/Swagger spec, one can include the spec in the JSON payload with `spec`, e.g.
