@@ -23,7 +23,7 @@ then
   -l java \
   -DdateLibrary=java8 \
   -o fileservice/java_client/java \
-  -c config.json
+  -c config.json --group-id com.capillary.platforms --model-package com.capillary.platforms.fileservice.models --api-package com.capillary.platforms.fileservice.api --artifact-id fileservice-client
   tar cvzf fileservice/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./filservice/java_client/java/ .
   mvn3 clean deploy -f fileservice/java_client/java/pom.xml
   fpm -f -s "dir" -t "deb" -a "all" -n "swagger_sdk_gen_fileService" -v $BUILD_NUMBER -C ./fileservice/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger_sdk_gen_fileService"
