@@ -18,7 +18,7 @@ if [ "$Client" = "java" ]
 then 
   rm -rf fileservice/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -a "Authorization%3ABasic%20a3Jpc2huYS50aWxsMDE6MjAyY2I5NjJhYzU5MDc1Yjk2NGIwNzE1MmQyMzRiNzA%3D"
+  -a "Authorization%3ABasic%20a3Jpc2huYS50aWxsMDE6MjAyY2I5NjJhYzU5MDc1Yjk2NGIwNzE1MmQyMzRiNzA%3D" \
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
