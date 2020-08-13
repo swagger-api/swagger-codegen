@@ -11,12 +11,14 @@ elif [ "$Branch" = "production" ]
     version="https://fileservice.capillary.in/v1/meta/version"
 else " No Branch is selected"
 fi
-curl -k $version -o config.json -H"Authorization: Basic REDACTED"
+ver=$(curl -H"Authorization: Basic REDACTED" -k $version)
+echo {"artifactVersion":$ver} > config.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
   rm -rf fileservice/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -a "REDACTED"
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
