@@ -18,7 +18,7 @@ if [ "$Client" = "java" ]
 then 
   rm -rf fileservice/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -a "REDACTED"
+  -a "REDACTED" \
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
