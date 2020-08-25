@@ -31,6 +31,9 @@ import android.os.Parcel;
  * OuterComposite
  */
 
+
+
+
 public class OuterComposite implements Parcelable {
   @SerializedName("my_number")
   private BigDecimal myNumber = null;

@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "HasOnlyReadOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "HasOnlyReadOnly")
+
+
+
 public class HasOnlyReadOnly {
   @JsonProperty("bar")
   @JacksonXmlProperty(localName = "bar")

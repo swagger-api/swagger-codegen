@@ -27,6 +27,9 @@ import java.util.Map;
  * MapTest
  */
 
+
+
+
 public class MapTest {
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;

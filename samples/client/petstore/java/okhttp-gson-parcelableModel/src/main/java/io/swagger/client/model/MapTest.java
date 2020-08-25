@@ -33,6 +33,9 @@ import android.os.Parcel;
  * MapTest
  */
 
+
+
+
 public class MapTest implements Parcelable {
   @SerializedName("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;

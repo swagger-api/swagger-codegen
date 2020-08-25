@@ -33,6 +33,9 @@ import android.os.Parcel;
  * ArrayOfArrayOfNumberOnly
  */
 
+
+
+
 public class ArrayOfArrayOfNumberOnly implements Parcelable {
   @SerializedName("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = null;

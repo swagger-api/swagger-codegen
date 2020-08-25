@@ -31,6 +31,9 @@ import android.os.Parcel;
  * Order
  */
 
+
+
+
 public class Order implements Parcelable {
   @SerializedName("id")
   private Long id = null;

@@ -31,6 +31,9 @@ import android.os.Parcel;
  */
 @ApiModel(description = "Model for testing model with \"_class\" property")
 
+
+
+
 public class ClassModel implements Parcelable {
   @SerializedName("_class")
   private String propertyClass = null;

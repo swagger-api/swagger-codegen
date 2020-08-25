@@ -28,6 +28,9 @@ import java.io.IOException;
  * Category
  */
 
+
+
+
 public class Category {
   @SerializedName("id")
   private Long id = null;

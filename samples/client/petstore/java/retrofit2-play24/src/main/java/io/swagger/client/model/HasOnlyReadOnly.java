@@ -27,6 +27,9 @@ import javax.validation.Valid;
  * HasOnlyReadOnly
  */
 
+
+
+
 public class HasOnlyReadOnly {
   @JsonProperty("bar")
   private String bar = null;

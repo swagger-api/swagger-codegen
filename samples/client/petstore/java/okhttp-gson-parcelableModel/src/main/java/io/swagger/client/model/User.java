@@ -30,6 +30,9 @@ import android.os.Parcel;
  * User
  */
 
+
+
+
 public class User implements Parcelable {
   @SerializedName("id")
   private Long id = null;

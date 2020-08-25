@@ -24,6 +24,9 @@ import io.swagger.annotations.ApiModelProperty;
  * HasOnlyReadOnly
  */
 
+
+
+
 public class HasOnlyReadOnly {
   @JsonProperty("bar")
   private String bar = null;
