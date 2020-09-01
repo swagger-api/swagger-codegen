@@ -63,7 +63,7 @@ module Petstore
                             :message => response.return_message)
         else
           fail ApiError.new(:code => response.code,
-                            :response_headers => response.headers,
+                            :response_headers => response.headers.to_h,
                             :response_body => response.body),
                response.status_message
         end
