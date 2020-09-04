@@ -36,7 +36,10 @@ then rm -rf intouch_api/csharp_client/c#
   fpm -f -s "dir" -t "deb" -a "all" -n "c#-swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/csharp_client --deb-no-default-config-files  csharp="/usr/share/c#/capillary-libs/swagger-sdk"
 elif [ "$Client" = "php" ]
 then rm -rf intouch_api/php_client/php
-   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  if [ "$CamelCase" = "Yes" ]
+    then
+      sed -i -e 's/}/,"variableNamingConvention":"camelCase"}/g' config.json
+  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l php \
   -o intouch_api/php_client/php
