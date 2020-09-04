@@ -38,11 +38,13 @@ elif [ "$Client" = "php" ]
 then rm -rf intouch_api/php_client/php
   if [ "$CamelCase" = "Yes" ]
     then
-      sed -i -e 's/}/,"variableNamingConvention":"camelCase"}/g' config.json
+      echo "setting camelcase variable name convention for php sdk"
+      echo '{"variableNamingConvention":"camelCase"}' > config.json
   fi
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l php \
+  -c config.json \
   -o intouch_api/php_client/php
   tar cvzf intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
   fpm -f -s "dir" -t "deb" -a "all" -n "swagger-sdk" -v $BUILD_NUMBER -C ./intouch_api/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-sdk"
