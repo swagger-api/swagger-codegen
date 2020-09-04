@@ -39,6 +39,7 @@ then rm -rf intouch_api/php_client/php
   if [ "$CamelCase" = "Yes" ]
     then
       sed -i -e 's/}/,"variableNamingConvention":"camelCase"}/g' config.json
+  fi
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l php \
