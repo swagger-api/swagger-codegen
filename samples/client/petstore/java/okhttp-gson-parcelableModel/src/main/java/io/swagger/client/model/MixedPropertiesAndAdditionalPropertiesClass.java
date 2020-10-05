@@ -36,9 +36,6 @@ import android.os.Parcel;
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
-
-
-
 public class MixedPropertiesAndAdditionalPropertiesClass implements Parcelable {
   @SerializedName("uuid")
   private UUID uuid = null;

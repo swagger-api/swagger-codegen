@@ -33,9 +33,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "ArrayTest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ArrayTest")
-
-
-
 public class ArrayTest {
   @JsonProperty("array_of_string")
   // Is a container wrapped=false

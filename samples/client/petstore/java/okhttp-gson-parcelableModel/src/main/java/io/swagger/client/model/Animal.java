@@ -31,9 +31,6 @@ import android.os.Parcel;
  */
 
 
-
-
-
 public class Animal implements Parcelable {
   @SerializedName("className")
   private String className = null;

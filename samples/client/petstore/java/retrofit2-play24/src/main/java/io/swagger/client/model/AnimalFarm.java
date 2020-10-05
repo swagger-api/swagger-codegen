@@ -25,9 +25,6 @@ import javax.validation.Valid;
  * AnimalFarm
  */
 
-
-
-
 public class AnimalFarm extends ArrayList<Animal> {
 
   @Override

@@ -25,9 +25,6 @@ import io.swagger.client.model.OuterEnum;
  * EnumTest
  */
 
-
-
-
 public class EnumTest {
   /**
    * Gets or Sets enumString

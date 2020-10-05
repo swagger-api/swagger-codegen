@@ -36,9 +36,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "MixedPropertiesAndAdditionalPropertiesClass")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "MixedPropertiesAndAdditionalPropertiesClass")
-
-
-
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @JsonProperty("uuid")
   @JacksonXmlProperty(localName = "uuid")

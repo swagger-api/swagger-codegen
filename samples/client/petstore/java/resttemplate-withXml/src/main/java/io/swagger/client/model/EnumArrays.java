@@ -32,9 +32,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "EnumArrays")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "EnumArrays")
-
-
-
 public class EnumArrays {
   /**
    * Gets or Sets justSymbol

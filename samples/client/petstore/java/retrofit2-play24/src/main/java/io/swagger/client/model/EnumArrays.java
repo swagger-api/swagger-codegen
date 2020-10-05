@@ -29,9 +29,6 @@ import javax.validation.Valid;
  * EnumArrays
  */
 
-
-
-
 public class EnumArrays {
   /**
    * Gets or Sets justSymbol

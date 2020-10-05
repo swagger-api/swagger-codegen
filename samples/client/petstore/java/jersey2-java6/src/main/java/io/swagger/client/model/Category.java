@@ -24,9 +24,6 @@ import io.swagger.annotations.ApiModelProperty;
  * Category
  */
 
-
-
-
 public class Category {
   @JsonProperty("id")
   private Long id = null;

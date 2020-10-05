@@ -22,9 +22,6 @@ import java.util.List;
  * AnimalFarm
  */
 
-
-
-
 public class AnimalFarm extends ArrayList<Animal> {
 
   @Override

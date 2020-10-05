@@ -34,9 +34,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "FormatTest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "FormatTest")
-
-
-
 public class FormatTest {
   @JsonProperty("integer")
   @JacksonXmlProperty(localName = "integer")

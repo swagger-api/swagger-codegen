@@ -28,9 +28,6 @@ import java.util.List;
  * ArrayTest
  */
 
-
-
-
 public class ArrayTest {
   @JsonProperty("array_of_string")
   private List<String> arrayOfString = null;

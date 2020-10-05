@@ -14,7 +14,6 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -28,9 +27,6 @@ import java.io.IOException;
  * Model for testing reserved words  *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
  */
 @ApiModel(description = "Model for testing reserved words  *_/ ' \" =end -- \\r\\n \\n \\r")
-
-
-
 
 public class ModelReturn {
   @SerializedName("return")

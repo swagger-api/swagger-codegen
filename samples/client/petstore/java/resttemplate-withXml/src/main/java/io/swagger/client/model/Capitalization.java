@@ -30,9 +30,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "Capitalization")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Capitalization")
-
-
-
 public class Capitalization {
   @JsonProperty("smallCamel")
   @JacksonXmlProperty(localName = "smallCamel")

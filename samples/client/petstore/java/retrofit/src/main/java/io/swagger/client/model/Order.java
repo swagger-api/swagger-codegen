@@ -29,9 +29,6 @@ import org.joda.time.DateTime;
  * Order
  */
 
-
-
-
 public class Order {
   @SerializedName("id")
   private Long id = null;

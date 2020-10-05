@@ -29,9 +29,6 @@ import java.io.IOException;
  * Dog
  */
 
-
-
-
 public class Dog extends Animal {
   @SerializedName("breed")
   private String breed = null;

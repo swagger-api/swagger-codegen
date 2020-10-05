@@ -26,9 +26,6 @@ import java.time.OffsetDateTime;
  * Order
  */
 
-
-
-
 public class Order {
   @JsonProperty("id")
   private Long id = null;

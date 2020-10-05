@@ -31,9 +31,6 @@ import javax.validation.Valid;
  * FormatTest
  */
 
-
-
-
 public class FormatTest {
   @JsonProperty("integer")
   private Integer integer = null;

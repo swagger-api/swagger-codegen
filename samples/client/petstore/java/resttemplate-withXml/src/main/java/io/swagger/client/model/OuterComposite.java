@@ -31,9 +31,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "OuterComposite")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "OuterComposite")
-
-
-
 public class OuterComposite {
   @JsonProperty("my_number")
   @JacksonXmlProperty(localName = "my_number")

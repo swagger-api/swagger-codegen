@@ -25,9 +25,6 @@ import io.swagger.annotations.ApiModelProperty;
  * User
  */
 
-
-
-
 public class User {
   @JsonProperty("id")
   private Long id = null;

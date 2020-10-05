@@ -24,9 +24,6 @@ import io.swagger.annotations.ApiModelProperty;
  * SpecialModelName
  */
 
-
-
-
 public class SpecialModelName {
   @JsonProperty("$special[property.name]")
   private Long specialPropertyName = null;

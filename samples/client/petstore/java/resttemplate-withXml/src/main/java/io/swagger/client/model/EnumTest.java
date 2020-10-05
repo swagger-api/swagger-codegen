@@ -31,9 +31,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "EnumTest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "EnumTest")
-
-
-
 public class EnumTest {
   /**
    * Gets or Sets enumString

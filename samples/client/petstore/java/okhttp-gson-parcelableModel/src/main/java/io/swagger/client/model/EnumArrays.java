@@ -32,9 +32,6 @@ import android.os.Parcel;
  * EnumArrays
  */
 
-
-
-
 public class EnumArrays implements Parcelable {
   /**
    * Gets or Sets justSymbol

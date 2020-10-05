@@ -31,9 +31,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "Return")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Return")
-
-
-
 public class ModelReturn {
   @JsonProperty("return")
   @JacksonXmlProperty(localName = "return")

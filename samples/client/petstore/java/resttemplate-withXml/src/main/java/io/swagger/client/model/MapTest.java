@@ -33,9 +33,6 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "MapTest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "MapTest")
-
-
-
 public class MapTest {
   @JsonProperty("map_map_of_string")
   // Is a container wrapped=false

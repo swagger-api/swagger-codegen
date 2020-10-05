@@ -28,9 +28,6 @@ import javax.validation.Valid;
  */
 @ApiModel(description = "Model for testing model name same as property name")
 
-
-
-
 public class Name {
   @JsonProperty("name")
   private Integer name = null;

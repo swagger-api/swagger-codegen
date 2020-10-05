@@ -24,9 +24,6 @@ import io.swagger.annotations.ApiModelProperty;
  * Capitalization
  */
 
-
-
-
 public class Capitalization {
   @JsonProperty("smallCamel")
   private String smallCamel = null;

@@ -32,9 +32,6 @@ import io.swagger.annotations.ApiModelProperty;
   @JsonSubTypes.Type(value = Cat.class, name = "Cat"),
 })
 
-
-
-
 public class Animal {
   @JsonProperty("className")
   private String className = null;

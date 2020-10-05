@@ -29,9 +29,6 @@ import java.math.BigDecimal;
  * OuterComposite
  */
 
-
-
-
 public class OuterComposite {
   @SerializedName("my_number")
   private BigDecimal myNumber = null;

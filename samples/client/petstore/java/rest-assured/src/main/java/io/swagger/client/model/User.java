@@ -28,9 +28,6 @@ import java.io.IOException;
  * User
  */
 
-
-
-
 public class User {
   @SerializedName("id")
   private Long id = null;

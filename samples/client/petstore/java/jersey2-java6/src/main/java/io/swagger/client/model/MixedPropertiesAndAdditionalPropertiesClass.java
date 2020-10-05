@@ -30,9 +30,6 @@ import org.threeten.bp.OffsetDateTime;
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
-
-
-
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @JsonProperty("uuid")
   private UUID uuid = null;

@@ -30,9 +30,6 @@ import android.os.Parcel;
  * SpecialModelName
  */
 
-
-
-
 public class SpecialModelName implements Parcelable {
   @SerializedName("$special[property.name]")
   private Long specialPropertyName = null;

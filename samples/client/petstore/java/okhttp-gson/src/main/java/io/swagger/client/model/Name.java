@@ -29,9 +29,6 @@ import java.io.IOException;
  */
 @ApiModel(description = "Model for testing model name same as property name")
 
-
-
-
 public class Name {
   @SerializedName("name")
   private Integer name = null;

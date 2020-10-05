@@ -30,9 +30,6 @@ import android.os.Parcel;
  * HasOnlyReadOnly
  */
 
-
-
-
 public class HasOnlyReadOnly implements Parcelable {
   @SerializedName("bar")
   private String bar = null;

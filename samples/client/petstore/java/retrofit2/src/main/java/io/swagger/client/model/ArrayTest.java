@@ -31,9 +31,6 @@ import java.util.List;
  * ArrayTest
  */
 
-
-
-
 public class ArrayTest {
   @SerializedName("array_of_string")
   private List<String> arrayOfString = null;

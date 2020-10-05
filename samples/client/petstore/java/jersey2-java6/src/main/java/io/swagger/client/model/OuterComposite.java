@@ -25,9 +25,6 @@ import java.math.BigDecimal;
  * OuterComposite
  */
 
-
-
-
 public class OuterComposite {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;
