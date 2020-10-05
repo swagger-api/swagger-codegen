@@ -30,6 +30,9 @@ import android.os.Parcel;
  * Category
  */
 
+
+
+
 public class Category implements Parcelable {
   @SerializedName("id")
   private Long id = null;

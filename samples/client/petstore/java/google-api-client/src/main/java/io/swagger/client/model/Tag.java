@@ -25,6 +25,9 @@ import io.swagger.annotations.ApiModelProperty;
  * Tag
  */
 
+
+
+
 public class Tag {
   @JsonProperty("id")
   private Long id = null;

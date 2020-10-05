@@ -26,6 +26,9 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "Model for testing model with \"_class\" property")
 
+
+
+
 public class ClassModel {
   @JsonProperty("_class")
   private String propertyClass = null;

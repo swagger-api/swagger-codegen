@@ -34,6 +34,9 @@ import android.os.Parcel;
  * FormatTest
  */
 
+
+
+
 public class FormatTest implements Parcelable {
   @SerializedName("integer")
   private Integer integer = null;

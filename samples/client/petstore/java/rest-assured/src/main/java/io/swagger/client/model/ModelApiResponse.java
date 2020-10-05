@@ -28,6 +28,9 @@ import java.io.IOException;
  * ModelApiResponse
  */
 
+
+
+
 public class ModelApiResponse {
   @SerializedName("code")
   private Integer code = null;

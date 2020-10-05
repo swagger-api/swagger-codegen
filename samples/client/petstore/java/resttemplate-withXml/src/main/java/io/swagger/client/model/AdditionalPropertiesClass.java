@@ -33,6 +33,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "AdditionalPropertiesClass")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "AdditionalPropertiesClass")
+
+
+
 public class AdditionalPropertiesClass {
   @JsonProperty("map_property")
   // Is a container wrapped=false

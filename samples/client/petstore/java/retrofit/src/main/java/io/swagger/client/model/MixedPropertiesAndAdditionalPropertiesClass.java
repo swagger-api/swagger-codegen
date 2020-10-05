@@ -34,6 +34,9 @@ import org.joda.time.DateTime;
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
+
+
+
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @SerializedName("uuid")
   private UUID uuid = null;

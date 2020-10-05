@@ -27,6 +27,9 @@ import java.util.List;
  * EnumArrays
  */
 
+
+
+
 public class EnumArrays {
   /**
    * Gets or Sets justSymbol

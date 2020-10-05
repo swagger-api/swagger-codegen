@@ -29,6 +29,9 @@ import java.io.IOException;
  * EnumTest
  */
 
+
+
+
 public class EnumTest {
   /**
    * Gets or Sets enumString

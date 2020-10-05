@@ -28,6 +28,9 @@ import java.io.IOException;
  * HasOnlyReadOnly
  */
 
+
+
+
 public class HasOnlyReadOnly {
   @SerializedName("bar")
   private String bar = null;

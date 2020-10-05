@@ -31,6 +31,9 @@ import java.util.List;
  * ArrayOfArrayOfNumberOnly
  */
 
+
+
+
 public class ArrayOfArrayOfNumberOnly {
   @SerializedName("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = null;
