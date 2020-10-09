@@ -5,16 +5,18 @@ if [ "$Branch" = "master" ]
   then
     url="https://crm-nightly-new.cc.capillarytech.com/api_gateway/file-service/v2/api-docs"
     version="https://crm-nightly-new.cc.capillarytech.com/api_gateway/file-service/v1/meta/version"
+    ver=$(curl -H"Authorization: Basic REDACTED" -k $version)
+    curl -H"Authorization:Basic REDACTED" -o spec.json $url
 elif [ "$Branch" = "production" ]
   then
-    url="http://fileservice.capillary.in/tl-docs-test/v2/api-docs"
-    version="https://fileservice.capillary.in/v1/meta/version"
+    url="https://crm-staging-new.cc.capillarytech.com/api_gateway/file-service/v2/api-docs"
+    version="https://crm-staging-new.cc.capillarytech.com/api_gateway/file-service/v1/meta/version"
+    ver=$(curl -H"Authorization: Basic REDACTED" -k $version)
+    curl -H"Authorization:Basic REDACTED" -o spec.json $url
 else " No Branch is selected"
 fi
-ver=$(curl -H"Authorization: Basic REDACTED" -k $version)
 echo {'"artifactVersion"':\"$ver\"} > config.json
 echo "GENERATING SDK"
-curl -H"Authorization:Basic REDACTED" -o spec.json "https://crm-nightly-new.cc.capillarytech.com/api_gateway/file-service/v2/api-docs"
 if [ "$Client" = "java" ]
 then
   rm -rf fileservice/java_client/java
