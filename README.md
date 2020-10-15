@@ -781,7 +781,7 @@ curl -X POST -H "content-type:application/json" -d '{"swaggerUrl":"https://petst
 ```
 Then you will receive a JSON response with the URL to download the zipped code.
 
-To customize the SDK, you can `POST` to `https://generator.swagger.io/gen/clients/{language}` with the following HTTP body:
+To customize the SDK, you can `POST` to `https://generator.swagger.io/api/gen/clients/{language}` with the following HTTP body:
 ```json
 {
   "options": {},
