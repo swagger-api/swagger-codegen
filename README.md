@@ -58,7 +58,7 @@ dependency example:
 
 ### Swagger Codegen 3.X ([`3.0.0` branch](https://github.com/swagger-api/swagger-codegen/tree/3.0.0))
 
-Swagger Codegen 2.X supports OpenAPI version 3 (and version 2 via spec conversion to version 3)
+Swagger Codegen 3.X supports OpenAPI version 3 (and version 2 via spec conversion to version 3)
 [Online generator of version 3.X](https://github.com/swagger-api/swagger-codegen/tree/3.0.0#online-generators) supports both generation from Swagger/OpenAPI version 2 (by using engine + generators of 2.X) and version 3 specifications.
 
 group id: `io.swagger.codegen.v3`
@@ -642,10 +642,10 @@ Your config file for Java can look like
 
 ```json
 {
-  "groupId":"com.my.company",
-  "artifactId":"MyClient",
-  "artifactVersion":"1.2.0",
-  "library":"feign"
+  "groupId": "com.my.company",
+  "artifactId": "MyClient",
+  "artifactVersion": "1.2.0",
+  "library": "feign"
 }
 ```
 
@@ -781,10 +781,10 @@ curl -X POST -H "content-type:application/json" -d '{"swaggerUrl":"https://petst
 ```
 Then you will receive a JSON response with the URL to download the zipped code.
 
-To customize the SDK, you can `POST` to `https://generator.swagger.io/gen/clients/{language}` with the following HTTP body:
+To customize the SDK, you can `POST` to `https://generator.swagger.io/api/gen/clients/{language}` with the following HTTP body:
 ```json
 {
-  "options": {},
+  "options":  {},
   "swaggerUrl": "https://petstore.swagger.io/v2/swagger.json"
 }
 ```
@@ -793,23 +793,23 @@ in which the `options` for a language can be obtained by submitting a `GET` requ
 For example, `curl https://generator.swagger.io/api/gen/clients/python` returns
 ```json
 {
-  "packageName":{
-    "opt":"packageName",
-    "description":"python package name (convention: snake_case).",
-    "type":"string",
-    "default":"swagger_client"
+  "packageName": {
+    "opt": "packageName",
+    "description": "python package name (convention: snake_case).",
+    "type": "string",
+    "default": "swagger_client"
   },
-  "packageVersion":{
-    "opt":"packageVersion",
-    "description":"python package version.",
-    "type":"string",
-    "default":"1.0.0"
+  "packageVersion": {
+    "opt": "packageVersion",
+    "description": "python package version.",
+    "type": "string",
+    "default": "1.0.0"
   },
-  "sortParamsByRequiredFlag":{
-    "opt":"sortParamsByRequiredFlag",
-    "description":"Sort method arguments to place required parameters before optional parameters.",
-    "type":"boolean",
-    "default":"true"
+  "sortParamsByRequiredFlag": {
+    "opt": "sortParamsByRequiredFlag",
+    "description": "Sort method arguments to place required parameters before optional parameters.",
+    "type": "boolean",
+    "default": "true"
   }
 }
 ```
