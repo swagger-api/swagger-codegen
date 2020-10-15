@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -29,6 +30,7 @@ import javax.validation.constraints.*;
  */
 
 public class ArrayOfNumberOnly  implements Serializable {
+        @Valid 
   @JsonProperty("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
 
@@ -51,6 +53,7 @@ public class ArrayOfNumberOnly  implements Serializable {
    **/
   @JsonProperty("ArrayNumber")
   @ApiModelProperty(value = "")
+  @Valid
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }

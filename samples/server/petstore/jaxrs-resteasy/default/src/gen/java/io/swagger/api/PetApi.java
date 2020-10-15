@@ -22,6 +22,7 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.inject.Inject;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -46,7 +47,7 @@ public class PetApi  {
     }, tags={ "pet", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext)
+    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) @Valid  Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.addPet(body,securityContext);
     }
@@ -80,7 +81,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-    public Response findPetsByStatus( @NotNull  @QueryParam("status") List<String> status,@Context SecurityContext securityContext)
+    public Response findPetsByStatus( @NotNull  @QueryParam("status") @Valid List<String> status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.findPetsByStatus(status,securityContext);
     }
@@ -98,7 +99,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
-    public Response findPetsByTags( @NotNull  @QueryParam("tags") List<String> tags,@Context SecurityContext securityContext)
+    public Response findPetsByTags( @NotNull  @QueryParam("tags") @Valid List<String> tags,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.findPetsByTags(tags,securityContext);
     }
@@ -135,7 +136,7 @@ public class PetApi  {
         @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
-    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext)
+    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) @Valid  Pet body,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.updatePet(body,securityContext);
     }
@@ -151,7 +152,7 @@ public class PetApi  {
     }, tags={ "pet", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response updatePetWithForm( @PathParam("petId") Long petId,@ApiParam(value = "Updated name of the pet")@FormParam("name")  String name,@ApiParam(value = "Updated status of the pet")@FormParam("status")  String status,@Context SecurityContext securityContext)
+    public Response updatePetWithForm( @PathParam("petId") Long petId,@ApiParam(value = "Updated name of the pet")@FormParam("name")  String name ,@ApiParam(value = "Updated status of the pet")@FormParam("status")  String status ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.updatePetWithForm(petId,name,status,securityContext);
     }

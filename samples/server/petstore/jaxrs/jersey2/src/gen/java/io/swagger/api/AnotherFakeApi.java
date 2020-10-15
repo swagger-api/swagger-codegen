@@ -23,6 +23,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 @Path("/another-fake")
@@ -61,7 +62,7 @@ public class AnotherFakeApi  {
     @io.swagger.annotations.ApiOperation(value = "To test special tags", notes = "To test special tags", response = Client.class, tags={ "$another-fake?", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    public Response testSpecialTags(@ApiParam(value = "client model" ,required=true) Client body
+    public Response testSpecialTags(@ApiParam(value = "client model" ,required=true) @Valid Client body
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.testSpecialTags(body,securityContext);

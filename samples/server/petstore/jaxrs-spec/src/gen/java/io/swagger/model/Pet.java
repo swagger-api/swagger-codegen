@@ -83,6 +83,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("category")
+        @Valid
   public Category getCategory() {
     return category;
   }
@@ -136,6 +137,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("tags")
+            @Valid
   public List<Tag> getTags() {
     return tags;
   }

@@ -18,6 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -40,7 +41,7 @@ public interface PetApi  {
     }, tags={ "pet", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext);
+    public Response addPet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) @Valid  Pet body,@Context SecurityContext securityContext);
     @DELETE
     @Path("/{petId}")
     
@@ -68,7 +69,7 @@ public interface PetApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid status value", response = Void.class) })
-    public Response findPetsByStatus( @NotNull @QueryParam("status") List<String> status,@Context SecurityContext securityContext);
+    public Response findPetsByStatus( @NotNull  @QueryParam("status") List<String> status,@Context SecurityContext securityContext);
     @GET
     @Path("/findByTags")
     
@@ -83,7 +84,7 @@ public interface PetApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Pet.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid tag value", response = Void.class) })
-    public Response findPetsByTags( @NotNull @QueryParam("tags") List<String> tags,@Context SecurityContext securityContext);
+    public Response findPetsByTags( @NotNull  @QueryParam("tags") List<String> tags,@Context SecurityContext securityContext);
     @GET
     @Path("/{petId}")
     
@@ -114,7 +115,7 @@ public interface PetApi  {
         @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
-    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) Pet body,@Context SecurityContext securityContext);
+    public Response updatePet(@ApiParam(value = "Pet object that needs to be added to the store" ,required=true) @Valid  Pet body,@Context SecurityContext securityContext);
     @POST
     @Path("/{petId}")
     @Consumes({ "application/x-www-form-urlencoded" })
@@ -127,7 +128,7 @@ public interface PetApi  {
     }, tags={ "pet", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
-    public Response updatePetWithForm( @PathParam("petId") Long petId,@ApiParam(value = "Updated name of the pet")@FormParam("name")  String name,@ApiParam(value = "Updated status of the pet")@FormParam("status")  String status,@Context SecurityContext securityContext);
+    public Response updatePetWithForm( @PathParam("petId") Long petId,@ApiParam(value = "Updated name of the pet")@FormParam("name")  String name  ,@ApiParam(value = "Updated status of the pet")@FormParam("status")  String status  ,@Context SecurityContext securityContext);
     @POST
     @Path("/{petId}/uploadImage")
     @Consumes({ "multipart/form-data" })

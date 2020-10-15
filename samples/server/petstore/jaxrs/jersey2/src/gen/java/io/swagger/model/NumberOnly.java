@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -26,6 +27,7 @@ import javax.validation.constraints.*;
  */
 
 public class NumberOnly   {
+
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;
 
@@ -40,6 +42,7 @@ public class NumberOnly   {
    **/
   @JsonProperty("JustNumber")
   @ApiModelProperty(value = "")
+  @Valid
   public BigDecimal getJustNumber() {
     return justNumber;
   }

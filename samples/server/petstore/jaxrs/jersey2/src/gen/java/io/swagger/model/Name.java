@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -26,14 +27,18 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Model for testing model name same as property name")
 
 public class Name   {
+
   @JsonProperty("name")
   private Integer name = null;
+
 
   @JsonProperty("snake_case")
   private Integer snakeCase = null;
 
+
   @JsonProperty("property")
   private String property = null;
+
 
   @JsonProperty("123Number")
   private Integer _123Number = null;

@@ -124,6 +124,7 @@ public class FormatTest  {
   **/
   @JsonProperty("number")
   @NotNull
+        @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
@@ -238,6 +239,7 @@ public class FormatTest  {
   **/
   @JsonProperty("date")
   @NotNull
+        @Valid
   public LocalDate getDate() {
     return date;
   }
@@ -256,6 +258,7 @@ public class FormatTest  {
    * @return dateTime
   **/
   @JsonProperty("dateTime")
+        @Valid
   public Date getDateTime() {
     return dateTime;
   }
@@ -274,6 +277,7 @@ public class FormatTest  {
    * @return uuid
   **/
   @JsonProperty("uuid")
+        @Valid
   public UUID getUuid() {
     return uuid;
   }

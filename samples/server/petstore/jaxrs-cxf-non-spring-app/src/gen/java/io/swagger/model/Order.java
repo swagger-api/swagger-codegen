@@ -133,6 +133,7 @@ public enum StatusEnum {
    * @return shipDate
   **/
   @JsonProperty("shipDate")
+        @Valid
   public Date getShipDate() {
     return shipDate;
   }

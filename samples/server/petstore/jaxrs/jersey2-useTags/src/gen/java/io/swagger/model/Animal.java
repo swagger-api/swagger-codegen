@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -27,8 +28,10 @@ import javax.validation.constraints.*;
  */
 
 public class Animal   {
+
   @JsonProperty("className")
   private String className = null;
+
 
   @JsonProperty("color")
   private String color = "red";

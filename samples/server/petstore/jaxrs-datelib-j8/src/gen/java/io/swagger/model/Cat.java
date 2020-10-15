@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -27,6 +28,7 @@ import javax.validation.constraints.*;
  */
 
 public class Cat extends Animal implements Serializable {
+
   @JsonProperty("declawed")
   private Boolean declawed = null;
 

@@ -114,6 +114,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
+        @Valid
   public Date getShipDate() {
     return shipDate;
   }

@@ -35,6 +35,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
    * @return uuid
   **/
   @JsonProperty("uuid")
+        @Valid
   public UUID getUuid() {
     return uuid;
   }
@@ -53,6 +54,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
    * @return dateTime
   **/
   @JsonProperty("dateTime")
+        @Valid
   public Date getDateTime() {
     return dateTime;
   }
@@ -71,6 +73,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
    * @return map
   **/
   @JsonProperty("map")
+            @Valid
   public Map<String, Animal> getMap() {
     return map;
   }

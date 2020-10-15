@@ -24,6 +24,7 @@ public class NumberOnly  {
    * @return justNumber
   **/
   @JsonProperty("JustNumber")
+        @Valid
   public BigDecimal getJustNumber() {
     return justNumber;
   }

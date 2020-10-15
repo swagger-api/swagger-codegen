@@ -46,6 +46,7 @@ public class ArrayTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("array_array_of_integer")
+            @Valid
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -63,6 +64,7 @@ public class ArrayTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("array_array_of_model")
+            @Valid
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }

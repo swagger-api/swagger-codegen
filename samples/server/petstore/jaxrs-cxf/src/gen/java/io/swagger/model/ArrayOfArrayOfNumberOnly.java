@@ -26,6 +26,7 @@ public class ArrayOfArrayOfNumberOnly  {
    * @return arrayArrayNumber
   **/
   @JsonProperty("ArrayArrayNumber")
+            @Valid
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }

@@ -126,5 +126,7 @@ public interface PetApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
     ModelApiResponse uploadFile(@PathParam("petId") @ApiParam("ID of pet to update") Long petId,@FormParam(value = "additionalMetadata")  String additionalMetadata, @FormParam(value = "file") InputStream fileInputStream,
-   @FormParam(value = "file") Attachment fileDetail);
+@Valid
+@FormParam(value = "file") Attachment fileDetail
+);
 }

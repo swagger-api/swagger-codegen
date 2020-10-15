@@ -3,6 +3,7 @@ package io.swagger.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**

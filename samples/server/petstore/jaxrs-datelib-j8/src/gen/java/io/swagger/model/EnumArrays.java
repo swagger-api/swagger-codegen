@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -60,6 +61,7 @@ public class EnumArrays  implements Serializable {
     }
   }
 
+
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
 
@@ -94,6 +96,7 @@ public class EnumArrays  implements Serializable {
     }
   }
 
+        @Valid 
   @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
 

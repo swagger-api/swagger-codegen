@@ -22,6 +22,7 @@ import io.swagger.model.ReadOnlyFirst;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -29,12 +30,15 @@ import javax.validation.constraints.*;
  */
 
 public class ArrayTest  implements Serializable {
+        @Valid 
   @JsonProperty("array_of_string")
   private List<String> arrayOfString = null;
 
+        @Valid 
   @JsonProperty("array_array_of_integer")
   private List<List<Long>> arrayArrayOfInteger = null;
 
+        @Valid 
   @JsonProperty("array_array_of_model")
   private List<List<ReadOnlyFirst>> arrayArrayOfModel = null;
 
@@ -84,6 +88,7 @@ public class ArrayTest  implements Serializable {
    **/
   @JsonProperty("array_array_of_integer")
   @ApiModelProperty(value = "")
+  @Valid
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -111,6 +116,7 @@ public class ArrayTest  implements Serializable {
    **/
   @JsonProperty("array_array_of_model")
   @ApiModelProperty(value = "")
+  @Valid
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }

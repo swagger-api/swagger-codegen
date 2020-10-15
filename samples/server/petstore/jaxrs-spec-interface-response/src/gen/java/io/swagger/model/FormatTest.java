@@ -98,6 +98,7 @@ public class FormatTest  implements Serializable {
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("number")
   @NotNull
+        @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
@@ -206,6 +207,7 @@ public class FormatTest  implements Serializable {
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("date")
   @NotNull
+        @Valid
   public LocalDate getDate() {
     return date;
   }
@@ -223,6 +225,7 @@ public class FormatTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("dateTime")
+        @Valid
   public Date getDateTime() {
     return dateTime;
   }
@@ -240,6 +243,7 @@ public class FormatTest  implements Serializable {
   
   @ApiModelProperty(value = "")
   @JsonProperty("uuid")
+        @Valid
   public UUID getUuid() {
     return uuid;
   }

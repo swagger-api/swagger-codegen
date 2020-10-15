@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.annotations.*;
 
@@ -25,9 +26,7 @@ public class Amount   {
   @ApiModelProperty(required = true, value = "some description ")
   @JsonProperty("value")
   @NotNull
-  @DecimalMin("0.01")
-  @DecimalMax("1000000000000000")
-  public Double getValue() {
+ @DecimalMin("0.01") @DecimalMax("1000000000000000")  public Double getValue() {
     return value;
   }
   public void setValue(Double value) {
@@ -40,8 +39,7 @@ public class Amount   {
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("currency")
   @NotNull
-  @Pattern(regexp="^[A-Z]{3,3}$")
-  public String getCurrency() {
+ @Pattern(regexp="^[A-Z]{3,3}$")  public String getCurrency() {
     return currency;
   }
   public void setCurrency(String currency) {

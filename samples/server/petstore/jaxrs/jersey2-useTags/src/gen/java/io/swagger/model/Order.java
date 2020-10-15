@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -27,14 +28,18 @@ import javax.validation.constraints.*;
  */
 
 public class Order   {
+
   @JsonProperty("id")
   private Long id = null;
+
 
   @JsonProperty("petId")
   private Long petId = null;
 
+
   @JsonProperty("quantity")
   private Integer quantity = null;
+
 
   @JsonProperty("shipDate")
   private Date shipDate = null;
@@ -72,8 +77,10 @@ public class Order   {
     }
   }
 
+
   @JsonProperty("status")
   private StatusEnum status = null;
+
 
   @JsonProperty("complete")
   private Boolean complete = false;
@@ -146,6 +153,7 @@ public class Order   {
    **/
   @JsonProperty("shipDate")
   @ApiModelProperty(value = "")
+  @Valid
   public Date getShipDate() {
     return shipDate;
   }

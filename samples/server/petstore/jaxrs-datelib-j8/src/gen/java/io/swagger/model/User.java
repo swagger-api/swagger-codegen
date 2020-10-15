@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
@@ -26,26 +27,34 @@ import javax.validation.constraints.*;
  */
 
 public class User  implements Serializable {
+
   @JsonProperty("id")
   private Long id = null;
+
 
   @JsonProperty("username")
   private String username = null;
 
+
   @JsonProperty("firstName")
   private String firstName = null;
+
 
   @JsonProperty("lastName")
   private String lastName = null;
 
+
   @JsonProperty("email")
   private String email = null;
+
 
   @JsonProperty("password")
   private String password = null;
 
+
   @JsonProperty("phone")
   private String phone = null;
+
 
   @JsonProperty("userStatus")
   private Integer userStatus = null;

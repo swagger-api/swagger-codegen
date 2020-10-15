@@ -30,6 +30,7 @@ public class OuterComposite  {
    * @return myNumber
   **/
   @JsonProperty("my_number")
+        @Valid
   public BigDecimal getMyNumber() {
     return myNumber;
   }
