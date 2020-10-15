@@ -376,9 +376,9 @@ This will run the generator with this command:
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i http://petstore.swagger.io/v2/swagger.json \
-  -l java \
-  -o samples/client/petstore/java
+  -i http://petstore.swagger.io/v2/swagger.json \                               # The location of the Swagger specifcation file (JSON/YAML).
+  -l java \                                                                     # The desired language for the library.
+  -o samples/client/petstore/java                                               # The output destination.
 ```
 
 with a number of options. You can get the options with the `generate --help` command (below only shows partal results):
