@@ -914,7 +914,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.51</swagger-parser-version>
+        <swagger-parser-version>1.0.52-SNAPSHOT</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <swagger-core-version>1.6.1</swagger-core-version>
