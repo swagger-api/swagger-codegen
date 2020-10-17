@@ -21,7 +21,7 @@ var (
 type {{classname}}Service service
 {{#operation}}
 
-/* 
+/*
 {{{classname}}}Service{{#summary}} {{.}}{{/summary}}{{#notes}}
 {{notes}}{{/notes}}
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -235,9 +235,7 @@ func (a *{{{classname}}}Service) {{{nickname}}}(ctx context.Context{{#hasParams}
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
 		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
-		}
+		return {{#returnType}}localVarReturnValue, {{/returnType}}localVarHttpResponse, err
 	}
 	{{/returnType}}
 

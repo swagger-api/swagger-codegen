@@ -26,7 +26,7 @@ var (
 
 type FakeClassnameTags123ApiService service
 
-/* 
+/*
 FakeClassnameTags123ApiService To test class name in snake case
 To test class name in snake case
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -101,9 +101,7 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
 		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
@@ -128,3 +126,4 @@ func (a *FakeClassnameTags123ApiService) TestClassname(ctx context.Context, body
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
