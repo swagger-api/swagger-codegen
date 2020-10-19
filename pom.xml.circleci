@@ -968,7 +968,7 @@
         <swagger-core-version>1.6.1</swagger-core-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.8.1</junit-version>
+        <junit-version>4.13.1</junit-version>
         <jackson-version>2.10.1</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
