@@ -194,7 +194,7 @@
     <jetty-version>9.2.9.v20150224</jetty-version>
     <jersey2-version>2.27</jersey2-version>
     <jackson-version>2.9.5</jackson-version>
-    <junit-version>4.12</junit-version>
+    <junit-version>4.13.1</junit-version>
     <logback-version>1.1.7</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
     <beanvalidation-version>1.1.0.Final</beanvalidation-version>
