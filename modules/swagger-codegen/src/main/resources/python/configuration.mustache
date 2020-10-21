@@ -85,6 +85,9 @@ class Configuration(object):
         # cpu_count * 5 is used as default value to increase performance.
         self.connection_pool_maxsize = multiprocessing.cpu_count() * 5
 
+        # If set these options will be passed down to the underlying urllib3 socket
+        self.socket_options = None
+
         # Proxy URL
         self.proxy = None
         # Safe chars for path_param
