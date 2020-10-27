@@ -21,11 +21,15 @@
 namespace Swagger {
 
     void setValue(void* value, QJsonValue obj, QString type, QString complexType);
+    void setValue(QString& value, QJsonValue obj, QString type);
     void toJsonArray(QList<void*>* value, QJsonObject& output, QString innerName, QString innerType);
     void toJsonValue(QString name, void* value, QJsonObject& output, QString type);
+    void toJsonValue(QString name, QString& value, QJsonObject& output, QString type);
+    void toJsonMap(QMap<QString, QString>* value, QJsonObject& output, QString innerName, QString innerType);
     void toJsonMap(QMap<QString, void*>* value, QJsonObject& output, QString innerName, QString innerType);
     bool isCompatibleJsonValue(QString type);
-    QString stringValue(QString* value);
+    bool isCompatibleJsonValue(QString type);
+    QString stringValue(QString value);
     QString stringValue(qint32 value);
     QString stringValue(qint64 value);
     QString stringValue(bool value);
