@@ -11,6 +11,7 @@ WORKDIR /generator
 COPY docker/jetty_base /generator/
 COPY docker/ROOT.xml /generator/webapps/ROOT.xml
 COPY target/*.war /generator/webapps/ROOT.war
+COPY grantall.policy /generator/grantall.policy
 ENV JETTY_BASE /generator
 ARG HIDDEN_OPTIONS_DEFAULT_PATH
 COPY ${HIDDEN_OPTIONS_DEFAULT_PATH} /generator/resources/

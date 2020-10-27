@@ -43,7 +43,7 @@ JAVA_DEBUG_OPTIONS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8005,server=y,
 # APP options
 APP_OPTS="-DHIDDEN_OPTIONS_PATH=${HIDDEN_OPTIONS_PATH} -DHIDDEN_OPTIONS=${HIDDEN_OPTIONS}"
 # JVM options
-JAVA_OPTS="-server -Duser.timezone=GMT -Xms${HEAP} -Xmx${HEAP} -XX:NewSize=${NEW_SIZE} -XX:MaxNewSize=${NEW_SIZE} -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:PermSize=${PERM_SIZE} -XX:MaxPermSize=${PERM_SIZE} -Dfile.encoding=UTF-8"
+JAVA_OPTS="-Djava.security.manager -Djava.security.policy==grantall.policy -DgeneratorWriteDirs="/tmp" -server -Duser.timezone=GMT -Xms${HEAP} -Xmx${HEAP} -XX:NewSize=${NEW_SIZE} -XX:MaxNewSize=${NEW_SIZE} -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:PermSize=${PERM_SIZE} -XX:MaxPermSize=${PERM_SIZE} -Dfile.encoding=UTF-8"
 
 echo "Starting application with command: "
 echo ${JAVA_EXEC} ${JETTY_OPTS} ${APP_OPTS} ${JAVA_OPTS} -jar $JETTY_HOME/start.jar
