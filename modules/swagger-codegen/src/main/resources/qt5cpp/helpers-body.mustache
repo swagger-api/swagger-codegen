@@ -183,7 +183,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             QJsonArray arr = obj.toArray();
             for (const QJsonValue & jval : arr){
                 QString val = QString();
-                ::{{cppNamespace}}::setValue(val, jval, QStringLiteral("QString"), QStringLiteral(""));
+                ::{{cppNamespace}}::setValue(val, jval, QStringLiteral("QString"));
                 (*output)->push_back(val);
             }
         }
@@ -305,7 +305,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
                 for(auto itemkey : varmap.keys() ){
                     QString val = QString();
                     auto  jsonval = QJsonValue::fromVariant(varmap.value(itemkey));
-                    ::{{cppNamespace}}::setValue(val, jsonval, QStringLiteral("QString"), QStringLiteral(""));
+                    ::{{cppNamespace}}::setValue(val, jsonval, QStringLiteral("QString"));
                     (*output)->insert( itemkey, val);
                 }
             }
@@ -346,7 +346,7 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
 }
 
 void
-setValue(QString& value, QJsonValue obj, QString type, QString complexType) {
+setValue(QString& value, QJsonValue obj, QString type) {
  if (QStringLiteral("QString").compare(type) == 0) {
         if(value.isEmpty()) {
             if(!obj.isNull()) {

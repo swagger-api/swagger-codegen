@@ -75,10 +75,16 @@ void
 void
 {{classname}}::fromJsonObject(QJsonObject pJson) {
     {{#vars}}
-    {{^isContainer}}{{#isString}}::{{cppNamespace}}::setValue({{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");
-              m_{{name}}_isSet = pJson.contains("{{baseName}}");{{/isString}}{{/isContainer}}
-    {{^isContainer}}{{^isString}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");
-              m_{{name}}_isSet = pJson.contains("{{baseName}}");{/isString}}{{/isContainer}}
+    {{^isContainer}}
+    {{#isString}}
+    ::{{cppNamespace}}::setValue({{name}}, pJson["{{baseName}}"], "{{baseType}}");
+    m_{{name}}_isSet = pJson.contains("{{baseName}}");
+    {{/isString}}
+    {{^isString}}
+    ::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");
+    m_{{name}}_isSet = pJson.contains("{{baseName}}");
+    {{/isString}}
+    {{/isContainer}}
     {{#isContainer}}{{^items.isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{items.baseType}}");{{/items.isContainer}}{{#items.isContainer}}{{#isListContainer}}
     if(pJson["{{baseName}}"].isArray()){
         auto arr = pJson["{{baseName}}"].toArray();
