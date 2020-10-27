@@ -219,7 +219,7 @@ void
 
     QString json(worker->response);
 
-    {{{returnType}}} output;
+    {{{returnType}}} output = {};
     create(json, QString("{{{returnBaseType}}}"),&output);
    
     auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
