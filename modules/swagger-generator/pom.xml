@@ -40,8 +40,25 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.security.policy>${java.security.policy}</java.security.policy>
+                        <generatorWriteDirs>/tmp,.</generatorWriteDirs>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.0</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.security.policy>${java.security.policy}</java.security.policy>
+                        <generatorWriteDirs>/tmp,.</generatorWriteDirs>
+                    </systemPropertyVariables>
+                </configuration>
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -78,6 +95,10 @@
                         <systemProperty>
                             <name>logback.configurationFile</name>
                             <value>src/main/resources/logback.xml</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>java.security.policy</name>
+                            <value>${java.security.policy}</value>
                         </systemProperty>
                     </systemProperties>
                     <webApp>
@@ -364,6 +385,7 @@
         </dependency>
     </dependencies>
     <properties>
+        <java.security.policy>grantall.policy</java.security.policy>
         <dockerfile.tag.skip>true</dockerfile.tag.skip>
         <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>

