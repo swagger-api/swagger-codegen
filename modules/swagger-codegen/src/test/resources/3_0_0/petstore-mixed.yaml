@@ -1475,6 +1475,15 @@ components:
       example:
         id: 0
         category: "test-category-name"
+    UserWrapper:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/Users'
+    Users:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
     User:
       type: object
       properties:
