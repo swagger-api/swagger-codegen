@@ -87,7 +87,6 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
             .put(JavaClientCodegen.JAVA8_MODE, JAVA8_MODE_VALUE)
             .put(JavaClientCodegen.WITH_XML, WITH_XML_VALUE)
-            //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
             .put("hideGenerationTimestamp", "true")
             .put(JavaClientCodegen.DISABLE_HTML_ESCAPING, "false")
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
