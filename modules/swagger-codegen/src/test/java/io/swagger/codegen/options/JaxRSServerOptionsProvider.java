@@ -93,7 +93,8 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put("serverPort", "2345")
             .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
-            .put(JavaJerseyServerCodegen.USE_TAGS, USE_TAGS);
+            .put(JavaJerseyServerCodegen.USE_TAGS, USE_TAGS)
+            .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false");
 
         return builder.build();
     }

@@ -74,6 +74,7 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(JavaClientCodegen.DISABLE_HTML_ESCAPING, "false")
                 .put("hideGenerationTimestamp", "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false")
                         //.put("supportJava6", "true")
                 .build();
     }
