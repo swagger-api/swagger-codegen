@@ -11,14 +11,14 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import IHttpClient from "../IHttpClient";
-import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration";
-import { Headers } from "../Headers";
-import HttpResponse from "../HttpResponse";
+import IHttpClient from '../IHttpClient';
+import { inject, injectable } from 'inversify';
+import { IAPIConfiguration } from '../IAPIConfiguration';
+import { Headers } from '../Headers';
+import HttpResponse from '../HttpResponse';
 
 import { User } from '../model/user';
 
@@ -28,13 +28,10 @@ import { COLLECTION_FORMATS }  from '../variables';
 
 @injectable()
 export class UserService {
-    private basePath: string = 'http://petstore.swagger.io/v2';
+    @inject('IAPIConfiguration') private APIConfiguration: IAPIConfiguration;
+    @inject('IApiHttpClient') private httpClient: IHttpClient;
 
-    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
-        @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
-        if(this.APIConfiguration.basePath)
-            this.basePath = this.APIConfiguration.basePath;
-    }
+
 
     /**
      * Create user
@@ -52,9 +49,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user`, body , headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.APIConfiguration.basePath}/user`, body as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -76,9 +73,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user/createWithArray`, body , headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.APIConfiguration.basePath}/user/createWithArray`, body as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -100,9 +97,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.basePath}/user/createWithList`, body , headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.post(`${this.APIConfiguration.basePath}/user/createWithList`, body as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -123,9 +120,9 @@ export class UserService {
 
         headers['Accept'] = 'application/xml';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.APIConfiguration.basePath}/user/${encodeURIComponent(String(username))}` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -146,9 +143,9 @@ export class UserService {
 
         headers['Accept'] = 'application/xml';
 
-        const response: Observable<HttpResponse<User>> = this.httpClient.get(`${this.basePath}/user/${encodeURIComponent(String(username))}`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <User>(httpResponse.response));
+        const response: Observable<HttpResponse<User>> = this.httpClient.get(`${this.APIConfiguration.basePath}/user/${encodeURIComponent(String(username))}` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -174,17 +171,17 @@ export class UserService {
 
         let queryParameters: string[] = [];
         if (username !== undefined) {
-            queryParameters.push("username="+encodeURIComponent(String(username)));
+            queryParameters.push('username='+encodeURIComponent(String(username)));
         }
         if (password !== undefined) {
-            queryParameters.push("password="+encodeURIComponent(String(password)));
+            queryParameters.push('password='+encodeURIComponent(String(password)));
         }
 
         headers['Accept'] = 'application/xml';
 
-        const response: Observable<HttpResponse<string>> = this.httpClient.get(`${this.basePath}/user/login?${queryParameters.join('&')}`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <string>(httpResponse.response));
+        const response: Observable<HttpResponse<string>> = this.httpClient.get(`${this.APIConfiguration.basePath}/user/login?${queryParameters.join('&')}` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -200,9 +197,9 @@ export class UserService {
     public logoutUser(observe: any = 'body', headers: Headers = {}): Observable<any> {
         headers['Accept'] = 'application/xml';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.get(`${this.basePath}/user/logout`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.get(`${this.APIConfiguration.basePath}/user/logout` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -229,9 +226,9 @@ export class UserService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.basePath}/user/${encodeURIComponent(String(username))}`, body , headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.put(`${this.APIConfiguration.basePath}/user/${encodeURIComponent(String(username))}`, body as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }

@@ -52,7 +52,8 @@ public class Pet {
 
   @JsonProperty("photoUrls")
   // items.xmlName=
-  @JacksonXmlElementWrapper(useWrapping = true, localName = "photoUrls")
+  @JacksonXmlElementWrapper(useWrapping = true, localName = "photoUrl")
+  @JacksonXmlProperty(localName = "photoUrls")
   // Is a container wrapped=true
   // items.name=photoUrls items.baseName=photoUrls items.xmlName= items.xmlNamespace=
   // items.example= items.type=String
@@ -62,7 +63,8 @@ public class Pet {
 
   @JsonProperty("tags")
   // items.xmlName=
-  @JacksonXmlElementWrapper(useWrapping = true, localName = "tags")
+  @JacksonXmlElementWrapper(useWrapping = true, localName = "tag")
+  @JacksonXmlProperty(localName = "tags")
   // Is a container wrapped=true
   // items.name=tags items.baseName=tags items.xmlName= items.xmlNamespace=
   // items.example= items.type=Tag

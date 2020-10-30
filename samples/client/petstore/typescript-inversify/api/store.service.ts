@@ -11,14 +11,14 @@
  */
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import IHttpClient from "../IHttpClient";
-import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration";
-import { Headers } from "../Headers";
-import HttpResponse from "../HttpResponse";
+import IHttpClient from '../IHttpClient';
+import { inject, injectable } from 'inversify';
+import { IAPIConfiguration } from '../IAPIConfiguration';
+import { Headers } from '../Headers';
+import HttpResponse from '../HttpResponse';
 
 import { Order } from '../model/order';
 
@@ -28,13 +28,10 @@ import { COLLECTION_FORMATS }  from '../variables';
 
 @injectable()
 export class StoreService {
-    private basePath: string = 'http://petstore.swagger.io/v2';
+    @inject('IAPIConfiguration') private APIConfiguration: IAPIConfiguration;
+    @inject('IApiHttpClient') private httpClient: IHttpClient;
 
-    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
-        @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
-        if(this.APIConfiguration.basePath)
-            this.basePath = this.APIConfiguration.basePath;
-    }
+
 
     /**
      * Delete purchase order by ID
@@ -51,9 +48,9 @@ export class StoreService {
 
         headers['Accept'] = 'application/xml';
 
-        const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <any>(httpResponse.response));
+        const response: Observable<HttpResponse<any>> = this.httpClient.delete(`${this.APIConfiguration.basePath}/store/order/${encodeURIComponent(String(orderId))}` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -68,14 +65,14 @@ export class StoreService {
     public getInventory(observe?: 'response', headers?: Headers): Observable<HttpResponse<{ [key: string]: number; }>>;
     public getInventory(observe: any = 'body', headers: Headers = {}): Observable<any> {
         // authentication (api_key) required
-        if (this.APIConfiguration.apiKeys["api_key"]) {
-            headers['api_key'] = this.APIConfiguration.apiKeys["api_key"];
+        if (this.APIConfiguration.apiKeys['api_key']) {
+            headers['api_key'] = this.APIConfiguration.apiKeys['api_key'];
         }
         headers['Accept'] = 'application/json';
 
-        const response: Observable<HttpResponse<{ [key: string]: number; }>> = this.httpClient.get(`${this.basePath}/store/inventory`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <{ [key: string]: number; }>(httpResponse.response));
+        const response: Observable<HttpResponse<{ [key: string]: number; }>> = this.httpClient.get(`${this.APIConfiguration.basePath}/store/inventory` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -96,9 +93,9 @@ export class StoreService {
 
         headers['Accept'] = 'application/xml';
 
-        const response: Observable<HttpResponse<Order>> = this.httpClient.get(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <Order>(httpResponse.response));
+        const response: Observable<HttpResponse<Order>> = this.httpClient.get(`${this.APIConfiguration.basePath}/store/order/${encodeURIComponent(String(orderId))}` as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }
@@ -120,9 +117,9 @@ export class StoreService {
         headers['Accept'] = 'application/xml';
         headers['Content-Type'] = 'application/json';
 
-        const response: Observable<HttpResponse<Order>> = this.httpClient.post(`${this.basePath}/store/order`, body , headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <Order>(httpResponse.response));
+        const response: Observable<HttpResponse<Order>> = this.httpClient.post(`${this.APIConfiguration.basePath}/store/order`, body as any, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response);
         }
         return response;
     }

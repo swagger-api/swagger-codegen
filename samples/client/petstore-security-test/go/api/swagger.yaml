@@ -41,8 +41,9 @@ paths:
         required: false
         type: "string"
         x-exportParamName: "TestCodeInjectEndRnNR"
+        x-optionalDataType: "String"
       responses:
-        400:
+        "400":
           description: "To test code injection */ ' \" =end -- \\r\\n \\n \\r"
 securityDefinitions:
   petstore_auth:
@@ -63,10 +64,9 @@ definitions:
         type: "integer"
         format: "int32"
         description: "property description  */ ' \" =end -- \\r\\n \\n \\r"
-    description: "Model for testing reserved words  */ ' \" =end -- \\r\\n \\n \\r"
     xml:
       name: "Return"
-
+    description: "Model for testing reserved words  */ ' \" =end -- \\r\\n \\n \\r"
 externalDocs:
   description: "Find out more about Swagger  */ ' \" =end -- \\r\\n \\n \\r"
   url: "http://swagger.io"
