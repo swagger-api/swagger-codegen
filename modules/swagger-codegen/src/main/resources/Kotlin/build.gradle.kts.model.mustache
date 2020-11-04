@@ -1,0 +1,23 @@
+plugins {
+    kotlin("jvm")
+    `java-library`
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri("https://repo.maven.apache.org/maven2/")
+    }
+}
+
+dependencies {
+    implementation(project(":core"))
+
+    implementation(kotlin("stdlib"))
+    implementation("io.swagger:swagger-annotations:1.5.8")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.10.3")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.10.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")
+    implementation("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.10.3")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.1.5")
+}

@@ -24,7 +24,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     protected String groupId = "io.swagger";
     protected String packageName;
 
-    protected String sourceFolder = "src/main/java";
+    protected String sourceFolder = "src/main/kotlin";
 
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
@@ -198,7 +198,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
     @Override
     public String apiFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + "api" + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
     }
 
     public String escapeQuotationMark(String input) {
@@ -286,7 +286,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
     @Override
     public String modelFileFolder() {
-        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
+        return outputFolder + File.separator + "model" + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
     }
 
     @Override
