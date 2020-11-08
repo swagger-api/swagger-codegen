@@ -8,11 +8,12 @@ var serverPort = 8080;
 
 // swaggerRouter configuration
 var options = {
-    controllers: path.join(__dirname, './controllers')
+    routing: {
+        controllers: path.join(__dirname, './controllers')
+    },
 };
 
 var expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, 'api/openapi.yaml'), options);
-expressAppConfig.addValidator();
 var app = expressAppConfig.getApp();
 
 // Initialize the Swagger middleware
