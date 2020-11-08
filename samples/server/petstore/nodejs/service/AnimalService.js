@@ -67,12 +67,10 @@ exports.updateAnimal = function(body) {
 /**
  * Updates a animal
  *
- * name String  (optional)
- * status String  (optional)
  * animalId Long ID of animal that needs to be updated
  * no response value expected for this operation
  **/
-exports.updateAnimalWithForm = function(name,status,animalId) {
+exports.updateAnimalWithForm = function(animalId) {
   return new Promise(function(resolve, reject) {
     resolve();
   });

@@ -242,12 +242,10 @@ exports.updatePet = function(body) {
 /**
  * Updates a pet in the store with form data
  *
- * name String  (optional)
- * status String  (optional)
  * petId Long ID of pet that needs to be updated
  * no response value expected for this operation
  **/
-exports.updatePetWithForm = function(name,status,petId) {
+exports.updatePetWithForm = function(petId) {
   return new Promise(function(resolve, reject) {
     resolve();
   });
@@ -257,12 +255,10 @@ exports.updatePetWithForm = function(name,status,petId) {
 /**
  * uploads an image
  *
- * additionalMetadata String  (optional)
- * file byte[]  (optional)
  * petId Long ID of pet to update
  * returns ApiResponse
  **/
-exports.uploadFile = function(additionalMetadata,file,petId) {
+exports.uploadFile = function(petId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {

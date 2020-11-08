@@ -64,12 +64,10 @@ exports.updateDog = function(body) {
 /**
  * Updates a dog
  *
- * name String  (optional)
- * status String  (optional)
  * dogId Long ID of dog that needs to be updated
  * no response value expected for this operation
  **/
-exports.updateDogWithForm = function(name,status,dogId) {
+exports.updateDogWithForm = function(dogId) {
   return new Promise(function(resolve, reject) {
     resolve();
   });
