@@ -293,7 +293,7 @@ public class DefaultCodegen {
     }
 
     /**
-     * Returns the common prefix of variables for enum naming if 
+     * Returns the common prefix of variables for enum naming if
      * two or more variables are present
      *
      * @param vars List of variable names
@@ -1498,6 +1498,10 @@ public class DefaultCodegen {
 
             if (model.getProperties() != null) {
                 properties.putAll(model.getProperties());
+            }
+
+            if (composed.getRequired() != null) {
+                required.addAll(composed.getRequired());
             }
 
             // child model (properties owned by the model itself)
