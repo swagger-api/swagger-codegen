@@ -43,8 +43,8 @@ module.exports.updateAnimal = function updateAnimal (req, res, next, body) {
     });
 };
 
-module.exports.updateAnimalWithForm = function updateAnimalWithForm (req, res, next, name, status, animalId) {
-  Animal.updateAnimalWithForm(name, status, animalId)
+module.exports.updateAnimalWithForm = function updateAnimalWithForm (req, res, next, animalId) {
+  Animal.updateAnimalWithForm(animalId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
