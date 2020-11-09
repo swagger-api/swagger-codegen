@@ -4,7 +4,7 @@ fi
 if [ "$Branch" = "snapshot" ]
   then
     url="https://intouch-api-swagger.crm-nightly-new.cc.capillarytech.com/swagger.json"
-    version="https://api.crm-nightly-new.cc.capillarytech.com/version"
+    version="https://newapi.crm-nightly-new.cc.capillarytech.com/version"
 elif [ "$Branch" = "production" ]
   then
     url="http://newapi.staging.capillary.in/swagger.json"
