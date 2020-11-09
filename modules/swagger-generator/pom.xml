@@ -45,7 +45,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <java.security.policy>${java.security.policy}</java.security.policy>
-                        <generatorWriteDirs>/tmp,.</generatorWriteDirs>
+                        <generatorWriteDirs>${java.io.tmpdir},.</generatorWriteDirs>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -56,7 +56,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <java.security.policy>${java.security.policy}</java.security.policy>
-                        <generatorWriteDirs>/tmp,.</generatorWriteDirs>
+                        <generatorWriteDirs>${java.io.tmpdir},.</generatorWriteDirs>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
