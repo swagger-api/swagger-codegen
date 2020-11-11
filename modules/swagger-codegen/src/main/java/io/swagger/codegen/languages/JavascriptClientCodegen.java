@@ -872,9 +872,9 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
-
+        Model parentModel = null;
         if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
-            final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
+            parentModel = allDefinitions.get(codegenModel.parentSchema);
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel, allDefinitions);
             codegenModel = JavascriptClientCodegen.reconcileInlineEnums(codegenModel, parentCodegenModel);
         }
@@ -891,7 +891,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
                 codegenModel.vendorExtensions.put("x-itemType", getSwaggerType(mm.getAdditionalProperties()));
             } else {
                 String type = mm.getType();
-                if (isPrimitiveType(type)){
+                String parentType = null;
+                if (parentModel != null) {
+                    parentType = ((ModelImpl)parentModel).getType();
+                }
+                if (isPrimitiveType(type)
+                    || (parentType != null && isPrimitiveType(parentType))) {
                     codegenModel.vendorExtensions.put("x-isPrimitive", true);
                 }
             }
