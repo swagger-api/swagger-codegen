@@ -137,6 +137,18 @@ services:
 {{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
 Now you can start using the bundle!
 
+### Object validation
+
+Submitted JSON-objects defined by the OpenAPI specification can be validated in two ways:
+- Logging: If an invalid object is submitted, a log message will be generated, but the object will be accepted anyway. This is the default for the transitioning period.
+- Strict: If an invalid object is submitted, the whole request is rejected. This has to be enabled per project, but will be the default eventually.
+
+To enable strict validation, add the following parameters to your project's `config/parameters.yml`:
+```yaml
+parameters:
+    emc_api.object_validation_log: false
+    emc_api.object_validation_strict: true
+```
 
 ## Documentation for API Endpoints
 

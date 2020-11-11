@@ -10,7 +10,7 @@ class SymfonyValidator implements ValidatorInterface
 
     public function __construct()
     {
-        $this->validator = Validation::createValidator();
+        $this->validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
     }
 
     public function validate($value, $constraints = null, $groups = null)
