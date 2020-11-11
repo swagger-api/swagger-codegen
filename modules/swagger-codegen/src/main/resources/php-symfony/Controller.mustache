@@ -21,6 +21,7 @@ namespace {{controllerPackage}};
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\ConstraintViolation;
 use {{servicePackage}}\SerializerInterface;
 use {{servicePackage}}\ValidatorInterface;
 
@@ -198,8 +199,16 @@ class Controller
                 $validationErrors->addAll($result);
             }
             if ($this->objectValidationLog) {
-                $this->logger->info('Object input validation error', [
-                    'message' => $result->get(0)->getMessage(),
+                $this->logger->info('OpenAPI object input validation error', [
+                    'errors' => array_map(function (ConstraintViolation $violation) {
+                        return [
+                            'class' => (is_object($violation->getRoot()) ? get_class($violation->getRoot()) : null),
+                            'property' => $violation->getPropertyPath(),
+                            'message' => $violation->getMessage(),
+                            'value' => $violation->getInvalidValue(),
+                        ];
+                    }, $result->getIterator()->getArrayCopy()),
+                    'full_object' => $this->serializer->serialize($object, 'application/json'),
                 ]);
             }
         }
