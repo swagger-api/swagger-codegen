@@ -23,6 +23,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "doctrine/annotations": "^1.11",
         "symfony/validator": "*",
         "jms/serializer-bundle": "*",
         "symfony/framework-bundle": "^2.3|^3.0"
@@ -34,6 +35,9 @@
         "friendsofphp/php-cs-fixer": "~1.12",
         "symfony/browser-kit": "*",
         "hoa/regex": "~1.0"
+    },
+    "suggest": {
+        "doctrine/cache": "Allows caching of the annotations / assertions for object validation"
     },
     "autoload": {
         "psr-4": { "{{escapedInvokerPackage}}\\" : "{{srcBasePath}}/" }

@@ -150,6 +150,20 @@ parameters:
     emc_api.object_validation_strict: true
 ```
 
+### Validation Cache
+
+If object validation is used (which it its, by default), then it is strongly suggested to use a cache.
+Otherwise, with each new HTTP request, the annotations of the models need to be parsed anew.
+The recommended way is to use the doctrine annotation cache by configuring it as follows in your project's `config/services.yml` (or its equivalent):
+```yaml
+services:
+    emc_api.service.validator.cache:
+        class: Symfony\Component\Validator\Mapping\Cache\DoctrineCache
+        arguments: ['@annotations.cache']
+```
+
+Please note that the `doctrine/cache` package needs to be installed for this.
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *{{basePath}}*

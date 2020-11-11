@@ -20,6 +20,8 @@ services:
 
     {{bundleAlias}}.service.validator:
         class: '%{{bundleAlias}}.validator%'
+        arguments:
+         - '@?emc_api.service.validator.cache'
 
 {{#apiInfo}}
 {{#apis}}
