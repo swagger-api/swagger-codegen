@@ -1412,7 +1412,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Number".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Number".equals(datatype) || "Boolean".equals(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
