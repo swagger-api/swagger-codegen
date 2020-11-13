@@ -23,9 +23,11 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
 
         // Use C# templates
         embeddedTemplateDir = templateDir = "purecloud" + File.separator + "csharp";
-
+        
         // Custom mappings for swagger type -> .NET type
+        typeMapping.put("date", "LocalDate" );
         typeMapping.put("LocalDateTime", "DateTime?");
+        
     }
 
     @Override
