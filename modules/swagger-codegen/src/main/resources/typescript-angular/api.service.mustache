@@ -18,7 +18,7 @@ import { CustomQueryEncoderHelper }                          from '../encoder';
 import { Observable }                                        from 'rxjs/Observable';
 {{/useRxJS6}}
 {{#useRxJS6}}
-import { Observable }                                        from 'rxjs';
+import { Observable, throwError }                                        from 'rxjs';
 {{/useRxJS6}}
 {{^useHttpClient}}
 import '../rxjs-operators';
@@ -140,7 +140,12 @@ export class {{classname}} {
         {{/isConstEnumParam}}
         {{^isConstEnumParam}}
         if ({{paramName}} === null || {{paramName}} === undefined) {
+            {{^useRxJS6}}
             throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
+            {{/useRxJS6}}
+            {{#useRxJS6}}
+            return throwError('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
+            {{/useRxJS6}}
         }
         {{/isConstEnumParam}}
 {{/required}}
