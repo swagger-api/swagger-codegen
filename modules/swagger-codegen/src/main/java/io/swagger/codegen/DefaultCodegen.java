@@ -348,7 +348,7 @@ public class DefaultCodegen {
      * @return the sanitized value for enum
      */
     public String toEnumValue(String value, String datatype) {
-        if ("number".equalsIgnoreCase(datatype)) {
+        if (isPrimivite(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
@@ -373,6 +373,12 @@ public class DefaultCodegen {
         } else {
             return var;
         }
+    }
+
+    public boolean isPrimivite(String datatype) {
+        return "number".equalsIgnoreCase(datatype)
+                || "integer".equalsIgnoreCase(datatype)
+                || "boolean".equalsIgnoreCase(datatype);
     }
 
     // override with any special post-processing
