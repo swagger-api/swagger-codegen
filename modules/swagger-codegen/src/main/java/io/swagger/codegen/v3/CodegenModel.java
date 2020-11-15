@@ -84,6 +84,16 @@ public class CodegenModel extends CodegenObject {
     }
 
     @Override
+    public Boolean getIsInteger() {
+        return "Integer".equalsIgnoreCase(this.dataType);
+    }
+
+    @Override
+    public Boolean getIsNumber() {
+        return "BigDecimal".equalsIgnoreCase(this.dataType);
+    }
+
+    @Override
     public String toString() {
         return String.format("%s(%s)", name, classname);
     }
