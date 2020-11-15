@@ -15,28 +15,28 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.*;
-import javax.xml.bind.annotation.*;
+import java.io.IOException;
+import android.os.Parcelable;
+import android.os.Parcel;
 
 /**
- * List
+ * ModelList
  */
 
-@XmlRootElement(name = "List")
-@XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "List")
-public class List {
-  @JsonProperty("123-list")
-  @JacksonXmlProperty(localName = "123-list")
-  @XmlElement(name = "123-list")
+public class ModelList implements Parcelable {
+  @SerializedName("123-list")
   private String _123List = null;
 
-  public List _123List(String _123List) {
+  public ModelList() {
+  }
+  public ModelList _123List(String _123List) {
     this._123List = _123List;
     return this;
   }
@@ -63,8 +63,8 @@ public class List {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    List list = (List) o;
-    return Objects.equals(this._123List, list._123List);
+    ModelList _list = (ModelList) o;
+    return Objects.equals(this._123List, _list._123List);
   }
 
   @Override
@@ -76,7 +76,7 @@ public class List {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class List {\n");
+    sb.append("class ModelList {\n");
     
     sb.append("    _123List: ").append(toIndentedString(_123List)).append("\n");
     sb.append("}");
@@ -94,5 +94,26 @@ public class List {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeValue(_123List);
+  }
+
+  ModelList(Parcel in) {
+    _123List = (String)in.readValue(null);
+  }
+
+  public int describeContents() {
+    return 0;
+  }
+
+  public static final Parcelable.Creator<ModelList> CREATOR = new Parcelable.Creator<ModelList>() {
+    public ModelList createFromParcel(Parcel in) {
+      return new ModelList(in);
+    }
+    public ModelList[] newArray(int size) {
+      return new ModelList[size];
+    }
+  };
 }
 

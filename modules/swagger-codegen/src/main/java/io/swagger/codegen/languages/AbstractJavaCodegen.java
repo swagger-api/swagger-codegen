@@ -122,7 +122,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 "this", "break", "double", "implements", "protected", "throw", "byte", "else",
                 "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
                 "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
+                "void", "class", "finally", "long", "strictfp", "volatile", "const", "float", "list",
                 "native", "super", "while", "null")
         );
 
@@ -1212,8 +1212,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         // number
-        if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Long".equals(datatype) || "Float".equals(datatype) || "Double".equals(datatype)  || "BigDecimal".equals(datatype)) {
             String varName = "NUMBER_" + value;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
@@ -1232,7 +1231,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Double".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Double".equals(datatype) || "Boolean".equals(datatype)) {
             return value;
         } else if ("Long".equals(datatype)) {
             // add l to number, e.g. 2048 => 2048l
@@ -1240,6 +1239,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else if ("Float".equals(datatype)) {
             // add f to number, e.g. 3.14 => 3.14f
             return value + "f";
+        } else if ("BigDecimal".equals(datatype)) {
+            return "new BigDecimal(" + escapeText(value) + ")";
         } else {
             return "\"" + escapeText(value) + "\"";
         }

@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.swagger.models.properties.UntypedProperty;
+import io.swagger.util.Yaml;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -347,7 +348,7 @@ public class DefaultCodegen {
      * @return the sanitized value for enum
      */
     public String toEnumValue(String value, String datatype) {
-        if ("number".equalsIgnoreCase(datatype)) {
+        if (isPrimivite(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
@@ -372,6 +373,12 @@ public class DefaultCodegen {
         } else {
             return var;
         }
+    }
+
+    public boolean isPrimivite(String datatype) {
+        return "number".equalsIgnoreCase(datatype)
+                || "integer".equalsIgnoreCase(datatype)
+                || "boolean".equalsIgnoreCase(datatype);
     }
 
     // override with any special post-processing
@@ -1529,6 +1536,9 @@ public class DefaultCodegen {
                 // comment out below as allowableValues is not set in post processing model enum
                 m.allowableValues = new HashMap<String, Object>();
                 m.allowableValues.put("values", impl.getEnum());
+                if (m.dataType.equals("BigDecimal")) {
+                    addImport(m, "BigDecimal");
+                }
             }
             if (impl.getAdditionalProperties() != null) {
                 addAdditionPropertiesToCodeGenModel(m, impl);
