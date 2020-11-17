@@ -19,7 +19,7 @@ For more information, please visit [{{{infoUrl}}}]({{{infoUrl}}})
 
 ## Requirements
 
-PHP 5.4.0 and later
+PHP 7.1.0 and later, Symfony
 
 ## Installation & Usage
 
@@ -137,6 +137,32 @@ services:
 {{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
 Now you can start using the bundle!
 
+### Object validation
+
+Submitted JSON-objects defined by the OpenAPI specification can be validated in two ways:
+- Logging: If an invalid object is submitted, a log message will be generated, but the object will be accepted anyway. This is the default for the transitioning period.
+- Strict: If an invalid object is submitted, the whole request is rejected. This has to be enabled per project, but will be the default eventually.
+
+To enable strict validation, add the following parameters to your project's `config/parameters.yml`:
+```yaml
+parameters:
+    emc_api.object_validation_log: false
+    emc_api.object_validation_strict: true
+```
+
+### Validation Cache
+
+If object validation is used (which it its, by default), then it is strongly suggested to use a cache.
+Otherwise, with each new HTTP request, the annotations of the models need to be parsed anew.
+The recommended way is to use the doctrine annotation cache by configuring it as follows in your project's `config/services.yml` (or its equivalent):
+```yaml
+services:
+    emc_api.service.validator.cache:
+        class: Symfony\Component\Validator\Mapping\Cache\DoctrineCache
+        arguments: ['@annotations.cache']
+```
+
+Please note that the `doctrine/cache` package needs to be installed for this.
 
 ## Documentation for API Endpoints
 

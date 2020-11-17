@@ -5,6 +5,8 @@
 parameters:
     {{bundleAlias}}.serializer: '{{servicePackage}}\JmsSerializer'
     {{bundleAlias}}.validator:  '{{servicePackage}}\SymfonyValidator'
+    emc_api.object_validation_log: true
+    emc_api.object_validation_strict: false
 
 services:
     {{bundleAlias}}.api.api_server:
@@ -18,6 +20,8 @@ services:
 
     {{bundleAlias}}.service.validator:
         class: '%{{bundleAlias}}.validator%'
+        arguments:
+         - '@?emc_api.service.validator.cache'
 
 {{#apiInfo}}
 {{#apis}}
@@ -25,10 +29,12 @@ services:
     {{bundleAlias}}.controller.{{pathPrefix}}:
         class: {{controllerPackage}}\{{baseName}}Controller
         calls:
-         - [setDebugMode,  ['%kernel.debug%']]
-         - [setSerializer, ['@{{bundleAlias}}.service.serializer']]
-         - [setValidator,  ['@{{bundleAlias}}.service.validator']]
-         - [setApiServer,  ['@{{bundleAlias}}.api.api_server']]
+         - [setDebugMode,        ['%kernel.debug%']]
+         - [setLogger,           ['@logger']]
+         - [setObjectValidation, ['%emc_api.object_validation_log%', '%emc_api.object_validation_strict%']]
+         - [setSerializer,       ['@{{bundleAlias}}.service.serializer']]
+         - [setValidator,        ['@{{bundleAlias}}.service.validator']]
+         - [setApiServer,        ['@{{bundleAlias}}.api.api_server']]
         tags:
          - {name: 'controller.service_arguments'}
 

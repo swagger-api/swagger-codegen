@@ -2,15 +2,23 @@
 
 namespace {{servicePackage}};
 
+use Symfony\Component\Validator\Mapping\Cache\CacheInterface;
 use Symfony\Component\Validator\Validation;
 
 class SymfonyValidator implements ValidatorInterface
 {
     protected $validator;
 
-    public function __construct()
+    public function __construct(CacheInterface $cache = null)
     {
-        $this->validator = Validation::createValidator();
+        $validatorBuilder = Validation::createValidatorBuilder();
+        $validatorBuilder->enableAnnotationMapping();
+
+        if ($cache) {
+            $validatorBuilder->setMetadataCache($cache);
+        }
+
+        $this->validator = $validatorBuilder->getValidator();
     }
 
     public function validate($value, $constraints = null, $groups = null)

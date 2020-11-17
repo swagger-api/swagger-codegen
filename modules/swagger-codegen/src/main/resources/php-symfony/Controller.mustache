@@ -21,6 +21,7 @@ namespace {{controllerPackage}};
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\ConstraintViolation;
 use {{servicePackage}}\SerializerInterface;
 use {{servicePackage}}\ValidatorInterface;
 
@@ -34,10 +35,20 @@ use {{servicePackage}}\ValidatorInterface;
  */
 class Controller
 {
+    /** @var \EMC\EmcApiBundle\Service\SymfonyValidator\SymfonyValidator */
     protected $validator;
+
+    /** @var \Psr\Log\LoggerInterface\LoggerInterface */
+    protected $logger;
+
+    /** @var SerializerInterface */
     protected $serializer;
+
     protected $apiServer;
+
     protected $debugMode=false;
+    protected $objectValidationLog = true;
+    protected $objectValidationStrict = false;
     protected $binaryFormats=array(
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/pdf',
@@ -53,9 +64,24 @@ class Controller
         $this->debugMode = $debugMode;
     }
 
+    public function setLogger(\Psr\Log\LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     public function setValidator(ValidatorInterface $validator)
     {
         $this->validator = $validator;
+    }
+
+    /**
+     * @param bool $validateLog
+     * @param bool $validateStrict
+     */
+    public function setObjectValidation($validateLog, $validateStrict)
+    {
+        $this->objectValidationLog = $validateLog;
+        $this->objectValidationStrict = $validateStrict;
     }
 
     public function setSerializer(SerializerInterface $serializer)
@@ -139,9 +165,52 @@ class Controller
     {
         $errors = $this->validator->validate($data, $asserts);
 
+        if (is_object($data) && ($this->objectValidationLog || $this->objectValidationStrict)) {
+            $this->validateObject($data, $asserts, $errors);
+        }
+
         if (count($errors) > 0) {
             $errorsString = (string)$errors;
             return $this->createBadRequestResponse($errorsString);
+        }
+    }
+
+    /**
+     * If this is a typed object (it has an own model, therefore a Assert\Type-Constraint),
+     * we explicitly validate it.
+     * If objectValidationStrict is enabled, then validation errors will be added to the regular list of validation errors.
+     * If objectValidationLog is enabled, then messages will be written to the log.
+     *
+     * @param object $object
+     * @param \Symfony\Component\Validator\Constraint[]|null $asserts
+     * @param \Symfony\Component\Validator\ConstraintViolationList $validationErrors
+     */
+    protected function validateObject($object, $asserts, $validationErrors)
+    {
+        if (!is_array($asserts) || count(array_filter($asserts, function ($assert) {
+            return is_object($assert) && is_a($assert, \Symfony\Component\Validator\Constraints\Type::class);
+        })) === 0) {
+            return;
+        }
+        /** @var \Symfony\Component\Validator\ConstraintViolationList $result */
+        $result = $this->validator->validate($object);
+        if ($result->count() > 0) {
+            if ($this->objectValidationStrict) {
+                $validationErrors->addAll($result);
+            }
+            if ($this->objectValidationLog) {
+                $this->logger->info('OpenAPI object input validation error', [
+                    'errors' => array_map(function (ConstraintViolation $violation) {
+                        return [
+                            'class' => (is_object($violation->getRoot()) ? get_class($violation->getRoot()) : null),
+                            'property' => $violation->getPropertyPath(),
+                            'message' => $violation->getMessage(),
+                            'value' => $violation->getInvalidValue(),
+                        ];
+                    }, $result->getIterator()->getArrayCopy()),
+                    'full_object' => $this->serializer->serialize($object, 'application/json'),
+                ]);
+            }
         }
     }
 
