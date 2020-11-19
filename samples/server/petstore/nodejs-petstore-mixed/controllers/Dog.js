@@ -43,8 +43,8 @@ module.exports.updateDog = function updateDog (req, res, next, body) {
     });
 };
 
-module.exports.updateDogWithForm = function updateDogWithForm (req, res, next, name, status, dogId) {
-  Dog.updateDogWithForm(name, status, dogId)
+module.exports.updateDogWithForm = function updateDogWithForm (req, res, next, dogId) {
+  Dog.updateDogWithForm(dogId)
     .then(function (response) {
       utils.writeJson(res, response);
     })

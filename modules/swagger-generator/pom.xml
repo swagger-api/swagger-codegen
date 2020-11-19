@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.22-SNAPSHOT</version>
+        <version>3.0.24-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
@@ -40,8 +40,25 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.security.policy>${java.security.policy}</java.security.policy>
+                        <generatorWriteDirs>${java.io.tmpdir},.</generatorWriteDirs>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.22.0</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.security.policy>${java.security.policy}</java.security.policy>
+                        <generatorWriteDirs>${java.io.tmpdir},.</generatorWriteDirs>
+                    </systemPropertyVariables>
+                </configuration>
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -78,6 +95,10 @@
                         <systemProperty>
                             <name>logback.configurationFile</name>
                             <value>src/main/resources/logback.xml</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>java.security.policy</name>
+                            <value>${java.security.policy}</value>
                         </systemProperty>
                     </systemProperties>
                     <webApp>
@@ -364,10 +385,11 @@
         </dependency>
     </dependencies>
     <properties>
+        <java.security.policy>grantall.policy</java.security.policy>
         <dockerfile.tag.skip>true</dockerfile.tag.skip>
         <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <jetty-version>9.4.15.v20190215</jetty-version>
+        <jetty-version>9.4.34.v20201102</jetty-version>
         <inflector-version>2.0.5</inflector-version>
         <junit-version>4.8.2</junit-version>
         <servlet-api.version>3.1.0</servlet-api.version>
