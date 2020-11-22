@@ -95,6 +95,10 @@
   exports.prototype.{{name}} = {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}undefined{{/defaultValue}};
 
 {{/vars}}
+{{#additionalPropertiesType}}
+  exports.prototype.additionalProperties = new Map();
+{{/additionalPropertiesType}}
+
 {{#useInheritance}}
   {{#interfaceModels}}
   // Implement {{classname}} interface:
