@@ -902,6 +902,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @Override
     protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+        super.addAdditionPropertiesToCodeGenModel(codegenModel, swaggerModel);
         if (swaggerModel.getAdditionalProperties() != null) {
             codegenModel.additionalPropertiesType = getSwaggerType(swaggerModel.getAdditionalProperties());
         }
