@@ -102,22 +102,8 @@ signing {
     sign(publishing.publications["mavenJava"])
 }
 
-artifactory {
-    setContextUrl(project.properties["artifactoryRepoUrl"])
-    publish(delegateClosureOf<PublisherConfig> {
-        repository(delegateClosureOf<GroovyObject> {
-            setProperty("repoKey", "inin-release")
-            setProperty("username", project.properties["artifactoryUsername"])
-            setProperty("password", project.properties["artifactoryPassword"])
-            setProperty("maven", true)
-        })
-        defaults(delegateClosureOf<GroovyObject> {
-            invokeMethod("publications", "mavenJava")
-            setProperty("publishPom", true)
-            setProperty("publishArtifacts", true)
-        })
-    })
-    resolve(delegateClosureOf<ResolverConfig> {
-        setProperty("repoKey", "repo")
-    })
+tasks.register("publishSDK") {
+    // TODO Add maven publish task and call it from here
+    outputs.upToDateWhen { false }
+    // dependsOn("")
 }
