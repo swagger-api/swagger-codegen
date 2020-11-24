@@ -1,8 +1,5 @@
 import org.gradle.api.publish.maven.*
 
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
-import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
-
 import groovy.lang.GroovyObject
 
 description = "A Kotlin package to interface with the PureCloud Platform API"
@@ -16,7 +13,6 @@ plugins {
     `java-library`
     signing
     maven
-    id("com.jfrog.artifactory") version "4.18.0"
 }
 
 repositories {
@@ -35,7 +31,7 @@ allprojects {
 }
 
 dependencies {
-    // Marking these an testImplementation so they don't get added to the resulting pom that's uploaded to maven and artifactory
+    // Marking these an testImplementation so they don't get added to the resulting pom that's deployed
     testImplementation(project(":api"))
     testImplementation(project(":core"))
     testImplementation(project(":model"))
