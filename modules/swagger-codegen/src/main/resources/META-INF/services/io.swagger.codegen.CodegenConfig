@@ -58,5 +58,6 @@ io.swagger.codegen.languages.PureCloudDotNetGuestClientCodegen
 io.swagger.codegen.languages.PureCloudRubyClientCodegen
 io.swagger.codegen.languages.PureCloudGoClientCodegen
 io.swagger.codegen.languages.PureCloudKotlinClientCodegen
+io.swagger.codegen.languages.WebMessagingJavaClientCodegen
 io.swagger.codegen.languages.KotlinClientCodegen
 io.swagger.codegen.languages.LumenServerCodegen
