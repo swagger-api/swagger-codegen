@@ -32,18 +32,30 @@ public class WebMessagingJavaClientCodegen extends PureCloudJavaClientCodegen {
 
         modelTemplateFiles.put("model.mustache", ".java");
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
+        apiTemplateFiles.put("api.mustache", ".java");
+        apiTemplateFiles.put("api_async.mustache", "Async.java");
+        operationTemplateFiles.put("requestBuilder.mustache", ".java");
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
-//        supportingFiles.add(new SupportingFile("testng.mustache", "", "testng.xml"));
 
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         supportingFiles.add(new SupportingFile("WebMessagingClient.mustache", invokerFolder, "WebMessagingClient.java"));
         supportingFiles.add(new SupportingFile("WebMessagingException.mustache", invokerFolder, "WebMessagingException.java"));
         supportingFiles.add(new SupportingFile("GenesysCloudRegionHosts.mustache", invokerFolder, "GenesysCloudRegionHosts.java"));
+        supportingFiles.add(new SupportingFile("GenesysCloudRegionWebSocketHosts.mustache", invokerFolder, "GenesysCloudRegionWebSocketHosts.java"));
         supportingFiles.add(new SupportingFile("ApiDateFormat.mustache", invokerFolder, "ApiDateFormat.java"));
         supportingFiles.add(new SupportingFile("LocalDateDeserializer.mustache", invokerFolder, "LocalDateDeserializer.java"));
+        supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
+        supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
+        supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
+
+        final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
+        supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
+        supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
+
+        writeOptional(outputFolder, new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
     }
 
     @Override
