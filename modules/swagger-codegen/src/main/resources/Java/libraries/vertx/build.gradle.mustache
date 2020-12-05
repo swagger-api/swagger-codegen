@@ -27,7 +27,8 @@ task execute(type:JavaExec) {
 
 ext {
     swagger_annotations_version = "1.5.17"
-    jackson_version = "{{^threetenbp}}2.8.9{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}"
+    {{#threetenbp}}threetenbp_version = "2.6.4"{{/threetenbp}}
+    jackson_version = "2.10.1"
     vertx_version = "3.4.2"
     junit_version = "4.12"
 }
@@ -46,7 +47,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
     {{/java8}}
     {{#threetenbp}}
-    compile "com.github.joschi.jackson:jackson-datatype-threetenbp:$jackson_version"
+    compile "com.github.joschi.jackson:jackson-datatype-threetenbp:$threetenbp_version"
     {{/threetenbp}}
     testCompile "junit:junit:$junit_version"
     testCompile "io.vertx:vertx-unit:$vertx_version"

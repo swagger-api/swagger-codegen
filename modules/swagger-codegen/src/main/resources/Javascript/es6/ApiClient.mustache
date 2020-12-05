@@ -1,5 +1,4 @@
 {{>licenseInfo}}
-
 import superagent from "superagent";
 import querystring from "querystring";
 
@@ -15,7 +14,7 @@ import querystring from "querystring";
 * @alias module:{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}ApiClient
 * @class
 */{{/emitJSDoc}}
-export default class ApiClient {
+export class ApiClient {
     constructor() {
         {{#emitJSDoc}}/**
          * The base URL against which to resolve every API call's (relative) path.

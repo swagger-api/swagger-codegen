@@ -1,5 +1,6 @@
 sudo: required
 language: objective-c
+dist: trusty
 osx_image: xcode8.1
 cache:
   directories:

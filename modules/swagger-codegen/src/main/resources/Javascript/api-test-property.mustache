@@ -1,0 +1,22 @@
+{{#example}}{{{example}}}{{/example}}{{!
+}}{{^example}}{{!
+}}{{#isListContainer}}[{{#items}}{{>api-test-property}}{{/items}}]{{/isListContainer}}{{!
+}}{{#isMapContainer}}{key: {{#items}}{{>api-test-property}}{{/items}}}{{/isMapContainer}}{{!
+}}{{^isEnum}}{{!
+}}{{#isString}}""{{/isString}}{{!
+}}{{#isInteger}}0{{/isInteger}}{{!
+}}{{#isLong}}"0"{{/isLong}}{{!
+}}{{#isFloat}}0.0{{/isFloat}}{{!
+}}{{#isDouble}}0.0{{/isDouble}}{{!
+}}{{#isByteArray}}undefined{{/isByteArray}}{{!
+}}{{#isBinary}}undefined{{/isBinary}}{{!
+}}{{#isBoolean}}false{{/isBoolean}}{{!
+}}{{#isDate}}new Date(){{/isDate}}{{!
+}}{{#isDateTime}}new Date(){{/isDateTime}}{{!
+}}{{#isUuid}}"00000000-0000-0000-0000-000000000000"{{/isUuid}}{{!
+}}{{#isFile}}undefined{{/isFile}}{{!
+}}{{^isListContainer}}{{#complexType}}new {{moduleName}}.{{complexType}}(){{/complexType}}{{/isListContainer}}{{!
+}}{{/isEnum}}{{!
+}}{{#isEnum}}{{vendorExtensions.x-first-enum-value}}{{/isEnum}}{{!
+}}{{/example}}{{!
+}}{{#complexType}}{{^vendorExtensions.x-is-prop-item}};{{>api-test-param-complex}}{{/vendorExtensions.x-is-prop-item}}{{/complexType}}

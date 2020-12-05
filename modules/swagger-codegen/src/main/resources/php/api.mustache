@@ -356,8 +356,8 @@ use {{invokerPackage}}\ObjectSerializer;
         // query params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            ${{paramName}} = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}', true);
-        }
+            $queryParams['{{baseName}}'] = ${{paramName}};
+        } else
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $queryParams['{{baseName}}'] = ObjectSerializer::toQueryValue(${{paramName}});
@@ -426,9 +426,16 @@ use {{invokerPackage}}\ObjectSerializer;
         if (isset($_tempBody)) {
             // $_tempBody is the method argument, if present
             $httpBody = $_tempBody;
-            // \stdClass has no __toString(), so we should encode it manually
-            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -465,6 +472,12 @@ use {{invokerPackage}}\ObjectSerializer;
             $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
         }
         {{/isBasic}}
+        {{#isBearer}}
+        // this endpoint requires Bearer token
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        {{/isBearer}}
         {{#isOAuth}}
         // this endpoint requires OAuth (access token)
         if ($this->config->getAccessToken() !== null) {

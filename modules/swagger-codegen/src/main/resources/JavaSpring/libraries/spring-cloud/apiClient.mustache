@@ -9,7 +9,7 @@ package {{package}};
 import {{configPackage}}.ClientConfiguration;
 
 {{=<% %>=}}
-@FeignClient(name="${<%title%>.name:<%title%>}", url="${<%title%>.url:<%basePath%>}", configuration = ClientConfiguration.class)
+@FeignClient(name="${<%title%>.name:<%title%>}", url="${<%title%>.url:<%hostWithoutBasePath%>}", configuration = ClientConfiguration.class)
 <%={{ }}=%>
 public interface {{classname}}Client extends {{classname}} {
 }

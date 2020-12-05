@@ -18,7 +18,7 @@ dependencies {
     compile         'io.swagger:swagger-annotations:1.5.10'
     compile         'org.jboss.resteasy:resteasy-jackson2-provider:3.0.11.Final'
     providedCompile 'javax.validation:validation-api:1.1.0.Final'
-    compile         'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.1'
+    compile         'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.10.1'
     compile         'joda-time:joda-time:2.7'
     //TODO: swaggerFeature
     compile 'io.swagger:swagger-jaxrs:1.5.12'

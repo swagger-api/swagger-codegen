@@ -1,0 +1,6 @@
+{{#vendorExtensions.x-codegen-model}}{{#allVars}}{{^isReadOnly}}{{#vendorExtensions.x-cache-current-context}}
+          {{^vendorExtensions.x-is-param-required}}opts.{{/vendorExtensions.x-is-param-required}}{{paramName}}{{!
+  }}{{#vendorExtensions.x-is-param-list-container}}[0]{{/vendorExtensions.x-is-param-list-container}}{{#vendorExtensions.x-is-param-map-container}}.key{{/vendorExtensions.x-is-param-map-container}}{{!
+  }}{{#vendorExtensions.x-execute-for-cached-contexts}}{{#this}}{{#vendorExtensions.x-execute-for-cached-parent-context}}{{#isListContainer}}[0]{{/isListContainer}}{{#isMapContainer}}.key{{/isMapContainer}}{{/vendorExtensions.x-execute-for-cached-parent-context}}.{{name}}{{/this}}{{/vendorExtensions.x-execute-for-cached-contexts}} = {{!
+  }}{{>api-test-property}}{{#isPrimitiveType}};{{/isPrimitiveType}}{{!
+}}{{/vendorExtensions.x-cache-current-context}}{{/isReadOnly}}{{/allVars}}{{/vendorExtensions.x-codegen-model}}

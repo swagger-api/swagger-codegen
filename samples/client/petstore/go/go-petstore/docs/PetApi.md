@@ -54,10 +54,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| Pet id to delete | 
- **optional** | ***DeletePetOpts** | optional parameters | nil if no parameters
+ **optional** | ***PetApiDeletePetOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DeletePetOpts struct
+Optional parameters are passed through a pointer to a PetApiDeletePetOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -203,10 +203,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| ID of pet that needs to be updated | 
- **optional** | ***UpdatePetWithFormOpts** | optional parameters | nil if no parameters
+ **optional** | ***PetApiUpdatePetWithFormOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a UpdatePetWithFormOpts struct
+Optional parameters are passed through a pointer to a PetApiUpdatePetWithFormOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -241,10 +241,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **petId** | **int64**| ID of pet to update | 
- **optional** | ***UploadFileOpts** | optional parameters | nil if no parameters
+ **optional** | ***PetApiUploadFileOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a UploadFileOpts struct
+Optional parameters are passed through a pointer to a PetApiUploadFileOpts struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------

@@ -6,6 +6,7 @@ import com.google.common.collect.LinkedListMultimap;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
+import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, PerformBeanValidationFeatures,
-                   GzipFeatures
+                   GzipFeatures, NotNullAnnotationFeatures
 {
     static final String MEDIA_TYPE = "mediaType";
 
@@ -52,7 +53,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean performBeanValidation = false;
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
-
+    private boolean notNullJacksonAnnotation;
 
     public JavaClientCodegen() {
         super();
@@ -74,16 +75,16 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
         cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
 
-        supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.8.9. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
-        supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.8.9");
-        supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.25.1. JSON processing: Jackson 2.8.9");
+        supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.10.1. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
+        supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.10.1");
+        supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.29.1. JSON processing: Jackson 2.10.1");
         supportedLibraries.put("okhttp-gson", "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.8.1. Enable Parcelable models on Android using '-DparcelableModel=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put(RETROFIT_1, "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.3.1 (Retrofit 1.9.0). IMPORTANT NOTE: retrofit1.x is no longer actively maintained so please upgrade to 'retrofit2' instead.");
         supportedLibraries.put(RETROFIT_2, "HTTP client: OkHttp 3.8.0. JSON processing: Gson 2.6.1 (Retrofit 2.3.0). Enable the RxJava adapter using '-DuseRxJava[2]=true'. (RxJava 1.x or 2.x)");
-        supportedLibraries.put("resttemplate", "HTTP client: Spring RestTemplate 4.3.9-RELEASE. JSON processing: Jackson 2.8.9");
-        supportedLibraries.put("resteasy", "HTTP client: Resteasy client 3.1.3.Final. JSON processing: Jackson 2.8.9");
-        supportedLibraries.put("vertx", "HTTP client: VertX client 3.2.4. JSON processing: Jackson 2.8.9");
-        supportedLibraries.put("google-api-client", "HTTP client: Google API client 1.23.0. JSON processing: Jackson 2.8.9");
+        supportedLibraries.put("resttemplate", "HTTP client: Spring RestTemplate 4.3.9-RELEASE. JSON processing: Jackson 2.10.1");
+        supportedLibraries.put("resteasy", "HTTP client: Resteasy client 3.1.3.Final. JSON processing: Jackson 2.10.1");
+        supportedLibraries.put("vertx", "HTTP client: VertX client 3.2.4. JSON processing: Jackson 2.10.1");
+        supportedLibraries.put("google-api-client", "HTTP client: Google API client 1.23.0. JSON processing: Jackson 2.10.1");
         supportedLibraries.put("rest-assured", "HTTP client: rest-assured : 3.1.0. JSON processing: Gson 2.6.1. Only for Java8");
 
         CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
@@ -611,4 +612,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         return mime != null && JSON_VENDOR_MIME_PATTERN.matcher(mime).matches();
     }
 
+    @Override
+    public void setNotNullJacksonAnnotation(boolean notNullJacksonAnnotation) {
+        this.notNullJacksonAnnotation = notNullJacksonAnnotation;
+    }
+
+    @Override
+    public boolean isNotNullJacksonAnnotation() {
+        return notNullJacksonAnnotation;
+    }
 }

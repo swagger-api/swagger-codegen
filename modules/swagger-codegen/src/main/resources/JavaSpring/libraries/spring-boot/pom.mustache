@@ -60,6 +60,7 @@
         <dependency>
           <groupId>com.fasterxml.jackson.dataformat</groupId>
           <artifactId>jackson-dataformat-xml</artifactId>
+          <version>2.10.1</version>
         </dependency>
 
         {{/withXml}}
@@ -68,6 +69,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.10.1</version>
         </dependency>
         {{/java8}}
         {{#joda}}
@@ -75,6 +77,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
+            <version>2.10.1</version>
         </dependency>
         {{/joda}}
         {{#threetenbp}}
@@ -92,6 +95,13 @@
             <artifactId>validation-api</artifactId>
         </dependency>
 {{/useBeanValidation}}
+        {{#notNullJacksonAnnotation}}
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.10.1</version>
+            </dependency>
+        {{/notNullJacksonAnnotation}}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

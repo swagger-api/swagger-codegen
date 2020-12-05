@@ -111,7 +111,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                     "assert", "else", "if", "pass", "yield", "break", "except", "import",
                     "print", "class", "exec", "in", "raise", "continue", "finally", "is",
                     "return", "def", "for", "lambda", "try", "self", "nonlocal", "None", "True", "nonlocal",
-                    "float", "int", "str", "date", "datetime"));
+                    "float", "int", "str", "date", "datetime", "False", "await", "async"));
 
         regexModifiers = new HashMap<Character, String>();
         regexModifiers.put('i', "IGNORECASE");

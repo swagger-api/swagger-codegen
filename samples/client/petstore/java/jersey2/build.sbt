@@ -10,9 +10,10 @@ lazy val root = (project in file(".")).
     resolvers += Resolver.mavenLocal,
     libraryDependencies ++= Seq(
       "io.swagger" % "swagger-annotations" % "1.5.17",
-      "org.glassfish.jersey.core" % "jersey-client" % "2.25.1",
-      "org.glassfish.jersey.media" % "jersey-media-multipart" % "2.25.1",
-      "org.glassfish.jersey.media" % "jersey-media-json-jackson" % "2.25.1",
+      "org.glassfish.jersey.core" % "jersey-client" % "2.29.1",
+      "org.glassfish.jersey.media" % "jersey-media-multipart" % "2.29.1",
+      "org.glassfish.jersey.inject" % "jersey-hk2" % "2.29.1",
+      "org.glassfish.jersey.media" % "jersey-media-json-jackson" % "2.29.1",
       "com.fasterxml.jackson.core" % "jackson-core" % "2.6.4" % "compile",
       "com.fasterxml.jackson.core" % "jackson-annotations" % "2.6.4" % "compile",
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.4" % "compile",

@@ -217,7 +217,7 @@ public class PetApi {
     public List<Pet> findPetsByStatus(List<String> status) throws IOException {
         HttpResponse response = findPetsByStatusForHttpResponse(status);
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (List<Pet>)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -233,7 +233,7 @@ public class PetApi {
     public List<Pet> findPetsByStatus(List<String> status, Map<String, Object> params) throws IOException {
         HttpResponse response = findPetsByStatusForHttpResponse(status, params);
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (List<Pet>)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse findPetsByStatusForHttpResponse(List<String> status) throws IOException {
@@ -308,7 +308,7 @@ public class PetApi {
     public List<Pet> findPetsByTags(List<String> tags) throws IOException {
         HttpResponse response = findPetsByTagsForHttpResponse(tags);
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (List<Pet>)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -324,7 +324,7 @@ public class PetApi {
     public List<Pet> findPetsByTags(List<String> tags, Map<String, Object> params) throws IOException {
         HttpResponse response = findPetsByTagsForHttpResponse(tags, params);
         TypeReference typeRef = new TypeReference<List<Pet>>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (List<Pet>)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse findPetsByTagsForHttpResponse(List<String> tags) throws IOException {
@@ -400,7 +400,7 @@ public class PetApi {
     public Pet getPetById(Long petId) throws IOException {
         HttpResponse response = getPetByIdForHttpResponse(petId);
         TypeReference typeRef = new TypeReference<Pet>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Pet)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -417,7 +417,7 @@ public class PetApi {
     public Pet getPetById(Long petId, Map<String, Object> params) throws IOException {
         HttpResponse response = getPetByIdForHttpResponse(petId, params);
         TypeReference typeRef = new TypeReference<Pet>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Pet)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse getPetByIdForHttpResponse(Long petId) throws IOException {
@@ -654,7 +654,7 @@ public class PetApi {
     public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws IOException {
         HttpResponse response = uploadFileForHttpResponse(petId, additionalMetadata, file);
         TypeReference typeRef = new TypeReference<ModelApiResponse>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (ModelApiResponse)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -669,7 +669,7 @@ public class PetApi {
     public ModelApiResponse uploadFile(Long petId, Map<String, Object> params) throws IOException {
         HttpResponse response = uploadFileForHttpResponse(petId, params);
         TypeReference typeRef = new TypeReference<ModelApiResponse>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (ModelApiResponse)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse uploadFileForHttpResponse(Long petId, String additionalMetadata, File file) throws IOException {

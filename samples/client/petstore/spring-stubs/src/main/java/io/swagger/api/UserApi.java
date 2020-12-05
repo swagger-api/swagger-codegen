@@ -24,6 +24,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "user", description = "the user API")
+@RequestMapping(value = "/v2")
 public interface UserApi {
 
     @ApiOperation(value = "Create user", nickname = "createUser", notes = "This can only be done by the logged in user.", tags={ "user", })

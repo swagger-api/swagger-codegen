@@ -80,6 +80,8 @@ public class SpringOptionsTest extends JavaClientOptionsTest {
             clientCodegen.setUseOptional(
                     Boolean.valueOf(SpringOptionsProvider.USE_OPTIONAL));
             times = 1;
+            clientCodegen.setDefaultInterfaces(Boolean.valueOf(SpringOptionsProvider.DEFAULT_INTERFACES));
+            times = 1;
         }};
     }
 }

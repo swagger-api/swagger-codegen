@@ -17,7 +17,7 @@ To test special tags
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.AnotherFakeApi();
 

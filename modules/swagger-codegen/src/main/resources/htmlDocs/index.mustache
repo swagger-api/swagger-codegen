@@ -83,7 +83,7 @@
     {{#hasHeaderParams}}
     <h3 class="field-label">Request headers</h3>
     <div class="field-items">
-      {{#headerParam}}{{>headerParam}}{{/headerParam}}
+      {{#headerParams}}{{>headerParam}}{{/headerParams}}
     </div>  <!-- field-items -->
     {{/hasHeaderParams}}
 
@@ -171,6 +171,9 @@
         <div class="param-enum-header">Enum:</div>
         {{#_enum}}<div class="param-enum">{{this}}</div>{{/_enum}}
       {{/isEnum}}
+      {{#example}}
+          <div class="param-desc"><span class="param-type">example: {{example}}</span></div>
+      {{/example}}
       {{/vars}}
     </div>  <!-- field-items -->
   </div>
