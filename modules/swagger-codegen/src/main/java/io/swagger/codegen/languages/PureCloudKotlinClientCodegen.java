@@ -166,6 +166,16 @@ public class PureCloudKotlinClientCodegen extends KotlinClientCodegen {
     }
 
     @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+
+        if (property.description != null) {
+            // [DEVENGAGE-345] Escape /* in description - this interferes with javadoc comments and annotations - transforms /* -> \\/\\*
+            property.description = property.description.replaceAll("/\\*","\\\\\\\\/\\\\\\\\*");
+        }
+    }
+
+    @Override
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
