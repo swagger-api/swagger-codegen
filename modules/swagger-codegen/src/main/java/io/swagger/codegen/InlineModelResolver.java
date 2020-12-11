@@ -355,6 +355,22 @@ public class InlineModelResolver {
                         }
                     }
                 }
+            } else if (property instanceof ComposedProperty) {
+                ComposedProperty composedProperty = (ComposedProperty) property;
+                String modelName = resolveModelName(composedProperty.getTitle(), path + "_" + key);
+                Model model = modelFromProperty(composedProperty, modelName);
+                String existing = matchGenerated(model);
+                if (existing != null) {
+                    RefProperty refProperty = new RefProperty(existing);
+                    refProperty.setRequired(composedProperty.getRequired());
+                    propsToUpdate.put(key, refProperty);
+                } else {
+                    RefProperty refProperty = new RefProperty(modelName);
+                    refProperty.setRequired(composedProperty.getRequired());
+                    propsToUpdate.put(key, refProperty);
+                    addGenerated(modelName, model);
+                    swagger.addDefinition(modelName, model);
+                }
             }
         }
         if (propsToUpdate.size() > 0) {
@@ -425,6 +441,30 @@ public class InlineModelResolver {
             model.setProperties(properties);
         }
 
+        return model;
+    }
+
+    public Model modelFromProperty(ComposedProperty composedProperty, String path) {
+        String description = composedProperty.getDescription();
+        String example = null;
+
+        Object obj = composedProperty.getExample();
+        if (obj != null) {
+            example = obj.toString();
+        }
+        Xml xml = composedProperty.getXml();
+
+        ModelImpl model = new ModelImpl();
+        model.type(composedProperty.getType());
+        model.setDescription(description);
+        model.setExample(example);
+        model.setName(path);
+        model.setXml(xml);
+        if (composedProperty.getVendorExtensions() != null) {
+            for (String key : composedProperty.getVendorExtensions().keySet()) {
+                model.setVendorExtension(key, composedProperty.getVendorExtensions().get(key));
+            }
+        }
         return model;
     }
 

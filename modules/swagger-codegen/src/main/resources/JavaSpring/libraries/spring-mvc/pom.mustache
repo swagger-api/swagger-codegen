@@ -161,6 +161,13 @@
         <scope>provided</scope>
     </dependency>
 {{/useBeanValidation}}
+        {{#notNullJacksonAnnotation}}
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+        {{/notNullJacksonAnnotation}}
     <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
@@ -194,7 +201,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <jetty-version>9.3.27.v20190418</jetty-version>
         <slf4j-version>1.7.21</slf4j-version>
-        <junit-version>4.12</junit-version>
+        <junit-version>4.13.1</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
         <springfox-version>2.7.0</springfox-version>
         <jackson-version>2.10.1</jackson-version>

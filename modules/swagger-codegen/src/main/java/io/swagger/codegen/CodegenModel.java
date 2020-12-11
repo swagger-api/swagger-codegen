@@ -40,6 +40,7 @@ public class CodegenModel {
 
     public Set<String> imports = new TreeSet<String>();
     public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, hasOptional, isArrayModel, hasChildren;
+    public CodegenProperty parentContainer;
     public boolean hasOnlyReadOnly = true; // true if all properties are read-only
     public ExternalDocs externalDocs;
 
@@ -53,6 +54,14 @@ public class CodegenModel {
         // store the complete closure of owned and inherited properties in allVars and allMandatory.
         allVars = vars;
         allMandatory = mandatory;
+    }
+
+    public boolean getIsInteger() {
+        return "Integer".equalsIgnoreCase(this.dataType);
+    }
+
+    public boolean getIsNumber() {
+        return "BigDecimal".equalsIgnoreCase(this.dataType);
     }
 
     @Override

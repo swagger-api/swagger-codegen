@@ -261,6 +261,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (info.getTermsOfService() != null) {
             config.additionalProperties().put("termsOfService", config.escapeText(info.getTermsOfService()));
         }
+        if (info.getVendorExtensions() != null && !info.getVendorExtensions().isEmpty()) {
+            config.additionalProperties().put("info-extensions", info.getVendorExtensions());
+        }
     }
 
     protected void generateModelTests(List<File> files, Map<String, Object> models, String modelName) throws IOException {
@@ -424,8 +427,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 }
                 allModels.add(modelTemplate);
                 for (String templateName : config.modelTemplateFiles().keySet()) {
-                    String suffix = config.modelTemplateFiles().get(templateName);
-                    String filename = config.modelFileFolder() + File.separator + config.toModelFilename(modelName) + suffix;
+                    String filename = config.modelFilename(templateName, modelName);
                     if (!config.shouldOverwrite(filename)) {
                         LOGGER.info("Skipped overwriting " + filename);
                         continue;

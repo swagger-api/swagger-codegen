@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +85,7 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
             configureMapper(mapper);
             String swaggerString = mapper.writeValueAsString(swagger);
             String outputFile = outputFolder + File.separator + this.outputFile;
-            FileUtils.writeStringToFile(new File(outputFile), swaggerString);
+            FileUtils.writeStringToFile(new File(outputFile), swaggerString, StandardCharsets.UTF_8);
             LOGGER.debug("wrote file to " + outputFile);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);

@@ -273,7 +273,7 @@
         <feign-form-version>2.1.0</feign-form-version>
         <jackson-version>2.10.1</jackson-version>
             <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
-        <junit-version>4.12</junit-version>
+        <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <oltu-version>1.0.1</oltu-version>
     </properties>
