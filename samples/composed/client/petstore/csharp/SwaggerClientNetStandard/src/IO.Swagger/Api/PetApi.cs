@@ -89,6 +89,27 @@ namespace IO.Swagger.Api
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> DeletePetWithHttpInfo (long? petId, string apiKey = null);
         /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>ApiResponse</returns>
+        ApiResponse DoCategoryStuff (SubCategory body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>ApiResponse of ApiResponse</returns>
+        ApiResponse<ApiResponse> DoCategoryStuffWithHttpInfo (SubCategory body = null);
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>
@@ -166,8 +187,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>List&lt;&gt;</returns>
-        List<> GetParrots ();
+        /// <returns>List&lt;InlineResponseItems200&gt;</returns>
+        List<InlineResponseItems200> GetParrots ();
 
         /// <summary>
         /// get Parrots
@@ -176,8 +197,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>ApiResponse of List&lt;&gt;</returns>
-        ApiResponse<List<>> GetParrotsWithHttpInfo ();
+        /// <returns>ApiResponse of List&lt;InlineResponseItems200&gt;</returns>
+        ApiResponse<List<InlineResponseItems200>> GetParrotsWithHttpInfo ();
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -249,10 +270,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns></returns>
-        void UpdatePetWithForm (long? petId, string name = null, string status = null);
+        void UpdatePetWithForm (long? petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
@@ -262,10 +281,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null);
+        ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId);
         /// <summary>
         /// uploads an image
         /// </summary>
@@ -357,6 +374,27 @@ namespace IO.Swagger.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> DeletePetAsyncWithHttpInfo (long? petId, string apiKey = null);
         /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse> DoCategoryStuffAsync (SubCategory body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>Task of ApiResponse (ApiResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ApiResponse>> DoCategoryStuffAsyncWithHttpInfo (SubCategory body = null);
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>
@@ -434,8 +472,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>Task of List&lt;&gt;</returns>
-        System.Threading.Tasks.Task<List<>> GetParrotsAsync ();
+        /// <returns>Task of List&lt;InlineResponseItems200&gt;</returns>
+        System.Threading.Tasks.Task<List<InlineResponseItems200>> GetParrotsAsync ();
 
         /// <summary>
         /// get Parrots
@@ -444,8 +482,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>Task of ApiResponse (List&lt;&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<>>> GetParrotsAsyncWithHttpInfo ();
+        /// <returns>Task of ApiResponse (List&lt;InlineResponseItems200&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<InlineResponseItems200>>> GetParrotsAsyncWithHttpInfo ();
         /// <summary>
         /// Find pet by ID
         /// </summary>
@@ -517,10 +555,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId, string name = null, string status = null);
+        System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
@@ -530,10 +566,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null);
+        System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId);
         /// <summary>
         /// uploads an image
         /// </summary>
@@ -1112,6 +1146,147 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>ApiResponse</returns>
+        public ApiResponse DoCategoryStuff (SubCategory body = null)
+        {
+             ApiResponse<ApiResponse> localVarResponse = DoCategoryStuffWithHttpInfo(body);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>ApiResponse of ApiResponse</returns>
+        public ApiResponse< ApiResponse > DoCategoryStuffWithHttpInfo (SubCategory body = null)
+        {
+
+            var localVarPath = "./pet/category";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("DoCategoryStuff", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ApiResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Key, x => string.Join(",", x.Value)),
+                (ApiResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse> DoCategoryStuffAsync (SubCategory body = null)
+        {
+             ApiResponse<ApiResponse> localVarResponse = await DoCategoryStuffAsyncWithHttpInfo(body);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body"> (optional)</param>
+        /// <returns>Task of ApiResponse (ApiResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ApiResponse>> DoCategoryStuffAsyncWithHttpInfo (SubCategory body = null)
+        {
+
+            var localVarPath = "./pet/category";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("DoCategoryStuff", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ApiResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Key, x => string.Join(",", x.Value)),
+                (ApiResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
+        }
+
+        /// <summary>
         /// Find pet by ID schedule pet feeding
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
@@ -1598,10 +1773,10 @@ namespace IO.Swagger.Api
         /// get Parrots 
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>List&lt;&gt;</returns>
-        public List<> GetParrots ()
+        /// <returns>List&lt;InlineResponseItems200&gt;</returns>
+        public List<InlineResponseItems200> GetParrots ()
         {
-             ApiResponse<List<>> localVarResponse = GetParrotsWithHttpInfo();
+             ApiResponse<List<InlineResponseItems200>> localVarResponse = GetParrotsWithHttpInfo();
              return localVarResponse.Data;
         }
 
@@ -1609,8 +1784,8 @@ namespace IO.Swagger.Api
         /// get Parrots 
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>ApiResponse of List&lt;&gt;</returns>
-        public ApiResponse< List<> > GetParrotsWithHttpInfo ()
+        /// <returns>ApiResponse of List&lt;InlineResponseItems200&gt;</returns>
+        public ApiResponse< List<InlineResponseItems200> > GetParrotsWithHttpInfo ()
         {
 
             var localVarPath = "./parrot";
@@ -1648,19 +1823,19 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<>>(localVarStatusCode,
+            return new ApiResponse<List<InlineResponseItems200>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => string.Join(",", x.Value)),
-                (List<>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<>)));
+                (List<InlineResponseItems200>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<InlineResponseItems200>)));
         }
 
         /// <summary>
         /// get Parrots 
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>Task of List&lt;&gt;</returns>
-        public async System.Threading.Tasks.Task<List<>> GetParrotsAsync ()
+        /// <returns>Task of List&lt;InlineResponseItems200&gt;</returns>
+        public async System.Threading.Tasks.Task<List<InlineResponseItems200>> GetParrotsAsync ()
         {
-             ApiResponse<List<>> localVarResponse = await GetParrotsAsyncWithHttpInfo();
+             ApiResponse<List<InlineResponseItems200>> localVarResponse = await GetParrotsAsyncWithHttpInfo();
              return localVarResponse.Data;
 
         }
@@ -1669,8 +1844,8 @@ namespace IO.Swagger.Api
         /// get Parrots 
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>Task of ApiResponse (List&lt;&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<>>> GetParrotsAsyncWithHttpInfo ()
+        /// <returns>Task of ApiResponse (List&lt;InlineResponseItems200&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<InlineResponseItems200>>> GetParrotsAsyncWithHttpInfo ()
         {
 
             var localVarPath = "./parrot";
@@ -1708,9 +1883,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<>>(localVarStatusCode,
+            return new ApiResponse<List<InlineResponseItems200>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Key, x => string.Join(",", x.Value)),
-                (List<>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<>)));
+                (List<InlineResponseItems200>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<InlineResponseItems200>)));
         }
 
         /// <summary>
@@ -2159,12 +2334,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns></returns>
-        public void UpdatePetWithForm (long? petId, string name = null, string status = null)
+        public void UpdatePetWithForm (long? petId)
         {
-             UpdatePetWithFormWithHttpInfo(petId, name, status);
+             UpdatePetWithFormWithHttpInfo(petId);
         }
 
         /// <summary>
@@ -2172,10 +2345,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId, string name = null, string status = null)
+        public ApiResponse<Object> UpdatePetWithFormWithHttpInfo (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -2235,12 +2406,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId, string name = null, string status = null)
+        public async System.Threading.Tasks.Task UpdatePetWithFormAsync (long? petId)
         {
-             await UpdatePetWithFormAsyncWithHttpInfo(petId, name, status);
+             await UpdatePetWithFormAsyncWithHttpInfo(petId);
 
         }
 
@@ -2249,10 +2418,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"> (optional)</param>
-        /// <param name="status"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId, string name = null, string status = null)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> UpdatePetWithFormAsyncWithHttpInfo (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)

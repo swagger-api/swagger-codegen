@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
-public class Parakeet  implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001  {
+public class Parakeet  implements AnyOfbody2, OneOfinlineResponse2001, AnyOfinlineResponseItems200  {
   @JsonProperty("color")
   private String color = null;
   @JsonProperty("soundRepeater")

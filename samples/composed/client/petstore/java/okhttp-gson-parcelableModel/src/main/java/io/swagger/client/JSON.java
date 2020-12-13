@@ -50,12 +50,44 @@ public class JSON {
 
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
+          .registerTypeSelector(Category.class, new TypeSelector<Category>() {
+            @Override
+            public Class<? extends Category> getClassForElement(JsonElement readElement) {
+                Map<String, Class<? extends Category>> classByDiscriminatorValue = new HashMap<>();
+                    classByDiscriminatorValue.put("AllOfSubCategoryCategory".toUpperCase(), AllOfSubCategoryCategory.class);
+                    classByDiscriminatorValue.put("Category".toUpperCase(), Category.class);
+                return getClassByDiscriminator(
+                            classByDiscriminatorValue,
+                            getDiscriminatorValue(readElement, ""));
+            }
+          })
+          .registerPostProcessor(Category.class, new PostProcessor<Category>() {
+              @Override
+              public void postDeserialize(Category result, JsonElement src, Gson gson) {
+
+              }
+
+              @Override
+              public void postSerialize(JsonElement result, Category src, Gson gson) {
+                  Map<Class<? extends Category>, String> discriminatorValueByClass = new HashMap<>();
+                      discriminatorValueByClass.put(AllOfSubCategoryCategory.class, "AllOfSubCategoryCategory");
+                      discriminatorValueByClass.put(Category.class, "Category");
+                  if(result instanceof JsonObject)
+                  {
+                      if(!((JsonObject) result).has(""))
+                      {
+                          ((JsonObject) result).addProperty("", discriminatorValueByClass.get(src.getClass()));
+                      }
+                  }
+              }
+          })
           .registerTypeSelector(Pet.class, new TypeSelector<Pet>() {
             @Override
             public Class<? extends Pet> getClassForElement(JsonElement readElement) {
                 Map<String, Class<? extends Pet>> classByDiscriminatorValue = new HashMap<>();
                     classByDiscriminatorValue.put("Cat".toUpperCase(), Cat.class);
                     classByDiscriminatorValue.put("Dog".toUpperCase(), Dog.class);
+                    classByDiscriminatorValue.put("SubCategory_pets".toUpperCase(), SubCategoryPets.class);
                     classByDiscriminatorValue.put("Pet".toUpperCase(), Pet.class);
                 return getClassByDiscriminator(
                             classByDiscriminatorValue,
@@ -73,6 +105,7 @@ public class JSON {
                   Map<Class<? extends Pet>, String> discriminatorValueByClass = new HashMap<>();
                       discriminatorValueByClass.put(Cat.class, "Cat");
                       discriminatorValueByClass.put(Dog.class, "Dog");
+                      discriminatorValueByClass.put(SubCategoryPets.class, "SubCategory_pets");
                       discriminatorValueByClass.put(Pet.class, "Pet");
                   if(result instanceof JsonObject)
                   {

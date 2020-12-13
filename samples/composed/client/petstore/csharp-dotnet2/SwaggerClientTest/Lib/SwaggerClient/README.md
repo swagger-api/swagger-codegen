@@ -54,7 +54,7 @@ namespace Example
 
             try
             {
-                List<Test> result = apiInstance.TestMethod();
+                List<string> result = apiInstance.TestMethod();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -77,6 +77,7 @@ Class | Method | HTTP request | Description
 *PetApi* | [**AddParrot**](docs/PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**DoCategoryStuff**](docs/PetApi.md#docategorystuff) | **POST** /pet/category | 
 *PetApi* | [**FeedPet**](docs/PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
@@ -102,6 +103,8 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [IO.Swagger.Model.AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [IO.Swagger.Model.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
  - [IO.Swagger.Model.AllPetsResponse](docs/AllPetsResponse.md)
  - [IO.Swagger.Model.AnyOfbody1ParrotsItems](docs/AnyOfbody1ParrotsItems.md)
  - [IO.Swagger.Model.AnyOfbody2](docs/AnyOfbody2.md)
@@ -115,6 +118,7 @@ Class | Method | HTTP request | Description
  - [IO.Swagger.Model.InlineResponse200](docs/InlineResponse200.md)
  - [IO.Swagger.Model.InlineResponse2001](docs/InlineResponse2001.md)
  - [IO.Swagger.Model.Macaw](docs/Macaw.md)
+ - [IO.Swagger.Model.NullableEnumModel](docs/NullableEnumModel.md)
  - [IO.Swagger.Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
  - [IO.Swagger.Model.OneOfPartMasterDestination](docs/OneOfPartMasterDestination.md)
  - [IO.Swagger.Model.OneOfPartMasterOrigin](docs/OneOfPartMasterOrigin.md)
@@ -132,8 +136,8 @@ Class | Method | HTTP request | Description
  - [IO.Swagger.Model.PartTwo](docs/PartTwo.md)
  - [IO.Swagger.Model.Pet](docs/Pet.md)
  - [IO.Swagger.Model.Pup](docs/Pup.md)
+ - [IO.Swagger.Model.SubCategory](docs/SubCategory.md)
  - [IO.Swagger.Model.Tag](docs/Tag.md)
- - [IO.Swagger.Model.Test](docs/Test.md)
  - [IO.Swagger.Model.User](docs/User.md)
  - [IO.Swagger.Model.ValMemberChoice1](docs/ValMemberChoice1.md)
  - [IO.Swagger.Model.ValMemberChoice2](docs/ValMemberChoice2.md)

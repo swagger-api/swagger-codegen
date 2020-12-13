@@ -19,7 +19,9 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.client.model.CatAllOf2;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.PetPart;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +32,7 @@ import android.os.Parcel;
  */
 
 
-public class Cat extends Pet implements Parcelable , OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup {
+public class Cat extends Pet implements Parcelable , OneOfinlineArrayItemsAllPetsResponse, OneOfPetPart, OneOfPup {
   @SerializedName("hunts")
   private Boolean hunts = null;
 

@@ -16,6 +16,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.PetPart;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class Pet {
   private StatusEnum status = null;
 
   @JsonProperty("part")
-  private List<OneOfPetPartItems> part = null;
+  private List<PetPart> part = null;
 
   public Pet id(Long id) {
     this.id = id;
@@ -123,12 +124,12 @@ public class Pet {
     this.status = status;
   }
 
-  public Pet part(List<OneOfPetPartItems> part) {
+  public Pet part(List<PetPart> part) {
     this.part = part;
     return this;
   }
 
-  public Pet addPartItem(OneOfPetPartItems partItem) {
+  public Pet addPartItem(PetPart partItem) {
     if (this.part == null) {
       this.part = new ArrayList<>();
     }
@@ -141,11 +142,11 @@ public class Pet {
    * @return part
   **/
   @Schema(description = "")
-  public List<OneOfPetPartItems> getPart() {
+  public List<PetPart> getPart() {
     return part;
   }
 
-  public void setPart(List<OneOfPetPartItems> part) {
+  public void setPart(List<PetPart> part) {
     this.part = part;
   }
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using RestSharp;
 using IO.Swagger.Client;
-using IO.Swagger.Model;
 
 namespace IO.Swagger.Api
 {
@@ -14,8 +13,8 @@ namespace IO.Swagger.Api
         /// <summary>
         ///  
         /// </summary>
-        /// <returns>List&lt;Test&gt;</returns>
-        List<Test> TestMethod ();
+        /// <returns>List&lt;string&gt;</returns>
+        List<string> TestMethod ();
     }
   
     /// <summary>
@@ -74,8 +73,8 @@ namespace IO.Swagger.Api
         /// <summary>
         ///  
         /// </summary>
-        /// <returns>List&lt;Test&gt;</returns>
-        public List<Test> TestMethod ()
+        /// <returns>List&lt;string&gt;</returns>
+        public List<string> TestMethod ()
         {
     
             var path = "/test";
@@ -99,7 +98,7 @@ namespace IO.Swagger.Api
             else if (((int)response.StatusCode) == 0)
                 throw new ApiException ((int)response.StatusCode, "Error calling TestMethod: " + response.ErrorMessage, response.ErrorMessage);
     
-            return (List<Test>) ApiClient.Deserialize(response.Content, typeof(List<Test>), response.Headers);
+            return (List<string>) ApiClient.Deserialize(response.Content, typeof(List<string>), response.Headers);
         }
     
     }

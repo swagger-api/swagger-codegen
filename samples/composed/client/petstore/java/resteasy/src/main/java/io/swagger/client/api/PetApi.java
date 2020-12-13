@@ -11,8 +11,10 @@ import io.swagger.client.model.Body1;
 import io.swagger.client.model.Body2;
 import io.swagger.client.model.InlineResponse200;
 import io.swagger.client.model.InlineResponse2001;
+import io.swagger.client.model.InlineResponseItems200;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,6 +152,41 @@ public class PetApi {
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return ModelApiResponse
+   * @throws ApiException if fails to make API call
+   */
+  public ModelApiResponse doCategoryStuff(SubCategory body) throws ApiException {
+    Object localVarPostBody = body;
+    // create path and map variables
+    String localVarPath = "/pet/category".replaceAll("\\{format\\}","json");
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
   /**
    * Find pet by ID
@@ -303,10 +340,10 @@ public class PetApi {
   /**
    * get Parrots
    * 
-   * @return List<Object>
+   * @return List<InlineResponseItems200>
    * @throws ApiException if fails to make API call
    */
-  public List<Object> getParrots() throws ApiException {
+  public List<InlineResponseItems200> getParrots() throws ApiException {
     Object localVarPostBody = null;
     // create path and map variables
     String localVarPath = "/parrot".replaceAll("\\{format\\}","json");
@@ -331,7 +368,7 @@ public class PetApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    GenericType<List<Object>> localVarReturnType = new GenericType<List<Object>>() {};
+    GenericType<List<InlineResponseItems200>> localVarReturnType = new GenericType<List<InlineResponseItems200>>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
   /**

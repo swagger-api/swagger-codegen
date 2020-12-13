@@ -63,6 +63,17 @@ namespace IO.Swagger.Test
         }
 
         /// <summary>
+        /// Test AddParrot
+        /// </summary>
+        [Test]
+        public void AddParrotTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //Body2 body = null;
+            //var response = instance.AddParrot(body);
+            //Assert.IsInstanceOf<InlineResponse2001> (response, "response is InlineResponse2001");
+        }
+        /// <summary>
         /// Test AddPet
         /// </summary>
         [Test]
@@ -84,6 +95,17 @@ namespace IO.Swagger.Test
             //string apiKey = null;
             //instance.DeletePet(petId, apiKey);
             
+        }
+        /// <summary>
+        /// Test DoCategoryStuff
+        /// </summary>
+        [Test]
+        public void DoCategoryStuffTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //SubCategory body = null;
+            //var response = instance.DoCategoryStuff(body);
+            //Assert.IsInstanceOf<ApiResponse> (response, "response is ApiResponse");
         }
         /// <summary>
         /// Test FeedPet
@@ -123,6 +145,16 @@ namespace IO.Swagger.Test
             //Assert.IsInstanceOf<List<Pet>> (response, "response is List<Pet>");
         }
         /// <summary>
+        /// Test GetParrots
+        /// </summary>
+        [Test]
+        public void GetParrotsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //var response = instance.GetParrots();
+            //Assert.IsInstanceOf<List<InlineResponseItems200>> (response, "response is List<InlineResponseItems200>");
+        }
+        /// <summary>
         /// Test GetPetById
         /// </summary>
         [Test]
@@ -132,6 +164,17 @@ namespace IO.Swagger.Test
             //long? petId = null;
             //var response = instance.GetPetById(petId);
             //Assert.IsInstanceOf<Pet> (response, "response is Pet");
+        }
+        /// <summary>
+        /// Test UpdateParrots
+        /// </summary>
+        [Test]
+        public void UpdateParrotsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //Body1 body = null;
+            //var response = instance.UpdateParrots(body);
+            //Assert.IsInstanceOf<InlineResponse200> (response, "response is InlineResponse200");
         }
         /// <summary>
         /// Test UpdatePet
@@ -152,9 +195,7 @@ namespace IO.Swagger.Test
         {
             // TODO uncomment below to test the method and replace null with proper value
             //long? petId = null;
-            //string name = null;
-            //string status = null;
-            //instance.UpdatePetWithForm(petId, name, status);
+            //instance.UpdatePetWithForm(petId);
             
         }
         /// <summary>

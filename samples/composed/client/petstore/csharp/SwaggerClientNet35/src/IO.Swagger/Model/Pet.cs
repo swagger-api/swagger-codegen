@@ -64,7 +64,7 @@ namespace IO.Swagger.Model
         /// <param name="name">name (required).</param>
         /// <param name="status">pet status in the store.</param>
         /// <param name="part">part.</param>
-        public Pet(long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>))
+        public Pet(long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<PetPart> part = default(List<PetPart>))
         {
             // to ensure "name" is required (not null)
             if (name == null)
@@ -97,7 +97,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets Part
         /// </summary>
         [DataMember(Name="part", EmitDefaultValue=false)]
-        public List<OneOfPetPartItems> Part { get; set; }
+        public List<PetPart> Part { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

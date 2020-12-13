@@ -94,6 +94,29 @@ namespace IO.Swagger.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        [HttpPost]
+        [Route("/pet/category")]
+        [ValidateModelState]
+        [SwaggerOperation("DoCategoryStuff")]
+        [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
+        public virtual IActionResult DoCategoryStuff([FromBody]SubCategory body)
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(ApiResponse));
+            string exampleJson = null;
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)
+                        : default(ApiResponse);            //TODO: Change the data returned
+            return new ObjectResult(example);
+        }
+
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>schedule pet feeding</remarks>
@@ -179,17 +202,17 @@ namespace IO.Swagger.Controllers
         [Route("/parrot")]
         [ValidateModelState]
         [SwaggerOperation("GetParrots")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<>), description: "successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<InlineResponseItems200>), description: "successful operation")]
         public virtual IActionResult GetParrots()
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(List<>));
+            // return StatusCode(200, default(List<InlineResponseItems200>));
             string exampleJson = null;
             exampleJson = "[ \"\", \"\" ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<>>(exampleJson)
-                        : default(List<>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<InlineResponseItems200>>(exampleJson)
+                        : default(List<InlineResponseItems200>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 

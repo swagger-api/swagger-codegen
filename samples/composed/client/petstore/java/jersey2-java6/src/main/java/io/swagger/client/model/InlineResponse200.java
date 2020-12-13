@@ -16,6 +16,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +27,14 @@ import java.util.List;
 
 public class InlineResponse200 {
   @JsonProperty("parrots")
-  private List<OneOfinlineResponse200ParrotsItems> parrots = null;
+  private List<InlineResponse2001> parrots = null;
 
-  public InlineResponse200 parrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
+  public InlineResponse200 parrots(List<InlineResponse2001> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public InlineResponse200 addParrotsItem(OneOfinlineResponse200ParrotsItems parrotsItem) {
+  public InlineResponse200 addParrotsItem(InlineResponse2001 parrotsItem) {
     if (this.parrots == null) {
       this.parrots = new ArrayList<>();
     }
@@ -46,11 +47,11 @@ public class InlineResponse200 {
    * @return parrots
   **/
   @Schema(description = "")
-  public List<OneOfinlineResponse200ParrotsItems> getParrots() {
+  public List<InlineResponse2001> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
+  public void setParrots(List<InlineResponse2001> parrots) {
     this.parrots = parrots;
   }
 

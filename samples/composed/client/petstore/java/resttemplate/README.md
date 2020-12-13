@@ -103,12 +103,16 @@ All URIs are relative to */*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**testMethod**](docs/DefaultApi.md#testMethod) | **GET** /test | 
+*PetApi* | [**addParrot**](docs/PetApi.md#addParrot) | **POST** /parrot | Add a new parrow to the store
 *PetApi* | [**addPet**](docs/PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**deletePet**](docs/PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**doCategoryStuff**](docs/PetApi.md#doCategoryStuff) | **POST** /pet/category | 
 *PetApi* | [**feedPet**](docs/PetApi.md#feedPet) | **POST** /pet/feed/{petId} | Find pet by ID
 *PetApi* | [**findPetsByStatus**](docs/PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**findPetsByTags**](docs/PetApi.md#findPetsByTags) | **GET** /pet/findByTags | Finds Pets by tags
+*PetApi* | [**getParrots**](docs/PetApi.md#getParrots) | **GET** /parrot | get Parrots
 *PetApi* | [**getPetById**](docs/PetApi.md#getPetById) | **GET** /pet/{petId} | Find pet by ID
+*PetApi* | [**updateParrots**](docs/PetApi.md#updateParrots) | **PUT** /parrot | update parrots
 *PetApi* | [**updatePet**](docs/PetApi.md#updatePet) | **PUT** /pet | Update an existing pet
 *PetApi* | [**updatePetWithForm**](docs/PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
 *PetApi* | [**uploadFile**](docs/PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -127,16 +131,32 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
  - [AllPetsResponse](docs/AllPetsResponse.md)
+ - [AnyOfbody1ParrotsItems](docs/AnyOfbody1ParrotsItems.md)
+ - [AnyOfbody2](docs/AnyOfbody2.md)
  - [Body](docs/Body.md)
+ - [Body1](docs/Body1.md)
+ - [Body2](docs/Body2.md)
  - [Cat](docs/Cat.md)
  - [Category](docs/Category.md)
  - [Dog](docs/Dog.md)
+ - [InlineResponse200](docs/InlineResponse200.md)
+ - [InlineResponse2001](docs/InlineResponse2001.md)
+ - [Macaw](docs/Macaw.md)
  - [ModelApiResponse](docs/ModelApiResponse.md)
+ - [NullableEnumModel](docs/NullableEnumModel.md)
  - [OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
+ - [OneOfPartMasterDestination](docs/OneOfPartMasterDestination.md)
  - [OneOfPartMasterOrigin](docs/OneOfPartMasterOrigin.md)
+ - [OneOfPetPartItems](docs/OneOfPetPartItems.md)
  - [OneOfPup](docs/OneOfPup.md)
+ - [OneOfinlineResponse2001](docs/OneOfinlineResponse2001.md)
+ - [OneOfinlineResponse200ParrotsItems](docs/OneOfinlineResponse200ParrotsItems.md)
+ - [OneOfvalMembersValMemberItems](docs/OneOfvalMembersValMemberItems.md)
  - [Order](docs/Order.md)
+ - [Parakeet](docs/Parakeet.md)
  - [PartFour](docs/PartFour.md)
  - [PartMaster](docs/PartMaster.md)
  - [PartOne](docs/PartOne.md)
@@ -144,6 +164,7 @@ Class | Method | HTTP request | Description
  - [PartTwo](docs/PartTwo.md)
  - [Pet](docs/Pet.md)
  - [Pup](docs/Pup.md)
+ - [SubCategory](docs/SubCategory.md)
  - [Tag](docs/Tag.md)
  - [User](docs/User.md)
  - [ValMemberChoice1](docs/ValMemberChoice1.md)

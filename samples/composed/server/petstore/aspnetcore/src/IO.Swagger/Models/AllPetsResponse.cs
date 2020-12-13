@@ -24,7 +24,7 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class AllPetsResponse : List<OneOfAllPetsResponseItems>, IEquatable<AllPetsResponse>
+    public partial class AllPetsResponse : List<InlineArrayItemsAllPetsResponse>, IEquatable<AllPetsResponse>
     { 
         /// <summary>
         /// Returns the string presentation of the object

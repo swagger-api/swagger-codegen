@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import org.apache.commons.lang3.ObjectUtils;
+import io.swagger.client.model.InlineArrayItemsAllPetsResponse;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -20,7 +21,7 @@ import java.util.List;
  */
 
 
-public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> {
+public class AllPetsResponse extends ArrayList<InlineArrayItemsAllPetsResponse> {
 
   @Override
   public boolean equals(java.lang.Object o) {

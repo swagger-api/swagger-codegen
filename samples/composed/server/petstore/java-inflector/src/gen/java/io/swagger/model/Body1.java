@@ -2,6 +2,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.model.InlineResponseItems200;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,10 @@ import java.util.List;
 
 public class Body1   {
   @JsonProperty("parrots")
-  private List<AnyOfbody1ParrotsItems> parrots = null;
+  private List<InlineResponseItems200> parrots = null;
   /**
    **/
-  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
+  public Body1 parrots(List<InlineResponseItems200> parrots) {
     this.parrots = parrots;
     return this;
   }
@@ -22,10 +23,10 @@ public class Body1   {
   
   @Schema(description = "")
   @JsonProperty("parrots")
-  public List<AnyOfbody1ParrotsItems> getParrots() {
+  public List<InlineResponseItems200> getParrots() {
     return parrots;
   }
-  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
+  public void setParrots(List<InlineResponseItems200> parrots) {
     this.parrots = parrots;
   }
 

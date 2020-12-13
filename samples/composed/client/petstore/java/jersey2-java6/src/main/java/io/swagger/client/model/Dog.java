@@ -16,7 +16,9 @@ import org.apache.commons.lang3.ObjectUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.client.model.DogAllOf2;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.PetPart;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 /**
@@ -24,7 +26,7 @@ import java.util.List;
  */
 
 
-public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartItems, OneOfPup {
+public class Dog extends Pet implements OneOfinlineArrayItemsAllPetsResponse, OneOfPetPart, OneOfPup {
   @JsonProperty("bark")
   private Boolean bark = null;
 

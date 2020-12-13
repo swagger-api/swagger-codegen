@@ -18,6 +18,7 @@ import io.swagger.client.model.InlineResponse200;
 import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SubCategory;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -77,6 +78,21 @@ public class PetApiTest {
         Long petId = null;
         String apiKey = null;
         api.deletePet(petId, apiKey);
+
+        // TODO: test validations
+    }
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void doCategoryStuffTest() {
+        SubCategory body = null;
+        ModelApiResponse response = api.doCategoryStuff(body);
 
         // TODO: test validations
     }

@@ -31,6 +31,12 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         void DeletePet (long? petId, string apiKey);
         /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        ApiResponse DoCategoryStuff (SubCategory body);
+        /// <summary>
         /// Find pet by ID schedule pet feeding
         /// </summary>
         /// <param name="body">Pet object that needs to be added to the store</param>
@@ -79,10 +85,8 @@ namespace IO.Swagger.Api
         /// Updates a pet in the store with form data 
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"></param>
-        /// <param name="status"></param>
         /// <returns></returns>
-        void UpdatePetWithForm (long? petId, string name, string status);
+        void UpdatePetWithForm (long? petId);
         /// <summary>
         /// uploads an image 
         /// </summary>
@@ -248,6 +252,39 @@ namespace IO.Swagger.Api
                 throw new ApiException ((int)response.StatusCode, "Error calling DeletePet: " + response.ErrorMessage, response.ErrorMessage);
     
             return;
+        }
+    
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        public ApiResponse DoCategoryStuff (SubCategory body)
+        {
+    
+            var path = "/pet/category";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.POST, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling DoCategoryStuff: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling DoCategoryStuff: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (ApiResponse) ApiClient.Deserialize(response.Content, typeof(ApiResponse), response.Headers);
         }
     
         /// <summary>
@@ -509,10 +546,8 @@ namespace IO.Swagger.Api
         /// Updates a pet in the store with form data 
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name"></param>
-        /// <param name="status"></param>
         /// <returns></returns>
-        public void UpdatePetWithForm (long? petId, string name, string status)
+        public void UpdatePetWithForm (long? petId)
         {
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling UpdatePetWithForm");

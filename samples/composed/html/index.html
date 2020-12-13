@@ -210,6 +210,7 @@ out more about Swagger at
   <li><a href="#addParrot"><code><span class="http-method">post</span> /parrot</code></a></li>
   <li><a href="#addPet"><code><span class="http-method">post</span> /pet</code></a></li>
   <li><a href="#deletePet"><code><span class="http-method">delete</span> /pet/{petId}</code></a></li>
+  <li><a href="#doCategoryStuff"><code><span class="http-method">post</span> /pet/category</code></a></li>
   <li><a href="#feedPet"><code><span class="http-method">post</span> /pet/feed/{petId}</code></a></li>
   <li><a href="#findPetsByStatus"><code><span class="http-method">get</span> /pet/findByStatus</code></a></li>
   <li><a href="#findPetsByTags"><code><span class="http-method">get</span> /pet/findByTags</code></a></li>
@@ -402,6 +403,59 @@ out more about Swagger at
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="doCategoryStuff"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /pet/category</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">doCategoryStuff</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SubCategory">SubCategory</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ApiResponse">ApiResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 0,
+  "type" : "type",
+  "message" : "message"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#ApiResponse">ApiResponse</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="feedPet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -582,8 +636,8 @@ out more about Swagger at
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
+      array[<a href="#inline_response_items200">inline_response_items200</a>]
       
-      array[null]
     </div>
 
     <!--Todo: process Response Object and its headers, schema, examples -->
@@ -602,7 +656,7 @@ out more about Swagger at
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     successful operation
-        <a href="#array[null]">array[null]</a>
+        
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="getPetById"></a>
@@ -1367,9 +1421,12 @@ out more about Swagger at
     <li><a href="#AllPetsResponse"><code>AllPetsResponse</code></a></li>
     <li><a href="#ApiResponse"><code>ApiResponse</code></a></li>
     <li><a href="#Cat"><code>Cat</code></a></li>
+    <li><a href="#CatAllOf_2"><code>CatAllOf_2</code></a></li>
     <li><a href="#Category"><code>Category</code></a></li>
     <li><a href="#Dog"><code>Dog</code></a></li>
+    <li><a href="#DogAllOf_2"><code>DogAllOf_2</code></a></li>
     <li><a href="#Macaw"><code>Macaw</code></a></li>
+    <li><a href="#NullableEnumModel"><code>NullableEnumModel</code></a></li>
     <li><a href="#Order"><code>Order</code></a></li>
     <li><a href="#Parakeet"><code>Parakeet</code></a></li>
     <li><a href="#PartFour"><code>PartFour</code></a></li>
@@ -1378,18 +1435,24 @@ out more about Swagger at
     <li><a href="#PartThree"><code>PartThree</code></a></li>
     <li><a href="#PartTwo"><code>PartTwo</code></a></li>
     <li><a href="#Pet"><code>Pet</code></a></li>
+    <li><a href="#Pet_part"><code>Pet_part</code></a></li>
     <li><a href="#Pup"><code>Pup</code></a></li>
+    <li><a href="#SubCategory"><code>SubCategory</code></a></li>
+    <li><a href="#SubCategory_pets"><code>SubCategory_pets</code></a></li>
     <li><a href="#Tag"><code>Tag</code></a></li>
     <li><a href="#Test"><code>Test</code></a></li>
     <li><a href="#User"><code>User</code></a></li>
     <li><a href="#body"><code>body</code></a></li>
     <li><a href="#body_1"><code>body_1</code></a></li>
     <li><a href="#body_2"><code>body_2</code></a></li>
+    <li><a href="#inline_array_items_AllPetsResponse"><code>inline_array_items_AllPetsResponse</code></a></li>
     <li><a href="#inline_response_200"><code>inline_response_200</code></a></li>
     <li><a href="#inline_response_200_1"><code>inline_response_200_1</code></a></li>
+    <li><a href="#inline_response_items200"><code>inline_response_items200</code></a></li>
     <li><a href="#val_MemberChoice1"><code>val_MemberChoice1</code></a></li>
     <li><a href="#val_MemberChoice2"><code>val_MemberChoice2</code></a></li>
     <li><a href="#val_Members"><code>val_Members</code></a></li>
+    <li><a href="#val_Members_val_member"><code>val_Members_val_member</code></a></li>
   </ol>
 
   <div class="model">
@@ -1411,18 +1474,22 @@ out more about Swagger at
     <h3><a name="Cat"><code>Cat</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+      <div class="param">hunts (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">age (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
 <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
           <div class="param-desc"><span class="param-type">example: doggie</span></div>
 <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> pet status in the store </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">available</div><div class="param-enum">pending</div><div class="param-enum">sold</div>
-<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
-              <div class="param-desc"><span class="param-type">items oneOf:</span>
-                  <a href="#Dog"><code>Dog</code></a>&nbsp;&nbsp;&nbsp;
-                  <a href="#Cat"><code>Cat</code></a>&nbsp;&nbsp;&nbsp;
-              </div>
-<div class="param">hunts (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#Pet_part">array[Pet_part]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CatAllOf_2"><code>CatAllOf_2</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">hunts (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
 <div class="param">age (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
@@ -1439,18 +1506,24 @@ out more about Swagger at
     <h3><a name="Dog"><code>Dog</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+      <div class="param">bark (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">breed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">Dingo</div><div class="param-enum">Husky</div><div class="param-enum">Retriever</div><div class="param-enum">Shepherd</div>
+<div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
 <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
           <div class="param-desc"><span class="param-type">example: doggie</span></div>
 <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> pet status in the store </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">available</div><div class="param-enum">pending</div><div class="param-enum">sold</div>
-<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
-              <div class="param-desc"><span class="param-type">items oneOf:</span>
-                  <a href="#Dog"><code>Dog</code></a>&nbsp;&nbsp;&nbsp;
-                  <a href="#Cat"><code>Cat</code></a>&nbsp;&nbsp;&nbsp;
-              </div>
-<div class="param">bark (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#Pet_part">array[Pet_part]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="DogAllOf_2"><code>DogAllOf_2</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">bark (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
 <div class="param">breed (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">Dingo</div><div class="param-enum">Husky</div><div class="param-enum">Retriever</div><div class="param-enum">Shepherd</div>
@@ -1462,6 +1535,15 @@ out more about Swagger at
     <div class="field-items">
       <div class="param">color (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">singer (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NullableEnumModel"><code>NullableEnumModel</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">enumProp (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">a</div><div class="param-enum">b</div><div class="param-enum"></div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1540,18 +1622,42 @@ out more about Swagger at
 <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> pet status in the store </div>
         <div class="param-enum-header">Enum:</div>
         <div class="param-enum">available</div><div class="param-enum">pending</div><div class="param-enum">sold</div>
-<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
-              <div class="param-desc"><span class="param-type">items oneOf:</span>
-                  <a href="#Dog"><code>Dog</code></a>&nbsp;&nbsp;&nbsp;
-                  <a href="#Cat"><code>Cat</code></a>&nbsp;&nbsp;&nbsp;
-              </div>
+<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#Pet_part">array[Pet_part]</a></span>  </div>
     </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Pet_part"><code>Pet_part</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="Pup"><code>Pup</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
       <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SubCategory"><code>SubCategory</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">category (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span>  </div>
+<div class="param">category2 (optional)</div><div class="param-desc"><span class="param-type"><a href="#Category">Category</a></span>  </div>
+<div class="param">pets (optional)</div><div class="param-desc"><span class="param-type"><a href="#SubCategory_pets">array[SubCategory_pets]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SubCategory_pets"><code>SubCategory_pets</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: doggie</span></div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> pet status in the store </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">available</div><div class="param-enum">pending</div><div class="param-enum">sold</div>
+<div class="param">part (optional)</div><div class="param-desc"><span class="param-type"><a href="#Pet_part">array[Pet_part]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1594,11 +1700,7 @@ out more about Swagger at
     <h3><a name="body_1"><code>body_1</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">parrots (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
-              <div class="param-desc"><span class="param-type">items anyOf:</span>
-                  <a href="#Macaw"><code>Macaw</code></a>&nbsp;&nbsp;&nbsp;
-                  <a href="#Parakeet"><code>Parakeet</code></a>&nbsp;&nbsp;&nbsp;
-              </div>
+      <div class="param">parrots (optional)</div><div class="param-desc"><span class="param-type"><a href="#inline_response_items200">array[inline_response_items200]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -1608,18 +1710,26 @@ out more about Swagger at
           </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="inline_array_items_AllPetsResponse"><code>inline_array_items_AllPetsResponse</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="inline_response_200"><code>inline_response_200</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">parrots (optional)</div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span>  </div>
-              <div class="param-desc"><span class="param-type">items oneOf:</span>
-                  <a href="#Macaw"><code>Macaw</code></a>&nbsp;&nbsp;&nbsp;
-                  <a href="#Parakeet"><code>Parakeet</code></a>&nbsp;&nbsp;&nbsp;
-              </div>
+      <div class="param">parrots (optional)</div><div class="param-desc"><span class="param-type"><a href="#inline_response_200_1">array[inline_response_200_1]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="inline_response_200_1"><code>inline_response_200_1</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_items200"><code>inline_response_items200</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
           </div>  <!-- field-items -->
@@ -1655,14 +1765,16 @@ Purpose: To identify those members that have left or are due to leave the scheme
 Definition: Information about the Members of the Scheme.
 Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.</div>
     <div class="field-items">
-      <div class="param">val_member </div><div class="param-desc"><span class="param-type"><a href="#">array[null]</a></span> Business Term: Scheme Member
+      <div class="param">val_member </div><div class="param-desc"><span class="param-type"><a href="#val_Members_val_member">array[val_Members_val_member]</a></span> Business Term: Scheme Member
 Definition: Information about a Member of the Scheme.
 Purpose: To have enough information to be able to produce a Statement of Account indicating premium due. </div>
-              <div class="param-desc"><span class="param-type">items oneOf:</span>
-                  <a href="#val_MemberChoice1"><code>val_MemberChoice1</code></a>&nbsp;&nbsp;&nbsp;
-                  <a href="#val_MemberChoice2"><code>val_MemberChoice2</code></a>&nbsp;&nbsp;&nbsp;
-              </div>
     </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="val_Members_val_member"><code>val_Members_val_member</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
   </div>
   </body>
 </html>
