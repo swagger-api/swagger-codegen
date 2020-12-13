@@ -26,7 +26,7 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore-with-composed-schemas.yaml -l java -c bin/java8-petstore-jersey2.json -o samples/composed/client/petstore/java/jersey2-java8 -DhideGenerationTimestamp=true"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore-with-composed-schemas.yaml -l java -c bin/java8-petstore-jersey2.json -o samples/composed/client/petstore/java/jersey2-java8 -DhideGenerationTimestamp=true --flatten-inline-schema true"
 
 echo "Removing files and folders under samples/client/petstore/java/jersey2-java8/src/main"
 rm -rf samples/composed/client/petstore/java/jersey2-java8/src/main
