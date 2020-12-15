@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
+import io.swagger.models.RefModel;
+import io.swagger.models.properties.RefProperty;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,6 +60,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String SUPPORT_JAVA6 = "supportJava6";
     public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
     public static final String ERROR_ON_UNKNOWN_ENUM = "errorOnUnknownEnum";
+    public static final String CHECK_DUPLICATED_MODEL_NAME = "checkDuplicatedModelName";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -119,7 +122,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 "this", "break", "double", "implements", "protected", "throw", "byte", "else",
                 "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
                 "catch", "extends", "int", "short", "try", "char", "final", "interface", "static",
-                "void", "class", "finally", "long", "strictfp", "volatile", "const", "float",
+                "void", "class", "finally", "long", "strictfp", "volatile", "const", "float", "list",
                 "native", "super", "while", "null")
         );
 
@@ -187,6 +190,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(java8Mode);
 
         cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
+        cliOptions.add(CliOption.newBoolean(CHECK_DUPLICATED_MODEL_NAME, "Check if there are duplicated model names (ignoring case)"));
     }
 
     @Override
@@ -1042,6 +1046,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (swagger == null || swagger.getPaths() == null){
             return;
         }
+        boolean checkDuplicatedModelName = Boolean.parseBoolean(additionalProperties.get(CHECK_DUPLICATED_MODEL_NAME) != null ? additionalProperties.get(CHECK_DUPLICATED_MODEL_NAME).toString() : "");
+        if (checkDuplicatedModelName) {
+            this.checkDuplicatedModelNameIgnoringCase(swagger);
+        }
         for (String pathname : swagger.getPaths().keySet()) {
             Path path = swagger.getPath(pathname);
             if (path.getOperations() == null){
@@ -1099,6 +1107,84 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected boolean needToImport(String type) {
         return super.needToImport(type) && type.indexOf(".") < 0;
     }
+
+    protected void checkDuplicatedModelNameIgnoringCase(Swagger swagger) {
+        final Map<String, Model> definitions = swagger.getDefinitions();
+        final Map<String, Map<String, Model>> definitionsRepeated = new HashMap<>();
+
+        for (String definitionKey : definitions.keySet()) {
+            final Model model = definitions.get(definitionKey);
+            final String lowerKeyDefinition = definitionKey.toLowerCase();
+
+            if (definitionsRepeated.containsKey(lowerKeyDefinition)) {
+                Map<String, Model> modelMap = definitionsRepeated.get(lowerKeyDefinition);
+                if (modelMap == null) {
+                    modelMap = new HashMap<>();
+                    definitionsRepeated.put(lowerKeyDefinition, modelMap);
+                }
+                modelMap.put(definitionKey, model);
+            } else {
+                definitionsRepeated.put(lowerKeyDefinition, null);
+            }
+        }
+        for (String lowerKeyDefinition : definitionsRepeated.keySet()) {
+            final Map<String, Model> modelMap = definitionsRepeated.get(lowerKeyDefinition);
+            if (modelMap == null) {
+                continue;
+            }
+            int index = 1;
+            for (String name : modelMap.keySet()) {
+                final Model model = modelMap.get(name);
+                final String newModelName = name + index;
+                definitions.put(newModelName, model);
+                replaceDuplicatedInPaths(swagger.getPaths(), name, newModelName);
+                replaceDuplicatedInModelProperties(definitions, name, newModelName);
+                definitions.remove(name);
+                index++;
+            }
+        }
+    }
+
+    protected void replaceDuplicatedInPaths(Map<String, Path> paths, String modelName, String newModelName) {
+        if (paths == null || paths.isEmpty()) {
+            return;
+        }
+        paths.values().stream()
+                .flatMap(path -> path.getOperations().stream())
+                .flatMap(operation -> operation.getParameters().stream())
+                .filter(parameter -> parameter instanceof BodyParameter
+                        && ((BodyParameter)parameter).getSchema() != null
+                        && ((BodyParameter)parameter).getSchema() instanceof RefModel
+                )
+                .forEach(parameter -> {
+                        final RefModel refModel = (RefModel) ((BodyParameter)parameter).getSchema();
+                        if (refModel.getSimpleRef().equals(modelName)) {
+                            refModel.set$ref(refModel.get$ref().replace(modelName, newModelName));
+                        }
+                });
+        paths.values().stream()
+                .flatMap(path -> path.getOperations().stream())
+                .flatMap(operation -> operation.getResponses().values().stream())
+                .filter(response -> response.getResponseSchema() != null && response.getResponseSchema() instanceof RefModel)
+                .forEach(response -> {
+                        final RefModel refModel = (RefModel) response.getResponseSchema();
+                        if (refModel.getSimpleRef().equals(modelName)) {
+                            refModel.set$ref(refModel.get$ref().replace(modelName, newModelName));
+                        }
+                });
+    }
+
+    protected void replaceDuplicatedInModelProperties(Map<String, Model> definitions, String modelName, String newModelName) {
+        definitions.values().stream()
+                .flatMap(model -> model.getProperties().values().stream())
+                .filter(property -> property instanceof RefProperty)
+                .forEach(property -> {
+                    final RefProperty refProperty = (RefProperty) property;
+                    if (refProperty.getSimpleRef().equals(modelName)) {
+                        refProperty.set$ref(refProperty.get$ref().replace(modelName, newModelName));
+                    }
+                });
+    }
 /*
     @Override
     public String findCommonPrefixOfVars(List<String> vars) {
@@ -1126,8 +1212,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
 
         // number
-        if ("Integer".equals(datatype) || "Long".equals(datatype) ||
-            "Float".equals(datatype) || "Double".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Long".equals(datatype) || "Float".equals(datatype) || "Double".equals(datatype)  || "BigDecimal".equals(datatype)) {
             String varName = "NUMBER_" + value;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
@@ -1146,7 +1231,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Double".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Double".equals(datatype) || "Boolean".equals(datatype)) {
             return value;
         } else if ("Long".equals(datatype)) {
             // add l to number, e.g. 2048 => 2048l
@@ -1154,6 +1239,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         } else if ("Float".equals(datatype)) {
             // add f to number, e.g. 3.14 => 3.14f
             return value + "f";
+        } else if ("BigDecimal".equals(datatype)) {
+            return "new BigDecimal(" + escapeText(value) + ")";
         } else {
             return "\"" + escapeText(value) + "\"";
         }

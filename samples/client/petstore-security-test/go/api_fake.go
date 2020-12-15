@@ -1,3 +1,4 @@
+
 /*
  * Swagger Petstore *_/ ' \" =end -- \\r\\n \\n \\r
  *
@@ -26,20 +27,20 @@ var (
 
 type FakeApiService service
 
-/* 
+/*
 FakeApiService To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *TestCodeInjectEndRnNROpts - Optional Parameters:
+ * @param optional nil or *FakeApiTestCodeInjectEndRnNROpts - Optional Parameters:
      * @param "TestCodeInjectEndRnNR" (optional.String) -  To test code injection *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
 
 
 */
 
-type TestCodeInjectEndRnNROpts struct { 
+type FakeApiTestCodeInjectEndRnNROpts struct { 
 	TestCodeInjectEndRnNR optional.String
 }
 
-func (a *FakeApiService) TestCodeInjectEndRnNR(ctx context.Context, localVarOptionals *TestCodeInjectEndRnNROpts) (*http.Response, error) {
+func (a *FakeApiService) TestCodeInjectEndRnNR(ctx context.Context, localVarOptionals *FakeApiTestCodeInjectEndRnNROpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody   interface{}
@@ -103,3 +104,4 @@ func (a *FakeApiService) TestCodeInjectEndRnNR(ctx context.Context, localVarOpti
 
 	return localVarHttpResponse, nil
 }
+
