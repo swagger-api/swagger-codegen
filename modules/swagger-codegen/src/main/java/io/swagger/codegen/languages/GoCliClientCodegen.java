@@ -1,17 +1,20 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Map;
 
 public class GoCliClientCodegen extends PureCloudGoClientCodegen {
     protected Logger LOGGER = LoggerFactory.getLogger(GoCliClientCodegen.class);
 
     public GoCliClientCodegen() {
         super();
+
+        typeMapping.put("integer", "int");
+        typeMapping.put("long", "int");
 
         outputFolder = "generated-code/go";
 
@@ -20,7 +23,7 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
 
     @Override
     public String getName() {
-        return "cliclientgo";
+        return "clisdkclient";
     }
 
     @Override
@@ -59,6 +62,7 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("Makefile.mustache", "", "Makefile"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
+        supportingFiles.add(new SupportingFile("restclient.mustache", "/src/restclient", "restclient.go"));
         apiTemplateFiles.put("api.mustache", ".go");
     }
 
@@ -72,8 +76,7 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
         name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
         String folder = name;
 
-        // e.g. PetApi.go => pet_api.go
-        return (folder + File.separatorChar + underscore(name)).toLowerCase();
+        return toCustomApiName((folder + File.separatorChar + name));
     }
 
     @Override
@@ -83,12 +86,42 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
             LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
             operationId = "call_" + operationId;
         }
+        operationId = operationId
+                .toLowerCase()
+                .replaceAll("outboundcampaign|authorizationdivision|telephonyprovidersedge|group|location|sphone|routingqueue|ssite|routingskill|station|usagequery|listexecutionid|user", "")
+                .replaceAll("^post", "create")
+                .replaceAll("^patch|^put", "update");
+        if (operationId.startsWith("get") && operationId.endsWith("s"))
+            operationId = operationId.replaceAll("^get", "list");
 
-        return operationId.toLowerCase();
+        operationId = operationId.replaceAll("s*$", "")
+                .replaceAll("listexecutionidresult", "results");
+
+        return operationId;
     }
 
     @Override
     public String toApiVarName(String name) {
-        return name.toLowerCase();
+        return toCustomApiName(name);
+    }
+
+    private String toCustomApiName(String name) {
+        // Renaming APIs as necessary to create more user friendly names for the CLI interface
+        return name
+                .toLowerCase()
+                .replaceAll("outbound", "campaigns")
+                .replaceAll("authorization", "divisions")
+                .replaceAll("telephonyprovidersedge", "edges")
+                .replaceAll("routing", "queues");
+    }
+
+    @Override
+    public void postProcessParameter(CodegenParameter parameter) {
+        super.postProcessParameter(parameter);
+
+        if (parameter.description != null) {
+            parameter.description = parameter.description
+                    .replace("\\\"", "");
+        }
     }
 }
