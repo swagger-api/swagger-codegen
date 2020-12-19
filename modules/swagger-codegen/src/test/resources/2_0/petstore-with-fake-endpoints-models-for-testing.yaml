@@ -1466,6 +1466,32 @@ definitions:
     type: string
   OuterBoolean:
     type: boolean
+  Boolean:
+    type: boolean
+    description: True or False indicator
+    enum:
+      - true
+      - false
+  Ints:
+    type: integer
+    format: int32
+    description: True or False indicator
+    enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+  Numbers:
+    type: number
+    description: some number
+    enum:
+      - 7
+      - 8
+      - 9
+      - 10
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'

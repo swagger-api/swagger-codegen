@@ -1,5 +1,6 @@
 package io.swagger.codegen.java;
 
+import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
@@ -8,8 +9,10 @@ import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
+import io.swagger.parser.SwaggerParser;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -91,5 +94,19 @@ public class JavaModelEnumTest {
         Assert.assertEquals(enumVar.datatype, "String");
         Assert.assertEquals(enumVar.datatypeWithEnum, "UnsharedThingEnum");
         Assert.assertTrue(enumVar.isEnum);
+    }
+
+    @Test(description = "not override identical parent enums")
+    public void testEnumTypes() {
+        //final Swagger swagger = parser.read("src/test/resources/issue-913/BS/ApiSpecification.yaml");
+        final CodegenConfig codegenConfig = new JavaClientCodegen();
+
+        final Swagger swagger = new SwaggerParser().read("2_0/issue-10546.yaml", null, true);
+        final Model booleanModel = swagger.getDefinitions().get("Boolean");
+
+        CodegenModel codegenModel = codegenConfig.fromModel("Boolean", booleanModel);
+
+        Assert.assertTrue(codegenModel.isEnum);
+        Assert.assertEquals(codegenModel.dataType, "Boolean");
     }
 }
