@@ -33,7 +33,6 @@ public class WebMessagingJavaClientCodegen extends PureCloudJavaClientCodegen {
         modelTemplateFiles.put("model.mustache", ".java");
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiTemplateFiles.put("api.mustache", ".java");
-        apiTemplateFiles.put("api_async.mustache", "Async.java");
         operationTemplateFiles.put("requestBuilder.mustache", ".java");
 
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
@@ -43,7 +42,6 @@ public class WebMessagingJavaClientCodegen extends PureCloudJavaClientCodegen {
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         supportingFiles.add(new SupportingFile("WebMessagingClient.mustache", invokerFolder, "WebMessagingClient.java"));
         supportingFiles.add(new SupportingFile("WebMessagingException.mustache", invokerFolder, "WebMessagingException.java"));
-        supportingFiles.add(new SupportingFile("GenesysCloudRegionHosts.mustache", invokerFolder, "GenesysCloudRegionHosts.java"));
         supportingFiles.add(new SupportingFile("GenesysCloudRegionWebSocketHosts.mustache", invokerFolder, "GenesysCloudRegionWebSocketHosts.java"));
         supportingFiles.add(new SupportingFile("ApiDateFormat.mustache", invokerFolder, "ApiDateFormat.java"));
         supportingFiles.add(new SupportingFile("LocalDateDeserializer.mustache", invokerFolder, "LocalDateDeserializer.java"));
