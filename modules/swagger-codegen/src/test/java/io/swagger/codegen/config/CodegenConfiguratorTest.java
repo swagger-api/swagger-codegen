@@ -9,6 +9,7 @@ import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import mockit.Expectations;
 import mockit.FullVerifications;
 import mockit.Injectable;
@@ -43,6 +44,9 @@ public class CodegenConfiguratorTest {
 
     @Injectable
     List<AuthorizationValue> authorizationValues;
+
+    @Mocked
+    ParseOptions options;
 
     @Tested
     CodegenConfigurator configurator;
@@ -351,11 +355,16 @@ public class CodegenConfiguratorTest {
 
             AuthParser.parse(auth); times=1; result = authorizationValues;
 
+            new ParseOptions();
+            times = 1;
+            result = options;
+            options.setFlatten(true);
+
             new SwaggerParser();
             times = 1;
             result = parser;
 
-            parser.read(spec, authorizationValues, true);
+            parser.read(spec, authorizationValues, options);
             times = 1;
             result = swagger;
 
