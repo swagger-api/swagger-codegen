@@ -358,6 +358,7 @@ public class CodegenConfiguratorTest {
             new ParseOptions();
             times = 1;
             result = options;
+            options.setResolve(true);
             options.setFlatten(true);
 
             new SwaggerParser();
