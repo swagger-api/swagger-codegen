@@ -205,6 +205,7 @@ class Configuration(object):
         :param identifier: The identifier of apiKey.
         :return: The token for api key authentication.
         """
+
         if self.refresh_api_key_hook:
             self.refresh_api_key_hook(self)
 

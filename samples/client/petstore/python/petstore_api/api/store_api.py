@@ -39,10 +39,11 @@ class StoreApi(object):
         For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.delete_order(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str order_id: ID of the order that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -61,10 +62,11 @@ class StoreApi(object):
         For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.delete_order_with_http_info(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param str order_id: ID of the order that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -134,10 +136,11 @@ class StoreApi(object):
         Returns a map of status codes to quantities  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_inventory(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :return: dict(str, int)
                  If the method is called asynchronously,
                  returns the request thread.
@@ -155,10 +158,11 @@ class StoreApi(object):
         Returns a map of status codes to quantities  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_inventory_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :return: dict(str, int)
                  If the method is called asynchronously,
                  returns the request thread.
@@ -221,10 +225,11 @@ class StoreApi(object):
         For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_order_by_id(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int order_id: ID of pet that needs to be fetched (required)
         :return: Order
                  If the method is called asynchronously,
@@ -243,10 +248,11 @@ class StoreApi(object):
         For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.get_order_by_id_with_http_info(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param int order_id: ID of pet that needs to be fetched (required)
         :return: Order
                  If the method is called asynchronously,
@@ -320,10 +326,11 @@ class StoreApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.place_order(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param Order body: order placed for purchasing the pet (required)
         :return: Order
                  If the method is called asynchronously,
@@ -342,10 +349,11 @@ class StoreApi(object):
           # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
+
         >>> thread = api.place_order_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req
         :param Order body: order placed for purchasing the pet (required)
         :return: Order
                  If the method is called asynchronously,
