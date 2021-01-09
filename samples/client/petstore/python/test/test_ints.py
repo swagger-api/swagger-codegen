@@ -16,12 +16,12 @@ from __future__ import absolute_import
 import unittest
 
 import petstore_api
-from petstore_api.models.model200_response import Model200Response  # noqa: E501
+from petstore_api.models.ints import Ints  # noqa: E501
 from petstore_api.rest import ApiException
 
 
-class TestModel200Response(unittest.TestCase):
-    """Model200Response unit test stubs"""
+class TestInts(unittest.TestCase):
+    """Ints unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +29,10 @@ class TestModel200Response(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testModel200Response(self):
-        """Test Model200Response"""
+    def testInts(self):
+        """Test Ints"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = petstore_api.models.model_200_response.Model200Response()  # noqa: E501
+        # model = petstore_api.models.ints.Ints()  # noqa: E501
         pass
 
 
