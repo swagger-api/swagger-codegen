@@ -2,7 +2,10 @@ package io.swagger.codegen.v3;
 
 import io.swagger.v3.oas.models.security.Scopes;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CodegenSecurity extends CodegenObject {
@@ -78,10 +81,32 @@ public class CodegenSecurity extends CodegenObject {
         return tokenUrl;
     }
 
-    public Scopes getScopes() {
-        return scopes;
+    public Collection<Map<String, String>> getScopes() {
+        final List<Map<String, String>> scopesList = new ArrayList<>();
+        if (!getHasScopes()) {
+            return scopesList; 
+        }
+        
+        int count = 0;
+        for (final String key: scopes.keySet()) {
+            Map<String, String> scope = new HashMap<>();
+            
+            scope.put("scope", key);
+            scope.put("description", scopes.get(key));
+            count += 1;
+            
+            if (count < scopes.size()) {
+                scope.put("hasMore", "true");
+            } else {
+                scope.put("hasMore", null);
+            }
+            
+            scopesList.add(scope);
+        }
+        
+        return scopesList;
     }
-
+    
     public Boolean getHasScopes() {
         return scopes != null && !scopes.isEmpty();
     }
