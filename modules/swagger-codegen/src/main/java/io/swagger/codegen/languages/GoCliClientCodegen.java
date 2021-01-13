@@ -1,10 +1,14 @@
 package io.swagger.codegen.languages;
 
 import io.swagger.codegen.*;
+import io.swagger.models.Operation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class GoCliClientCodegen extends PureCloudGoClientCodegen {
@@ -57,12 +61,16 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
         additionalProperties.put(CodegenConstants.PACKAGE_VERSION, packageVersion);
 
+        additionalProperties.put("addImports", "{{=it.addImports}}");
+        additionalProperties.put("addCommands", "{{=it.addCommands}}");
+
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("Makefile.mustache", "", "Makefile"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("restclient.mustache", "/src/restclient", "restclient.go"));
+        supportingFiles.add(new SupportingFile("root.mustache", "/src/cmd", "root.go"));
         apiTemplateFiles.put("api.mustache", ".go");
     }
 
@@ -72,32 +80,74 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
 
     @Override
     public String toApiFilename(String name) {
-        // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        String folder = name;
-
-        return toCustomApiName((folder + File.separatorChar + name));
+        return toCustomApiName((name + File.separatorChar + name));
     }
 
     @Override
     public String toOperationId(String operationId) {
-        // method name cannot use reserved keyword, e.g. return
-        if (isReservedWord(operationId)) {
-            LOGGER.warn(operationId + " (reserved word) cannot be used as method name. Renamed to " + camelize(sanitizeName("call_" + operationId)));
-            operationId = "call_" + operationId;
+        final String SWAGGER_OVERRIDE = "SWAGGER_OVERRIDE_";
+        if (operationId.contains(SWAGGER_OVERRIDE)) {
+            return operationId.replace(SWAGGER_OVERRIDE, "");
         }
+
         operationId = operationId
                 .toLowerCase()
-                .replaceAll("outboundcampaign|authorizationdivision|telephonyprovidersedge|group|location|sphone|routingqueue|ssite|routingskill|station|usagequery|listexecutionid|user", "")
+                .replaceAll("outboundcampaign|authorizationdivision|telephonyprovidersedge|group|location|sphone|routingqueue|ssite|routingskill|station|usagequery|listexecutionid|user|notificationschannel|subscription", "")
                 .replaceAll("^post", "create")
                 .replaceAll("^patch|^put", "update");
         if (operationId.startsWith("get") && operationId.endsWith("s"))
             operationId = operationId.replaceAll("^get", "list");
-
-        operationId = operationId.replaceAll("s*$", "")
-                .replaceAll("listexecutionidresult", "results");
+        operationId = operationId.replaceAll("s*$", "");
 
         return operationId;
+    }
+
+    @Override
+    /**
+     * Get the operation ID or use default behavior if blank.
+     *
+     * @param operation the operation object
+     * @param path the path of the operation
+     * @param httpMethod the HTTP method of the operation
+     * @return the (generated) operationId
+     */
+    protected String getOrGenerateOperationId(Operation operation, String path, String httpMethod) {
+        return operation.getOperationId();
+    }
+
+    /**
+     * Remove characters not suitable for variable or method name from the input and camelize it
+     *
+     * @param name string to be camelize
+     * @return camelized string
+     */
+    @SuppressWarnings("static-method")
+    public String removeNonNameElementToCamelCase(String name) {
+        // Change to no-op
+        return name;
+    }
+
+    @Override
+    /**
+     * Add operation to group
+     *
+     * @param tag name of the tag
+     * @param resourcePath path of the resource
+     * @param operation Swagger Operation object
+     * @param co Codegen Operation object
+     * @param operations map of Codegen operations
+     */
+    @SuppressWarnings("static-method")
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+        List<CodegenOperation> opList = operations.get(tag);
+        if (opList == null) {
+            opList = new ArrayList<CodegenOperation>();
+            operations.put(tag, opList);
+        }
+
+        co.operationIdLowerCase = co.operationId.toLowerCase();
+        opList.add(co);
+        co.baseName = tag;
     }
 
     @Override
@@ -121,7 +171,8 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
 
         if (parameter.description != null) {
             parameter.description = parameter.description
-                    .replace("\\\"", "");
+                    .replace("\\\"", "")
+                    .replace("'", "`");
         }
     }
 }
