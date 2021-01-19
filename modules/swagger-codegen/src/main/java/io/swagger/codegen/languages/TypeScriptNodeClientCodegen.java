@@ -1,5 +1,8 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.CodegenOperation;
 import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.Property;
 import org.slf4j.Logger;
@@ -8,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.SupportingFile;
@@ -127,5 +132,61 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
 
     public void setNpmRepository(String npmRepository) {
         this.npmRepository = npmRepository;
+    }
+
+    @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        Map<String, Object> result = super.postProcessAllModels(objs);
+
+        for (Map.Entry<String, Object> entry : result.entrySet()) {
+            Map<String, Object> inner = (Map<String, Object>) entry.getValue();
+            List<Map<String, Object>> models = (List<Map<String, Object>>) inner.get("models");
+            for (Map<String, Object> mo : models) {
+                CodegenModel cm = (CodegenModel) mo.get("model");
+                // Fix complex array property's datatype
+                for (CodegenProperty prop : cm.allVars) {
+                    if (!prop.isPrimitiveType) {
+                        CodegenModel complexTypeModel = getCodegenModel(result, prop.complexType);
+                        if (complexTypeModel != null && complexTypeModel.isArrayModel) {
+                            prop.complexType = complexTypeModel.arrayModelType;
+                            prop.datatype = complexTypeModel.parent;
+                            prop.baseType = "Array";
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperationsWithModels(Map<String, Object> objs, List<Object> allModels) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
+            for (CodegenOperation op : ops) {
+                // Fix complex array object return type of operations
+                CodegenModel cm = getCodegenModelFromAllModels(allModels, op.returnType);
+                if (cm != null && cm.isArrayModel) {
+                    op.returnType = cm.parent;
+                }
+            }
+        }
+        return objs;
+    }
+
+    private CodegenModel getCodegenModelFromAllModels(List<Object> allModels, String modelName) {
+        for (Object o : allModels) {
+            Map<String, Object> mo = (Map<String, Object>) o;
+            CodegenModel cm = (CodegenModel) mo.get("model");
+            if (cm.name.equals(modelName)) {
+                return cm;
+            }
+        }
+        return null;
+    }
+    private CodegenModel getCodegenModel(Map<String, Object> objs, String modelName) {
+        Map<String, List<Object>> inner = (Map<String, List<Object>>) objs.get(modelName);
+        return getCodegenModelFromAllModels(inner.get("models"), modelName);
     }
 }
