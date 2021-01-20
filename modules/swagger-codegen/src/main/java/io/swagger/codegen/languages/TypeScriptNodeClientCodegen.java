@@ -1,8 +1,6 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.*;
 import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.Property;
 import org.slf4j.Logger;
@@ -14,8 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.BooleanProperty;
 
 public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen {
@@ -165,7 +161,14 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation op : ops) {
-                // Fix complex array object return type of operations
+                // Fix complex array object input params of an operation
+                for (CodegenParameter param: op.allParams) {
+                    CodegenModel cm = getCodegenModelFromAllModels(allModels, param.dataType);
+                    if (cm != null && cm.isArrayModel) {
+                        param.dataType = cm.parent;
+                    }
+                }
+                // Fix complex array object return type of an operation
                 CodegenModel cm = getCodegenModelFromAllModels(allModels, op.returnType);
                 if (cm != null && cm.isArrayModel) {
                     op.returnType = cm.parent;
