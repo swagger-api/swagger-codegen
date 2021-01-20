@@ -24,6 +24,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "store", description = "the store API")
+@RequestMapping(value = "/v2")
 public interface StoreApi {
 
     @ApiOperation(value = "Delete purchase order by ID", nickname = "deleteOrder", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store", })

@@ -1,0 +1,40 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Swagger Petstore"
+    },
+    "host": "petstore.swagger.io",
+    "basePath": "/v2",
+    "paths": {
+        "/pet": {
+            "post": {
+                "operationId": "addPet",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "additionalProperties": {
+                                "properties": {
+                                    "duration": {
+                                        "description": "duration integer",
+                                        "format": "int32",
+                                        "title": "get_markets_region_id_orders_duration",
+                                        "type": "integer"
+                                    }
+                                },
+                                "title": "get_markets_region_id_orders_200_ok",
+                                "type": "object"
+                            },
+                            "maxItems": 1000,
+                            "title": "get_markets_region_id_orders_ok",
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

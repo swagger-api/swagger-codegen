@@ -1,7 +1,8 @@
 sudo: required
 language: java
+dist: trusty
 jdk:
-  - openjdk7
+  - openjdk8
 
 cache:
   directories:
@@ -38,6 +39,10 @@ before_install:
   - gem install bundler -v '< 2'
   - gem update --system 2.7.8
   - gem --version
+  # install node version 10.x
+  - nvm install 10.22.0
+  - nvm use 10.22.0
+  # install typescript
   - npm install -g typescript
   - npm install -g npm
   - npm config set registry http://registry.npmjs.org/
@@ -63,7 +68,18 @@ before_install:
   - cat /etc/hosts
   # show java version
   - java -version
-
+  # show node version
+  - node -v
+  # show node executable
+  - which node
+  # show npm version
+  - npm -v
+  # show npm executable
+  - which npm
+  # show typescript version
+  - tsc -v
+  # show tsc executable
+  - which tsc
 install:
   # Add Godeps dependencies to GOPATH and PATH
   - eval "$(curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | GIMME_GO_VERSION=1.4 bash)"

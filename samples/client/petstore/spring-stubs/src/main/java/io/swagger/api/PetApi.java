@@ -25,6 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Api(value = "pet", description = "the pet API")
+@RequestMapping(value = "/v2")
 public interface PetApi {
 
     @ApiOperation(value = "Add a new pet to the store", nickname = "addPet", notes = "", authorizations = {
