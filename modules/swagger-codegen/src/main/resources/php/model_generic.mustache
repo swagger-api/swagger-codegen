@@ -187,18 +187,20 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
 
         {{#vars}}
         {{#required}}
-        if ($this->container['{{name}}'] === null) {
+        if (null === $this->container['{{name}}']) {
             $invalidProperties[] = "'{{name}}' can't be null";
         }
         {{/required}}
         {{#isEnum}}
         {{^isContainer}}
-        $allowedValues = $this->{{getter}}AllowableValues();
-        if (!in_array($this->container['{{name}}'], $allowedValues)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for '{{name}}', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
+        if (null !== $this->container['{{name}}']) {
+            $allowedValues = $this->{{getter}}AllowableValues();
+            if (!in_array($this->container['{{name}}'], $allowedValues)) {
+                $invalidProperties[] = sprintf(
+                    "invalid value for '{{name}}', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                );
+            }
         }
 
         {{/isContainer}}
@@ -267,15 +269,17 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
 
         {{#vars}}
         {{#required}}
-        if ($this->container['{{name}}'] === null) {
+        if (null === $this->container['{{name}}']) {
             return false;
         }
         {{/required}}
         {{#isEnum}}
         {{^isContainer}}
-        $allowedValues = $this->{{getter}}AllowableValues();
-        if (!in_array($this->container['{{name}}'], $allowedValues)) {
-            return false;
+        if (null !== $this->container['{{name}}']) {
+            $allowedValues = $this->{{getter}}AllowableValues();
+            if (!in_array($this->container['{{name}}'], $allowedValues)) {
+                return false;
+            }
         }
         {{/isContainer}}
         {{/isEnum}}
