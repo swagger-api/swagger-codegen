@@ -11,20 +11,13 @@ namespace IO.Swagger.Model {
   /// 
   /// </summary>
   [DataContract]
-  public class Category {
+  public class SinglePetResponse {
     /// <summary>
-    /// Gets or Sets Id
+    /// Gets or Sets Pet
     /// </summary>
-    [DataMember(Name="id", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "id")]
-    public long? Id { get; set; }
-
-    /// <summary>
-    /// Gets or Sets Name
-    /// </summary>
-    [DataMember(Name="name", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "name")]
-    public string Name { get; set; }
+    [DataMember(Name="pet", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "pet")]
+    public OneOfSinglePetResponsePet Pet { get; set; }
 
 
     /// <summary>
@@ -33,9 +26,8 @@ namespace IO.Swagger.Model {
     /// <returns>String presentation of the object</returns>
     public override string ToString()  {
       var sb = new StringBuilder();
-      sb.Append("class Category {\n");
-      sb.Append("  Id: ").Append(Id).Append("\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
+      sb.Append("class SinglePetResponse {\n");
+      sb.Append("  Pet: ").Append(Pet).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }

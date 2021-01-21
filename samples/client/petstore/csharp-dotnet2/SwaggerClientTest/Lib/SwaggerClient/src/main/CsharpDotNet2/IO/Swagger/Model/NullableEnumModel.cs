@@ -11,20 +11,13 @@ namespace IO.Swagger.Model {
   /// 
   /// </summary>
   [DataContract]
-  public class Category {
+  public class NullableEnumModel {
     /// <summary>
-    /// Gets or Sets Id
+    /// Gets or Sets EnumProp
     /// </summary>
-    [DataMember(Name="id", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "id")]
-    public long? Id { get; set; }
-
-    /// <summary>
-    /// Gets or Sets Name
-    /// </summary>
-    [DataMember(Name="name", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "name")]
-    public string Name { get; set; }
+    [DataMember(Name="enumProp", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "enumProp")]
+    public string EnumProp { get; set; }
 
 
     /// <summary>
@@ -33,9 +26,8 @@ namespace IO.Swagger.Model {
     /// <returns>String presentation of the object</returns>
     public override string ToString()  {
       var sb = new StringBuilder();
-      sb.Append("class Category {\n");
-      sb.Append("  Id: ").Append(Id).Append("\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
+      sb.Append("class NullableEnumModel {\n");
+      sb.Append("  EnumProp: ").Append(EnumProp).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }

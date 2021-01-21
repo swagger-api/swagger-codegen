@@ -11,20 +11,20 @@ namespace IO.Swagger.Model {
   /// 
   /// </summary>
   [DataContract]
-  public class Category {
+  public class Dog : Pet {
     /// <summary>
-    /// Gets or Sets Id
+    /// Gets or Sets Bark
     /// </summary>
-    [DataMember(Name="id", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "id")]
-    public long? Id { get; set; }
+    [DataMember(Name="bark", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "bark")]
+    public bool? Bark { get; set; }
 
     /// <summary>
-    /// Gets or Sets Name
+    /// Gets or Sets Breed
     /// </summary>
-    [DataMember(Name="name", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "name")]
-    public string Name { get; set; }
+    [DataMember(Name="breed", EmitDefaultValue=false)]
+    [JsonProperty(PropertyName = "breed")]
+    public string Breed { get; set; }
 
 
     /// <summary>
@@ -33,9 +33,9 @@ namespace IO.Swagger.Model {
     /// <returns>String presentation of the object</returns>
     public override string ToString()  {
       var sb = new StringBuilder();
-      sb.Append("class Category {\n");
-      sb.Append("  Id: ").Append(Id).Append("\n");
-      sb.Append("  Name: ").Append(Name).Append("\n");
+      sb.Append("class Dog {\n");
+      sb.Append("  Bark: ").Append(Bark).Append("\n");
+      sb.Append("  Breed: ").Append(Breed).Append("\n");
       sb.Append("}\n");
       return sb.ToString();
     }
@@ -44,7 +44,7 @@ namespace IO.Swagger.Model {
     /// Get the JSON string presentation of the object
     /// </summary>
     /// <returns>JSON string presentation of the object</returns>
-    public string ToJson() {
+    public  new string ToJson() {
       return JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 

@@ -11,46 +11,19 @@ namespace IO.Swagger.Model {
   /// 
   /// </summary>
   [DataContract]
-  public class Pet {
+  public class Body {
     /// <summary>
-    /// Gets or Sets Id
+    /// Updated name of the pet
     /// </summary>
-    [DataMember(Name="id", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "id")]
-    public long? Id { get; set; }
-
-    /// <summary>
-    /// Gets or Sets Category
-    /// </summary>
-    [DataMember(Name="category", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "category")]
-    public Category Category { get; set; }
-
-    /// <summary>
-    /// Gets or Sets Name
-    /// </summary>
+    /// <value>Updated name of the pet</value>
     [DataMember(Name="name", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "name")]
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or Sets PhotoUrls
+    /// Updated status of the pet
     /// </summary>
-    [DataMember(Name="photoUrls", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "photoUrls")]
-    public List<string> PhotoUrls { get; set; }
-
-    /// <summary>
-    /// Gets or Sets Tags
-    /// </summary>
-    [DataMember(Name="tags", EmitDefaultValue=false)]
-    [JsonProperty(PropertyName = "tags")]
-    public List<Tag> Tags { get; set; }
-
-    /// <summary>
-    /// pet status in the store
-    /// </summary>
-    /// <value>pet status in the store</value>
+    /// <value>Updated status of the pet</value>
     [DataMember(Name="status", EmitDefaultValue=false)]
     [JsonProperty(PropertyName = "status")]
     public string Status { get; set; }
@@ -62,12 +35,8 @@ namespace IO.Swagger.Model {
     /// <returns>String presentation of the object</returns>
     public override string ToString()  {
       var sb = new StringBuilder();
-      sb.Append("class Pet {\n");
-      sb.Append("  Id: ").Append(Id).Append("\n");
-      sb.Append("  Category: ").Append(Category).Append("\n");
+      sb.Append("class Body {\n");
       sb.Append("  Name: ").Append(Name).Append("\n");
-      sb.Append("  PhotoUrls: ").Append(PhotoUrls).Append("\n");
-      sb.Append("  Tags: ").Append(Tags).Append("\n");
       sb.Append("  Status: ").Append(Status).Append("\n");
       sb.Append("}\n");
       return sb.ToString();

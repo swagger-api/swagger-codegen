@@ -1,6 +1,6 @@
 # IO.Swagger.Api.StoreApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,11 +11,11 @@ Method | HTTP request | Description
 
 <a name="deleteorder"></a>
 # **DeleteOrder**
-> void DeleteOrder (string orderId)
+> void DeleteOrder (long? orderId)
 
 Delete purchase order by ID
 
-For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
 
 ### Example
 ```csharp
@@ -33,7 +33,7 @@ namespace Example
         {
 
             var apiInstance = new StoreApi();
-            var orderId = orderId_example;  // string | ID of the order that needs to be deleted
+            var orderId = 789;  // long? | ID of the order that needs to be deleted
 
             try
             {
@@ -53,7 +53,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderId** | **string**| ID of the order that needs to be deleted | 
+ **orderId** | **long?**| ID of the order that needs to be deleted | 
 
 ### Return type
 
@@ -139,7 +139,7 @@ This endpoint does not need any parameter.
 
 Find purchase order by ID
 
-For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
+For valid response try integer IDs with value >= 1 and <= 10.\\ \\ Other values will generated exceptions
 
 ### Example
 ```csharp
@@ -191,7 +191,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -251,7 +251,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
