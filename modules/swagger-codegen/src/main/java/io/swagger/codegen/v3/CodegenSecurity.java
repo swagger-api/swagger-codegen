@@ -81,7 +81,15 @@ public class CodegenSecurity extends CodegenObject {
         return tokenUrl;
     }
 
-    public Collection<Map<String, String>> getScopes() {
+    public Scopes getScopes() {
+        return scopes;
+    }
+    
+    /**
+     * Wraps the scopes into list of maps to be consumable from within the templates.
+     * @return scopes as the list of maps
+     */
+    public Collection<Map<String, String>> getScopesList() {
         final List<Map<String, String>> scopesList = new ArrayList<>();
         if (!getHasScopes()) {
             return scopesList; 
@@ -106,7 +114,7 @@ public class CodegenSecurity extends CodegenObject {
         
         return scopesList;
     }
-    
+
     public Boolean getHasScopes() {
         return scopes != null && !scopes.isEmpty();
     }
