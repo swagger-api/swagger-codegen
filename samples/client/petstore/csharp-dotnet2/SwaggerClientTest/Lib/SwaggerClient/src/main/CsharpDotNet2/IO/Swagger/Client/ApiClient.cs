@@ -24,7 +24,7 @@ namespace IO.Swagger.Client
         /// Initializes a new instance of the <see cref="ApiClient" /> class.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath="http://petstore.swagger.io/v2")
+        public ApiClient(String basePath="/")
         {
             BasePath = basePath;
             RestClient = new RestClient(BasePath);
@@ -259,6 +259,10 @@ namespace IO.Swagger.Client
                 {
                     case "api_key":
                         headerParams["api_key"] = GetApiKeyWithPrefix("api_key");
+                        
+                        break;
+                    case "bearer":
+                        
                         
                         break;
                     case "petstore_auth":

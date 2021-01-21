@@ -25,23 +25,39 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         void DeletePet (long? petId, string apiKey);
         /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        ApiResponse DoCategoryStuff (SubCategory body);
+        /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>List&lt;Pet&gt;</returns>
         List<Pet> FindPetsByStatus (List<string> status);
         /// <summary>
-        /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>List&lt;Pet&gt;</returns>
         List<Pet> FindPetsByTags (List<string> tags);
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>AllPetsResponse</returns>
+        AllPetsResponse GetAllPets ();
         /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Pet</returns>
         Pet GetPetById (long? petId);
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>SinglePetResponse</returns>
+        SinglePetResponse GetRandomPet ();
         /// <summary>
         /// Update an existing pet 
         /// </summary>
@@ -60,10 +76,9 @@ namespace IO.Swagger.Api
         /// uploads an image 
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
-        /// <param name="additionalMetadata"></param>
-        /// <param name="_file"></param>
+        /// <param name="body"></param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata, byte[] _file);
+        ApiResponse UploadFile (long? petId, Object body);
     }
   
     /// <summary>
@@ -192,6 +207,39 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        public ApiResponse DoCategoryStuff (SubCategory body)
+        {
+    
+            var path = "/pet/category";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.POST, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling DoCategoryStuff: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling DoCategoryStuff: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (ApiResponse) ApiClient.Deserialize(response.Content, typeof(ApiResponse), response.Headers);
+        }
+    
+        /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
@@ -227,7 +275,7 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
-        /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>List&lt;Pet&gt;</returns>
@@ -259,6 +307,37 @@ namespace IO.Swagger.Api
                 throw new ApiException ((int)response.StatusCode, "Error calling FindPetsByTags: " + response.ErrorMessage, response.ErrorMessage);
     
             return (List<Pet>) ApiClient.Deserialize(response.Content, typeof(List<Pet>), response.Headers);
+        }
+    
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>AllPetsResponse</returns>
+        public AllPetsResponse GetAllPets ()
+        {
+    
+            var path = "/allPets";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetAllPets: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetAllPets: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (AllPetsResponse) ApiClient.Deserialize(response.Content, typeof(AllPetsResponse), response.Headers);
         }
     
         /// <summary>
@@ -294,6 +373,37 @@ namespace IO.Swagger.Api
                 throw new ApiException ((int)response.StatusCode, "Error calling GetPetById: " + response.ErrorMessage, response.ErrorMessage);
     
             return (Pet) ApiClient.Deserialize(response.Content, typeof(Pet), response.Headers);
+        }
+    
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>SinglePetResponse</returns>
+        public SinglePetResponse GetRandomPet ()
+        {
+    
+            var path = "/randomPet";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetRandomPet: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetRandomPet: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (SinglePetResponse) ApiClient.Deserialize(response.Content, typeof(SinglePetResponse), response.Headers);
         }
     
         /// <summary>
@@ -374,10 +484,9 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
         /// uploads an image 
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
-        /// <param name="additionalMetadata"></param>
-        /// <param name="_file"></param>
+        /// <param name="body"></param>
         /// <returns>ApiResponse</returns>
-        public ApiResponse UploadFile (long? petId, string additionalMetadata, byte[] _file)
+        public ApiResponse UploadFile (long? petId, Object body)
         {
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling UploadFile");
@@ -392,9 +501,8 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
             var fileParams = new Dictionary<String, FileParameter>();
             String postBody = null;
     
-                                    if (additionalMetadata != null) formParams.Add("additionalMetadata", ApiClient.ParameterToString(additionalMetadata)); // form parameter
-if (_file != null) fileParams.Add("file", ApiClient.ParameterToFile("file", _file));
-                
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
             // authentication setting, if any
             String[] authSettings = new String[] { "petstore_auth" };
     
