@@ -689,7 +689,7 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-            defs.ApiResponse = {
+            defs["ApiResponse"] = {
   "title" : "An uploaded response",
   "type" : "object",
   "properties" : {
@@ -706,7 +706,32 @@
   },
   "description" : "Describes the result of uploading an image resource"
 };
-            defs.Category = {
+            defs["body"] = {
+  "properties" : {
+    "name" : {
+      "type" : "string",
+      "description" : "Updated name of the pet"
+    },
+    "status" : {
+      "type" : "string",
+      "description" : "Updated status of the pet"
+    }
+  }
+};
+            defs["body_1"] = {
+  "properties" : {
+    "additionalMetadata" : {
+      "type" : "string",
+      "description" : "Additional data to pass to server"
+    },
+    "file" : {
+      "type" : "string",
+      "description" : "file to upload",
+      "format" : "binary"
+    }
+  }
+};
+            defs["Category"] = {
   "title" : "Pet category",
   "type" : "object",
   "properties" : {
@@ -723,7 +748,7 @@
     "name" : "Category"
   }
 };
-            defs.Order = {
+            defs["Order"] = {
   "title" : "Pet Order",
   "type" : "object",
   "properties" : {
@@ -758,7 +783,7 @@
     "name" : "Order"
   }
 };
-            defs.Pet = {
+            defs["Pet"] = {
   "title" : "a Pet",
   "required" : [ "name", "photoUrls" ],
   "type" : "object",
@@ -805,7 +830,7 @@
     "name" : "Pet"
   }
 };
-            defs.Tag = {
+            defs["Tag"] = {
   "title" : "Pet Tag",
   "type" : "object",
   "properties" : {
@@ -822,7 +847,7 @@
     "name" : "Tag"
   }
 };
-            defs.User = {
+            defs["User"] = {
   "title" : "a User",
   "type" : "object",
   "properties" : {
@@ -991,7 +1016,10 @@
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-addPet-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/pet"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+\
+-H "Content-Type: application/json,application/xml"\
+"http://petstore.swagger.io/v2/pet"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-addPet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1281,7 +1309,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-deletePet-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+\
+"http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-deletePet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1587,7 +1617,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-findPetsByStatus-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "http://petstore.swagger.io/v2/pet/findByStatus?status="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+\
+-H "Accept: application/xml,application/json"\
+"http://petstore.swagger.io/v2/pet/findByStatus?status="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-findPetsByStatus-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1854,8 +1887,7 @@ except ApiException as e:
         "type" : "array",
         "items" : {
           "$ref" : "#/components/schemas/Pet"
-        },
-        "x-content-type" : "application/xml"
+        }
       }
     }
   }
@@ -1927,7 +1959,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-findPetsByTags-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "http://petstore.swagger.io/v2/pet/findByTags?tags="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+\
+-H "Accept: application/xml,application/json"\
+"http://petstore.swagger.io/v2/pet/findByTags?tags="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-findPetsByTags-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2194,8 +2229,7 @@ except ApiException as e:
         "type" : "array",
         "items" : {
           "$ref" : "#/components/schemas/Pet"
-        },
-        "x-content-type" : "application/xml"
+        }
       }
     }
   }
@@ -2267,7 +2301,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-getPetById-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET -H "api_key: [[apiKey]]" "http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "api_key: [[apiKey]]"\
+-H "Accept: application/xml,application/json"\
+"http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-getPetById-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2624,7 +2661,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-updatePet-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "http://petstore.swagger.io/v2/pet"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+\
+-H "Content-Type: application/json,application/xml"\
+"http://petstore.swagger.io/v2/pet"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-updatePet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2930,7 +2970,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-updatePetWithForm-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+\
+-H "Content-Type: application/x-www-form-urlencoded"\
+"http://petstore.swagger.io/v2/pet/{petId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-updatePetWithForm-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3019,7 +3062,10 @@ petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
 var petId = 789; // {{Long}} ID of pet that needs to be updated
-
+var opts = { 
+  'name': name_example // {{String}} 
+  'status': status_example // {{String}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3027,7 +3073,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.updatePetWithForm(petId, callback);
+api.updatePetWithForm(petId, opts, callback);
 </code></pre>
                             </div>
 
@@ -3258,7 +3304,11 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Pet-uploadFile-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/pet/{petId}/uploadImage"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+\
+-H "Accept: application/json"\
+-H "Content-Type: multipart/form-data"\
+"http://petstore.swagger.io/v2/pet/{petId}/uploadImage"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Pet-uploadFile-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3352,7 +3402,10 @@ petstore_auth.accessToken = "YOUR ACCESS TOKEN"
 
 var api = new SwaggerPetstore.PetApi()
 var petId = 789; // {{Long}} ID of pet to update
-
+var opts = { 
+  'additionalMetadata': additionalMetadata_example // {{String}} 
+  'file': file_example // {{byte[]}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3360,7 +3413,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.uploadFile(petId, callback);
+api.uploadFile(petId, opts, callback);
 </code></pre>
                             </div>
 
@@ -3641,7 +3694,8 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Store-deleteOrder-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "http://petstore.swagger.io/v2/store/order/{orderId}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+"http://petstore.swagger.io/v2/store/order/{orderId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Store-deleteOrder-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3894,7 +3948,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Store-getInventory-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET -H "api_key: [[apiKey]]" "http://petstore.swagger.io/v2/store/inventory"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "api_key: [[apiKey]]"\
+-H "Accept: application/json"\
+"http://petstore.swagger.io/v2/store/inventory"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Store-getInventory-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4194,7 +4251,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Store-getOrderById-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "http://petstore.swagger.io/v2/store/order/{orderId}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/xml,application/json"\
+"http://petstore.swagger.io/v2/store/order/{orderId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Store-getOrderById-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4512,7 +4571,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Store-placeOrder-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/store/order"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/xml,application/json"\
+-H "Content-Type: application/json"\
+"http://petstore.swagger.io/v2/store/order"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Store-placeOrder-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4837,7 +4899,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-createUser-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/user"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Content-Type: application/json"\
+"http://petstore.swagger.io/v2/user"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-createUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5097,7 +5161,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-createUsersWithArrayInput-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/user/createWithArray"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Content-Type: application/json"\
+"http://petstore.swagger.io/v2/user/createWithArray"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-createUsersWithArrayInput-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5360,7 +5426,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-createUsersWithListInput-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "http://petstore.swagger.io/v2/user/createWithList"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Content-Type: application/json"\
+"http://petstore.swagger.io/v2/user/createWithList"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-createUsersWithListInput-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5623,7 +5691,8 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-deleteUser-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "http://petstore.swagger.io/v2/user/{username}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+"http://petstore.swagger.io/v2/user/{username}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-deleteUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5876,7 +5945,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-getUserByName-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "http://petstore.swagger.io/v2/user/{username}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/xml,application/json"\
+"http://petstore.swagger.io/v2/user/{username}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-getUserByName-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6191,7 +6262,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-loginUser-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "http://petstore.swagger.io/v2/user/login?username=&password="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/xml,application/json"\
+"http://petstore.swagger.io/v2/user/login?username=&password="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-loginUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6455,6 +6528,8 @@ except ApiException as e:
   "headers" : {
     "X-Rate-Limit" : {
       "description" : "calls per hour allowed by the user",
+      "style" : "simple",
+      "explode" : false,
       "schema" : {
         "type" : "integer",
         "format" : "int32"
@@ -6462,6 +6537,8 @@ except ApiException as e:
     },
     "X-Expires-After" : {
       "description" : "date in UTC when toekn expires",
+      "style" : "simple",
+      "explode" : false,
       "schema" : {
         "type" : "string",
         "format" : "date-time"
@@ -6477,8 +6554,7 @@ except ApiException as e:
     },
     "application/json" : {
       "schema" : {
-        "type" : "string",
-        "x-content-type" : "application/xml"
+        "type" : "string"
       }
     }
   }
@@ -6572,7 +6648,8 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-logoutUser-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "http://petstore.swagger.io/v2/user/logout"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+"http://petstore.swagger.io/v2/user/logout"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-logoutUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6779,7 +6856,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-User-updateUser-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "http://petstore.swagger.io/v2/user/{username}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Content-Type: */*"\
+"http://petstore.swagger.io/v2/user/{username}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-User-updateUser-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -8150,7 +8229,7 @@ except ApiException as e:
   
       _classCallCheck(this, JSONSchemaView);
   
-      this.schema = schema; //console.log(schema);
+      this.schema = schema;
       this.open = open;
       this.options = options;
       this.isCollapsed = open <= 0;
@@ -8163,7 +8242,7 @@ except ApiException as e:
       // Determine if a schema is an array
       this.isArray = !this.isAny && this.schema && this.schema.type === 'array';
   
-      this.isObject = this.schema && (this.schema.type === 'object' || this.schema.properties || this.schema.anyOf || this.schema.oneof || this.schema.allOf);
+      this.isObject = this.schema && (this.schema.type === 'object' || this.schema.properties || this.schema.allOf);
   
       // Determine if a schema is a primitive
       this.isPrimitive = !this.isAny && !this.isArray && !this.isObject;
