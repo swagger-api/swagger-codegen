@@ -114,10 +114,10 @@ namespace IO.Swagger.Test
         public void UpdateDogWithFormTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //long? animalId = null;
+            //long? dogId = null;
             //string name = null;
             //string status = null;
-            //instance.UpdateDogWithForm(animalId, name, status);
+            //instance.UpdateDogWithForm(dogId, name, status);
             
         }
     }

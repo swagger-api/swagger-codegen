@@ -71,7 +71,7 @@ namespace IO.Swagger.Test
             // TODO uncomment below to test the method and replace null with proper value
             //bool? body = null;
             //var response = instance.FakeOuterBooleanSerialize(body);
-            //Assert.IsInstanceOf<OuterBoolean> (response, "response is OuterBoolean");
+            //Assert.IsInstanceOf<bool?> (response, "response is bool?");
         }
         /// <summary>
         /// Test FakeOuterCompositeSerialize
@@ -91,9 +91,9 @@ namespace IO.Swagger.Test
         public void FakeOuterNumberSerializeTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //BigDecimal body = null;
+            //decimal? body = null;
             //var response = instance.FakeOuterNumberSerialize(body);
-            //Assert.IsInstanceOf<OuterNumber> (response, "response is OuterNumber");
+            //Assert.IsInstanceOf<decimal?> (response, "response is decimal?");
         }
         /// <summary>
         /// Test FakeOuterStringSerialize
@@ -104,7 +104,7 @@ namespace IO.Swagger.Test
             // TODO uncomment below to test the method and replace null with proper value
             //string body = null;
             //var response = instance.FakeOuterStringSerialize(body);
-            //Assert.IsInstanceOf<OuterString> (response, "response is OuterString");
+            //Assert.IsInstanceOf<string> (response, "response is string");
         }
         /// <summary>
         /// Test TestClientModel
@@ -113,9 +113,9 @@ namespace IO.Swagger.Test
         public void TestClientModelTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //Client body = null;
+            //ModelClient body = null;
             //var response = instance.TestClientModel(body);
-            //Assert.IsInstanceOf<Client> (response, "response is Client");
+            //Assert.IsInstanceOf<ModelClient> (response, "response is ModelClient");
         }
         /// <summary>
         /// Test TestEndpointParameters
@@ -124,7 +124,7 @@ namespace IO.Swagger.Test
         public void TestEndpointParametersTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            // body = null;
+            //Body2 body = null;
             //instance.TestEndpointParameters(body);
             
         }
@@ -135,13 +135,23 @@ namespace IO.Swagger.Test
         public void TestEnumParametersTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            // body = null;
             //List<string> enumHeaderStringArray = null;
             //string enumHeaderString = null;
             //List<string> enumQueryStringArray = null;
             //string enumQueryString = null;
             //int? enumQueryInteger = null;
-            //instance.TestEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+            //instance.TestEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+            
+        }
+        /// <summary>
+        /// Test TestEnumRequestBody
+        /// </summary>
+        [Test]
+        public void TestEnumRequestBodyTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //Body4 body = null;
+            //instance.TestEnumRequestBody(body);
             
         }
         /// <summary>
@@ -162,7 +172,7 @@ namespace IO.Swagger.Test
         public void TestJsonFormDataTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            // body = null;
+            //Body5 body = null;
             //instance.TestJsonFormData(body);
             
         }

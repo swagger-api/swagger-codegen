@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 <a name="testspecialtags"></a>
 # **TestSpecialTags**
-> Client TestSpecialTags (Client body)
+> ModelClient TestSpecialTags (ModelClient body)
 
 To test special tags
 
@@ -29,12 +29,12 @@ namespace Example
         public void main()
         {
             var apiInstance = new AnotherFakeApi();
-            var body = new Client(); // Client | client model
+            var body = new ModelClient(); // ModelClient | client model
 
             try
             {
                 // To test special tags
-                Client result = apiInstance.TestSpecialTags(body);
+                ModelClient result = apiInstance.TestSpecialTags(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -50,11 +50,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Client**](Client.md)| client model | 
+ **body** | [**ModelClient**](ModelClient.md)| client model | 
 
 ### Return type
 
-[**Client**](Client.md)
+[**ModelClient**](ModelClient.md)
 
 ### Authorization
 

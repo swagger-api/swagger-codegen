@@ -71,7 +71,7 @@ namespace IO.Swagger.Test
             // TODO uncomment below to test the method and replace null with proper value
             //bool? body = null;
             //var response = instance.FakeOuterBooleanSerialize(body);
-            //Assert.IsInstanceOf<OuterBoolean> (response, "response is OuterBoolean");
+            //Assert.IsInstanceOf<bool?> (response, "response is bool?");
         }
         /// <summary>
         /// Test FakeOuterCompositeSerialize
@@ -93,7 +93,7 @@ namespace IO.Swagger.Test
             // TODO uncomment below to test the method and replace null with proper value
             //decimal? body = null;
             //var response = instance.FakeOuterNumberSerialize(body);
-            //Assert.IsInstanceOf<OuterNumber> (response, "response is OuterNumber");
+            //Assert.IsInstanceOf<decimal?> (response, "response is decimal?");
         }
         /// <summary>
         /// Test FakeOuterStringSerialize
@@ -104,7 +104,7 @@ namespace IO.Swagger.Test
             // TODO uncomment below to test the method and replace null with proper value
             //string body = null;
             //var response = instance.FakeOuterStringSerialize(body);
-            //Assert.IsInstanceOf<OuterString> (response, "response is OuterString");
+            //Assert.IsInstanceOf<string> (response, "response is string");
         }
         /// <summary>
         /// Test TestClientModel
@@ -113,9 +113,9 @@ namespace IO.Swagger.Test
         public void TestClientModelTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //ClientModel body = null;
+            //ModelClient body = null;
             //var response = instance.TestClientModel(body);
-            //Assert.IsInstanceOf<ClientModel> (response, "response is ClientModel");
+            //Assert.IsInstanceOf<ModelClient> (response, "response is ModelClient");
         }
         /// <summary>
         /// Test TestEndpointParameters
