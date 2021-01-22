@@ -37,7 +37,7 @@ namespace IO.Swagger.Model
         public Model200Response(int? name = default(int?), string _class = default(string))
         {
             this.Name = name;
-            this.Class = _class;
+            this._Class = _class;
         }
         
         /// <summary>
@@ -47,10 +47,10 @@ namespace IO.Swagger.Model
         public int? Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Class
+        /// Gets or Sets _Class
         /// </summary>
         [DataMember(Name="class", EmitDefaultValue=false)]
-        public string Class { get; set; }
+        public string _Class { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -61,7 +61,7 @@ namespace IO.Swagger.Model
             var sb = new StringBuilder();
             sb.Append("class Model200Response {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Class: ").Append(Class).Append("\n");
+            sb.Append("  _Class: ").Append(_Class).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -102,9 +102,9 @@ namespace IO.Swagger.Model
                     this.Name.Equals(input.Name))
                 ) && 
                 (
-                    this.Class == input.Class ||
-                    (this.Class != null &&
-                    this.Class.Equals(input.Class))
+                    this._Class == input._Class ||
+                    (this._Class != null &&
+                    this._Class.Equals(input._Class))
                 );
         }
 
@@ -119,8 +119,8 @@ namespace IO.Swagger.Model
                 int hashCode = 41;
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.Class != null)
-                    hashCode = hashCode * 59 + this.Class.GetHashCode();
+                if (this._Class != null)
+                    hashCode = hashCode * 59 + this._Class.GetHashCode();
                 return hashCode;
             }
         }

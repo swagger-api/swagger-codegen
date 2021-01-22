@@ -97,18 +97,13 @@ namespace IO.Swagger.Model
         [DataMember(Name="enum_number", EmitDefaultValue=false)]
         public EnumNumberEnum? EnumNumber { get; set; }
         /// <summary>
-        /// Gets or Sets OuterEnum
-        /// </summary>
-        [DataMember(Name="outerEnum", EmitDefaultValue=false)]
-        public OuterEnum? OuterEnum { get; set; }
-        /// <summary>
         /// Initializes a new instance of the <see cref="EnumTest" /> class.
         /// </summary>
         /// <param name="enumString">enumString.</param>
         /// <param name="enumInteger">enumInteger.</param>
         /// <param name="enumNumber">enumNumber.</param>
         /// <param name="outerEnum">outerEnum.</param>
-        public EnumTest(EnumStringEnum? enumString = default(EnumStringEnum?), EnumIntegerEnum? enumInteger = default(EnumIntegerEnum?), EnumNumberEnum? enumNumber = default(EnumNumberEnum?), OuterEnum? outerEnum = default(OuterEnum?))
+        public EnumTest(EnumStringEnum? enumString = default(EnumStringEnum?), EnumIntegerEnum? enumInteger = default(EnumIntegerEnum?), EnumNumberEnum? enumNumber = default(EnumNumberEnum?), OuterEnum outerEnum = default(OuterEnum))
         {
             this.EnumString = enumString;
             this.EnumInteger = enumInteger;
@@ -119,6 +114,11 @@ namespace IO.Swagger.Model
 
 
 
+        /// <summary>
+        /// Gets or Sets OuterEnum
+        /// </summary>
+        [DataMember(Name="outerEnum", EmitDefaultValue=false)]
+        public OuterEnum OuterEnum { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

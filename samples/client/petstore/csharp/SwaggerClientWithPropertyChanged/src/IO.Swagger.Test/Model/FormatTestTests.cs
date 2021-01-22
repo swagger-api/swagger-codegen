@@ -98,36 +98,36 @@ namespace IO.Swagger.Test
             // TODO unit test for the property 'Number'
         }
         /// <summary>
-        /// Test the property 'Float'
+        /// Test the property '_Float'
         /// </summary>
         [Test]
-        public void FloatTest()
+        public void _FloatTest()
         {
-            // TODO unit test for the property 'Float'
+            // TODO unit test for the property '_Float'
         }
         /// <summary>
-        /// Test the property 'Double'
+        /// Test the property '_Double'
         /// </summary>
         [Test]
-        public void DoubleTest()
+        public void _DoubleTest()
         {
-            // TODO unit test for the property 'Double'
+            // TODO unit test for the property '_Double'
         }
         /// <summary>
-        /// Test the property 'String'
+        /// Test the property '_String'
         /// </summary>
         [Test]
-        public void StringTest()
+        public void _StringTest()
         {
-            // TODO unit test for the property 'String'
+            // TODO unit test for the property '_String'
         }
         /// <summary>
-        /// Test the property 'Byte'
+        /// Test the property '_Byte'
         /// </summary>
         [Test]
-        public void ByteTest()
+        public void _ByteTest()
         {
-            // TODO unit test for the property 'Byte'
+            // TODO unit test for the property '_Byte'
         }
         /// <summary>
         /// Test the property 'Binary'
