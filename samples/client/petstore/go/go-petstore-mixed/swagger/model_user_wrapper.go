@@ -9,7 +9,6 @@
  */
 package swagger
 
-type OneOfinlineResponse200ParrotsItems struct {
-    Macaw
-    Parakeet
+type UserWrapper struct {
+	Users *[]User `json:"users,omitempty"`
 }

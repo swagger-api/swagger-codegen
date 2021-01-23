@@ -13,5 +13,5 @@ type EnumTest struct {
 	EnumString string `json:"enum_string,omitempty"`
 	EnumInteger int32 `json:"enum_integer,omitempty"`
 	EnumNumber float64 `json:"enum_number,omitempty"`
-	OuterEnum string `json:"outerEnum,omitempty"`
+	OuterEnum *OuterEnum `json:"outerEnum,omitempty"`
 }

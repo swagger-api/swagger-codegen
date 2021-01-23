@@ -1327,6 +1327,16 @@ components:
         category: test-category-name
       xml:
         name: Category
+    UserWrapper:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/Users'
+    Users:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+      x-schema-name: Users
     User:
       type: object
       properties:
@@ -2267,7 +2277,7 @@ components:
           type: boolean
     inline_array_items_AllPetsResponse:
       discriminator:
-        propertyName: pet_type
+        propertyName: PetType
       oneOf:
       - $ref: '#/components/schemas/Dog'
       - $ref: '#/components/schemas/Cat'

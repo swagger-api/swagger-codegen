@@ -1,4 +1,4 @@
-# AnyOfbody8ParrotsItems
+# OuterEnum
 
 ## Properties
 Name | Type | Description | Notes
