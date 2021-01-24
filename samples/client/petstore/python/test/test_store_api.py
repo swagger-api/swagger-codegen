@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from api.store_api import StoreApi  # noqa: E501
+from swagger_client.api.store_api import StoreApi  # noqa: E501
 from swagger_client.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestStoreApi(unittest.TestCase):
     """StoreApi unit test stubs"""
 
     def setUp(self):
-        self.api = api.store_api.StoreApi()  # noqa: E501
+        self.api = StoreApi()  # noqa: E501
 
     def tearDown(self):
         pass

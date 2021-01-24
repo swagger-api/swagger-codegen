@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.nullable_enum_model import NullableEnumModel  # noqa: E501
+from swagger_client.models.nullable_enum_model import NullableEnumModel  # noqa: E501
 from swagger_client.rest import ApiException
 
 

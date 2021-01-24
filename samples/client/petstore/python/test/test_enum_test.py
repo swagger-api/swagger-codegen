@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.enum_test import EnumTest  # noqa: E501
+from swagger_client.models.enum_test import EnumTest  # noqa: E501
 from swagger_client.rest import ApiException
 
 
