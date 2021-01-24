@@ -115,6 +115,7 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("shipDate")
+  @Valid
   public java.util.Date getShipDate() {
     return shipDate;
   }

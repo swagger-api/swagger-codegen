@@ -83,6 +83,7 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("category")
+  @Valid
   public Category getCategory() {
     return category;
   }
@@ -139,6 +140,7 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("tags")
+  @Valid
   public List<Tag> getTags() {
     return tags;
   }

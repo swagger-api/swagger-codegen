@@ -19,6 +19,7 @@ import io.swagger.model.Category;
 import io.swagger.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * AllOfSubCategoryCategory
@@ -104,6 +105,7 @@ public class AllOfSubCategoryCategory extends Category  {
    **/
   @JsonProperty("drunk")
   @Schema(description = "")
+  @Valid
   public User getDrunk() {
     return drunk;
   }

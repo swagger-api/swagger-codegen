@@ -48,6 +48,7 @@ public class SubCategory   {
   
   @Schema(description = "")
   @JsonProperty("category2")
+  @Valid
   public Category getCategory2() {
     return category2;
   }

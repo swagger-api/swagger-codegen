@@ -1,32 +1,20 @@
 package io.swagger.model;
 
+import java.util.Objects;
+import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.model.Category;
 import io.swagger.model.User;
 import javax.validation.constraints.*;
-
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.Objects;
-
-import javax.xml.bind.annotation.*;
-
 
 
 public class AllOfSubCategoryCategory extends Category  {
-  private Boolean foo = null;
-  private Integer bar = null;
-  private String beer = null;
-  private User drunk = null;
+  private Boolean foo = null;  private Integer bar = null;  private String beer = null;  private User drunk = null;
 
   /**
    **/
-  public AllOfSubCategoryCategory foo(Boolean foo) {
-    this.foo = foo;
-    return this;
-  }
-
-  
   
   @Schema(description = "")
   @JsonProperty("foo")
@@ -39,12 +27,6 @@ public class AllOfSubCategoryCategory extends Category  {
 
   /**
    **/
-  public AllOfSubCategoryCategory bar(Integer bar) {
-    this.bar = bar;
-    return this;
-  }
-
-  
   
   @Schema(description = "")
   @JsonProperty("bar")
@@ -57,12 +39,6 @@ public class AllOfSubCategoryCategory extends Category  {
 
   /**
    **/
-  public AllOfSubCategoryCategory beer(String beer) {
-    this.beer = beer;
-    return this;
-  }
-
-  
   
   @Schema(description = "")
   @JsonProperty("beer")
@@ -75,16 +51,9 @@ public class AllOfSubCategoryCategory extends Category  {
 
   /**
    **/
-  public AllOfSubCategoryCategory drunk(User drunk) {
-    this.drunk = drunk;
-    return this;
-  }
-
-  
   
   @Schema(description = "")
   @JsonProperty("drunk")
-  @Valid
   public User getDrunk() {
     return drunk;
   }

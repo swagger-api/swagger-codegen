@@ -1,6 +1,6 @@
 /**
  * Swagger Petstore
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -22,11 +22,9 @@
  * limitations under the License.
  */
 
-
 package io.swagger.api;
 
 import io.swagger.model.User;
-
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -37,10 +35,7 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
-
-
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,23 +45,15 @@ import java.util.Map;
 
 
 
-
-
 /**
- 
  * Swagger Petstore
  *
- 
- 
- * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * <p>This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
- 
  * API tests for UserApi 
  */
-
 public class UserApiTest {
 
-    
 
     private UserApi api;
     
@@ -76,195 +63,137 @@ public class UserApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        
-
-        api = JAXRSClientFactory.create("http://petstore.swagger.io/v2", UserApi.class, providers);
-
+        api = JAXRSClientFactory.create("/", UserApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-
-
     }
 
-    
     /**
-     
      * Create user
      *
-     
      * This can only be done by the logged in user.
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void createUserTest() {
-        
-        User user = null;
-        
-        //api.createUser(user);
+        User body = null;
+        //api.createUser(body);
         
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Creates list of users with given input array
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void createUsersWithArrayInputTest() {
-        
         List<User> body = null;
-        
         //api.createUsersWithArrayInput(body);
         
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Creates list of users with given input array
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void createUsersWithListInputTest() {
-        
         List<User> body = null;
-        
         //api.createUsersWithListInput(body);
         
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Delete user
      *
-     
      * This can only be done by the logged in user.
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void deleteUserTest() {
-        
         String username = null;
-        
         //api.deleteUser(username);
         
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Get user by user name
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void getUserByNameTest() {
-        
         String username = null;
-        
         //User response = api.getUserByName(username);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Logs user into the system
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void loginUserTest() {
-        
         String username = null;
-        
         String password = null;
-        
         //String response = api.loginUser(username, password);
         //assertNotNull(response);
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Logs out current logged in user session
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void logoutUserTest() {
-        
         //api.logoutUser();
         
         // TODO: test validations
         
         
     }
-    
     /**
-     
      * Updated user
      *
-     
      * This can only be done by the logged in user.
      *
-     
-     
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
-    public void updateUserTest() {
-        
-        User user = null;
-        
+    public void userUsernamePutTest() {
+        User body = null;
         String username = null;
-        
-        //api.updateUser(user, username);
+        //api.userUsernamePut(body, username);
         
         // TODO: test validations
         
         
     }
-    
 }
