@@ -70,7 +70,7 @@ public class MapTest {
 
       @Override
       public InnerEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return InnerEnum.fromValue(String.valueOf(value));
       }
     }
