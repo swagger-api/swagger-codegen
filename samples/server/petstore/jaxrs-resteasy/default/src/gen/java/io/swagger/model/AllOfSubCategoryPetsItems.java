@@ -1,16 +1,17 @@
 package io.swagger.model;
 
-import java.io.Serializable;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
-
-
-import io.swagger.annotations.*;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import io.swagger.model.Category;
+import io.swagger.model.Pet;
+import io.swagger.model.Tag;
+import java.util.List;
+import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
-public class OuterBoolean  implements Serializable  {
+public class AllOfSubCategoryPetsItems extends Pet  {
+
 
 
   @Override
@@ -21,7 +22,7 @@ public class OuterBoolean  implements Serializable  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OuterBoolean outerBoolean = (OuterBoolean) o;
+    AllOfSubCategoryPetsItems allOfSubCategoryPetsItems = (AllOfSubCategoryPetsItems) o;
     return true;
   }
 
@@ -33,8 +34,8 @@ public class OuterBoolean  implements Serializable  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OuterBoolean {\n");
-    
+    sb.append("class AllOfSubCategoryPetsItems {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();
   }

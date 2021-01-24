@@ -21,6 +21,7 @@ import io.swagger.model.Category;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * SubCategory
@@ -65,6 +66,7 @@ public class SubCategory   {
    **/
   @JsonProperty("category2")
   @ApiModelProperty(value = "")
+  @Valid
   public Category getCategory2() {
     return category2;
   }
