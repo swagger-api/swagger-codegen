@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.read_only_first import ReadOnlyFirst  # noqa: E501
+from swagger_client.models.read_only_first import ReadOnlyFirst  # noqa: E501
 from swagger_client.rest import ApiException
 
 
