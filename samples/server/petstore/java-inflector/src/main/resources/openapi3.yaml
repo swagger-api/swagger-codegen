@@ -334,6 +334,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/AllPetsResponse'
       x-accepts: application/json
+  /pet/category:
+    post:
+      tags:
+      - pet
+      operationId: doCategoryStuff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubCategory'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      x-contentType: application/json
+      x-accepts: application/json
   /store/inventory:
     get:
       tags:
@@ -1217,7 +1236,7 @@ paths:
       summary: Updates a dog
       operationId: updateDogWithForm
       parameters:
-      - name: animalId
+      - name: dogId
         in: path
         description: ID of dog that needs to be updated
         required: true
@@ -1781,6 +1800,16 @@ components:
         status: available
       xml:
         name: Pet
+    NullableEnumModel:
+      type: object
+      properties:
+        enumProp:
+          type: string
+          nullable: true
+          enum:
+          - a
+          - b
+          - null
     SinglePetResponse:
       type: object
       properties:
@@ -1800,7 +1829,29 @@ components:
         oneOf:
         - $ref: '#/components/schemas/Dog'
         - $ref: '#/components/schemas/Cat'
-        x-model-name: OneOfAllPetsResponseItems
+    SubCategory:
+      type: object
+      properties:
+        category:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          - type: object
+            properties:
+              foo:
+                type: boolean
+              bar:
+                type: integer
+              beer:
+                type: string
+              drunk:
+                $ref: '#/components/schemas/User'
+        category2:
+          $ref: '#/components/schemas/Category'
+        pets:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/Pet'
     hasOnlyReadOnly:
       type: object
       properties:

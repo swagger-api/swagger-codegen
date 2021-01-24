@@ -62,7 +62,7 @@ public enum OuterEnum {
 
     @Override
     public OuterEnum read(final JsonReader jsonReader) throws IOException {
-      String value = jsonReader.nextString();
+      Object value = jsonReader.nextString();
       return OuterEnum.fromValue(String.valueOf(value));
     }
   }

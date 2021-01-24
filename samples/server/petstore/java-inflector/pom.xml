@@ -121,7 +121,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <jetty-version>9.4.9.v20180320</jetty-version>
         <logback-version>1.0.1</logback-version>
-        <junit-version>4.8.2</junit-version>
+        <junit-version>4.13.1</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
         <swagger-inflector-version>2.0.0</swagger-inflector-version>
     </properties>
