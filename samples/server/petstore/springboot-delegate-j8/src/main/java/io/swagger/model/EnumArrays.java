@@ -4,8 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +15,8 @@ import javax.validation.constraints.*;
  * EnumArrays
  */
 @Validated
+
+
 public class EnumArrays   {
   /**
    * Gets or Sets justSymbol
@@ -92,8 +93,8 @@ public class EnumArrays   {
   /**
    * Get justSymbol
    * @return justSymbol
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public JustSymbolEnum getJustSymbol() {
     return justSymbol;
@@ -119,8 +120,8 @@ public class EnumArrays   {
   /**
    * Get arrayEnum
    * @return arrayEnum
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;

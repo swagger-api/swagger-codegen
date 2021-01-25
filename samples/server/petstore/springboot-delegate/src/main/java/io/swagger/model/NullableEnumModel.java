@@ -4,8 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,6 +13,8 @@ import javax.validation.constraints.*;
  * NullableEnumModel
  */
 @Validated
+
+
 public class NullableEnumModel   {
   /**
    * Gets or Sets enumProp
@@ -58,8 +59,8 @@ public class NullableEnumModel   {
   /**
    * Get enumProp
    * @return enumProp
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public EnumPropEnum getEnumProp() {
     return enumProp;

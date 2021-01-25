@@ -3,10 +3,9 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
 import io.swagger.model.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,6 +14,8 @@ import javax.validation.constraints.*;
  * AllOfSubCategoryCategory
  */
 @Validated
+
+
 public class AllOfSubCategoryCategory extends Category  {
   @JsonProperty("foo")
   private Boolean foo = null;
@@ -36,8 +37,8 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get foo
    * @return foo
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Boolean isFoo() {
     return foo;
@@ -55,8 +56,8 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get bar
    * @return bar
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Integer getBar() {
     return bar;
@@ -74,8 +75,8 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get beer
    * @return beer
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getBeer() {
     return beer;
@@ -93,8 +94,8 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get drunk
    * @return drunk
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public User getDrunk() {

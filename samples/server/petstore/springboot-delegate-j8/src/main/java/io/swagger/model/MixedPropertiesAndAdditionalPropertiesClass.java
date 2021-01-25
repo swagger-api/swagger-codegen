@@ -3,9 +3,8 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,8 @@ import javax.validation.constraints.*;
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 @Validated
+
+
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
   private UUID uuid = null;
@@ -38,8 +39,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   /**
    * Get uuid
    * @return uuid
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public UUID getUuid() {
@@ -58,8 +59,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   /**
    * Get dateTime
    * @return dateTime
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public OffsetDateTime getDateTime() {
@@ -86,8 +87,8 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
   /**
    * Get map
    * @return map
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
       @Valid
     public Map<String, Animal> getMap() {
     return map;

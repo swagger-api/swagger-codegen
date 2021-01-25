@@ -24,12 +24,16 @@ then
   mvn clean package
 fi
 
+output="samples/server/petstore/spring-mvc-j8-async"
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -l spring -o samples/server/petstore/spring-mvc-j8-async -c bin/spring-mvc-petstore-j8-async.json -DhideGenerationTimestamp=true,java8=true,async=true"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -l spring -o $output -c bin/spring-mvc-petstore-j8-async.json -DhideGenerationTimestamp=true,java8=true,async=true"
 echo "Removing files and folders under samples/server/petstore/spring-mvc-j8-async/src/main"
 rm -rf samples/server/petstore/spring-mvc-j8-async/src/main
 rm -rf samples/server/petstore/spring-mvc-j8-async/src/gen
 find samples/server/petstore/spring-mvc-j8-async -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 
 java $JAVA_OPTS -jar $executable $ags
+
+#cd $output
+#mvn package
