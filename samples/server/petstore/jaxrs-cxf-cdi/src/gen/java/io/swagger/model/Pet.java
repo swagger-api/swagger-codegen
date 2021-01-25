@@ -6,6 +6,7 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;

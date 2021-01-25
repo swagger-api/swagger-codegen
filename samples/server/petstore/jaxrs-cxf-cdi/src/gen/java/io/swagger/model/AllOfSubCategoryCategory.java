@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.model.Category;
 import io.swagger.model.User;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
