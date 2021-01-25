@@ -17,7 +17,7 @@ public class NullableEnumModel   {
     
     B("b"),
     
-    NULL();
+    NULL(null);
 
     private String value;
 
