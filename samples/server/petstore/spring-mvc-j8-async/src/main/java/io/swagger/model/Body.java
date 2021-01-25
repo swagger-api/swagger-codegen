@@ -13,6 +13,8 @@ import javax.validation.constraints.*;
  * Body
  */
 @Validated
+
+
 public class Body   {
   @JsonProperty("name")
   private String name = null;
@@ -28,7 +30,7 @@ public class Body   {
   /**
    * Updated name of the pet
    * @return name
-  **/
+   **/
   @ApiModelProperty(value = "Updated name of the pet")
   
     public String getName() {
@@ -47,7 +49,7 @@ public class Body   {
   /**
    * Updated status of the pet
    * @return status
-  **/
+   **/
   @ApiModelProperty(value = "Updated status of the pet")
   
     public String getStatus() {

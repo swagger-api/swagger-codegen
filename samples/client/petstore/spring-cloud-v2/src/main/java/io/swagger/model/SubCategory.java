@@ -16,6 +16,8 @@ import javax.validation.constraints.*;
  * SubCategory
  */
 @Validated
+
+
 public class SubCategory   {
   @JsonProperty("category")
   private AllOfSubCategoryCategory category = null;
@@ -35,7 +37,7 @@ public class SubCategory   {
   /**
    * Get category
    * @return category
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public AllOfSubCategoryCategory getCategory() {
@@ -54,7 +56,7 @@ public class SubCategory   {
   /**
    * Get category2
    * @return category2
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     @Valid
@@ -82,7 +84,7 @@ public class SubCategory   {
   /**
    * Get pets
    * @return pets
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public List<AllOfSubCategoryPetsItems> getPets() {
