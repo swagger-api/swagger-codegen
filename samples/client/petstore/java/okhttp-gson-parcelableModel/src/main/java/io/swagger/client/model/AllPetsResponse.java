@@ -71,7 +71,6 @@ public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> implem
   }
 
   AllPetsResponse(Parcel in) {
-    in.readTypedList(this, OneOfAllPetsResponseItems.CREATOR);
   }
 
   public int describeContents() {
