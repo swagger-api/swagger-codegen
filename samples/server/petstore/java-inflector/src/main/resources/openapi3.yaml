@@ -105,11 +105,11 @@ paths:
           type: array
           items:
             type: string
+            default: available
             enum:
             - available
             - pending
             - sold
-            default: available
       responses:
         "200":
           description: successful operation
@@ -719,10 +719,10 @@ paths:
           type: array
           items:
             type: string
+            default: $
             enum:
             - '>'
             - $
-            default: $
       - name: enum_header_string
         in: header
         description: Header parameter enum test (string)
@@ -731,11 +731,11 @@ paths:
         explode: false
         schema:
           type: string
+          default: -efg
           enum:
           - _abc
           - -efg
           - (xyz)
-          default: -efg
       - name: enum_query_string_array
         in: query
         description: Query parameter enum test (string array)
@@ -746,10 +746,10 @@ paths:
           type: array
           items:
             type: string
+            default: $
             enum:
             - '>'
             - $
-            default: $
       - name: enum_query_string
         in: query
         description: Query parameter enum test (string)
@@ -758,11 +758,11 @@ paths:
         explode: true
         schema:
           type: string
+          default: -efg
           enum:
           - _abc
           - -efg
           - (xyz)
-          default: -efg
       - name: enum_query_integer
         in: query
         description: Query parameter enum test (double)
@@ -1429,11 +1429,11 @@ components:
         name: Name
     EnumClass:
       type: string
+      default: -efg
       enum:
       - _abc
       - -efg
       - (xyz)
-      default: -efg
     List:
       type: object
       properties:
@@ -2027,18 +2027,18 @@ components:
           description: Form parameter enum test (string array)
           items:
             type: string
+            default: $
             enum:
             - '>'
             - $
-            default: $
         enum_form_string:
           type: string
           description: Form parameter enum test (string)
+          default: -efg
           enum:
           - _abc
           - -efg
           - (xyz)
-          default: -efg
         enum_query_double:
           type: number
           description: Query parameter enum test (double)
