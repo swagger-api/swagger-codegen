@@ -54,11 +54,11 @@ paths:
         refName: "Pet"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "ADD_PET"
         consumesXml: true
       responses:
-        405:
+        "405":
           description: "Invalid input"
           x-responseId: "InvalidInput"
           x-uppercaseResponseId: "INVALID_INPUT"
@@ -67,7 +67,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-post-method: true
       operation_id: "add_pet"
       uppercase_operation_id: "ADD_PET"
       path: "/pet"
@@ -98,21 +97,21 @@ paths:
         refName: "Pet"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "UPDATE_PET"
         consumesXml: true
       responses:
-        400:
+        "400":
           description: "Invalid ID supplied"
           x-responseId: "InvalidIDSupplied"
           x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "UPDATE_PET"
-        404:
+        "404":
           description: "Pet not found"
           x-responseId: "PetNotFound"
           x-uppercaseResponseId: "PET_NOT_FOUND"
           uppercase_operation_id: "UPDATE_PET"
-        405:
+        "405":
           description: "Validation exception"
           x-responseId: "ValidationException"
           x-uppercaseResponseId: "VALIDATION_EXCEPTION"
@@ -121,7 +120,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-put-method: true
       operation_id: "update_pet"
       uppercase_operation_id: "UPDATE_PET"
       path: "/pet"
@@ -156,7 +154,7 @@ paths:
         formatString: "{:?}"
         example: "&Vec::new()"
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             type: "array"
@@ -167,7 +165,7 @@ paths:
           uppercase_operation_id: "FIND_PETS_BY_STATUS"
           uppercase_data_type: "VEC<PET>"
           producesXml: true
-        400:
+        "400":
           description: "Invalid status value"
           x-responseId: "InvalidStatusValue"
           x-uppercaseResponseId: "INVALID_STATUS_VALUE"
@@ -176,7 +174,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-get-method: true
       operation_id: "find_pets_by_status"
       uppercase_operation_id: "FIND_PETS_BY_STATUS"
       path: "/pet/findByStatus"
@@ -206,7 +203,7 @@ paths:
         formatString: "{:?}"
         example: "&Vec::new()"
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             type: "array"
@@ -217,7 +214,7 @@ paths:
           uppercase_operation_id: "FIND_PETS_BY_TAGS"
           uppercase_data_type: "VEC<PET>"
           producesXml: true
-        400:
+        "400":
           description: "Invalid tag value"
           x-responseId: "InvalidTagValue"
           x-uppercaseResponseId: "INVALID_TAG_VALUE"
@@ -227,7 +224,6 @@ paths:
         - "write:pets"
         - "read:pets"
       deprecated: true
-      x-is-get-method: true
       operation_id: "find_pets_by_tags"
       uppercase_operation_id: "FIND_PETS_BY_TAGS"
       path: "/pet/findByTags"
@@ -254,7 +250,7 @@ paths:
         formatString: "{}"
         example: "789"
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/Pet"
@@ -263,19 +259,18 @@ paths:
           uppercase_operation_id: "GET_PET_BY_ID"
           uppercase_data_type: "PET"
           producesXml: true
-        400:
+        "400":
           description: "Invalid ID supplied"
           x-responseId: "InvalidIDSupplied"
           x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "GET_PET_BY_ID"
-        404:
+        "404":
           description: "Pet not found"
           x-responseId: "PetNotFound"
           x-uppercaseResponseId: "PET_NOT_FOUND"
           uppercase_operation_id: "GET_PET_BY_ID"
       security:
       - api_key: []
-      x-is-get-method: true
       operation_id: "get_pet_by_id"
       uppercase_operation_id: "GET_PET_BY_ID"
       path: "/pet/:petId"
@@ -317,7 +312,7 @@ paths:
         formatString: "{:?}"
         example: "Some(\"status_example\".to_string())"
       responses:
-        405:
+        "405":
           description: "Invalid input"
           x-responseId: "InvalidInput"
           x-uppercaseResponseId: "INVALID_INPUT"
@@ -326,7 +321,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-post-method: true
       operation_id: "update_pet_with_form"
       uppercase_operation_id: "UPDATE_PET_WITH_FORM"
       path: "/pet/:petId"
@@ -358,7 +352,7 @@ paths:
         formatString: "{}"
         example: "789"
       responses:
-        400:
+        "400":
           description: "Invalid pet value"
           x-responseId: "InvalidPetValue"
           x-uppercaseResponseId: "INVALID_PET_VALUE"
@@ -367,7 +361,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-delete-method: true
       operation_id: "delete_pet"
       uppercase_operation_id: "DELETE_PET"
       path: "/pet/:petId"
@@ -411,7 +404,7 @@ paths:
           \ as Box<Stream<Item=_, Error=_> + Send>))) as Box<Future<Item=_, Error=_>\
           \ + Send>"
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/ApiResponse"
@@ -424,7 +417,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-post-method: true
       operation_id: "upload_file"
       uppercase_operation_id: "UPLOAD_FILE"
       path: "/pet/:petId/uploadImage"
@@ -443,7 +435,7 @@ paths:
       - "application/json"
       parameters: []
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             type: "object"
@@ -457,7 +449,6 @@ paths:
           producesJson: true
       security:
       - api_key: []
-      x-is-get-method: true
       operation_id: "get_inventory"
       uppercase_operation_id: "GET_INVENTORY"
       path: "/store/inventory"
@@ -485,11 +476,11 @@ paths:
         refName: "Order"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "PLACE_ORDER"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/Order"
@@ -498,12 +489,11 @@ paths:
           uppercase_operation_id: "PLACE_ORDER"
           uppercase_data_type: "ORDER"
           producesXml: true
-        400:
+        "400":
           description: "Invalid Order"
           x-responseId: "InvalidOrder"
           x-uppercaseResponseId: "INVALID_ORDER"
           uppercase_operation_id: "PLACE_ORDER"
-      x-is-post-method: true
       operation_id: "place_order"
       uppercase_operation_id: "PLACE_ORDER"
       path: "/store/order"
@@ -534,7 +524,7 @@ paths:
         formatString: "{}"
         example: "789"
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/Order"
@@ -543,17 +533,16 @@ paths:
           uppercase_operation_id: "GET_ORDER_BY_ID"
           uppercase_data_type: "ORDER"
           producesXml: true
-        400:
+        "400":
           description: "Invalid ID supplied"
           x-responseId: "InvalidIDSupplied"
           x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "GET_ORDER_BY_ID"
-        404:
+        "404":
           description: "Order not found"
           x-responseId: "OrderNotFound"
           x-uppercaseResponseId: "ORDER_NOT_FOUND"
           uppercase_operation_id: "GET_ORDER_BY_ID"
-      x-is-get-method: true
       operation_id: "get_order_by_id"
       uppercase_operation_id: "GET_ORDER_BY_ID"
       path: "/store/order/:order_id"
@@ -579,17 +568,16 @@ paths:
         formatString: "\\\"{}\\\""
         example: "\"order_id_example\".to_string()"
       responses:
-        400:
+        "400":
           description: "Invalid ID supplied"
           x-responseId: "InvalidIDSupplied"
           x-uppercaseResponseId: "INVALID_ID_SUPPLIED"
           uppercase_operation_id: "DELETE_ORDER"
-        404:
+        "404":
           description: "Order not found"
           x-responseId: "OrderNotFound"
           x-uppercaseResponseId: "ORDER_NOT_FOUND"
           uppercase_operation_id: "DELETE_ORDER"
-      x-is-delete-method: true
       operation_id: "delete_order"
       uppercase_operation_id: "DELETE_ORDER"
       path: "/store/order/:order_id"
@@ -617,7 +605,7 @@ paths:
         refName: "User"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "CREATE_USER"
         consumesJson: true
       responses:
@@ -626,7 +614,6 @@ paths:
           x-responseId: "SuccessfulOperation"
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "CREATE_USER"
-      x-is-post-method: true
       operation_id: "create_user"
       uppercase_operation_id: "CREATE_USER"
       path: "/user"
@@ -655,7 +642,7 @@ paths:
             $ref: "#/definitions/User"
         formatString: "{:?}"
         example: "&Vec::new()"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
         consumesJson: true
       responses:
@@ -664,7 +651,6 @@ paths:
           x-responseId: "SuccessfulOperation"
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
-      x-is-post-method: true
       operation_id: "create_users_with_array_input"
       uppercase_operation_id: "CREATE_USERS_WITH_ARRAY_INPUT"
       path: "/user/createWithArray"
@@ -692,7 +678,7 @@ paths:
             $ref: "#/definitions/User"
         formatString: "{:?}"
         example: "&Vec::new()"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
         consumesJson: true
       responses:
@@ -701,7 +687,6 @@ paths:
           x-responseId: "SuccessfulOperation"
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
-      x-is-post-method: true
       operation_id: "create_users_with_list_input"
       uppercase_operation_id: "CREATE_USERS_WITH_LIST_INPUT"
       path: "/user/createWithList"
@@ -734,7 +719,7 @@ paths:
         formatString: "\\\"{}\\\""
         example: "\"password_example\".to_string()"
       responses:
-        200:
+        "200":
           description: "successful operation"
           headers:
             X-Rate-Limit:
@@ -752,12 +737,11 @@ paths:
           uppercase_operation_id: "LOGIN_USER"
           uppercase_data_type: "STRING"
           producesXml: true
-        400:
+        "400":
           description: "Invalid username/password supplied"
           x-responseId: "InvalidUsername"
           x-uppercaseResponseId: "INVALID_USERNAME"
           uppercase_operation_id: "LOGIN_USER"
-      x-is-get-method: true
       operation_id: "login_user"
       uppercase_operation_id: "LOGIN_USER"
       path: "/user/login"
@@ -781,7 +765,6 @@ paths:
           x-responseId: "SuccessfulOperation"
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "LOGOUT_USER"
-      x-is-get-method: true
       operation_id: "logout_user"
       uppercase_operation_id: "LOGOUT_USER"
       path: "/user/logout"
@@ -807,7 +790,7 @@ paths:
         formatString: "\\\"{}\\\""
         example: "\"username_example\".to_string()"
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/User"
@@ -816,17 +799,16 @@ paths:
           uppercase_operation_id: "GET_USER_BY_NAME"
           uppercase_data_type: "USER"
           producesXml: true
-        400:
+        "400":
           description: "Invalid username supplied"
           x-responseId: "InvalidUsernameSupplied"
           x-uppercaseResponseId: "INVALID_USERNAME_SUPPLIED"
           uppercase_operation_id: "GET_USER_BY_NAME"
-        404:
+        "404":
           description: "User not found"
           x-responseId: "UserNotFound"
           x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "GET_USER_BY_NAME"
-      x-is-get-method: true
       operation_id: "get_user_by_name"
       uppercase_operation_id: "GET_USER_BY_NAME"
       path: "/user/:username"
@@ -860,21 +842,20 @@ paths:
         refName: "User"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "UPDATE_USER"
         consumesJson: true
       responses:
-        400:
+        "400":
           description: "Invalid user supplied"
           x-responseId: "InvalidUserSupplied"
           x-uppercaseResponseId: "INVALID_USER_SUPPLIED"
           uppercase_operation_id: "UPDATE_USER"
-        404:
+        "404":
           description: "User not found"
           x-responseId: "UserNotFound"
           x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "UPDATE_USER"
-      x-is-put-method: true
       operation_id: "update_user"
       uppercase_operation_id: "UPDATE_USER"
       path: "/user/:username"
@@ -900,17 +881,16 @@ paths:
         formatString: "\\\"{}\\\""
         example: "\"username_example\".to_string()"
       responses:
-        400:
+        "400":
           description: "Invalid username supplied"
           x-responseId: "InvalidUsernameSupplied"
           x-uppercaseResponseId: "INVALID_USERNAME_SUPPLIED"
           uppercase_operation_id: "DELETE_USER"
-        404:
+        "404":
           description: "User not found"
           x-responseId: "UserNotFound"
           x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "DELETE_USER"
-      x-is-delete-method: true
       operation_id: "delete_user"
       uppercase_operation_id: "DELETE_USER"
       path: "/user/:username"
@@ -939,11 +919,11 @@ paths:
         refName: "Client"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "TEST_CLASSNAME"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
@@ -954,7 +934,6 @@ paths:
           producesJson: true
       security:
       - api_key_query: []
-      x-is-head-method: true
       operation_id: "test_classname"
       uppercase_operation_id: "TEST_CLASSNAME"
       path: "/fake_classname_test"
@@ -1072,17 +1051,16 @@ paths:
         formatString: "{:?}"
         example: "Some(1.2)"
       responses:
-        400:
+        "400":
           description: "Invalid request"
           x-responseId: "InvalidRequest"
           x-uppercaseResponseId: "INVALID_REQUEST"
           uppercase_operation_id: "TEST_ENUM_PARAMETERS"
-        404:
+        "404":
           description: "Not found"
           x-responseId: "NotFound"
           x-uppercaseResponseId: "NOT_FOUND"
           uppercase_operation_id: "TEST_ENUM_PARAMETERS"
-      x-is-get-method: true
       operation_id: "test_enum_parameters"
       uppercase_operation_id: "TEST_ENUM_PARAMETERS"
       path: "/fake"
@@ -1225,19 +1203,18 @@ paths:
         formatString: "{:?}"
         example: "Some(\"callback_example\".to_string())"
       responses:
-        400:
+        "400":
           description: "Invalid username supplied"
           x-responseId: "InvalidUsernameSupplied"
           x-uppercaseResponseId: "INVALID_USERNAME_SUPPLIED"
           uppercase_operation_id: "TEST_ENDPOINT_PARAMETERS"
-        404:
+        "404":
           description: "User not found"
           x-responseId: "UserNotFound"
           x-uppercaseResponseId: "USER_NOT_FOUND"
           uppercase_operation_id: "TEST_ENDPOINT_PARAMETERS"
       security:
       - http_basic_test: []
-      x-is-post-method: true
       operation_id: "test_endpoint_parameters"
       uppercase_operation_id: "TEST_ENDPOINT_PARAMETERS"
       path: "/fake"
@@ -1265,11 +1242,11 @@ paths:
         refName: "Client"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "TEST_CLIENT_MODEL"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
@@ -1278,7 +1255,6 @@ paths:
           uppercase_operation_id: "TEST_CLIENT_MODEL"
           uppercase_data_type: "CLIENT"
           producesJson: true
-      x-is-head-method: true
       operation_id: "test_client_model"
       uppercase_operation_id: "TEST_CLIENT_MODEL"
       path: "/fake"
@@ -1303,11 +1279,11 @@ paths:
         refName: "OuterNumber"
         formatString: "{:?}"
         example: "None"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "Output number"
           schema:
             $ref: "#/definitions/OuterNumber"
@@ -1316,7 +1292,6 @@ paths:
           uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
           uppercase_data_type: "OUTERNUMBER"
           producesJson: true
-      x-is-post-method: true
       operation_id: "fake_outer_number_serialize"
       uppercase_operation_id: "FAKE_OUTER_NUMBER_SERIALIZE"
       path: "/fake/outer/number"
@@ -1340,11 +1315,11 @@ paths:
         refName: "OuterString"
         formatString: "{:?}"
         example: "None"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "Output string"
           schema:
             $ref: "#/definitions/OuterString"
@@ -1353,7 +1328,6 @@ paths:
           uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
           uppercase_data_type: "OUTERSTRING"
           producesJson: true
-      x-is-post-method: true
       operation_id: "fake_outer_string_serialize"
       uppercase_operation_id: "FAKE_OUTER_STRING_SERIALIZE"
       path: "/fake/outer/string"
@@ -1377,11 +1351,11 @@ paths:
         refName: "OuterBoolean"
         formatString: "{:?}"
         example: "None"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "Output boolean"
           schema:
             $ref: "#/definitions/OuterBoolean"
@@ -1390,7 +1364,6 @@ paths:
           uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
           uppercase_data_type: "OUTERBOOLEAN"
           producesJson: true
-      x-is-post-method: true
       operation_id: "fake_outer_boolean_serialize"
       uppercase_operation_id: "FAKE_OUTER_BOOLEAN_SERIALIZE"
       path: "/fake/outer/boolean"
@@ -1414,11 +1387,11 @@ paths:
         refName: "OuterComposite"
         formatString: "{:?}"
         example: "None"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "Output composite"
           schema:
             $ref: "#/definitions/OuterComposite"
@@ -1427,7 +1400,6 @@ paths:
           uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
           uppercase_data_type: "OUTERCOMPOSITE"
           producesJson: true
-      x-is-post-method: true
       operation_id: "fake_outer_composite_serialize"
       uppercase_operation_id: "FAKE_OUTER_COMPOSITE_SERIALIZE"
       path: "/fake/outer/composite"
@@ -1459,12 +1431,11 @@ paths:
         formatString: "\\\"{}\\\""
         example: "\"param2_example\".to_string()"
       responses:
-        200:
+        "200":
           description: "successful operation"
           x-responseId: "SuccessfulOperation"
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_JSON_FORM_DATA"
-      x-is-get-method: true
       operation_id: "test_json_form_data"
       uppercase_operation_id: "TEST_JSON_FORM_DATA"
       path: "/fake/jsonFormData"
@@ -1490,19 +1461,17 @@ paths:
           additionalProperties:
             type: "string"
           upperCaseName: "PARAM"
-        refName: null
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "successful operation"
           x-responseId: "SuccessfulOperation"
           x-uppercaseResponseId: "SUCCESSFUL_OPERATION"
           uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
-      x-is-post-method: true
       operation_id: "test_inline_additional_properties"
       uppercase_operation_id: "TEST_INLINE_ADDITIONAL_PROPERTIES"
       path: "/fake/inline-additionalProperties"
@@ -1527,7 +1496,7 @@ paths:
         refName: "User"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "TEST_BODY_WITH_QUERY_PARAMS"
         consumesJson: true
       - name: "query"
@@ -1537,12 +1506,11 @@ paths:
         formatString: "\\\"{}\\\""
         example: "\"query_example\".to_string()"
       responses:
-        200:
+        "200":
           description: "Success"
           x-responseId: "Success"
           x-uppercaseResponseId: "SUCCESS"
           uppercase_operation_id: "TEST_BODY_WITH_QUERY_PARAMS"
-      x-is-put-method: true
       operation_id: "test_body_with_query_params"
       uppercase_operation_id: "TEST_BODY_WITH_QUERY_PARAMS"
       path: "/fake/body-with-query-params"
@@ -1572,11 +1540,11 @@ paths:
         refName: "Client"
         formatString: "{:?}"
         example: "???"
-        model_key: "OuterBoolean"
+        model_key: "Numbers"
         uppercase_operation_id: "TEST_SPECIAL_TAGS"
         consumesJson: true
       responses:
-        200:
+        "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
@@ -1585,7 +1553,6 @@ paths:
           uppercase_operation_id: "TEST_SPECIAL_TAGS"
           uppercase_data_type: "CLIENT"
           producesJson: true
-      x-is-head-method: true
       operation_id: "test_special_tags"
       uppercase_operation_id: "TEST_SPECIAL_TAGS"
       path: "/another-fake/dummy"
@@ -1809,14 +1776,14 @@ definitions:
         readOnly: true
       property:
         type: "string"
-      123Number:
+      "123Number":
         type: "integer"
         readOnly: true
     xml:
       name: "Name"
     description: "Model for testing model name same as property name"
     upperCaseName: "NAME"
-  200_response:
+  "200_response":
     properties:
       name:
         type: "integer"
@@ -1996,7 +1963,7 @@ definitions:
   List:
     type: "object"
     properties:
-      123-list:
+      "123-list":
         type: "string"
     upperCaseName: "LIST"
   Client:
@@ -2151,6 +2118,35 @@ definitions:
   OuterBoolean:
     type: "boolean"
     upperCaseName: "OUTERBOOLEAN"
+  Boolean:
+    type: "boolean"
+    description: "True or False indicator"
+    enum:
+    - "true"
+    - "false"
+    upperCaseName: "BOOLEAN"
+  Ints:
+    type: "integer"
+    format: "int32"
+    description: "True or False indicator"
+    enum:
+    - "0"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    upperCaseName: "INTS"
+  Numbers:
+    type: "number"
+    description: "some number"
+    enum:
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+    upperCaseName: "NUMBERS"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
