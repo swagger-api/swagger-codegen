@@ -15,7 +15,7 @@ use std::collections::HashMap;
 
 use hyper;
 use serde_json;
-use futures;
+use serde_json::Value;
 use futures::{Future, Stream};
 
 use hyper::header::UserAgent;
@@ -35,15 +35,15 @@ impl<C: hyper::client::Connect> StoreApiClient<C> {
 }
 
 pub trait StoreApi {
-    fn delete_order(&self, order_id: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn get_inventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error<serde_json::Value>>>;
-    fn get_order_by_id(&self, order_id: i64) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>>;
-    fn place_order(&self, body: ::models::Order) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>>;
+    fn delete_order(&self, order_id: &str) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn get_inventory(&self, ) -> Box<dyn Future<Item = ::std::collections::HashMap<String, i32>, Error = Error<serde_json::Value>>>;
+    fn get_order_by_id(&self, order_id: i64) -> Box<dyn Future<Item = ::models::Order, Error = Error<serde_json::Value>>>;
+    fn place_order(&self, body: ::models::Order) -> Box<dyn Future<Item = ::models::Order, Error = Error<serde_json::Value>>>;
 }
 
 
 impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
-    fn delete_order(&self, order_id: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn delete_order(&self, order_id: &str) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Delete;
@@ -90,7 +90,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
         )
     }
 
-    fn get_inventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error<serde_json::Value>>> {
+    fn get_inventory(&self, ) -> Box<dyn Future<Item = ::std::collections::HashMap<String, i32>, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -156,7 +156,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
         )
     }
 
-    fn get_order_by_id(&self, order_id: i64) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>> {
+    fn get_order_by_id(&self, order_id: i64) -> Box<dyn Future<Item = ::models::Order, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Get;
@@ -206,7 +206,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
         )
     }
 
-    fn place_order(&self, body: ::models::Order) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>> {
+    fn place_order(&self, body: ::models::Order) -> Box<dyn Future<Item = ::models::Order, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
