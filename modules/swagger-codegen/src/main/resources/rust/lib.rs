@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+#![allow(unused_mut)]
 #[macro_use]
 extern crate serde_derive;
 
