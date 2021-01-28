@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -90,9 +91,12 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
             return operationId.replace(SWAGGER_OVERRIDE, "");
         }
 
+        List<String> idsToReplace = new ArrayList<>(Arrays.asList("outboundcampaign","authorizationdivision", "telephonyprovidersedge",
+                "group", "location", "sphone", "routingqueue", "ssite", "routingskill", "station", "usagequery",
+                "listexecutionid", "user", "notificationschannel", "subscription", "authorizationrole"));
         operationId = operationId
                 .toLowerCase()
-                .replaceAll("outboundcampaign|authorizationdivision|telephonyprovidersedge|group|location|sphone|routingqueue|ssite|routingskill|station|usagequery|listexecutionid|user|notificationschannel|subscription", "")
+                .replaceAll(String.join("|", idsToReplace), "")
                 .replaceAll("^post", "create")
                 .replaceAll("^patch|^put", "update");
         if (operationId.startsWith("get") && operationId.endsWith("s"))
