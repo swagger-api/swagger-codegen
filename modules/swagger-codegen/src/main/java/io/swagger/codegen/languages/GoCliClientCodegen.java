@@ -70,13 +70,13 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("Makefile.mustache", "", "Makefile"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("restclient.mustache", "/src/restclient", "restclient.go"));
-        supportingFiles.add(new SupportingFile("root.mustache", "/src/cmd", "root.go"));
+        supportingFiles.add(new SupportingFile("restclient.mustache", "/gc/restclient", "restclient.go"));
+        supportingFiles.add(new SupportingFile("root.mustache", "/gc/cmd", "root.go"));
         apiTemplateFiles.put("api.mustache", ".go");
     }
 
     public String apiFileFolder() {
-        return (outputFolder + "/src/cmd").replace('/', File.separatorChar);
+        return (outputFolder + "/gc/cmd").replace('/', File.separatorChar);
     }
 
     @Override
