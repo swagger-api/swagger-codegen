@@ -83,8 +83,8 @@ public class GoClientCodegen extends DefaultCodegen implements CodegenConfig {
         instantiationTypes.clear();
 
         typeMapping.clear();
-        typeMapping.put("integer", "int32");
-        typeMapping.put("long", "int64");
+        typeMapping.put("integer", "int");
+        typeMapping.put("long", "int");
         typeMapping.put("number", "float32");
         typeMapping.put("float", "float32");
         typeMapping.put("double", "float64");

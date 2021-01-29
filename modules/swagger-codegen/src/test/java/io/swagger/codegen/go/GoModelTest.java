@@ -42,10 +42,10 @@ public class GoModelTest {
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
-        Assert.assertEquals(property1.datatype, "int64");
+        Assert.assertEquals(property1.datatype, "int");
         Assert.assertEquals(property1.name, "Id");
         Assert.assertEquals(property1.defaultValue, "null");
-        Assert.assertEquals(property1.baseType, "int64");
+        Assert.assertEquals(property1.baseType, "int");
         Assert.assertTrue(property1.hasMore);
         Assert.assertTrue(property1.required);
         Assert.assertTrue(property1.isPrimitiveType);
@@ -92,10 +92,10 @@ public class GoModelTest {
 
         final CodegenProperty property1 = cm.vars.get(0);
         Assert.assertEquals(property1.baseName, "id");
-        Assert.assertEquals(property1.datatype, "int64");
+        Assert.assertEquals(property1.datatype, "int");
         Assert.assertEquals(property1.name, "Id");
         Assert.assertEquals(property1.defaultValue, "null");
-        Assert.assertEquals(property1.baseType, "int64");
+        Assert.assertEquals(property1.baseType, "int");
         Assert.assertTrue(property1.hasMore);
         Assert.assertTrue(property1.required);
         Assert.assertTrue(property1.isPrimitiveType);
