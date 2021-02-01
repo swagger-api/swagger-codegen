@@ -33,11 +33,11 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="Body1" /> class.
         /// </summary>
         /// <param name="additionalMetadata">Additional data to pass to server.</param>
-        /// <param name="_file">file to upload.</param>
-        public Body1(string additionalMetadata = default(string), byte[] _file = default(byte[]))
+        /// <param name="file">file to upload.</param>
+        public Body1(string additionalMetadata = default(string), byte[] file = default(byte[]))
         {
             this.AdditionalMetadata = additionalMetadata;
-            this.File = _file;
+            this.File = file;
         }
         
         /// <summary>

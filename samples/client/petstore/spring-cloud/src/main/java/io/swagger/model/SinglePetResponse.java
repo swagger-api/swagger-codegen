@@ -13,6 +13,8 @@ import javax.validation.constraints.*;
  * SinglePetResponse
  */
 @Validated
+
+
 public class SinglePetResponse   {
   @JsonProperty("pet")
   private OneOfSinglePetResponsePet pet = null;
@@ -25,7 +27,7 @@ public class SinglePetResponse   {
   /**
    * Get pet
    * @return pet
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public OneOfSinglePetResponsePet getPet() {

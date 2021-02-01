@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 <a name="fakeouterbooleanserialize"></a>
 # **FakeOuterBooleanSerialize**
-> OuterBoolean FakeOuterBooleanSerialize (bool? body = null)
+> bool? FakeOuterBooleanSerialize (bool? body = null)
 
 
 
@@ -42,7 +42,7 @@ namespace Example
 
             try
             {
-                OuterBoolean result = apiInstance.FakeOuterBooleanSerialize(body);
+                bool? result = apiInstance.FakeOuterBooleanSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**OuterBoolean**](OuterBoolean.md)
+**bool?**
 
 ### Authorization
 
@@ -135,7 +135,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="fakeouternumberserialize"></a>
 # **FakeOuterNumberSerialize**
-> OuterNumber FakeOuterNumberSerialize (decimal? body = null)
+> decimal? FakeOuterNumberSerialize (decimal? body = null)
 
 
 
@@ -160,7 +160,7 @@ namespace Example
 
             try
             {
-                OuterNumber result = apiInstance.FakeOuterNumberSerialize(body);
+                decimal? result = apiInstance.FakeOuterNumberSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -180,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**OuterNumber**](OuterNumber.md)
+[**decimal?**](BigDecimal.md)
 
 ### Authorization
 
@@ -194,7 +194,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="fakeouterstringserialize"></a>
 # **FakeOuterStringSerialize**
-> OuterString FakeOuterStringSerialize (string body = null)
+> string FakeOuterStringSerialize (string body = null)
 
 
 
@@ -219,7 +219,7 @@ namespace Example
 
             try
             {
-                OuterString result = apiInstance.FakeOuterStringSerialize(body);
+                string result = apiInstance.FakeOuterStringSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**OuterString**](OuterString.md)
+**string**
 
 ### Authorization
 
@@ -253,7 +253,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="testclientmodel"></a>
 # **TestClientModel**
-> Client TestClientModel (Client body)
+> ModelClient TestClientModel (ModelClient body)
 
 To test \"client\" model
 
@@ -274,12 +274,12 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new Client(); // Client | client model
+            var body = new ModelClient(); // ModelClient | client model
 
             try
             {
                 // To test \"client\" model
-                Client result = apiInstance.TestClientModel(body);
+                ModelClient result = apiInstance.TestClientModel(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -295,11 +295,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Client**](Client.md)| client model | 
+ **body** | [**ModelClient**](ModelClient.md)| client model | 
 
 ### Return type
 
-[**Client**](Client.md)
+[**ModelClient**](ModelClient.md)
 
 ### Authorization
 

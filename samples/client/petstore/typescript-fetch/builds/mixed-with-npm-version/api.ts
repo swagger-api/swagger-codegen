@@ -1542,6 +1542,26 @@ export interface User {
     userStatus?: number;
 }
 /**
+ * 
+ * @export
+ * @interface UserWrapper
+ */
+export interface UserWrapper {
+    /**
+     * 
+     * @type {Users}
+     * @memberof UserWrapper
+     */
+    users?: Users;
+}
+/**
+ * 
+ * @export
+ * @interface Users
+ */
+export interface Users extends Array<User> {
+}
+/**
  * Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
  * @export
  * @interface ValMemberChoice1
@@ -3823,7 +3843,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -3866,7 +3886,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -3940,7 +3960,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -3981,7 +4001,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -4115,7 +4135,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -4160,7 +4180,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -4212,7 +4232,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
 				const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-					? configuration.accessToken("petstore_auth", [""])
+					? configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }

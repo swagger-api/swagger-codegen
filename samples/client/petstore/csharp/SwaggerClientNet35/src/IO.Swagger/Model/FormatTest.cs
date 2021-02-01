@@ -63,7 +63,7 @@ namespace IO.Swagger.Model
             }
             else
             {
-                this.Byte = _byte;
+                this._Byte = _byte;
             }
             // to ensure "date" is required (not null)
             if (date == null)
@@ -86,9 +86,9 @@ namespace IO.Swagger.Model
             this.Integer = integer;
             this.Int32 = int32;
             this.Int64 = int64;
-            this.Float = _float;
-            this.Double = _double;
-            this.String = _string;
+            this._Float = _float;
+            this._Double = _double;
+            this._String = _string;
             this.Binary = binary;
             this.DateTime = dateTime;
             this.Uuid = uuid;
@@ -119,28 +119,28 @@ namespace IO.Swagger.Model
         public decimal? Number { get; set; }
 
         /// <summary>
-        /// Gets or Sets Float
+        /// Gets or Sets _Float
         /// </summary>
         [DataMember(Name="float", EmitDefaultValue=false)]
-        public float? Float { get; set; }
+        public float? _Float { get; set; }
 
         /// <summary>
-        /// Gets or Sets Double
+        /// Gets or Sets _Double
         /// </summary>
         [DataMember(Name="double", EmitDefaultValue=false)]
-        public double? Double { get; set; }
+        public double? _Double { get; set; }
 
         /// <summary>
-        /// Gets or Sets String
+        /// Gets or Sets _String
         /// </summary>
         [DataMember(Name="string", EmitDefaultValue=false)]
-        public string String { get; set; }
+        public string _String { get; set; }
 
         /// <summary>
-        /// Gets or Sets Byte
+        /// Gets or Sets _Byte
         /// </summary>
         [DataMember(Name="byte", EmitDefaultValue=false)]
-        public byte[] Byte { get; set; }
+        public byte[] _Byte { get; set; }
 
         /// <summary>
         /// Gets or Sets Binary
@@ -185,10 +185,10 @@ namespace IO.Swagger.Model
             sb.Append("  Int32: ").Append(Int32).Append("\n");
             sb.Append("  Int64: ").Append(Int64).Append("\n");
             sb.Append("  Number: ").Append(Number).Append("\n");
-            sb.Append("  Float: ").Append(Float).Append("\n");
-            sb.Append("  Double: ").Append(Double).Append("\n");
-            sb.Append("  String: ").Append(String).Append("\n");
-            sb.Append("  Byte: ").Append(Byte).Append("\n");
+            sb.Append("  _Float: ").Append(_Float).Append("\n");
+            sb.Append("  _Double: ").Append(_Double).Append("\n");
+            sb.Append("  _String: ").Append(_String).Append("\n");
+            sb.Append("  _Byte: ").Append(_Byte).Append("\n");
             sb.Append("  Binary: ").Append(Binary).Append("\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
             sb.Append("  DateTime: ").Append(DateTime).Append("\n");
@@ -249,24 +249,24 @@ namespace IO.Swagger.Model
                     this.Number.Equals(input.Number))
                 ) && 
                 (
-                    this.Float == input.Float ||
-                    (this.Float != null &&
-                    this.Float.Equals(input.Float))
+                    this._Float == input._Float ||
+                    (this._Float != null &&
+                    this._Float.Equals(input._Float))
                 ) && 
                 (
-                    this.Double == input.Double ||
-                    (this.Double != null &&
-                    this.Double.Equals(input.Double))
+                    this._Double == input._Double ||
+                    (this._Double != null &&
+                    this._Double.Equals(input._Double))
                 ) && 
                 (
-                    this.String == input.String ||
-                    (this.String != null &&
-                    this.String.Equals(input.String))
+                    this._String == input._String ||
+                    (this._String != null &&
+                    this._String.Equals(input._String))
                 ) && 
                 (
-                    this.Byte == input.Byte ||
-                    (this.Byte != null &&
-                    this.Byte.Equals(input.Byte))
+                    this._Byte == input._Byte ||
+                    (this._Byte != null &&
+                    this._Byte.Equals(input._Byte))
                 ) && 
                 (
                     this.Binary == input.Binary ||
@@ -312,14 +312,14 @@ namespace IO.Swagger.Model
                     hashCode = hashCode * 59 + this.Int64.GetHashCode();
                 if (this.Number != null)
                     hashCode = hashCode * 59 + this.Number.GetHashCode();
-                if (this.Float != null)
-                    hashCode = hashCode * 59 + this.Float.GetHashCode();
-                if (this.Double != null)
-                    hashCode = hashCode * 59 + this.Double.GetHashCode();
-                if (this.String != null)
-                    hashCode = hashCode * 59 + this.String.GetHashCode();
-                if (this.Byte != null)
-                    hashCode = hashCode * 59 + this.Byte.GetHashCode();
+                if (this._Float != null)
+                    hashCode = hashCode * 59 + this._Float.GetHashCode();
+                if (this._Double != null)
+                    hashCode = hashCode * 59 + this._Double.GetHashCode();
+                if (this._String != null)
+                    hashCode = hashCode * 59 + this._String.GetHashCode();
+                if (this._Byte != null)
+                    hashCode = hashCode * 59 + this._Byte.GetHashCode();
                 if (this.Binary != null)
                     hashCode = hashCode * 59 + this.Binary.GetHashCode();
                 if (this.Date != null)

@@ -9,6 +9,7 @@
  */
 package petstore
 import (
+	"os"
 	"time"
 )
 
@@ -32,7 +33,7 @@ type Body3 struct {
 	// None
 	Byte_ string `json:"byte"`
 	// None
-	Binary string `json:"binary,omitempty"`
+	Binary **os.File `json:"binary,omitempty"`
 	// None
 	Date string `json:"date,omitempty"`
 	// None

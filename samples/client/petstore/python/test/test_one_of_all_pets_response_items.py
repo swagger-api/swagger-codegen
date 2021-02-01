@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.one_of_all_pets_response_items import OneOfAllPetsResponseItems  # noqa: E501
+from swagger_client.models.one_of_all_pets_response_items import OneOfAllPetsResponseItems  # noqa: E501
 from swagger_client.rest import ApiException
 
 

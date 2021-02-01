@@ -18,6 +18,8 @@ import javax.validation.constraints.*;
  * Dog
  */
 @Validated
+
+
 public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("bark")
   private Boolean bark = null;
@@ -67,7 +69,7 @@ public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePe
   /**
    * Get bark
    * @return bark
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Boolean isBark() {
@@ -86,7 +88,7 @@ public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePe
   /**
    * Get breed
    * @return breed
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public BreedEnum getBreed() {

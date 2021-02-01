@@ -10,6 +10,6 @@
 package petstore
 
 type OneOfSinglePetResponsePet struct {
-    dog Dog
-    cat Cat
+    Dog
+    Cat
 }
