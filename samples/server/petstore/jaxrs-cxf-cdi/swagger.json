@@ -1024,7 +1024,8 @@
         }
       },
       "Test" : {
-        "type" : "string"
+        "type" : "string",
+        "example" : ""
       },
       "NullableEnumModel" : {
         "type" : "object",

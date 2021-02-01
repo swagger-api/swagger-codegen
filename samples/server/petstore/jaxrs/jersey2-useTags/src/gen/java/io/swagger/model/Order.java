@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Order
@@ -142,6 +143,7 @@ public class Order   {
    **/
   @JsonProperty("shipDate")
   @Schema(description = "")
+  @Valid
   public Date getShipDate() {
     return shipDate;
   }

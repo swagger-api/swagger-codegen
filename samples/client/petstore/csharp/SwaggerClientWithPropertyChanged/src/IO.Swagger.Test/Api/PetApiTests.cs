@@ -80,10 +80,21 @@ namespace IO.Swagger.Test
         public void DeletePetTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //int? petId = null;
+            //long? petId = null;
             //string apiKey = null;
             //instance.DeletePet(petId, apiKey);
             
+        }
+        /// <summary>
+        /// Test DoCategoryStuff
+        /// </summary>
+        [Test]
+        public void DoCategoryStuffTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //SubCategory body = null;
+            //var response = instance.DoCategoryStuff(body);
+            //Assert.IsInstanceOf<ModelApiResponse> (response, "response is ModelApiResponse");
         }
         /// <summary>
         /// Test FindPetsByStatus
@@ -108,15 +119,35 @@ namespace IO.Swagger.Test
             //Assert.IsInstanceOf<List<Pet>> (response, "response is List<Pet>");
         }
         /// <summary>
+        /// Test GetAllPets
+        /// </summary>
+        [Test]
+        public void GetAllPetsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //var response = instance.GetAllPets();
+            //Assert.IsInstanceOf<AllPetsResponse> (response, "response is AllPetsResponse");
+        }
+        /// <summary>
         /// Test GetPetById
         /// </summary>
         [Test]
         public void GetPetByIdTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //int? petId = null;
+            //long? petId = null;
             //var response = instance.GetPetById(petId);
             //Assert.IsInstanceOf<Pet> (response, "response is Pet");
+        }
+        /// <summary>
+        /// Test GetRandomPet
+        /// </summary>
+        [Test]
+        public void GetRandomPetTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //var response = instance.GetRandomPet();
+            //Assert.IsInstanceOf<SinglePetResponse> (response, "response is SinglePetResponse");
         }
         /// <summary>
         /// Test UpdatePet
@@ -136,7 +167,7 @@ namespace IO.Swagger.Test
         public void UpdatePetWithFormTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //int? petId = null;
+            //long? petId = null;
             //string name = null;
             //string status = null;
             //instance.UpdatePetWithForm(petId, name, status);
@@ -149,11 +180,11 @@ namespace IO.Swagger.Test
         public void UploadFileTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //int? petId = null;
+            //long? petId = null;
             //string additionalMetadata = null;
-            //System.IO.Stream file = null;
+            //byte[] file = null;
             //var response = instance.UploadFile(petId, additionalMetadata, file);
-            //Assert.IsInstanceOf<ApiResponse> (response, "response is ApiResponse");
+            //Assert.IsInstanceOf<ModelApiResponse> (response, "response is ModelApiResponse");
         }
     }
 

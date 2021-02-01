@@ -1,4 +1,6 @@
 export * from './apiResponse';
+export * from './body';
+export * from './body1';
 export * from './category';
 export * from './order';
 export * from './pet';

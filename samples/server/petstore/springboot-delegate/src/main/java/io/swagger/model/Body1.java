@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.core.io.Resource;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -14,6 +13,8 @@ import javax.validation.constraints.*;
  * Body1
  */
 @Validated
+
+
 public class Body1   {
   @JsonProperty("additionalMetadata")
   private String additionalMetadata = null;
@@ -29,8 +30,8 @@ public class Body1   {
   /**
    * Additional data to pass to server
    * @return additionalMetadata
-  **/
-  @ApiModelProperty(value = "Additional data to pass to server")
+   **/
+  @Schema(description = "Additional data to pass to server")
   
     public String getAdditionalMetadata() {
     return additionalMetadata;
@@ -48,8 +49,8 @@ public class Body1   {
   /**
    * file to upload
    * @return file
-  **/
-  @ApiModelProperty(value = "file to upload")
+   **/
+  @Schema(description = "file to upload")
   
     @Valid
     public Resource getFile() {

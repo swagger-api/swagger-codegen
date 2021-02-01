@@ -143,6 +143,7 @@ Class | Method | HTTP request | Description
  - [SubCategoryPets](docs/SubCategoryPets.md)
  - [Tag](docs/Tag.md)
  - [User](docs/User.md)
+ - [UserWrapper](docs/UserWrapper.md)
  - [ValMemberChoice1](docs/ValMemberChoice1.md)
  - [ValMemberChoice2](docs/ValMemberChoice2.md)
  - [ValMembers](docs/ValMembers.md)

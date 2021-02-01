@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -18,6 +17,8 @@ import javax.validation.constraints.*;
  * FormatTest
  */
 @Validated
+
+
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;
@@ -68,8 +69,8 @@ public class FormatTest   {
    * minimum: 10
    * maximum: 100
    * @return integer
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
   @Min(10) @Max(100)   public Integer getInteger() {
     return integer;
@@ -89,8 +90,8 @@ public class FormatTest   {
    * minimum: 20
    * maximum: 200
    * @return int32
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
   @Min(20) @Max(200)   public Integer getInt32() {
     return int32;
@@ -108,8 +109,8 @@ public class FormatTest   {
   /**
    * Get int64
    * @return int64
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Long getInt64() {
     return int64;
@@ -129,8 +130,8 @@ public class FormatTest   {
    * minimum: 32
    * maximum: 543
    * @return number
-  **/
-  @ApiModelProperty(required = true, value = "")
+   **/
+  @Schema(required = true, description = "")
       @NotNull
 
     @Valid
@@ -152,8 +153,8 @@ public class FormatTest   {
    * minimum: 54
    * maximum: 987
    * @return _float
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
   @DecimalMin("54") @DecimalMax("987")   public Float getFloat() {
     return _float;
@@ -173,8 +174,8 @@ public class FormatTest   {
    * minimum: 67
    * maximum: 123
    * @return _double
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
   @DecimalMin("67") @DecimalMax("123")   public Double getDouble() {
     return _double;
@@ -192,8 +193,8 @@ public class FormatTest   {
   /**
    * Get string
    * @return string
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
   @Pattern(regexp="/[a-z]/i")   public String getString() {
     return string;
@@ -211,8 +212,8 @@ public class FormatTest   {
   /**
    * Get _byte
    * @return _byte
-  **/
-  @ApiModelProperty(required = true, value = "")
+   **/
+  @Schema(required = true, description = "")
       @NotNull
 
     public byte[] getByte() {
@@ -231,8 +232,8 @@ public class FormatTest   {
   /**
    * Get binary
    * @return binary
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public Resource getBinary() {
@@ -251,8 +252,8 @@ public class FormatTest   {
   /**
    * Get date
    * @return date
-  **/
-  @ApiModelProperty(required = true, value = "")
+   **/
+  @Schema(required = true, description = "")
       @NotNull
 
     @Valid
@@ -272,8 +273,8 @@ public class FormatTest   {
   /**
    * Get dateTime
    * @return dateTime
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public OffsetDateTime getDateTime() {
@@ -292,8 +293,8 @@ public class FormatTest   {
   /**
    * Get uuid
    * @return uuid
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public UUID getUuid() {
@@ -312,8 +313,8 @@ public class FormatTest   {
   /**
    * Get password
    * @return password
-  **/
-  @ApiModelProperty(required = true, value = "")
+   **/
+  @Schema(required = true, description = "")
       @NotNull
 
     public String getPassword() {

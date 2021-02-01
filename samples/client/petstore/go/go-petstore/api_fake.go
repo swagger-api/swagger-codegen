@@ -34,8 +34,8 @@ Test serialization of outer boolean types
 @return bool
 */
 
-type FakeApiFakeOuterBooleanSerializeOpts struct { 
-	Body optional.Interface
+type FakeApiFakeOuterBooleanSerializeOpts struct {
+    Body optional.Interface
 }
 
 func (a *FakeApiService) FakeOuterBooleanSerialize(ctx context.Context, localVarOptionals *FakeApiFakeOuterBooleanSerializeOpts) (bool, *http.Response, error) {
@@ -130,8 +130,8 @@ Test serialization of object with outer number type
 @return OuterComposite
 */
 
-type FakeApiFakeOuterCompositeSerializeOpts struct { 
-	Body optional.Interface
+type FakeApiFakeOuterCompositeSerializeOpts struct {
+    Body optional.Interface
 }
 
 func (a *FakeApiService) FakeOuterCompositeSerialize(ctx context.Context, localVarOptionals *FakeApiFakeOuterCompositeSerializeOpts) (OuterComposite, *http.Response, error) {
@@ -226,8 +226,8 @@ Test serialization of outer number types
 @return float64
 */
 
-type FakeApiFakeOuterNumberSerializeOpts struct { 
-	Body optional.Interface
+type FakeApiFakeOuterNumberSerializeOpts struct {
+    Body optional.Interface
 }
 
 func (a *FakeApiService) FakeOuterNumberSerialize(ctx context.Context, localVarOptionals *FakeApiFakeOuterNumberSerializeOpts) (float64, *http.Response, error) {
@@ -322,8 +322,8 @@ Test serialization of outer string types
 @return string
 */
 
-type FakeApiFakeOuterStringSerializeOpts struct { 
-	Body optional.Interface
+type FakeApiFakeOuterStringSerializeOpts struct {
+    Body optional.Interface
 }
 
 func (a *FakeApiService) FakeOuterStringSerialize(ctx context.Context, localVarOptionals *FakeApiFakeOuterStringSerializeOpts) (string, *http.Response, error) {
@@ -577,12 +577,12 @@ To test enum parameters
 
 */
 
-type FakeApiTestEnumParametersOpts struct { 
-	EnumHeaderStringArray optional.Interface
-	EnumHeaderString optional.String
-	EnumQueryStringArray optional.Interface
-	EnumQueryString optional.String
-	EnumQueryInteger optional.Int32
+type FakeApiTestEnumParametersOpts struct {
+    EnumHeaderStringArray optional.Interface
+    EnumHeaderString optional.String
+    EnumQueryStringArray optional.Interface
+    EnumQueryString optional.String
+    EnumQueryInteger optional.Int32
 }
 
 func (a *FakeApiService) TestEnumParameters(ctx context.Context, localVarOptionals *FakeApiTestEnumParametersOpts) (*http.Response, error) {
@@ -669,8 +669,8 @@ To test enum parameters
 
 */
 
-type FakeApiTestEnumRequestBodyOpts struct { 
-	Body optional.Interface
+type FakeApiTestEnumRequestBodyOpts struct {
+    Body optional.Interface
 }
 
 func (a *FakeApiService) TestEnumRequestBody(ctx context.Context, localVarOptionals *FakeApiTestEnumRequestBodyOpts) (*http.Response, error) {

@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.File;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Body1
@@ -60,6 +61,7 @@ public class Body1   {
    **/
   @JsonProperty("file")
   @ApiModelProperty(value = "file to upload")
+  @Valid
   public File getFile() {
     return file;
   }

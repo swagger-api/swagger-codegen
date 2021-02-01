@@ -69,9 +69,9 @@ namespace IO.Swagger.Test
         public void TestSpecialTagsTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //Client body = null;
+            //ModelClient body = null;
             //var response = instance.TestSpecialTags(body);
-            //Assert.IsInstanceOf<Client> (response, "response is Client");
+            //Assert.IsInstanceOf<ModelClient> (response, "response is ModelClient");
         }
     }
 

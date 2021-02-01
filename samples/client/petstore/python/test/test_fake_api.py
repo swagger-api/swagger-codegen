@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from api.fake_api import FakeApi  # noqa: E501
+from swagger_client.api.fake_api import FakeApi  # noqa: E501
 from swagger_client.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestFakeApi(unittest.TestCase):
     """FakeApi unit test stubs"""
 
     def setUp(self):
-        self.api = api.fake_api.FakeApi()  # noqa: E501
+        self.api = FakeApi()  # noqa: E501
 
     def tearDown(self):
         pass

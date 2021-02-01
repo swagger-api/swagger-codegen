@@ -4,11 +4,10 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
 import io.swagger.model.Pet;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -18,6 +17,8 @@ import javax.validation.constraints.*;
  * Cat
  */
 @Validated
+
+
 public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("hunts")
   private Boolean hunts = null;
@@ -33,8 +34,8 @@ public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePe
   /**
    * Get hunts
    * @return hunts
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Boolean isHunts() {
     return hunts;
@@ -52,8 +53,8 @@ public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePe
   /**
    * Get age
    * @return age
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Integer getAge() {
     return age;

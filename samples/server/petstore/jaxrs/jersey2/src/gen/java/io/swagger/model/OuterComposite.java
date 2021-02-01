@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * OuterComposite
@@ -43,6 +44,7 @@ public class OuterComposite   {
    **/
   @JsonProperty("my_number")
   @Schema(description = "")
+  @Valid
   public BigDecimal getMyNumber() {
     return myNumber;
   }

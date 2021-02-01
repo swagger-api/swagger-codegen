@@ -10,20 +10,16 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
 import io.swagger.client.model.Client;
-
 import org.junit.Test;
 import org.junit.Ignore;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * API tests for FakeClassnameTags123Api
@@ -33,7 +29,6 @@ public class FakeClassnameTags123ApiTest {
 
     private final FakeClassnameTags123Api api = new FakeClassnameTags123Api();
 
-    
     /**
      * To test class name in snake case
      *
@@ -44,12 +39,9 @@ public class FakeClassnameTags123ApiTest {
      */
     @Test
     public void testClassnameTest() {
-        
-        Client client = null;
-        
-        Client response = api.testClassname(client);
+        Client body = null;
+        Client response = api.testClassname(body);
 
         // TODO: test validations
     }
-    
 }

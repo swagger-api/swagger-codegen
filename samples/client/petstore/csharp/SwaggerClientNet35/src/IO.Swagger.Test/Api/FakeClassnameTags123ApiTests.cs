@@ -69,9 +69,9 @@ namespace IO.Swagger.Test
         public void TestClassnameTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //Client body = null;
+            //ModelClient body = null;
             //var response = instance.TestClassname(body);
-            //Assert.IsInstanceOf<Client> (response, "response is Client");
+            //Assert.IsInstanceOf<ModelClient> (response, "response is ModelClient");
         }
     }
 

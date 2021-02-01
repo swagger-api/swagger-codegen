@@ -75,8 +75,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
-        /// <returns>ApiResponse</returns>
-        ApiResponse DoCategoryStuff (SubCategory body = null);
+        /// <returns>ModelApiResponse</returns>
+        ModelApiResponse DoCategoryStuff (SubCategory body = null);
 
         /// <summary>
         /// 
@@ -86,8 +86,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
-        /// <returns>ApiResponse of ApiResponse</returns>
-        ApiResponse<ApiResponse> DoCategoryStuffWithHttpInfo (SubCategory body = null);
+        /// <returns>ApiResponse of ModelApiResponse</returns>
+        ApiResponse<ModelApiResponse> DoCategoryStuffWithHttpInfo (SubCategory body = null);
         /// <summary>
         /// Finds Pets by status
         /// </summary>
@@ -244,9 +244,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="_file"> (optional)</param>
-        /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] _file = null);
+        /// <param name="file"> (optional)</param>
+        /// <returns>ModelApiResponse</returns>
+        ModelApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] file = null);
 
         /// <summary>
         /// uploads an image
@@ -257,9 +257,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="_file"> (optional)</param>
-        /// <returns>ApiResponse of ApiResponse</returns>
-        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] _file = null);
+        /// <param name="file"> (optional)</param>
+        /// <returns>ApiResponse of ModelApiResponse</returns>
+        ApiResponse<ModelApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] file = null);
         #endregion Synchronous Operations
     }
 
@@ -526,10 +526,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
-        /// <returns>ApiResponse</returns>
-        public ApiResponse DoCategoryStuff (SubCategory body = null)
+        /// <returns>ModelApiResponse</returns>
+        public ModelApiResponse DoCategoryStuff (SubCategory body = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = DoCategoryStuffWithHttpInfo(body);
+             ApiResponse<ModelApiResponse> localVarResponse = DoCategoryStuffWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -538,8 +538,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
-        /// <returns>ApiResponse of ApiResponse</returns>
-        public ApiResponse< ApiResponse > DoCategoryStuffWithHttpInfo (SubCategory body = null)
+        /// <returns>ApiResponse of ModelApiResponse</returns>
+        public ApiResponse< ModelApiResponse > DoCategoryStuffWithHttpInfo (SubCategory body = null)
         {
 
             var localVarPath = "/pet/category";
@@ -586,9 +586,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ApiResponse>(localVarStatusCode,
+            return new ApiResponse<ModelApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ApiResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
+                (ModelApiResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelApiResponse)));
         }
 
         /// <summary>
@@ -1084,11 +1084,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="_file"> (optional)</param>
-        /// <returns>ApiResponse</returns>
-        public ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] _file = null)
+        /// <param name="file"> (optional)</param>
+        /// <returns>ModelApiResponse</returns>
+        public ModelApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, _file);
+             ApiResponse<ModelApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
              return localVarResponse.Data;
         }
 
@@ -1098,9 +1098,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata"> (optional)</param>
-        /// <param name="_file"> (optional)</param>
-        /// <returns>ApiResponse of ApiResponse</returns>
-        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] _file = null)
+        /// <param name="file"> (optional)</param>
+        /// <returns>ApiResponse of ModelApiResponse</returns>
+        public ApiResponse< ModelApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, byte[] file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -1130,7 +1130,7 @@ namespace IO.Swagger.Api
 
             if (petId != null) localVarPathParams.Add("petId", this.Configuration.ApiClient.ParameterToString(petId)); // path parameter
             if (additionalMetadata != null) localVarFormParams.Add("additionalMetadata", this.Configuration.ApiClient.ParameterToString(additionalMetadata)); // form parameter
-            if (_file != null) localVarFileParams.Add("file", this.Configuration.ApiClient.ParameterToFile("file", _file));
+            if (file != null) localVarFileParams.Add("file", this.Configuration.ApiClient.ParameterToFile("file", file));
             // authentication (petstore_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
@@ -1151,9 +1151,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ApiResponse>(localVarStatusCode,
+            return new ApiResponse<ModelApiResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ApiResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ApiResponse)));
+                (ModelApiResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelApiResponse)));
         }
 
     }

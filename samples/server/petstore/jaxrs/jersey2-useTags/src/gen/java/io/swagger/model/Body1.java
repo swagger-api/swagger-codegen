@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.File;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Body1
@@ -59,6 +60,7 @@ public class Body1   {
    **/
   @JsonProperty("file")
   @Schema(description = "file to upload")
+  @Valid
   public File getFile() {
     return file;
   }

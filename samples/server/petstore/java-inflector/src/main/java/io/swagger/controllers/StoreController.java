@@ -21,7 +21,8 @@ public class StoreController  {
    **/
 
   /*
-    public ResponseContext deleteOrder(RequestContext request , String orderId ) {
+    public ResponseContext deleteOrder(RequestContext request , String orderId 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
@@ -33,13 +34,15 @@ public class StoreController  {
   */
 
   /*
-    public ResponseContext getOrderById(RequestContext request , Long orderId ) {
+    public ResponseContext getOrderById(RequestContext request , Long orderId 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext placeOrder(RequestContext request , Order body ) {
+    public ResponseContext placeOrder(RequestContext request , Order body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

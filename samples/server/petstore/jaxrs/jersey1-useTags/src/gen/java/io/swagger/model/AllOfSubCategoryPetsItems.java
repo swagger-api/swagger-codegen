@@ -18,6 +18,7 @@ import io.swagger.model.Pet;
 import io.swagger.model.Tag;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * AllOfSubCategoryPetsItems
