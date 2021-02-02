@@ -78,10 +78,10 @@ public class DogApiTest {
      */
     @Test
     public void updateDogWithFormTest() {
-        Long animalId = null;
+        Long dogId = null;
         String name = null;
         String status = null;
-        // Void response = api.updateDogWithForm(animalId, name, status);
+        // Void response = api.updateDogWithForm(dogId, name, status);
 
         // TODO: test validations
     }

@@ -20,7 +20,7 @@ import java.util.List;
 @Configuration
 @ComponentScan(basePackages = "io.swagger.api")
 @EnableWebMvc
-@EnableSwagger2 //Loads the spring beans required by the framework
+@EnableSwagger2
 @PropertySource("classpath:swagger.properties")
 @Import(SwaggerDocumentationConfig.class)
 public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {

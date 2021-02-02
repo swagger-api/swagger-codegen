@@ -15,6 +15,8 @@ import javax.validation.constraints.*;
  * AllOfSubCategoryCategory
  */
 @Validated
+
+
 public class AllOfSubCategoryCategory extends Category  {
   @JsonProperty("foo")
   private Boolean foo = null;
@@ -36,7 +38,7 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get foo
    * @return foo
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Boolean isFoo() {
@@ -55,7 +57,7 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get bar
    * @return bar
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Integer getBar() {
@@ -74,7 +76,7 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get beer
    * @return beer
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public String getBeer() {
@@ -93,7 +95,7 @@ public class AllOfSubCategoryCategory extends Category  {
   /**
    * Get drunk
    * @return drunk
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     @Valid

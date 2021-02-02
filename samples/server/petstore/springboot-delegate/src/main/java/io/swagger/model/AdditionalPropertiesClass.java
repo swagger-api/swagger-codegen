@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,8 @@ import javax.validation.constraints.*;
  * AdditionalPropertiesClass
  */
 @Validated
+
+
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   @Valid
@@ -41,8 +42,8 @@ public class AdditionalPropertiesClass   {
   /**
    * Get mapProperty
    * @return mapProperty
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Map<String, String> getMapProperty() {
     return mapProperty;
@@ -68,8 +69,8 @@ public class AdditionalPropertiesClass   {
   /**
    * Get mapOfMapProperty
    * @return mapOfMapProperty
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
       @Valid
     public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;

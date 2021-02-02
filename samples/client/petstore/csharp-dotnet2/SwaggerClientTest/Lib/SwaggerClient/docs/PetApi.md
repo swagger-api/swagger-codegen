@@ -1,14 +1,17 @@
 # IO.Swagger.Api.PetApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AddPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 [**DeletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+[**DoCategoryStuff**](PetApi.md#docategorystuff) | **POST** /pet/category | 
 [**FindPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**FindPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+[**GetAllPets**](PetApi.md#getallpets) | **GET** /allPets | 
 [**GetPetById**](PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+[**GetRandomPet**](PetApi.md#getrandompet) | **GET** /randomPet | 
 [**UpdatePet**](PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
 [**UpdatePetWithForm**](PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**UploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
@@ -139,6 +142,65 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="docategorystuff"></a>
+# **DoCategoryStuff**
+> ApiResponse DoCategoryStuff (SubCategory body)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class DoCategoryStuffExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new PetApi();
+            var body = new SubCategory(); // SubCategory |  (optional) 
+
+            try
+            {
+                ApiResponse result = apiInstance.DoCategoryStuff(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.DoCategoryStuff: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional] 
+
+### Return type
+
+[**ApiResponse**](ApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="findpetsbystatus"></a>
 # **FindPetsByStatus**
 > List<Pet> FindPetsByStatus (List<string> status)
@@ -200,7 +262,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -210,7 +272,7 @@ Name | Type | Description  | Notes
 
 Finds Pets by tags
 
-Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
 
 ### Example
 ```csharp
@@ -265,7 +327,62 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="getallpets"></a>
+# **GetAllPets**
+> AllPetsResponse GetAllPets ()
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class GetAllPetsExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new PetApi();
+
+            try
+            {
+                AllPetsResponse result = apiInstance.GetAllPets();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.GetAllPets: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AllPetsResponse**](AllPetsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -332,7 +449,62 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="getrandompet"></a>
+# **GetRandomPet**
+> SinglePetResponse GetRandomPet ()
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class GetRandomPetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new PetApi();
+
+            try
+            {
+                SinglePetResponse result = apiInstance.GetRandomPet();
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.GetRandomPet: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SinglePetResponse**](SinglePetResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -466,7 +638,7 @@ void (empty response body)
 
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (long? petId, string additionalMetadata, byte[] _file)
+> ApiResponse UploadFile (long? petId, Object body)
 
 uploads an image
 
@@ -490,13 +662,12 @@ namespace Example
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to update
-            var additionalMetadata = additionalMetadata_example;  // string |  (optional) 
-            var _file = _file_example;  // byte[] |  (optional) 
+            var body = new Object(); // Object |  (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, _file);
+                ApiResponse result = apiInstance.UploadFile(petId, body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -513,8 +684,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **long?**| ID of pet to update | 
- **additionalMetadata** | **string**|  | [optional] 
- **_file** | **byte[]****byte[]**|  | [optional] 
+ **body** | **Object**|  | [optional] 
 
 ### Return type
 
@@ -526,7 +696,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
+ - **Content-Type**: application/octet-stream
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -121,7 +121,7 @@ public class JSON {
                     classByDiscriminatorValue.put("Animal".toUpperCase(), Animal.class);
                 return getClassByDiscriminator(
                             classByDiscriminatorValue,
-                            getDiscriminatorValue(readElement, ""));
+                            getDiscriminatorValue(readElement, "className"));
             }
           })
           .registerPostProcessor(Animal.class, new PostProcessor<Animal>() {
@@ -138,9 +138,9 @@ public class JSON {
                       discriminatorValueByClass.put(Animal.class, "Animal");
                   if(result instanceof JsonObject)
                   {
-                      if(!((JsonObject) result).has(""))
+                      if(!((JsonObject) result).has("className"))
                       {
-                          ((JsonObject) result).addProperty("", discriminatorValueByClass.get(src.getClass()));
+                          ((JsonObject) result).addProperty("className", discriminatorValueByClass.get(src.getClass()));
                       }
                   }
               }

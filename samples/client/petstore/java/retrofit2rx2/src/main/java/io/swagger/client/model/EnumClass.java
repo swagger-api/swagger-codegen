@@ -62,7 +62,7 @@ public enum EnumClass {
 
     @Override
     public EnumClass read(final JsonReader jsonReader) throws IOException {
-      String value = jsonReader.nextString();
+      Object value = jsonReader.nextString();
       return EnumClass.fromValue(String.valueOf(value));
     }
   }

@@ -202,7 +202,7 @@
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
-      <version>${jersey-version}</version>
+      <version>2.29.1</version>
     </dependency>
 
     <!-- JSON processing: jackson -->

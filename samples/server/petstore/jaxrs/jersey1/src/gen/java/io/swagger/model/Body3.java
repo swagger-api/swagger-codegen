@@ -21,6 +21,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Body3
@@ -143,6 +144,7 @@ public class Body3   {
   @JsonProperty("number")
   @ApiModelProperty(required = true, value = "None")
   @NotNull
+  @Valid
  @DecimalMin("32") @DecimalMax("543")  public BigDecimal getNumber() {
     return number;
   }
@@ -263,6 +265,7 @@ public class Body3   {
    **/
   @JsonProperty("binary")
   @ApiModelProperty(value = "None")
+  @Valid
   public File getBinary() {
     return binary;
   }
@@ -282,6 +285,7 @@ public class Body3   {
    **/
   @JsonProperty("date")
   @ApiModelProperty(value = "None")
+  @Valid
   public Date getDate() {
     return date;
   }
@@ -301,6 +305,7 @@ public class Body3   {
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "None")
+  @Valid
   public Date getDateTime() {
     return dateTime;
   }

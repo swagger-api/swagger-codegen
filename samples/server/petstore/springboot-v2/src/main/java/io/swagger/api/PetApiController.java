@@ -1,10 +1,11 @@
 package io.swagger.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
-@Controller
+
+@RestController
 public class PetApiController implements PetApi {
 
     private final ObjectMapper objectMapper;

@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.additional_properties_class import AdditionalPropertiesClass  # noqa: E501
+from swagger_client.models.additional_properties_class import AdditionalPropertiesClass  # noqa: E501
 from swagger_client.rest import ApiException
 
 
