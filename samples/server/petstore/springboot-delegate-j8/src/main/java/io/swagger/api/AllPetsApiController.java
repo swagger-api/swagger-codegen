@@ -1,7 +1,8 @@
 package io.swagger.api;
 
-import org.springframework.stereotype.Controller;
-@Controller
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 public class AllPetsApiController implements AllPetsApi {
 
     private final AllPetsApiDelegate delegate;

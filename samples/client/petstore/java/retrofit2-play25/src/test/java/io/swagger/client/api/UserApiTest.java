@@ -2,16 +2,13 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
 import io.swagger.client.model.User;
-
 import org.junit.Before;
 import org.junit.Test;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * API tests for UserApi
@@ -25,8 +22,7 @@ public class UserApiTest {
         api = new ApiClient().createService(UserApi.class);
     }
 
-    
-    
+
     /**
      * Create user
      *
@@ -34,14 +30,12 @@ public class UserApiTest {
      */
     @Test
     public void createUserTest() {
-        
-        User user = null;
-        
-        // Void response = api.createUser(user);
+        User body = null;
+        // Void response = api.createUser(body);
 
         // TODO: test validations
     }
-    
+
     /**
      * Creates list of users with given input array
      *
@@ -49,14 +43,12 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithArrayInputTest() {
-        
         List<User> body = null;
-        
         // Void response = api.createUsersWithArrayInput(body);
 
         // TODO: test validations
     }
-    
+
     /**
      * Creates list of users with given input array
      *
@@ -64,14 +56,12 @@ public class UserApiTest {
      */
     @Test
     public void createUsersWithListInputTest() {
-        
         List<User> body = null;
-        
         // Void response = api.createUsersWithListInput(body);
 
         // TODO: test validations
     }
-    
+
     /**
      * Delete user
      *
@@ -79,14 +69,12 @@ public class UserApiTest {
      */
     @Test
     public void deleteUserTest() {
-        
         String username = null;
-        
         // Void response = api.deleteUser(username);
 
         // TODO: test validations
     }
-    
+
     /**
      * Get user by user name
      *
@@ -94,14 +82,12 @@ public class UserApiTest {
      */
     @Test
     public void getUserByNameTest() {
-        
         String username = null;
-        
         // User response = api.getUserByName(username);
 
         // TODO: test validations
     }
-    
+
     /**
      * Logs user into the system
      *
@@ -109,16 +95,13 @@ public class UserApiTest {
      */
     @Test
     public void loginUserTest() {
-        
         String username = null;
-        
         String password = null;
-        
         // String response = api.loginUser(username, password);
 
         // TODO: test validations
     }
-    
+
     /**
      * Logs out current logged in user session
      *
@@ -126,12 +109,11 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() {
-        
         // Void response = api.logoutUser();
 
         // TODO: test validations
     }
-    
+
     /**
      * Updated user
      *
@@ -139,15 +121,10 @@ public class UserApiTest {
      */
     @Test
     public void updateUserTest() {
-        
-        User user = null;
-        
+        User body = null;
         String username = null;
-        
-        // Void response = api.updateUser(user, username);
+        // Void response = api.updateUser(body, username);
 
         // TODO: test validations
     }
-    
-    
 }

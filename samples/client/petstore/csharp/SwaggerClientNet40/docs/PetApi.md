@@ -140,7 +140,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="docategorystuff"></a>
 # **DoCategoryStuff**
-> ApiResponse DoCategoryStuff (SubCategory body = null)
+> ModelApiResponse DoCategoryStuff (SubCategory body = null)
 
 
 
@@ -163,7 +163,7 @@ namespace Example
 
             try
             {
-                ApiResponse result = apiInstance.DoCategoryStuff(body);
+                ModelApiResponse result = apiInstance.DoCategoryStuff(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -183,7 +183,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+[**ModelApiResponse**](ModelApiResponse.md)
 
 ### Authorization
 
@@ -618,7 +618,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] _file = null)
+> ModelApiResponse UploadFile (long? petId, string additionalMetadata = null, byte[] file = null)
 
 uploads an image
 
@@ -642,12 +642,12 @@ namespace Example
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to update
             var additionalMetadata = additionalMetadata_example;  // string |  (optional) 
-            var _file = _file_example;  // byte[] |  (optional) 
+            var file = file_example;  // byte[] |  (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, _file);
+                ModelApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -665,11 +665,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **long?**| ID of pet to update | 
  **additionalMetadata** | **string**|  | [optional] 
- **_file** | **byte[]****byte[]**|  | [optional] 
+ **file** | **byte[]****byte[]**|  | [optional] 
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+[**ModelApiResponse**](ModelApiResponse.md)
 
 ### Authorization
 

@@ -63,6 +63,8 @@ export * from './sub-category';
 export * from './sub-category-pets';
 export * from './tag';
 export * from './user';
+export * from './user-wrapper';
+export * from './users';
 export * from './val-member-choice1';
 export * from './val-member-choice2';
 export * from './val-members';

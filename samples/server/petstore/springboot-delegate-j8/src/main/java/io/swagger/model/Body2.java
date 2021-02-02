@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -17,6 +16,8 @@ import javax.validation.constraints.*;
  * Body2
  */
 @Validated
+
+
 public class Body2   {
   @JsonProperty("integer")
   private Integer integer = null;
@@ -70,8 +71,8 @@ public class Body2   {
    * minimum: 10
    * maximum: 100
    * @return integer
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
   @Min(10) @Max(100)   public Integer getInteger() {
     return integer;
@@ -91,8 +92,8 @@ public class Body2   {
    * minimum: 20
    * maximum: 200
    * @return int32
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
   @Min(20) @Max(200)   public Integer getInt32() {
     return int32;
@@ -110,8 +111,8 @@ public class Body2   {
   /**
    * None
    * @return int64
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
     public Long getInt64() {
     return int64;
@@ -131,8 +132,8 @@ public class Body2   {
    * minimum: 32
    * maximum: 543
    * @return number
-  **/
-  @ApiModelProperty(required = true, value = "None")
+   **/
+  @Schema(required = true, description = "None")
       @NotNull
 
     @Valid
@@ -153,8 +154,8 @@ public class Body2   {
    * None
    * maximum: 987
    * @return _float
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
    @DecimalMax("987")   public Float getFloat() {
     return _float;
@@ -174,8 +175,8 @@ public class Body2   {
    * minimum: 67
    * maximum: 123
    * @return _double
-  **/
-  @ApiModelProperty(required = true, value = "None")
+   **/
+  @Schema(required = true, description = "None")
       @NotNull
 
   @DecimalMin("67") @DecimalMax("123")   public Double getDouble() {
@@ -194,8 +195,8 @@ public class Body2   {
   /**
    * None
    * @return string
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
   @Pattern(regexp="/[a-z]/i")   public String getString() {
     return string;
@@ -213,8 +214,8 @@ public class Body2   {
   /**
    * None
    * @return patternWithoutDelimiter
-  **/
-  @ApiModelProperty(required = true, value = "None")
+   **/
+  @Schema(required = true, description = "None")
       @NotNull
 
   @Pattern(regexp="^[A-Z].*")   public String getPatternWithoutDelimiter() {
@@ -233,8 +234,8 @@ public class Body2   {
   /**
    * None
    * @return _byte
-  **/
-  @ApiModelProperty(required = true, value = "None")
+   **/
+  @Schema(required = true, description = "None")
       @NotNull
 
     public byte[] getByte() {
@@ -253,8 +254,8 @@ public class Body2   {
   /**
    * None
    * @return binary
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
     @Valid
     public Resource getBinary() {
@@ -273,8 +274,8 @@ public class Body2   {
   /**
    * None
    * @return date
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
     @Valid
     public LocalDate getDate() {
@@ -293,8 +294,8 @@ public class Body2   {
   /**
    * None
    * @return dateTime
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
     @Valid
     public OffsetDateTime getDateTime() {
@@ -313,8 +314,8 @@ public class Body2   {
   /**
    * None
    * @return password
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
     public String getPassword() {
     return password;
@@ -332,8 +333,8 @@ public class Body2   {
   /**
    * None
    * @return callback
-  **/
-  @ApiModelProperty(value = "None")
+   **/
+  @Schema(description = "None")
   
     public String getCallback() {
     return callback;

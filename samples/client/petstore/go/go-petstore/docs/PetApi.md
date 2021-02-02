@@ -165,7 +165,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetAllPets**
-> Array GetAllPets(ctx, )
+> []OneOfAllPetsResponseItems GetAllPets(ctx, )
 
 
 ### Required Parameters
@@ -173,7 +173,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Array**](array.md)
+[**[]OneOfAllPetsResponseItems**](array.md)
 
 ### Authorization
 
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **additionalMetadata** | **optional.**|  | 
- **file** | **optional.Interface of string****optional.**|  | 
+ **file** | **optional.Interface of *os.File****optional.**|  | 
 
 ### Return type
 

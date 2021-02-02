@@ -231,6 +231,11 @@ namespace IO.Swagger.Client
                 return FileParameter.Create(name, ReadAsBytes(stream), "no_file_name_provided");
         }
 
+        public FileParameter ParameterToFile(string name, byte[] stream)
+        {
+            return FileParameter.Create(name, stream, "no_file_name_provided");
+        }
+
         /// <summary>
         /// If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
         /// If parameter is a list, join the list with ",".

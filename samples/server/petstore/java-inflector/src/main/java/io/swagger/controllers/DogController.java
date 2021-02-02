@@ -20,31 +20,39 @@ public class DogController  {
    **/
 
   /*
-    public ResponseContext addDog(RequestContext request , Dog body ) {
+    public ResponseContext addDog(RequestContext request , Dog body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext deleteDog(RequestContext request , Long dogId , String apiKey ) {
+    public ResponseContext deleteDog(RequestContext request , Long dogId 
+, String apiKey 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext getDogById(RequestContext request , Long dogId ) {
+    public ResponseContext getDogById(RequestContext request , Long dogId 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext updateDog(RequestContext request , Dog body ) {
+    public ResponseContext updateDog(RequestContext request , Dog body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext updateDogWithForm(RequestContext request , Long animalId ,  String name,  String status) {
+    public ResponseContext updateDogWithForm(RequestContext request , Long dogId 
+,  String name
+,  String status
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

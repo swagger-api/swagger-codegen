@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.OuterEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumTest
@@ -196,6 +197,7 @@ public class EnumTest   {
    **/
   @JsonProperty("outerEnum")
   @Schema(description = "")
+  @Valid
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

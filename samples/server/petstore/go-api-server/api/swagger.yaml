@@ -83,11 +83,11 @@ paths:
           type: array
           items:
             type: string
-            default: available
             enum:
             - available
             - pending
             - sold
+            default: available
       responses:
         "200":
           description: successful operation
@@ -811,6 +811,7 @@ components:
         message: message
     Test:
       type: string
+      example: ""
     NullableEnumModel:
       type: object
       properties:

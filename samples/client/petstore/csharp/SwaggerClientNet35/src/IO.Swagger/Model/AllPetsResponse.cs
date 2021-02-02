@@ -32,7 +32,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AllPetsResponse" /> class.
         /// </summary>
-        public AllPetsResponse() : base(_123List)
+        public AllPetsResponse() : base()
         {
         }
         

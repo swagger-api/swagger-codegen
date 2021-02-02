@@ -1,6 +1,6 @@
 # IO.Swagger.Api.UserApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**GetUserByName**](UserApi.md#getuserbyname) | **GET** /user/{username} | Get user by user name
 [**LoginUser**](UserApi.md#loginuser) | **GET** /user/login | Logs user into the system
 [**LogoutUser**](UserApi.md#logoutuser) | **GET** /user/logout | Logs out current logged in user session
-[**UpdateUser**](UserApi.md#updateuser) | **PUT** /user/{username} | Updated user
+[**UserUsernamePut**](UserApi.md#userusernameput) | **PUT** /user/{username} | Updated user
 
 <a name="createuser"></a>
 # **CreateUser**
@@ -275,7 +275,7 @@ namespace Example
         {
 
             var apiInstance = new UserApi();
-            var username = username_example;  // string | The name that needs to be fetched. Use user1 for testing. 
+            var username = username_example;  // string | The name that needs to be fetched. Use user1 for testing.
 
             try
             {
@@ -296,7 +296,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **string**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 
@@ -309,7 +309,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -371,7 +371,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: application/json, application/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -430,9 +430,9 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="updateuser"></a>
-# **UpdateUser**
-> void UpdateUser (User body, string username)
+<a name="userusernameput"></a>
+# **UserUsernamePut**
+> void UserUsernamePut (User body, string username)
 
 Updated user
 
@@ -448,23 +448,23 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class UpdateUserExample
+    public class UserUsernamePutExample
     {
         public void main()
         {
 
             var apiInstance = new UserApi();
             var body = new User(); // User | Updated user object
-            var username = username_example;  // string | name that need to be deleted
+            var username = username_example;  // string | name that need to be updated
 
             try
             {
                 // Updated user
-                apiInstance.UpdateUser(body, username);
+                apiInstance.UserUsernamePut(body, username);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling UserApi.UpdateUser: " + e.Message );
+                Debug.Print("Exception when calling UserApi.UserUsernamePut: " + e.Message );
             }
         }
     }
@@ -476,7 +476,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**User**](User.md)| Updated user object | 
- **username** | **string**| name that need to be deleted | 
+ **username** | **string**| name that need to be updated | 
 
 ### Return type
 
@@ -488,7 +488,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: */*
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

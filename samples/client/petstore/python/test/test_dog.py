@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import swagger_client
-from models.dog import Dog  # noqa: E501
+from swagger_client.models.dog import Dog  # noqa: E501
 from swagger_client.rest import ApiException
 
 

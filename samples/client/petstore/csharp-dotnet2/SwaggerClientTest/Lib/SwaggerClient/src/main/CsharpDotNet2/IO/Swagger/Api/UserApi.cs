@@ -38,7 +38,7 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Get user by user name 
         /// </summary>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>User</returns>
         User GetUserByName (string username);
         /// <summary>
@@ -57,9 +57,9 @@ namespace IO.Swagger.Api
         /// Updated user This can only be done by the logged in user.
         /// </summary>
         /// <param name="body">Updated user object</param>
-        /// <param name="username">name that need to be deleted</param>
+        /// <param name="username">name that need to be updated</param>
         /// <returns></returns>
-        void UpdateUser (User body, string username);
+        void UserUsernamePut (User body, string username);
     }
   
     /// <summary>
@@ -258,7 +258,7 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Get user by user name 
         /// </summary>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>User</returns>
         public User GetUserByName (string username)
         {
@@ -364,14 +364,14 @@ namespace IO.Swagger.Api
         /// Updated user This can only be done by the logged in user.
         /// </summary>
         /// <param name="body">Updated user object</param>
-        /// <param name="username">name that need to be deleted</param>
+        /// <param name="username">name that need to be updated</param>
         /// <returns></returns>
-        public void UpdateUser (User body, string username)
+        public void UserUsernamePut (User body, string username)
         {
             // verify the required parameter 'body' is set
-            if (body == null) throw new ApiException(400, "Missing required parameter 'body' when calling UpdateUser");
+            if (body == null) throw new ApiException(400, "Missing required parameter 'body' when calling UserUsernamePut");
             // verify the required parameter 'username' is set
-            if (username == null) throw new ApiException(400, "Missing required parameter 'username' when calling UpdateUser");
+            if (username == null) throw new ApiException(400, "Missing required parameter 'username' when calling UserUsernamePut");
     
             var path = "/user/{username}";
             path = path.Replace("{format}", "json");
@@ -392,9 +392,9 @@ namespace IO.Swagger.Api
             IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.PUT, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
     
             if (((int)response.StatusCode) >= 400)
-                throw new ApiException ((int)response.StatusCode, "Error calling UpdateUser: " + response.Content, response.Content);
+                throw new ApiException ((int)response.StatusCode, "Error calling UserUsernamePut: " + response.Content, response.Content);
             else if (((int)response.StatusCode) == 0)
-                throw new ApiException ((int)response.StatusCode, "Error calling UpdateUser: " + response.ErrorMessage, response.ErrorMessage);
+                throw new ApiException ((int)response.StatusCode, "Error calling UserUsernamePut: " + response.ErrorMessage, response.ErrorMessage);
     
             return;
         }

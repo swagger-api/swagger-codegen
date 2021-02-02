@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * ArrayTest
@@ -80,6 +81,7 @@ public class ArrayTest   {
    **/
   @JsonProperty("array_array_of_integer")
   @Schema(description = "")
+  @Valid
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -107,6 +109,7 @@ public class ArrayTest   {
    **/
   @JsonProperty("array_array_of_model")
   @Schema(description = "")
+  @Valid
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
