@@ -93,7 +93,7 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
 
         List<String> idsToReplace = new ArrayList<>(Arrays.asList("outboundcampaign","authorizationdivision", "telephonyprovidersedge",
                 "group", "location", "sphone", "routingqueue", "ssite", "routingskill", "station", "usagequery",
-                "listexecutionid", "user", "notificationschannel", "subscription", "authorizationrole"));
+                "listexecutionid", "user", "notificationschannel", "subscription", "authorizationrole", "sdidpool", "sdid"  ));
         operationId = operationId
                 .toLowerCase()
                 .replaceAll(String.join("|", idsToReplace), "")
