@@ -81,7 +81,8 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
 
     @Override
     public String toApiFilename(String name) {
-        return toCustomApiName((name + File.separatorChar + name));
+        name = name.toLowerCase();
+        return name + File.separatorChar + name;
     }
 
     @Override
@@ -156,17 +157,7 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
 
     @Override
     public String toApiVarName(String name) {
-        return toCustomApiName(name);
-    }
-
-    private String toCustomApiName(String name) {
-        // Renaming APIs as necessary to create more user friendly names for the CLI interface
-        return name
-                .toLowerCase()
-                .replaceAll("outbound", "campaigns")
-                .replaceAll("authorization", "divisions")
-                .replaceAll("telephonyprovidersedge", "edges")
-                .replaceAll("routing", "queues");
+        return name.toLowerCase();
     }
 
     @Override
