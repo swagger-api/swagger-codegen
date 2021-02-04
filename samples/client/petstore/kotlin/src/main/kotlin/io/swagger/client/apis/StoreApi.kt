@@ -105,7 +105,7 @@ class StoreApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/store/order"
         )
         val response = request<Order>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
