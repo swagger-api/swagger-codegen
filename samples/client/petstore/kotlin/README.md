@@ -2,8 +2,8 @@
 
 ## Requires
 
-* Kotlin 1.1.2
-* Gradle 3.3
+* Kotlin 1.3.72
+* Gradle 4.9
 
 ## Build
 
@@ -38,6 +38,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**testMethod**](docs/DefaultApi.md#testmethod) | **GET** /test | 
 *PetApi* | [**addPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**deletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**doCategoryStuff**](docs/PetApi.md#docategorystuff) | **POST** /pet/category | 
 *PetApi* | [**findPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**findPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
 *PetApi* | [**getAllPets**](docs/PetApi.md#getallpets) | **GET** /allPets | 
@@ -62,6 +63,8 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [io.swagger.client.models.AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [io.swagger.client.models.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
  - [io.swagger.client.models.AllPetsResponse](docs/AllPetsResponse.md)
  - [io.swagger.client.models.ApiResponse](docs/ApiResponse.md)
  - [io.swagger.client.models.Body](docs/Body.md)
@@ -74,6 +77,7 @@ Class | Method | HTTP request | Description
  - [io.swagger.client.models.Order](docs/Order.md)
  - [io.swagger.client.models.Pet](docs/Pet.md)
  - [io.swagger.client.models.SinglePetResponse](docs/SinglePetResponse.md)
+ - [io.swagger.client.models.SubCategory](docs/SubCategory.md)
  - [io.swagger.client.models.Tag](docs/Tag.md)
  - [io.swagger.client.models.Test](docs/Test.md)
  - [io.swagger.client.models.User](docs/User.md)
@@ -96,5 +100,6 @@ Class | Method | HTTP request | Description
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/oauth/dialog
 - **Scopes**: 
-  - : 
+  - write:pets: modify pets in your account
+  - read:pets: read your pets
 

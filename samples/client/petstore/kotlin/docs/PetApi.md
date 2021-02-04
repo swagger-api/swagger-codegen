@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**addPet**](PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 [**deletePet**](PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
+[**doCategoryStuff**](PetApi.md#doCategoryStuff) | **POST** /pet/category | 
 [**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** /pet/findByTags | Finds Pets by tags
 [**getAllPets**](PetApi.md#getAllPets) | **GET** /allPets | 
@@ -104,6 +105,51 @@ null (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+<a name="doCategoryStuff"></a>
+# **doCategoryStuff**
+> ApiResponse doCategoryStuff(body)
+
+
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = PetApi()
+val body : SubCategory =  // SubCategory | 
+try {
+    val result : ApiResponse = apiInstance.doCategoryStuff(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling PetApi#doCategoryStuff")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling PetApi#doCategoryStuff")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional]
+
+### Return type
+
+[**ApiResponse**](ApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findPetsByStatus"></a>
 # **findPetsByStatus**
