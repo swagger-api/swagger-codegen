@@ -85,6 +85,15 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
         return name + File.separatorChar + name;
     }
 
+    private int firstIndexOfCapital(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isUpperCase(str.charAt(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public String toOperationId(String operationId) {
         final String SWAGGER_OVERRIDE = "SWAGGER_OVERRIDE_";
@@ -92,12 +101,16 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
             return operationId.replace(SWAGGER_OVERRIDE, "");
         }
 
-        List<String> idsToReplace = new ArrayList<>(Arrays.asList("outboundcampaign","authorizationdivision", "telephonyprovidersedge",
-                "group", "location", "sphone", "routingqueue", "ssite", "routingskill", "station", "usagequery",
-                "listexecutionid", "user", "notificationschannel", "subscription", "authorizationrole", "sdidpool", "sdid"  ));
+        // OperationIds look like getRoutingSkills or deleteRoutingSkill etc, change it to gets or delete in this step
+        boolean isPlural = operationId.endsWith("s");
+        operationId = operationId.substring(0, firstIndexOfCapital(operationId));
+        operationId += isPlural ? "s" : "";
+
+        // post -> create
+        // patch or put -> update (will cause a clash if a resource has both, this would have to be resolved by overriding one or both operationIds)
+        // get -> get (no change)
+        // gets -> list
         operationId = operationId
-                .toLowerCase()
-                .replaceAll(String.join("|", idsToReplace), "")
                 .replaceAll("^post", "create")
                 .replaceAll("^patch|^put", "update");
         if (operationId.startsWith("get") && operationId.endsWith("s"))
