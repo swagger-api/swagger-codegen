@@ -21,7 +21,7 @@ executable="./modules/swagger-codegen-cli/target/swagger-codegen-cli.jar"
 
 if [ ! -f "$executable" ]
 then
-  mvn clean package
+  mvn -B clean package
 fi
 
 # if you've executed sbt assembly previously it will use that instead.

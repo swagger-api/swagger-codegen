@@ -21,7 +21,7 @@ executable="./modules/swagger-codegen-cli/target/swagger-codegen-cli.jar"
 
 if [ ! -f "$executable" ]
 then
-  mvn clean package
+  mvn -B clean package
 fi
 
 # remove existing lib and model file

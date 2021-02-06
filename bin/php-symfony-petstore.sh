@@ -31,7 +31,7 @@ executable="$SCRIPT_DIR/../modules/swagger-codegen-cli/target/swagger-codegen-cl
 
 if [ ! -f "$executable" ]
 then
-  mvn clean package
+  mvn -B clean package
 fi
 
 # if you've executed sbt assembly previously it will use that instead.
