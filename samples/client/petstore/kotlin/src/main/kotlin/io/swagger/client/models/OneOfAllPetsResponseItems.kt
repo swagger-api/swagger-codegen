@@ -15,7 +15,7 @@ package io.swagger.client.models
 /**
  * 
  */
-data class OneOfAllPetsResponseItems (
+class OneOfAllPetsResponseItems (
 
 ) {
 }
