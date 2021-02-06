@@ -136,6 +136,10 @@ public abstract class CodegenObject implements VendorExtendable {
         return getBooleanValue(CodegenConstants.IS_READ_ONLY_EXT_NAME);
     }
 
+    public Boolean getIsNullable() {
+        return getBooleanValue(CodegenConstants.IS_NULLABLE_EXT_NAME);
+    }
+
     public Boolean getIsCollectionFormatMulti() {
         return getBooleanValue(CodegenConstants.IS_COLLECTION_FORMAT_MULTI_EXT_NAME);
     }

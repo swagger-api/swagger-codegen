@@ -31,7 +31,7 @@ class UserApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/user"
         )
         val response = request<Any?>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
@@ -56,7 +56,7 @@ class UserApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/user/createWithArray"
         )
         val response = request<Any?>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
@@ -81,7 +81,7 @@ class UserApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/user/createWithList"
         )
         val response = request<Any?>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
@@ -205,7 +205,7 @@ class UserApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/user/{username}".replace("{" + "username" + "}", "$username")
         )
         val response = request<Any?>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
