@@ -22,6 +22,10 @@ export interface ConfigurationParameters {
 
 export class Configuration {
     /**
+     * object for default configurations
+     */
+    static DEFAULT_INSTANCE = new Configuration({basePath: "http://petstore.swagger.io/v2".replace(/\/+$/, "")});
+    /**
      * parameter for apiKey security
      * @param name security name
      * @memberof Configuration
