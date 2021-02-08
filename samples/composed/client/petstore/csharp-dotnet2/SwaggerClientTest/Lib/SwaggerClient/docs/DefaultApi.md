@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 <a name="testmethod"></a>
 # **TestMethod**
-> List<Test> TestMethod ()
+> List<string> TestMethod ()
 
 
 
@@ -32,7 +32,7 @@ namespace Example
 
             try
             {
-                List&lt;Test&gt; result = apiInstance.TestMethod();
+                List&lt;string&gt; result = apiInstance.TestMethod();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -49,7 +49,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<Test>**](Test.md)
+**List<string>**
 
 ### Authorization
 

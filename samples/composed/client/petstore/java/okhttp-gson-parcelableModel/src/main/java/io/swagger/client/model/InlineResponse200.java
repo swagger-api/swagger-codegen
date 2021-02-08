@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.client.model.InlineResponse2001;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,18 +33,18 @@ import android.os.Parcel;
 
 public class InlineResponse200 implements Parcelable {
   @SerializedName("parrots")
-  private List<OneOfinlineResponse200ParrotsItems> parrots = null;
+  private List<InlineResponse2001> parrots = null;
 
   public InlineResponse200() {
   }
-  public InlineResponse200 parrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
+  public InlineResponse200 parrots(List<InlineResponse2001> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public InlineResponse200 addParrotsItem(OneOfinlineResponse200ParrotsItems parrotsItem) {
+  public InlineResponse200 addParrotsItem(InlineResponse2001 parrotsItem) {
     if (this.parrots == null) {
-      this.parrots = new ArrayList<OneOfinlineResponse200ParrotsItems>();
+      this.parrots = new ArrayList<InlineResponse2001>();
     }
     this.parrots.add(parrotsItem);
     return this;
@@ -54,11 +55,11 @@ public class InlineResponse200 implements Parcelable {
    * @return parrots
   **/
   @Schema(description = "")
-  public List<OneOfinlineResponse200ParrotsItems> getParrots() {
+  public List<InlineResponse2001> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<OneOfinlineResponse200ParrotsItems> parrots) {
+  public void setParrots(List<InlineResponse2001> parrots) {
     this.parrots = parrots;
   }
 
@@ -108,7 +109,7 @@ public class InlineResponse200 implements Parcelable {
   }
 
   InlineResponse200(Parcel in) {
-    parrots = (List<OneOfinlineResponse200ParrotsItems>)in.readValue(null);
+    parrots = (List<InlineResponse2001>)in.readValue(InlineResponse2001.class.getClassLoader());
   }
 
   public int describeContents() {

@@ -27,7 +27,7 @@ namespace IO.Swagger.Model
     /// AllPetsResponse
     /// </summary>
     [DataContract]
-        public partial class AllPetsResponse : List<OneOfAllPetsResponseItems>,  IEquatable<AllPetsResponse>, IValidatableObject
+        public partial class AllPetsResponse : List<InlineArrayItemsAllPetsResponse>,  IEquatable<AllPetsResponse>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AllPetsResponse" /> class.

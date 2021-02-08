@@ -428,6 +428,33 @@
         } ]
       }
     },
+    "/pet/category" : {
+      "post" : {
+        "tags" : [ "pet" ],
+        "operationId" : "doCategoryStuff",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SubCategory"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/store/inventory" : {
       "get" : {
         "tags" : [ "store" ],
@@ -815,11 +842,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "anyOf" : [ {
-                      "$ref" : "#/components/schemas/Macaw"
-                    }, {
-                      "$ref" : "#/components/schemas/Parakeet"
-                    } ]
+                    "$ref" : "#/components/schemas/inline_response_items200"
                   },
                   "x-content-type" : "application/json"
                 }
@@ -1068,7 +1091,8 @@
         }
       },
       "Test" : {
-        "type" : "string"
+        "type" : "string",
+        "example" : ""
       },
       "PartOne" : {
         "properties" : {
@@ -1137,11 +1161,7 @@
           "part" : {
             "type" : "array",
             "items" : {
-              "oneOf" : [ {
-                "$ref" : "#/components/schemas/Dog"
-              }, {
-                "$ref" : "#/components/schemas/Cat"
-              } ]
+              "$ref" : "#/components/schemas/Pet_part"
             }
           }
         },
@@ -1171,45 +1191,21 @@
       "AllPetsResponse" : {
         "type" : "array",
         "items" : {
-          "discriminator" : {
-            "propertyName" : "pet_type"
-          },
-          "oneOf" : [ {
-            "$ref" : "#/components/schemas/Dog"
-          }, {
-            "$ref" : "#/components/schemas/Cat"
-          } ]
+          "$ref" : "#/components/schemas/inline_array_items_AllPetsResponse"
         }
       },
       "Dog" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/Pet"
         }, {
-          "type" : "object",
-          "properties" : {
-            "bark" : {
-              "type" : "boolean"
-            },
-            "breed" : {
-              "type" : "string",
-              "enum" : [ "Dingo", "Husky", "Retriever", "Shepherd" ]
-            }
-          }
+          "$ref" : "#/components/schemas/DogAllOf_2"
         } ]
       },
       "Cat" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/Pet"
         }, {
-          "type" : "object",
-          "properties" : {
-            "hunts" : {
-              "type" : "boolean"
-            },
-            "age" : {
-              "type" : "integer"
-            }
-          }
+          "$ref" : "#/components/schemas/CatAllOf_2"
         } ]
       },
       "Macaw" : {
@@ -1243,11 +1239,7 @@
             "type" : "array",
             "description" : "Business Term: Scheme Member\nDefinition: Information about a Member of the Scheme.\nPurpose: To have enough information to be able to produce a Statement of Account indicating premium due.",
             "items" : {
-              "oneOf" : [ {
-                "$ref" : "#/components/schemas/val_MemberChoice1"
-              }, {
-                "$ref" : "#/components/schemas/val_MemberChoice2"
-              } ]
+              "$ref" : "#/components/schemas/val_Members_val_member"
             }
           }
         },
@@ -1308,6 +1300,51 @@
           "prefix" : "val"
         }
       },
+      "NullableEnumModel" : {
+        "type" : "object",
+        "properties" : {
+          "enumProp" : {
+            "type" : "string",
+            "nullable" : true,
+            "enum" : [ "a", "b", null ]
+          }
+        }
+      },
+      "SubCategory" : {
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Category"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "foo" : {
+                  "type" : "boolean"
+                },
+                "bar" : {
+                  "type" : "integer"
+                },
+                "beer" : {
+                  "type" : "string"
+                },
+                "drunk" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            } ]
+          },
+          "category2" : {
+            "$ref" : "#/components/schemas/Category"
+          },
+          "pets" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SubCategory_pets"
+            }
+          }
+        }
+      },
       "body" : {
         "type" : "object",
         "properties" : {
@@ -1321,17 +1358,20 @@
           }
         }
       },
+      "inline_response_items200" : {
+        "anyOf" : [ {
+          "$ref" : "#/components/schemas/Macaw"
+        }, {
+          "$ref" : "#/components/schemas/Parakeet"
+        } ]
+      },
       "body_1" : {
         "type" : "object",
         "properties" : {
           "parrots" : {
             "type" : "array",
             "items" : {
-              "anyOf" : [ {
-                "$ref" : "#/components/schemas/Macaw"
-              }, {
-                "$ref" : "#/components/schemas/Parakeet"
-              } ]
+              "$ref" : "#/components/schemas/inline_response_items200"
             }
           }
         }
@@ -1342,11 +1382,7 @@
           "parrots" : {
             "type" : "array",
             "items" : {
-              "oneOf" : [ {
-                "$ref" : "#/components/schemas/Macaw"
-              }, {
-                "$ref" : "#/components/schemas/Parakeet"
-              } ]
+              "$ref" : "#/components/schemas/inline_response_200_1"
             }
           }
         },
@@ -1366,6 +1402,58 @@
           "$ref" : "#/components/schemas/Macaw"
         }, {
           "$ref" : "#/components/schemas/Parakeet"
+        } ]
+      },
+      "Pet_part" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/Dog"
+        }, {
+          "$ref" : "#/components/schemas/Cat"
+        } ]
+      },
+      "inline_array_items_AllPetsResponse" : {
+        "discriminator" : {
+          "propertyName" : "PetType"
+        },
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/Dog"
+        }, {
+          "$ref" : "#/components/schemas/Cat"
+        } ]
+      },
+      "DogAllOf_2" : {
+        "type" : "object",
+        "properties" : {
+          "bark" : {
+            "type" : "boolean"
+          },
+          "breed" : {
+            "type" : "string",
+            "enum" : [ "Dingo", "Husky", "Retriever", "Shepherd" ]
+          }
+        }
+      },
+      "CatAllOf_2" : {
+        "type" : "object",
+        "properties" : {
+          "hunts" : {
+            "type" : "boolean"
+          },
+          "age" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "val_Members_val_member" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/val_MemberChoice1"
+        }, {
+          "$ref" : "#/components/schemas/val_MemberChoice2"
+        } ]
+      },
+      "SubCategory_pets" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Pet"
         } ]
       }
     },

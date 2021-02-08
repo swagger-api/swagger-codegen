@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.client.model.InlineResponseItems200;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,18 +33,18 @@ import android.os.Parcel;
 
 public class Body1 implements Parcelable {
   @SerializedName("parrots")
-  private List<AnyOfbody1ParrotsItems> parrots = null;
+  private List<InlineResponseItems200> parrots = null;
 
   public Body1() {
   }
-  public Body1 parrots(List<AnyOfbody1ParrotsItems> parrots) {
+  public Body1 parrots(List<InlineResponseItems200> parrots) {
     this.parrots = parrots;
     return this;
   }
 
-  public Body1 addParrotsItem(AnyOfbody1ParrotsItems parrotsItem) {
+  public Body1 addParrotsItem(InlineResponseItems200 parrotsItem) {
     if (this.parrots == null) {
-      this.parrots = new ArrayList<AnyOfbody1ParrotsItems>();
+      this.parrots = new ArrayList<InlineResponseItems200>();
     }
     this.parrots.add(parrotsItem);
     return this;
@@ -54,11 +55,11 @@ public class Body1 implements Parcelable {
    * @return parrots
   **/
   @Schema(description = "")
-  public List<AnyOfbody1ParrotsItems> getParrots() {
+  public List<InlineResponseItems200> getParrots() {
     return parrots;
   }
 
-  public void setParrots(List<AnyOfbody1ParrotsItems> parrots) {
+  public void setParrots(List<InlineResponseItems200> parrots) {
     this.parrots = parrots;
   }
 
@@ -108,7 +109,7 @@ public class Body1 implements Parcelable {
   }
 
   Body1(Parcel in) {
-    parrots = (List<AnyOfbody1ParrotsItems>)in.readValue(null);
+    parrots = (List<InlineResponseItems200>)in.readValue(InlineResponseItems200.class.getClassLoader());
   }
 
   public int describeContents() {

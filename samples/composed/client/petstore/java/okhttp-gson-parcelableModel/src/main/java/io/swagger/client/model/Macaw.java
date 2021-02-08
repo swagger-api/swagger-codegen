@@ -28,7 +28,7 @@ import android.os.Parcel;
  */
 
 
-public class Macaw implements Parcelable , AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001 {
+public class Macaw implements Parcelable , AnyOfbody2, OneOfinlineResponse2001, AnyOfinlineResponseItems200 {
   @SerializedName("color")
   private String color = null;
 

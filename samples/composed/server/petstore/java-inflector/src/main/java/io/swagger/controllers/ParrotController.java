@@ -14,6 +14,7 @@ import io.swagger.model.Body1;
 import io.swagger.model.Body2;
 import io.swagger.model.InlineResponse200;
 import io.swagger.model.InlineResponse2001;
+import io.swagger.model.InlineResponseItems200;
 
 public class ParrotController  {
   /** 

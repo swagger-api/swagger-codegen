@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.client.model.PetPart;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class Pet implements Parcelable {
 
       @Override
       public StatusEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextObject();
         return StatusEnum.fromValue(String.valueOf(value));
       }
     }
@@ -83,7 +84,7 @@ public class Pet implements Parcelable {
   private StatusEnum status = null;
 
   @SerializedName("part")
-  private List<OneOfPetPartItems> part = null;
+  private List<PetPart> part = null;
 
   public Pet() {
   }
@@ -141,14 +142,14 @@ public class Pet implements Parcelable {
     this.status = status;
   }
 
-  public Pet part(List<OneOfPetPartItems> part) {
+  public Pet part(List<PetPart> part) {
     this.part = part;
     return this;
   }
 
-  public Pet addPartItem(OneOfPetPartItems partItem) {
+  public Pet addPartItem(PetPart partItem) {
     if (this.part == null) {
-      this.part = new ArrayList<OneOfPetPartItems>();
+      this.part = new ArrayList<PetPart>();
     }
     this.part.add(partItem);
     return this;
@@ -159,11 +160,11 @@ public class Pet implements Parcelable {
    * @return part
   **/
   @Schema(description = "")
-  public List<OneOfPetPartItems> getPart() {
+  public List<PetPart> getPart() {
     return part;
   }
 
-  public void setPart(List<OneOfPetPartItems> part) {
+  public void setPart(List<PetPart> part) {
     this.part = part;
   }
 
@@ -225,7 +226,7 @@ public class Pet implements Parcelable {
     id = (Long)in.readValue(null);
     name = (String)in.readValue(null);
     status = (StatusEnum)in.readValue(null);
-    part = (List<OneOfPetPartItems>)in.readValue(null);
+    part = (List<PetPart>)in.readValue(PetPart.class.getClassLoader());
   }
 
   public int describeContents() {

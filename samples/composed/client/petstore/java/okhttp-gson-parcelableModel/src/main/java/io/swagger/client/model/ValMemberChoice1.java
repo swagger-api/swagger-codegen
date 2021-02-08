@@ -29,7 +29,7 @@ import android.os.Parcel;
  */
 @Schema(description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
 
-public class ValMemberChoice1 implements Parcelable , OneOfvalMembersValMemberItems {
+public class ValMemberChoice1 implements Parcelable , OneOfvalMembersValMember {
   @SerializedName("val_date_of_birth")
   private LocalDate valDateOfBirth = null;
 

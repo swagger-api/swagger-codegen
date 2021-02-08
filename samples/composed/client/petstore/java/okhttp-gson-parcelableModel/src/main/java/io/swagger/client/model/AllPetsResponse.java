@@ -14,6 +14,7 @@ package io.swagger.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import io.swagger.client.model.InlineArrayItemsAllPetsResponse;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
@@ -23,7 +24,7 @@ import android.os.Parcel;
  */
 
 
-public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> implements Parcelable {
+public class AllPetsResponse extends ArrayList<InlineArrayItemsAllPetsResponse> implements Parcelable {
   public AllPetsResponse() {
     super();
   }
@@ -71,7 +72,7 @@ public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> implem
   }
 
   AllPetsResponse(Parcel in) {
-    in.readTypedList(this, OneOfAllPetsResponseItems.CREATOR);
+    in.readTypedList(this, InlineArrayItemsAllPetsResponse.CREATOR);
   }
 
   public int describeContents() {
@@ -81,7 +82,7 @@ public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> implem
   public static final Parcelable.Creator<AllPetsResponse> CREATOR = new Parcelable.Creator<AllPetsResponse>() {
     public AllPetsResponse createFromParcel(Parcel in) {
       AllPetsResponse result = new AllPetsResponse();
-      result.addAll(in.readArrayList(OneOfAllPetsResponseItems.class.getClassLoader()));
+      result.addAll(in.readArrayList(InlineArrayItemsAllPetsResponse.class.getClassLoader()));
       return result;
     }
     public AllPetsResponse[] newArray(int size) {

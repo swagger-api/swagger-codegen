@@ -2,6 +2,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.model.ValMembersValMember;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,11 @@ import java.util.List;
 
 public class ValMembers   {
   @JsonProperty("val_member")
-  private List<OneOfvalMembersValMemberItems> valMember = new ArrayList<OneOfvalMembersValMemberItems>();
+  private List<ValMembersValMember> valMember = new ArrayList<ValMembersValMember>();
   /**
    * Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
    **/
-  public ValMembers valMember(List<OneOfvalMembersValMemberItems> valMember) {
+  public ValMembers valMember(List<ValMembersValMember> valMember) {
     this.valMember = valMember;
     return this;
   }
@@ -26,10 +27,10 @@ public class ValMembers   {
   
   @Schema(required = true, description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
   @JsonProperty("val_member")
-  public List<OneOfvalMembersValMemberItems> getValMember() {
+  public List<ValMembersValMember> getValMember() {
     return valMember;
   }
-  public void setValMember(List<OneOfvalMembersValMemberItems> valMember) {
+  public void setValMember(List<ValMembersValMember> valMember) {
     this.valMember = valMember;
   }
 

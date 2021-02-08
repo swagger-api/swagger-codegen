@@ -31,7 +31,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="ValMembers" /> class.
         /// </summary>
         /// <param name="valMember">Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due. (required).</param>
-        public ValMembers(List<OneOfvalMembersValMemberItems> valMember = default(List<OneOfvalMembersValMemberItems>))
+        public ValMembers(List<ValMembersValMember> valMember = default(List<ValMembersValMember>))
         {
             // to ensure "valMember" is required (not null)
             if (valMember == null)
@@ -49,7 +49,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <value>Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.</value>
         [DataMember(Name="val_member", EmitDefaultValue=false)]
-        public List<OneOfvalMembersValMemberItems> ValMember { get; set; }
+        public List<ValMembersValMember> ValMember { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

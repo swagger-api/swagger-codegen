@@ -17,8 +17,10 @@ import io.swagger.client.model.Body1;
 import io.swagger.client.model.Body2;
 import io.swagger.client.model.InlineResponse200;
 import io.swagger.client.model.InlineResponse2001;
+import io.swagger.client.model.InlineResponseItems200;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SubCategory;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -82,6 +84,21 @@ public class PetApiTest {
         // TODO: test validations
     }
     /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void doCategoryStuffTest() throws ApiException {
+        SubCategory body = null;
+        ModelApiResponse response = api.doCategoryStuff(body);
+
+        // TODO: test validations
+    }
+    /**
      * Find pet by ID
      *
      * schedule pet feeding
@@ -141,7 +158,7 @@ public class PetApiTest {
      */
     @Test
     public void getParrotsTest() throws ApiException {
-        List<Object> response = api.getParrots();
+        List<InlineResponseItems200> response = api.getParrots();
 
         // TODO: test validations
     }

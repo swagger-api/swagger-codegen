@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**AddParrot**](PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 [**AddPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 [**DeletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+[**DoCategoryStuff**](PetApi.md#docategorystuff) | **POST** /pet/category | 
 [**FeedPet**](PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 [**FindPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**FindPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
@@ -195,6 +196,63 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="docategorystuff"></a>
+# **DoCategoryStuff**
+> ApiResponse DoCategoryStuff (SubCategory body = null)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class DoCategoryStuffExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+            var body = new SubCategory(); // SubCategory |  (optional) 
+
+            try
+            {
+                ApiResponse result = apiInstance.DoCategoryStuff(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.DoCategoryStuff: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional] 
+
+### Return type
+
+[**ApiResponse**](ApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="feedpet"></a>
@@ -629,7 +687,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="updatepetwithform"></a>
 # **UpdatePetWithForm**
-> void UpdatePetWithForm (long? petId, string name = null, string status = null)
+> void UpdatePetWithForm (long? petId)
 
 Updates a pet in the store with form data
 
@@ -652,13 +710,11 @@ namespace Example
 
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet that needs to be updated
-            var name = name_example;  // string |  (optional) 
-            var status = status_example;  // string |  (optional) 
 
             try
             {
                 // Updates a pet in the store with form data
-                apiInstance.UpdatePetWithForm(petId, name, status);
+                apiInstance.UpdatePetWithForm(petId);
             }
             catch (Exception e)
             {
@@ -674,8 +730,6 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **long?**| ID of pet that needs to be updated | 
- **name** | **string**|  | [optional] 
- **status** | **string**|  | [optional] 
 
 ### Return type
 

@@ -12,6 +12,7 @@ import io.swagger.model.*;
 
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 public class PetController  {
   /** 
@@ -30,6 +31,13 @@ public class PetController  {
   /*
     public ResponseContext deletePet(RequestContext request , Long petId 
 , String apiKey 
+) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext doCategoryStuff(RequestContext request , SubCategory body 
 ) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }

@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/gracekarina/repo/swagger-codegen/samples/composed/client/petstore/csharp/SwaggerClientNetStandard/src/IO.Swagger/IO.Swagger.csproj": {}
+  },
+  "projects": {
+    "/Users/gracekarina/repo/swagger-codegen/samples/composed/client/petstore/csharp/SwaggerClientNetStandard/src/IO.Swagger/IO.Swagger.csproj": {
+      "restore": {
+        "projectUniqueName": "/Users/gracekarina/repo/swagger-codegen/samples/composed/client/petstore/csharp/SwaggerClientNetStandard/src/IO.Swagger/IO.Swagger.csproj",
+        "projectName": "IO.Swagger",
+        "projectPath": "/Users/gracekarina/repo/swagger-codegen/samples/composed/client/petstore/csharp/SwaggerClientNetStandard/src/IO.Swagger/IO.Swagger.csproj",
+        "projectJsonPath": "/Users/gracekarina/repo/swagger-codegen/samples/composed/client/petstore/csharp/SwaggerClientNetStandard/src/IO.Swagger/project.json",
+        "packagesPath": "/Users/gracekarina/.nuget/packages/",
+        "projectStyle": "ProjectJson",
+        "configFilePaths": [
+          "/Users/gracekarina/.config/NuGet/NuGet.Config"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        }
+      },
+      "dependencies": {
+        "FubarCoder.RestSharp.Portable.Core": "[4.0.7, )",
+        "FubarCoder.RestSharp.Portable.HttpClient": "[4.0.7, )",
+        "JsonSubTypes": "[1.2.0, )",
+        "Newtonsoft.Json": "[10.0.3, )"
+      },
+      "frameworks": {
+        "netstandard1.3": {}
+      }
+    }
+  }
+}

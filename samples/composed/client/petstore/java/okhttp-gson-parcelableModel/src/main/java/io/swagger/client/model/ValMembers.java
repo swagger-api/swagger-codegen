@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.client.model.ValMembersValMember;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,16 +33,16 @@ import android.os.Parcel;
 
 public class ValMembers implements Parcelable {
   @SerializedName("val_member")
-  private List<OneOfvalMembersValMemberItems> valMember = new ArrayList<OneOfvalMembersValMemberItems>();
+  private List<ValMembersValMember> valMember = new ArrayList<ValMembersValMember>();
 
   public ValMembers() {
   }
-  public ValMembers valMember(List<OneOfvalMembersValMemberItems> valMember) {
+  public ValMembers valMember(List<ValMembersValMember> valMember) {
     this.valMember = valMember;
     return this;
   }
 
-  public ValMembers addValMemberItem(OneOfvalMembersValMemberItems valMemberItem) {
+  public ValMembers addValMemberItem(ValMembersValMember valMemberItem) {
     this.valMember.add(valMemberItem);
     return this;
   }
@@ -51,11 +52,11 @@ public class ValMembers implements Parcelable {
    * @return valMember
   **/
   @Schema(required = true, description = "Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.")
-  public List<OneOfvalMembersValMemberItems> getValMember() {
+  public List<ValMembersValMember> getValMember() {
     return valMember;
   }
 
-  public void setValMember(List<OneOfvalMembersValMemberItems> valMember) {
+  public void setValMember(List<ValMembersValMember> valMember) {
     this.valMember = valMember;
   }
 
@@ -105,7 +106,7 @@ public class ValMembers implements Parcelable {
   }
 
   ValMembers(Parcel in) {
-    valMember = (List<OneOfvalMembersValMemberItems>)in.readValue(null);
+    valMember = (List<ValMembersValMember>)in.readValue(ValMembersValMember.class.getClassLoader());
   }
 
   public int describeContents() {
