@@ -27,7 +27,7 @@ public class PureCloudDotNetClientCodegen extends CSharpClientCodegen {
         // Custom mappings for swagger type -> .NET type
         typeMapping.put("date", "String" );
         typeMapping.put("LocalDateTime", "DateTime?");
-        
+        typeMapping.put("LocalTime", "DateTime?");
     }
 
     @Override
