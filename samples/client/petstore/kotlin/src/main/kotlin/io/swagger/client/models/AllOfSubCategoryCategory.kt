@@ -11,22 +11,25 @@
  */
 package io.swagger.client.models
 
+import io.swagger.client.models.Category
+import io.swagger.client.models.User
 
 /**
  * 
- * @param enumProp 
+ * @param id 
+ * @param name 
+ * @param foo 
+ * @param bar 
+ * @param beer 
+ * @param drunk 
  */
-data class NullableEnumModel (
+data class AllOfSubCategoryCategory (
 
-    val enumProp: NullableEnumModel.EnumProp? = null
+    val id: kotlin.Long? = null,
+    val name: kotlin.String? = null,
+    val foo: kotlin.Boolean? = null,
+    val bar: kotlin.Int? = null,
+    val beer: kotlin.String? = null,
+    val drunk: User? = null
 ) {
-    /**
-    * 
-    * Values: a,b,`null`
-    */
-    enum class EnumProp(val value: kotlin.String?){
-        a("a"),
-        b("b"),
-        `null`(null);
-    }
 }

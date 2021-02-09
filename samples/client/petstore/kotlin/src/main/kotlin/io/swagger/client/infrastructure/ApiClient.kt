@@ -1,6 +1,8 @@
 package io.swagger.client.infrastructure
 
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.File
 
 open class ApiClient(val baseUrl: String) {
@@ -23,7 +25,7 @@ open class ApiClient(val baseUrl: String) {
 
     protected inline fun <reified T> requestBody(content: T, mediaType: String = JsonMediaType): RequestBody =
             when {
-                content is File -> RequestBody.create(MediaType.parse(mediaType), content)
+                content is File -> RequestBody.create(mediaType.toMediaTypeOrNull(), content)
 
                 mediaType == FormDataMediaType -> {
                     var builder = FormBody.Builder()
@@ -35,7 +37,7 @@ open class ApiClient(val baseUrl: String) {
                     builder.build()
                 }
                 mediaType == JsonMediaType -> RequestBody.create(
-                        MediaType.parse(mediaType), Serializer.moshi.adapter(T::class.java).toJson(content)
+                        mediaType.toMediaTypeOrNull(), Serializer.moshi.adapter(T::class.java).toJson(content)
                 )
                 mediaType == XmlMediaType -> TODO("xml not currently supported.")
 
@@ -52,7 +54,7 @@ open class ApiClient(val baseUrl: String) {
     }
 
     protected inline fun <reified T : Any?> request(requestConfig: RequestConfig, body: Any? = null): ApiInfrastructureResponse<T?> {
-        val httpUrl = HttpUrl.parse(baseUrl) ?: throw IllegalStateException("baseUrl is invalid.")
+        val httpUrl = baseUrl.toHttpUrlOrNull() ?: throw IllegalStateException("baseUrl is invalid.")
 
         var urlBuilder = httpUrl.newBuilder()
                 .addPathSegments(requestConfig.path.trimStart('/'))
@@ -88,7 +90,7 @@ open class ApiClient(val baseUrl: String) {
             RequestMethod.OPTIONS -> Request.Builder().url(url).method("OPTIONS", null)
         }
 
-        headers.forEach { header -> request = request.addHeader(header.key, header.value) }
+        headers.forEach { header -> request = request.addHeader(header.key, header.value.toString()) }
 
         val realRequest = request.build()
         val response = client.newCall(realRequest).execute()
@@ -96,29 +98,29 @@ open class ApiClient(val baseUrl: String) {
         // TODO: handle specific mapping types. e.g. Map<int, Class<?>>
         when {
             response.isRedirect -> return Redirection(
-                    response.code(),
-                    response.headers().toMultimap()
+                    response.code,
+                    response.headers.toMultimap()
             )
             response.isInformational -> return Informational(
-                    response.message(),
-                    response.code(),
-                    response.headers().toMultimap()
+                    response.message,
+                    response.code,
+                    response.headers.toMultimap()
             )
             response.isSuccessful -> return Success(
-                    responseBody(response.body(), accept),
-                    response.code(),
-                    response.headers().toMultimap()
+                    responseBody(response.body, accept),
+                    response.code,
+                    response.headers.toMultimap()
             )
             response.isClientError -> return ClientError(
-                    response.body()?.string(),
-                    response.code(),
-                    response.headers().toMultimap()
+                    response.body?.string(),
+                    response.code,
+                    response.headers.toMultimap()
             )
             else -> return ServerError(
                     null,
-                    response.body()?.string(),
-                    response.code(),
-                    response.headers().toMultimap()
+                    response.body?.string(),
+                    response.code,
+                    response.headers.toMultimap()
             )
         }
     }
