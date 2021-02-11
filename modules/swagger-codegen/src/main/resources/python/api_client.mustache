@@ -272,8 +272,10 @@ class ApiClient(object):
             # convert str to class
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
-            else:
-                klass = getattr({{modelPackage}}, klass)
+            elif hasattr(arturo_client.models, klass):
+                klass = getattr(arturo_client.models, klass)
+            elif klass == "Object":
+                klass = self.NATIVE_TYPES_MAPPING["object"]
 
         if klass in self.PRIMITIVE_TYPES:
             return self.__deserialize_primitive(data, klass)
