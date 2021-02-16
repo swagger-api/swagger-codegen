@@ -2784,26 +2784,7 @@ public class DefaultCodegen {
             } else {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
-                    String name = ((RefModel) sub).getSimpleRef();
-                    try {
-                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
-                    } catch (UnsupportedEncodingException e) {
-                        LOGGER.error("Could not decoded string: " + name, e);
-                    }
-                    name = getAlias(name);
-                    if (typeMapping.containsKey(name)) {
-                        name = typeMapping.get(name);
-                        p.baseType = name;
-                    } else {
-                        name = toModelName(name);
-                        p.baseType = name;
-                        if (defaultIncludes.contains(name)) {
-                            imports.add(name);
-                        }
-                        imports.add(name);
-                        name = getTypeDeclaration(name);
-                    }
-                    p.dataType = name;
+                    readRefModelParameter((RefModel) model, p, imports);
                 } else {
                     if (sub instanceof ComposedModel) {
                         p.dataType = "object";
@@ -2911,6 +2892,29 @@ public class DefaultCodegen {
         } else {
             return false;
         }
+    }
+
+    protected void readRefModelParameter(RefModel refModel, CodegenParameter codegenParameter, Set<String> imports) {
+        String name = refModel.getSimpleRef();
+        try {
+            name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Could not decoded string: " + name, e);
+        }
+        name = getAlias(name);
+        if (typeMapping.containsKey(name)) {
+            name = typeMapping.get(name);
+            codegenParameter.baseType = name;
+        } else {
+            name = toModelName(name);
+            codegenParameter.baseType = name;
+            if (defaultIncludes.contains(name)) {
+                imports.add(name);
+            }
+            imports.add(name);
+            name = getTypeDeclaration(name);
+        }
+        codegenParameter.dataType = name;
     }
 
     /**
