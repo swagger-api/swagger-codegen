@@ -47,6 +47,7 @@ public class PureCloudKotlinClientCodegen extends KotlinClientCodegen {
         typeMapping.put("date-time", "Date");
         typeMapping.put("Date", "Date");
         typeMapping.put("DateTime", "Date");
+        typeMapping.put("LocalTime", "Date");
 
         importMapping.put("BigDecimal", "java.math.BigDecimal");
         importMapping.put("Date", "java.util.Date");
