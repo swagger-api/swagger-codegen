@@ -19,7 +19,7 @@ then
   rm -rf coupon_gateway/java_client/java
   mkdir -p coupon_gateway/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i spec.json  \
+  -i $url  \
   -l java \
   -DdateLibrary=java8 \
   -o coupon_gateway/java_client/java \
