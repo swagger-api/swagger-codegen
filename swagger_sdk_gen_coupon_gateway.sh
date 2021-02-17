@@ -26,7 +26,6 @@ then
   tar cvzf coupon_gateway/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./coupon_gateway/java_client/java/ .
   mvn3 clean deploy -f coupon_gateway/java_client/java/pom.xml
   fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-coupon-gateway-sdk" -v $BUILD_NUMBER -C ./coupon_gateway/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger_sdk_gen_coupon_gateway"
-else " no client is selected"
 
 elif [ "$Client" = "c#" ]
 then rm -rf intouch_api/csharp_client/c#
