@@ -17,6 +17,7 @@ echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then
   rm -rf coupon_gateway/java_client/java
+  mkdir -p coupon_gateway/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i spec.json  \
   -l java \
