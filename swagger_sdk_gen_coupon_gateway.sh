@@ -15,17 +15,18 @@ curl -k $version -o config.json
 #echo '{"artifactVersion":"0.0.1-SNAPSHOT","invokerPackage":"SwaggerV3\\\\Client","modelPackage":"SwaggerV3\\\\Client\\\\Model","apiPackage":"SwaggerV3\\\\Client\\\\Api"}'>config_php.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
-then 
-  rm -rf intouch_api/java_client/java
+then
+  rm -rf coupon_gateway/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i $url  \
+  -i spec.json  \
   -l java \
   -DdateLibrary=java8 \
-  -o intouch_api/java_client/java \
-  -c config.json
-  tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
-  mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
-  fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-coupon-gateway-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-coupon-gateway-sdk"
+  -o coupon_gateway/java_client/java \
+  -c config.json --group-id com.capillary --model-package com.capillary.coupon.gateway.models --api-package com.capillary.coupon.gateway.api --artifact-id coupon-gateway
+  tar cvzf coupon_gateway/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./coupon_gateway/java_client/java/ .
+  mvn3 clean deploy -f coupon_gateway/java_client/java/pom.xml
+  fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-coupon-gateway-sdk" -v $BUILD_NUMBER -C ./coupon_gateway/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger_sdk_gen_coupon_gateway"
+else " no client is selected"
 
 elif [ "$Client" = "c#" ]
 then rm -rf intouch_api/csharp_client/c#
