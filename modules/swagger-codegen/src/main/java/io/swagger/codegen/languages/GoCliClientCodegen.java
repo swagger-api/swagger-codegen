@@ -183,4 +183,17 @@ public class GoCliClientCodegen extends PureCloudGoClientCodegen {
                     .replace("'", "`");
         }
     }
+
+    @Override
+    public String sanitizeTag(String tag) {
+        // remove spaces and make strong case
+        String[] parts = tag.split(" ");
+        StringBuilder buf = new StringBuilder();
+        for (String part : parts) {
+            if (StringUtils.isNotEmpty(part)) {
+                buf.append(StringUtils.capitalize(part));
+            }
+        }
+        return buf.toString().replaceAll("[^a-zA-Z_ ]", "");
+    }
 }
