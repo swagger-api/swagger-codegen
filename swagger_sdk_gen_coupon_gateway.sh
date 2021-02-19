@@ -4,7 +4,7 @@ fi
 if [ "$Branch" = "snapshot" ]
   then
     url="https://coupon-gateway-api.crm-nightly-new.cc.capillarytech.com/v2/api-docs"
-    version="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/meta/version"
+    version="https://coupon-gateway-api.crm-nightly-new.cc.capillarytech.com/v1/coupongateway/version"
 elif [ "$Branch" = "production" ]
   then
     url="http://api.staging.capillary.in/tl-docs/v2/api-docs"
