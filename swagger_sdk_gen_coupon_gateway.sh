@@ -23,7 +23,7 @@ then
   -l java \
   -DdateLibrary=java8 \
   -o coupon_gateway/java_client/java \
-  -c config.json --group-id com.capillary.commons --model-package com.capillary.coupon.gateway.models --api-package com.capillary.coupon.gateway.api --artifact-id coupon-gateway
+  -c config.json --group-id com.capillary.coupongateway --model-package com.capillary.coupon.gateway.models --api-package com.capillary.coupon.gateway.api --artifact-id coupon-gateway-swagger-sdk
   tar cvzf coupon_gateway/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./coupon_gateway/java_client/java/ .
   mvn3 clean deploy -f coupon_gateway/java_client/java/pom.xml
   fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-coupon-gateway-sdk" -v $BUILD_NUMBER -C ./coupon_gateway/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger_sdk_gen_coupon_gateway"
