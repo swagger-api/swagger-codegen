@@ -29,6 +29,7 @@ public class PetApiTest {
     @Before
     public void setup() {
         apiClient = new ApiClient();
+        apiClient.setBasePath("https://petstore.swagger.io:80/v2");
         api = apiClient.buildClient(PetApi.class);
         localServer = new MockWebServer();
         localClient = new ApiClient();
@@ -37,7 +38,7 @@ public class PetApiTest {
     @Test
     public void testApiClient() {
         // the default api client is used
-        assertEquals("http://petstore.swagger.io:80/v2", apiClient.getBasePath());
+        assertEquals("https://petstore.swagger.io:80/v2", apiClient.getBasePath());
 
         ApiClient newClient = new ApiClient();
         newClient.setBasePath("http://example.com");
