@@ -1,11 +1,10 @@
 
-# ReadOnlyFirst
+# ModelList
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**bar** | **String** |  |  [optional]
-**baz** | **String** |  |  [optional]
+**_123List** | **String** |  |  [optional]
 
 
 

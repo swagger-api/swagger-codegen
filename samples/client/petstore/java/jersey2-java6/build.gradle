@@ -93,7 +93,7 @@ if(hasProperty('target') && target == 'android') {
 }
 
 ext {
-    swagger_annotations_version = "1.5.17"
+    swagger_annotations_version = "1.5.24"
     jackson_version = "2.10.1"
     jersey_version = "2.6"
     commons_io_version=2.5

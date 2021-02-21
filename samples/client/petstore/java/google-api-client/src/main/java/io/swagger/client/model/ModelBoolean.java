@@ -16,20 +16,13 @@ package io.swagger.client.model;
 import java.util.Objects;
 import java.util.Arrays;
 import io.swagger.annotations.ApiModel;
-import com.google.gson.annotations.SerializedName;
-import android.os.Parcelable;
-import android.os.Parcel;
 
-import java.io.IOException;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * True or False indicator
  */
-@JsonAdapter(ModelBoolean.Adapter.class)
 public enum ModelBoolean {
   
   TRUE(true),
@@ -42,6 +35,7 @@ public enum ModelBoolean {
     this.value = value;
   }
 
+  @JsonValue
   public Boolean getValue() {
     return value;
   }
@@ -51,6 +45,7 @@ public enum ModelBoolean {
     return String.valueOf(value);
   }
 
+  @JsonCreator
   public static ModelBoolean fromValue(String text) {
     for (ModelBoolean b : ModelBoolean.values()) {
       if (String.valueOf(b.value).equals(text)) {
@@ -58,19 +53,6 @@ public enum ModelBoolean {
       }
     }
     return null;
-  }
-
-  public static class Adapter extends TypeAdapter<ModelBoolean> {
-    @Override
-    public void write(final JsonWriter jsonWriter, final ModelBoolean enumeration) throws IOException {
-      jsonWriter.value(enumeration.getValue());
-    }
-
-    @Override
-    public ModelBoolean read(final JsonReader jsonReader) throws IOException {
-      String value = jsonReader.nextString();
-      return ModelBoolean.fromValue(String.valueOf(value));
-    }
   }
 }
 
