@@ -847,10 +847,8 @@
                 <module>samples/client/petstore/python</module>
                 <!--<module>samples/client/petstore/python-tornado</module>-->
                 <module>samples/client/petstore/python-asyncio</module>
-                <!--
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
-                -->
                 <!--
                     comment out due to error experienced since Sept 6th 2020 due to removed support
                     for ts 2.x in DefinitivelyTyped. see https://github.com/swagger-api/swagger-codegen/issues/10454
