@@ -25,7 +25,7 @@ tags:
       description: Find out more about our store
       url: 'http://swagger.io'
 schemes:
-  - http
+  - https
 paths:
   /pet:
     post:
