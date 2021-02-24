@@ -31,6 +31,6 @@ public enum {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum
         return b;
       }
     }
-    return null;
+    {{^errorOnUnknownEnum}}return null;{{/errorOnUnknownEnum}}{{#errorOnUnknownEnum}}throw new IllegalArgumentException("Unexpected value '" + text + "' for '{{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}' enum.");{{/errorOnUnknownEnum}}
   }
 }
