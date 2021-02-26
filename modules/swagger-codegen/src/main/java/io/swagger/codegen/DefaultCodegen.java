@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.swagger.models.properties.UntypedProperty;
-import io.swagger.util.Yaml;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -401,6 +400,15 @@ public class DefaultCodegen {
 
     // override to post-process any model properties
     @SuppressWarnings("unused")
+    public void postProcessModelProperties(CodegenModel model){
+        if (model.vars == null || model.vars.isEmpty()) {
+            return;
+        }
+        for(CodegenProperty codegenProperty : model.vars) {
+            postProcessModelProperty(model, codegenProperty);
+        }
+    }
+
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
     }
 
@@ -1546,11 +1554,7 @@ public class DefaultCodegen {
             addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
-        if (m.vars != null) {
-            for(CodegenProperty prop : m.vars) {
-                postProcessModelProperty(m, prop);
-            }
-        }
+        postProcessModelProperties(m);
         return m;
     }
 
