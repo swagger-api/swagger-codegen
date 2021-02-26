@@ -23,52 +23,30 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
- * Category
+ * ModelList
  */
 
-public class Category  implements Serializable {
-  @JsonProperty("id")
-  private Long id = null;
+public class ModelList  implements Serializable {
+  @JsonProperty("123-list")
+  private String _123List = null;
 
-  @JsonProperty("name")
-  private String name = null;
-
-  public Category id(Long id) {
-    this.id = id;
+  public ModelList _123List(String _123List) {
+    this._123List = _123List;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get _123List
+   * @return _123List
    **/
-  @JsonProperty("id")
+  @JsonProperty("123-list")
   @ApiModelProperty(value = "")
-  public Long getId() {
-    return id;
+  public String get123List() {
+    return _123List;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Category name(String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-   **/
-  @JsonProperty("name")
-  @ApiModelProperty(value = "")
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void set123List(String _123List) {
+    this._123List = _123List;
   }
 
 
@@ -80,24 +58,22 @@ public class Category  implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Category category = (Category) o;
-    return Objects.equals(this.id, category.id) &&
-        Objects.equals(this.name, category.name);
+    ModelList _list = (ModelList) o;
+    return Objects.equals(this._123List, _list._123List);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(_123List);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Category {\n");
+    sb.append("class ModelList {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    _123List: ").append(toIndentedString(_123List)).append("\n");
     sb.append("}");
     return sb.toString();
   }

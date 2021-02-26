@@ -24,6 +24,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * FormatTest
@@ -144,6 +145,7 @@ public class FormatTest  implements Serializable {
   @JsonProperty("number")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
@@ -264,6 +266,7 @@ public class FormatTest  implements Serializable {
   @JsonProperty("date")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
   public LocalDate getDate() {
     return date;
   }
@@ -283,6 +286,7 @@ public class FormatTest  implements Serializable {
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
+  @Valid
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -302,6 +306,7 @@ public class FormatTest  implements Serializable {
    **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
+  @Valid
   public UUID getUuid() {
     return uuid;
   }

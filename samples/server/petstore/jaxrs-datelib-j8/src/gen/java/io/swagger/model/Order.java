@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Order
@@ -147,6 +148,7 @@ public class Order  implements Serializable {
    **/
   @JsonProperty("shipDate")
   @ApiModelProperty(value = "")
+  @Valid
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
