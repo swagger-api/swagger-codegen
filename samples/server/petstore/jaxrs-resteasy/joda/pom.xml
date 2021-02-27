@@ -91,18 +91,6 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <version>${resteasy-version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-validator-provider-11</artifactId>
-            <version>${resteasy-version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-multipart-provider</artifactId>
             <version>${resteasy-version}</version>
             <scope>provided</scope>
@@ -181,7 +169,7 @@
     <properties>
         <swagger-core-version>1.5.24</swagger-core-version>
         <jetty-version>9.3.27.v20190418</jetty-version>
-        <resteasy-version>3.0.11.Final</resteasy-version>
+        <resteasy-version>3.13.2.Final</resteasy-version>
         <slf4j-version>1.6.3</slf4j-version>
         <junit-version>4.13.1</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
