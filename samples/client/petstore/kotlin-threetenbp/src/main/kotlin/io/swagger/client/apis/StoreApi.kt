@@ -16,7 +16,7 @@ import io.swagger.client.models.Order
 import io.swagger.client.infrastructure.*
 import org.threeten.bp.LocalDateTime
 
-class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
+class StoreApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiClient(basePath) {
 
     /**
     * Delete purchase order by ID
