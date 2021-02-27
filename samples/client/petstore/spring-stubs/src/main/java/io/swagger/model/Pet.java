@@ -20,6 +20,7 @@ import javax.validation.constraints.*;
 @ApiModel(description = "A pet for sale in the pet store")
 @Validated
 
+
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;

@@ -10,15 +10,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * List
+ * ModelList
  */
 @Validated
 
-public class List   {
+
+public class ModelList   {
   @JsonProperty("123-list")
   private String _123List = null;
 
-  public List _123List(String _123List) {
+  public ModelList _123List(String _123List) {
     this._123List = _123List;
     return this;
   }
@@ -47,8 +48,8 @@ public class List   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    List list = (List) o;
-    return Objects.equals(this._123List, list._123List);
+    ModelList _list = (ModelList) o;
+    return Objects.equals(this._123List, _list._123List);
   }
 
   @Override
@@ -59,7 +60,7 @@ public class List   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class List {\n");
+    sb.append("class ModelList {\n");
     
     sb.append("    _123List: ").append(toIndentedString(_123List)).append("\n");
     sb.append("}");
