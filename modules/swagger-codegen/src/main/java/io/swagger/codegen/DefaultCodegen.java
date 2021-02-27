@@ -1932,6 +1932,7 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
+            property.uniqueItems = ap.getUniqueItems() == null ? false : ap.getUniqueItems();
             String itemName = (String) p.getVendorExtensions().get("x-item-name");
             if (itemName == null) {
                 itemName = property.name;
