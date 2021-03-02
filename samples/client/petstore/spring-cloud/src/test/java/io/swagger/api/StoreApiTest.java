@@ -29,7 +29,7 @@ public class StoreApiTest {
         assertTrue(inventory.keySet().size() > 0);
     }
 
-    @Test
+    @Test(enabled = false)
     public void testPlaceOrder() {
         Order order = createOrder();
         client.placeOrder(order).execute();
@@ -41,7 +41,7 @@ public class StoreApiTest {
         assertEquals(order.getShipDate().toInstant(), fetched.getShipDate().toInstant());
     }
 
-    @Test
+    @Test(enabled = false)
     public void testDeleteOrder() {
         Order order = createOrder();
         client.placeOrder(order).execute();
