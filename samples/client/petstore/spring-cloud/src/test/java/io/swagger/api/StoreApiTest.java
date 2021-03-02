@@ -4,6 +4,7 @@ import com.netflix.hystrix.exception.HystrixRuntimeException;
 import io.swagger.Application;
 import io.swagger.TestUtils;
 import io.swagger.model.Order;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,15 @@ public class StoreApiTest {
     @Autowired
     private StoreApiClient client;
 
+    @Ignore
     @Test
     public void testGetInventory() {
         Map<String, Integer> inventory = client.getInventory().execute().getBody();
         assertTrue(inventory.keySet().size() > 0);
     }
 
-    @Test(enabled = false)
+    @Ignore
+    @Test
     public void testPlaceOrder() {
         Order order = createOrder();
         client.placeOrder(order).execute();
@@ -41,7 +44,8 @@ public class StoreApiTest {
         assertEquals(order.getShipDate().toInstant(), fetched.getShipDate().toInstant());
     }
 
-    @Test(enabled = false)
+    @Ignore
+    @Test
     public void testDeleteOrder() {
         Order order = createOrder();
         client.placeOrder(order).execute();

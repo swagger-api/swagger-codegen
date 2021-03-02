@@ -28,6 +28,7 @@ public class PetApiTest {
     @Autowired
     private PetApiClient client;
 
+    @Ignore
     @Test
     public void testCreateAndGetPet() {
         Pet pet = createRandomPet();
@@ -39,6 +40,7 @@ public class PetApiTest {
         assertEquals(fetched.getCategory().getName(), pet.getCategory().getName());
     }
 
+    @Ignore
     @Test
     public void testUpdatePet() throws Exception {
         Pet pet = createRandomPet();
@@ -104,6 +106,7 @@ public class PetApiTest {
         assertTrue(found);
     }
 
+    @Ignore
     @Test
     public void testUpdatePetWithForm() throws Exception {
         Pet pet = createRandomPet();
@@ -118,6 +121,7 @@ public class PetApiTest {
         assertEquals(updated.getName(), "furt");
     }
 
+    @Ignore
     @Test
     public void testDeletePet() throws Exception {
         Pet pet = createRandomPet();
