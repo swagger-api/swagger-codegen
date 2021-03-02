@@ -481,9 +481,7 @@ public class GeneratorController {
 
     protected static File getTmpFolder() {
         try {
-            File outputFolder = File.createTempFile("codegen-", "-tmp");
-            outputFolder.delete();
-            outputFolder.mkdir();
+            File outputFolder = Files.createTempDirectory("codegen-").toFile();
             outputFolder.deleteOnExit();
             return outputFolder;
         } catch (Exception e) {
