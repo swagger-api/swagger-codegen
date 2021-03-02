@@ -1,6 +1,6 @@
 /*
  * Swagger Petstore
- * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
+ * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -24,6 +24,8 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import javax.net.ssl.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -808,9 +810,9 @@ public class ApiClient {
         }
 
         if (tempFolderPath == null)
-            return File.createTempFile(prefix, suffix);
+            return Files.createTempFile(prefix, suffix).toFile();
         else
-            return File.createTempFile(prefix, suffix, new File(tempFolderPath));
+            return Files.createTempFile(Paths.get(tempFolderPath), prefix, suffix).toFile();
     }
 
     /**
@@ -960,7 +962,7 @@ public class ApiClient {
      * @param formParams The form parameters
      * @param authNames The authentications to apply
      * @param progressRequestListener Progress request listener
-     * @return The HTTP request 
+     * @return The HTTP request
      * @throws ApiException If fail to serialize the request body object
      */
     public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {

@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.lang.reflect.Type;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -809,9 +811,9 @@ public class ApiClient {
         }
 
         if (tempFolderPath == null)
-            return File.createTempFile(prefix, suffix);
+            return Files.createTempFile(prefix, suffix).toFile();
         else
-            return File.createTempFile(prefix, suffix, new File(tempFolderPath));
+            return Files.createTempFile(Paths.get(tempFolderPath), prefix, suffix).toFile();
     }
 
     /**
@@ -961,7 +963,7 @@ public class ApiClient {
      * @param formParams The form parameters
      * @param authNames The authentications to apply
      * @param progressRequestListener Progress request listener
-     * @return The HTTP request 
+     * @return The HTTP request
      * @throws ApiException If fail to serialize the request body object
      */
     public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
