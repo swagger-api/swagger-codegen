@@ -10,6 +10,6 @@
   "private": true,
   "dependencies": {
     "js-yaml": "^3.3.0",
-    "swagger-tools": "0.10.1"
+    "swagger-tools": "0.10.4"
   }
 }
