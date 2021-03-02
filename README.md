@@ -135,7 +135,7 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- | ------------ | -------------------------- | -----
 3.0.25-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.25-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.24](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.24) (**current stable**) | 2020-12-29   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.23](https://github.com/swagger-api/swagger-codegen/tree/v3.0.24)
+[3.0.24](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.24) (**current stable**) | 2020-12-29   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.24](https://github.com/swagger-api/swagger-codegen/tree/v3.0.24)
 [3.0.23](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.23) | 2020-11-02   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.23](https://github.com/swagger-api/swagger-codegen/tree/v3.0.23)
 [3.0.22](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.22) | 2020-10-05   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.22](https://github.com/swagger-api/swagger-codegen/tree/v3.0.22)
 [3.0.21](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.21) | 2020-07-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.21](https://github.com/swagger-api/swagger-codegen/tree/v3.0.21)
