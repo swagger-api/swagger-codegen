@@ -3,7 +3,7 @@ package io.swagger.client.infrastructure
 import okhttp3.*
 import java.io.File
 import java.io.IOException
-import java.nio.file.Files
+import java.nio.file.Files;
 import java.util.regex.Pattern
 
 open class ApiClient(val baseUrl: String) {

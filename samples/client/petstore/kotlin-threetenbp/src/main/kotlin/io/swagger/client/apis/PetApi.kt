@@ -17,7 +17,7 @@ import io.swagger.client.models.Pet
 import io.swagger.client.infrastructure.*
 import org.threeten.bp.LocalDateTime
 
-class PetApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiClient(basePath) {
+class PetApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
 
     /**
     * Add a new pet to the store

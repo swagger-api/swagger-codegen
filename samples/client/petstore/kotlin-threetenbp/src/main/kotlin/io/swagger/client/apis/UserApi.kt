@@ -16,7 +16,7 @@ import io.swagger.client.models.User
 import io.swagger.client.infrastructure.*
 import org.threeten.bp.LocalDateTime
 
-class UserApi(basePath: kotlin.String = "https://petstore.swagger.io/v2") : ApiClient(basePath) {
+class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiClient(basePath) {
 
     /**
     * Create user
