@@ -17,6 +17,7 @@ import com.twitter.util.Future
 import com.twitter.io.Buf
 import io.finch._, items._
 import java.io.File
+import java.nio.file.Files
 import java.time._
 
 object PetApi {
@@ -56,11 +57,11 @@ object PetApi {
     }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Unit
         */
         private def addPet(da: DataAccessor): Endpoint[Unit] =
-        post("pet" :: jsonBody[Pet]) { (body: Pet) => 
+        post("pet" :: jsonBody[Pet]) { (body: Pet) =>
           da.Pet_addPet(body) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -70,11 +71,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Unit
         */
         private def deletePet(da: DataAccessor): Endpoint[Unit] =
-        delete("pet" :: long :: headerOption("api_key")) { (petId: Long, apiKey: Option[String]) => 
+        delete("pet" :: long :: headerOption("api_key")) { (petId: Long, apiKey: Option[String]) =>
           da.Pet_deletePet(petId, apiKey) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -84,11 +85,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Seq[Pet]
         */
         private def findPetsByStatus(da: DataAccessor): Endpoint[Seq[Pet]] =
-        get("pet" :: "findByStatus" :: params("status")) { (status: Seq[String]) => 
+        get("pet" :: "findByStatus" :: params("status")) { (status: Seq[String]) =>
           da.Pet_findPetsByStatus(status) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -98,11 +99,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Seq[Pet]
         */
         private def findPetsByTags(da: DataAccessor): Endpoint[Seq[Pet]] =
-        get("pet" :: "findByTags" :: params("tags")) { (tags: Seq[String]) => 
+        get("pet" :: "findByTags" :: params("tags")) { (tags: Seq[String]) =>
           da.Pet_findPetsByTags(tags) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -112,11 +113,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Pet
         */
         private def getPetById(da: DataAccessor): Endpoint[Pet] =
-        get("pet" :: long :: header("api_key")) { (petId: Long, authParamapi_key: String) => 
+        get("pet" :: long :: header("api_key")) { (petId: Long, authParamapi_key: String) =>
           da.Pet_getPetById(petId, authParamapi_key) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -126,11 +127,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Unit
         */
         private def updatePet(da: DataAccessor): Endpoint[Unit] =
-        put("pet" :: jsonBody[Pet]) { (body: Pet) => 
+        put("pet" :: jsonBody[Pet]) { (body: Pet) =>
           da.Pet_updatePet(body) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -140,11 +141,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a Unit
         */
         private def updatePetWithForm(da: DataAccessor): Endpoint[Unit] =
-        post("pet" :: long :: string :: string) { (petId: Long, name: Option[String], status: Option[String]) => 
+        post("pet" :: long :: string :: string) { (petId: Long, name: Option[String], status: Option[String]) =>
           da.Pet_updatePetWithForm(petId, name, status) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -154,11 +155,11 @@ object PetApi {
         }
 
         /**
-        * 
+        *
         * @return An endpoint representing a ApiResponse
         */
         private def uploadFile(da: DataAccessor): Endpoint[ApiResponse] =
-        post("pet" :: long :: "uploadImage" :: string :: fileUpload("file")) { (petId: Long, additionalMetadata: Option[String], file: FileUpload) => 
+        post("pet" :: long :: "uploadImage" :: string :: fileUpload("file")) { (petId: Long, additionalMetadata: Option[String], file: FileUpload) =>
           da.Pet_uploadFile(petId, additionalMetadata, file) match {
             case Left(error) => checkError(error)
             case Right(data) => Ok(data)
@@ -179,7 +180,7 @@ object PetApi {
     }
 
     private def bytesToFile(input: Array[Byte]): java.io.File = {
-      val file = File.createTempFile("tmpPetApi", null)
+      val file = Files.createTempFile("tmpPetApi", null).toFile()
       val output = new FileOutputStream(file)
       output.write(input)
       file
