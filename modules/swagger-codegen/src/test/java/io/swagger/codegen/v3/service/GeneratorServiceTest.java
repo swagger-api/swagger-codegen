@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.List;
 
 public class GeneratorServiceTest {
@@ -654,7 +655,7 @@ public class GeneratorServiceTest {
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
         Assert.assertTrue(spec.contains("#/components/schemas/inline_response_200"));
         Assert.assertTrue(spec.contains("#/components/schemas/body"));
-        
+
         path = getTmpFolder().getAbsolutePath();
         request = new GenerationRequest();
         request
@@ -677,7 +678,7 @@ public class GeneratorServiceTest {
 
     protected static File getTmpFolder() {
         try {
-            File outputFolder = File.createTempFile("codegentest-", "-tmp");
+            File outputFolder = Files.createTempFile("codegentest-", "-tmp").toFile();
             outputFolder.delete();
             outputFolder.mkdir();
             outputFolder.deleteOnExit();
