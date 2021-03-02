@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class ArrayTest   {
   @JsonProperty("array_of_string")
   @Valid

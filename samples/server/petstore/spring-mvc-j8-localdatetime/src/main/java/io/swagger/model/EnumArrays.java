@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class EnumArrays   {
   /**
    * Gets or Sets justSymbol

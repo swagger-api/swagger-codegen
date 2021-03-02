@@ -16,6 +16,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class Order   {
   @JsonProperty("id")
   private Long id = null;

@@ -51,8 +51,8 @@
 
       @Override
       public {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}} read(final JsonReader jsonReader) throws IOException {
-        {{{dataType}}} value = {{#isNumber}}new BigDecimal(jsonReader.nextDouble()){{/isNumber}}{{^isNumber}}jsonReader.{{#isInteger}}nextInt(){{/isInteger}}{{^isInteger}}next{{{dataType}}}(){{/isInteger}}{{/isNumber}};
-        return {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}.fromValue(String.valueOf(value));
+        {{#isNumber}}Object value = new BigDecimal(jsonReader.nextDouble()){{/isNumber}}{{^isNumber}}{{#isInteger}}int value {{/isInteger}}{{^isInteger}}String value {{/isInteger}}= jsonReader.{{#isInteger}}nextInt(){{/isInteger}}{{^isInteger}}nextString(){{/isInteger}}{{/isNumber}};
+        return {{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}.fromValue(String.valueOf(value));
       }
     }
 {{/gson}}
