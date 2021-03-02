@@ -198,7 +198,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         super.processOpts();
 
         if (additionalProperties.containsKey(SUPPORT_JAVA6)) {
-            this.setSupportJava6(Boolean.valueOf(additionalProperties.get(SUPPORT_JAVA6).toString()));
+            this.setSupportJava6(false); // JAVA 6 not supported
         }
         additionalProperties.put(SUPPORT_JAVA6, supportJava6);
 
