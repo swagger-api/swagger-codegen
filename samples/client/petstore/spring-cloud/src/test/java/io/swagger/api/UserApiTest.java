@@ -22,7 +22,6 @@ public class UserApiTest {
     @Autowired
     private UserApiClient client;
 
-    @Ignore
     @Test
     public void testCreateUser() {
         User user = createUser();
@@ -33,7 +32,6 @@ public class UserApiTest {
         assertEquals(user.getUsername(), fetched.getUsername());
     }
 
-    @Ignore
     @Test
     public void testCreateUsersWithArray() {
         User user1 = createUser();
@@ -47,7 +45,6 @@ public class UserApiTest {
         assertEquals(user1.getUsername(), fetched.getUsername());
     }
 
-    @Ignore
     @Test
     public void testCreateUsersWithList() {
         User user1 = createUser();
@@ -61,7 +58,7 @@ public class UserApiTest {
         assertEquals(user1.getUsername(), fetched.getUsername());
     }
 
-    @Ignore
+    
     @Test
     public void testLoginUser() {
         User user = createUser();
@@ -71,7 +68,7 @@ public class UserApiTest {
         assertTrue(token.contains("logged in user session:"));
     }
 
-    @Ignore
+    
     @Test
     public void logoutUser() {
         client.logoutUser().execute();
