@@ -88,8 +88,8 @@ if(hasProperty('target') && target == 'android') {
     }
 
     task execute(type:JavaExec) {
-        main = System.getProperty('mainClass')
-        classpath = sourceSets.main.runtimeClasspath
+       main = System.getProperty('mainClass')
+       classpath = sourceSets.main.runtimeClasspath
     }
 }
 
