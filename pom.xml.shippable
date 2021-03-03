@@ -1053,7 +1053,7 @@
         <swagger-core-version-v1>1.6.2</swagger-core-version-v1>
         <swagger-parser-version>2.0.23</swagger-parser-version>
         <swagger-parser-version-v1>1.0.54</swagger-parser-version-v1>
-        <jackson-version>2.10.3</jackson-version>
+        <jackson-version>2.11.4</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.4</commons-io-version>
