@@ -29,6 +29,6 @@ runs:
         echo -e "\n****** mvn clean package ******\n" >> $logfile
         curdir=$(pwd)
         cd ${{ inputs.path }}
-        mvn clean package | tee --append $curdir/$logfile
+        ${{ inputs.build-comands[0] }} | tee --append $curdir/$logfile
         cd ${curdir}
       shell: bash
