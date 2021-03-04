@@ -7,6 +7,9 @@ inputs:
   job-name:
     description: 'Job name'
     required: true
+  build-commands:
+    description: 'Build Commands'
+    required: true
 outputs:
   logs:
     description: "logs"
@@ -27,8 +30,6 @@ runs:
         curdir=$(pwd)
         cd ${{ inputs.path }}
         echo -e "\n****** python setup and build ******\n" >> $curdir/$logfile
-        python3 setup.py install --user | tee --append $curdir/$logfile
-        pip3 install nose2 --user
-        python3 -m nose2 | tee --append $curdir/$logfile
+        ${{ inputs.build-comamnds }} | tee --append $curdir/$logfile
         cd ${curdir}
       shell: bash

@@ -7,6 +7,9 @@ inputs:
   job-name:
     description: 'Job name'
     required: true
+  build-commands:
+    description: 'Build Commands'
+    required: true
 outputs:
   logs:
     description: "logs"
@@ -26,8 +29,6 @@ runs:
         echo -e "\n****** npm i ******\n" >> $logfile
         curdir=$(pwd)
         cd ${{ inputs.path }}
-        npm i 2>&1 | tee --append $curdir/$logfile
-        echo -e "\n****** npm run test ******\n" >> $curdir/$logfile
-        npm run test 2>&1 | tee --append $curdir/$logfile
+        ${{ inputs.build-comamnds }} | tee --append $curdir/$logfile
         cd ${curdir}
       shell: bash
