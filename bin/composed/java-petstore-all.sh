@@ -7,7 +7,6 @@
 ./bin/composed/java-petstore-google-api-client.sh
 ./bin/composed/java-petstore-jersey1.sh
 ./bin/composed/java-petstore-jersey2.sh
-./bin/composed/java-petstore-jersey2-java6.sh
 ./bin/composed/java-petstore-okhttp-gson.sh
 ./bin/composed/java-petstore-okhttp-gson-parcelable.sh
 ./bin/composed/java-petstore-resteasy.sh
