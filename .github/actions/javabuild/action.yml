@@ -7,7 +7,7 @@ inputs:
   job-name:
     description: 'Job name'
     required: true
-  build-comands:
+  build-commands:
     description: 'Build Commands'
     required: true
 outputs:
@@ -26,9 +26,9 @@ runs:
         logfile=${{ inputs.job-name }}.log
         echo "::set-output name=logs::$(echo $logfile)"
         echo "::set-output name=path::$(echo generated/${{ inputs.job-name }})"
-        echo -e "\n****** mvn clean package ******\n" >> $logfile
+        echo -e "\n****** ${{ inputs.build-comamnds }} ******\n" >> $logfile
         curdir=$(pwd)
         cd ${{ inputs.path }}
-        ${{ inputs.build-comands }} | tee --append $curdir/$logfile
+        ${{ inputs.build-comamnds }} | tee --append $curdir/$logfile
         cd ${curdir}
       shell: bash
