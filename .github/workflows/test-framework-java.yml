@@ -139,10 +139,7 @@ jobs:
         continue-on-error: true
         with:
           path: generated/${{ env.JOB_NAME }}
-          job-name: ${{ env.JOB_NAME }}
-          language: ${{ env.LANGUAGE }}
-          options: ${{ env.OPTIONS }}
-          build-commands: ${{ env.BUILD_COMMANDS }}
+          job-name: ${{ env.JOB_NAME }}}
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -162,4 +159,3 @@ jobs:
       JOB_NAME: ${{ github.event.inputs.jobName }}
       OPTIONS: ${{ github.event.inputs.options }}
       SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
