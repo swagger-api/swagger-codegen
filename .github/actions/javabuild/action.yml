@@ -7,6 +7,12 @@ inputs:
   job-name:
     description: 'Job name'
     required: true
+  language:
+    description: 'Language'
+    required: true
+  options:
+    description: 'Options'
+    required: true
   build-commands:
     description: 'Build Commands'
     required: true
@@ -26,7 +32,7 @@ runs:
         logfile=${{ inputs.job-name }}.log
         echo "::set-output name=logs::$(echo $logfile)"
         echo "::set-output name=path::$(echo generated/${{ inputs.job-name }})"
-        echo -e "\n****** ${{ inputs.path }} ${{ inputs.job-name }} - ${{ inputs.build-comamnds }} ******\n" >> $logfile
+        echo -e "\n****** ${{ inputs.path }} - ${{ inputs.job-name }} - ${{ inputs.language }} - ${{ inputs.build-comamnds }} - ${{ github.event.inputs.buildCommands }} ******\n" >> $logfile
         curdir=$(pwd)
         cd ${{ inputs.path }}
         ${{ inputs.build-comamnds }} | tee --append $curdir/$logfile

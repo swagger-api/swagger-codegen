@@ -140,6 +140,8 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
+          language: ${{ env.LANGUAGE }}
+          options: ${{ env.OPTIONS }}
           build-commands: ${{ env.BUILD_COMMANDS }}
       - id: outcome
         run: |
