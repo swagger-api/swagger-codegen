@@ -26,7 +26,7 @@ runs:
         logfile=${{ inputs.job-name }}.log
         echo "::set-output name=logs::$(echo $logfile)"
         echo "::set-output name=path::$(echo generated/${{ inputs.job-name }})"
-        echo -e "\n****** ${{ inputs.build-comamnds }} ******\n" >> $logfile
+        echo -e "\n****** ${{ inputs.path }} ${{ inputs.job-name }} - ${{ inputs.build-comamnds }} ******\n" >> $logfile
         curdir=$(pwd)
         cd ${{ inputs.path }}
         ${{ inputs.build-comamnds }} | tee --append $curdir/$logfile
