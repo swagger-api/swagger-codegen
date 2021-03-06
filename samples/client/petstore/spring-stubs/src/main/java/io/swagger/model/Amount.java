@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
 @ApiModel(description = "some description ")
 @Validated
 
+
 public class Amount   {
   @JsonProperty("value")
   private Double value = null;

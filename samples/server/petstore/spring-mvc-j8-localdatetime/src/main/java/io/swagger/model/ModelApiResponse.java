@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;
