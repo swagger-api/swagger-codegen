@@ -458,8 +458,13 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+        if ("int".equals(datatype) || "int32".equals(datatype) || "int64".equals(datatype)
+                || "uint".equals(datatype) || "uint32".equals(datatype) || "uint64".equals(datatype)
+                || "float".equals(datatype) || "float32".equals(datatype) || "float64".equals(datatype)
+                || "boolean".equals(datatype) || "double".equals(datatype)) {
             return value;
+        } else if ("string".equals(datatype)) {
+            return String.format("\"%s\"", value);
         } else {
             return escapeText(value);
         }
@@ -477,11 +482,16 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         }
 
         // number
-        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+        if ("int".equals(datatype) || "int32".equals(datatype) || "int64".equals(datatype)
+                || "uint".equals(datatype) || "uint32".equals(datatype) || "uint64".equals(datatype)
+                || "float".equals(datatype) || "float32".equals(datatype) || "float64".equals(datatype)) {
             String varName = name;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
             varName = varName.replaceAll("\\.", "_DOT_");
+            if (varName.matches("\\d.*")) {
+                return "_" + varName;
+            }
             return varName;
         }
 

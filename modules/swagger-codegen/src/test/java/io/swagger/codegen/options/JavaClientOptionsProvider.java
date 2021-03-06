@@ -21,7 +21,6 @@ public class JavaClientOptionsProvider extends JavaOptionsProvider {
         options.put(JavaClientCodegen.USE_PLAY_WS, "false");
         options.put(JavaClientCodegen.PLAY_VERSION, JavaClientCodegen.PLAY_25);
         options.put(JavaClientCodegen.PARCELABLE_MODEL, "false");
-        options.put(JavaClientCodegen.SUPPORT_JAVA6, "false");
         options.put(JavaClientCodegen.USE_BEANVALIDATION, "false");
         options.put(JavaClientCodegen.PERFORM_BEANVALIDATION, PERFORM_BEANVALIDATION);
         options.put(JavaClientCodegen.USE_GZIP_FEATURE, "false");
