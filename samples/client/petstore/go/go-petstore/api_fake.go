@@ -858,7 +858,7 @@ FakeApiService test inline additionalProperties
 
 
 */
-func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, param interface{}) (*http.Response, error) {
+func (a *FakeApiService) TestInlineAdditionalProperties(ctx context.Context, param map[string]interface{}) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}

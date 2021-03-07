@@ -76,7 +76,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         // the correct solution is to use []byte
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
-        typeMapping.put("object", "interface{}");
+        typeMapping.put("object", "map[string]interface{}");
         typeMapping.put("UUID", "string");
 
         importMapping = new HashMap<String, String>();
