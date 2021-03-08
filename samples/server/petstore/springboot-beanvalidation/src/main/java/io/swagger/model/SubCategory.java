@@ -3,9 +3,8 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +15,8 @@ import javax.validation.constraints.*;
  * SubCategory
  */
 @Validated
+
+
 public class SubCategory   {
   @JsonProperty("category")
   private AllOfSubCategoryCategory category = null;
@@ -35,8 +36,8 @@ public class SubCategory   {
   /**
    * Get category
    * @return category
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public AllOfSubCategoryCategory getCategory() {
     return category;
@@ -54,8 +55,8 @@ public class SubCategory   {
   /**
    * Get category2
    * @return category2
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     @Valid
     public Category getCategory2() {
@@ -82,8 +83,8 @@ public class SubCategory   {
   /**
    * Get pets
    * @return pets
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public List<AllOfSubCategoryPetsItems> getPets() {
     return pets;

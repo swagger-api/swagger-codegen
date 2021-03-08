@@ -15,6 +15,7 @@ import io.swagger.client.models.AllPetsResponse
 import io.swagger.client.models.ApiResponse
 import io.swagger.client.models.Pet
 import io.swagger.client.models.SinglePetResponse
+import io.swagger.client.models.SubCategory
 
 import io.swagger.client.infrastructure.*
 
@@ -34,7 +35,7 @@ class PetApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/pet"
         )
         val response = request<Any?>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
@@ -54,17 +55,43 @@ class PetApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
      */
     fun deletePet(petId: kotlin.Long, apiKey: kotlin.String? = null): Unit {
         
-        val localVariableHeaders: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf("api_key" to apiKey)
+        val localVariableHeaders: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf("api_key" to apiKey.toString())
         val localVariableConfig = RequestConfig(
                 RequestMethod.DELETE,
                 "/pet/{petId}".replace("{" + "petId" + "}", "$petId"), headers = localVariableHeaders
         )
         val response = request<Any?>(
-                localVariableConfig, localVariableBody
+                localVariableConfig
         )
 
         return when (response.responseType) {
             ResponseType.Success -> Unit
+            ResponseType.Informational -> TODO()
+            ResponseType.Redirection -> TODO()
+            ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
+            ResponseType.ServerError -> throw ServerException((response as ServerError<*>).message ?: "Server error")
+        }
+    }
+    /**
+     * 
+     * 
+     * @param body  (optional)
+     * @return ApiResponse
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun doCategoryStuff(body: SubCategory? = null): ApiResponse {
+        val localVariableBody: kotlin.Any? = body
+        
+        val localVariableConfig = RequestConfig(
+                RequestMethod.POST,
+                "/pet/category"
+        )
+        val response = request<ApiResponse>(
+                localVariableConfig, localVariableBody
+        )
+
+        return when (response.responseType) {
+            ResponseType.Success -> (response as Success<*>).data as ApiResponse
             ResponseType.Informational -> TODO()
             ResponseType.Redirection -> TODO()
             ResponseType.ClientError -> throw ClientException((response as ClientError<*>).body as? String ?: "Client error")
@@ -208,7 +235,7 @@ class PetApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/pet"
         )
         val response = request<Any?>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {
@@ -263,7 +290,7 @@ class PetApi(basePath: kotlin.String = "/") : ApiClient(basePath) {
                 "/pet/{petId}/uploadImage".replace("{" + "petId" + "}", "$petId")
         )
         val response = request<ApiResponse>(
-                localVariableConfig
+                localVariableConfig, localVariableBody
         )
 
         return when (response.responseType) {

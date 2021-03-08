@@ -65,7 +65,7 @@ public class NullableEnumModel {
 
       @Override
       public EnumPropEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return EnumPropEnum.fromValue(String.valueOf(value));
       }
     }

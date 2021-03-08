@@ -14,6 +14,8 @@ import javax.validation.constraints.*;
  * NullableEnumModel
  */
 @Validated
+
+
 public class NullableEnumModel   {
   /**
    * Gets or Sets enumProp
@@ -58,7 +60,7 @@ public class NullableEnumModel   {
   /**
    * Get enumProp
    * @return enumProp
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public EnumPropEnum getEnumProp() {

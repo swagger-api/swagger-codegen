@@ -7,11 +7,11 @@ Name | Type | Description | Notes
 **Int32** | **int?** | None | [optional] 
 **Int64** | **long?** | None | [optional] 
 **Number** | [**decimal?**](BigDecimal.md) | None | 
-**Float** | **float?** | None | [optional] 
-**Double** | **double?** | None | 
-**String** | **string** | None | [optional] 
+**_Float** | **float?** | None | [optional] 
+**_Double** | **double?** | None | 
+**_String** | **string** | None | [optional] 
 **PatternWithoutDelimiter** | **string** | None | 
-**Byte** | **byte[]** | None | 
+**_Byte** | **byte[]** | None | 
 **Binary** | **byte[]** | None | [optional] 
 **Date** | **DateTime?** | None | [optional] 
 **DateTime** | **DateTime?** | None | [optional] 

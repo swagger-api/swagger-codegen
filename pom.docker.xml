@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.21-SNAPSHOT</version>
+    <version>3.0.26-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -407,18 +407,6 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/java/jersey2</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>java-client-jersey2-java6</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/java/jersey2-java6</module>
             </modules>
         </profile>
         <profile>
@@ -1070,17 +1058,17 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.21-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.1.2</swagger-core-version>
-        <swagger-core-version-v1>1.6.1</swagger-core-version-v1>
-        <swagger-parser-version>2.0.21-SNAPSHOT</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.51</swagger-parser-version-v1>
-        <jackson-version>2.10.3</jackson-version>
+        <swagger-codegen-generators-version>1.0.26-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.1.4</swagger-core-version>
+        <swagger-core-version-v1>1.6.2</swagger-core-version-v1>
+        <swagger-parser-version>2.0.23</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.54</swagger-parser-version-v1>
+        <jackson-version>2.11.4</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.4</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.8.1</junit-version>
+        <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.25</slf4j-version>

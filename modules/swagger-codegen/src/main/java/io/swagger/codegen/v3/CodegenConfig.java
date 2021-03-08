@@ -41,6 +41,8 @@ public interface CodegenConfig {
 
     String embeddedTemplateDir();
 
+    String customTemplateDir();
+
     String getTemplateVersion();
 
     String modelFileFolder();
@@ -245,4 +247,8 @@ public interface CodegenConfig {
     boolean defaultIgnoreImportMappingOption();
 
     ISchemaHandler getSchemaHandler();
+
+    default boolean checkAliasModel() {
+        return false;
+    }
 }

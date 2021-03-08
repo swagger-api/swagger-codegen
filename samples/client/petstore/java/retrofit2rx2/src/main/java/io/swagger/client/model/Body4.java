@@ -66,7 +66,7 @@ public class Body4 {
 
       @Override
       public EnumFormStringArrayEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return EnumFormStringArrayEnum.fromValue(String.valueOf(value));
       }
     }
@@ -111,7 +111,7 @@ public class Body4 {
 
       @Override
       public EnumFormStringEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return EnumFormStringEnum.fromValue(String.valueOf(value));
       }
     }
@@ -155,7 +155,7 @@ public class Body4 {
 
       @Override
       public EnumQueryDoubleEnum read(final JsonReader jsonReader) throws IOException {
-        Double value = jsonReader.nextDouble();
+        Object value = jsonReader.nextString();
         return EnumQueryDoubleEnum.fromValue(String.valueOf(value));
       }
     }

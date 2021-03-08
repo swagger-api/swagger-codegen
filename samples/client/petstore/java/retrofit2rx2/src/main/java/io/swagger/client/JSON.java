@@ -78,7 +78,7 @@ public class JSON {
                 classByDiscriminatorValue.put("Animal".toUpperCase(), Animal.class);
                 return getClassByDiscriminator(
                             classByDiscriminatorValue,
-                            getDiscriminatorValue(readElement, ""));
+                            getDiscriminatorValue(readElement, "className"));
             }
           })
         ;

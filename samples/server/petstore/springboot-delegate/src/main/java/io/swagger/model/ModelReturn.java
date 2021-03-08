@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,8 +11,10 @@ import javax.validation.constraints.*;
 /**
  * Model for testing reserved words
  */
-@ApiModel(description = "Model for testing reserved words")
+@Schema(description = "Model for testing reserved words")
 @Validated
+
+
 public class ModelReturn   {
   @JsonProperty("return")
   private Integer _return = null;
@@ -26,8 +27,8 @@ public class ModelReturn   {
   /**
    * Get _return
    * @return _return
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Integer getReturn() {
     return _return;

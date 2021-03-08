@@ -35,14 +35,14 @@ namespace IO.Swagger.Model
         /// <param name="_class">_class.</param>
         public ClassModel(string _class = default(string))
         {
-            this.Class = _class;
+            this._Class = _class;
         }
         
         /// <summary>
-        /// Gets or Sets Class
+        /// Gets or Sets _Class
         /// </summary>
         [DataMember(Name="_class", EmitDefaultValue=false)]
-        public string Class { get; set; }
+        public string _Class { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -52,7 +52,7 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class ClassModel {\n");
-            sb.Append("  Class: ").Append(Class).Append("\n");
+            sb.Append("  _Class: ").Append(_Class).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -88,9 +88,9 @@ namespace IO.Swagger.Model
 
             return 
                 (
-                    this.Class == input.Class ||
-                    (this.Class != null &&
-                    this.Class.Equals(input.Class))
+                    this._Class == input._Class ||
+                    (this._Class != null &&
+                    this._Class.Equals(input._Class))
                 );
         }
 
@@ -103,8 +103,8 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Class != null)
-                    hashCode = hashCode * 59 + this.Class.GetHashCode();
+                if (this._Class != null)
+                    hashCode = hashCode * 59 + this._Class.GetHashCode();
                 return hashCode;
             }
         }

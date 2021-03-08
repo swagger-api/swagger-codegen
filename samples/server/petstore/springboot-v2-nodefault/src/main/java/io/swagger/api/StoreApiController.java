@@ -3,18 +3,27 @@ package io.swagger.api;
 import java.util.Map;
 import io.swagger.model.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
@@ -24,7 +33,8 @@ import java.util.Optional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@Controller
+
+@RestController
 public class StoreApiController implements StoreApi {
 
     private static final Logger log = LoggerFactory.getLogger(StoreApiController.class);
@@ -49,8 +59,8 @@ public class StoreApiController implements StoreApi {
         return Optional.ofNullable(request);
     }
 
-    public ResponseEntity<Void> deleteOrder(@Min(1L)@ApiParam(value = "ID of the order that needs to be deleted",required=true, allowableValues="") @PathVariable("orderId") Long orderId
-) {
+    public ResponseEntity<Void> deleteOrder(@Min(1L)@Parameter(in = ParameterIn.PATH, description = "ID of the order that needs to be deleted", required=true, schema=@Schema(allowableValues={  }, minimum="1"
+)) @PathVariable("orderId") Long orderId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
@@ -69,8 +79,8 @@ public class StoreApiController implements StoreApi {
         return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(10L) @ApiParam(value = "ID of pet that needs to be fetched",required=true, allowableValues="") @PathVariable("orderId") Long orderId
-) {
+    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(10L) @Parameter(in = ParameterIn.PATH, description = "ID of pet that needs to be fetched", required=true, schema=@Schema(allowableValues={  }, minimum="1", maximum="10"
+)) @PathVariable("orderId") Long orderId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -84,8 +94,7 @@ public class StoreApiController implements StoreApi {
         return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body
-) {
+    public ResponseEntity<Order> placeOrder(@Parameter(in = ParameterIn.DEFAULT, description = "order placed for purchasing the pet", required=true, schema=@Schema()) @Valid @RequestBody Order body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

@@ -162,8 +162,8 @@ export class PetService implements PetServiceInterface {
      * @param name 
      * @param status 
      */
-    public updatePetWithForm(petId: number, name?: string, status?: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
-        return this.updatePetWithFormWithHttpInfo(petId, name, status, extraHttpRequestParams)
+    public updatePetWithFormForm(petId: number, name?: string, status?: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+        return this.updatePetWithFormFormWithHttpInfo(petId, name, status, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;
@@ -180,8 +180,8 @@ export class PetService implements PetServiceInterface {
      * @param additionalMetadata 
      * @param file 
      */
-    public uploadFile(petId: number, additionalMetadata?: string, file?: Blob, extraHttpRequestParams?: RequestOptionsArgs): Observable<ApiResponse> {
-        return this.uploadFileWithHttpInfo(petId, additionalMetadata, file, extraHttpRequestParams)
+    public uploadFileForm(petId: number, additionalMetadata?: string, file?: Blob, extraHttpRequestParams?: RequestOptionsArgs): Observable<ApiResponse> {
+        return this.uploadFileFormWithHttpInfo(petId, additionalMetadata, file, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
                     return undefined;

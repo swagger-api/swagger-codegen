@@ -162,12 +162,12 @@ public class FakeApi  {
 
 ,
 @Parameter(in = ParameterIn.HEADER, description = "Header parameter enum test (string)" , schema=@Schema(allowableValues={ "_abc", "-efg", "(xyz)" })
-, defaultValue="-efg")@HeaderParam("enum_header_string") String enumHeaderString
+)@HeaderParam("enum_header_string") String enumHeaderString
 
 ,@Parameter(in = ParameterIn.QUERY, description = "Query parameter enum test (string array)", schema=@Schema(allowableValues={ ">", "$" })
 ) @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
 ,@Parameter(in = ParameterIn.QUERY, description = "Query parameter enum test (string)", schema=@Schema(allowableValues={ "_abc", "-efg", "(xyz)" })
-, defaultValue="-efg") @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
+) @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
 ,@Parameter(in = ParameterIn.QUERY, description = "Query parameter enum test (double)", schema=@Schema(allowableValues={ "1", "-2" })
 ) @QueryParam("enum_query_integer") Integer enumQueryInteger
 ,@Context SecurityContext securityContext)

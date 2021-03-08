@@ -66,12 +66,12 @@ namespace IO.Swagger.Test
 
 
         /// <summary>
-        /// Test the property 'Class'
+        /// Test the property '_Class'
         /// </summary>
         [Test]
-        public void ClassTest()
+        public void _ClassTest()
         {
-            // TODO unit test for the property 'Class'
+            // TODO unit test for the property '_Class'
         }
 
     }

@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,8 @@ import javax.validation.constraints.*;
  * User
  */
 @Validated
+
+
 public class User   {
   @JsonProperty("id")
   private Long id = null;
@@ -46,8 +47,8 @@ public class User   {
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public Long getId() {
     return id;
@@ -65,8 +66,8 @@ public class User   {
   /**
    * Get username
    * @return username
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getUsername() {
     return username;
@@ -84,8 +85,8 @@ public class User   {
   /**
    * Get firstName
    * @return firstName
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getFirstName() {
     return firstName;
@@ -103,8 +104,8 @@ public class User   {
   /**
    * Get lastName
    * @return lastName
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getLastName() {
     return lastName;
@@ -122,8 +123,8 @@ public class User   {
   /**
    * Get email
    * @return email
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getEmail() {
     return email;
@@ -141,8 +142,8 @@ public class User   {
   /**
    * Get password
    * @return password
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getPassword() {
     return password;
@@ -160,8 +161,8 @@ public class User   {
   /**
    * Get phone
    * @return phone
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getPhone() {
     return phone;
@@ -179,8 +180,8 @@ public class User   {
   /**
    * User Status
    * @return userStatus
-  **/
-  @ApiModelProperty(value = "User Status")
+   **/
+  @Schema(description = "User Status")
   
     public Integer getUserStatus() {
     return userStatus;

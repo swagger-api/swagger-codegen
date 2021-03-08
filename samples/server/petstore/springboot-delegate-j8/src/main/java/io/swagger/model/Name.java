@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,8 +11,10 @@ import javax.validation.constraints.*;
 /**
  * Model for testing model name same as property name
  */
-@ApiModel(description = "Model for testing model name same as property name")
+@Schema(description = "Model for testing model name same as property name")
 @Validated
+
+
 public class Name   {
   @JsonProperty("name")
   private Integer name = null;
@@ -35,8 +36,8 @@ public class Name   {
   /**
    * Get name
    * @return name
-  **/
-  @ApiModelProperty(required = true, value = "")
+   **/
+  @Schema(required = true, description = "")
       @NotNull
 
     public Integer getName() {
@@ -55,8 +56,8 @@ public class Name   {
   /**
    * Get snakeCase
    * @return snakeCase
-  **/
-  @ApiModelProperty(readOnly = true, value = "")
+   **/
+  @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "")
   
     public Integer getSnakeCase() {
     return snakeCase;
@@ -74,8 +75,8 @@ public class Name   {
   /**
    * Get property
    * @return property
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getProperty() {
     return property;
@@ -93,8 +94,8 @@ public class Name   {
   /**
    * Get _123Number
    * @return _123Number
-  **/
-  @ApiModelProperty(readOnly = true, value = "")
+   **/
+  @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "")
   
     public Integer get123Number() {
     return _123Number;

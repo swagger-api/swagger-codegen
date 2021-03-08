@@ -3,9 +3,8 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,6 +13,8 @@ import javax.validation.constraints.*;
  * Dog
  */
 @Validated
+
+
 public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("breed")
   private String breed = null;
@@ -26,8 +27,8 @@ public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSingl
   /**
    * Get breed
    * @return breed
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
   
     public String getBreed() {
     return breed;

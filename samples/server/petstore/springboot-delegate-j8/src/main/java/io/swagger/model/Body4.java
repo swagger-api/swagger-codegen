@@ -4,8 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +15,8 @@ import javax.validation.constraints.*;
  * Body4
  */
 @Validated
+
+
 public class Body4   {
   /**
    * Gets or Sets enumFormStringArray
@@ -135,8 +136,8 @@ public class Body4   {
   /**
    * Form parameter enum test (string array)
    * @return enumFormStringArray
-  **/
-  @ApiModelProperty(value = "Form parameter enum test (string array)")
+   **/
+  @Schema(description = "Form parameter enum test (string array)")
   
     public List<EnumFormStringArrayEnum> getEnumFormStringArray() {
     return enumFormStringArray;
@@ -154,8 +155,8 @@ public class Body4   {
   /**
    * Form parameter enum test (string)
    * @return enumFormString
-  **/
-  @ApiModelProperty(value = "Form parameter enum test (string)")
+   **/
+  @Schema(description = "Form parameter enum test (string)")
   
     public EnumFormStringEnum getEnumFormString() {
     return enumFormString;
@@ -173,8 +174,8 @@ public class Body4   {
   /**
    * Query parameter enum test (double)
    * @return enumQueryDouble
-  **/
-  @ApiModelProperty(value = "Query parameter enum test (double)")
+   **/
+  @Schema(description = "Query parameter enum test (double)")
   
     public EnumQueryDoubleEnum getEnumQueryDouble() {
     return enumQueryDouble;

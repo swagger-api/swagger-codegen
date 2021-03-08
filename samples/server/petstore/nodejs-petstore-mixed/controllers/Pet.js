@@ -93,8 +93,8 @@ module.exports.updatePet = function updatePet (req, res, next, body) {
     });
 };
 
-module.exports.updatePetWithForm = function updatePetWithForm (req, res, next, name, status, petId) {
-  Pet.updatePetWithForm(name, status, petId)
+module.exports.updatePetWithForm = function updatePetWithForm (req, res, next, petId) {
+  Pet.updatePetWithForm(petId)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -103,8 +103,8 @@ module.exports.updatePetWithForm = function updatePetWithForm (req, res, next, n
     });
 };
 
-module.exports.uploadFile = function uploadFile (req, res, next, additionalMetadata, file, petId) {
-  Pet.uploadFile(additionalMetadata, file, petId)
+module.exports.uploadFile = function uploadFile (req, res, next, petId) {
+  Pet.uploadFile(petId)
     .then(function (response) {
       utils.writeJson(res, response);
     })

@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"github.com/antihax/optional"
 )
 
 // Linger please

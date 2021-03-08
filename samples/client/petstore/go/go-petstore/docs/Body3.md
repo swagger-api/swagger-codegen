@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **String_** | **string** | None | [optional] [default to null]
 **PatternWithoutDelimiter** | **string** | None | [default to null]
 **Byte_** | **string** | None | [default to null]
-**Binary** | **string** | None | [optional] [default to null]
+**Binary** | [****os.File**](*os.File.md) | None | [optional] [default to null]
 **Date** | **string** | None | [optional] [default to null]
 **DateTime** | [**time.Time**](time.Time.md) | None | [optional] [default to null]
 **Password** | **string** | None | [optional] [default to null]
