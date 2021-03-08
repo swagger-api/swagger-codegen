@@ -34,8 +34,8 @@ import (
 )
 
 var (
-	jsonCheck = regexp.MustCompile("(?i:[application|text]/json)")
-	xmlCheck  = regexp.MustCompile("(?i:[application|text]/xml)")
+	jsonCheck = regexp.MustCompile("(?i:(?:application|text)/json)")
+	xmlCheck  = regexp.MustCompile("(?i:(?:application|text)/xml)")
 )
 
 // APIClient manages communication with the Swagger Petstore *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r API v1.0.0 *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r

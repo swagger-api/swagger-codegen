@@ -28,7 +28,12 @@ class {{classname}} {
         (json['{{baseName}}'] as List).map((item) => item as {{items.datatype}}).toList()
       {{/isListContainer}}
       {{^isListContainer}}
+        {{#isDouble}}
+        json['{{baseName}}'] == null ? null : json['{{baseName}}'].toDouble()
+        {{/isDouble}}
+        {{^isDouble}}
         json['{{baseName}}']
+        {{/isDouble}}
       {{/isListContainer}}
     {{/complexType}};
   {{/isDateTime}}

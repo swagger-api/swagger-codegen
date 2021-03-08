@@ -75,6 +75,14 @@ namespace IO.Swagger.Test
             // TODO unit test for the property 'EnumString'
         }
         /// <summary>
+        /// Test the property 'EnumStringRequired'
+        /// </summary>
+        [Test]
+        public void EnumStringRequiredTest()
+        {
+            // TODO unit test for the property 'EnumStringRequired'
+        }
+        /// <summary>
         /// Test the property 'EnumInteger'
         /// </summary>
         [Test]

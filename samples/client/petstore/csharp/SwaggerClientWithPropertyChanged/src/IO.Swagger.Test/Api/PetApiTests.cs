@@ -160,8 +160,8 @@ namespace IO.Swagger.Test
             // TODO uncomment below to test the method and replace null with proper value
             //long? petId = null;
             //string additionalMetadata = null;
-            //System.IO.Stream file = null;
-            //var response = instance.UploadFile(petId, additionalMetadata, file);
+            //System.IO.Stream _file = null;
+            //var response = instance.UploadFile(petId, additionalMetadata, _file);
             //Assert.IsInstanceOf<ApiResponse> (response, "response is ApiResponse");
         }
         

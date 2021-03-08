@@ -2,6 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -187,41 +190,46 @@ public class DefaultCodegen {
                     allModels.put(modelName, cm);
                 }
             }
-            // Fix up all parent and interface CodegenModel references.
-            for (CodegenModel cm : allModels.values()) {
-                if (cm.parent != null) {
-                    cm.parentModel = allModels.get(cm.parent);
-                }
-                if (cm.interfaces != null && !cm.interfaces.isEmpty()) {
-                    cm.interfaceModels = new ArrayList<CodegenModel>(cm.interfaces.size());
-                    for (String intf : cm.interfaces) {
-                        CodegenModel intfModel = allModels.get(intf);
-                        if (intfModel != null) {
-                            cm.interfaceModels.add(intfModel);
-                        }
-                    }
-                }
-            }
-            // Let parent know about all its children
+
             for (String name : allModels.keySet()) {
-                CodegenModel cm = allModels.get(name);
-                CodegenModel parent = allModels.get(cm.parent);
-                // if a discriminator exists on the parent, don't add this child to the inheritance hierarchy
-                // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
-                while (parent != null) {
-                    if (parent.children == null) {
-                        parent.children = new ArrayList<CodegenModel>();
-                    }
-                    parent.children.add(cm);
-                    if (parent.discriminator == null) {
-                        parent = allModels.get(parent.parent);
-                    } else {
-                        parent = null;
-                    }
-                }
+                CodegenModel codegenModel = allModels.get(name);
+                fixUpParentAndInterfaces(codegenModel, allModels);
             }
         }
         return objs;
+    }
+
+    /**
+     * Fix up all parent and interface CodegenModel references.
+     * @param allModels
+     */
+    protected void fixUpParentAndInterfaces(CodegenModel codegenModel, Map<String, CodegenModel> allModels) {
+        if (codegenModel.parent != null) {
+            codegenModel.parentModel = allModels.get(codegenModel.parent);
+        }
+        if (codegenModel.interfaces != null && !codegenModel.interfaces.isEmpty()) {
+            codegenModel.interfaceModels = new ArrayList<CodegenModel>(codegenModel.interfaces.size());
+            for (String intf : codegenModel.interfaces) {
+                CodegenModel intfModel = allModels.get(intf);
+                if (intfModel != null) {
+                    codegenModel.interfaceModels.add(intfModel);
+                }
+            }
+        }
+        CodegenModel parent = codegenModel.parentModel;
+        // if a discriminator exists on the parent, don't add this child to the inheritance hierarchy
+        // TODO Determine what to do if the parent discriminator name == the grandparent discriminator name
+        while (parent != null) {
+            if (parent.children == null) {
+                parent.children = new ArrayList<CodegenModel>();
+            }
+            parent.children.add(codegenModel);
+            if (parent.discriminator == null) {
+                parent = allModels.get(parent.parent);
+            } else {
+                parent = null;
+            }
+        }
     }
 
     // override with any special post-processing
@@ -285,8 +293,8 @@ public class DefaultCodegen {
     }
 
     /**
-     * Returns the common prefix of variables for enum naming if 
-     * two or more variables are present
+     * Returns the common prefix of variables for enum naming if
+     * two or more variables are present.
      *
      * @param vars List of variable names
      * @return the common prefix for naming
@@ -339,7 +347,7 @@ public class DefaultCodegen {
      * @return the sanitized value for enum
      */
     public String toEnumValue(String value, String datatype) {
-        if ("number".equalsIgnoreCase(datatype)) {
+        if (isPrimivite(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
@@ -366,6 +374,12 @@ public class DefaultCodegen {
         }
     }
 
+    public boolean isPrimivite(String datatype) {
+        return "number".equalsIgnoreCase(datatype)
+                || "integer".equalsIgnoreCase(datatype)
+                || "boolean".equalsIgnoreCase(datatype);
+    }
+
     // override with any special post-processing
     @SuppressWarnings("static-method")
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
@@ -386,6 +400,15 @@ public class DefaultCodegen {
 
     // override to post-process any model properties
     @SuppressWarnings("unused")
+    public void postProcessModelProperties(CodegenModel model){
+        if (model.vars == null || model.vars.isEmpty()) {
+            return;
+        }
+        for(CodegenProperty codegenProperty : model.vars) {
+            postProcessModelProperty(model, codegenProperty);
+        }
+    }
+
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
     }
 
@@ -1390,6 +1413,12 @@ public class DefaultCodegen {
             List<String> required = new ArrayList<String>();
             Map<String, Property> allProperties;
             List<String> allRequired;
+
+            List<Model> allComponents = composed.getAllOf();
+            if (allComponents.size() > 0 && composed.getParent() == null) {
+                rebuildComponents(composed);
+            }
+
             if (supportsInheritance || supportsMixins) {
                 allProperties = new LinkedHashMap<String, Property>();
                 allRequired = new ArrayList<String>();
@@ -1469,7 +1498,7 @@ public class DefaultCodegen {
 
                 if(parentName != null) {
                     m.parentSchema = parentName;
-                    m.parent = toModelName(parentName);
+                    m.parent = typeMapping.containsKey(parentName) ? typeMapping.get(parentName): toModelName(parentName);
                     addImport(m, m.parent);
                     if (allDefinitions != null) {
                         final Model parentModel = allDefinitions.get(m.parentSchema);
@@ -1484,6 +1513,10 @@ public class DefaultCodegen {
 
             if (model.getProperties() != null) {
                 properties.putAll(model.getProperties());
+            }
+
+            if (composed.getRequired() != null) {
+                required.addAll(composed.getRequired());
             }
 
             // child model (properties owned by the model itself)
@@ -1511,6 +1544,9 @@ public class DefaultCodegen {
                 // comment out below as allowableValues is not set in post processing model enum
                 m.allowableValues = new HashMap<String, Object>();
                 m.allowableValues.put("values", impl.getEnum());
+                if (m.dataType.equals("BigDecimal")) {
+                    addImport(m, "BigDecimal");
+                }
             }
             if (impl.getAdditionalProperties() != null) {
                 addAdditionPropertiesToCodeGenModel(m, impl);
@@ -1518,12 +1554,32 @@ public class DefaultCodegen {
             addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
-        if (m.vars != null) {
-            for(CodegenProperty prop : m.vars) {
-                postProcessModelProperty(m, prop);
+        postProcessModelProperties(m);
+        return m;
+    }
+
+    private void rebuildComponents(ComposedModel composedModel) {
+        List<Model> allComponents = composedModel.getAllOf();
+        if (allComponents.size() >= 1) {
+            composedModel.setParent(allComponents.get(0));
+            if (allComponents.size() >= 2) {
+                composedModel.setChild(allComponents.get(allComponents.size() - 1));
+                List<RefModel> interfaces = new ArrayList();
+                int size = allComponents.size();
+                Iterator modelIterator = allComponents.subList(1, size - 1).iterator();
+
+                while(modelIterator.hasNext()) {
+                    Model model = (Model)modelIterator.next();
+                    if (model instanceof RefModel) {
+                        RefModel ref = (RefModel)model;
+                        interfaces.add(ref);
+                    }
+                }
+                composedModel.setInterfaces(interfaces);
+            } else {
+                composedModel.setChild(new ModelImpl());
             }
         }
-        return m;
     }
 
     /**
@@ -1880,6 +1936,7 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
+            property.uniqueItems = ap.getUniqueItems() == null ? false : ap.getUniqueItems();
             String itemName = (String) p.getVendorExtensions().get("x-item-name");
             if (itemName == null) {
                 itemName = property.name;
@@ -2724,27 +2781,14 @@ public class DefaultCodegen {
                 p.isPrimitiveType = cp.isPrimitiveType;
                 p.isContainer = true;
                 p.isListContainer = true;
+                p.uniqueItems = impl.getUniqueItems() == null ? false : impl.getUniqueItems();
 
                 // set boolean flag (e.g. isString)
                 setParameterBooleanFlagWithCodegenProperty(p, cp);
             } else {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
-                    String name = ((RefModel) sub).getSimpleRef();
-                    name = getAlias(name);
-                    if (typeMapping.containsKey(name)) {
-                        name = typeMapping.get(name);
-                        p.baseType = name;
-                    } else {
-                        name = toModelName(name);
-                        p.baseType = name;
-                        if (defaultIncludes.contains(name)) {
-                            imports.add(name);
-                        }
-                        imports.add(name);
-                        name = getTypeDeclaration(name);
-                    }
-                    p.dataType = name;
+                    readRefModelParameter((RefModel) model, p, imports);
                 } else {
                     if (sub instanceof ComposedModel) {
                         p.dataType = "object";
@@ -2852,6 +2896,29 @@ public class DefaultCodegen {
         } else {
             return false;
         }
+    }
+
+    protected void readRefModelParameter(RefModel refModel, CodegenParameter codegenParameter, Set<String> imports) {
+        String name = refModel.getSimpleRef();
+        try {
+            name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Could not decoded string: " + name, e);
+        }
+        name = getAlias(name);
+        if (typeMapping.containsKey(name)) {
+            name = typeMapping.get(name);
+            codegenParameter.baseType = name;
+        } else {
+            name = toModelName(name);
+            codegenParameter.baseType = name;
+            if (defaultIncludes.contains(name)) {
+                imports.add(name);
+            }
+            imports.add(name);
+            name = getTypeDeclaration(name);
+        }
+        codegenParameter.dataType = name;
     }
 
     /**
@@ -3435,6 +3502,11 @@ public class DefaultCodegen {
     public String apiFilename(String templateName, String tag) {
         String suffix = apiTemplateFiles().get(templateName);
         return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
+    }
+
+    public String modelFilename(String templateName, String modelName) {
+        String suffix = modelTemplateFiles().get(templateName);
+        return modelFileFolder() + File.separator + toModelFilename(modelName) + suffix;
     }
 
     /**

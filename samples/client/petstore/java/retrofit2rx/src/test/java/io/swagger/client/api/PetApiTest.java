@@ -7,6 +7,7 @@ import io.swagger.client.model.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -192,7 +193,7 @@ public class PetApiTest {
 
     @Test
     public void testUploadFile() throws Exception {
-        File file = File.createTempFile("test", "hello.txt");
+        File file = Files.createTempFile("test", "hello.txt").toFile();
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
         writer.write("Hello world!");
