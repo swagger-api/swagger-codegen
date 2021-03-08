@@ -35,6 +35,8 @@ public class StoreApi {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * Delete purchase order by ID
    * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -45,6 +47,7 @@ public class StoreApi {
 
     deleteOrderWithHttpInfo(orderId);
   }
+
 
   /**
    * Delete purchase order by ID
@@ -66,7 +69,6 @@ public class StoreApi {
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -86,8 +88,10 @@ public class StoreApi {
     String[] localVarAuthNames = new String[] {  };
 
 
-    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Returns pet inventories by status
    * Returns a map of status codes to quantities
@@ -97,6 +101,7 @@ public class StoreApi {
   public Map<String, Integer> getInventory() throws ApiException {
     return getInventoryWithHttpInfo().getData();
       }
+
 
   /**
    * Returns pet inventories by status
@@ -112,7 +117,6 @@ public class StoreApi {
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -132,8 +136,10 @@ public class StoreApi {
     String[] localVarAuthNames = new String[] { "api_key" };
 
     GenericType<Map<String, Integer>> localVarReturnType = new GenericType<Map<String, Integer>>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
+
+
   /**
    * Find purchase order by ID
    * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -144,6 +150,7 @@ public class StoreApi {
   public Order getOrderById(Long orderId) throws ApiException {
     return getOrderByIdWithHttpInfo(orderId).getData();
       }
+
 
   /**
    * Find purchase order by ID
@@ -166,7 +173,6 @@ public class StoreApi {
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -186,8 +192,10 @@ public class StoreApi {
     String[] localVarAuthNames = new String[] {  };
 
     GenericType<Order> localVarReturnType = new GenericType<Order>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
+
+
   /**
    * Place an order for a pet
    * 
@@ -198,6 +206,7 @@ public class StoreApi {
   public Order placeOrder(Order body) throws ApiException {
     return placeOrderWithHttpInfo(body).getData();
       }
+
 
   /**
    * Place an order for a pet
@@ -219,7 +228,6 @@ public class StoreApi {
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -239,6 +247,6 @@ public class StoreApi {
     String[] localVarAuthNames = new String[] {  };
 
     GenericType<Order> localVarReturnType = new GenericType<Order>() {};
-    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
 }

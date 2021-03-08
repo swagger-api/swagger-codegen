@@ -35,6 +35,8 @@ public class FakeClassnameTags123Api {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * To test class name in snake case
    * To test class name in snake case
@@ -45,6 +47,7 @@ public class FakeClassnameTags123Api {
   public Client testClassname(Client body) throws ApiException {
     return testClassnameWithHttpInfo(body).getData();
       }
+
 
   /**
    * To test class name in snake case
@@ -66,7 +69,6 @@ public class FakeClassnameTags123Api {
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -86,6 +88,6 @@ public class FakeClassnameTags123Api {
     String[] localVarAuthNames = new String[] { "api_key_query" };
 
     GenericType<Client> localVarReturnType = new GenericType<Client>() {};
-    return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
 }

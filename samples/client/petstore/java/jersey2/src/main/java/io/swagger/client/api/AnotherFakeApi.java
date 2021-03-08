@@ -35,6 +35,8 @@ public class AnotherFakeApi {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * To test special tags
    * To test special tags
@@ -45,6 +47,7 @@ public class AnotherFakeApi {
   public Client testSpecialTags(Client body) throws ApiException {
     return testSpecialTagsWithHttpInfo(body).getData();
       }
+
 
   /**
    * To test special tags
@@ -66,7 +69,6 @@ public class AnotherFakeApi {
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
@@ -86,6 +88,6 @@ public class AnotherFakeApi {
     String[] localVarAuthNames = new String[] {  };
 
     GenericType<Client> localVarReturnType = new GenericType<Client>() {};
-    return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
 }

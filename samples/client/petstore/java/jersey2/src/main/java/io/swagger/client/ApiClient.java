@@ -372,71 +372,62 @@ public class ApiClient {
     }
   }
 
-  /**
-   * Formats the specified query parameter to a list containing a single {@code Pair} object.
-   *
-   * Note that {@code value} must not be a collection.
-   *
-   * @param name The name of the parameter.
-   * @param value The value of the parameter.
-   * @return A list containing a single {@code Pair} object.
+  /*
+   * Format to {@code Pair} objects.
+   * @param collectionFormat Collection format
+   * @param name Name
+   * @param value Value
+   * @return List of pairs
    */
-  public List<Pair> parameterToPair(String name, Object value) {
+  public List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
     List<Pair> params = new ArrayList<Pair>();
 
     // preconditions
-    if (name == null || name.isEmpty() || value == null || value instanceof Collection) return params;
+    if (name == null || name.isEmpty() || value == null) return params;
 
-    params.add(new Pair(name, parameterToString(value)));
-    return params;
-  }
-
-  /**
-   * Formats the specified collection query parameters to a list of {@code Pair} objects.
-   *
-   * Note that the values of each of the returned Pair objects are percent-encoded.
-   *
-   * @param collectionFormat The collection format of the parameter.
-   * @param name The name of the parameter.
-   * @param value The value of the parameter.
-   * @return A list of {@code Pair} objects.
-   */
-  public List<Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
-    List<Pair> params = new ArrayList<Pair>();
-
-    // preconditions
-    if (name == null || name.isEmpty() || value == null) {
+    Collection valueCollection;
+    if (value instanceof Collection) {
+      valueCollection = (Collection) value;
+    } else {
+      params.add(new Pair(name, parameterToString(value)));
       return params;
     }
+
+    if (valueCollection.isEmpty()){
+      return params;
+    }
+
+    // get the collection format (default: csv)
+    String format = (collectionFormat == null || collectionFormat.isEmpty() ? "csv" : collectionFormat);
 
     // create the params based on the collection format
-    if ("multi".equals(collectionFormat)) {
-      for (Object item : value) {
-        params.add(new Pair(name, escapeString(parameterToString(item))));
+    if ("multi".equals(format)) {
+      for (Object item : valueCollection) {
+        params.add(new Pair(name, parameterToString(item)));
       }
+
       return params;
     }
 
-    // collectionFormat is assumed to be "csv" by default
     String delimiter = ",";
 
-    // escape all delimiters except commas, which are URI reserved
-    // characters
-    if ("ssv".equals(collectionFormat)) {
-      delimiter = escapeString(" ");
-    } else if ("tsv".equals(collectionFormat)) {
-      delimiter = escapeString("\t");
-    } else if ("pipes".equals(collectionFormat)) {
-      delimiter = escapeString("|");
+    if ("csv".equals(format)) {
+      delimiter = ",";
+    } else if ("ssv".equals(format)) {
+      delimiter = " ";
+    } else if ("tsv".equals(format)) {
+      delimiter = "\t";
+    } else if ("pipes".equals(format)) {
+      delimiter = "|";
     }
 
     StringBuilder sb = new StringBuilder() ;
-    for (Object item : value) {
+    for (Object item : valueCollection) {
       sb.append(delimiter);
-      sb.append(escapeString(parameterToString(item)));
+      sb.append(parameterToString(item));
     }
 
-    params.add(new Pair(name, sb.substring(delimiter.length())));
+    params.add(new Pair(name, sb.substring(1)));
 
     return params;
   }
@@ -639,7 +630,6 @@ public class ApiClient {
    * @param path The sub-path of the HTTP URL
    * @param method The request method, one of "GET", "POST", "PUT", "HEAD" and "DELETE"
    * @param queryParams The query parameters
-   * @param collectionQueryParams The collection query parameters
    * @param body The request body object
    * @param headerParams The header parameters
    * @param formParams The form parameters
@@ -650,47 +640,20 @@ public class ApiClient {
    * @return The response body in type of string
    * @throws ApiException API exception
    */
-  public <T> ApiResponse<T> invokeAPI(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String accept, String contentType, String[] authNames, GenericType<T> returnType) throws ApiException {
+  public <T> ApiResponse<T> invokeAPI(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String accept, String contentType, String[] authNames, GenericType<T> returnType) throws ApiException {
     updateParamsForAuth(authNames, queryParams, headerParams);
 
-    final StringBuilder url = new StringBuilder();
-    url.append(basePath).append(path);
+    // Not using `.target(this.basePath).path(path)` below,
+    // to support (constant) query string in `path`, e.g. "/posts?draft=1"
+    WebTarget target = httpClient.target(this.basePath + path);
 
-    if (queryParams != null && !queryParams.isEmpty()) {
-      // support (constant) query string in `path`, e.g. "/posts?draft=1"
-      String prefix = path.contains("?") ? "&" : "?";
-      for (Pair param : queryParams) {
-        if (param.getValue() != null) {
-          if (prefix != null) {
-            url.append(prefix);
-            prefix = null;
-          } else {
-            url.append("&");
-          }
-          String value = parameterToString(param.getValue());
-          url.append(escapeString(param.getName())).append("=").append(escapeString(value));
+    if (queryParams != null) {
+      for (Pair queryParam : queryParams) {
+        if (queryParam.getValue() != null) {
+          target = target.queryParam(queryParam.getName(), queryParam.getValue());
         }
       }
     }
-
-    if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
-      String prefix = url.toString().contains("?") ? "&" : "?";
-      for (Pair param : collectionQueryParams) {
-        if (param.getValue() != null) {
-          if (prefix != null) {
-            url.append(prefix);
-            prefix = null;
-          } else {
-            url.append("&");
-          }
-          String value = parameterToString(param.getValue());
-          // collection query parameter value already escaped as part of parameterToPairs
-          url.append(escapeString(param.getName())).append("=").append(value);
-        }
-      }
-    }
-
-    WebTarget target = httpClient.target(url.toString());
 
     Invocation.Builder invocationBuilder = target.request().accept(accept);
 
