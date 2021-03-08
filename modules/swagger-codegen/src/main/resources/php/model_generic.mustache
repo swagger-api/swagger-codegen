@@ -351,8 +351,9 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
         if ({{^required}}!is_null(${{name}}) && {{/required}}!in_array(${{{name}}}, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for '{{name}}', must be one of '%s'",
-                    implode("', '", $allowedValues)
+                    "Invalid value for '{{name}}', must be one of '%s'. Given: '%s'",
+                    implode("', '", $allowedValues),
+                    ${{{name}}}
                 )
             );
         }
@@ -361,8 +362,9 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
         if ({{^required}}!is_null(${{name}}) && {{/required}}array_diff(${{{name}}}, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for '{{name}}', must be one of '%s'",
-                    implode("', '", $allowedValues)
+                    "Invalid value for '{{name}}', must be one of '%s'. Given: '%s'",
+                    implode("', '", $allowedValues),
+                    ${{{name}}}
                 )
             );
         }
