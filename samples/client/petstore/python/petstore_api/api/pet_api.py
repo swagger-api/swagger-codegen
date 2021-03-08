@@ -87,8 +87,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in params or
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `add_pet`")  # noqa: E501
 
         collection_formats = {}
@@ -188,8 +188,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params or
-                params['pet_id'] is None):
+        if self.api_client.client_side_validation and ('pet_id' not in params or
+                                                       params['pet_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `pet_id` when calling `delete_pet`")  # noqa: E501
 
         collection_formats = {}
@@ -285,8 +285,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'status' is set
-        if ('status' not in params or
-                params['status'] is None):
+        if self.api_client.client_side_validation and ('status' not in params or
+                                                       params['status'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `status` when calling `find_pets_by_status`")  # noqa: E501
 
         collection_formats = {}
@@ -381,8 +381,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'tags' is set
-        if ('tags' not in params or
-                params['tags'] is None):
+        if self.api_client.client_side_validation and ('tags' not in params or
+                                                       params['tags'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `tags` when calling `find_pets_by_tags`")  # noqa: E501
 
         collection_formats = {}
@@ -477,8 +477,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params or
-                params['pet_id'] is None):
+        if self.api_client.client_side_validation and ('pet_id' not in params or
+                                                       params['pet_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `pet_id` when calling `get_pet_by_id`")  # noqa: E501
 
         collection_formats = {}
@@ -572,8 +572,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in params or
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `update_pet`")  # noqa: E501
 
         collection_formats = {}
@@ -675,8 +675,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params or
-                params['pet_id'] is None):
+        if self.api_client.client_side_validation and ('pet_id' not in params or
+                                                       params['pet_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `pet_id` when calling `update_pet_with_form`")  # noqa: E501
 
         collection_formats = {}
@@ -782,8 +782,8 @@ class PetApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'pet_id' is set
-        if ('pet_id' not in params or
-                params['pet_id'] is None):
+        if self.api_client.client_side_validation and ('pet_id' not in params or
+                                                       params['pet_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `pet_id` when calling `upload_file`")  # noqa: E501
 
         collection_formats = {}

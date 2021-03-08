@@ -19,6 +19,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -96,6 +97,23 @@ public class FakeApiTest {
     public void fakeOuterStringSerializeTest() throws ApiException {
         String body = null;
         String response = api.fakeOuterStringSerialize(body);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testBodyWithQueryParamsTest() throws ApiException {
+        User body = null;
+        String query = null;
+        api.testBodyWithQueryParams(body, query);
 
         // TODO: test validations
     }

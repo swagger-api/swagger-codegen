@@ -99,6 +99,9 @@ class Configuration(object):
         # Safe chars for path_param
         self.safe_chars_for_path_param = ''
 
+        # Disable client side validation
+        self.client_side_validation = True
+
     @classmethod
     def set_default(cls, default):
         cls._default = default

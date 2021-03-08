@@ -58,7 +58,6 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
         ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<String, String>();
         builder.put(CodegenConstants.IMPL_FOLDER, IMPL_FOLDER_VALUE)
             .put(JavaClientCodegen.DATE_LIBRARY, "joda") //java.lang.IllegalArgumentException: Multiple entries with same key: dateLibrary=joda and dateLibrary=joda
-            .put(JavaClientCodegen.SUPPORT_JAVA6, "false")
             .put("title", "Test title")
             .put(CodegenConstants.MODEL_PACKAGE, MODEL_PACKAGE_VALUE)
             .put(CodegenConstants.API_PACKAGE, API_PACKAGE_VALUE)
@@ -87,13 +86,13 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
             .put(JavaClientCodegen.JAVA8_MODE, JAVA8_MODE_VALUE)
             .put(JavaClientCodegen.WITH_XML, WITH_XML_VALUE)
-            //.put(JavaClientCodegen.DATE_LIBRARY, "joda")
             .put("hideGenerationTimestamp", "true")
             .put(JavaClientCodegen.DISABLE_HTML_ESCAPING, "false")
             .put(JavaCXFServerCodegen.USE_BEANVALIDATION, USE_BEANVALIDATION)
             .put("serverPort", "2345")
             .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
-            .put(JavaJerseyServerCodegen.USE_TAGS, USE_TAGS);
+            .put(JavaJerseyServerCodegen.USE_TAGS, USE_TAGS)
+            .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false");
 
         return builder.build();
     }
