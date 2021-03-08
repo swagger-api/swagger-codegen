@@ -57,7 +57,6 @@ public class DogApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -135,7 +134,6 @@ public class DogApi {
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
 
-
     final String[] localVarAccepts = {
       
     };
@@ -176,7 +174,6 @@ public class DogApi {
 
 
 
-
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -213,7 +210,6 @@ public class DogApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -300,7 +296,6 @@ public class DogApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
     if (name != null)

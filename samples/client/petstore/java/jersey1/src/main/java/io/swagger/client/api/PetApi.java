@@ -74,7 +74,6 @@ public class PetApi {
 
 
     
-    
     final String[] localVarAccepts = {
       
     };
@@ -153,7 +152,6 @@ public class PetApi {
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
 
-    
     final String[] localVarAccepts = {
       
     };
@@ -225,7 +223,6 @@ public class PetApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -267,7 +264,6 @@ public class PetApi {
 
     localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "status", status));
 
-    
     
     final String[] localVarAccepts = {
       "application/xml", "application/json"
@@ -313,7 +309,6 @@ public class PetApi {
     localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "tags", tags));
 
     
-    
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -349,7 +344,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json"
@@ -393,7 +387,6 @@ public class PetApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -429,7 +422,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json"
@@ -470,7 +462,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
@@ -558,8 +549,7 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    if (name != null)
+        if (name != null)
       localVarFormParams.put("name", name);
 if (status != null)
       localVarFormParams.put("status", status);
@@ -653,8 +643,7 @@ if (status != null)
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    if (additionalMetadata != null)
+        if (additionalMetadata != null)
       localVarFormParams.put("additionalMetadata", additionalMetadata);
 if (file != null)
       localVarFormParams.put("file", file);

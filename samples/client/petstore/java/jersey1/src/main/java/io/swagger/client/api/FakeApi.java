@@ -107,7 +107,6 @@ public class FakeApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -179,7 +178,6 @@ public class FakeApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "*/*"
@@ -253,7 +251,6 @@ public class FakeApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -326,7 +323,6 @@ public class FakeApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -368,7 +364,6 @@ public class FakeApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -408,7 +403,6 @@ public class FakeApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
@@ -529,7 +523,6 @@ public class FakeApi {
 if (enumHeaderString != null)
       localVarHeaderParams.put("enum_header_string", apiClient.parameterToString(enumHeaderString));
 
-    
     final String[] localVarAccepts = {
       
     };
@@ -598,7 +591,6 @@ if (enumHeaderString != null)
 
 
     
-    
     final String[] localVarAccepts = {
       
     };
@@ -638,7 +630,6 @@ if (enumHeaderString != null)
 
 
     
-    
     final String[] localVarAccepts = {
       
     };
@@ -677,7 +668,6 @@ if (enumHeaderString != null)
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       

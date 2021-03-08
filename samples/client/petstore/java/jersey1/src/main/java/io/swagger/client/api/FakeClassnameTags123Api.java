@@ -70,7 +70,6 @@ public class FakeClassnameTags123Api {
 
 
     
-    
     final String[] localVarAccepts = {
       "application/json"
     };

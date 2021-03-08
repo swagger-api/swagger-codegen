@@ -58,7 +58,6 @@ public class AnotherFakeApi {
 
 
 
-
     final String[] localVarAccepts = {
       "application/json"
     };
