@@ -15,6 +15,9 @@
 {{#notNullJacksonAnnotation}}
 @JsonInclude(JsonInclude.Include.NON_NULL)
 {{/notNullJacksonAnnotation}}
+{{#ignoreUnknownJacksonAnnotation}}
+@JsonIgnoreProperties(ignoreUnknown = true)
+{{/ignoreUnknownJacksonAnnotation}}
 public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#serializableModel}}implements Serializable{{/serializableModel}} {
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
+import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.RefProperty;
 import org.apache.commons.lang3.BooleanUtils;
@@ -47,6 +48,7 @@ import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
 
 import static io.swagger.codegen.languages.features.NotNullAnnotationFeatures.NOT_NULL_JACKSON_ANNOTATION;
+import static io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures.IGNORE_UNKNOWN_JACKSON_ANNOTATION;
 
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -95,6 +97,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected boolean supportJava6= false;
     protected boolean disableHtmlEscaping = false;
     private NotNullAnnotationFeatures notNullOption;
+    private IgnoreUnknownJacksonFeatures ignoreUnknown;
 
     public AbstractJavaCodegen() {
         super();
@@ -170,6 +173,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
         if(this instanceof NotNullAnnotationFeatures){
             cliOptions.add(CliOption.newBoolean(NOT_NULL_JACKSON_ANNOTATION, "adds @JsonInclude(JsonInclude.Include.NON_NULL) annotation to model classes"));
+        }
+        if (this instanceof IgnoreUnknownJacksonFeatures){
+            cliOptions.add(CliOption.newBoolean(IGNORE_UNKNOWN_JACKSON_ANNOTATION,
+                "adds @JsonIgnoreProperties(ignoreUnknown = true) annotation to model classes"));
         }
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
@@ -355,6 +362,17 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 writePropertyBack(NOT_NULL_JACKSON_ANNOTATION, notNullOption.isNotNullJacksonAnnotation());
                 if (notNullOption.isNotNullJacksonAnnotation()) {
                     importMapping.put("JsonInclude", "com.fasterxml.jackson.annotation.JsonInclude");
+                }
+            }
+        }
+
+        if (this instanceof IgnoreUnknownJacksonFeatures) {
+            ignoreUnknown = (IgnoreUnknownJacksonFeatures)this;
+            if (additionalProperties.containsKey(IGNORE_UNKNOWN_JACKSON_ANNOTATION)) {
+                ignoreUnknown.setIgnoreUnknownJacksonAnnotation(convertPropertyToBoolean(IGNORE_UNKNOWN_JACKSON_ANNOTATION));
+                writePropertyBack(IGNORE_UNKNOWN_JACKSON_ANNOTATION, ignoreUnknown.isIgnoreUnknownJacksonAnnotation());
+                if (ignoreUnknown.isIgnoreUnknownJacksonAnnotation()) {
+                    importMapping.put("JsonIgnoreProperties", "com.fasterxml.jackson.annotation.JsonIgnoreProperties");
                 }
             }
         }
@@ -939,6 +957,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 if (additionalProperties.containsKey(NOT_NULL_JACKSON_ANNOTATION)) {
                     if (notNullOption.isNotNullJacksonAnnotation()) {
                         codegenModel.imports.add("JsonInclude");
+                    }
+                }
+            }
+        }
+        if (this instanceof IgnoreUnknownJacksonFeatures) {
+            if (this instanceof IgnoreUnknownJacksonFeatures) {
+                ignoreUnknown = (IgnoreUnknownJacksonFeatures)this;
+                if (additionalProperties.containsKey(IGNORE_UNKNOWN_JACKSON_ANNOTATION)) {
+                    if (ignoreUnknown.isIgnoreUnknownJacksonAnnotation()) {
+                        codegenModel.imports.add("JsonIgnoreProperties");
                     }
                 }
             }
