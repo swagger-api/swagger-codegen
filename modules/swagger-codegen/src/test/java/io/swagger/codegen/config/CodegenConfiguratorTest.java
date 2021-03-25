@@ -162,14 +162,12 @@ public class CodegenConfiguratorTest {
 
         configurator.addAdditionalProperty("foo", "bar")
                 .addAdditionalProperty("hello", "world")
-                .addAdditionalProperty("supportJava6", false)
                 .addAdditionalProperty("useRxJava", true);
 
         final ClientOptInput clientOptInput = setupAndRunGenericTest(configurator);
 
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "foo", "bar");
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "hello", "world");
-        assertValueInMap(clientOptInput.getConfig().additionalProperties(), "supportJava6", false);
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "useRxJava", true);
     }
 
@@ -250,13 +248,11 @@ public class CodegenConfiguratorTest {
     @Test
     public void testDynamicProperties() throws Exception {
         configurator.addDynamicProperty(CodegenConstants.LOCAL_VARIABLE_PREFIX, "_");
-        configurator.addDynamicProperty("supportJava6", false);
         configurator.addDynamicProperty("useRxJava", true);
 
         final ClientOptInput clientOptInput = setupAndRunGenericTest(configurator);
 
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), CodegenConstants.LOCAL_VARIABLE_PREFIX, "_");
-        assertValueInMap(clientOptInput.getConfig().additionalProperties(), "supportJava6", false);
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "useRxJava", true);
     }
 

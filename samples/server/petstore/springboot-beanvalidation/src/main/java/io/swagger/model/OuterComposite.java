@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class OuterComposite   {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;
