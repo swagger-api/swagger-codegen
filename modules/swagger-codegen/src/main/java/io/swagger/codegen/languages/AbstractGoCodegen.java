@@ -51,6 +51,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 "complex64",
                 "complex128",
                 "rune",
+                "interface{}",
                 "byte")
             );
 
