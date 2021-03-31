@@ -347,7 +347,7 @@ public class DefaultCodegen {
      * @return the sanitized value for enum
      */
     public String toEnumValue(String value, String datatype) {
-        if ("number".equalsIgnoreCase(datatype)) {
+        if (isPrimivite(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";
@@ -374,6 +374,12 @@ public class DefaultCodegen {
         }
     }
 
+    public boolean isPrimivite(String datatype) {
+        return "number".equalsIgnoreCase(datatype)
+                || "integer".equalsIgnoreCase(datatype)
+                || "boolean".equalsIgnoreCase(datatype);
+    }
+
     // override with any special post-processing
     @SuppressWarnings("static-method")
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
@@ -394,6 +400,15 @@ public class DefaultCodegen {
 
     // override to post-process any model properties
     @SuppressWarnings("unused")
+    public void postProcessModelProperties(CodegenModel model){
+        if (model.vars == null || model.vars.isEmpty()) {
+            return;
+        }
+        for(CodegenProperty codegenProperty : model.vars) {
+            postProcessModelProperty(model, codegenProperty);
+        }
+    }
+
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
     }
 
@@ -1529,6 +1544,9 @@ public class DefaultCodegen {
                 // comment out below as allowableValues is not set in post processing model enum
                 m.allowableValues = new HashMap<String, Object>();
                 m.allowableValues.put("values", impl.getEnum());
+                if (m.dataType.equals("BigDecimal")) {
+                    addImport(m, "BigDecimal");
+                }
             }
             if (impl.getAdditionalProperties() != null) {
                 addAdditionPropertiesToCodeGenModel(m, impl);
@@ -1536,11 +1554,7 @@ public class DefaultCodegen {
             addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
-        if (m.vars != null) {
-            for(CodegenProperty prop : m.vars) {
-                postProcessModelProperty(m, prop);
-            }
-        }
+        postProcessModelProperties(m);
         return m;
     }
 
@@ -1922,6 +1936,7 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
+            property.uniqueItems = ap.getUniqueItems() == null ? false : ap.getUniqueItems();
             String itemName = (String) p.getVendorExtensions().get("x-item-name");
             if (itemName == null) {
                 itemName = property.name;
@@ -2773,26 +2788,7 @@ public class DefaultCodegen {
             } else {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
-                    String name = ((RefModel) sub).getSimpleRef();
-                    try {
-                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
-                    } catch (UnsupportedEncodingException e) {
-                        LOGGER.error("Could not decoded string: " + name, e);
-                    }
-                    name = getAlias(name);
-                    if (typeMapping.containsKey(name)) {
-                        name = typeMapping.get(name);
-                        p.baseType = name;
-                    } else {
-                        name = toModelName(name);
-                        p.baseType = name;
-                        if (defaultIncludes.contains(name)) {
-                            imports.add(name);
-                        }
-                        imports.add(name);
-                        name = getTypeDeclaration(name);
-                    }
-                    p.dataType = name;
+                    readRefModelParameter((RefModel) model, p, imports);
                 } else {
                     if (sub instanceof ComposedModel) {
                         p.dataType = "object";
@@ -2900,6 +2896,29 @@ public class DefaultCodegen {
         } else {
             return false;
         }
+    }
+
+    protected void readRefModelParameter(RefModel refModel, CodegenParameter codegenParameter, Set<String> imports) {
+        String name = refModel.getSimpleRef();
+        try {
+            name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Could not decoded string: " + name, e);
+        }
+        name = getAlias(name);
+        if (typeMapping.containsKey(name)) {
+            name = typeMapping.get(name);
+            codegenParameter.baseType = name;
+        } else {
+            name = toModelName(name);
+            codegenParameter.baseType = name;
+            if (defaultIncludes.contains(name)) {
+                imports.add(name);
+            }
+            imports.add(name);
+            name = getTypeDeclaration(name);
+        }
+        codegenParameter.dataType = name;
     }
 
     /**

@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class Dog extends Animal  {
   @JsonProperty("breed")
   private String breed = null;

@@ -7,6 +7,7 @@ import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
 import io.swagger.models.Tag;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.rules.TemporaryFolder;
@@ -426,8 +427,10 @@ public class DefaultGeneratorTest {
     @Test
     public void testIssue9725() throws Exception {
         final File output = folder.getRoot();
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setFlatten(true);
 
-        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725.json");
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725.json",null, parseOptions);
         CodegenConfig codegenConfig = new SpringCodegen();
         codegenConfig.setLibrary("spring-cloud");
         codegenConfig.setOutputDir(output.getAbsolutePath());
@@ -444,8 +447,9 @@ public class DefaultGeneratorTest {
     @Test
     public void testIssue9725Map() throws Exception {
         final File output = folder.getRoot();
-
-        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json",null, parseOptions);
         CodegenConfig codegenConfig = new SpringCodegen();
         codegenConfig.setLibrary("spring-cloud");
         codegenConfig.setOutputDir(output.getAbsolutePath());
