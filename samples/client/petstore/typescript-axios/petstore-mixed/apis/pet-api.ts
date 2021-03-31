@@ -54,7 +54,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -108,7 +108,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -200,7 +200,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -252,7 +252,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -422,7 +422,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -478,7 +478,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
@@ -540,7 +540,7 @@ export const PetApiAxiosParamCreator = function (configuration?: Configuration) 
             // oauth required
             if (configuration && configuration.accessToken) {
                 const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                    ? await configuration.accessToken("petstore_auth", [""])
+                    ? await configuration.accessToken("petstore_auth", ["write:pets", "read:pets"])
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }

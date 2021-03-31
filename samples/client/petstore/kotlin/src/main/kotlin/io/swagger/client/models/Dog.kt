@@ -17,23 +17,36 @@ import io.swagger.client.models.Tag
 
 /**
  * 
+ * @param id 
+ * @param category 
+ * @param name 
+ * @param photoUrls 
+ * @param tags 
+ * @param status pet status in the store
  * @param bark 
  * @param breed 
  */
 data class Dog (
-    val name: kotlin.String,
-    val photoUrls: kotlin.Array<kotlin.String>
-,
-    val bark: kotlin.Boolean? = null,
-    val breed: Dog.Breed? = null,
+
     val id: kotlin.Long? = null,
     val category: Category? = null,
+    val name: kotlin.String,
+    val photoUrls: kotlin.Array<kotlin.String>,
     val tags: kotlin.Array<Tag>? = null,
     /* pet status in the store */
     val status: Dog.Status? = null,
     val bark: kotlin.Boolean? = null,
     val breed: Dog.Breed? = null
 ) {
+    /**
+    * pet status in the store
+    * Values: available,pending,sold
+    */
+    enum class Status(val value: kotlin.String){
+        available("available"),
+        pending("pending"),
+        sold("sold");
+    }
     /**
     * 
     * Values: dingo,husky,retriever,shepherd

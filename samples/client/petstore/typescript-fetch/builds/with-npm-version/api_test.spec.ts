@@ -46,11 +46,11 @@ describe("PetApi", () => {
     return expect(instance.doCategoryStuff(body, {})).resolves.toBe(null)
   })
   test("findPetsByStatus", () => {
-    const status: api.Array<string> = undefined
+    const status: Array<string> = undefined
     return expect(instance.findPetsByStatus(status, {})).resolves.toBe(null)
   })
   test("findPetsByTags", () => {
-    const tags: api.Array<string> = undefined
+    const tags: Array<string> = undefined
     return expect(instance.findPetsByTags(tags, {})).resolves.toBe(null)
   })
   test("getAllPets", () => {
@@ -114,11 +114,11 @@ describe("UserApi", () => {
     return expect(instance.createUser(body, {})).resolves.toBe(null)
   })
   test("createUsersWithArrayInput", () => {
-    const body: api.Array<User> = undefined
+    const body: Array<api.User> = undefined
     return expect(instance.createUsersWithArrayInput(body, {})).resolves.toBe(null)
   })
   test("createUsersWithListInput", () => {
-    const body: api.Array<User> = undefined
+    const body: Array<api.User> = undefined
     return expect(instance.createUsersWithListInput(body, {})).resolves.toBe(null)
   })
   test("deleteUser", () => {

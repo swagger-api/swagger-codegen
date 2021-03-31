@@ -251,6 +251,7 @@ public class CodegenConstants {
     public static final String HAS_INNER_OBJECT_NAME = PREFIX_HAS + "inner-object";
 
     public static final String IS_SIMPLE_TYPE_EXT_NAME = PREFIX_IS + "simple-type";
+    public static final String IS_NULLABLE_EXT_NAME = PREFIX_IS + "nullable";
     public static final String IS_PRIMITIVE_TYPE_EXT_NAME = PREFIX_IS + "primitive-type";
     public static final String IS_OBJECT_EXT_NAME = PREFIX_IS + "object";
     public static final String IS_CONTAINER_EXT_NAME = PREFIX_IS + "container";

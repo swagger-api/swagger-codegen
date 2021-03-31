@@ -90,7 +90,7 @@ namespace IO.Swagger.Test
         public void GetOrderByIdTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //int? orderId = null;
+            //long? orderId = null;
             //var response = instance.GetOrderById(orderId);
             //Assert.IsInstanceOf<Order> (response, "response is Order");
         }

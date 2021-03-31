@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,8 @@ import javax.validation.constraints.*;
  * ArrayOfNumberOnly
  */
 @Validated
+
+
 public class ArrayOfNumberOnly   {
   @JsonProperty("ArrayNumber")
   @Valid
@@ -37,8 +38,8 @@ public class ArrayOfNumberOnly   {
   /**
    * Get arrayNumber
    * @return arrayNumber
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @Schema(description = "")
       @Valid
     public List<BigDecimal> getArrayNumber() {
     return arrayNumber;

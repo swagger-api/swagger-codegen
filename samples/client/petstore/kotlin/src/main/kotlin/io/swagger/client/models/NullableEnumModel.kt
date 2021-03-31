@@ -24,7 +24,7 @@ data class NullableEnumModel (
     * 
     * Values: a,b,`null`
     */
-    enum class EnumProp(val value: kotlin.String){
+    enum class EnumProp(val value: kotlin.String?){
         a("a"),
         b("b"),
         `null`(null);

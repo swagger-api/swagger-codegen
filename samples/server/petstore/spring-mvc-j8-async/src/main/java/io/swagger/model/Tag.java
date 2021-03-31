@@ -13,6 +13,8 @@ import javax.validation.constraints.*;
  * Tag
  */
 @Validated
+
+
 public class Tag   {
   @JsonProperty("id")
   private Long id = null;
@@ -28,7 +30,7 @@ public class Tag   {
   /**
    * Get id
    * @return id
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Long getId() {
@@ -47,7 +49,7 @@ public class Tag   {
   /**
    * Get name
    * @return name
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public String getName() {

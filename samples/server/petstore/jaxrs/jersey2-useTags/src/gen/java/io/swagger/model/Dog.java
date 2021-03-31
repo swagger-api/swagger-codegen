@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Dog

@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
 import io.swagger.model.User;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * AllOfSubCategoryCategory
@@ -105,6 +106,7 @@ public class AllOfSubCategoryCategory extends Category  {
    **/
   @JsonProperty("drunk")
   @ApiModelProperty(value = "")
+  @Valid
   public User getDrunk() {
     return drunk;
   }

@@ -431,7 +431,7 @@ public class CodegenConfigurator implements Serializable {
     }
 
     public String loadSpecContent(String location, List<AuthorizationValue> auths) throws Exception{
-            location = location.replaceAll("\\\\","/");
+            location = sanitizeSpecificationUrl(location);
             String data = "";
             if (location.toLowerCase().startsWith("http")) {
                 data = RemoteUrl.urlToString(location, auths);
@@ -451,6 +451,10 @@ public class CodegenConfigurator implements Serializable {
             }
             LOGGER.trace("Loaded raw data: {}", data);
             return data;
+    }
+
+    private String sanitizeSpecificationUrl(String specificationUrl) {
+        return specificationUrl.replaceAll("\\\\","/");
     }
 
     public ClientOptInput toClientOptInput() {
@@ -494,36 +498,37 @@ public class CodegenConfigurator implements Serializable {
             LOGGER.debug("getClientOptInput - parsed inputSpec");
         } else {
             String specContent = null;
+            String sanitizedSpecificationUrl = sanitizeSpecificationUrl(inputSpecURL);
             try {
-                specContent = loadSpecContent(inputSpecURL, authorizationValues);
+                specContent = loadSpecContent(sanitizedSpecificationUrl, authorizationValues);
             } catch (Exception e) {
-                String msg = "Unable to read URL: " + inputSpecURL;
+                String msg = "Unable to read URL: " + sanitizedSpecificationUrl;
                 LOGGER.error(msg, e);
                 throw new IllegalArgumentException(msg);
             }
 
             if (StringUtils.isBlank(specContent)) {
-                String msg = "Empty content found in URL: " + inputSpecURL;
+                String msg = "Empty content found in URL: " + sanitizedSpecificationUrl;
                 LOGGER.error(msg);
                 throw new IllegalArgumentException(msg);
             }
             config.setInputSpec(specContent);
-            config.setInputURL(inputSpecURL);
+            config.setInputURL(sanitizedSpecificationUrl);
             ParseOptions options = new ParseOptions();
             options.setResolve(true);
             options.setResolveFully(resolveFully);
             options.setFlatten(true);
             options.setFlattenComposedSchemas(flattenInlineSchema);
-            SwaggerParseResult result = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, options);
+            SwaggerParseResult result = new OpenAPIParser().readLocation(sanitizedSpecificationUrl, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
-            LOGGER.debug("getClientOptInput - parsed inputSpecURL " + inputSpecURL);
+            LOGGER.debug("getClientOptInput - parsed inputSpecURL " + sanitizedSpecificationUrl);
             input.opts(new ClientOpts())
                     .openAPI(openAPI);
 
             if (config.needsUnflattenedSpec()) {
                 ParseOptions optionsUnflattened = new ParseOptions();
                 optionsUnflattened.setResolve(true);
-                SwaggerParseResult resultUnflattened = new OpenAPIParser().readLocation(inputSpecURL, authorizationValues, optionsUnflattened);
+                SwaggerParseResult resultUnflattened = new OpenAPIParser().readLocation(sanitizedSpecificationUrl, authorizationValues, optionsUnflattened);
                 OpenAPI openAPIUnflattened = resultUnflattened.getOpenAPI();
                 config.setUnflattenedOpenAPI(openAPIUnflattened);
             }

@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,8 @@ import javax.validation.constraints.*;
  * Body6
  */
 @Validated
+
+
 public class Body6   {
   @JsonProperty("name")
   private String name = null;
@@ -28,8 +29,8 @@ public class Body6   {
   /**
    * Updated name of the animal
    * @return name
-  **/
-  @ApiModelProperty(value = "Updated name of the animal")
+   **/
+  @Schema(description = "Updated name of the animal")
   
     public String getName() {
     return name;
@@ -47,8 +48,8 @@ public class Body6   {
   /**
    * Updated status of the animal
    * @return status
-  **/
-  @ApiModelProperty(value = "Updated status of the animal")
+   **/
+  @Schema(description = "Updated status of the animal")
   
     public String getStatus() {
     return status;

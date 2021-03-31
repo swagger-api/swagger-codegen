@@ -10,21 +10,17 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.Client;
-
 import org.junit.Test;
 import org.junit.Ignore;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * API tests for AnotherFakeApi
@@ -34,7 +30,6 @@ public class AnotherFakeApiTest {
 
     private final AnotherFakeApi api = new AnotherFakeApi();
 
-    
     /**
      * To test special tags
      *
@@ -45,12 +40,9 @@ public class AnotherFakeApiTest {
      */
     @Test
     public void testSpecialTagsTest() throws ApiException {
-        
-        Client client = null;
-        
-        Client response = api.testSpecialTags(client);
+        Client body = null;
+        Client response = api.testSpecialTags(body);
 
         // TODO: test validations
     }
-    
 }

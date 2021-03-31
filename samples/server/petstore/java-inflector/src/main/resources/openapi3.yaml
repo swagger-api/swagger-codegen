@@ -105,11 +105,11 @@ paths:
           type: array
           items:
             type: string
+            default: available
             enum:
             - available
             - pending
             - sold
-            default: available
       responses:
         "200":
           description: successful operation
@@ -333,6 +333,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AllPetsResponse'
+      x-accepts: application/json
+  /pet/category:
+    post:
+      tags:
+      - pet
+      operationId: doCategoryStuff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubCategory'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      x-contentType: application/json
       x-accepts: application/json
   /store/inventory:
     get:
@@ -700,10 +719,10 @@ paths:
           type: array
           items:
             type: string
+            default: $
             enum:
             - '>'
             - $
-            default: $
       - name: enum_header_string
         in: header
         description: Header parameter enum test (string)
@@ -712,11 +731,11 @@ paths:
         explode: false
         schema:
           type: string
+          default: -efg
           enum:
           - _abc
           - -efg
           - (xyz)
-          default: -efg
       - name: enum_query_string_array
         in: query
         description: Query parameter enum test (string array)
@@ -727,10 +746,10 @@ paths:
           type: array
           items:
             type: string
+            default: $
             enum:
             - '>'
             - $
-            default: $
       - name: enum_query_string
         in: query
         description: Query parameter enum test (string)
@@ -739,11 +758,11 @@ paths:
         explode: true
         schema:
           type: string
+          default: -efg
           enum:
           - _abc
           - -efg
           - (xyz)
-          default: -efg
       - name: enum_query_integer
         in: query
         description: Query parameter enum test (double)
@@ -1217,7 +1236,7 @@ paths:
       summary: Updates a dog
       operationId: updateDogWithForm
       parameters:
-      - name: animalId
+      - name: dogId
         in: path
         description: ID of dog that needs to be updated
         required: true
@@ -1410,11 +1429,11 @@ components:
         name: Name
     EnumClass:
       type: string
+      default: -efg
       enum:
       - _abc
       - -efg
       - (xyz)
-      default: -efg
     List:
       type: object
       properties:
@@ -1781,6 +1800,16 @@ components:
         status: available
       xml:
         name: Pet
+    NullableEnumModel:
+      type: object
+      properties:
+        enumProp:
+          type: string
+          nullable: true
+          enum:
+          - a
+          - b
+          - null
     SinglePetResponse:
       type: object
       properties:
@@ -1800,7 +1829,29 @@ components:
         oneOf:
         - $ref: '#/components/schemas/Dog'
         - $ref: '#/components/schemas/Cat'
-        x-model-name: OneOfAllPetsResponseItems
+    SubCategory:
+      type: object
+      properties:
+        category:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          - type: object
+            properties:
+              foo:
+                type: boolean
+              bar:
+                type: integer
+              beer:
+                type: string
+              drunk:
+                $ref: '#/components/schemas/User'
+        category2:
+          $ref: '#/components/schemas/Category'
+        pets:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/Pet'
     hasOnlyReadOnly:
       type: object
       properties:
@@ -1976,18 +2027,18 @@ components:
           description: Form parameter enum test (string array)
           items:
             type: string
+            default: $
             enum:
             - '>'
             - $
-            default: $
         enum_form_string:
           type: string
           description: Form parameter enum test (string)
+          default: -efg
           enum:
           - _abc
           - -efg
           - (xyz)
-          default: -efg
         enum_query_double:
           type: number
           description: Query parameter enum test (double)

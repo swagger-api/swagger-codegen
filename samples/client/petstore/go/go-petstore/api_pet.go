@@ -18,6 +18,7 @@ import (
 	"strings"
 	"fmt"
 	"github.com/antihax/optional"
+	"os"
 )
 
 // Linger please
@@ -103,8 +104,8 @@ PetApiService Deletes a pet
 
 */
 
-type PetApiDeletePetOpts struct { 
-	ApiKey optional.String
+type PetApiDeletePetOpts struct {
+    ApiKey optional.String
 }
 
 func (a *PetApiService) DeletePet(ctx context.Context, petId int64, localVarOptionals *PetApiDeletePetOpts) (*http.Response, error) {
@@ -179,8 +180,8 @@ PetApiService
 @return ModelApiResponse
 */
 
-type PetApiDoCategoryStuffOpts struct { 
-	Body optional.Interface
+type PetApiDoCategoryStuffOpts struct {
+    Body optional.Interface
 }
 
 func (a *PetApiService) DoCategoryStuff(ctx context.Context, localVarOptionals *PetApiDoCategoryStuffOpts) (ModelApiResponse, *http.Response, error) {
@@ -439,15 +440,15 @@ func (a *PetApiService) FindPetsByTags(ctx context.Context, tags []string) ([]Pe
 /*
 PetApiService
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-@return Array
+@return []OneOfAllPetsResponseItems
 */
-func (a *PetApiService) GetAllPets(ctx context.Context) (Array, *http.Response, error) {
+func (a *PetApiService) GetAllPets(ctx context.Context) ([]OneOfAllPetsResponseItems, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue Array
+		localVarReturnValue []OneOfAllPetsResponseItems
 	)
 
 	// create path and map variables
@@ -504,7 +505,7 @@ func (a *PetApiService) GetAllPets(ctx context.Context) (Array, *http.Response, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v Array
+			var v []OneOfAllPetsResponseItems
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -776,9 +777,9 @@ PetApiService Updates a pet in the store with form data
 
 */
 
-type PetApiUpdatePetWithFormOpts struct { 
-	Name optional.String
-	Status optional.String
+type PetApiUpdatePetWithFormOpts struct {
+    Name optional.String
+    Status optional.String
 }
 
 func (a *PetApiService) UpdatePetWithForm(ctx context.Context, petId int64, localVarOptionals *PetApiUpdatePetWithFormOpts) (*http.Response, error) {
@@ -854,13 +855,13 @@ PetApiService uploads an image
  * @param petId ID of pet to update
  * @param optional nil or *PetApiUploadFileOpts - Optional Parameters:
      * @param "AdditionalMetadata" (optional.String) - 
-     * @param "File" (optional.String) - 
+     * @param "File" (optional.*os.File) - 
 @return ModelApiResponse
 */
 
-type PetApiUploadFileOpts struct { 
-	AdditionalMetadata optional.String
-	File optional.String
+type PetApiUploadFileOpts struct {
+    AdditionalMetadata optional.String
+    File optional.Interface
 }
 
 func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOptionals *PetApiUploadFileOpts) (ModelApiResponse, *http.Response, error) {
@@ -900,12 +901,12 @@ func (a *PetApiService) UploadFile(ctx context.Context, petId int64, localVarOpt
 	if localVarOptionals != nil && localVarOptionals.AdditionalMetadata.IsSet() {
 		localVarFormParams.Add("additionalMetadata", parameterToString(localVarOptionals.AdditionalMetadata.Value(), ""))
 	}
-    var localVarFile string
+    var localVarFile *os.File
 	if localVarOptionals != nil && localVarOptionals.File.IsSet() {
 		localVarFileOk := false
-		localVarFile, localVarFileOk = localVarOptionals.File.Value().(string)
+		localVarFile, localVarFileOk = localVarOptionals.File.Value().(*os.File)
 		if !localVarFileOk {
-				return localVarReturnValue, nil, reportError("file should be string")
+				return localVarReturnValue, nil, reportError("file should be *os.File")
 		}
 	}
 	if localVarFile != nil {

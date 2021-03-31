@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/randomPet")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2020-03-13T07:31:34.535-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-01-24T13:25:49.427-05:00[America/Bogota]")
 public class RandomPetApi {
 
     @GET
