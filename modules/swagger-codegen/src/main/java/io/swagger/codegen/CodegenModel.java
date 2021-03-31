@@ -56,6 +56,14 @@ public class CodegenModel {
         allMandatory = mandatory;
     }
 
+    public boolean getIsInteger() {
+        return "Integer".equalsIgnoreCase(this.dataType);
+    }
+
+    public boolean getIsNumber() {
+        return "BigDecimal".equalsIgnoreCase(this.dataType);
+    }
+
     @Override
     public String toString() {
         return String.format("%s(%s)", name, classname);

@@ -186,9 +186,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
-        /// <param name="file">file to upload (optional)</param>
+        /// <param name="_file">file to upload (optional)</param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream _file = null);
 
         /// <summary>
         /// uploads an image
@@ -199,9 +199,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
-        /// <param name="file">file to upload (optional)</param>
+        /// <param name="_file">file to upload (optional)</param>
         /// <returns>ApiResponse of ApiResponse</returns>
-        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null);
+        ApiResponse<ApiResponse> UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream _file = null);
         #endregion Synchronous Operations
     }
 
@@ -842,11 +842,11 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
-        /// <param name="file">file to upload (optional)</param>
+        /// <param name="_file">file to upload (optional)</param>
         /// <returns>ApiResponse</returns>
-        public ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        public ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream _file = null)
         {
-             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, file);
+             ApiResponse<ApiResponse> localVarResponse = UploadFileWithHttpInfo(petId, additionalMetadata, _file);
              return localVarResponse.Data;
         }
 
@@ -856,9 +856,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server (optional)</param>
-        /// <param name="file">file to upload (optional)</param>
+        /// <param name="_file">file to upload (optional)</param>
         /// <returns>ApiResponse of ApiResponse</returns>
-        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+        public ApiResponse< ApiResponse > UploadFileWithHttpInfo (long? petId, string additionalMetadata = null, System.IO.Stream _file = null)
         {
             // verify the required parameter 'petId' is set
             if (petId == null)
@@ -888,7 +888,7 @@ namespace IO.Swagger.Api
 
             if (petId != null) localVarPathParams.Add("petId", this.Configuration.ApiClient.ParameterToString(petId)); // path parameter
             if (additionalMetadata != null) localVarFormParams.Add("additionalMetadata", this.Configuration.ApiClient.ParameterToString(additionalMetadata)); // form parameter
-            if (file != null) localVarFileParams.Add("file", this.Configuration.ApiClient.ParameterToFile("file", file));
+            if (_file != null) localVarFileParams.Add("file", this.Configuration.ApiClient.ParameterToFile("file", _file));
 
             // authentication (petstore_auth) required
             // oauth required

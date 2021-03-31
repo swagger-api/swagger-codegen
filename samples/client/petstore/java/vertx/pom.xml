@@ -115,7 +115,7 @@
                         <configuration>
                             <sources>
                                 <source>
-                                    src/main/java</source>
+                                src/main/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -128,7 +128,7 @@
                         <configuration>
                             <sources>
                                 <source>
-                                    src/test/java</source>
+                                src/test/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -140,7 +140,7 @@
                 <version>3.6.1</version>
                 <configuration>
                     <source>
-                        1.8</source>
+                    1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
@@ -232,16 +232,16 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.joschi.jackson</groupId>
-            <artifactId>jackson-datatype-threetenbp</artifactId>
-            <version>${threetenbp-version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.joschi.jackson</groupId>
+                <artifactId>jackson-datatype-threetenbp</artifactId>
+                <version>${threetenbp-version}</version>
+            </dependency>
 
         <!-- test dependencies -->
         <dependency>
@@ -261,9 +261,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vertx-version>3.4.2</vertx-version>
-        <swagger-core-version>1.5.18</swagger-core-version>
+        <swagger-core-version>1.5.24</swagger-core-version>
         <threetenbp-version>2.6.4</threetenbp-version>
-        <jackson-version>2.10.1</jackson-version>
+        <jackson-version>2.11.4</jackson-version>
         <junit-version>4.13.1</junit-version>
     </properties>
 </project>
