@@ -832,6 +832,7 @@
                 <module>samples/client/petstore/kotlin/</module>
                 <module>samples/client/petstore/kotlin-threetenbp/</module>
                 <module>samples/client/petstore/kotlin-string/</module>
+                <module>samples/client/petstore/kotlin-retrofit2-client/</module>
                 <!-- test non-java projects -->
                 <module>samples/client/petstore/go</module>
                 <!-- servers -->

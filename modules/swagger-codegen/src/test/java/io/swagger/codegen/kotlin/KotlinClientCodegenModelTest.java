@@ -149,6 +149,27 @@ public class KotlinClientCodegenModelTest {
         Assert.assertTrue(property3.isNotContainer);
     }
 
+    @Test(description = "convert a simple model: date java8")
+    public void selectDateLibraryAsJava8WithOffsetDateTime() {
+        final Model model = getSimpleModel();
+        final KotlinClientCodegen codegen = new KotlinClientCodegen();
+        codegen.setDateLibrary(KotlinClientCodegen.DateLibrary.JAVA8.value);
+        codegen.additionalProperties().put(KotlinClientCodegen.USE_OFFSET_DATE_TIME, true);
+        codegen.processOpts();
+
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        final CodegenProperty property3 = cm.vars.get(2);
+        Assert.assertEquals(property3.baseName, "createdAt");
+        Assert.assertEquals(property3.datatype, "java.time.OffsetDateTime");
+        Assert.assertEquals(property3.name, "createdAt");
+        Assert.assertEquals(property3.defaultValue, "null");
+        Assert.assertEquals(property3.baseType, "java.time.OffsetDateTime");
+        Assert.assertFalse(property3.hasMore);
+        Assert.assertFalse(property3.required);
+        Assert.assertTrue(property3.isNotContainer);
+    }
+
     @Test(description = "convert a model with array property to default kotlin.Array")
     public void arrayPropertyTest() {
         final Model model = getArrayTestModel();

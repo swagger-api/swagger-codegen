@@ -1,20 +1,18 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.*;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
+
+import static io.swagger.codegen.languages.JavaClientCodegen.prioritizeContentTypes;
+import static java.util.Collections.sort;
 
 public abstract class AbstractKotlinCodegen extends DefaultCodegen implements CodegenConfig {
     static Logger LOGGER = LoggerFactory.getLogger(AbstractKotlinCodegen.class);
@@ -25,6 +23,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     protected String packageName;
 
     protected String sourceFolder = "src/main/kotlin";
+    protected String testFolder = "src/test/kotlin";
 
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
@@ -46,6 +45,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
                 "kotlin.Char",
                 "kotlin.String",
                 "kotlin.Array",
+                "kotlin.ByteArray",
                 "kotlin.collections.List",
                 "kotlin.collections.Map",
                 "kotlin.collections.Set"
@@ -129,6 +129,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
                 "kotlin.Boolean",
                 "kotlin.Char",
                 "kotlin.Array",
+                "kotlin.ByteArray",
                 "kotlin.collections.List",
                 "kotlin.collections.Set",
                 "kotlin.collections.Map"
@@ -143,18 +144,20 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         typeMapping.put("double", "kotlin.Double");
         typeMapping.put("number", "java.math.BigDecimal");
         typeMapping.put("date-time", "java.time.LocalDateTime");
-        typeMapping.put("date", "java.time.LocalDateTime");
+        typeMapping.put("date", "java.time.LocalDate");
         typeMapping.put("file", "java.io.File");
         typeMapping.put("array", "kotlin.Array");
-        typeMapping.put("list", "kotlin.Array");
+        typeMapping.put("list", "kotlin.collections.List");
         typeMapping.put("map", "kotlin.collections.Map");
         typeMapping.put("object", "kotlin.Any");
         typeMapping.put("binary", "kotlin.Array<kotlin.Byte>");
         typeMapping.put("Date", "java.time.LocalDateTime");
         typeMapping.put("DateTime", "java.time.LocalDateTime");
+        typeMapping.put("ByteArray", "kotlin.ByteArray");
 
-        instantiationTypes.put("array", "arrayOf");
-        instantiationTypes.put("list", "arrayOf");
+        instantiationTypes.put("array", "kotlin.collections.ArrayList");
+        instantiationTypes.put("list", "kotlin.collections.ArrayList");
+
         instantiationTypes.put("map", "mapOf");
 
         importMapping = new HashMap<String, String>();
@@ -479,12 +482,22 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
             modifiedName = escapeReservedWord(modifiedName);
         }
 
-        return titleCase(modifiedName);
+        modifiedName = titleCase(modifiedName);
+
+        if (modifiedName.matches("\\d.*")) {
+            modifiedName = "Model" + modifiedName;
+        }
+        return modifiedName;
     }
 
     @Override
     public String toModelFilename(String name) {
         // Should be the same as the model name
+        return toModelName(name);
+    }
+
+    @Override
+    public String toModelDocFilename(String name) {
         return toModelName(name);
     }
 
@@ -556,5 +569,110 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         // provides extra protection against improperly trying to import language primitives and java types
         boolean imports = !type.startsWith("kotlin.") && !type.startsWith("java.") && !defaultIncludes.contains(type) && !languageSpecificPrimitives.contains(type);
         return imports;
+    }
+
+    @Override
+    public String toVarName(final String name) {
+        // sanitize name
+        String varName = sanitizeName(name);
+
+        if("_".equals(varName)) {
+            varName = "_u";
+        }
+
+        if (isReservedWord(varName) || varName.matches("^\\d.*")) {
+            varName = escapeReservedWord(varName);
+        }
+
+        return varName;
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        final String name = property.nameInCamelCase.replace("`", "");
+        if (!name.toLowerCase().contains("enum") || isReservedWord(name)) {
+            return name + "Enum";
+        } else {
+            return name;
+        }
+    }
+
+    @Override
+    public String toEnumValue(String value, String datatype) {
+        if (datatype.contains("kotlin.String")) {
+            return "\"" + escapeText(value) + "\"";
+        }
+        return value;
+    }
+
+    @Override
+    public String apiTestFileFolder() {
+        String testApiPackage = testPackage();
+        if (StringUtils.isEmpty(testApiPackage)) testApiPackage = apiPackage();
+        return outputFolder + File.separator + testFolder + File.separator + testApiPackage.replace('.', '/');
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        // Index all CodegenModels by model name.
+        Map<String, CodegenModel> allModels = new HashMap<>();
+        for (Map.Entry<String, Object> entry : objs.entrySet()) {
+            String modelName = toModelName(entry.getKey());
+            Map<String, Object> inner = (Map<String, Object>) entry.getValue();
+            List<Map<String, Object>> models = (List<Map<String, Object>>) inner.get("models");
+            for (Map<String, Object> mo : models) {
+                CodegenModel cm = (CodegenModel) mo.get("model");
+                allModels.put(modelName, cm);
+            }
+        }
+        Map<String, Map<String, Object>> parentsMap = new HashMap<>();
+        // Let parent know about all its children
+        for (CodegenModel cm : allModels.values()) {
+            Map<String, CodegenProperty> propertyHash = new HashMap<>(cm.vars.size());
+            for (final CodegenProperty property : cm.allVars) {
+                propertyHash.put(property.name, property);
+            }
+
+            CodegenModel parent = allModels.get(cm.parent);
+
+            if (parent != null) {
+                if (parent.children == null) {
+                    parent.hasChildren = true;
+                }
+                CodegenProperty last = null;
+                for (final CodegenProperty property : parent.vars) {
+                    // helper list of parentVars simplifies templating
+                    if (propertyHash.containsKey(property.name)) {
+                        final CodegenProperty parentVar = property.clone();
+                        parentVar.isInherited = true;
+                        parentVar.hasMore = true;
+                        last = parentVar;
+                        cm.parentVars.add(parentVar);
+                    }
+                }
+                if (last != null) {
+                    last.hasMore = false;
+                }
+
+                Map<String, Object> parentMap = parentsMap.get(parent.classname);
+                if (parentMap == null) {
+                    parentMap = new HashMap<>();
+                    parentMap.put("classname", parent.classname);
+                    parentMap.put("children", new ArrayList<Map<String, Object>>());
+                    parentMap.put("discriminator", parent.discriminator);
+                    parentsMap.put(parent.classname, parentMap);
+                }
+                List<Map<String, Object>> childrenList = (List<Map<String, Object>>)parentMap.get("children");
+                Map<String, Object> child = new HashMap<>();
+                child.put("name", cm.name);
+                child.put("classname", cm.classname);
+                childrenList.add(child);
+            } else if (StringUtils.isNotEmpty(cm.parent)) {
+                cm.isAlias = true;
+            }
+        }
+        additionalProperties.put("parent", new ArrayList<>(parentsMap.values()));
+        return objs;
     }
 }

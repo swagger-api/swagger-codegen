@@ -21,7 +21,7 @@ import com.squareup.moshi.Json
  * @param shipDate 
  * @param status Order Status
  * @param complete 
- */
+*/
 data class Order (
     val id: kotlin.Long? = null,
     val petId: kotlin.Long? = null,

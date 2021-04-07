@@ -23,7 +23,7 @@ import com.squareup.moshi.Json
  * @param photoUrls 
  * @param tags 
  * @param status pet status in the store
- */
+*/
 data class Pet (
     val name: kotlin.String,
     val photoUrls: kotlin.Array<kotlin.String>,

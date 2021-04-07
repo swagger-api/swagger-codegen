@@ -48,6 +48,7 @@ public class Pet {
   @SerializedName("tags")
   private List<Tag> tags = null;
 
+
   /**
    * pet status in the store
    */
