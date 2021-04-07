@@ -41,7 +41,7 @@ open class ApiClient(val baseUrl: String) {
             (content as Map<String,Any>).forEach { key, value ->
                 if(value::class == File::class) {
                     val file = value as File
-                    requestBodyBuilder.addFormDataPart(key, file.name, RequestBody.create(MediaType.parse("application/octet-stream"), file))
+                    requestBodyBuilder.addFormDataPart(key, file.name, RequestBody.create(MediaType.parse(guessContentTypeFromFile(file.name)), file))
                 } else {
                     val stringValue = value as String
                     requestBodyBuilder.addFormDataPart(key, stringValue)
@@ -207,5 +207,16 @@ open class ApiClient(val baseUrl: String) {
         }
 
         return File.createTempFile(prefix, suffix);
+    }
+
+   /**
+    * Guess Content-Type header from the given file (defaults to "application/octet-stream").
+    *
+    * @param file The given file
+    * @return The guessed Content-Type
+    */
+    open fun guessContentTypeFromFile(fileName: String): String? {
+        val contentType = URLConnection.guessContentTypeFromName(fileName)
+        return contentType ?: "application/octet-stream"
     }
 }
