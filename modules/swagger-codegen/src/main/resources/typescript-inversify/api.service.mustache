@@ -1,14 +1,14 @@
 {{>licenseInfo}}
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import IHttpClient from "../IHttpClient";
-import { inject, injectable } from "inversify";
-import { IAPIConfiguration } from "../IAPIConfiguration";
-import { Headers } from "../Headers";
-import HttpResponse from "../HttpResponse";
+import IHttpClient from '../IHttpClient';
+import { inject, injectable } from 'inversify';
+import { IAPIConfiguration } from '../IAPIConfiguration';
+import { Headers } from '../Headers';
+import HttpResponse from '../HttpResponse';
 
 {{#imports}}
 import { {{classname}} } from '../{{filename}}';
@@ -34,13 +34,10 @@ export class {{classname}} implements {{classname}}Interface {
 {{^withInterfaces}}
 export class {{classname}} {
 {{/withInterfaces}}
-    private basePath: string = '{{{basePath}}}';
+    @inject('IAPIConfiguration') private APIConfiguration: IAPIConfiguration;
+    @inject('IApiHttpClient') private httpClient: IHttpClient;
 
-    constructor(@inject("IApiHttpClient") private httpClient: IHttpClient,
-        @inject("IAPIConfiguration") private APIConfiguration: IAPIConfiguration ) {
-        if(this.APIConfiguration.basePath)
-            this.basePath = this.APIConfiguration.basePath;
-    }
+
 {{#operation}}
 
     /**
@@ -68,21 +65,21 @@ export class {{classname}} {
         if ({{paramName}}) {
         {{#isCollectionFormatMulti}}
             {{paramName}}.forEach((element) => {
-                queryParameters.push("{{paramName}}="+encodeURIComponent(String({{paramName}})));
+                queryParameters.push('{{paramName}}='+encodeURIComponent(String({{paramName}})));
             })
         {{/isCollectionFormatMulti}}
         {{^isCollectionFormatMulti}}
-            queryParameters.push("{{paramName}}="+encodeURIComponent({{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])));
+            queryParameters.push('{{paramName}}='+encodeURIComponent({{paramName}}.join(COLLECTION_FORMATS['{{collectionFormat}}'])));
         {{/isCollectionFormatMulti}}
         }
         {{/isListContainer}}
         {{^isListContainer}}
         if ({{paramName}} !== undefined) {
         {{#isDateTime}}
-           queryParameters.push("{{paramName}}="+encodeURIComponent(<any>{{paramName}}.toISOString()));
+           queryParameters.push('{{paramName}}='+encodeURIComponent(<any>{{paramName}}.toISOString()));
         {{/isDateTime}}
         {{^isDateTime}}
-            queryParameters.push("{{paramName}}="+encodeURIComponent(String({{paramName}})));
+            queryParameters.push('{{paramName}}='+encodeURIComponent(String({{paramName}})));
         {{/isDateTime}}
         }
         {{/isListContainer}}
@@ -106,13 +103,13 @@ export class {{classname}} {
         // authentication ({{name}}) required
 {{#isApiKey}}
 {{#isKeyInHeader}}
-        if (this.APIConfiguration.apiKeys["{{keyParamName}}"]) {
-            headers['{{keyParamName}}'] = this.APIConfiguration.apiKeys["{{keyParamName}}"];
+        if (this.APIConfiguration.apiKeys['{{keyParamName}}']) {
+            headers['{{keyParamName}}'] = this.APIConfiguration.apiKeys['{{keyParamName}}'];
         }
 {{/isKeyInHeader}}
 {{#isKeyInQuery}}
-        if (this.APIConfiguration.apiKeys["{{keyParamName}}"]) {
-            queryParameters.push("{{paramName}}="+encodeURIComponent(String(this.APIConfiguration.apiKeys["{{keyParamName}}"])));
+        if (this.APIConfiguration.apiKeys['{{keyParamName}}']) {
+            queryParameters.push('{{paramName}}='+encodeURIComponent(String(this.APIConfiguration.apiKeys['{{keyParamName}}'])));
         }
 {{/isKeyInQuery}}
 {{/isApiKey}}
@@ -169,9 +166,9 @@ export class {{classname}} {
 {{/formParams}}
 
 {{/hasFormParams}}
-        const response: Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>> = this.httpClient.{{httpMethod}}(`${this.basePath}{{{path}}}{{#hasQueryParams}}?${queryParameters.join('&')}{{/hasQueryParams}}`{{#bodyParam}}, {{paramName}} {{/bodyParam}}{{#hasFormParams}}, body{{/hasFormParams}}, headers);
-        if (observe == 'body') {
-               return response.map(httpResponse => <{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>(httpResponse.response)){{#usePromise}}.toPromise(){{/usePromise}};
+        const response: Observable<HttpResponse<{{#returnType}}{{{returnType}}}{{#isResponseTypeFile}}|undefined{{/isResponseTypeFile}}{{/returnType}}{{^returnType}}any{{/returnType}}>> = this.httpClient.{{httpMethod}}(`${this.APIConfiguration.basePath}{{{path}}}{{#hasQueryParams}}?${queryParameters.join('&')}{{/hasQueryParams}}`{{#bodyParam}}, {{paramName}}{{/bodyParam}} as any{{#hasFormParams}}, body{{/hasFormParams}}, headers);
+        if (observe === 'body') {
+               return response.map(httpResponse => httpResponse.response){{#usePromise}}.toPromise(){{/usePromise}};
         }
         return response{{#usePromise}}.toPromise(){{/usePromise}};
     }
