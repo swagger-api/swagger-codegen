@@ -104,7 +104,7 @@ public interface {{classname}} {
         produces = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}{{#hasConsumes}}
         consumes = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}{{/singleContentTypes}}
         method = RequestMethod.{{httpMethod}})
-    {{#jdk8}}{{#defaultInterfaces}}default {{/defaultInterfaces}}{{/jdk8}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{#delegate-method}}_{{/delegate-method}}{{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^jdk8}};{{/jdk8}}{{#jdk8}}{{#defaultInterfaces}} {
+    {{#jdk8}}{{#defaultInterfaces}}default {{/defaultInterfaces}}{{/jdk8}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{#delegate-method}}_{{/delegate-method}}{{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{#jdk8}}{{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}} {
         {{#delegate-method}}
         return {{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     }
