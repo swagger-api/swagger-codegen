@@ -444,6 +444,56 @@ public class DefaultGeneratorTest {
         assertFalse(FileUtils.readFileToString(model).contains("@JsonIgnoreProperties(ignoreUnknown = true)"));
         assertFalse(FileUtils.readFileToString(model).contains("import com.fasterxml.jackson.annotation.JsonIgnoreProperties;"));
     }
+    
+    @Test
+    public void testAdditionalModelTypeAnnotations() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("jaxrs");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+        additionalProperties.put("additionalModelTypeAnnotations",
+                "@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true);"
+                + "@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_NULL)");
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File model = new File(output, "src/gen/java/com/mycompany/generated/client/model/ModelOne.java");
+        assertTrue(model.exists());
+        assertTrue(FileUtils.readFileToString(model).contains("@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)"));
+        assertTrue(FileUtils.readFileToString(model).contains("@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_NULL)"));
+    }
 
     @Test
     public void testSecurityWithoutGlobal() throws Exception {
