@@ -66,7 +66,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
                 "localVarPath", "localVarQueryParams", "localVarHeaderParams", "localVarFormParams",
                 "localVarPostBody", "localVarAccepts", "localVarAccept", "localVarContentTypes",
                 "localVarContentType", "localVarAuthNames", "localReturnType",
-                "ApiClient", "ApiException", "ApiResponse", "Configuration", "StringUtil",
+                "ApiClient", "ApiException", "ApiResponse", "Configuration", "StringUtil", "Logger",
 
                 // language reserved words
                 "abstract", "continue", "for", "new", "switch", "assert",
@@ -264,6 +264,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         writeOptional(outputFolder, new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
         writeOptional(outputFolder, new SupportingFile("manifest.mustache", projectFolder, "AndroidManifest.xml"));
         writeOptional(outputFolder, new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
+        writeOptional(outputFolder, new SupportingFile("Logger.mustache", invokerFolder, "Logger.java"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
 
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
@@ -278,6 +279,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         if (!("feign".equals(getLibrary()) || usesAnyRetrofitLibrary())) {
             supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder, "ApiException.java"));
             supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
+            // supportingFiles.add(new SupportingFile("Logger.mustache", invokerFolder, "Logger.java"));
             supportingFiles.add(new SupportingFile("Pair.mustache", invokerFolder, "Pair.java"));
             supportingFiles.add(new SupportingFile("auth/Authentication.mustache", authFolder, "Authentication.java"));
         }
