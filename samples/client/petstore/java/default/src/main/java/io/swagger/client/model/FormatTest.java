@@ -48,7 +48,7 @@ public class FormatTest   {
     this.integer = integer;
   }
 
-
+  
   /**
    * minimum: 20.0
    * maximum: 200.0
@@ -67,7 +67,7 @@ public class FormatTest   {
     this.int32 = int32;
   }
 
-
+  
   /**
    **/
   public FormatTest int64(Long int64) {
@@ -84,7 +84,7 @@ public class FormatTest   {
     this.int64 = int64;
   }
 
-
+  
   /**
    * minimum: 32.1
    * maximum: 543.2
@@ -103,7 +103,7 @@ public class FormatTest   {
     this.number = number;
   }
 
-
+  
   /**
    * minimum: 54.3
    * maximum: 987.6
@@ -122,7 +122,7 @@ public class FormatTest   {
     this._float = _float;
   }
 
-
+  
   /**
    * minimum: 67.8
    * maximum: 123.4
@@ -141,7 +141,7 @@ public class FormatTest   {
     this._double = _double;
   }
 
-
+  
   /**
    **/
   public FormatTest string(String string) {
@@ -158,7 +158,7 @@ public class FormatTest   {
     this.string = string;
   }
 
-
+  
   /**
    **/
   public FormatTest _byte(byte[] _byte) {
@@ -175,7 +175,7 @@ public class FormatTest   {
     this._byte = _byte;
   }
 
-
+  
   /**
    **/
   public FormatTest binary(byte[] binary) {
@@ -192,7 +192,7 @@ public class FormatTest   {
     this.binary = binary;
   }
 
-
+  
   /**
    **/
   public FormatTest date(Date date) {
@@ -209,7 +209,7 @@ public class FormatTest   {
     this.date = date;
   }
 
-
+  
   /**
    **/
   public FormatTest dateTime(Date dateTime) {
@@ -226,7 +226,7 @@ public class FormatTest   {
     this.dateTime = dateTime;
   }
 
-
+  
   /**
    **/
   public FormatTest uuid(String uuid) {
@@ -243,7 +243,7 @@ public class FormatTest   {
     this.uuid = uuid;
   }
 
-
+  
   /**
    **/
   public FormatTest password(String password) {
@@ -260,6 +260,7 @@ public class FormatTest   {
     this.password = password;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {

@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 
-public class UserApi {
+public class UserApiAsync {
   private ApiClient apiClient;
 
-  public UserApi() {
+  public UserApiAsync() {
     this(Configuration.getDefaultApiClient());
   }
 
-  public UserApi(ApiClient apiClient) {
+  public UserApiAsync(ApiClient apiClient) {
     this.apiClient = apiClient;
   }
 

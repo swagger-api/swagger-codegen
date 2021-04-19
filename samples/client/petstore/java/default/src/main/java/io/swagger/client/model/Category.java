@@ -33,7 +33,7 @@ public class Category   {
     this.id = id;
   }
 
-
+  
   /**
    **/
   public Category name(String name) {
@@ -50,6 +50,7 @@ public class Category   {
     this.name = name;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {

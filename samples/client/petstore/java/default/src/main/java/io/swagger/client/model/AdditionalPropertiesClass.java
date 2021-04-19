@@ -2,16 +2,15 @@ package io.swagger.client.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
-import io.swagger.client.model.Animal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
- * AnimalFarm
+ * AdditionalPropertiesClass
  */
 
-public class AnimalFarm extends ArrayList<Animal>  {
+public class AdditionalPropertiesClass extends HashMap<String, String>  {
   
 
   
@@ -35,7 +34,7 @@ public class AnimalFarm extends ArrayList<Animal>  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AnimalFarm {\n");
+    sb.append("class AdditionalPropertiesClass {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();

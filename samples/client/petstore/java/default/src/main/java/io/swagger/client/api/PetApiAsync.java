@@ -19,14 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PetApi {
+public class PetApiAsync {
   private ApiClient apiClient;
 
-  public PetApi() {
+  public PetApiAsync() {
     this(Configuration.getDefaultApiClient());
   }
 
-  public PetApi(ApiClient apiClient) {
+  public PetApiAsync(ApiClient apiClient) {
     this.apiClient = apiClient;
   }
 

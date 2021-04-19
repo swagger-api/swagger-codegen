@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 
-public class StoreApi {
+public class StoreApiAsync {
   private ApiClient apiClient;
 
-  public StoreApi() {
+  public StoreApiAsync() {
     this(Configuration.getDefaultApiClient());
   }
 
-  public StoreApi(ApiClient apiClient) {
+  public StoreApiAsync(ApiClient apiClient) {
     this.apiClient = apiClient;
   }
 

@@ -18,14 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 
-public class FakeApi {
+public class FakeApiAsync {
   private ApiClient apiClient;
 
-  public FakeApi() {
+  public FakeApiAsync() {
     this(Configuration.getDefaultApiClient());
   }
 
-  public FakeApi(ApiClient apiClient) {
+  public FakeApiAsync(ApiClient apiClient) {
     this.apiClient = apiClient;
   }
 

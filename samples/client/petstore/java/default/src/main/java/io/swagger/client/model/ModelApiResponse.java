@@ -34,7 +34,7 @@ public class ModelApiResponse   {
     this.code = code;
   }
 
-
+  
   /**
    **/
   public ModelApiResponse type(String type) {
@@ -51,7 +51,7 @@ public class ModelApiResponse   {
     this.type = type;
   }
 
-
+  
   /**
    **/
   public ModelApiResponse message(String message) {
@@ -68,6 +68,7 @@ public class ModelApiResponse   {
     this.message = message;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {

@@ -33,6 +33,7 @@ public class Model200Response   {
     this.name = name;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {

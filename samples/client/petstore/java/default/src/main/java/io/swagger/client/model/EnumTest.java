@@ -98,7 +98,7 @@ public class EnumTest   {
     this.enumString = enumString;
   }
 
-
+  
   /**
    **/
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
@@ -115,7 +115,7 @@ public class EnumTest   {
     this.enumInteger = enumInteger;
   }
 
-
+  
   /**
    **/
   public EnumTest enumNumber(EnumNumberEnum enumNumber) {
@@ -132,6 +132,7 @@ public class EnumTest   {
     this.enumNumber = enumNumber;
   }
 
+  
 
   @Override
   public boolean equals(java.lang.Object o) {
