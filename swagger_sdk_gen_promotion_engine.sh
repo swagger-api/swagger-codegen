@@ -9,7 +9,7 @@ then
   rm -rf promotion_engine/java_client/java
   mkdir -p promotion_engine/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i promotion-engine.json  \
+  -i "https://promotion-engine-api.crm-nightly-new.cc.capillarytech.com/v2/api-docs"  \
   -l java \
   -DdateLibrary=java8 \
   -o promotion_engine/java_client/java \
