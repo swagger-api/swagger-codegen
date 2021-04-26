@@ -9,11 +9,11 @@ then
   rm -rf promotion_engine/java_client/java
   mkdir -p promotion_engine/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i "https://promotion-engine-api.crm-nightly-new.cc.capillarytech.com/v2/api-docs"  \
+  -i promotion-engine.json  \
   -l java \
   -DdateLibrary=java11 \
   -o promotion_engine/java_client/java \
-  -c config.json --group-id com.capillary.promotionengine --model-package com.capillary.promotion.engine.models --api-package com.capillary.promotion.engine.api --artifact-id promotion-engine-swagger-sdk
+  -c config.json --group-id com.capillary.coupongateway --model-package com.capillary.promotion.engine.models --api-package com.capillary.promotion.engine.api --artifact-id promotion-engine-swagger-sdk
   tar cvzf promotion_engine/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./promotion_engine/java_client/java/ .
   mvn3 clean deploy -f promotion_engine/java_client/java/pom.xml
   fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-promotion-engine-sdk" -v $BUILD_NUMBER -C ./promotion_engine/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger_sdk_gen_promotion_engine"
