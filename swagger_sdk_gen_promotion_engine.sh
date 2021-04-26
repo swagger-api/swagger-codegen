@@ -9,9 +9,9 @@ then
   rm -rf promotion_engine/java_client/java
   mkdir -p promotion_engine/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i "https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v2/api-docs"  \
+  -i "https://promotion-engine-api.crm-nightly-new.cc.capillarytech.com/v2/api-docs"  \
   -l java \
-  -DdateLibrary=java8 \
+  -DdateLibrary=java11 \
   -o promotion_engine/java_client/java \
   -c config.json --group-id com.capillary.promotionengine --model-package com.capillary.promotion.engine.models --api-package com.capillary.promotion.engine.api --artifact-id promotion-engine-swagger-sdk
   tar cvzf promotion_engine/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./promotion_engine/java_client/java/ .
