@@ -27,7 +27,7 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-01-24T13:25:49.427-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:35:29.140-05:00[America/Bogota]")
 public class FakeApi {
 
     @POST
@@ -36,7 +36,7 @@ public class FakeApi {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class)))
+        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(mediaType = "*/*", schema = @Schema(implementation = Boolean.class)))
     })
     public Response fakeOuterBooleanSerialize(@Valid Boolean body) {
         return Response.ok().entity("magic!").build();
@@ -47,7 +47,7 @@ public class FakeApi {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class)))
+        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(mediaType = "*/*", schema = @Schema(implementation = OuterComposite.class)))
     })
     public Response fakeOuterCompositeSerialize(@Valid OuterComposite body) {
         return Response.ok().entity("magic!").build();
@@ -58,7 +58,7 @@ public class FakeApi {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class)))
+        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(mediaType = "*/*", schema = @Schema(implementation = BigDecimal.class)))
     })
     public Response fakeOuterNumberSerialize(@Valid BigDecimal body) {
         return Response.ok().entity("magic!").build();
@@ -69,7 +69,7 @@ public class FakeApi {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class)))
+        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(mediaType = "*/*", schema = @Schema(implementation = String.class)))
     })
     public Response fakeOuterStringSerialize(@Valid String body) {
         return Response.ok().entity("magic!").build();
@@ -79,7 +79,7 @@ public class FakeApi {
     @Produces({ "application/json" })
     @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class)))
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)))
     })
     public Response testClientModel(@Valid Client body) {
         return Response.ok().entity("magic!").build();

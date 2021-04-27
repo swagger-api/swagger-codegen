@@ -14,7 +14,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model name starting with number")
 
 public class Model200Response  implements Serializable  {
+
   private @Valid Integer name = null;
+
   private @Valid String propertyClass = null;
 
   /**

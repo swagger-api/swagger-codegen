@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Cat extends Animal implements Serializable , OneOfAllPetsResponseItems, , OneOfSinglePetResponsePet  {
+
   private @Valid Boolean declawed = null;
 
   /**

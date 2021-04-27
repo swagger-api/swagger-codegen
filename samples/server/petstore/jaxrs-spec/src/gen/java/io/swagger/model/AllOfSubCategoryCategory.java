@@ -13,9 +13,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class AllOfSubCategoryCategory extends Category implements Serializable  {
+
   private @Valid Boolean foo = null;
+
   private @Valid Integer bar = null;
+
   private @Valid String beer = null;
+
   private @Valid User drunk = null;
 
   /**

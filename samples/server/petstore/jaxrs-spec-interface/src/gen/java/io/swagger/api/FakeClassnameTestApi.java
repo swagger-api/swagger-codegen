@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/fake_classname_test")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-01-24T13:26:54.217-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:40:20.525-05:00[America/Bogota]")
 public interface FakeClassnameTestApi {
 
     @PATCH
@@ -30,5 +30,5 @@ public interface FakeClassnameTestApi {
     @Operation(summary = "To test class name in snake case", description = "", security = {
         @SecurityRequirement(name = "api_key_query")    }, tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     Client testClassname(@Valid Client body);}

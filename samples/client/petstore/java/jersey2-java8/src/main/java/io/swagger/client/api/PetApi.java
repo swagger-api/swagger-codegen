@@ -60,7 +60,6 @@ public class PetApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -101,7 +100,6 @@ public class PetApi {
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
 
-
     final String[] localVarAccepts = {
       
     };
@@ -132,7 +130,6 @@ public class PetApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -173,7 +170,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "status", status));
-
 
 
     final String[] localVarAccepts = {
@@ -217,7 +213,6 @@ public class PetApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("csv", "tags", tags));
 
 
-
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -248,7 +243,6 @@ public class PetApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -291,7 +285,6 @@ public class PetApi {
 
 
 
-
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -322,7 +315,6 @@ public class PetApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -363,7 +355,6 @@ public class PetApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -400,7 +391,6 @@ public class PetApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
     if (name != null)
@@ -445,7 +435,6 @@ public class PetApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
     if (additionalMetadata != null)

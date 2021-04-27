@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Body5   {
+
   private @Valid String param = null;
+
   private @Valid String param2 = null;
 
   /**

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class SpecialModelName   {
+
   private @Valid Long $specialPropertyName = null;
 
   /**

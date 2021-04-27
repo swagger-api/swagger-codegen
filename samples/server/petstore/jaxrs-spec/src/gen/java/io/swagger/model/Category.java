@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Category  implements Serializable  {
+
   private @Valid Long id = null;
+
   private @Valid String name = null;
 
   /**
