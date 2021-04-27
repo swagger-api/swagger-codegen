@@ -10,13 +10,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class User   {
+
   private @Valid Long id = null;
+
   private @Valid String username = null;
+
   private @Valid String firstName = null;
+
   private @Valid String lastName = null;
+
   private @Valid String email = null;
+
   private @Valid String password = null;
+
   private @Valid String phone = null;
+
   private @Valid Integer userStatus = null;
 
   /**

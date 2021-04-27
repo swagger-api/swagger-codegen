@@ -14,39 +14,40 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class MapTest  implements Serializable  {
+
   private @Valid Map<String, Map<String, String>> mapMapOfString = new HashMap<String, Map<String, String>>();
 
-  public enum InnerEnum {
-  
-      UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
-  
-  
-      private String value;
-  
-      InnerEnum (String v) {
-          value = v;
-      }
-  
-      public String value() {
-          return value;
-      }
-  
-      @Override
-      @JsonValue
-      public String toString() {
-          return String.valueOf(value);
-      }
-  
-      @JsonCreator
-      public static InnerEnum fromValue(String v) {
-          for (InnerEnum b : InnerEnum.values()) {
-              if (String.valueOf(b.value).equals(v)) {
-                  return b;
-              }
-          }
-          return null;
-      }
-  }
+public enum InnerEnum {
+
+    UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower"));
+
+
+    private String value;
+
+    InnerEnum (String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static InnerEnum fromValue(String v) {
+        for (InnerEnum b : InnerEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
+    }
+}
   private @Valid Map<String, InnerEnum> mapOfEnumString = new HashMap<String, InnerEnum>();
 
   /**

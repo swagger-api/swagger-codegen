@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class NullableEnumModel  implements Serializable  {
+
 public enum EnumPropEnum {
 
     A(String.valueOf("a")), B(String.valueOf("b")), NULL(null);

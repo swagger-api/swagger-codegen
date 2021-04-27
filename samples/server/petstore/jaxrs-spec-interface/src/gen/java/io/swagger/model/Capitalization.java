@@ -10,11 +10,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Capitalization   {
+
   private @Valid String smallCamel = null;
+
   private @Valid String capitalCamel = null;
+
   private @Valid String smallSnake = null;
+
   private @Valid String capitalSnake = null;
+
   private @Valid String scAETHFlowPoints = null;
+
   private @Valid String ATT_NAME = null;
 
   /**

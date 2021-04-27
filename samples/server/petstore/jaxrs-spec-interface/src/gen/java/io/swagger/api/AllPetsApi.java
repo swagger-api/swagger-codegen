@@ -21,12 +21,12 @@ import javax.validation.Valid;
 
 @Path("/allPets")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-01-24T13:26:54.217-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:40:20.525-05:00[America/Bogota]")
 public interface AllPetsApi {
 
     @GET
     @Produces({ "application/json" })
     @Operation(summary = "", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(schema = @Schema(implementation = AllPetsResponse.class))) })
+        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AllPetsResponse.class))) })
     AllPetsResponse getAllPets();}

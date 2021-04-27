@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Category   {
+
   private @Valid Long id = null;
+
   private @Valid String name = null;
 
   /**

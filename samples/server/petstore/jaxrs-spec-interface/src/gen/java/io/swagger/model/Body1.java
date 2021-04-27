@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Body1   {
+
   private @Valid String additionalMetadata = null;
+
   private @Valid File file = null;
 
   /**

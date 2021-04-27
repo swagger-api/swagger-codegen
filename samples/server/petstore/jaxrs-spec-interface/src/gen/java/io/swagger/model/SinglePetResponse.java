@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class SinglePetResponse   {
+
   private @Valid OneOfSinglePetResponsePet pet = null;
 
   /**

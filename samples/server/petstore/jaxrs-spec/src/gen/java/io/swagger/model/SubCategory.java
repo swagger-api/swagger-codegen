@@ -14,8 +14,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class SubCategory  implements Serializable  {
+
   private @Valid AllOfSubCategoryCategory category = null;
+
   private @Valid Category category2 = null;
+
   private @Valid List<AllOfSubCategoryPetsItems> pets = new ArrayList<AllOfSubCategoryPetsItems>();
 
   /**

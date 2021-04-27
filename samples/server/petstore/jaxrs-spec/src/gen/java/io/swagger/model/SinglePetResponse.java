@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class SinglePetResponse  implements Serializable  {
+
   private @Valid OneOfSinglePetResponsePet pet = null;
 
   /**

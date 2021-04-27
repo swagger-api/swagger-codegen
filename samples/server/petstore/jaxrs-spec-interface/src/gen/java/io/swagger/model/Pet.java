@@ -14,11 +14,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Pet   {
+
   private @Valid Long id = null;
+
   private @Valid Category category = null;
+
   private @Valid String name = null;
+
   private @Valid List<String> photoUrls = new ArrayList<String>();
+
   private @Valid List<Tag> tags = new ArrayList<Tag>();
+
 public enum StatusEnum {
 
     AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
