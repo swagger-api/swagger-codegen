@@ -25,8 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;

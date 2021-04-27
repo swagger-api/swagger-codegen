@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Body1  implements Serializable  {
+
   private @Valid String additionalMetadata = null;
+
   private @Valid File file = null;
 
   /**

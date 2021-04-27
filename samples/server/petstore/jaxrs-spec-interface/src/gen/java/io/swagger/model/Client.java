@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Client   {
+
   private @Valid String client = null;
 
   /**

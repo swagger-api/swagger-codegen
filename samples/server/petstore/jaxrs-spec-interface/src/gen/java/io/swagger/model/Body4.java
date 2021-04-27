@@ -13,38 +13,39 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Body4   {
 
-  public enum EnumFormStringArrayEnum {
-  
-      GREATER_THAN(String.valueOf(">")), DOLLAR(String.valueOf("$"));
-  
-  
-      private String value;
-  
-      EnumFormStringArrayEnum (String v) {
-          value = v;
-      }
-  
-      public String value() {
-          return value;
-      }
-  
-      @Override
-      @JsonValue
-      public String toString() {
-          return String.valueOf(value);
-      }
-  
-      @JsonCreator
-      public static EnumFormStringArrayEnum fromValue(String v) {
-          for (EnumFormStringArrayEnum b : EnumFormStringArrayEnum.values()) {
-              if (String.valueOf(b.value).equals(v)) {
-                  return b;
-              }
-          }
-          return null;
-      }
-  }
+public enum EnumFormStringArrayEnum {
+
+    GREATER_THAN(String.valueOf(">")), DOLLAR(String.valueOf("$"));
+
+
+    private String value;
+
+    EnumFormStringArrayEnum (String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static EnumFormStringArrayEnum fromValue(String v) {
+        for (EnumFormStringArrayEnum b : EnumFormStringArrayEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
+    }
+}
   private @Valid List<EnumFormStringArrayEnum> enumFormStringArray = new ArrayList<EnumFormStringArrayEnum>();
+
 public enum EnumFormStringEnum {
 
     _ABC(String.valueOf("_abc")), _EFG(String.valueOf("-efg")), _XYZ_(String.valueOf("(xyz)"));
@@ -77,6 +78,7 @@ public enum EnumFormStringEnum {
     }
 }
   private @Valid EnumFormStringEnum enumFormString = EnumFormStringEnum._EFG;
+
 public enum EnumQueryDoubleEnum {
 
     NUMBER_1_DOT_1(Double.valueOf(1.1)), NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
