@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class NumberOnly   {
+
   private @Valid BigDecimal justNumber = null;
 
   /**

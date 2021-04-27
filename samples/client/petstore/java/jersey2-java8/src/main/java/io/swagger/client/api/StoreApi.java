@@ -56,7 +56,6 @@ public class StoreApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -86,7 +85,6 @@ public class StoreApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -129,7 +127,6 @@ public class StoreApi {
 
 
 
-
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -165,7 +162,6 @@ public class StoreApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 

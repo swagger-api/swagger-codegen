@@ -13,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Animal   {
+
   private @Valid String className = null;
+
   private @Valid String color = "red";
 
   /**

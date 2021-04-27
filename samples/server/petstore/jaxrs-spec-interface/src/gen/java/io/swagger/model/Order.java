@@ -11,10 +11,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Order   {
+
   private @Valid Long id = null;
+
   private @Valid Long petId = null;
+
   private @Valid Integer quantity = null;
+
   private @Valid Date shipDate = null;
+
 public enum StatusEnum {
 
     PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
@@ -47,6 +52,7 @@ public enum StatusEnum {
     }
 }
   private @Valid StatusEnum status = null;
+
   private @Valid Boolean complete = false;
 
   /**

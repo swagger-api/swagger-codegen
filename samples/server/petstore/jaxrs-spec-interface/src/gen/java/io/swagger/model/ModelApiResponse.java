@@ -10,8 +10,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ModelApiResponse   {
+
   private @Valid Integer code = null;
+
   private @Valid String type = null;
+
   private @Valid String message = null;
 
   /**

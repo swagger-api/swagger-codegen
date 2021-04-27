@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class List  implements Serializable  {
+
   private @Valid String _123List = null;
 
   /**

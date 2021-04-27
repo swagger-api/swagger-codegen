@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing reserved words")
 
 public class ModelReturn   {
+
   private @Valid Integer _return = null;
 
   /**
