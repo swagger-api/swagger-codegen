@@ -1,16 +1,8 @@
 if $Build_Codegen ; then
     mvn3 clean package -Dmaven.test.skip=true
 fi
-if [ "$Branch" = "snapshot" ]
-  then
-    url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v2/api-docs"
-    version="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/meta/version"
-elif [ "$Branch" = "production" ]
-  then
-    url="http://api.staging.capillary.in/tl-docs/v2/api-docs"
-    version="http://api.staging.capillary.in/v3/meta/version"
-else " No Branch is selected"
-fi
+url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v2/api-docs"
+version="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/meta/version"
 curl -k $version -o config.json
 #echo '{"artifactVersion":"0.0.1-SNAPSHOT","invokerPackage":"SwaggerV3\\\\Client","modelPackage":"SwaggerV3\\\\Client\\\\Model","apiPackage":"SwaggerV3\\\\Client\\\\Api"}'>config_php.json
 echo "GENERATING SDK"
