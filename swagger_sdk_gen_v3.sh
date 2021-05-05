@@ -17,9 +17,10 @@ echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
   rm -rf intouch_api/java_client/java
-  java -Dio.swagger.parser.util.RemoteUrl.trustAll=true,dateLibrary=java8 -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l java \
+  -DdateLibrary=java8 \
   -o intouch_api/java_client/java \
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
