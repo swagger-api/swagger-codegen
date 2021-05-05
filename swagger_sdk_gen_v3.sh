@@ -20,8 +20,7 @@ then
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l java \
-  -DdateLibrary=java8 \
-  -Dio.swagger.parser.util.RemoteUrl.trustAll=true \
+  -Dio.swagger.parser.util.RemoteUrl.trustAll=true -DdateLibrary=java8 \
   -o intouch_api/java_client/java \
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
