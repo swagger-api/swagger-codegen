@@ -21,6 +21,7 @@ then
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
+  -Dio.swagger.parser.util.RemoteUrl.trustAll=true \
   -o intouch_api/java_client/java \
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
