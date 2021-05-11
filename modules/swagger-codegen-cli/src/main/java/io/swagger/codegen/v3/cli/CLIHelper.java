@@ -55,6 +55,14 @@ public class CLIHelper {
         }
     }
 
+    static String getDescription(String schemaName, Schema schema) {
+        if(schema.getExtensions() != null && !schema.getExtensions().isEmpty() && schema.getExtensions().get("x-command-description") != null) {
+            return schema.getExtensions().get("x-command-description").toString();
+        } else {
+            return schemaName.toLowerCase();
+        }
+    }
+
     static String[] getArguments(Map<String, Object> extensions) {
         if(extensions.get("x-short-version") != null && StringUtils.isNotBlank(extensions.get("x-short-version").toString())) {
             return new String[] {extensions.get("x-short-version").toString(), extensions.get("x-option").toString()};
@@ -71,43 +79,6 @@ public class CLIHelper {
             options.add(codegenArgument.getShortOption());
         }
         return options.toArray(new String[options.size()]);
-    }
-
-    static String detectCommand(String[] args) {
-        if(args == null || args.length == 0) {
-            return null;
-        }
-        String command = args[0];
-        if(StringUtils.isBlank(command) || command.startsWith("-")) {
-            return null;
-        }
-        return command;
-    }
-
-    static String detectlanguage(String[] args) {
-        if(args == null || args.length == 0) {
-            return null;
-        }
-        boolean langFlatFound = false;
-        String language = null;
-        for (String argument : args) {
-            argument = argument.trim();
-            if (langFlatFound) {
-                if (argument.startsWith("-")) {
-                    return null;
-                }
-                return argument;
-            }
-            if ("-l".equalsIgnoreCase(argument)
-                    || "--lang".equalsIgnoreCase(argument)) {
-                langFlatFound = true;
-                continue;
-            }
-            if (argument.startsWith("-l") && argument.length() > 2) {
-                return argument.substring(2);
-            }
-        }
-        return language;
     }
 
     static Class getClass(Schema property) {
