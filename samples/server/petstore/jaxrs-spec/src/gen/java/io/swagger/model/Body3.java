@@ -15,19 +15,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Body3  implements Serializable  {
+
   private @Valid Integer integer = null;
+
   private @Valid Integer int32 = null;
+
   private @Valid Long int64 = null;
+
   private @Valid BigDecimal number = null;
+
   private @Valid Float _float = null;
+
   private @Valid Double _double = null;
+
   private @Valid String string = null;
+
   private @Valid String patternWithoutDelimiter = null;
+
   private @Valid byte[] _byte = null;
+
   private @Valid File binary = null;
+
   private @Valid LocalDate date = null;
+
   private @Valid Date dateTime = null;
+
   private @Valid String password = null;
+
   private @Valid String callback = null;
 
   /**

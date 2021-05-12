@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class EnumTest  implements Serializable  {
+
 public enum EnumStringEnum {
 
     UPPER(String.valueOf("UPPER")), LOWER(String.valueOf("lower")), EMPTY(String.valueOf(""));
@@ -44,6 +45,7 @@ public enum EnumStringEnum {
     }
 }
   private @Valid EnumStringEnum enumString = null;
+
 public enum EnumIntegerEnum {
 
     NUMBER_1(Integer.valueOf(1)), NUMBER_MINUS_1(Integer.valueOf(-1));
@@ -76,6 +78,7 @@ public enum EnumIntegerEnum {
     }
 }
   private @Valid EnumIntegerEnum enumInteger = null;
+
 public enum EnumNumberEnum {
 
     NUMBER_1_DOT_1(Double.valueOf(1.1)), NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
@@ -108,6 +111,7 @@ public enum EnumNumberEnum {
     }
 }
   private @Valid EnumNumberEnum enumNumber = null;
+
   private @Valid OuterEnum outerEnum = null;
 
   /**

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class NullableEnumModel   {
+
 public enum EnumPropEnum {
 
     A(String.valueOf("a")), B(String.valueOf("b")), NULL(null);

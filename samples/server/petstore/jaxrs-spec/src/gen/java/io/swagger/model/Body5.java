@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Body5  implements Serializable  {
+
   private @Valid String param = null;
+
   private @Valid String param2 = null;
 
   /**

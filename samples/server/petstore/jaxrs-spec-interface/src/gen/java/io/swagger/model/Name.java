@@ -13,9 +13,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model name same as property name")
 
 public class Name   {
+
   private @Valid Integer name = null;
+
   private @Valid Integer snakeCase = null;
+
   private @Valid String property = null;
+
   private @Valid Integer _123Number = null;
 
   /**

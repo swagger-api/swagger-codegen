@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class EnumArrays   {
+
 public enum JustSymbolEnum {
 
     GREATER_THAN_OR_EQUAL_TO(String.valueOf(">=")), DOLLAR(String.valueOf("$"));
@@ -45,37 +46,37 @@ public enum JustSymbolEnum {
 }
   private @Valid JustSymbolEnum justSymbol = null;
 
-  public enum ArrayEnumEnum {
-  
-      FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
-  
-  
-      private String value;
-  
-      ArrayEnumEnum (String v) {
-          value = v;
-      }
-  
-      public String value() {
-          return value;
-      }
-  
-      @Override
-      @JsonValue
-      public String toString() {
-          return String.valueOf(value);
-      }
-  
-      @JsonCreator
-      public static ArrayEnumEnum fromValue(String v) {
-          for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
-              if (String.valueOf(b.value).equals(v)) {
-                  return b;
-              }
-          }
-          return null;
-      }
-  }
+public enum ArrayEnumEnum {
+
+    FISH(String.valueOf("fish")), CRAB(String.valueOf("crab"));
+
+
+    private String value;
+
+    ArrayEnumEnum (String v) {
+        value = v;
+    }
+
+    public String value() {
+        return value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+        return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static ArrayEnumEnum fromValue(String v) {
+        for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
+    }
+}
   private @Valid List<ArrayEnumEnum> arrayEnum = new ArrayList<ArrayEnumEnum>();
 
   /**
