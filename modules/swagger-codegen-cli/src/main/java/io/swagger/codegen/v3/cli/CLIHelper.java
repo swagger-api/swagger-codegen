@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CLIHelper {
 
@@ -138,11 +139,9 @@ public class CLIHelper {
                 }
             }
             else if(property instanceof ArraySchema) {
-                String inputElements = value.toString()
-                        .replace("[", StringUtils.EMPTY)
-                        .replace("]", StringUtils.EMPTY)
-                        .replace(" ", StringUtils.EMPTY);
-                final List<String> values = new ArrayList<>(Arrays.asList(inputElements.split(",")));
+                final List<String> values = ((List<?>)value).stream()
+                    .flatMap(o -> Arrays.asList(o.toString().split(",")).stream())
+                    .collect(Collectors.toList());
                 optionValueMap.put(propertyName, values);
             }
             else {
