@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model with \"_class\" property")
 
 public class ClassModel   {
+
   private @Valid String propertyClass = null;
 
   /**

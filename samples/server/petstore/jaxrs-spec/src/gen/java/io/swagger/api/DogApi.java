@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/dog")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-01-24T13:25:49.427-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:35:29.140-05:00[America/Bogota]")
 public class DogApi {
 
     @POST
@@ -53,7 +53,7 @@ public class DogApi {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Find dog by ID", description = "Returns a single dog", tags={ "dog" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Dog.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Dog.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found")
     })

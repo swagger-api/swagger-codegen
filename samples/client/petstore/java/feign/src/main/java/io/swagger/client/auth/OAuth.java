@@ -1,6 +1,7 @@
 package io.swagger.client.auth;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -183,7 +184,6 @@ public class OAuth implements RequestInterceptor {
             if(contentTypeHeader != null) {
                 contentType = StringUtil.join(contentTypeHeader.toArray(new String[0]), ";");
             }
-
             return OAuthClientResponseFactory.createCustomResponse(
                     body,
                     contentType,

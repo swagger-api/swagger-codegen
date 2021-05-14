@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/user")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-01-24T13:25:49.427-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:35:29.140-05:00[America/Bogota]")
 public class UserApi {
 
     @POST
@@ -71,7 +71,7 @@ public class UserApi {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Get user by user name", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")
     })
@@ -86,7 +86,7 @@ public class UserApi {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = String.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied")
     })
     public Response loginUser( @NotNull  @QueryParam("username") 
