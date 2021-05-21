@@ -922,7 +922,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     codegenOperation.getVendorExtensions().put(CodegenConstants.HAS_AUTH_METHODS_EXT_NAME, Boolean.TRUE);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
                 String msg = "Could not process operation:\n" //
                         + "  Tag: " + tag + "\n"//
                         + "  Operation: " + operation.getOperationId() + "\n" //
