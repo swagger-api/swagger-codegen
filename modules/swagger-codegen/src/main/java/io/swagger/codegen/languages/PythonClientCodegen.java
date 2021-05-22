@@ -27,12 +27,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     public static final String WRITE_BINARY_OPTION = "writeBinary";
 
+    public static final String CASE_OPTION = "case";
+    public static final String CAMEL_CASE_OPTION = "camel";
+    public static final String SNAKE_CASE_OPTION = "snake";
+    public static final String KEBAB_CASE_OPTION = "kebab";
+
     protected String packageName; // e.g. petstore_api
     protected String packageVersion;
     protected String projectName; // for setup.py, e.g. petstore-api
     protected String packageUrl;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected String caseType;
 
     protected Map<Character, String> regexModifiers;
 
@@ -193,6 +199,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
             setPackageUrl((String) additionalProperties.get(PACKAGE_URL));
         }
 
+        this.setCaseType();
+
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
@@ -290,6 +298,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
             vendorExtensions.put("x-regex", regex);
             vendorExtensions.put("x-modifiers", modifiers);
+        }
+    }
+
+    protected void setCaseType() {
+        final String caseType = String.valueOf(additionalProperties.get(CASE_OPTION));
+        if (CAMEL_CASE_OPTION.equalsIgnoreCase(caseType) || SNAKE_CASE_OPTION.equalsIgnoreCase(caseType) || KEBAB_CASE_OPTION.equalsIgnoreCase(caseType)) {
+            this.caseType = caseType;
+        } else {
+            this.caseType = SNAKE_CASE_OPTION;
         }
     }
 
@@ -407,13 +424,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         if (name.matches("^[A-Z_]*$")) {
             name = name.toLowerCase();
         }
+        if (this.caseType.equalsIgnoreCase(CAMEL_CASE_OPTION)) {
+            name = camelize(name, true);
+        } else if (this.caseType.equalsIgnoreCase(KEBAB_CASE_OPTION)) {
+            name = dashize(name);
+        } else {
+            // underscore the variable name
+            // petId => pet_id
+            name = underscore(name);
 
-        // underscore the variable name
-        // petId => pet_id
-        name = underscore(name);
-
-        // remove leading underscore
-        name = name.replaceAll("^_*", "");
+            // remove leading underscore
+            name = name.replaceAll("^_*", "");
+        }
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name) || name.matches("^\\d.*")) {
