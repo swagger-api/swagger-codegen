@@ -49,6 +49,8 @@ public class PetApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Add a new pet to the store
      * 
@@ -63,7 +65,7 @@ public class PetApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling addPet");
         }
         String path = UriComponentsBuilder.fromPath("/pet").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -80,6 +82,43 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class DeletePetOptionals {
+        public String apiKey() {
+            return this.apiKey;
+        }
+
+        public DeletePetOptionals apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        private String apiKey = null;
+    }
+
+    /**
+    * Deletes a pet
+    * 
+    * @param petId Pet id to delete (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deletePet(Long petId) throws RestClientException {
+        deletePet(petId, null);
+    }
+
+    /**
+    * Deletes a pet
+    * 
+    * @param petId Pet id to delete (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deletePetOpts(Long petId, DeletePetOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new DeletePetOptionals();
+        }
+        deletePet(petId, optionals.apiKey());
+    }
+
     /**
      * Deletes a pet
      * 
@@ -98,7 +137,7 @@ public class PetApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         String path = UriComponentsBuilder.fromPath("/pet/{petId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -115,6 +154,43 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class DoCategoryStuffOptionals {
+        public SubCategory body() {
+            return this.body;
+        }
+
+        public DoCategoryStuffOptionals body(SubCategory body) {
+            this.body = body;
+            return this;
+        }
+
+        private SubCategory body = null;
+    }
+
+    /**
+    * 
+    * 
+    * @return ModelApiResponse
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ModelApiResponse doCategoryStuff() throws RestClientException {
+        return doCategoryStuff(null);
+    }
+
+    /**
+    * 
+    * 
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ModelApiResponse
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ModelApiResponse doCategoryStuffOpts(DoCategoryStuffOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new DoCategoryStuffOptionals();
+        }
+        return doCategoryStuff(optionals.body());
+    }
+
     /**
      * 
      * 
@@ -126,7 +202,7 @@ public class PetApi {
     public ModelApiResponse doCategoryStuff(SubCategory body) throws RestClientException {
         Object postBody = body;
         String path = UriComponentsBuilder.fromPath("/pet/category").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -145,6 +221,8 @@ public class PetApi {
         ParameterizedTypeReference<ModelApiResponse> returnType = new ParameterizedTypeReference<ModelApiResponse>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
@@ -161,7 +239,7 @@ public class PetApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'status' when calling findPetsByStatus");
         }
         String path = UriComponentsBuilder.fromPath("/pet/findByStatus").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -179,6 +257,8 @@ public class PetApi {
         ParameterizedTypeReference<List<Pet>> returnType = new ParameterizedTypeReference<List<Pet>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -195,7 +275,7 @@ public class PetApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'tags' when calling findPetsByTags");
         }
         String path = UriComponentsBuilder.fromPath("/pet/findByTags").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -213,6 +293,8 @@ public class PetApi {
         ParameterizedTypeReference<List<Pet>> returnType = new ParameterizedTypeReference<List<Pet>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * 
      * 
@@ -223,7 +305,7 @@ public class PetApi {
     public AllPetsResponse getAllPets() throws RestClientException {
         Object postBody = null;
         String path = UriComponentsBuilder.fromPath("/allPets").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -240,6 +322,8 @@ public class PetApi {
         ParameterizedTypeReference<AllPetsResponse> returnType = new ParameterizedTypeReference<AllPetsResponse>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Find pet by ID
      * Returns a single pet
@@ -260,7 +344,7 @@ public class PetApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         String path = UriComponentsBuilder.fromPath("/pet/{petId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -277,6 +361,8 @@ public class PetApi {
         ParameterizedTypeReference<Pet> returnType = new ParameterizedTypeReference<Pet>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * 
      * 
@@ -287,7 +373,7 @@ public class PetApi {
     public SinglePetResponse getRandomPet() throws RestClientException {
         Object postBody = null;
         String path = UriComponentsBuilder.fromPath("/randomPet").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -304,6 +390,8 @@ public class PetApi {
         ParameterizedTypeReference<SinglePetResponse> returnType = new ParameterizedTypeReference<SinglePetResponse>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Update an existing pet
      * 
@@ -320,7 +408,7 @@ public class PetApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling updatePet");
         }
         String path = UriComponentsBuilder.fromPath("/pet").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -337,6 +425,53 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class UpdatePetWithFormOptionals {
+        public String name() {
+            return this.name;
+        }
+
+        public UpdatePetWithFormOptionals name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String name = null;
+        public String status() {
+            return this.status;
+        }
+
+        public UpdatePetWithFormOptionals status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        private String status = null;
+    }
+
+    /**
+    * Updates a pet in the store with form data
+    * 
+    * @param petId ID of pet that needs to be updated (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updatePetWithForm(Long petId) throws RestClientException {
+        updatePetWithForm(petId, null, null);
+    }
+
+    /**
+    * Updates a pet in the store with form data
+    * 
+    * @param petId ID of pet that needs to be updated (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updatePetWithFormOpts(Long petId, UpdatePetWithFormOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UpdatePetWithFormOptionals();
+        }
+        updatePetWithForm(petId, optionals.name(), optionals.status());
+    }
+
     /**
      * Updates a pet in the store with form data
      * 
@@ -356,7 +491,7 @@ public class PetApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         String path = UriComponentsBuilder.fromPath("/pet/{petId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -377,6 +512,55 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class UploadFileOptionals {
+        public String additionalMetadata() {
+            return this.additionalMetadata;
+        }
+
+        public UploadFileOptionals additionalMetadata(String additionalMetadata) {
+            this.additionalMetadata = additionalMetadata;
+            return this;
+        }
+
+        private String additionalMetadata = null;
+        public File file() {
+            return this.file;
+        }
+
+        public UploadFileOptionals file(File file) {
+            this.file = file;
+            return this;
+        }
+
+        private File file = null;
+    }
+
+    /**
+    * uploads an image
+    * 
+    * @param petId ID of pet to update (required)
+    * @return ModelApiResponse
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ModelApiResponse uploadFile(Long petId) throws RestClientException {
+        return uploadFile(petId, null, null);
+    }
+
+    /**
+    * uploads an image
+    * 
+    * @param petId ID of pet to update (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ModelApiResponse
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ModelApiResponse uploadFileOpts(Long petId, UploadFileOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UploadFileOptionals();
+        }
+        return uploadFile(petId, optionals.additionalMetadata(), optionals.file());
+    }
+
     /**
      * uploads an image
      * 
@@ -397,7 +581,7 @@ public class PetApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("petId", petId);
         String path = UriComponentsBuilder.fromPath("/pet/{petId}/uploadImage").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();

@@ -50,6 +50,43 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
+    public static class FakeOuterBooleanSerializeOptionals {
+        public Boolean body() {
+            return this.body;
+        }
+
+        public FakeOuterBooleanSerializeOptionals body(Boolean body) {
+            this.body = body;
+            return this;
+        }
+
+        private Boolean body = null;
+    }
+
+    /**
+    * 
+    * Test serialization of outer boolean types
+    * @return Boolean
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public Boolean fakeOuterBooleanSerialize() throws RestClientException {
+        return fakeOuterBooleanSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer boolean types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return Boolean
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public Boolean fakeOuterBooleanSerializeOpts(FakeOuterBooleanSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of outer boolean types
@@ -61,7 +98,7 @@ public class FakeApi {
     public Boolean fakeOuterBooleanSerialize(Boolean body) throws RestClientException {
         Object postBody = body;
         String path = UriComponentsBuilder.fromPath("/fake/outer/boolean").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -80,6 +117,43 @@ public class FakeApi {
         ParameterizedTypeReference<Boolean> returnType = new ParameterizedTypeReference<Boolean>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class FakeOuterCompositeSerializeOptionals {
+        public OuterComposite body() {
+            return this.body;
+        }
+
+        public FakeOuterCompositeSerializeOptionals body(OuterComposite body) {
+            this.body = body;
+            return this;
+        }
+
+        private OuterComposite body = null;
+    }
+
+    /**
+    * 
+    * Test serialization of object with outer number type
+    * @return OuterComposite
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public OuterComposite fakeOuterCompositeSerialize() throws RestClientException {
+        return fakeOuterCompositeSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of object with outer number type
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return OuterComposite
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public OuterComposite fakeOuterCompositeSerializeOpts(FakeOuterCompositeSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of object with outer number type
@@ -91,7 +165,7 @@ public class FakeApi {
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws RestClientException {
         Object postBody = body;
         String path = UriComponentsBuilder.fromPath("/fake/outer/composite").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -110,6 +184,43 @@ public class FakeApi {
         ParameterizedTypeReference<OuterComposite> returnType = new ParameterizedTypeReference<OuterComposite>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class FakeOuterNumberSerializeOptionals {
+        public BigDecimal body() {
+            return this.body;
+        }
+
+        public FakeOuterNumberSerializeOptionals body(BigDecimal body) {
+            this.body = body;
+            return this;
+        }
+
+        private BigDecimal body = null;
+    }
+
+    /**
+    * 
+    * Test serialization of outer number types
+    * @return BigDecimal
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public BigDecimal fakeOuterNumberSerialize() throws RestClientException {
+        return fakeOuterNumberSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer number types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return BigDecimal
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public BigDecimal fakeOuterNumberSerializeOpts(FakeOuterNumberSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of outer number types
@@ -121,7 +232,7 @@ public class FakeApi {
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws RestClientException {
         Object postBody = body;
         String path = UriComponentsBuilder.fromPath("/fake/outer/number").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -140,6 +251,43 @@ public class FakeApi {
         ParameterizedTypeReference<BigDecimal> returnType = new ParameterizedTypeReference<BigDecimal>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class FakeOuterStringSerializeOptionals {
+        public String body() {
+            return this.body;
+        }
+
+        public FakeOuterStringSerializeOptionals body(String body) {
+            this.body = body;
+            return this;
+        }
+
+        private String body = null;
+    }
+
+    /**
+    * 
+    * Test serialization of outer string types
+    * @return String
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public String fakeOuterStringSerialize() throws RestClientException {
+        return fakeOuterStringSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer string types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return String
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public String fakeOuterStringSerializeOpts(FakeOuterStringSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of outer string types
@@ -151,7 +299,7 @@ public class FakeApi {
     public String fakeOuterStringSerialize(String body) throws RestClientException {
         Object postBody = body;
         String path = UriComponentsBuilder.fromPath("/fake/outer/string").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -170,6 +318,8 @@ public class FakeApi {
         ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<String>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * To test \&quot;client\&quot; model
      * To test \&quot;client\&quot; model
@@ -185,7 +335,7 @@ public class FakeApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testClientModel");
         }
         String path = UriComponentsBuilder.fromPath("/fake").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -204,6 +354,8 @@ public class FakeApi {
         ParameterizedTypeReference<Client> returnType = new ParameterizedTypeReference<Client>() {};
         return apiClient.invokeAPI(path, HttpMethod.PATCH, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -219,7 +371,7 @@ public class FakeApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testEndpointParameters");
         }
         String path = UriComponentsBuilder.fromPath("/fake").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -236,6 +388,81 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class TestEnumParametersOptionals {
+        public List<String> enumHeaderStringArray() {
+            return this.enumHeaderStringArray;
+        }
+
+        public TestEnumParametersOptionals enumHeaderStringArray(List<String> enumHeaderStringArray) {
+            this.enumHeaderStringArray = enumHeaderStringArray;
+            return this;
+        }
+
+        private List<String> enumHeaderStringArray = null;
+        public String enumHeaderString() {
+            return this.enumHeaderString;
+        }
+
+        public TestEnumParametersOptionals enumHeaderString(String enumHeaderString) {
+            this.enumHeaderString = enumHeaderString;
+            return this;
+        }
+
+        private String enumHeaderString = null;
+        public List<String> enumQueryStringArray() {
+            return this.enumQueryStringArray;
+        }
+
+        public TestEnumParametersOptionals enumQueryStringArray(List<String> enumQueryStringArray) {
+            this.enumQueryStringArray = enumQueryStringArray;
+            return this;
+        }
+
+        private List<String> enumQueryStringArray = null;
+        public String enumQueryString() {
+            return this.enumQueryString;
+        }
+
+        public TestEnumParametersOptionals enumQueryString(String enumQueryString) {
+            this.enumQueryString = enumQueryString;
+            return this;
+        }
+
+        private String enumQueryString = null;
+        public Integer enumQueryInteger() {
+            return this.enumQueryInteger;
+        }
+
+        public TestEnumParametersOptionals enumQueryInteger(Integer enumQueryInteger) {
+            this.enumQueryInteger = enumQueryInteger;
+            return this;
+        }
+
+        private Integer enumQueryInteger = null;
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEnumParameters() throws RestClientException {
+        testEnumParameters(null, null, null, null, null);
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEnumParametersOpts(TestEnumParametersOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        testEnumParameters(optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger());
+    }
+
     /**
      * To test enum parameters
      * To test enum parameters
@@ -251,7 +478,7 @@ public class FakeApi {
     public void testEnumParameters(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws RestClientException {
         Object postBody = null;
         String path = UriComponentsBuilder.fromPath("/fake").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -273,6 +500,41 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class TestEnumRequestBodyOptionals {
+        public Body4 body() {
+            return this.body;
+        }
+
+        public TestEnumRequestBodyOptionals body(Body4 body) {
+            this.body = body;
+            return this;
+        }
+
+        private Body4 body = null;
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEnumRequestBody() throws RestClientException {
+        testEnumRequestBody(null);
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEnumRequestBodyOpts(TestEnumRequestBodyOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new TestEnumRequestBodyOptionals();
+        }
+        testEnumRequestBody(optionals.body());
+    }
+
     /**
      * To test enum parameters
      * To test enum parameters
@@ -284,7 +546,7 @@ public class FakeApi {
     public void testEnumRequestBody(Body4 body) throws RestClientException {
         Object postBody = body;
         String path = UriComponentsBuilder.fromPath("/fake/enum/form").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -301,6 +563,8 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * test inline additionalProperties
      * 
@@ -315,7 +579,7 @@ public class FakeApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testInlineAdditionalProperties");
         }
         String path = UriComponentsBuilder.fromPath("/fake/inline-additionalProperties").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -332,6 +596,8 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * test json serialization of form data
      * 
@@ -346,7 +612,7 @@ public class FakeApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testJsonFormData");
         }
         String path = UriComponentsBuilder.fromPath("/fake/jsonFormData").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
