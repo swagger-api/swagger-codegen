@@ -7,6 +7,7 @@ import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
+import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, PerformBeanValidationFeatures,
-                   GzipFeatures, NotNullAnnotationFeatures
+                   GzipFeatures, NotNullAnnotationFeatures, IgnoreUnknownJacksonFeatures
 {
     static final String MEDIA_TYPE = "mediaType";
 
@@ -54,6 +55,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
     private boolean notNullJacksonAnnotation;
+    private boolean ignoreUnknownJacksonAnnotation = false;
 
     public JavaClientCodegen() {
         super();
@@ -619,5 +621,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public boolean isNotNullJacksonAnnotation() {
         return notNullJacksonAnnotation;
+    }
+
+    @Override
+    public void setIgnoreUnknownJacksonAnnotation(boolean ignoreUnknownJacksonAnnotation) {
+        this.ignoreUnknownJacksonAnnotation = ignoreUnknownJacksonAnnotation;
+    }
+
+    @Override
+    public boolean isIgnoreUnknownJacksonAnnotation() {
+        return ignoreUnknownJacksonAnnotation;
     }
 }

@@ -5,6 +5,7 @@ import com.samskivert.mustache.Template;
 import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
+import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.codegen.languages.features.OptionalFeatures;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
@@ -18,7 +19,8 @@ import java.util.regex.Matcher;
 
 
 public class SpringCodegen extends AbstractJavaCodegen
-        implements BeanValidationFeatures, OptionalFeatures, NotNullAnnotationFeatures {
+        implements BeanValidationFeatures, OptionalFeatures,
+        NotNullAnnotationFeatures, IgnoreUnknownJacksonFeatures {
     public static final String DEFAULT_LIBRARY = "spring-boot";
     public static final String TITLE = "title";
     public static final String CONFIG_PACKAGE = "configPackage";
@@ -55,6 +57,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean openFeign = false;
     protected boolean defaultInterfaces = true;
     private boolean notNullJacksonAnnotation;
+    private boolean ignoreUnknownJacksonAnnotation = false;
 
     public SpringCodegen() {
         super();
@@ -509,6 +512,16 @@ public class SpringCodegen extends AbstractJavaCodegen
     @Override
     public boolean isNotNullJacksonAnnotation() {
         return notNullJacksonAnnotation;
+    }
+
+    @Override
+    public void setIgnoreUnknownJacksonAnnotation(boolean ignoreUnknownJacksonAnnotation) {
+        this.ignoreUnknownJacksonAnnotation = ignoreUnknownJacksonAnnotation;
+    }
+
+    @Override
+    public boolean isIgnoreUnknownJacksonAnnotation() {
+        return ignoreUnknownJacksonAnnotation;
     }
 
     private interface DataTypeAssigner {
