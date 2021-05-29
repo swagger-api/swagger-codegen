@@ -599,7 +599,7 @@ public class GeneratorServiceTest {
         new GeneratorService().generationRequest(request).generate();
         String spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.json"));
         Assert.assertFalse(spec.contains("#/components/schemas/inline_response_200"));
-        Assert.assertFalse(spec.contains("#/components/schemas/body"));
+        Assert.assertFalse(spec.contains("#/components/schemas/productflatten_body"));
 
         path = getTmpFolder().getAbsolutePath();
         request = new GenerationRequest();
@@ -618,7 +618,7 @@ public class GeneratorServiceTest {
         new GeneratorService().generationRequest(request).generate();
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
         Assert.assertFalse(spec.contains("#/components/schemas/inline_response_200"));
-        Assert.assertFalse(spec.contains("#/components/schemas/body"));
+        Assert.assertFalse(spec.contains("#/components/schemas/productflatten_body"));
 
 
         path = getTmpFolder().getAbsolutePath();
@@ -636,7 +636,7 @@ public class GeneratorServiceTest {
         new GeneratorService().generationRequest(request).generate();
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.json"));
         Assert.assertTrue(spec.contains("#/components/schemas/inline_response_200"));
-        Assert.assertTrue(spec.contains("#/components/schemas/body"));
+        Assert.assertTrue(spec.contains("#/components/schemas/productflatten_body"));
 
 
         path = getTmpFolder().getAbsolutePath();
@@ -654,7 +654,7 @@ public class GeneratorServiceTest {
         new GeneratorService().generationRequest(request).generate();
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
         Assert.assertTrue(spec.contains("#/components/schemas/inline_response_200"));
-        Assert.assertTrue(spec.contains("#/components/schemas/body"));
+        Assert.assertTrue(spec.contains("#/components/schemas/productflatten_body"));
 
         path = getTmpFolder().getAbsolutePath();
         request = new GenerationRequest();
