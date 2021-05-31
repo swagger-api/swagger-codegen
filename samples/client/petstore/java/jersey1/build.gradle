@@ -90,7 +90,7 @@ if(hasProperty('target') && target == 'android') {
        main = System.getProperty('mainClass')
        classpath = sourceSets.main.runtimeClasspath
     }
-    
+
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
         from sourceSets.main.allSource
