@@ -1,29 +1,9 @@
-name: Test Framework JS
+name: Test Framework V2 Typescript Angular v4
 
 on:
   # execute on demand
   workflow_dispatch:
-    branches: ["master", "test-framework", "3.0.0"]
-    inputs:
-      language:
-        description: 'Language'
-        required: true
-      specUrl:
-        description: 'URL of OpenAPI doc'
-        required: true
-        default: "https://petstore3.swagger.io/api/v3/openapi.json"
-      options:
-        description: 'language options'
-        default: ''
-      jobName:
-        description: 'job name'
-        required: true
-      buildCommands:
-        description: 'build commands for generated code'
-        required: true
-      version:
-        description: 'exact release or snapshot codegen version'
-        required: true
+    branches: ["master"]
 
 jobs:
 
@@ -44,20 +24,10 @@ jobs:
       - name: build codegen
         run: |
           mkdir codegen-cli
-          if [[ ${{ env.VERSION }} == 3* ]]
-          then
-            echo "DOWNLOADING ${{ env.VERSION }}"
-          	wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
-          elif [[ ${{ env.VERSION }} == 2* ]]
-          then
-            echo "DOWNLOADING ${{ env.VERSION }}"
-          	wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
-          else
-            echo "BUILDING ${{ env.VERSION }}"
-            mvn -version
-            mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
-            cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
-          fi
+          echo "BUILDING ${{ env.VERSION }}"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
       - name: upload codegen cli
         uses: actions/upload-artifact@v2
         with:
@@ -95,10 +65,10 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: ${{ env.LANGUAGE }}
+          language: javascript
           job-name: ${{ env.JOB_NAME }}
-          spec-url: ${{ env.SPEC_URL }}
-          options: ${{ env.OPTIONS }}
+          spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore.yaml
+          options: -DnpmName=@swagger/angular2-typescript-petstore,npmVersion=0.0.1,npmRepository=https://skimdb.npmjs.com/registry,snapshot=false,ngVersion=4
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -119,14 +89,8 @@ jobs:
         with:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
-
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
-      VERSION: ${{ github.event.inputs.version }}
+      JOB_NAME: "typescript-angular-v4-v2-sample"
 
   build:
 
@@ -135,14 +99,15 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      ###############################################
-      ##### DYNAMIC: Dependent on build environment
-      ###############################################
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
       matrix:
         node-version: [12.x]
-      ###############################################
-      ##### END DYNAMIC: Dependent on build environment
-      ###############################################
+        java: [ 8 ]
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
     steps:
       - uses: actions/checkout@v2
       - name: Download artifacts
@@ -171,7 +136,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: ${{ env.BUILD_COMMANDS }}
+          build-commands: "npm install -g @angular/cli__&&__npm install -g ng-packagr__&&__npm i__&&__ng-packagr -p ng-package.json"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -188,7 +153,4 @@ jobs:
           path: ${{ steps.build.outputs.logs }}
     env:
       LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
+      JOB_NAME: "typescript-angular-v4-v2-sample"

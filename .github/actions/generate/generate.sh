@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SCRIPT="$0"
 
@@ -17,17 +17,27 @@ executable="swagger-codegen-cli.jar"
 
 LANG=$1
 
+echo "LANGUAGE $LANG"
+
 JOB_NAME=$2
+
+echo "JOB_NAME $JOB_NAME"
+
 if [ -z "$JOB_NAME" ]
 then
       JOB_NAME=$LANG
 fi
 
 SPEC_URL=$3
+
+echo "SPEC_URL PARAM $SPEC_URL"
+
 if [[ $SPEC_URL == "null" ]];
 then
       SPEC_URL="https://petstore3.swagger.io/api/v3/openapi.json"
 fi
+
+echo "SPEC_URL $SPEC_URL"
 
 shift;
 shift;

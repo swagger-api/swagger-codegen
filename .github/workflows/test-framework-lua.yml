@@ -1,9 +1,9 @@
-name: Test Framework JS
+name: Test Framework Lua
 
 on:
   # execute on demand
   workflow_dispatch:
-    branches: ["master", "test-framework", "3.0.0"]
+    branches: ["master"]
     inputs:
       language:
         description: 'Language'
@@ -134,15 +134,6 @@ jobs:
     if: contains(needs.generate.outputs.generate_outcome, 'success')
     runs-on: ubuntu-latest
 
-    strategy:
-      ###############################################
-      ##### DYNAMIC: Dependent on build environment
-      ###############################################
-      matrix:
-        node-version: [12.x]
-      ###############################################
-      ##### END DYNAMIC: Dependent on build environment
-      ###############################################
     steps:
       - uses: actions/checkout@v2
       - name: Download artifacts
@@ -157,10 +148,10 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: leafo/gh-actions-lua@v8.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          luaVersion: "5.1.5"
+      - uses: leafo/gh-actions-luarocks@v2
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################

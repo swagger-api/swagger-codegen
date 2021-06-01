@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework PHP
 
 on:
   # execute on demand
@@ -157,10 +157,11 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Install Composer Dependencies
+        uses: php-actions/composer@v5
         with:
-          node-version: ${{ matrix.node-version }}
+          php_version: 7.1
+          version: 1
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################

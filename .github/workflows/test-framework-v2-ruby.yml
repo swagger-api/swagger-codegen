@@ -1,29 +1,9 @@
-name: Test Framework JS
+name: Test Framework V2 Ruby
 
 on:
   # execute on demand
   workflow_dispatch:
-    branches: ["master", "test-framework", "3.0.0"]
-    inputs:
-      language:
-        description: 'Language'
-        required: true
-      specUrl:
-        description: 'URL of OpenAPI doc'
-        required: true
-        default: "https://petstore3.swagger.io/api/v3/openapi.json"
-      options:
-        description: 'language options'
-        default: ''
-      jobName:
-        description: 'job name'
-        required: true
-      buildCommands:
-        description: 'build commands for generated code'
-        required: true
-      version:
-        description: 'exact release or snapshot codegen version'
-        required: true
+    branches: ["master"]
 
 jobs:
 
@@ -44,25 +24,27 @@ jobs:
       - name: build codegen
         run: |
           mkdir codegen-cli
-          if [[ ${{ env.VERSION }} == 3* ]]
-          then
-            echo "DOWNLOADING ${{ env.VERSION }}"
-          	wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
-          elif [[ ${{ env.VERSION }} == 2* ]]
-          then
-            echo "DOWNLOADING ${{ env.VERSION }}"
-          	wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
-          else
-            echo "BUILDING ${{ env.VERSION }}"
-            mvn -version
-            mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
-            cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
-          fi
+          echo "BUILDING ${{ env.VERSION }}"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+
+          mkdir test-cfg-files
+          cp samples/client/petstore/ruby/pom.xml test-cfg-files
+          cp samples/client/petstore/ruby/petstore_profiling.rb test-cfg-files
+          cp samples/client/petstore/ruby/press_anykey_to_continue.sh test-cfg-files
+          cp samples/client/petstore/ruby/Rakefile test-cfg-files
+
       - name: upload codegen cli
         uses: actions/upload-artifact@v2
         with:
           name: codegen-cli
           path: codegen-cli
+      - name: upload test cfg file
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-cfg-files
+          path: test-cfg-files
 
     env:
       VERSION: ${{ github.event.inputs.version }}
@@ -95,10 +77,10 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: ${{ env.LANGUAGE }}
+          language: ruby
           job-name: ${{ env.JOB_NAME }}
-          spec-url: ${{ env.SPEC_URL }}
-          options: ${{ env.OPTIONS }}
+          spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
+          options: -DgemName=petstore,moduleName=Petstore,gemVersion=1.0.0
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -121,12 +103,7 @@ jobs:
           path: ${{ steps.generate.outputs.path }}
 
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
-      VERSION: ${{ github.event.inputs.version }}
+      JOB_NAME: "ruby-v2-sample"
 
   build:
 
@@ -139,7 +116,8 @@ jobs:
       ##### DYNAMIC: Dependent on build environment
       ###############################################
       matrix:
-        node-version: [12.x]
+        ruby: ['2.2']
+        java: [ 8 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -157,21 +135,28 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          ruby-version: ${{ matrix.ruby }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Download Ruby V2 test cfg files
+        uses: actions/download-artifact@v2
+        with:
+          name: test-cfg-files
+          path: generated/${{ env.JOB_NAME }}
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
       - name: build
         id: build
         uses: ./.github/actions/build
-        continue-on-error: true
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: ${{ env.BUILD_COMMANDS }}
+          build-commands: mvn verify
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -187,8 +172,4 @@ jobs:
           name: ${{ env.JOB_NAME }}logs
           path: ${{ steps.build.outputs.logs }}
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
+      JOB_NAME: "ruby-v2-sample"

@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework No Build
 
 on:
   # execute on demand
@@ -127,68 +127,3 @@ jobs:
       SPEC_URL: ${{ github.event.inputs.specUrl }}
       BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
       VERSION: ${{ github.event.inputs.version }}
-
-  build:
-
-    needs: generate
-    if: contains(needs.generate.outputs.generate_outcome, 'success')
-    runs-on: ubuntu-latest
-
-    strategy:
-      ###############################################
-      ##### DYNAMIC: Dependent on build environment
-      ###############################################
-      matrix:
-        node-version: [12.x]
-      ###############################################
-      ##### END DYNAMIC: Dependent on build environment
-      ###############################################
-    steps:
-      - uses: actions/checkout@v2
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.JOB_NAME }}generated
-          path: generated/${{ env.JOB_NAME }}
-      - name: Download logs
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.JOB_NAME }}generate_logs
-    ###############################################
-    ##### DYNAMIC: Dependent on build environment
-    ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-    ###############################################
-    ##### END DYNAMIC: Dependent on build environment
-    ###############################################
-      - name: build
-        id: build
-        uses: ./.github/actions/build
-        continue-on-error: true
-        with:
-          path: generated/${{ env.JOB_NAME }}
-          job-name: ${{ env.JOB_NAME }}
-          build-commands: ${{ env.BUILD_COMMANDS }}
-      - id: outcome
-        run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
-          echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
-      - name: upload build outcome
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.JOB_NAME }}build_outcome
-          path: ${{ env.JOB_NAME }}build_outcome
-      - name: upload logs
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.JOB_NAME }}logs
-          path: ${{ steps.build.outputs.logs }}
-    env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
