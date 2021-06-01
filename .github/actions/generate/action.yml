@@ -29,9 +29,11 @@ runs:
       name: generate
       run: |
         logfile=${{ inputs.job-name }}.log
-        echo "::set-output name=logs::$(echo $logfile)"
         chmod +x ${{ github.action_path }}/generate.sh
+        echo "${{ inputs.language }} ${{ inputs.job-name }} ${{ inputs.spec-url }} ${{ inputs.options }}"
         echo -e "\n****** generate ******\n" > $logfile
-        ${{ github.action_path }}/generate.sh ${{ inputs.language }} ${{ inputs.job-name }} ${{ inputs.spec-url }} ${{ inputs.options }} >> $logfile
+        echo "::set-output name=logs::$(echo $logfile)"
+        ${{ github.action_path }}/generate.sh ${{ inputs.language }} ${{ inputs.job-name }} ${{ inputs.spec-url }} ${{ inputs.options }} 2>&1 | tee --append $logfile
         echo "::set-output name=path::$(echo generated/${{ inputs.job-name }})"
+        echo "::set-output name=logs::$(echo $logfile)"
       shell: bash

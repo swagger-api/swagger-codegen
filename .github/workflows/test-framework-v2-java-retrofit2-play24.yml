@@ -1,27 +1,9 @@
-name: Test Framework Dynamic
+name: Test Framework V2 Java Retrofit2 Play24
 
 on:
   # execute on demand
   workflow_dispatch:
-    branches: ["master", "test-framework", "3.0.0"]
-    inputs:
-      language:
-        description: 'Language'
-        required: true
-      specUrl:
-        description: 'URL of OpenAPI doc'
-        required: true
-        default: "https://petstore3.swagger.io/api/v3/openapi.json"
-      options:
-        description: 'language options'
-        default: ''
-      jobName:
-        description: 'job name'
-        required: true
-      buildAction:
-        description: 'build action name'
-        required: true
-        default: "jsbuild"
+    branches: ['master']
 
 jobs:
 
@@ -41,9 +23,11 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: build codegen
         run: |
-          mvn -q -B package -DskipTests
-      - name: prepare codegen cli
-        run: mkdir codegen-cli && cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+          mkdir codegen-cli
+          echo "BUILDING Codegen"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
       - name: upload codegen cli
         uses: actions/upload-artifact@v2
         with:
@@ -78,9 +62,10 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: $LANGUAGE
-          job-name: ${JOB_NAME}
-          options: $OPTIONS
+          language: "java"
+          job-name: ${{ env.JOB_NAME }}
+          spec-url: "https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml"
+          options: " --library retrofit2 --additional-properties useBeanValidation=true,enableBuilderSupport=true,usePlayWS=true,playVersion=play24,dateLibrary=java8"
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -101,13 +86,8 @@ jobs:
         with:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
-
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_ACTION: ${{ github.event.inputs.buildAction }}
+      JOB_NAME: "java-retrofit2-play24-v2-sample"
 
   build:
 
@@ -116,9 +96,14 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
       matrix:
-        node-version: [12.x]
-
+        java-version: [1.8]
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
     steps:
       - uses: actions/checkout@v2
       - name: Download artifacts
@@ -130,18 +115,24 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.JOB_NAME }}generate_logs
-          #path: ${{ env.JOB_NAME }}.build.log
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          java-version: ${{ matrix.java-version }}
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
       - name: build
         id: build
-        uses: ./.github/actions/${{ env.BUILD_ACTION }}
+        uses: ./.github/actions/build
         continue-on-error: true
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
+          build-commands: "mvn clean package -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -157,8 +148,4 @@ jobs:
           name: ${{ env.JOB_NAME }}logs
           path: ${{ steps.build.outputs.logs }}
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_ACTION: ${{ github.event.inputs.buildAction }}
+      JOB_NAME: "java-retrofit2-play24-v2-sample"
