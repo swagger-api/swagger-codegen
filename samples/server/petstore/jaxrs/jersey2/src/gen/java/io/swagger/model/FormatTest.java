@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * FormatTest
@@ -143,6 +144,7 @@ public class FormatTest   {
   @JsonProperty("number")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
  @DecimalMin("32.1") @DecimalMax("543.2")  public BigDecimal getNumber() {
     return number;
   }
@@ -263,6 +265,7 @@ public class FormatTest   {
   @JsonProperty("date")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
   public Date getDate() {
     return date;
   }
@@ -282,6 +285,7 @@ public class FormatTest   {
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
+  @Valid
   public Date getDateTime() {
     return dateTime;
   }
@@ -301,6 +305,7 @@ public class FormatTest   {
    **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
+  @Valid
   public UUID getUuid() {
     return uuid;
   }

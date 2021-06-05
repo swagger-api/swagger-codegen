@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
@@ -51,6 +52,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
+  @Valid
   public UUID getUuid() {
     return uuid;
   }
@@ -70,6 +72,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
+  @Valid
   public Date getDateTime() {
     return dateTime;
   }
@@ -97,6 +100,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass   {
    **/
   @JsonProperty("map")
   @ApiModelProperty(value = "")
+  @Valid
   public Map<String, Animal> getMap() {
     return map;
   }

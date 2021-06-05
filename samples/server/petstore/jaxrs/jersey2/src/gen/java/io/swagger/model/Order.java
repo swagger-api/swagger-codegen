@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Order
@@ -147,6 +148,7 @@ public class Order   {
    **/
   @JsonProperty("shipDate")
   @ApiModelProperty(value = "")
+  @Valid
   public Date getShipDate() {
     return shipDate;
   }

@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;

@@ -140,7 +140,7 @@ public class AspNetCoreServerCodegen extends AbstractCSharpCodegen {
             supportingFiles.add(new SupportingFile("Program.mustache", packageFolder, "Program.cs"));
             supportingFiles.add(new SupportingFile("Project.csproj.mustache", packageFolder, this.packageName + ".csproj"));
             supportingFiles.add(new SupportingFile("Dockerfile.mustache", packageFolder, "Dockerfile"));
-        } else if (this.aspNetCoreVersion.equals("2.1")) {
+        } else if (this.aspNetCoreVersion.equals("2.1") || this.aspNetCoreVersion.equals("2.2")) {
             apiTemplateFiles.put("2.1/controller.mustache", ".cs");
             addInterfaceControllerTemplate(interfaceOnly, interfaceController);
 

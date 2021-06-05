@@ -29,7 +29,7 @@ import { PetServiceInterface }                            from './pet.serviceInt
 @Injectable()
 export class PetService implements PetServiceInterface {
 
-    protected basePath = 'http://petstore.swagger.io/v2';
+    protected basePath = 'https://petstore.swagger.io/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -433,7 +433,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -506,7 +506,7 @@ export class PetService implements PetServiceInterface {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
@@ -53,6 +54,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
    **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
+  @Valid
   public UUID getUuid() {
     return uuid;
   }
@@ -72,6 +74,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
+  @Valid
   public OffsetDateTime getDateTime() {
     return dateTime;
   }
@@ -99,6 +102,7 @@ public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializabl
    **/
   @JsonProperty("map")
   @ApiModelProperty(value = "")
+  @Valid
   public Map<String, Animal> getMap() {
     return map;
   }

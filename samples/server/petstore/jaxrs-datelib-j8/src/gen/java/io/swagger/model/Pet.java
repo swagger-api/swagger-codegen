@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Pet
@@ -113,6 +114,7 @@ public class Pet  implements Serializable {
    **/
   @JsonProperty("category")
   @ApiModelProperty(value = "")
+  @Valid
   public Category getCategory() {
     return category;
   }
@@ -185,6 +187,7 @@ public class Pet  implements Serializable {
    **/
   @JsonProperty("tags")
   @ApiModelProperty(value = "")
+  @Valid
   public List<Tag> getTags() {
     return tags;
   }

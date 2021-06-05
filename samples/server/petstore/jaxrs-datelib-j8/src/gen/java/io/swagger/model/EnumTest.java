@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.OuterEnum;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumTest
@@ -260,6 +261,7 @@ public class EnumTest  implements Serializable {
    **/
   @JsonProperty("outerEnum")
   @ApiModelProperty(value = "")
+  @Valid
   public OuterEnum getOuterEnum() {
     return outerEnum;
   }

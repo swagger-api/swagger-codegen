@@ -12,7 +12,6 @@
 ./bin/java-petstore-retrofit2rx2.sh
 ./bin/java8-petstore-jersey2.sh
 ./bin/java-petstore-retrofit2-play24.sh
-./bin/java-petstore-jersey2-java6.sh
 ./bin/java-petstore-resttemplate.sh
 ./bin/java-petstore-resttemplate-withxml.sh
 ./bin/java-petstore-resteasy.sh

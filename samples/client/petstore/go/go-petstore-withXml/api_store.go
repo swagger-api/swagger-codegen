@@ -27,7 +27,7 @@ var (
 
 type StoreApiService service
 
-/* 
+/*
 StoreApiService Delete purchase order by ID
 For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -98,7 +98,7 @@ func (a *StoreApiService) DeleteOrder(ctx context.Context, orderId string) (*htt
 	return localVarHttpResponse, nil
 }
 
-/* 
+/*
 StoreApiService Returns pet inventories by status
 Returns a map of status codes to quantities
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -170,9 +170,7 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
 		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
@@ -198,7 +196,7 @@ func (a *StoreApiService) GetInventory(ctx context.Context) (map[string]int32, *
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* 
+/*
 StoreApiService Find purchase order by ID
 For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -265,9 +263,7 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
 		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
@@ -293,7 +289,7 @@ func (a *StoreApiService) GetOrderById(ctx context.Context, orderId int64) (Orde
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 
-/* 
+/*
 StoreApiService Place an order for a pet
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -355,9 +351,7 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
 		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
@@ -382,3 +376,4 @@ func (a *StoreApiService) PlaceOrder(ctx context.Context, body Order) (Order, *h
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+

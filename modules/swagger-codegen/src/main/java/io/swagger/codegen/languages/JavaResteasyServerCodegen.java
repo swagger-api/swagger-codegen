@@ -99,6 +99,7 @@ public class JavaResteasyServerCodegen extends AbstractJavaJAXRSServerCodegen im
             supportingFiles.add(new SupportingFile("LocalDateProvider.mustache",
                     (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
         }
+        writeOptional(outputFolder, new SupportingFile("Dockerfile.mustache", "", "Dockerfile"));
     }
 
     @Override
