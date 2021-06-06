@@ -79,7 +79,7 @@ jobs:
           language: javascript
           job-name: ${{ env.JOB_NAME }}
           spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
-          options: ""
+          options: " --additional-properties composerVendorName=swagger,composerProjectName=swagger_codegen"
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -140,11 +140,11 @@ jobs:
         with:
           name: test-cfg-files
           path: generated/SwaggerClient-php/${{ env.JOB_NAME }}
-      - name: Install Composer Dependencies
-        uses: php-actions/composer@v5
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: 7.1
-          version: 2
+          php-version: '7.4'
+          tools: composer:v2
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
@@ -155,7 +155,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: mvn verify
+          build-commands: "composer install__&&__./vendor/bin/phpunit test"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"

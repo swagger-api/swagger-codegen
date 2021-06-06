@@ -157,11 +157,11 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Install Composer Dependencies
-        uses: php-actions/composer@v5
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: 7.1
-          version: 1
+          php-version: '7.4'
+          tools: composer:v2
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
