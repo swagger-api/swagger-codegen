@@ -76,7 +76,7 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: javascript
+          language: php
           job-name: ${{ env.JOB_NAME }}
           spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
           options: " --additional-properties composerVendorName=swagger,composerProjectName=swagger_codegen"
@@ -153,7 +153,7 @@ jobs:
         uses: ./.github/actions/build
         continue-on-error: true
         with:
-          path: generated/${{ env.JOB_NAME }}
+          path: generated/${{ env.JOB_NAME }}/SwaggerClient-php
           job-name: ${{ env.JOB_NAME }}
           build-commands: "composer install__&&__./vendor/bin/phpunit test"
       - id: outcome

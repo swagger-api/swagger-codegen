@@ -170,7 +170,7 @@ jobs:
         uses: ./.github/actions/build
         continue-on-error: true
         with:
-          path: generated/${{ env.JOB_NAME }}
+          path: generated/${{ env.JOB_NAME }}/SwaggerClient-php
           job-name: ${{ env.JOB_NAME }}
           build-commands: ${{ env.BUILD_COMMANDS }}
       - id: outcome
