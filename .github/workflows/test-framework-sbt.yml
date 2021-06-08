@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework SBT
 
 on:
   # execute on demand
@@ -139,7 +139,7 @@ jobs:
       ##### DYNAMIC: Dependent on build environment
       ###############################################
       matrix:
-        node-version: [12.x]
+        java-version: [1.8]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -161,6 +161,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Setup Scala
+        uses: olafurpg/setup-scala@v10
+        with:
+          java-version: "adopt@1.8"
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################

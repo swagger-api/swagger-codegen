@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework Ruby
 
 on:
   # execute on demand
@@ -139,7 +139,7 @@ jobs:
       ##### DYNAMIC: Dependent on build environment
       ###############################################
       matrix:
-        node-version: [12.x]
+        ruby: ['3.0']
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -157,10 +157,10 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          ruby-version: ${{ matrix.ruby }}
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################

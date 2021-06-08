@@ -1,29 +1,9 @@
-name: Test Framework JS
+name: Test Framework V2 Python Asyncio
 
 on:
   # execute on demand
   workflow_dispatch:
-    branches: ["master", "test-framework", "3.0.0"]
-    inputs:
-      language:
-        description: 'Language'
-        required: true
-      specUrl:
-        description: 'URL of OpenAPI doc'
-        required: true
-        default: "https://petstore3.swagger.io/api/v3/openapi.json"
-      options:
-        description: 'language options'
-        default: ''
-      jobName:
-        description: 'job name'
-        required: true
-      buildCommands:
-        description: 'build commands for generated code'
-        required: true
-      version:
-        description: 'exact release or snapshot codegen version'
-        required: true
+    branches: ["master"]
 
 jobs:
 
@@ -44,28 +24,30 @@ jobs:
       - name: build codegen
         run: |
           mkdir codegen-cli
-          if [[ ${{ env.VERSION }} == 3* ]]
-          then
-            echo "DOWNLOADING ${{ env.VERSION }}"
-          	wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
-          elif [[ ${{ env.VERSION }} == 2* ]]
-          then
-            echo "DOWNLOADING ${{ env.VERSION }}"
-          	wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
-          else
-            echo "BUILDING ${{ env.VERSION }}"
-            mvn -version
-            mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
-            cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
-          fi
+          echo "BUILDING latest"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          ls modules/swagger-codegen-cli/target/
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+
+          mkdir python-v2-sample-test-config-files
+          cp samples/client/petstore/python/tests -r python-v2-sample-test-config-files
+          cp samples/client/petstore/python/Makefile python-v2-sample-test-config-files
+          cp samples/client/petstore/python/pom.xml python-v2-sample-test-config-files
+          cp samples/client/petstore/python/setup.cfg python-v2-sample-test-config-files
+          cp samples/client/petstore/python/setup.cfg python-v2-sample-test-config-files
+          cp samples/client/petstore/python/test_python2.sh python-v2-sample-test-config-files
+          cp samples/client/petstore/python/test_python2_and_3.sh python-v2-sample-test-config-files
       - name: upload codegen cli
         uses: actions/upload-artifact@v2
         with:
           name: codegen-cli
           path: codegen-cli
-
-    env:
-      VERSION: ${{ github.event.inputs.version }}
+      - name: upload python test cfg files
+        uses: actions/upload-artifact@v2
+        with:
+          name: python-v2-sample-test-config-files
+          path: python-v2-sample-test-config-files
 
   generate:
 
@@ -95,10 +77,10 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: ${{ env.LANGUAGE }}
+          language: python
           job-name: ${{ env.JOB_NAME }}
-          spec-url: ${{ env.SPEC_URL }}
-          options: ${{ env.OPTIONS }}
+          spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
+          options: -DpackageName=petstore_api --library asyncio
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -119,14 +101,8 @@ jobs:
         with:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
-
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
-      VERSION: ${{ github.event.inputs.version }}
+      JOB_NAME: "python-asyncio-v2-sample"
 
   build:
 
@@ -135,14 +111,14 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      ###############################################
-      ##### DYNAMIC: Dependent on build environment
-      ###############################################
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
       matrix:
-        node-version: [12.x]
-      ###############################################
-      ##### END DYNAMIC: Dependent on build environment
-      ###############################################
+        python-version: [3.x]
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
     steps:
       - uses: actions/checkout@v2
       - name: Download artifacts
@@ -157,10 +133,15 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup python
+        uses: actions/setup-python@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          python-version: ${{ matrix.python-version }}
+      - name: Download Python V2 test cfg files
+        uses: actions/download-artifact@v2
+        with:
+          name: python-v2-sample-test-config-files
+          path: generated/${{ env.JOB_NAME }}
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
@@ -171,7 +152,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: ${{ env.BUILD_COMMANDS }}
+          build-commands: make test-all
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -187,8 +168,4 @@ jobs:
           name: ${{ env.JOB_NAME }}logs
           path: ${{ steps.build.outputs.logs }}
     env:
-      LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: ${{ github.event.inputs.jobName }}
-      OPTIONS: ${{ github.event.inputs.options }}
-      SPEC_URL: ${{ github.event.inputs.specUrl }}
-      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
+      JOB_NAME: "python-asyncio-v2-sample"

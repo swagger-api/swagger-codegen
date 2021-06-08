@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework PHP
 
 on:
   # execute on demand
@@ -157,10 +157,11 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          php-version: '7.4'
+          tools: composer:v2
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
@@ -169,7 +170,7 @@ jobs:
         uses: ./.github/actions/build
         continue-on-error: true
         with:
-          path: generated/${{ env.JOB_NAME }}
+          path: generated/${{ env.JOB_NAME }}/SwaggerClient-php
           job-name: ${{ env.JOB_NAME }}
           build-commands: ${{ env.BUILD_COMMANDS }}
       - id: outcome
