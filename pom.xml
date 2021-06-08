@@ -1154,7 +1154,7 @@
         <swagger-core-version-v1>1.6.2</swagger-core-version-v1>
         <swagger-parser-version>2.0.26</swagger-parser-version>
         <swagger-parser-version-v1>1.0.55</swagger-parser-version-v1>
-        <jackson-version>2.11.4</jackson-version>
+        <jackson-version>2.12.1</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.4</commons-io-version>
@@ -1171,7 +1171,7 @@
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
-        <snakeyaml-version>1.24</snakeyaml-version>
+        <snakeyaml-version>1.27</snakeyaml-version>
         <handlebars-version>4.1.2</handlebars-version>
     </properties>
 </project>
