@@ -148,6 +148,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         libraryOption.setDefault(DEFAULT_LIBRARY);
         cliOptions.add(libraryOption);
         setLibrary(DEFAULT_LIBRARY);
+
+        this.caseType = SNAKE_CASE_OPTION;
     }
 
     @Override
@@ -424,9 +426,9 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         if (name.matches("^[A-Z_]*$")) {
             name = name.toLowerCase();
         }
-        if (this.caseType.equalsIgnoreCase(CAMEL_CASE_OPTION)) {
+        if (CAMEL_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
             name = camelize(name, true);
-        } else if (this.caseType.equalsIgnoreCase(KEBAB_CASE_OPTION)) {
+        } else if (KEBAB_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
             name = dashize(name);
         } else {
             // underscore the variable name
