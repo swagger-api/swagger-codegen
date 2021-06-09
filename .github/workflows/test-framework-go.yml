@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework Golang
 
 on:
   # execute on demand
@@ -134,15 +134,6 @@ jobs:
     if: contains(needs.generate.outputs.generate_outcome, 'success')
     runs-on: ubuntu-latest
 
-    strategy:
-      ###############################################
-      ##### DYNAMIC: Dependent on build environment
-      ###############################################
-      matrix:
-        node-version: [12.x]
-      ###############################################
-      ##### END DYNAMIC: Dependent on build environment
-      ###############################################
     steps:
       - uses: actions/checkout@v2
       - name: Download artifacts
@@ -157,10 +148,9 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-go@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          go-version: '^1.13.1'
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################

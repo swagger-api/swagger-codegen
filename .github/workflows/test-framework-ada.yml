@@ -1,4 +1,4 @@
-name: Test Framework JS
+name: Test Framework PHP
 
 on:
   # execute on demand
@@ -157,10 +157,10 @@ jobs:
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: ada-actions/toolchain@dev
         with:
-          node-version: ${{ matrix.node-version }}
+          distrib: fsf
+          target: native
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
