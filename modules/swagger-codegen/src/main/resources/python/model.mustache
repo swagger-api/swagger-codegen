@@ -158,7 +158,7 @@ class {{classname}}(object):
 {{/minimum}}
 {{#pattern}}
         if (self._configuration.client_side_validation and
-                {{name}} is not None and not re.search('{{{vendorExtensions.x-regex}}}', {{name}}{{#vendorExtensions.x-modifiers}}{{#-first}}, flags={{/-first}}re.{{.}}{{^-last}} | {{/-last}}{{/vendorExtensions.x-modifiers}}):  # noqa: E501
+                {{name}} is not None and not re.search('{{{vendorExtensions.x-regex}}}', {{name}}{{#vendorExtensions.x-modifiers}}{{#-first}}, flags={{/-first}}re.{{.}}{{^-last}} | {{/-last}}{{/vendorExtensions.x-modifiers}})):  # noqa: E501
             raise ValueError(r"Invalid value for `{{name}}`, must be a follow pattern or equal to `{{{pattern}}}`")  # noqa: E501
 {{/pattern}}
 {{#maxItems}}
