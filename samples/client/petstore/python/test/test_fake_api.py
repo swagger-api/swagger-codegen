@@ -53,6 +53,12 @@ class TestFakeApi(unittest.TestCase):
         """
         pass
 
+    def test_test_body_with_query_params(self):
+        """Test case for test_body_with_query_params
+
+        """
+        pass
+
     def test_test_client_model(self):
         """Test case for test_client_model
 

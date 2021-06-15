@@ -48,9 +48,9 @@ public enum ModelBoolean {
   }
 
   @JsonCreator
-  public static ModelBoolean fromValue(String text) {
+  public static ModelBoolean fromValue(Boolean value) {
     for (ModelBoolean b : ModelBoolean.values()) {
-      if (String.valueOf(b.value).equals(text)) {
+      if (b.value.equals(value)) {
         return b;
       }
     }

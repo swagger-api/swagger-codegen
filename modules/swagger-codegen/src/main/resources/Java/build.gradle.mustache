@@ -102,7 +102,7 @@ if(hasProperty('target') && target == 'android') {
        main = System.getProperty('mainClass')
        classpath = sourceSets.main.runtimeClasspath
     }
-    
+
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
         from sourceSets.main.allSource
@@ -121,7 +121,7 @@ if(hasProperty('target') && target == 'android') {
 
 ext {
     swagger_annotations_version = "1.5.24"
-    jackson_version = "{{^threetenbp}}2.10.1{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}"
+    jackson_version = "{{^threetenbp}}2.11.4{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}"
     jersey_version = "1.19.4"
     jodatime_version = "2.10.5"
     junit_version = "4.12"

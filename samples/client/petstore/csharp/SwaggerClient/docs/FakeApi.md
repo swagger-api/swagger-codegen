@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 <a name="fakeouterbooleanserialize"></a>
 # **FakeOuterBooleanSerialize**
-> OuterBoolean FakeOuterBooleanSerialize (OuterBoolean body = null)
+> bool? FakeOuterBooleanSerialize (bool? body = null)
 
 
 
@@ -39,11 +39,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterBoolean(); // OuterBoolean | Input boolean as post body (optional) 
+            var body = new bool?(); // bool? | Input boolean as post body (optional) 
 
             try
             {
-                OuterBoolean result = apiInstance.FakeOuterBooleanSerialize(body);
+                bool? result = apiInstance.FakeOuterBooleanSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -59,11 +59,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterBoolean**](OuterBoolean.md)| Input boolean as post body | [optional] 
+ **body** | [**bool?**](bool?.md)| Input boolean as post body | [optional] 
 
 ### Return type
 
-[**OuterBoolean**](OuterBoolean.md)
+**bool?**
 
 ### Authorization
 
@@ -138,7 +138,7 @@ No authorization required
 
 <a name="fakeouternumberserialize"></a>
 # **FakeOuterNumberSerialize**
-> OuterNumber FakeOuterNumberSerialize (OuterNumber body = null)
+> decimal? FakeOuterNumberSerialize (decimal? body = null)
 
 
 
@@ -159,11 +159,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterNumber(); // OuterNumber | Input number as post body (optional) 
+            var body = new decimal?(); // decimal? | Input number as post body (optional) 
 
             try
             {
-                OuterNumber result = apiInstance.FakeOuterNumberSerialize(body);
+                decimal? result = apiInstance.FakeOuterNumberSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -179,11 +179,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterNumber**](OuterNumber.md)| Input number as post body | [optional] 
+ **body** | [**decimal?**](decimal?.md)| Input number as post body | [optional] 
 
 ### Return type
 
-[**OuterNumber**](OuterNumber.md)
+**decimal?**
 
 ### Authorization
 
@@ -198,7 +198,7 @@ No authorization required
 
 <a name="fakeouterstringserialize"></a>
 # **FakeOuterStringSerialize**
-> OuterString FakeOuterStringSerialize (OuterString body = null)
+> string FakeOuterStringSerialize (string body = null)
 
 
 
@@ -219,11 +219,11 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new OuterString(); // OuterString | Input string as post body (optional) 
+            var body = new string(); // string | Input string as post body (optional) 
 
             try
             {
-                OuterString result = apiInstance.FakeOuterStringSerialize(body);
+                string result = apiInstance.FakeOuterStringSerialize(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -239,11 +239,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**OuterString**](OuterString.md)| Input string as post body | [optional] 
+ **body** | [**string**](string.md)| Input string as post body | [optional] 
 
 ### Return type
 
-[**OuterString**](OuterString.md)
+**string**
 
 ### Authorization
 

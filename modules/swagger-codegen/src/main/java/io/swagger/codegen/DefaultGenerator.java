@@ -768,10 +768,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         configureGeneratorProperties();
         configureSwaggerInfo();
 
-        // resolve inline models
-        InlineModelResolver inlineModelResolver = new InlineModelResolver();
-        inlineModelResolver.flatten(swagger);
-
         List<File> files = new ArrayList<File>();
         // models
         List<Object> allModels = new ArrayList<Object>();

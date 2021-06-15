@@ -8,6 +8,7 @@ import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * A pet for sale in the pet store
@@ -89,6 +90,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("category")
+  @Valid
   public Category getCategory() {
     return category;
   }
@@ -142,6 +144,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("tags")
+  @Valid
   public List<Tag> getTags() {
     return tags;
   }

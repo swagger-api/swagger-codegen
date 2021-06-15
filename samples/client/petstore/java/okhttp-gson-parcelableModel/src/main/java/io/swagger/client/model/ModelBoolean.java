@@ -68,7 +68,7 @@ public enum ModelBoolean {
 
     @Override
     public ModelBoolean read(final JsonReader jsonReader) throws IOException {
-      Boolean value = jsonReader.nextBoolean();
+      String value = jsonReader.nextString();
       return ModelBoolean.fromValue(String.valueOf(value));
     }
   }

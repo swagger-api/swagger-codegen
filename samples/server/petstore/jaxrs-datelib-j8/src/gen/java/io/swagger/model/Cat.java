@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Cat

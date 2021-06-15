@@ -12,6 +12,7 @@ import io.swagger.codegen.auth.AuthParser;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import io.swagger.util.Json;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -433,8 +434,10 @@ public class CodegenConfigurator implements Serializable {
                 .config(config);
 
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
-
-        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, true);
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, parseOptions);
 
         input.opts(new ClientOpts())
                 .swagger(swagger);
