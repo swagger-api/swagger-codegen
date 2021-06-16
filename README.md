@@ -482,7 +482,7 @@ See also [standalone generator development](https://github.com/swagger-api/swagg
 ### Where is Javascript???
 See our [javascript library](http://github.com/swagger-api/swagger-js)--it's completely dynamic and doesn't require
 static code generation.
-There is a third-party component called [swagger-js-codegen](https://github.com/wcandillon/swagger-js-codegen) that can generate angularjs or nodejs source code from a OpenAPI Specification.
+There is a third-party component called [swagger-js-codegen](https://github.com/wcandillon/swagger-js-codegen) that can generate angularjs or nodejs source code from an OpenAPI Specification.
 
 :exclamation: On Dec 7th 2015, a Javascript API client generator has been added by @jfiala.
 
