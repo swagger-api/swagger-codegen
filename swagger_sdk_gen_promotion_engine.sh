@@ -28,14 +28,14 @@ then rm -rf intouch_api/csharp_client/c#
   tar cvzf intouch_api/csharp_client/c#swagger_sdK_$BUILD_NUMBER.tar.gz -C ./intouch_api/csharp_client/c#/ .
   fpm -f -s "dir" -t "deb" -a "all" -n "c#-swagger-promotion-engine-sdk" -v $BUILD_NUMBER -C ./intouch_api/csharp_client --deb-no-default-config-files  csharp="/usr/share/c#/capillary-libs/swagger-promotion-engine-sdk"
 elif [ "$Client" = "php" ]
-then rm -rf intouch_api/php_client/php
+then rm -rf promotion_engine/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -i $url  \
   -l php \
-  -o intouch_api/php_client/php \
+  -o promotion_engine/php_client/php \
   -c config_php.json
-  tar cvzf intouch_api/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
-  fpm -f -s "dir" -t "deb" -a "all" -n "swagger-promotion-engine-sdk" -v $BUILD_NUMBER -C ./intouch_api/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-promotion-engine-sdk"
+  tar cvzf promotion_engine/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
+  fpm -f -s "dir" -t "deb" -a "all" -n "swagger-promotion-engine-sdk" -v $BUILD_NUMBER -C ./promotion_engine/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-promotion-engine-sdk"
 elif [ "$Client" = "nodejs" ]
 then rm -rf intouch_api/nodejs_client
 	mkdir -p intouch_api/nodejs_client/
