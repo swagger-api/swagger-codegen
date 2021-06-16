@@ -34,7 +34,7 @@ then rm -rf promotion_engine/php_client/php
   -l php \
   -o promotion_engine/php_client/php \
   -c config_php.json
-  tar cvzf promotion_engine/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/php_client/php/ .
+  tar cvzf promotion_engine/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./promotion_engine/php_client/php/ .
   fpm -f -s "dir" -t "deb" -a "all" -n "swagger-promotion-engine-sdk" -v $BUILD_NUMBER -C ./promotion_engine/php_client --deb-no-default-config-files  php="/usr/share/php/capillary-libs/swagger-promotion-engine-sdk"
 elif [ "$Client" = "nodejs" ]
 then rm -rf intouch_api/nodejs_client
