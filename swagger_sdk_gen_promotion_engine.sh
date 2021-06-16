@@ -30,7 +30,7 @@ then rm -rf intouch_api/csharp_client/c#
 elif [ "$Client" = "php" ]
 then rm -rf promotion_engine/php_client/php
    java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-  -i $url  \
+  -i promotion-engine.json \
   -l php \
   -o promotion_engine/php_client/php \
   -c config_php.json
