@@ -31,6 +31,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -56,6 +57,10 @@ public class GeneratorController {
         // allow writing files only to directories configgured via generatorWriteDirs sys prop
         // e.g. -DgeneratorWriteDirs="/tmp"
         System.setSecurityManager(new FileAccessSecurityManager());
+        // Enabling a SecurityManager disables DNS cache expiration. This can cause issues
+        // for long-running instances of swagger-generator when the IP addresses of referenced
+        // domains change.
+        Security.setProperty("networkaddress.cache.ttl", "60");
 
         hiddenOptions = loadHiddenOptions();
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
