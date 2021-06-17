@@ -17,8 +17,6 @@ import io.swagger.oas.inflector.models.ResponseContext;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.parser.util.ClasspathHelper;
 import io.swagger.v3.parser.util.RemoteUrl;
-import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
