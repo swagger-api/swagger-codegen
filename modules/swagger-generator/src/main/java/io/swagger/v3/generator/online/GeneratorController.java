@@ -54,6 +54,8 @@ public class GeneratorController {
     private static String PROP_HIDDEN_OPTIONS = "HIDDEN_OPTIONS";
 
     static {
+        // allow writing files only to directories configgured via generatorWriteDirs sys prop
+        // e.g. -DgeneratorWriteDirs="/tmp"
         System.setSecurityManager(new FileAccessSecurityManager());
         // Enabling a SecurityManager disables DNS cache expiration. This can cause issues
         // for long-running instances of swagger-generator when the IP addresses of referenced
