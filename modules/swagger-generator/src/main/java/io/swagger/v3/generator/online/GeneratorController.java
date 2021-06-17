@@ -17,6 +17,8 @@ import io.swagger.oas.inflector.models.ResponseContext;
 import io.swagger.v3.core.util.Json;
 import io.swagger.v3.parser.util.ClasspathHelper;
 import io.swagger.v3.parser.util.RemoteUrl;
+import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,9 +56,11 @@ public class GeneratorController {
     private static String PROP_HIDDEN_OPTIONS = "HIDDEN_OPTIONS";
 
     static {
-        // allow writing files only to directories configgured via generatorWriteDirs sys prop
-        // e.g. -DgeneratorWriteDirs="/tmp"
         System.setSecurityManager(new FileAccessSecurityManager());
+        // Enabling a SecurityManager disables DNS cache expiration. This can cause issues
+        // for long-running instances of swagger-generator when the IP addresses of referenced
+        // domains change.
+        Security.setProperty("networkaddress.cache.ttl", "60");
 
         hiddenOptions = loadHiddenOptions();
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
