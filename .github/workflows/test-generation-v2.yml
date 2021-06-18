@@ -412,9 +412,9 @@ jobs:
         id: build
         uses: ./.github/actions/build
         with:
-          path: generated/${{ env.JOB_NAME }}
+          path: generated/${{ env.JOB_NAME }}/SwaggerClient-php
           job-name: ${{ env.JOB_NAME }}
-          build-commands: mvn verify
+          build-commands: "composer install__&&__./vendor/bin/phpunit test"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
