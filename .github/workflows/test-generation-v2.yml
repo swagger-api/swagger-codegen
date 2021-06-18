@@ -129,9 +129,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.JOB_NAME }}generate_logs
-    ###############################################
-    ##### DYNAMIC: Dependent on build environment
-    ###############################################
+      ###############################################
+      ##### DYNAMIC: Dependent on build environment
+      ###############################################
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -145,9 +145,9 @@ jobs:
           cp samples/client/petstore/ruby/petstore_profiling.rb generated/${{ env.JOB_NAME }}
           cp samples/client/petstore/ruby/press_anykey_to_continue.sh generated/${{ env.JOB_NAME }}
           cp samples/client/petstore/ruby/Rakefile generated/${{ env.JOB_NAME }}
-    ###############################################
-    ##### END DYNAMIC: Dependent on build environment
-    ###############################################
+      ###############################################
+      ##### END DYNAMIC: Dependent on build environment
+      ###############################################
       - name: build
         id: build
         uses: ./.github/actions/build
@@ -172,9 +172,9 @@ jobs:
     env:
       JOB_NAME: "ruby-v2-sample"
 
-######################
-##### JAVASCRIPT #####
-######################
+  ######################
+  ##### JAVASCRIPT #####
+  ######################
   generate-javascript:
 
     needs: build-codegen
@@ -332,7 +332,7 @@ jobs:
           language: php
           job-name: ${{ env.JOB_NAME }}
           spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
-          options: ""
+          options: " --additional-properties composerVendorName=swagger,composerProjectName=swagger_codegen"
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -400,11 +400,11 @@ jobs:
           cp samples/client/petstore/php/SwaggerClient-php/autoload.php generated/${{ env.JOB_NAME }}
           cp samples/client/petstore/php/SwaggerClient-php/pom.xml generated/${{ env.JOB_NAME }}
           cp samples/client/petstore/php/SwaggerClient-php/phpcs-generated-code.xml generated/${{ env.JOB_NAME }}
-      - name: Install Composer Dependencies
-        uses: php-actions/composer@v5
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: 7.1
-          version: 2
+          php-version: '7.4'
+          tools: composer:v2
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
