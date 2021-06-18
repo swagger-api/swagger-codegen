@@ -394,7 +394,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
-      - name: Python test files
+      - name: PHP test files
         run: |
           cp -r samples/client/petstore/php/SwaggerClient-php/tests generated/${{ env.JOB_NAME }}
           cp samples/client/petstore/php/SwaggerClient-php/autoload.php generated/${{ env.JOB_NAME }}
