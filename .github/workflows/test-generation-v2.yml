@@ -551,7 +551,9 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: make test-all
+          # TODO activate tests when virtualenv environment setup correctly in GH
+          #build-commands: make test-all
+          build-commands: "python3 setup.py install --user__&&__pip3 install nose2 --user__&&__python3 -m nose2"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
