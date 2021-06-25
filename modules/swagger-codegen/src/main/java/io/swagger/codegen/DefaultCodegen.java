@@ -1381,7 +1381,13 @@ public class DefaultCodegen {
         m.classname = toModelName(name);
         m.classVarName = toVarName(name);
         m.classFilename = toModelFilename(name);
-        m.modelJson = Json.pretty(model);
+        // NOTE: not using Json.pretty() to write out model, as it
+        // can raise memory consumption (see comment in ExampleGenerator)
+        try {
+            m.modelJson = Json.mapper().writeValueAsString(model);
+        } catch (Exception e) {
+            m.modelJson = "{}";
+        }
         m.externalDocs = model.getExternalDocs();
         m.vendorExtensions = model.getVendorExtensions();
         m.isAlias = typeAliases.containsKey(name);
