@@ -169,7 +169,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PROJECT_NAME)) {
-            setProjectName((String) additionalProperties.get(CodegenConstants.PROJECT_NAME));
+            String projectName = (String) additionalProperties.get(CodegenConstants.PROJECT_NAME);
+            setProjectName(projectName.replaceAll("[^a-zA-Z0-9\\s\\-_]",""));
         }
         else {
             // default: set project based on package name
