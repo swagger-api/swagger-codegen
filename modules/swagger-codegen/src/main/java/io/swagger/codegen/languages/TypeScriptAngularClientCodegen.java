@@ -31,10 +31,12 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     public static final String TAGGED_UNIONS ="taggedUnions";
     public static final String NG_VERSION = "ngVersion";
     public static final String PROVIDED_IN_ROOT ="providedInRoot";
+    public static final String KEBAB_FILE_NAME ="kebab-file-name";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
+    protected boolean kebabFileNaming;
 
     private boolean taggedUnions = false;
 
@@ -140,6 +142,8 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (!ngVersion.atLeast("4.3.0")) {
             supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         }
+
+        kebabFileNaming = Boolean.parseBoolean(String.valueOf(additionalProperties.get(KEBAB_FILE_NAME)));
     }
 
     private void addNpmPackageGeneration(SemVer ngVersion) {
@@ -411,6 +415,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (name.length() == 0) {
             return "default.service";
         }
+        if (kebabFileNaming) {
+            return dashize(name);
+        }
         return camelize(name, true) + ".service";
     }
 
@@ -421,6 +428,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String toModelFilename(String name) {
+        if (kebabFileNaming) {
+            return dashize(name);
+        }
         return camelize(toModelName(name), true);
     }
 

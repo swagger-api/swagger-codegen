@@ -37,4 +37,13 @@ public class PythonClientCodegenTest {
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
     }
 
+    @Test
+    public void testProjectNameCharacters() {
+        String projectName = ";import os; -;os.system('ping localhost');x=b;_yy=";
+        Assert.assertEquals(projectName.replaceAll("[^a-zA-Z0-9\\s\\-_]",""), "import os -ossystemping localhostxb_yy");
+        Assert.assertEquals("petstore-api".replaceAll("[^a-zA-Z0-9\\s\\-_]",""), "petstore-api");
+        Assert.assertEquals("petstore_api2".replaceAll("[^a-zA-Z0-9\\s\\-_]",""), "petstore_api2");
+        Assert.assertEquals("petstore api".replaceAll("[^a-zA-Z0-9\\s\\-_]",""), "petstore api");
+    }
+
 }
