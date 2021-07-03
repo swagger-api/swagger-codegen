@@ -35,6 +35,7 @@ public class JavaOptionsProvider implements OptionsProvider {
     //public static final String SUPPORT_JAVA6 = "true";
     public static final String USE_BEANVALIDATION = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String ADDITIONAL_MODEL_TYPE_ANNOTATIONS = "@TestAnnotation";
 
 
     private ImmutableMap<String, String> options;
@@ -76,6 +77,7 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false")
                         //.put("supportJava6", "true")
+                .put(JavaClientCodegen.ADDITIONAL_MODEL_TYPE_ANNOTATIONS, ADDITIONAL_MODEL_TYPE_ANNOTATIONS)
                 .build();
     }
 
