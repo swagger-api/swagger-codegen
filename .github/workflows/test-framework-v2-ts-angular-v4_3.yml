@@ -136,7 +136,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: "npm install -g @angular/cli__&&__npm install -g ng-packagr__&&__npm i__&&__ng-packagr -p ng-package.json"
+          build-commands: "npm install -g @angular/cli__&&__npm install -g ng-packagr__&&__npm i__&&__npm run build"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
