@@ -516,9 +516,15 @@ class ApiClient(object):
                     headers[auth_setting['key']] = auth_setting['value']
                 elif auth_setting['in'] == 'query':
                     querys.append((auth_setting['key'], auth_setting['value']))
+                elif auth_setting["in"] == "cookie":
+                    cookies = headers.get("Cookie", "")
+                    cookies = cookies + "; " if cookies else ""
+                    cookies += f"{auth_setting['key']}={auth_setting['value']}"
+                    headers["Cookie"] = cookies
+
                 else:
                     raise ValueError(
-                        'Authentication token must be in `query` or `header`'
+                        'Authentication token must be in `query`, `header` or `cookie`'
                     )
 
     def __deserialize_file(self, response):
