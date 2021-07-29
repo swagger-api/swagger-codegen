@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * An order for a pets from the pet store
@@ -119,6 +120,7 @@ public enum StatusEnum {
   
   @ApiModelProperty(value = "")
   @JsonProperty("shipDate")
+  @Valid
   public java.util.Date getShipDate() {
     return shipDate;
   }

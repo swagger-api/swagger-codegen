@@ -56,9 +56,9 @@ public enum Ints {
   }
 
   @JsonCreator
-  public static Ints fromValue(String text) {
+  public static Ints fromValue(Integer value) {
     for (Ints b : Ints.values()) {
-      if (String.valueOf(b.value).equals(text)) {
+      if (b.value.equals(value)) {
         return b;
       }
     }

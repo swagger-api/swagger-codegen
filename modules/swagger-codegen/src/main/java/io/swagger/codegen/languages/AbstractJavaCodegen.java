@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
+import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.RefProperty;
 import org.apache.commons.lang3.BooleanUtils;
@@ -47,6 +49,7 @@ import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
 
 import static io.swagger.codegen.languages.features.NotNullAnnotationFeatures.NOT_NULL_JACKSON_ANNOTATION;
+import static io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures.IGNORE_UNKNOWN_JACKSON_ANNOTATION;
 
 public abstract class AbstractJavaCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -61,6 +64,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
     public static final String ERROR_ON_UNKNOWN_ENUM = "errorOnUnknownEnum";
     public static final String CHECK_DUPLICATED_MODEL_NAME = "checkDuplicatedModelName";
+    public static final String ADDITIONAL_MODEL_TYPE_ANNOTATIONS = "additionalModelTypeAnnotations";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -95,6 +99,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected boolean supportJava6= false;
     protected boolean disableHtmlEscaping = false;
     private NotNullAnnotationFeatures notNullOption;
+    private IgnoreUnknownJacksonFeatures ignoreUnknown;
+    protected List<String> additionalModelTypeAnnotations = new LinkedList<>();
 
     public AbstractJavaCodegen() {
         super();
@@ -171,6 +177,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if(this instanceof NotNullAnnotationFeatures){
             cliOptions.add(CliOption.newBoolean(NOT_NULL_JACKSON_ANNOTATION, "adds @JsonInclude(JsonInclude.Include.NON_NULL) annotation to model classes"));
         }
+        if (this instanceof IgnoreUnknownJacksonFeatures){
+            cliOptions.add(CliOption.newBoolean(IGNORE_UNKNOWN_JACKSON_ANNOTATION,
+                "adds @JsonIgnoreProperties(ignoreUnknown = true) annotation to model classes"));
+        }
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
         dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+) - note: this also sets \"" + JAVA8_MODE + "\" to true");
@@ -191,6 +201,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
         cliOptions.add(CliOption.newBoolean(CHECK_DUPLICATED_MODEL_NAME, "Check if there are duplicated model names (ignoring case)"));
+        cliOptions.add(CliOption.newString(ADDITIONAL_MODEL_TYPE_ANNOTATIONS, "Additional annotations for model type(class level annotations)"));
     }
 
     @Override
@@ -198,7 +209,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         super.processOpts();
 
         if (additionalProperties.containsKey(SUPPORT_JAVA6)) {
-            this.setSupportJava6(Boolean.valueOf(additionalProperties.get(SUPPORT_JAVA6).toString()));
+            this.setSupportJava6(false); // JAVA 6 not supported
         }
         additionalProperties.put(SUPPORT_JAVA6, supportJava6);
 
@@ -206,6 +217,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setDisableHtmlEscaping(Boolean.valueOf(additionalProperties.get(DISABLE_HTML_ESCAPING).toString()));
         }
         additionalProperties.put(DISABLE_HTML_ESCAPING, disableHtmlEscaping);
+
+        if (additionalProperties.containsKey(ADDITIONAL_MODEL_TYPE_ANNOTATIONS)) {
+            String additionalAnnotationsList = additionalProperties.get(ADDITIONAL_MODEL_TYPE_ANNOTATIONS).toString();
+            this.setAdditionalModelTypeAnnotations(Arrays.asList(additionalAnnotationsList.split(";")));
+        }
 
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             this.setInvokerPackage((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
@@ -359,6 +375,17 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
         }
 
+        if (this instanceof IgnoreUnknownJacksonFeatures) {
+            ignoreUnknown = (IgnoreUnknownJacksonFeatures)this;
+            if (additionalProperties.containsKey(IGNORE_UNKNOWN_JACKSON_ANNOTATION)) {
+                ignoreUnknown.setIgnoreUnknownJacksonAnnotation(convertPropertyToBoolean(IGNORE_UNKNOWN_JACKSON_ANNOTATION));
+                writePropertyBack(IGNORE_UNKNOWN_JACKSON_ANNOTATION, ignoreUnknown.isIgnoreUnknownJacksonAnnotation());
+                if (ignoreUnknown.isIgnoreUnknownJacksonAnnotation()) {
+                    importMapping.put("JsonIgnoreProperties", "com.fasterxml.jackson.annotation.JsonIgnoreProperties");
+                }
+            }
+        }
+
         if (fullJavaUtil) {
             javaUtilPrefix = "java.util.";
         }
@@ -489,6 +516,18 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         if (this.skipAliasGeneration == null) {
             this.skipAliasGeneration = Boolean.TRUE;
         }
+    }
+    
+    @Override
+    public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
+        objs = super.postProcessAllModels(objs);
+        if (!additionalModelTypeAnnotations.isEmpty()) {
+            for (String modelName : objs.keySet()) {
+                Map<String, Object> models = (Map<String, Object>) objs.get(modelName);
+                models.put(ADDITIONAL_MODEL_TYPE_ANNOTATIONS, additionalModelTypeAnnotations);
+            }
+        }
+        return objs;
     }
 
     private void sanitizeConfig() {
@@ -939,6 +978,16 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
                 if (additionalProperties.containsKey(NOT_NULL_JACKSON_ANNOTATION)) {
                     if (notNullOption.isNotNullJacksonAnnotation()) {
                         codegenModel.imports.add("JsonInclude");
+                    }
+                }
+            }
+        }
+        if (this instanceof IgnoreUnknownJacksonFeatures) {
+            if (this instanceof IgnoreUnknownJacksonFeatures) {
+                ignoreUnknown = (IgnoreUnknownJacksonFeatures)this;
+                if (additionalProperties.containsKey(IGNORE_UNKNOWN_JACKSON_ANNOTATION)) {
+                    if (ignoreUnknown.isIgnoreUnknownJacksonAnnotation()) {
+                        codegenModel.imports.add("JsonIgnoreProperties");
                     }
                 }
             }
@@ -1421,6 +1470,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setSupportAsync(boolean enabled) {
         this.supportAsync = enabled;
+    }
+    
+    public void setAdditionalModelTypeAnnotations(final List<String> additionalModelTypeAnnotations) {
+        this.additionalModelTypeAnnotations = additionalModelTypeAnnotations;
     }
 
     @Override

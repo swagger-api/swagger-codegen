@@ -18,6 +18,12 @@ on:
       jobName:
         description: 'job name'
         required: true
+      buildCommands:
+        description: 'build commands for generated code'
+        required: true
+      version:
+        description: 'exact release or snapshot codegen version'
+        required: true
 
 jobs:
 
@@ -37,14 +43,29 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: build codegen
         run: |
-          mvn -q -B package -DskipTests
-      - name: prepare codegen cli
-        run: mkdir codegen-cli && cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+          mkdir codegen-cli
+          if [[ ${{ env.VERSION }} == 3* ]]
+          then
+            echo "DOWNLOADING ${{ env.VERSION }}"
+          	wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
+          elif [[ ${{ env.VERSION }} == 2* ]]
+          then
+            echo "DOWNLOADING ${{ env.VERSION }}"
+          	wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/${{ env.VERSION }}/swagger-codegen-cli-${{ env.VERSION }}.jar -O codegen-cli/swagger-codegen-cli.jar
+          else
+            echo "BUILDING ${{ env.VERSION }}"
+            mvn -version
+            mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+            cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+          fi
       - name: upload codegen cli
         uses: actions/upload-artifact@v2
         with:
           name: codegen-cli
           path: codegen-cli
+
+    env:
+      VERSION: ${{ github.event.inputs.version }}
 
   generate:
 
@@ -74,10 +95,10 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: $LANGUAGE
-          job-name: ${JOB_NAME}
-          spec-url: ${SPEC_URL}
-          options: $OPTIONS
+          language: ${{ env.LANGUAGE }}
+          job-name: ${{ env.JOB_NAME }}
+          spec-url: ${{ env.SPEC_URL }}
+          options: ${{ env.OPTIONS }}
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -104,6 +125,8 @@ jobs:
       JOB_NAME: ${{ github.event.inputs.jobName }}
       OPTIONS: ${{ github.event.inputs.options }}
       SPEC_URL: ${{ github.event.inputs.specUrl }}
+      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}
+      VERSION: ${{ github.event.inputs.version }}
 
   build:
 
@@ -112,9 +135,14 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      ###############################################
+      ##### DYNAMIC: Dependent on build environment
+      ###############################################
       matrix:
         node-version: [12.x]
-
+      ###############################################
+      ##### END DYNAMIC: Dependent on build environment
+      ###############################################
     steps:
       - uses: actions/checkout@v2
       - name: Download artifacts
@@ -126,7 +154,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.JOB_NAME }}generate_logs
-          #path: ${{ env.JOB_NAME }}.build.log
     ###############################################
     ##### DYNAMIC: Dependent on build environment
     ###############################################
@@ -135,16 +162,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
     ###############################################
-    ##### DYNAMIC: Dependent on build environment
-    ##### TODO: pass also build buildCommands coming from workflow input steps
+    ##### END DYNAMIC: Dependent on build environment
     ###############################################
       - name: build
         id: build
-        uses: ./.github/actions/jsbuild
+        uses: ./.github/actions/build
         continue-on-error: true
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
+          build-commands: ${{ env.BUILD_COMMANDS }}
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -164,3 +191,4 @@ jobs:
       JOB_NAME: ${{ github.event.inputs.jobName }}
       OPTIONS: ${{ github.event.inputs.options }}
       SPEC_URL: ${{ github.event.inputs.specUrl }}
+      BUILD_COMMANDS: ${{ github.event.inputs.buildCommands }}

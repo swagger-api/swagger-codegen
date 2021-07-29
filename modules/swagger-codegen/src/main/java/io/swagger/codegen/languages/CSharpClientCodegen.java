@@ -5,6 +5,7 @@ import com.samskivert.mustache.Mustache;
 import io.swagger.codegen.*;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
+import io.swagger.models.RefModel;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.Property;
@@ -15,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -582,6 +586,28 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
 
         return codegenModel;
     }
+
+    @Override
+    protected void readRefModelParameter(RefModel refModel, CodegenParameter codegenParameter, Set<String> imports) {
+        String name = getSwaggerType(new RefProperty(refModel.get$ref()));
+
+        try {
+            name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Could not decoded string: " + name, e);
+        }
+        name = getAlias(name);
+        if (typeMapping.containsKey(name)) {
+            name = typeMapping.get(name);
+        } else {
+            if (defaultIncludes.contains(name)) {
+                imports.add(name);
+            }
+        }
+        codegenParameter.baseType = name;
+        codegenParameter.dataType = name;
+    }
+
 
     public void setOptionalProjectFileFlag(boolean flag) {
         this.optionalProjectFileFlag = flag;

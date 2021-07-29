@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -173,9 +174,7 @@ public class Generator {
 
     protected static File getTmpFolder() {
         try {
-            File outputFolder = File.createTempFile("codegen-", "-tmp");
-            outputFolder.delete();
-            outputFolder.mkdir();
+            File outputFolder = Files.createTempDirectory("codegen-").toFile();
             outputFolder.deleteOnExit();
             return outputFolder;
         } catch (Exception e) {

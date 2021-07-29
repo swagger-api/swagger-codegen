@@ -20,6 +20,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")
   private UUID uuid = null;

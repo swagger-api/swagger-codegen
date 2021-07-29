@@ -29,6 +29,7 @@ public class PetApiTest {
     @Before
     public void setup() {
         apiClient = new ApiClient();
+        apiClient.setBasePath("http://petstore.swagger.io:80/v2");
         api = apiClient.buildClient(PetApi.class);
         localServer = new MockWebServer();
         localClient = new ApiClient();

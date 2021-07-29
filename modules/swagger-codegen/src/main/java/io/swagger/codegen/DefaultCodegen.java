@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.swagger.models.properties.UntypedProperty;
-import io.swagger.util.Yaml;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -401,6 +400,15 @@ public class DefaultCodegen {
 
     // override to post-process any model properties
     @SuppressWarnings("unused")
+    public void postProcessModelProperties(CodegenModel model){
+        if (model.vars == null || model.vars.isEmpty()) {
+            return;
+        }
+        for(CodegenProperty codegenProperty : model.vars) {
+            postProcessModelProperty(model, codegenProperty);
+        }
+    }
+
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
     }
 
@@ -1373,7 +1381,13 @@ public class DefaultCodegen {
         m.classname = toModelName(name);
         m.classVarName = toVarName(name);
         m.classFilename = toModelFilename(name);
-        m.modelJson = Json.pretty(model);
+        // NOTE: not using Json.pretty() to write out model, as it
+        // can raise memory consumption (see comment in ExampleGenerator)
+        try {
+            m.modelJson = Json.mapper().writeValueAsString(model);
+        } catch (Exception e) {
+            m.modelJson = "{}";
+        }
         m.externalDocs = model.getExternalDocs();
         m.vendorExtensions = model.getVendorExtensions();
         m.isAlias = typeAliases.containsKey(name);
@@ -1546,11 +1560,7 @@ public class DefaultCodegen {
             addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
-        if (m.vars != null) {
-            for(CodegenProperty prop : m.vars) {
-                postProcessModelProperty(m, prop);
-            }
-        }
+        postProcessModelProperties(m);
         return m;
     }
 
@@ -2784,26 +2794,7 @@ public class DefaultCodegen {
             } else {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
-                    String name = ((RefModel) sub).getSimpleRef();
-                    try {
-                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
-                    } catch (UnsupportedEncodingException e) {
-                        LOGGER.error("Could not decoded string: " + name, e);
-                    }
-                    name = getAlias(name);
-                    if (typeMapping.containsKey(name)) {
-                        name = typeMapping.get(name);
-                        p.baseType = name;
-                    } else {
-                        name = toModelName(name);
-                        p.baseType = name;
-                        if (defaultIncludes.contains(name)) {
-                            imports.add(name);
-                        }
-                        imports.add(name);
-                        name = getTypeDeclaration(name);
-                    }
-                    p.dataType = name;
+                    readRefModelParameter((RefModel) model, p, imports);
                 } else {
                     if (sub instanceof ComposedModel) {
                         p.dataType = "object";
@@ -2911,6 +2902,29 @@ public class DefaultCodegen {
         } else {
             return false;
         }
+    }
+
+    protected void readRefModelParameter(RefModel refModel, CodegenParameter codegenParameter, Set<String> imports) {
+        String name = refModel.getSimpleRef();
+        try {
+            name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Could not decoded string: " + name, e);
+        }
+        name = getAlias(name);
+        if (typeMapping.containsKey(name)) {
+            name = typeMapping.get(name);
+            codegenParameter.baseType = name;
+        } else {
+            name = toModelName(name);
+            codegenParameter.baseType = name;
+            if (defaultIncludes.contains(name)) {
+                imports.add(name);
+            }
+            imports.add(name);
+            name = getTypeDeclaration(name);
+        }
+        codegenParameter.dataType = name;
     }
 
     /**

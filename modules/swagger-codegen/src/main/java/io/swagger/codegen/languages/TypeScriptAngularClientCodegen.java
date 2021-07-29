@@ -31,10 +31,12 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
     public static final String TAGGED_UNIONS ="taggedUnions";
     public static final String NG_VERSION = "ngVersion";
     public static final String PROVIDED_IN_ROOT ="providedInRoot";
+    public static final String KEBAB_FILE_NAME ="kebab-file-name";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
+    protected boolean kebabFileNaming;
 
     private boolean taggedUnions = false;
 
@@ -140,6 +142,8 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (!ngVersion.atLeast("4.3.0")) {
             supportingFiles.add(new SupportingFile("rxjs-operators.mustache", getIndexDirectory(), "rxjs-operators.ts"));
         }
+
+        kebabFileNaming = Boolean.parseBoolean(String.valueOf(additionalProperties.get(KEBAB_FILE_NAME)));
     }
 
     private void addNpmPackageGeneration(SemVer ngVersion) {
@@ -160,6 +164,59 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
         if (additionalProperties.containsKey(NPM_REPOSITORY)) {
             this.setNpmRepository(additionalProperties.get(NPM_REPOSITORY).toString());
+        }
+
+        // Set the typescript version compatible to the Angular version
+        if (ngVersion.atLeast("11.0.0")) {
+            additionalProperties.put("tsVersion", ">=4.0.0 <4.1.0");
+            additionalProperties.put("rxjsVersion", "6.6.0");
+            additionalProperties.put("ngPackagrVersion", "11.0.2");
+            additionalProperties.put("tsickleVersion", "0.39.1");
+            additionalProperties.put("zonejsVersion", "0.11.3");
+
+            additionalProperties.put("skipHttpImport", true);
+        } else if (ngVersion.atLeast("10.0.0")) {
+            additionalProperties.put("tsVersion", ">=3.9.2 <4.0.0");
+            additionalProperties.put("rxjsVersion", "6.6.0");
+            additionalProperties.put("ngPackagrVersion", "10.0.3");
+            additionalProperties.put("tsickleVersion", "0.39.1");
+            additionalProperties.put("zonejsVersion", "0.10.2");
+
+            additionalProperties.put("skipHttpImport", true);
+        } else if (ngVersion.atLeast("9.0.0")) {
+            additionalProperties.put("tsVersion", ">=3.6.0 <3.8.0");
+            additionalProperties.put("rxjsVersion", "6.5.3");
+            additionalProperties.put("ngPackagrVersion", "9.0.1");
+            additionalProperties.put("tsickleVersion", "0.38.0");
+            additionalProperties.put("zonejsVersion", "0.10.2");
+
+            additionalProperties.put("skipHttpImport", true);
+        } else if (ngVersion.atLeast("8.0.0")) {
+            additionalProperties.put("tsVersion", ">=3.4.0 <3.6.0");
+            additionalProperties.put("rxjsVersion", "6.5.0");
+            additionalProperties.put("ngPackagrVersion", "5.4.0");
+            additionalProperties.put("tsickleVersion", "0.35.0");
+            additionalProperties.put("zonejsVersion", "0.9.1");
+
+            additionalProperties.put("skipHttpImport", true);
+        } else if (ngVersion.atLeast("7.0.0")) {
+            additionalProperties.put("tsVersion", ">=3.1.1 <3.2.0");
+            additionalProperties.put("rxjsVersion", "6.3.0");
+            additionalProperties.put("ngPackagrVersion", "5.1.0");
+            additionalProperties.put("tsickleVersion", "0.34.0");
+            additionalProperties.put("zonejsVersion", "0.8.26");
+        } else if (ngVersion.atLeast("6.0.0")) {
+            additionalProperties.put("tsVersion", ">=2.7.2 and <2.10.0");
+            additionalProperties.put("rxjsVersion", "6.1.0");
+            additionalProperties.put("ngPackagrVersion", "3.0.6");
+            additionalProperties.put("tsickleVersion", "0.32.1");
+            additionalProperties.put("zonejsVersion", "0.8.26");
+        } else {
+            additionalProperties.put("tsVersion", ">=2.1.5 and <2.8");
+            additionalProperties.put("rxjsVersion", "6.1.0");
+            additionalProperties.put("ngPackagrVersion", "3.0.6");
+            additionalProperties.put("tsickleVersion", "0.32.1");
+            additionalProperties.put("zonejsVersion", "0.8.26");
         }
 
         // for Angular 2 AOT support we will use good-old ngc,
@@ -411,6 +468,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         if (name.length() == 0) {
             return "default.service";
         }
+        if (kebabFileNaming) {
+            return dashize(name);
+        }
         return camelize(name, true) + ".service";
     }
 
@@ -421,6 +481,9 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String toModelFilename(String name) {
+        if (kebabFileNaming) {
+            return dashize(name);
+        }
         return camelize(toModelName(name), true);
     }
 
