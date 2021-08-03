@@ -125,7 +125,7 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         // Process java8 option before common java ones to change the default dateLibrary to java8.
         if (additionalProperties.containsKey(JAVA_8)) {
-            this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_8).toString()));
+            this.setJava8(Boolean.parseBoolean(additionalProperties.get(JAVA_8).toString()));
         }
         if (this.java8) {
             additionalProperties.put("javaVersion", "1.8");
@@ -163,23 +163,23 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
 
         if (additionalProperties.containsKey(INTERFACE_ONLY)) {
-            this.setInterfaceOnly(Boolean.valueOf(additionalProperties.get(INTERFACE_ONLY).toString()));
+            this.setInterfaceOnly(Boolean.parseBoolean(additionalProperties.get(INTERFACE_ONLY).toString()));
         }
 
         if (additionalProperties.containsKey(DELEGATE_PATTERN)) {
-            this.setDelegatePattern(Boolean.valueOf(additionalProperties.get(DELEGATE_PATTERN).toString()));
+            this.setDelegatePattern(Boolean.parseBoolean(additionalProperties.get(DELEGATE_PATTERN).toString()));
         }
 
         if (additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
-            this.setSingleContentTypes(Boolean.valueOf(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
+            this.setSingleContentTypes(Boolean.parseBoolean(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
         }
 
         if (additionalProperties.containsKey(JAVA_8)) {
-            this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_8).toString()));
+            this.setJava8(Boolean.parseBoolean(additionalProperties.get(JAVA_8).toString()));
         }
 
         if (additionalProperties.containsKey(ASYNC)) {
-            this.setAsync(Boolean.valueOf(additionalProperties.get(ASYNC).toString()));
+            this.setAsync(Boolean.parseBoolean(additionalProperties.get(ASYNC).toString()));
         }
 
         if (additionalProperties.containsKey(RESPONSE_WRAPPER)) {
@@ -187,7 +187,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
 
         if (additionalProperties.containsKey(USE_TAGS)) {
-            this.setUseTags(Boolean.valueOf(additionalProperties.get(USE_TAGS).toString()));
+            this.setUseTags(Boolean.parseBoolean(additionalProperties.get(USE_TAGS).toString()));
         }
 
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
@@ -212,11 +212,11 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
 
         if (additionalProperties.containsKey(IMPLICIT_HEADERS)) {
-            this.setImplicitHeaders(Boolean.valueOf(additionalProperties.get(IMPLICIT_HEADERS).toString()));
+            this.setImplicitHeaders(Boolean.parseBoolean(additionalProperties.get(IMPLICIT_HEADERS).toString()));
         }
 
         if (additionalProperties.containsKey(SWAGGER_DOCKET_CONFIG)) {
-            this.setSwaggerDocketConfig(Boolean.valueOf(additionalProperties.get(SWAGGER_DOCKET_CONFIG).toString()));
+            this.setSwaggerDocketConfig(Boolean.parseBoolean(additionalProperties.get(SWAGGER_DOCKET_CONFIG).toString()));
         }
 
         typeMapping.put("file", "Resource");
@@ -682,7 +682,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
 
         //Add imports for Jackson
-        if (!Boolean.TRUE.equals(model.isEnum)) {
+        if (Boolean.FALSE.equals(model.isEnum)) {
             model.imports.add("JsonProperty");
 
             if (Boolean.TRUE.equals(model.hasEnums)) {
@@ -718,6 +718,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         return objs;
     }
 
+    @Override
     public void setUseBeanValidation(boolean useBeanValidation) {
         this.useBeanValidation = useBeanValidation;
     }
