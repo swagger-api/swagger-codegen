@@ -169,7 +169,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PROJECT_NAME)) {
-            setProjectName((String) additionalProperties.get(CodegenConstants.PROJECT_NAME));
+            String projectName = (String) additionalProperties.get(CodegenConstants.PROJECT_NAME);
+            setProjectName(projectName.replaceAll("[^a-zA-Z0-9\\s\\-_]",""));
         }
         else {
             // default: set project based on package name
@@ -203,16 +204,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
         this.setCaseType();
 
+        final String packageFolder = packageName.replace('.', File.separatorChar);
+
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
         supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
         supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
 
-        supportingFiles.add(new SupportingFile("configuration.mustache", packageName, "configuration.py"));
-        supportingFiles.add(new SupportingFile("__init__package.mustache", packageName, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__model.mustache", packageName + File.separatorChar + modelPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__api.mustache", packageName + File.separatorChar + apiPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", packageFolder, "configuration.py"));
+        supportingFiles.add(new SupportingFile("__init__package.mustache", packageFolder, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__model.mustache", packageFolder + File.separatorChar + modelPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__api.mustache", packageFolder + File.separatorChar + apiPackage, "__init__.py"));
 
         if(Boolean.FALSE.equals(excludeTests)) {
             supportingFiles.add(new SupportingFile("__init__test.mustache", testFolder, "__init__.py"));
@@ -221,16 +224,16 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
         supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
-        supportingFiles.add(new SupportingFile("api_client.mustache", packageName, "api_client.py"));
+        supportingFiles.add(new SupportingFile("api_client.mustache", packageFolder, "api_client.py"));
 
         if ("asyncio".equals(getLibrary())) {
-            supportingFiles.add(new SupportingFile("asyncio/rest.mustache", packageName, "rest.py"));
+            supportingFiles.add(new SupportingFile("asyncio/rest.mustache", packageFolder, "rest.py"));
             additionalProperties.put("asyncio", "true");
         } else if ("tornado".equals(getLibrary())) {
-            supportingFiles.add(new SupportingFile("tornado/rest.mustache", packageName, "rest.py"));
+            supportingFiles.add(new SupportingFile("tornado/rest.mustache", packageFolder, "rest.py"));
             additionalProperties.put("tornado", "true");
         } else {
-            supportingFiles.add(new SupportingFile("rest.mustache", packageName, "rest.py"));
+            supportingFiles.add(new SupportingFile("rest.mustache", packageFolder, "rest.py"));
         }
 
         modelPackage = packageName + "." + modelPackage;

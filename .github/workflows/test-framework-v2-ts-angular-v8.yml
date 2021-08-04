@@ -1,4 +1,4 @@
-name: Test Framework V2 Typescript Angular v4.3
+name: Test Framework V2 Typescript Angular v8
 
 on:
   # execute on demand
@@ -68,7 +68,7 @@ jobs:
           language: typescript-angular
           job-name: ${{ env.JOB_NAME }}
           spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore.yaml
-          options: -DnpmName=@swagger/angular2-typescript-petstore,npmVersion=0.0.1,npmRepository=https://skimdb.npmjs.com/registry,snapshot=false,ngVersion=4.3
+          options: -DnpmName=@swagger/angular2-typescript-petstore,npmVersion=0.0.1,npmRepository=https://skimdb.npmjs.com/registry,snapshot=false,ngVersion=8.0.0
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -90,7 +90,7 @@ jobs:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
     env:
-      JOB_NAME: "typescript-angular-v4.3-v2-sample"
+      JOB_NAME: "typescript-angular-v8-v2-sample"
 
   build:
 
@@ -153,4 +153,4 @@ jobs:
           path: ${{ steps.build.outputs.logs }}
     env:
       LANGUAGE: ${{ github.event.inputs.language }}
-      JOB_NAME: "typescript-angular-v4.3-v2-sample"
+      JOB_NAME: "typescript-angular-v8-v2-sample"
