@@ -10,6 +10,7 @@ import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenConfigLoader;
 import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.v3.auth.AuthParser;
+import io.swagger.codegen.v3.service.HostAccessControl;
 import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.core.util.Json;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,6 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -91,6 +94,25 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator() {
         this.setOutputDir(".");
+    }
+
+    private List<HostAccessControl> allowedAuthHosts = new ArrayList<>();
+    private List<HostAccessControl> deniedAuthHosts = new ArrayList<>();
+
+    public List<HostAccessControl> getAllowedAuthHosts() {
+        return allowedAuthHosts;
+    }
+
+    public void setAllowedAuthHosts(List<HostAccessControl> allowedAuthHosts) {
+        this.allowedAuthHosts = allowedAuthHosts;
+    }
+
+    public List<HostAccessControl> getDeniedAuthHosts() {
+        return deniedAuthHosts;
+    }
+
+    public void setDeniedAuthHosts(List<HostAccessControl> deniedAuthHosts) {
+        this.deniedAuthHosts = deniedAuthHosts;
     }
 
     public CodegenConfigurator setLang(String lang) {
@@ -470,8 +492,60 @@ public class CodegenConfigurator implements Serializable {
 
         CodegenConfig config = CodegenConfigLoader.forName(lang);
         ClientOptInput input = new ClientOptInput();
+
+        Predicate<URL> urlMatcher = null;
+        if (!allowedAuthHosts.isEmpty() || !deniedAuthHosts.isEmpty()) {
+            urlMatcher = (url) -> {
+                String host = url.getHost();
+                // first check denies
+                for (HostAccessControl check: deniedAuthHosts) {
+                    if (check.isRegex()) {
+                        if (host.matches(check.getHost())) {
+                            return false;
+                        }
+                    } else if (check.isEndsWith()){
+                        if (host.toLowerCase().endsWith(check.getHost().toLowerCase())){
+                            return false;
+                        }
+                    } else {
+                        if (host.equalsIgnoreCase(check.getHost())) {
+                            return false;
+                        }
+                    }
+                }
+                // then allows
+                for (HostAccessControl check: allowedAuthHosts) {
+                    if (check.isRegex()) {
+                        if (!host.matches(check.getHost())) {
+                            return false;
+                        }
+                    } else if (check.isEndsWith()){
+                        if (!host.toLowerCase().endsWith(check.getHost().toLowerCase())){
+                            return false;
+                        }
+                    } else {
+                        if (!host.equalsIgnoreCase(check.getHost())) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+
+        }
+
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
+        if (!authorizationValues.isEmpty() && urlMatcher != null) {
+            for (AuthorizationValue authVal: authorizationValues) {
+                if (authVal.getUrlMatcher() == null) {
+                    authVal.setUrlMatcher(urlMatcher);
+                }
+            }
+        }
         if (authorizationValue != null) {
+            if (authorizationValue.getUrlMatcher() == null && urlMatcher != null) {
+                authorizationValue.setUrlMatcher(urlMatcher);
+            }
             authorizationValues.add(authorizationValue);
         }
 

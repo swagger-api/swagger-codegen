@@ -10,6 +10,7 @@ import io.swagger.codegen.v3.CodegenArgument;
 import io.swagger.codegen.v3.config.CodegenConfigurator;
 import io.swagger.codegen.v3.service.exception.BadRequestException;
 import io.swagger.models.Swagger;
+import io.swagger.models.auth.UrlMatcher;
 import io.swagger.parser.SwaggerParser;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.lang3.StringUtils;
@@ -41,12 +42,68 @@ public class GeneratorUtil {
         String lang = generationRequest.getLang();
         validateSpec(lang, inputSpec, inputSpecURL);
         LOGGER.debug("getClientOptInputV2 - spec validated");
+        io.swagger.models.auth.UrlMatcher urlMatcher = null;
+        if (!generationRequest.getOptions().getAllowedAuthHosts().isEmpty() || !generationRequest.getOptions().getDeniedAuthHosts().isEmpty()) {
+            urlMatcher = url -> {
+                String host = url.getHost();
+                // first check denies
+                for (HostAccessControl check: generationRequest.getOptions().getDeniedAuthHosts()) {
+                    if (check.isRegex()) {
+                        if (host.matches(check.getHost())) {
+                            return false;
+                        }
+                    } else if (check.isEndsWith()){
+                        if (host.toLowerCase().endsWith(check.getHost().toLowerCase())){
+                            return false;
+                        }
+                    } else {
+                        if (host.equalsIgnoreCase(check.getHost())) {
+                            return false;
+                        }
+                    }
+                }
+                // then allows
+                for (HostAccessControl check: generationRequest.getOptions().getAllowedAuthHosts()) {
+                    if (check.isRegex()) {
+                        if (!host.matches(check.getHost())) {
+                            return false;
+                        }
+                    } else if (check.isEndsWith()){
+                        if (!host.toLowerCase().endsWith(check.getHost().toLowerCase())){
+                            return false;
+                        }
+                    } else {
+                        if (!host.equalsIgnoreCase(check.getHost())) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+        }
+
         final List<io.swagger.models.auth.AuthorizationValue> authorizationValues = io.swagger.codegen.auth.AuthParser.parse(generationRequest.getOptions().getAuth());
+        if (!authorizationValues.isEmpty() && urlMatcher != null) {
+            for (io.swagger.models.auth.AuthorizationValue authVal: authorizationValues) {
+                if (authVal.getUrlMatcher() == null) {
+                    authVal.setUrlMatcher(urlMatcher);
+                }
+            }
+        }
         if (generationRequest.getOptions().getAuthorizationValue() != null) {
             io.swagger.models.auth.AuthorizationValue authorizationValue = new io.swagger.models.auth.AuthorizationValue()
                     .value(generationRequest.getOptions().getAuthorizationValue().getValue())
                     .keyName(generationRequest.getOptions().getAuthorizationValue().getKeyName())
                     .type(generationRequest.getOptions().getAuthorizationValue().getType());
+            UrlMatcher predicateUrlMatcher = null;
+            if (generationRequest.getOptions().getAuthorizationValue().getUrlMatcher() != null) {
+                predicateUrlMatcher = url -> generationRequest.getOptions().getAuthorizationValue().getUrlMatcher().test(url);
+            }
+            if (predicateUrlMatcher != null) {
+                authorizationValue.setUrlMatcher(predicateUrlMatcher);
+            } else if (urlMatcher != null) {
+                authorizationValue.setUrlMatcher(urlMatcher);
+            }
             authorizationValues.add(authorizationValue);
         }
         LOGGER.debug("getClientOptInputV2 - processed auth");
@@ -235,7 +292,7 @@ public class GeneratorUtil {
         }
         if (options.getResolveFully() != null) {
             configurator.setResolveFully(options.getResolveFully());
-        }        
+        }
         if (isNotEmpty(options.getArtifactVersion())) {
             configurator.setArtifactVersion(options.getArtifactVersion());
         }
@@ -290,6 +347,9 @@ public class GeneratorUtil {
                 configurator.addAdditionalReservedWordMapping(entry.getKey(), entry.getValue());
             }
         }
+
+        configurator.setAllowedAuthHosts(options.getAllowedAuthHosts());
+        configurator.setDeniedAuthHosts(options.getDeniedAuthHosts());
         LOGGER.debug("getClientOptInput - end");
         return configurator.toClientOptInput();
     }
