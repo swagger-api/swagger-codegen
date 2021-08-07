@@ -194,6 +194,22 @@
                 </plugins>
             </build>
         </profile>
+        {{#java11}}
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>2.3.3</version>
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+        </profile>
+        {{/java11}}
     </profiles>
 
     <dependencies>
