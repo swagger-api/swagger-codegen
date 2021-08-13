@@ -29,6 +29,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     public static final String DELEGATE_PATTERN = "delegatePattern";
     public static final String SINGLE_CONTENT_TYPES = "singleContentTypes";
     public static final String JAVA_8 = "java8";
+    public static final String JAVA_11 = "java11";
     public static final String ASYNC = "async";
     public static final String RESPONSE_WRAPPER = "responseWrapper";
     public static final String USE_TAGS = "useTags";
@@ -47,6 +48,7 @@ public class SpringCodegen extends AbstractJavaCodegen
     protected boolean delegateMethod = false;
     protected boolean singleContentTypes = false;
     protected boolean java8 = false;
+    protected boolean java11 = false;
     protected boolean async = false;
     protected String responseWrapper = "";
     protected boolean useTags = false;
@@ -134,6 +136,15 @@ public class SpringCodegen extends AbstractJavaCodegen
                 setDateLibrary("java8");
             }
         }
+        if (additionalProperties.containsKey(JAVA_11)) {
+            this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_11).toString()));
+        }
+        if (this.java11) {
+            additionalProperties.put("javaVersion", "11");
+            additionalProperties.put("jdk11", "true");
+        }
+
+        additionalProperties.put("isJava8or11", this.java8 || this.java11);
 
         // set invokerPackage as basePackage
         if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
@@ -172,10 +183,6 @@ public class SpringCodegen extends AbstractJavaCodegen
 
         if (additionalProperties.containsKey(SINGLE_CONTENT_TYPES)) {
             this.setSingleContentTypes(Boolean.valueOf(additionalProperties.get(SINGLE_CONTENT_TYPES).toString()));
-        }
-
-        if (additionalProperties.containsKey(JAVA_8)) {
-            this.setJava8(Boolean.valueOf(additionalProperties.get(JAVA_8).toString()));
         }
 
         if (additionalProperties.containsKey(ASYNC)) {
@@ -301,7 +308,7 @@ public class SpringCodegen extends AbstractJavaCodegen
             }
         }
 
-        if ((!this.delegatePattern && this.java8) || this.delegateMethod) {
+        if ((!this.delegatePattern && (this.java8 || this.java11)) || this.delegateMethod) {
             additionalProperties.put("jdk8-no-delegate", true);
         }
 
@@ -312,8 +319,6 @@ public class SpringCodegen extends AbstractJavaCodegen
         }
 
         if (this.java8) {
-            additionalProperties.put("javaVersion", "1.8");
-            additionalProperties.put("jdk8", "true");
             if (this.async) {
                 additionalProperties.put(RESPONSE_WRAPPER, "CompletableFuture");
             }
@@ -656,6 +661,8 @@ public class SpringCodegen extends AbstractJavaCodegen
     }
 
     public void setJava8(boolean java8) { this.java8 = java8; }
+
+    public void setJava11(boolean java11) { this.java11 = java11; }
 
     public void setAsync(boolean async) { this.async = async; }
 
