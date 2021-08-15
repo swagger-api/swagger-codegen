@@ -1,7 +1,7 @@
 package {{packageName}}.infrastructure
 
 enum class ResponseType {
-    Success, Informational, Redirection, ClientError, ServerError
+    Success, Retry, Informational, Redirection, ClientError, ServerError
 }
 
 abstract class ApiInfrastructureResponse<T>(val responseType: ResponseType) {
@@ -38,3 +38,9 @@ class ServerError<T>(
         override val statusCode: Int = -1,
         override val headers: Map<String, List<String>>
 ): ApiInfrastructureResponse<T>(ResponseType.ServerError)
+
+class RetryResponse<T>(
+        val body: Any? = null,
+        override val statusCode: Int = -1,
+        override val headers: Map<String, List<String>> = mapOf()
+) : ApiInfrastructureResponse<T>(ResponseType.Retry)

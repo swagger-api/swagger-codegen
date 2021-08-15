@@ -1,0 +1,60 @@
+{{>licenseInfo}}
+import { AxiosRequestConfig, Method } from 'axios';
+import { axios } from '../axios.config';
+{{#hasFormParams}}
+import { stringify } from 'qs';
+{{/hasFormParams}}
+
+{{#imports}}
+import { {{classname}} } from '../{{filename}}';
+{{/imports}}
+
+/* tslint:disable:no-unused-variable member-ordering max-line-length */
+/* eslint-disable no-useless-concat */
+
+{{#operations}}
+{{#description}}
+/**
+ * {{&description}}
+ */
+{{/description}}
+export class {{classname}}Resource {
+
+{{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     {{#allParams}}* @param {{paramName}} {{description}}
+     {{/allParams}}*/
+    public {{nickname}}({{#allParams}}{{^isQueryParam}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/isQueryParam}}{{/allParams}}{{#hasQueryParams}}query?: { {{#queryParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}},{{/-last}} {{/queryParams}}}, {{/hasQueryParams}}axiosConfig?: AxiosRequestConfig): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}> {
+        const reqPath = '{{path}}'{{#pathParams}}
+                    .replace('{' + '{{baseName}}}', String({{paramName}}{{#isDateTime}}.toISOString(){{/isDateTime}})){{/pathParams}};
+{{#hasFormParams}}
+        let reqFormParams = {
+{{#formParams}}
+            {{baseName}}: {{paramName}}{{^-last}},{{/-last}}
+{{/formParams}}
+        };
+{{/hasFormParams}}
+        let reqConfig = {
+            ...axiosConfig,
+            method: '{{httpMethod}}' as Method,
+            url: reqPath{{#hasQueryParams}},
+            params: query{{/hasQueryParams}}{{#bodyParam}},
+            data: {{paramName}}{{/bodyParam}}{{#hasFormParams}},
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+            data: stringify(reqFormParams)
+{{/hasFormParams}}
+
+        };
+        return axios.request(reqConfig)
+            .then(res => {
+                return res.data;
+            });
+    }
+
+{{/operation}}
+}
+{{/operations}}
+
+export const {{classname}} = new {{classname}}Resource();

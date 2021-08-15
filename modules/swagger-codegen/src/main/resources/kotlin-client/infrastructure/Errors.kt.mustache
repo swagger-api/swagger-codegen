@@ -40,3 +40,22 @@ open class ServerException : RuntimeException {
         private const val serialVersionUID: Long = 456L
     }
 }
+
+open class RetryException : RuntimeException {
+
+    /**
+     * Constructs an [RetryException] with no detail message.
+     */
+    constructor() : super()
+
+    /**
+     * Constructs an [RetryException] with the specified detail message.
+
+     * @param   message   the detail message.
+     */
+    constructor(message: kotlin.String) : super(message)
+
+    companion object {
+        private const val serialVersionUID: Long = 789L
+    }
+}

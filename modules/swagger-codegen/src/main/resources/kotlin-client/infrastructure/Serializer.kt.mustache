@@ -1,8 +1,8 @@
 package {{packageName}}.infrastructure
 
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Rfc3339DateJsonAdapter
+import com.squareup.moshi.*
+import java.math.BigDecimal
+import java.time.LocalDate
 import java.util.*
 
 object Serializer {
@@ -10,5 +10,17 @@ object Serializer {
     val moshi: Moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+            .add(LocalDateAdapter)
+            .add(BigDecimalAdapter)
             .build()
+}
+
+object LocalDateAdapter {
+    @FromJson fun fromJson(string: String) = LocalDate.parse(string)
+    @ToJson fun toJson(value: LocalDate) = value.toString()
+}
+
+object BigDecimalAdapter {
+    @FromJson fun fromJson(string: String) = BigDecimal(string)
+    @ToJson fun toJson(value: BigDecimal) = value.toString()
 }
