@@ -46,6 +46,7 @@ public class CodegenProperty implements Cloneable {
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;
+    public Integer itemsDepth;
     public Map<String, Object> vendorExtensions;
     public boolean hasValidation; // true if pattern, maximum, etc are set (only used in the mustache template)
     public boolean isInherited;
@@ -55,6 +56,7 @@ public class CodegenProperty implements Cloneable {
     public String enumName;
     public Integer maxItems;
     public Integer minItems;
+    public boolean uniqueItems;
 
     // XML
     public boolean isXmlAttribute = false;

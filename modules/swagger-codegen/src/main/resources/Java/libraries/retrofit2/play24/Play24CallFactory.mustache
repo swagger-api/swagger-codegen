@@ -3,6 +3,7 @@ package {{invokerPackage}};
 import okhttp3.*;
 import okio.Buffer;
 import okio.BufferedSource;
+import okio.Timeout;
 import play.libs.F;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
@@ -95,6 +96,10 @@ public class Play24CallFactory implements okhttp3.Call.Factory {
         @Override
         public Request request() {
             return request;
+        }
+
+        public Timeout timeout() {
+            return null;
         }
 
         @Override

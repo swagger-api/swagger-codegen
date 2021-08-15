@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class HasOnlyReadOnly   {
   @JsonProperty("bar")
   private String bar = null;

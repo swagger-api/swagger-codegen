@@ -49,14 +49,17 @@ import java.util.Optional;
     {{/useOptional}}
 {{/jdk8-no-delegate}}
 {{#async}}
-import java.util.concurrent.{{^jdk8}}Callable{{/jdk8}}{{#jdk8}}CompletableFuture{{/jdk8}};
+import java.util.concurrent.{{^isJava8or11}}Callable{{/isJava8or11}}{{#isJava8or11}}CompletableFuture{{/isJava8or11}};
 {{/async}}
 {{>generatedAnnotation}}
+{{#useBeanValidation}}
+@Validated
+{{/useBeanValidation}}
 @Api(value = "{{{baseName}}}", description = "the {{{baseName}}} API")
 {{#operations}}
 @RequestMapping(value = "{{{contextPath}}}")
 public interface {{classname}} {
-{{#jdk8}}
+{{#isJava8or11}}
 
     {{^isDelegate}}
     Logger log = LoggerFactory.getLogger({{classname}}.class);
@@ -76,7 +79,7 @@ public interface {{classname}} {
     {{#isDelegate}}
     {{classname}}Delegate getDelegate();
     {{/isDelegate}}
-{{/jdk8}}
+{{/isJava8or11}}
 {{#operation}}
 
     @ApiOperation(value = "{{{summary}}}", nickname = "{{{operationId}}}", notes = "{{{notes}}}"{{#returnBaseType}}, response = {{{returnBaseType}}}.class{{/returnBaseType}}{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}}{{#hasAuthMethods}}, authorizations = {
@@ -101,7 +104,7 @@ public interface {{classname}} {
         produces = { {{#produces}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }, {{/hasProduces}}{{#hasConsumes}}
         consumes = { {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} },{{/hasConsumes}}{{/singleContentTypes}}
         method = RequestMethod.{{httpMethod}})
-    {{#defaultInterfaces}}default {{/defaultInterfaces}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{#delegate-method}}_{{/delegate-method}}{{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}} {
+    {{#isJava8or11}}{{#defaultInterfaces}}default {{/defaultInterfaces}}{{/isJava8or11}}{{#responseWrapper}}{{.}}<{{/responseWrapper}}ResponseEntity<{{>returnTypes}}>{{#responseWrapper}}>{{/responseWrapper}} {{#delegate-method}}_{{/delegate-method}}{{operationId}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{#isJava8or11}}{{^defaultInterfaces}};{{/defaultInterfaces}}{{#defaultInterfaces}} {
         {{#delegate-method}}
         return {{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     }
@@ -129,7 +132,7 @@ public interface {{classname}} {
         {{#isDelegate}}
         return getDelegate().{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/isDelegate}}
-    }{{/defaultInterfaces}}
+    }{{/defaultInterfaces}}{{/isJava8or11}}
 
 {{/operation}}
 }

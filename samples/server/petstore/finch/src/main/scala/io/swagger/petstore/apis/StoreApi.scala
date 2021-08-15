@@ -16,6 +16,7 @@ import com.twitter.util.Future
 import com.twitter.io.Buf
 import io.finch._, items._
 import java.io.File
+import java.nio.file.Files
 
 object StoreApi {
     /**
@@ -29,11 +30,11 @@ object StoreApi {
             placeOrder(da)
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def deleteOrder(da: DataAccessor): Endpoint[Unit] =
-        delete("store" :: "order" :: string ) { (orderId: String) => 
+        delete("store" :: "order" :: string ) { (orderId: String) =>
                 da.Store_deleteOrder(orderId)
                 NoContent[Unit]
         } handle {
@@ -41,33 +42,33 @@ object StoreApi {
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Map[String, Int]
         */
         private def getInventory(da: DataAccessor): Endpoint[Map[String, Int]] =
-        get("store" :: "inventory" ) { 
+        get("store" :: "inventory" ) {
                 Ok(da.Store_getInventory())
         } handle {
           case e: Exception => BadRequest(e)
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Order
         */
         private def getOrderById(da: DataAccessor): Endpoint[Order] =
-        get("store" :: "order" :: long ) { (orderId: Long) => 
+        get("store" :: "order" :: long ) { (orderId: Long) =>
                 Ok(da.Store_getOrderById(orderId))
         } handle {
           case e: Exception => BadRequest(e)
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Order
         */
         private def placeOrder(da: DataAccessor): Endpoint[Order] =
-        post("store" :: "order"  :: jsonBody[Order]) { (body: Order) => 
+        post("store" :: "order"  :: jsonBody[Order]) { (body: Order) =>
                 Ok(da.Store_placeOrder(body))
         } handle {
           case e: Exception => BadRequest(e)
@@ -85,7 +86,7 @@ object StoreApi {
     }
 
     private def bytesToFile(input: Array[Byte]): java.io.File = {
-        val file = File.createTempFile("tmpStoreApi", null)
+        val file = Files.createTempFile("tmpStoreApi", null).toFile()
         val output = new FileOutputStream(file)
         output.write(input)
         file

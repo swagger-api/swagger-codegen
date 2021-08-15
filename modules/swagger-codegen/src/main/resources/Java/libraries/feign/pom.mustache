@@ -185,6 +185,22 @@
                 </plugins>
             </build>
         </profile>
+        {{#java11}}
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>2.3.3</version>
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+        </profile>
+        {{/java11}}
     </profiles>
 
     <dependencies>
@@ -291,17 +307,17 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
+        <java.version>{{#java11}}11{{/java11}}{{^java11}}{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}{{/java11}}</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <swagger-core-version>1.5.18</swagger-core-version>
-        <feign-version>9.4.0</feign-version>
-        <feign-form-version>2.1.0</feign-form-version>
-        <jackson-version>2.10.1</jackson-version>
+        <swagger-core-version>1.5.24</swagger-core-version>
+        <feign-version>11.6</feign-version>
+        <feign-form-version>3.8.0</feign-form-version>
+        <jackson-version>2.11.4</jackson-version>
         {{#threetenbp}}
             <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
         {{/threetenbp}}
-        <junit-version>4.12</junit-version>
+        <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <oltu-version>1.0.1</oltu-version>
     </properties>
