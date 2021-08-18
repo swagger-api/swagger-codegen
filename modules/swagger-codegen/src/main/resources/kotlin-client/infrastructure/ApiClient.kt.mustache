@@ -223,7 +223,7 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
      * @param file The given file
      * @return The guessed Content-Type
      */
-    open fun guessContentTypeFromFile(fileName: String): String? {
+    open fun guessContentTypeFromFile(fileName: String): String {
         val contentType = URLConnection.guessContentTypeFromName(fileName)
         return contentType ?: "application/octet-stream"
     }
