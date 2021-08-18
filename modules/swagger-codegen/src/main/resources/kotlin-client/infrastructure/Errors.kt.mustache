@@ -3,57 +3,41 @@ package {{packageName}}.infrastructure
 
 import java.lang.RuntimeException
 
-open class ClientException : RuntimeException {
+open class ApiException(val code: Int, message: String) : RuntimeException(message)
 
-    /**
-     * Constructs an [ClientException] with no detail message.
-     */
-    constructor() : super()
-
+open class ClientException : ApiException {
     /**
      * Constructs an [ClientException] with the specified detail message.
 
      * @param   message   the detail message.
      */
-    constructor(message: kotlin.String) : super(message)
+    constructor(code: Int, message: kotlin.String) : super(code, message)
 
     companion object {
         private const val serialVersionUID: Long = 123L
     }
 }
 
-open class ServerException : RuntimeException {
-
-    /**
-     * Constructs an [ServerException] with no detail message.
-     */
-    constructor() : super()
-
+open class ServerException : ApiException {
     /**
      * Constructs an [ServerException] with the specified detail message.
 
      * @param   message   the detail message.
      */
-    constructor(message: kotlin.String) : super(message)
+    constructor(code: Int, message: kotlin.String) : super(code, message)
 
     companion object {
         private const val serialVersionUID: Long = 456L
     }
 }
 
-open class RetryException : RuntimeException {
-
-    /**
-     * Constructs an [RetryException] with no detail message.
-     */
-    constructor() : super()
-
+open class RetryException : ApiException {
     /**
      * Constructs an [RetryException] with the specified detail message.
 
      * @param   message   the detail message.
      */
-    constructor(message: kotlin.String) : super(message)
+    constructor(code: Int, message: kotlin.String) : super(code, message)
 
     companion object {
         private const val serialVersionUID: Long = 789L
