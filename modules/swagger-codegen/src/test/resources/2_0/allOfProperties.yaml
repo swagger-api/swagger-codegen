@@ -1,0 +1,58 @@
+swagger: '2.0'
+info:
+  version: 0.0.0
+  title: Simple API
+paths:
+  /:
+    get:
+      responses:
+        200:
+          description: OK
+
+definitions:
+
+  ModelOne:
+    type: object
+    properties:
+      modelOneProp:
+        type: string
+
+  ModelTwo:
+    type: object
+    properties:
+      modelTwoProp:
+        type: string
+
+  ModelThree:
+    type: object
+    properties:
+      modelThreeProp:
+        type: string
+
+
+  User_Id_Resource:
+    allOf:
+      - "$ref": "#/definitions/ModelTwo"
+    properties:
+      aplicacion:
+        type: string
+        description: some description
+        example: some example value
+
+  RedisResource:
+    properties:
+      properties:
+        x-ms-client-flatten: true
+        "$ref": "#/definitions/ModelTwo"
+        description: Redis cache properties.
+      zones:
+        type: array
+        items:
+          type: string
+        description: A list of availability zones denoting where the resource needs
+          to come from.
+    required:
+      - properties
+    allOf:
+      - "$ref": "#/definitions/ModelOne"
+    description: A single Redis item in List or Get Operation.

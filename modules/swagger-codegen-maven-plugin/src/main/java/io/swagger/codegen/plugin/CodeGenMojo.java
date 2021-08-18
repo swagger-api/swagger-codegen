@@ -50,7 +50,7 @@ import io.swagger.codegen.config.CodegenConfigurator;
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
  */
-@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, threadSafe = true)
 public class CodeGenMojo extends AbstractMojo {
 
     @Parameter(name = "verbose", required = false, defaultValue = "false")
@@ -315,6 +315,13 @@ public class CodeGenMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        // Using the naive approach for achieving thread safety
+        synchronized (CodeGenMojo.class) {
+            execute_();
+        }
+    }
+
+    protected void execute_() throws MojoExecutionException {
 
         if (skip) {
             getLog().info("Code generation is skipped.");

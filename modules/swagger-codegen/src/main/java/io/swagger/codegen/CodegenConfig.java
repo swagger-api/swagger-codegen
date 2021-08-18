@@ -163,6 +163,8 @@ public interface CodegenConfig {
 
     String apiFilename(String templateName, String tag);
 
+    String modelFilename(String templateName, String modelName);
+
     String apiTestFilename(String templateName, String tag);
 
     String apiDocFilename(String templateName, String tag);
@@ -221,5 +223,15 @@ public interface CodegenConfig {
     String toGetter(String name);
 
     String sanitizeName(String name);
+
+    void setSkipAliasGeneration(Boolean skipAliasGeneration);
+
+    Boolean getSkipAliasGeneration();
+
+    boolean getIgnoreImportMapping();
+
+    void setIgnoreImportMapping(boolean ignoreImportMapping);
+
+    boolean defaultIgnoreImportMappingOption();
 
 }

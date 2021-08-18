@@ -1,8 +1,7 @@
 {{>licenseInfo}}
-
 {{=< >=}}
-import ApiClient from "../ApiClient";
-<#imports>import <import> from '../<#modelPackage><&modelPackage>/</modelPackage><import>';
+import {ApiClient} from "../ApiClient";
+<#imports>import {<import>} from '../<#modelPackage><&modelPackage>/</modelPackage><import>';
 </imports>
 
 <#emitJSDoc>/**
@@ -10,7 +9,7 @@ import ApiClient from "../ApiClient";
 * @module <#invokerPackage><&invokerPackage>/</invokerPackage><#apiPackage><&apiPackage>/</apiPackage><classname>
 * @version <projectVersion>
 */</emitJSDoc>
-export default class <classname> {
+export class <classname> {
 
     <#emitJSDoc>/**
     * Constructs a new <&classname>. <#description>
@@ -43,7 +42,7 @@ export default class <classname> {
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises><#usePromises>
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}<#returnType>, with an object containing data of type {@link <&vendorExtensions.x-jsdoc-type>} and HTTP response</returnType><^returnType>, with an object containing HTTP response</returnType></usePromises>
      */
-</emitJSDoc>    <operationId><#usePromises>WithHttpInfo</usePromises>(<vendorExtensions.x-codegen-argList>) {<#hasOptionalParams>
+</emitJSDoc>    <operationId><#usePromises>WithHttpInfo</usePromises>(<vendorExtensions.x-codegen-arg-list><^usePromises><#hasParams>, </hasParams>callback</usePromises>) {<#hasOptionalParams>
       opts = opts || {};</hasOptionalParams>
       let postBody = <#bodyParam><#required><paramName></required><^required>opts['<paramName>']</required></bodyParam><^bodyParam>null</bodyParam>;
 <#allParams><#required>
@@ -90,8 +89,8 @@ export default class <classname> {
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises><#usePromises>
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}<#returnType>, with data of type {@link <&vendorExtensions.x-jsdoc-type>}</returnType></usePromises>
      */
-</emitJSDoc>    <operationId>(<vendorExtensions.x-codegen-argList>) {
-      return this.<operationId>WithHttpInfo(<vendorExtensions.x-codegen-argList>)
+</emitJSDoc>    <operationId>(<vendorExtensions.x-codegen-arg-list>) {
+      return this.<operationId>WithHttpInfo(<vendorExtensions.x-codegen-arg-list>)
         .then(function(response_and_data) {
           return response_and_data.data;
         });

@@ -55,7 +55,7 @@ public class FakeApi {
     public Boolean fakeOuterBooleanSerialize(Boolean body) throws IOException {
         HttpResponse response = fakeOuterBooleanSerializeForHttpResponse(body);
         TypeReference typeRef = new TypeReference<Boolean>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Boolean)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -68,7 +68,7 @@ public class FakeApi {
     public Boolean fakeOuterBooleanSerialize(Boolean body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterBooleanSerializeForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<Boolean>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Boolean)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse fakeOuterBooleanSerializeForHttpResponse(Boolean body) throws IOException {
@@ -135,7 +135,7 @@ public class FakeApi {
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws IOException {
         HttpResponse response = fakeOuterCompositeSerializeForHttpResponse(body);
         TypeReference typeRef = new TypeReference<OuterComposite>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (OuterComposite)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -148,7 +148,7 @@ public class FakeApi {
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterCompositeSerializeForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<OuterComposite>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (OuterComposite)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse fakeOuterCompositeSerializeForHttpResponse(OuterComposite body) throws IOException {
@@ -215,7 +215,7 @@ public class FakeApi {
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws IOException {
         HttpResponse response = fakeOuterNumberSerializeForHttpResponse(body);
         TypeReference typeRef = new TypeReference<BigDecimal>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (BigDecimal)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -228,7 +228,7 @@ public class FakeApi {
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterNumberSerializeForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<BigDecimal>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (BigDecimal)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse fakeOuterNumberSerializeForHttpResponse(BigDecimal body) throws IOException {
@@ -295,7 +295,7 @@ public class FakeApi {
     public String fakeOuterStringSerialize(String body) throws IOException {
         HttpResponse response = fakeOuterStringSerializeForHttpResponse(body);
         TypeReference typeRef = new TypeReference<String>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (String)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -308,7 +308,7 @@ public class FakeApi {
     public String fakeOuterStringSerialize(String body, Map<String, Object> params) throws IOException {
         HttpResponse response = fakeOuterStringSerializeForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<String>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (String)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse fakeOuterStringSerializeForHttpResponse(String body) throws IOException {
@@ -493,7 +493,7 @@ public class FakeApi {
     public Client testClientModel(Client body) throws IOException {
         HttpResponse response = testClientModelForHttpResponse(body);
         TypeReference typeRef = new TypeReference<Client>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Client)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -508,7 +508,7 @@ public class FakeApi {
     public Client testClientModel(Client body, Map<String, Object> params) throws IOException {
         HttpResponse response = testClientModelForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<Client>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Client)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse testClientModelForHttpResponse(Client body) throws IOException {

@@ -90,7 +90,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         // set "client" as a reserved word to avoid conflicts with IO.Swagger.Client
                         // this is a workaround and can be removed if c# api client is updated to use
                         // fully qualified name
-                        "Client", "client", "parameter",
+                        "Client", "client", "parameter", "File", "file",
                         // local variable names in API methods (endpoints)
                         "localVarPath", "localVarPathParams", "localVarQueryParams", "localVarHeaderParams",
                         "localVarFormParams", "localVarFileParams", "localVarStatusCode", "localVarResponse",
@@ -408,7 +408,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                         // This is different in C# than most other generators, because enums in C# are compiled to integral types,
                         // while enums in many other languages are true objects.
                         CodegenModel refModel = enumRefs.get(var.datatype);
-                        var.allowableValues = refModel.allowableValues;
+                        var.allowableValues = new HashMap<>(refModel.allowableValues);
                         var.isEnum = true;
 
                         updateCodegenPropertyEnum(var);
@@ -468,6 +468,14 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         }
     }
 
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        final CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
+        if (typeMapping.containsKey(name.toLowerCase()) && isReservedWord(name)) {
+            typeMapping.remove(name.toLowerCase());
+        }
+        return codegenModel;
+    }
+
     /**
      * Update codegen property's enum by adding "enumVars" (with name and value)
      *
@@ -508,6 +516,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         super.postProcessOperations(objs);
         if (objs != null) {
+            boolean hasAuthMethods = false;
             Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
             if (operations != null) {
                 List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
@@ -556,8 +565,13 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
                     }
 
                     processOperation(operation);
+
+                    if (operation.hasAuthMethods) {
+                        hasAuthMethods = true;
+                    }
                 }
             }
+            objs.put("hasAuthMethods", hasAuthMethods);
         }
 
         return objs;

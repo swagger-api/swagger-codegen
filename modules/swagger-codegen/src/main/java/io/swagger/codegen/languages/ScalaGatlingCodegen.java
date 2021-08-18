@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.io.File;
 
@@ -252,7 +253,11 @@ public class ScalaGatlingCodegen extends AbstractScalaCodegen implements Codegen
                             operation.setVendorExtension("x-gatling-body-feeder", operation.getOperationId() + "BodyFeeder");
                             operation.setVendorExtension("x-gatling-body-feeder-params", StringUtils.join(sessionBodyVars, ","));
                             try {
-                                FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + "bodyParams.csv"), StringUtils.join(bodyFeederParams, ","));
+                                FileUtils.writeStringToFile(
+                                    new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + "bodyParams.csv"),
+                                    StringUtils.join(bodyFeederParams, ","),
+                                    StandardCharsets.UTF_8
+                                );
                             } catch (IOException ioe) {
                                 LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe);
                             }
@@ -296,7 +301,11 @@ public class ScalaGatlingCodegen extends AbstractScalaCodegen implements Codegen
             operation.setVendorExtension("x-gatling-" + parameterType.toLowerCase() + "-params", vendorList);
             operation.setVendorExtension("x-gatling-" + parameterType.toLowerCase() + "-feeder", operation.getOperationId() + parameterType.toUpperCase() + "Feeder");
             try {
-                FileUtils.writeStringToFile(new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + parameterType.toLowerCase() + "Params.csv"), StringUtils.join(parameterNames, ","));
+                FileUtils.writeStringToFile(
+                    new File(outputFolder + File.separator + dataFolder + File.separator + operation.getOperationId() + "-" + parameterType.toLowerCase() + "Params.csv"),
+                    StringUtils.join(parameterNames, ","),
+                    StandardCharsets.UTF_8
+                );
             } catch (IOException ioe) {
                 LOGGER.error("Could not create feeder file for operationId" + operation.getOperationId(), ioe);
             }

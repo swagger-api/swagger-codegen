@@ -45,8 +45,7 @@ open class FakeClassnameTags123API {
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
         var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-        ])
+        url?.queryItems = APIHelper.mapValuesToQueryItems([:])
 
         let requestBuilder: RequestBuilder<Client>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 

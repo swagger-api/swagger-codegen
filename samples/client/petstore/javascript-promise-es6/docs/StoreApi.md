@@ -16,11 +16,11 @@ Method | HTTP request | Description
 
 Delete purchase order by ID
 
-For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.StoreApi();
 
@@ -55,7 +55,7 @@ No authorization required
 
 <a name="getInventory"></a>
 # **getInventory**
-> {&#39;String&#39;: &#39;Number&#39;} getInventory()
+> {'String': 'Number'} getInventory()
 
 Returns pet inventories by status
 
@@ -63,7 +63,7 @@ Returns a map of status codes to quantities
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure API key authorization: api_key
@@ -86,7 +86,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**{&#39;String&#39;: &#39;Number&#39;}**
+**{'String': 'Number'}**
 
 ### Authorization
 
@@ -103,11 +103,11 @@ This endpoint does not need any parameter.
 
 Find purchase order by ID
 
-For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.StoreApi();
 
@@ -150,7 +150,7 @@ Place an order for a pet
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.StoreApi();
 

@@ -17,7 +17,7 @@ class Amount {
   Amount.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     value =
-        json['value']
+        json['value'] == null ? null : json['value'].toDouble()
     ;
     currency =
       

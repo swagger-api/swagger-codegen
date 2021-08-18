@@ -15,10 +15,12 @@ class PetApiSimulation extends Simulation {
 
     def getCurrentDirectory = new File("").getAbsolutePath
     def userDataDirectory = getCurrentDirectory + "/src/gatling/resources/data"
+    def userConfDirectory = getCurrentDirectory + "/src/gatling/resources/conf"
 
     // basic test setup
     val configName = System.getProperty("testConfig", "baseline")
-    val config = ConfigFactory.load(configName).withFallback(ConfigFactory.load("default"))
+    val config = ConfigFactory.parseFile(new File(userConfDirectory + File.separator + configName + ".conf"))
+      .withFallback(ConfigFactory.parseFile(new File(userConfDirectory + File.separator + "default.conf")))
     val durationSeconds = config.getInt("performance.durationSeconds")
     val rampUpSeconds = config.getInt("performance.rampUpSeconds")
     val rampDownSeconds = config.getInt("performance.rampDownSeconds")
@@ -42,7 +44,7 @@ class PetApiSimulation extends Simulation {
 
 // Setup http protocol configuration
     val httpConf = http
-        .baseURL("http://petstore.swagger.io/v2")
+        .baseUrl("http://petstore.swagger.io/v2")
         .doNotTrackHeader("1")
         .acceptLanguageHeader("en-US,en;q=0.5")
         .acceptEncodingHeader("gzip, deflate")
@@ -51,7 +53,7 @@ class PetApiSimulation extends Simulation {
         .contentTypeHeader(contentTypeHeader)
 
     // set authorization header if it has been modified from config
-    if(!authentication.equals("~MANUAL_ENTRY")){
+    if(!authentication.equals("~MANUAL_ENTRY~")){
         httpConf.authorizationHeader(authentication)
     }
 
@@ -87,7 +89,7 @@ class PetApiSimulation extends Simulation {
         .feed(addPetBodyFeeder)
         .exec(http("addPet")
         .httpRequest("POST","/pet")
-        .body(StringBody(Pet.toStringBody("${id}","${category}","${name}","${tags}","${status}","${photoUrls}")))
+        .body(StringBody(Pet.toStringBody("${status}","${id}","${tags}","${category}","${name}","${photoUrls}")))
         )
 
     // Run scnaddPet with warm up and reach a constant rate for entire duration
@@ -162,7 +164,7 @@ class PetApiSimulation extends Simulation {
         .feed(updatePetBodyFeeder)
         .exec(http("updatePet")
         .httpRequest("PUT","/pet")
-        .body(StringBody(Pet.toStringBody("${id}","${category}","${name}","${tags}","${status}","${photoUrls}")))
+        .body(StringBody(Pet.toStringBody("${status}","${id}","${tags}","${category}","${name}","${photoUrls}")))
         )
 
     // Run scnupdatePet with warm up and reach a constant rate for entire duration
@@ -195,8 +197,8 @@ class PetApiSimulation extends Simulation {
         .feed(uploadFilePATHFeeder)
         .exec(http("uploadFile")
         .httpRequest("POST","/pet/${petId}/uploadImage")
-        .formParam("file","${file}")
         .formParam("additionalMetadata","${additionalMetadata}")
+        .formParam("file","${file}")
 )
 
     // Run scnuploadFile with warm up and reach a constant rate for entire duration
