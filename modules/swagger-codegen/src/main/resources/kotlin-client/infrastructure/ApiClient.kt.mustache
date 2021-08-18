@@ -3,8 +3,10 @@ package {{packageName}}.infrastructure
 import okhttp3.*
 import java.io.File
 import java.io.IOException
-import java.nio.file.Files;
+import java.nio.file.Files
 import java.util.regex.Pattern
+import java.util.concurrent.TimeUnit
+import java.net.URLConnection
 
 open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> = emptyMap()) {
     companion object {
@@ -20,7 +22,7 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
         }
 
         @JvmStatic
-        val builder: OkHttpClient.Builder = OkHttpClient.Builder()
+        val builder: OkHttpClient.Builder = OkHttpClient.Builder().readTimeout(10, TimeUnit.MINUTES)
 
         @JvmStatic
         var defaultHeaders: Map<String, String> by ApplicationDelegates.setOnce(mapOf(ContentType to JsonMediaType, Accept to JsonMediaType))
@@ -42,7 +44,7 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
             (content as Map<String, Any>).forEach { (key, value) ->
                 if(value::class == File::class) {
                     val file = value as File
-                    requestBodyBuilder.addFormDataPart(key, file.name, RequestBody.create(MediaType.parse("application/octet-stream"), file))
+                    requestBodyBuilder.addFormDataPart(key, file.name, RequestBody.create(MediaType.parse(guessContentTypeFromFile(file.name)), file))
                 } else {
                     val stringValue = value as String
                     requestBodyBuilder.addFormDataPart(key, stringValue)
@@ -62,7 +64,7 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
         TODO("requestBody currently only supports JSON body and File body.")
     }
 
-    inline protected fun <reified T: Any?> responseBody(response: Response, mediaType: String = JsonMediaType): T? {
+    inline protected fun <reified T: Any?> responseBody(response: Response): T? {
         if(response.body() == null) return null
 
         if(T::class.java == java.io.File::class.java){
@@ -78,8 +80,8 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
         }
 
         if (isJsonMime(contentType)) {
-            return Serializer.moshi.adapter(T::class.java).fromJson(response.body()?.source())
-        } else if(contentType.equals(String.javaClass)){
+            return Serializer.moshi.adapter(T::class.java).fromJson(response.body()?.string() ?: return null)
+        } else if (contentType.equals(String::class.java)) {
             return response.body().toString() as T
         } else {
             TODO("Fill in more types!")
@@ -116,7 +118,6 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
 
         // TODO: support multiple contentType,accept options here.
         val contentType = (headers[ContentType] as String).substringBefore(";").toLowerCase()
-        val accept = (headers[Accept] as String).substringBefore(";").toLowerCase()
 
         var request : Request.Builder =  when (requestConfig.method) {
             RequestMethod.DELETE -> Request.Builder().url(url).delete()
@@ -128,7 +129,7 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
             RequestMethod.OPTIONS -> Request.Builder().url(url).method("OPTIONS", null)
         }
 
-        headers.forEach { header -> request = request.addHeader(header.key, header.value) }
+        headers.forEach { header -> request = request.addHeader(header.key, header.value ?: "") }
 
         val realRequest = request.build()
         val response = client.newCall(realRequest).execute()
@@ -145,12 +146,12 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
                     response.headers().toMultimap()
             )
             response.code() == 202 -> return RetryResponse(
-                    responseBody(response, accept),
+                    responseBody(response),
                     response.code(),
                     response.headers().toMultimap()
             )
             response.isSuccessful -> return Success(
-                    responseBody(response, accept),
+                    responseBody(response),
                     response.code(),
                     response.headers().toMultimap()
             )
@@ -172,9 +173,11 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
     fun downloadFileFromResponse(response: Response): File {
         val file = prepareDownloadFile(response)
 
-        response.body()?.byteStream().use{ input ->
+        val responseBody = response.body() ?: return file
+        responseBody.byteStream().use{ input ->
             File(file.path).outputStream().use { input?.copyTo(it) }
         }
+        responseBody.close()
 
         return file
     }
@@ -212,5 +215,16 @@ open class ApiClient(val baseUrl: String, val baseHeaders: Map<String, String> =
         }
 
         return Files.createTempFile(prefix, suffix).toFile();
+    }
+
+    /**
+     * Guess Content-Type header from the given file (defaults to "application/octet-stream").
+     *
+     * @param file The given file
+     * @return The guessed Content-Type
+     */
+    open fun guessContentTypeFromFile(fileName: String): String {
+        val contentType = URLConnection.guessContentTypeFromName(fileName)
+        return contentType ?: "application/octet-stream"
     }
 }

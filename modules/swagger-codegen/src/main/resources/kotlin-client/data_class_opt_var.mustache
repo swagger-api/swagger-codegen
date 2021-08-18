@@ -1,4 +1,4 @@
 {{#description}}
     /* {{{description}}} */
 {{/description}}
-    val {{{name}}}: {{#isEnum}}{{classname}}.{{nameInCamelCase}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}? = {{#defaultvalue}}{{defaultvalue}}{{/defaultvalue}}{{^defaultvalue}}null{{/defaultvalue}}
+    val {{{name}}}: {{#isEnum}}{{#isContainer}}List<{{classname}}.{{nameInCamelCase}}>{{/isContainer}}{{^isContainer}}{{classname}}.{{nameInCamelCase}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}? = {{#defaultvalue}}{{defaultvalue}}{{/defaultvalue}}{{^defaultvalue}}null{{/defaultvalue}}
