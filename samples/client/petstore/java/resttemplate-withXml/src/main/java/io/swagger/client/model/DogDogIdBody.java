@@ -18,28 +18,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.dataformat.xml.annotation.*;
+import javax.xml.bind.annotation.*;
 /**
- * Body
+ * DogDogIdBody
  */
 
-
-public class Body {
+@XmlRootElement(name = "DogDogIdBody")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JacksonXmlRootElement(localName = "DogDogIdBody")
+public class DogDogIdBody {
   @JsonProperty("name")
+  @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
   private String name = null;
 
   @JsonProperty("status")
+  @JacksonXmlProperty(localName = "status")
+  @XmlElement(name = "status")
   private String status = null;
 
-  public Body name(String name) {
+  public DogDogIdBody name(String name) {
     this.name = name;
     return this;
   }
 
    /**
-   * Updated name of the pet
+   * Updated name of the dog
    * @return name
   **/
-  @Schema(description = "Updated name of the pet")
+  @Schema(description = "Updated name of the dog")
   public String getName() {
     return name;
   }
@@ -48,16 +56,16 @@ public class Body {
     this.name = name;
   }
 
-  public Body status(String status) {
+  public DogDogIdBody status(String status) {
     this.status = status;
     return this;
   }
 
    /**
-   * Updated status of the pet
+   * Updated status of the dog
    * @return status
   **/
-  @Schema(description = "Updated status of the pet")
+  @Schema(description = "Updated status of the dog")
   public String getStatus() {
     return status;
   }
@@ -75,9 +83,9 @@ public class Body {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body body = (Body) o;
-    return Objects.equals(this.name, body.name) &&
-        Objects.equals(this.status, body.status);
+    DogDogIdBody dogDogIdBody = (DogDogIdBody) o;
+    return Objects.equals(this.name, dogDogIdBody.name) &&
+        Objects.equals(this.status, dogDogIdBody.status);
   }
 
   @Override
@@ -89,7 +97,7 @@ public class Body {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body {\n");
+    sb.append("class DogDogIdBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
