@@ -12,18 +12,15 @@
 
 package io.swagger.client.api;
 
-import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +117,7 @@ public class FakeApiTest {
      */
     @Test
     public void testEndpointParametersTest() {
-        Body2 body = null;
+        FakeBody body = null;
         api.testEndpointParameters(body);
 
         // TODO: test validations
@@ -154,7 +151,7 @@ public class FakeApiTest {
      */
     @Test
     public void testEnumRequestBodyTest() {
-        Body4 body = null;
+        EnumFormBody body = null;
         api.testEnumRequestBody(body);
 
         // TODO: test validations
@@ -184,7 +181,7 @@ public class FakeApiTest {
      */
     @Test
     public void testJsonFormDataTest() {
-        Body5 body = null;
+        FakeJsonFormDataBody body = null;
         api.testJsonFormData(body);
 
         // TODO: test validations

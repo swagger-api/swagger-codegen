@@ -18,53 +18,52 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.File;
 /**
- * Body1
+ * FakeJsonFormDataBody
  */
 
 
-public class Body1 {
-  @JsonProperty("additionalMetadata")
-  private String additionalMetadata = null;
+public class FakeJsonFormDataBody {
+  @JsonProperty("param")
+  private String param = null;
 
-  @JsonProperty("file")
-  private File file = null;
+  @JsonProperty("param2")
+  private String param2 = null;
 
-  public Body1 additionalMetadata(String additionalMetadata) {
-    this.additionalMetadata = additionalMetadata;
+  public FakeJsonFormDataBody param(String param) {
+    this.param = param;
     return this;
   }
 
    /**
-   * Additional data to pass to server
-   * @return additionalMetadata
+   * field1
+   * @return param
   **/
-  @Schema(description = "Additional data to pass to server")
-  public String getAdditionalMetadata() {
-    return additionalMetadata;
+  @Schema(required = true, description = "field1")
+  public String getParam() {
+    return param;
   }
 
-  public void setAdditionalMetadata(String additionalMetadata) {
-    this.additionalMetadata = additionalMetadata;
+  public void setParam(String param) {
+    this.param = param;
   }
 
-  public Body1 file(File file) {
-    this.file = file;
+  public FakeJsonFormDataBody param2(String param2) {
+    this.param2 = param2;
     return this;
   }
 
    /**
-   * file to upload
-   * @return file
+   * field2
+   * @return param2
   **/
-  @Schema(description = "file to upload")
-  public File getFile() {
-    return file;
+  @Schema(required = true, description = "field2")
+  public String getParam2() {
+    return param2;
   }
 
-  public void setFile(File file) {
-    this.file = file;
+  public void setParam2(String param2) {
+    this.param2 = param2;
   }
 
 
@@ -76,24 +75,24 @@ public class Body1 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body1 body1 = (Body1) o;
-    return Objects.equals(this.additionalMetadata, body1.additionalMetadata) &&
-        Objects.equals(this.file, body1.file);
+    FakeJsonFormDataBody fakeJsonFormDataBody = (FakeJsonFormDataBody) o;
+    return Objects.equals(this.param, fakeJsonFormDataBody.param) &&
+        Objects.equals(this.param2, fakeJsonFormDataBody.param2);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalMetadata, Objects.hashCode(file));
+    return Objects.hash(param, param2);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body1 {\n");
+    sb.append("class FakeJsonFormDataBody {\n");
     
-    sb.append("    additionalMetadata: ").append(toIndentedString(additionalMetadata)).append("\n");
-    sb.append("    file: ").append(toIndentedString(file)).append("\n");
+    sb.append("    param: ").append(toIndentedString(param)).append("\n");
+    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
     sb.append("}");
     return sb.toString();
   }
