@@ -18,61 +18,60 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.File;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 /**
- * Body1
+ * PetPetIdBody
  */
 
-@XmlRootElement(name = "Body1")
+@XmlRootElement(name = "PetPetIdBody")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body1")
-public class Body1 {
-  @JsonProperty("additionalMetadata")
-  @JacksonXmlProperty(localName = "additionalMetadata")
-  @XmlElement(name = "additionalMetadata")
-  private String additionalMetadata = null;
+@JacksonXmlRootElement(localName = "PetPetIdBody")
+public class PetPetIdBody {
+  @JsonProperty("name")
+  @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
+  private String name = null;
 
-  @JsonProperty("file")
-  @JacksonXmlProperty(localName = "file")
-  @XmlElement(name = "file")
-  private File file = null;
+  @JsonProperty("status")
+  @JacksonXmlProperty(localName = "status")
+  @XmlElement(name = "status")
+  private String status = null;
 
-  public Body1 additionalMetadata(String additionalMetadata) {
-    this.additionalMetadata = additionalMetadata;
+  public PetPetIdBody name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Additional data to pass to server
-   * @return additionalMetadata
+   * Updated name of the pet
+   * @return name
   **/
-  @Schema(description = "Additional data to pass to server")
-  public String getAdditionalMetadata() {
-    return additionalMetadata;
+  @Schema(description = "Updated name of the pet")
+  public String getName() {
+    return name;
   }
 
-  public void setAdditionalMetadata(String additionalMetadata) {
-    this.additionalMetadata = additionalMetadata;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Body1 file(File file) {
-    this.file = file;
+  public PetPetIdBody status(String status) {
+    this.status = status;
     return this;
   }
 
    /**
-   * file to upload
-   * @return file
+   * Updated status of the pet
+   * @return status
   **/
-  @Schema(description = "file to upload")
-  public File getFile() {
-    return file;
+  @Schema(description = "Updated status of the pet")
+  public String getStatus() {
+    return status;
   }
 
-  public void setFile(File file) {
-    this.file = file;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
@@ -84,24 +83,24 @@ public class Body1 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body1 body1 = (Body1) o;
-    return Objects.equals(this.additionalMetadata, body1.additionalMetadata) &&
-        Objects.equals(this.file, body1.file);
+    PetPetIdBody petPetIdBody = (PetPetIdBody) o;
+    return Objects.equals(this.name, petPetIdBody.name) &&
+        Objects.equals(this.status, petPetIdBody.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalMetadata, Objects.hashCode(file));
+    return Objects.hash(name, status);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body1 {\n");
+    sb.append("class PetPetIdBody {\n");
     
-    sb.append("    additionalMetadata: ").append(toIndentedString(additionalMetadata)).append("\n");
-    sb.append("    file: ").append(toIndentedString(file)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

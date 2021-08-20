@@ -20,16 +20,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.dataformat.xml.annotation.*;
-import javax.xml.bind.annotation.*;
 /**
- * Body4
+ * EnumFormBody
  */
 
-@XmlRootElement(name = "Body4")
-@XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body4")
-public class Body4 {
+
+public class EnumFormBody {
   /**
    * Gets or Sets enumFormStringArray
    */
@@ -62,10 +58,6 @@ public class Body4 {
     }
 
   }  @JsonProperty("enum_form_string_array")
-  // Is a container wrapped=
-  // items.name=enumFormStringArray items.baseName=enumFormStringArray items.xmlName= items.xmlNamespace=
-  // items.example= items.type=String
-  @XmlElement(name = "enumFormStringArray")
   private List<EnumFormStringArrayEnum> enumFormStringArray = null;
 
   /**
@@ -101,8 +93,6 @@ public class Body4 {
     }
 
   }  @JsonProperty("enum_form_string")
-  @JacksonXmlProperty(localName = "enum_form_string")
-  @XmlElement(name = "enum_form_string")
   private EnumFormStringEnum enumFormString = EnumFormStringEnum._EFG;
 
   /**
@@ -137,16 +127,14 @@ public class Body4 {
     }
 
   }  @JsonProperty("enum_query_double")
-  @JacksonXmlProperty(localName = "enum_query_double")
-  @XmlElement(name = "enum_query_double")
   private EnumQueryDoubleEnum enumQueryDouble = null;
 
-  public Body4 enumFormStringArray(List<EnumFormStringArrayEnum> enumFormStringArray) {
+  public EnumFormBody enumFormStringArray(List<EnumFormStringArrayEnum> enumFormStringArray) {
     this.enumFormStringArray = enumFormStringArray;
     return this;
   }
 
-  public Body4 addEnumFormStringArrayItem(EnumFormStringArrayEnum enumFormStringArrayItem) {
+  public EnumFormBody addEnumFormStringArrayItem(EnumFormStringArrayEnum enumFormStringArrayItem) {
     if (this.enumFormStringArray == null) {
       this.enumFormStringArray = new ArrayList<EnumFormStringArrayEnum>();
     }
@@ -167,7 +155,7 @@ public class Body4 {
     this.enumFormStringArray = enumFormStringArray;
   }
 
-  public Body4 enumFormString(EnumFormStringEnum enumFormString) {
+  public EnumFormBody enumFormString(EnumFormStringEnum enumFormString) {
     this.enumFormString = enumFormString;
     return this;
   }
@@ -185,7 +173,7 @@ public class Body4 {
     this.enumFormString = enumFormString;
   }
 
-  public Body4 enumQueryDouble(EnumQueryDoubleEnum enumQueryDouble) {
+  public EnumFormBody enumQueryDouble(EnumQueryDoubleEnum enumQueryDouble) {
     this.enumQueryDouble = enumQueryDouble;
     return this;
   }
@@ -212,10 +200,10 @@ public class Body4 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body4 body4 = (Body4) o;
-    return Objects.equals(this.enumFormStringArray, body4.enumFormStringArray) &&
-        Objects.equals(this.enumFormString, body4.enumFormString) &&
-        Objects.equals(this.enumQueryDouble, body4.enumQueryDouble);
+    EnumFormBody enumFormBody = (EnumFormBody) o;
+    return Objects.equals(this.enumFormStringArray, enumFormBody.enumFormStringArray) &&
+        Objects.equals(this.enumFormString, enumFormBody.enumFormString) &&
+        Objects.equals(this.enumQueryDouble, enumFormBody.enumQueryDouble);
   }
 
   @Override
@@ -227,7 +215,7 @@ public class Body4 {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body4 {\n");
+    sb.append("class EnumFormBody {\n");
     
     sb.append("    enumFormStringArray: ").append(toIndentedString(enumFormStringArray)).append("\n");
     sb.append("    enumFormString: ").append(toIndentedString(enumFormString)).append("\n");

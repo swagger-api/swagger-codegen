@@ -21,57 +21,57 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 /**
- * Body
+ * FakeJsonFormDataBody
  */
 
-@XmlRootElement(name = "Body")
+@XmlRootElement(name = "FakeJsonFormDataBody")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body")
-public class Body {
-  @JsonProperty("name")
-  @JacksonXmlProperty(localName = "name")
-  @XmlElement(name = "name")
-  private String name = null;
+@JacksonXmlRootElement(localName = "FakeJsonFormDataBody")
+public class FakeJsonFormDataBody {
+  @JsonProperty("param")
+  @JacksonXmlProperty(localName = "param")
+  @XmlElement(name = "param")
+  private String param = null;
 
-  @JsonProperty("status")
-  @JacksonXmlProperty(localName = "status")
-  @XmlElement(name = "status")
-  private String status = null;
+  @JsonProperty("param2")
+  @JacksonXmlProperty(localName = "param2")
+  @XmlElement(name = "param2")
+  private String param2 = null;
 
-  public Body name(String name) {
-    this.name = name;
+  public FakeJsonFormDataBody param(String param) {
+    this.param = param;
     return this;
   }
 
    /**
-   * Updated name of the pet
-   * @return name
+   * field1
+   * @return param
   **/
-  @Schema(description = "Updated name of the pet")
-  public String getName() {
-    return name;
+  @Schema(required = true, description = "field1")
+  public String getParam() {
+    return param;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setParam(String param) {
+    this.param = param;
   }
 
-  public Body status(String status) {
-    this.status = status;
+  public FakeJsonFormDataBody param2(String param2) {
+    this.param2 = param2;
     return this;
   }
 
    /**
-   * Updated status of the pet
-   * @return status
+   * field2
+   * @return param2
   **/
-  @Schema(description = "Updated status of the pet")
-  public String getStatus() {
-    return status;
+  @Schema(required = true, description = "field2")
+  public String getParam2() {
+    return param2;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  public void setParam2(String param2) {
+    this.param2 = param2;
   }
 
 
@@ -83,24 +83,24 @@ public class Body {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body body = (Body) o;
-    return Objects.equals(this.name, body.name) &&
-        Objects.equals(this.status, body.status);
+    FakeJsonFormDataBody fakeJsonFormDataBody = (FakeJsonFormDataBody) o;
+    return Objects.equals(this.param, fakeJsonFormDataBody.param) &&
+        Objects.equals(this.param2, fakeJsonFormDataBody.param2);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, status);
+    return Objects.hash(param, param2);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body {\n");
+    sb.append("class FakeJsonFormDataBody {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    param: ").append(toIndentedString(param)).append("\n");
+    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
     sb.append("}");
     return sb.toString();
   }
