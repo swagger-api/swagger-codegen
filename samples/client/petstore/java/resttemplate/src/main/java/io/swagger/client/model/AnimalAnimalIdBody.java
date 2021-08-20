@@ -19,27 +19,27 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 /**
- * Body7
+ * AnimalAnimalIdBody
  */
 
 
-public class Body7 {
+public class AnimalAnimalIdBody {
   @JsonProperty("name")
   private String name = null;
 
   @JsonProperty("status")
   private String status = null;
 
-  public Body7 name(String name) {
+  public AnimalAnimalIdBody name(String name) {
     this.name = name;
     return this;
   }
 
    /**
-   * Updated name of the dog
+   * Updated name of the animal
    * @return name
   **/
-  @Schema(description = "Updated name of the dog")
+  @Schema(description = "Updated name of the animal")
   public String getName() {
     return name;
   }
@@ -48,16 +48,16 @@ public class Body7 {
     this.name = name;
   }
 
-  public Body7 status(String status) {
+  public AnimalAnimalIdBody status(String status) {
     this.status = status;
     return this;
   }
 
    /**
-   * Updated status of the dog
+   * Updated status of the animal
    * @return status
   **/
-  @Schema(description = "Updated status of the dog")
+  @Schema(description = "Updated status of the animal")
   public String getStatus() {
     return status;
   }
@@ -75,9 +75,9 @@ public class Body7 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body7 body7 = (Body7) o;
-    return Objects.equals(this.name, body7.name) &&
-        Objects.equals(this.status, body7.status);
+    AnimalAnimalIdBody animalAnimalIdBody = (AnimalAnimalIdBody) o;
+    return Objects.equals(this.name, animalAnimalIdBody.name) &&
+        Objects.equals(this.status, animalAnimalIdBody.status);
   }
 
   @Override
@@ -89,7 +89,7 @@ public class Body7 {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body7 {\n");
+    sb.append("class AnimalAnimalIdBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

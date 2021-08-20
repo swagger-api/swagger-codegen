@@ -18,27 +18,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import com.fasterxml.jackson.dataformat.xml.annotation.*;
-import javax.xml.bind.annotation.*;
 /**
- * Body7
+ * DogDogIdBody
  */
 
-@XmlRootElement(name = "Body7")
-@XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body7")
-public class Body7 {
+
+public class DogDogIdBody {
   @JsonProperty("name")
-  @JacksonXmlProperty(localName = "name")
-  @XmlElement(name = "name")
   private String name = null;
 
   @JsonProperty("status")
-  @JacksonXmlProperty(localName = "status")
-  @XmlElement(name = "status")
   private String status = null;
 
-  public Body7 name(String name) {
+  public DogDogIdBody name(String name) {
     this.name = name;
     return this;
   }
@@ -56,7 +48,7 @@ public class Body7 {
     this.name = name;
   }
 
-  public Body7 status(String status) {
+  public DogDogIdBody status(String status) {
     this.status = status;
     return this;
   }
@@ -83,9 +75,9 @@ public class Body7 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body7 body7 = (Body7) o;
-    return Objects.equals(this.name, body7.name) &&
-        Objects.equals(this.status, body7.status);
+    DogDogIdBody dogDogIdBody = (DogDogIdBody) o;
+    return Objects.equals(this.name, dogDogIdBody.name) &&
+        Objects.equals(this.status, dogDogIdBody.status);
   }
 
   @Override
@@ -97,7 +89,7 @@ public class Body7 {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body7 {\n");
+    sb.append("class DogDogIdBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
