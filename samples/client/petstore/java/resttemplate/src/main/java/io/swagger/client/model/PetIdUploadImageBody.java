@@ -18,52 +18,53 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 /**
- * Body6
+ * PetIdUploadImageBody
  */
 
 
-public class Body6 {
-  @JsonProperty("name")
-  private String name = null;
+public class PetIdUploadImageBody {
+  @JsonProperty("additionalMetadata")
+  private String additionalMetadata = null;
 
-  @JsonProperty("status")
-  private String status = null;
+  @JsonProperty("file")
+  private File file = null;
 
-  public Body6 name(String name) {
-    this.name = name;
+  public PetIdUploadImageBody additionalMetadata(String additionalMetadata) {
+    this.additionalMetadata = additionalMetadata;
     return this;
   }
 
    /**
-   * Updated name of the animal
-   * @return name
+   * Additional data to pass to server
+   * @return additionalMetadata
   **/
-  @Schema(description = "Updated name of the animal")
-  public String getName() {
-    return name;
+  @Schema(description = "Additional data to pass to server")
+  public String getAdditionalMetadata() {
+    return additionalMetadata;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setAdditionalMetadata(String additionalMetadata) {
+    this.additionalMetadata = additionalMetadata;
   }
 
-  public Body6 status(String status) {
-    this.status = status;
+  public PetIdUploadImageBody file(File file) {
+    this.file = file;
     return this;
   }
 
    /**
-   * Updated status of the animal
-   * @return status
+   * file to upload
+   * @return file
   **/
-  @Schema(description = "Updated status of the animal")
-  public String getStatus() {
-    return status;
+  @Schema(description = "file to upload")
+  public File getFile() {
+    return file;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  public void setFile(File file) {
+    this.file = file;
   }
 
 
@@ -75,24 +76,24 @@ public class Body6 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body6 body6 = (Body6) o;
-    return Objects.equals(this.name, body6.name) &&
-        Objects.equals(this.status, body6.status);
+    PetIdUploadImageBody petIdUploadImageBody = (PetIdUploadImageBody) o;
+    return Objects.equals(this.additionalMetadata, petIdUploadImageBody.additionalMetadata) &&
+        Objects.equals(this.file, petIdUploadImageBody.file);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, status);
+    return Objects.hash(additionalMetadata, Objects.hashCode(file));
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body6 {\n");
+    sb.append("class PetIdUploadImageBody {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    additionalMetadata: ").append(toIndentedString(additionalMetadata)).append("\n");
+    sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("}");
     return sb.toString();
   }
