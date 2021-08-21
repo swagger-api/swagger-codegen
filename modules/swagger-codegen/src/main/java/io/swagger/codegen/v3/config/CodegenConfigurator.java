@@ -531,7 +531,6 @@ public class CodegenConfigurator implements Serializable {
                 }
                 return true;
             };
-
         }
 
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
@@ -543,7 +542,7 @@ public class CodegenConfigurator implements Serializable {
             }
         }
         if (authorizationValue != null) {
-            if (authorizationValue.getUrlMatcher() == null && urlMatcher != null) {
+            if (urlMatcher != null) {
                 authorizationValue.setUrlMatcher(urlMatcher);
             }
             authorizationValues.add(authorizationValue);

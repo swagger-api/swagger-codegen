@@ -19,6 +19,7 @@ import java.util.List;
 
 public class GeneratorServiceTest {
 
+
     @Test(description = "test generator service with html2")
     public void testGeneratorService_HTML2_Bearer() throws IOException {
 
