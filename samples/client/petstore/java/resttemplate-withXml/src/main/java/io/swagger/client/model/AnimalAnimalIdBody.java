@@ -21,57 +21,57 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import javax.xml.bind.annotation.*;
 /**
- * Body5
+ * AnimalAnimalIdBody
  */
 
-@XmlRootElement(name = "Body5")
+@XmlRootElement(name = "AnimalAnimalIdBody")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JacksonXmlRootElement(localName = "Body5")
-public class Body5 {
-  @JsonProperty("param")
-  @JacksonXmlProperty(localName = "param")
-  @XmlElement(name = "param")
-  private String param = null;
+@JacksonXmlRootElement(localName = "AnimalAnimalIdBody")
+public class AnimalAnimalIdBody {
+  @JsonProperty("name")
+  @JacksonXmlProperty(localName = "name")
+  @XmlElement(name = "name")
+  private String name = null;
 
-  @JsonProperty("param2")
-  @JacksonXmlProperty(localName = "param2")
-  @XmlElement(name = "param2")
-  private String param2 = null;
+  @JsonProperty("status")
+  @JacksonXmlProperty(localName = "status")
+  @XmlElement(name = "status")
+  private String status = null;
 
-  public Body5 param(String param) {
-    this.param = param;
+  public AnimalAnimalIdBody name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * field1
-   * @return param
+   * Updated name of the animal
+   * @return name
   **/
-  @Schema(required = true, description = "field1")
-  public String getParam() {
-    return param;
+  @Schema(description = "Updated name of the animal")
+  public String getName() {
+    return name;
   }
 
-  public void setParam(String param) {
-    this.param = param;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Body5 param2(String param2) {
-    this.param2 = param2;
+  public AnimalAnimalIdBody status(String status) {
+    this.status = status;
     return this;
   }
 
    /**
-   * field2
-   * @return param2
+   * Updated status of the animal
+   * @return status
   **/
-  @Schema(required = true, description = "field2")
-  public String getParam2() {
-    return param2;
+  @Schema(description = "Updated status of the animal")
+  public String getStatus() {
+    return status;
   }
 
-  public void setParam2(String param2) {
-    this.param2 = param2;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
@@ -83,24 +83,24 @@ public class Body5 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body5 body5 = (Body5) o;
-    return Objects.equals(this.param, body5.param) &&
-        Objects.equals(this.param2, body5.param2);
+    AnimalAnimalIdBody animalAnimalIdBody = (AnimalAnimalIdBody) o;
+    return Objects.equals(this.name, animalAnimalIdBody.name) &&
+        Objects.equals(this.status, animalAnimalIdBody.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(param, param2);
+    return Objects.hash(name, status);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body5 {\n");
+    sb.append("class AnimalAnimalIdBody {\n");
     
-    sb.append("    param: ").append(toIndentedString(param)).append("\n");
-    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }
