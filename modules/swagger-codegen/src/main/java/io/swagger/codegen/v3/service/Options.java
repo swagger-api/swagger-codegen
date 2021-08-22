@@ -42,10 +42,40 @@ public class Options {
 
     private boolean flattenInlineComposedSchemas = false;
 
+    private List<HostAccessControl> allowedAuthHosts = new ArrayList<>();
+    private List<HostAccessControl> deniedAuthHosts = new ArrayList<>();
+
+    public List<HostAccessControl> getAllowedAuthHosts() {
+        return allowedAuthHosts;
+    }
+
+    public void setAllowedAuthHosts(List<HostAccessControl> allowedAuthHosts) {
+        this.allowedAuthHosts = allowedAuthHosts;
+    }
+
+    public List<HostAccessControl> getDeniedAuthHosts() {
+        return deniedAuthHosts;
+    }
+
+    public void setDeniedAuthHosts(List<HostAccessControl> deniedAuthHosts) {
+        this.deniedAuthHosts = deniedAuthHosts;
+    }
+
+    public Options allowedAuthHosts(List<HostAccessControl> allowedAuthHosts) {
+        this.allowedAuthHosts = allowedAuthHosts;
+        return this;
+    }
+
+    public Options deniedAuthHosts(List<HostAccessControl> deniedAuthHosts) {
+        this.deniedAuthHosts = deniedAuthHosts;
+        return this;
+    }
+
     public Options authorizationValue(AuthorizationValue authorizationValue) {
         this.authorizationValue = authorizationValue;
         return this;
     }
+
 
     public AuthorizationValue getAuthorizationValue() {
         return authorizationValue;
@@ -455,4 +485,10 @@ public class Options {
         this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
         return this;
     }
+
+    public Options flattenInlineComposedSchemas(boolean flattenInlineComposedSchemas) {
+        this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
+        return this;
+    }
+
 }
