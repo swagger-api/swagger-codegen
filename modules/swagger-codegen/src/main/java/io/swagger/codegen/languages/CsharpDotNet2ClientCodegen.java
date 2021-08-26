@@ -9,6 +9,7 @@ import java.io.File;
 
 public class CsharpDotNet2ClientCodegen extends AbstractCSharpCodegen {
     public static final String CLIENT_PACKAGE = "clientPackage";
+    public static final String USE_CSPROJ_FILE = "useCsProjFile";
     protected String clientPackage = "IO.Swagger.Client";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
@@ -68,6 +69,9 @@ public class CsharpDotNet2ClientCodegen extends AbstractCSharpCodegen {
         supportingFiles.add(new SupportingFile("packages.config.mustache", "vendor", "packages.config"));
         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "compile-mono.sh"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+        if (additionalProperties.containsKey(USE_CSPROJ_FILE) && Boolean.parseBoolean(additionalProperties.get(USE_CSPROJ_FILE).toString())) {
+            supportingFiles.add(new SupportingFile("csproj.mustache", "", clientPackage + ".csproj"));
+        }
 
     }
 

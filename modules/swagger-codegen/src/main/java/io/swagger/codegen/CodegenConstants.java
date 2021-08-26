@@ -230,4 +230,10 @@ public class CodegenConstants {
 
     public static final String STRIP_PACKAGE_NAME = "stripPackageName";
     public static final String STRIP_PACKAGE_NAME_DESC = "Whether to strip leading dot-separated packages from generated model classes";
+
+    public static final String ASP_NET_CORE_VERSION = "aspnetCoreVersion";
+    public static final String INTERFACE_ONLY = "interface-only";
+    public static final String INTERFACE_CONTROLLER = "interface-controller";
+
+    public static final String IGNORE_IMPORT_MAPPING_OPTION = "ignoreImportMappings";
 }

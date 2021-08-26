@@ -1,23 +1,26 @@
 package io.swagger.codegen.languages;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
-
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
+import io.swagger.models.parameters.Parameter;
 import io.swagger.util.Json;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 {
@@ -56,6 +59,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         typeMapping.put("date", "LocalDate");
 
         importMapping.put("LocalDate", "org.joda.time.LocalDate");
+        importMapping.put("InputStream", "java.io.InputStream");
 
         super.embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "spec";
 
@@ -162,11 +166,38 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
     }
 
     @Override
+    public void postProcessModelProperties(CodegenModel model){
+        if (model.vars == null || model.vars.isEmpty()) {
+            return;
+        }
+        final boolean useJackson = Boolean.valueOf(String.valueOf(additionalProperties.get("jackson")));
+        boolean hasEnumProperty = false;
+        for(CodegenProperty codegenProperty : model.vars) {
+            postProcessModelProperty(model, codegenProperty);
+            if (codegenProperty.isEnum) {
+                hasEnumProperty = true;
+            }
+        }
+        if (useJackson && hasEnumProperty) {
+            model.imports.add("JsonValue");
+            model.imports.add("JsonCreator");
+        }
+    }
+
+    public CodegenParameter fromParameter(Parameter param, Set<String> imports) {
+        final CodegenParameter parameter = super.fromParameter(param, imports);
+        if (parameter.isFile) {
+            imports.add("InputStream");
+        }
+        return parameter;
+    }
+
+    @Override
     public void preprocessSwagger(Swagger swagger) {
         //copy input swagger to output folder
         try {
             String swaggerJson = Json.pretty(swagger);
-            FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson);
+            FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
@@ -174,8 +205,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
 
     }
     @Override
-    public String getHelp()
-    {
+    public String getHelp() {
         return "Generates a Java JAXRS Server according to JAXRS 2.0 specification.";
     }
 }

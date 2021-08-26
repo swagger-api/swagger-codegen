@@ -57,7 +57,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-post-method: true
     put:
       tags:
       - "pet"
@@ -88,7 +87,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-put-method: true
   /pet/findByStatus:
     get:
       tags:
@@ -126,7 +124,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-get-method: true
   /pet/findByTags:
     get:
       tags:
@@ -161,7 +158,6 @@ paths:
         - "write:pets"
         - "read:pets"
       deprecated: true
-      x-is-get-method: true
   /pet/{petId}:
     get:
       tags:
@@ -190,7 +186,6 @@ paths:
           description: "Pet not found"
       security:
       - api_key: []
-      x-is-get-method: true
     post:
       tags:
       - "pet"
@@ -226,7 +221,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-post-method: true
     delete:
       tags:
       - "pet"
@@ -254,7 +248,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-delete-method: true
   /pet/{petId}/uploadImage:
     post:
       tags:
@@ -292,7 +285,6 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-      x-is-post-method: true
   /store/inventory:
     get:
       tags:
@@ -313,7 +305,6 @@ paths:
               format: "int32"
       security:
       - api_key: []
-      x-is-get-method: true
   /store/order:
     post:
       tags:
@@ -338,7 +329,6 @@ paths:
             $ref: "#/definitions/Order"
         400:
           description: "Invalid Order"
-      x-is-post-method: true
   /store/order/{order_id}:
     get:
       tags:
@@ -368,7 +358,6 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-      x-is-get-method: true
     delete:
       tags:
       - "store"
@@ -390,7 +379,6 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Order not found"
-      x-is-delete-method: true
   /user:
     post:
       tags:
@@ -411,7 +399,6 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-is-post-method: true
   /user/createWithArray:
     post:
       tags:
@@ -434,7 +421,6 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-is-post-method: true
   /user/createWithList:
     post:
       tags:
@@ -457,7 +443,6 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-is-post-method: true
   /user/login:
     get:
       tags:
@@ -495,7 +480,6 @@ paths:
             type: "string"
         400:
           description: "Invalid username/password supplied"
-      x-is-get-method: true
   /user/logout:
     get:
       tags:
@@ -510,7 +494,6 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-is-get-method: true
   /user/{username}:
     get:
       tags:
@@ -536,7 +519,6 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      x-is-get-method: true
     put:
       tags:
       - "user"
@@ -563,7 +545,6 @@ paths:
           description: "Invalid user supplied"
         404:
           description: "User not found"
-      x-is-put-method: true
     delete:
       tags:
       - "user"
@@ -584,7 +565,6 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-      x-is-delete-method: true
   /fake_classname_test:
     patch:
       tags:
@@ -610,7 +590,6 @@ paths:
             $ref: "#/definitions/Client"
       security:
       - api_key_query: []
-      x-is-head-method: true
   /fake:
     get:
       tags:
@@ -709,7 +688,6 @@ paths:
           description: "Invalid request"
         404:
           description: "Not found"
-      x-is-get-method: true
     post:
       tags:
       - "fake"
@@ -824,7 +802,6 @@ paths:
           description: "User not found"
       security:
       - http_basic_test: []
-      x-is-post-method: true
     patch:
       tags:
       - "fake"
@@ -847,7 +824,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
-      x-is-head-method: true
   /fake/outer/number:
     post:
       tags:
@@ -866,7 +842,6 @@ paths:
           description: "Output number"
           schema:
             $ref: "#/definitions/OuterNumber"
-      x-is-post-method: true
   /fake/outer/string:
     post:
       tags:
@@ -885,7 +860,6 @@ paths:
           description: "Output string"
           schema:
             $ref: "#/definitions/OuterString"
-      x-is-post-method: true
   /fake/outer/boolean:
     post:
       tags:
@@ -904,7 +878,6 @@ paths:
           description: "Output boolean"
           schema:
             $ref: "#/definitions/OuterBoolean"
-      x-is-post-method: true
   /fake/outer/composite:
     post:
       tags:
@@ -923,7 +896,6 @@ paths:
           description: "Output composite"
           schema:
             $ref: "#/definitions/OuterComposite"
-      x-is-post-method: true
   /fake/jsonFormData:
     get:
       tags:
@@ -947,7 +919,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-      x-is-get-method: true
   /fake/inline-additionalProperties:
     post:
       tags:
@@ -969,7 +940,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-      x-is-post-method: true
   /fake/body-with-query-params:
     put:
       tags:
@@ -990,7 +960,6 @@ paths:
       responses:
         200:
           description: "Success"
-      x-is-put-method: true
   /another-fake/dummy:
     patch:
       tags:
@@ -1014,7 +983,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Client"
-      x-is-head-method: true
 securityDefinitions:
   petstore_auth:
     type: "oauth2"

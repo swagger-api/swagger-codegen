@@ -17,7 +17,7 @@ To test class name in snake case
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 let defaultClient = SwaggerPetstore.ApiClient.instance;
 
 // Configure API key authorization: api_key_query

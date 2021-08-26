@@ -2,6 +2,7 @@
 # Ref: http://www.yegor256.com/2015/01/10/windows-appveyor-maven.html
 version: '{branch}-{build}'
 os: Windows Server 2012
+skip_branch_with_pr: true
 hosts:
   petstore.swagger.io: 127.0.0.1
 install:

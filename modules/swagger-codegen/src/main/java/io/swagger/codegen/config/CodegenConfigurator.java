@@ -12,6 +12,7 @@ import io.swagger.codegen.auth.AuthParser;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import io.swagger.util.Json;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -44,6 +45,7 @@ public class CodegenConfigurator implements Serializable {
     private String outputDir;
     private boolean verbose;
     private boolean skipOverwrite;
+    private Boolean skipAliasGeneration;
     private boolean removeOperationIdPrefix;
     private String templateDir;
     private String auth;
@@ -124,6 +126,10 @@ public class CodegenConfigurator implements Serializable {
     public CodegenConfigurator setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
         return this;
+    }
+
+    public void setSkipAliasGeneration(Boolean skipAliasGeneration) {
+        this.skipAliasGeneration = skipAliasGeneration;
     }
 
     public String getModelNameSuffix() {
@@ -392,6 +398,7 @@ public class CodegenConfigurator implements Serializable {
         config.setInputSpec(inputSpec);
         config.setOutputDir(outputDir);
         config.setSkipOverwrite(skipOverwrite);
+        config.setSkipAliasGeneration(skipAliasGeneration);
         config.setIgnoreFilePathOverride(ignoreFileOverride);
         config.setRemoveOperationIdPrefix(removeOperationIdPrefix);
 
@@ -427,8 +434,10 @@ public class CodegenConfigurator implements Serializable {
                 .config(config);
 
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
-
-        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, true);
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, parseOptions);
 
         input.opts(new ClientOpts())
                 .swagger(swagger);

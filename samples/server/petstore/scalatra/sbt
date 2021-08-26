@@ -17,10 +17,10 @@ declare -r latest_28="2.8.2"
 
 declare -r buildProps="project/build.properties"
 
-declare -r sbt_launch_ivy_release_repo="http://repo.typesafe.com/typesafe/ivy-releases"
+declare -r sbt_launch_ivy_release_repo="https://repo.typesafe.com/typesafe/ivy-releases"
 declare -r sbt_launch_ivy_snapshot_repo="https://repo.scala-sbt.org/scalasbt/ivy-snapshots"
-declare -r sbt_launch_mvn_release_repo="http://repo.scala-sbt.org/scalasbt/maven-releases"
-declare -r sbt_launch_mvn_snapshot_repo="http://repo.scala-sbt.org/scalasbt/maven-snapshots"
+declare -r sbt_launch_mvn_release_repo="https://repo.scala-sbt.org/scalasbt/maven-releases"
+declare -r sbt_launch_mvn_snapshot_repo="https://repo.scala-sbt.org/scalasbt/maven-snapshots"
 
 declare -r default_jvm_opts_common="-Xms512m -Xmx1536m -Xss2m"
 declare -r noshare_opts="-Dsbt.global.base=project/.sbtboot -Dsbt.boot.directory=project/.boot -Dsbt.ivy.home=project/.ivy"

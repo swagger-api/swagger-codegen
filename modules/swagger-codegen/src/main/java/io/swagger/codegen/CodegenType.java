@@ -31,6 +31,7 @@ public enum CodegenType {
         names.put("client", CLIENT);
         names.put("server", SERVER);
         names.put("documentation", DOCUMENTATION);
+        names.put("config", CONFIG);
         names.put("other", OTHER);
     }
 }

@@ -61,9 +61,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server</param>
-        /// <param name="file">file to upload</param>
+        /// <param name="_file">file to upload</param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata, System.IO.Stream file);
+        ApiResponse UploadFile (long? petId, string additionalMetadata, System.IO.Stream _file);
     }
   
     /// <summary>
@@ -389,9 +389,9 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
         /// </summary>
         /// <param name="petId">ID of pet to update</param> 
         /// <param name="additionalMetadata">Additional data to pass to server</param> 
-        /// <param name="file">file to upload</param> 
+        /// <param name="_file">file to upload</param> 
         /// <returns>ApiResponse</returns>            
-        public ApiResponse UploadFile (long? petId, string additionalMetadata, System.IO.Stream file)
+        public ApiResponse UploadFile (long? petId, string additionalMetadata, System.IO.Stream _file)
         {
             
             // verify the required parameter 'petId' is set
@@ -409,7 +409,7 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
             String postBody = null;
     
                                     if (additionalMetadata != null) formParams.Add("additionalMetadata", ApiClient.ParameterToString(additionalMetadata)); // form parameter
-if (file != null) fileParams.Add("file", ApiClient.ParameterToFile("file", file));
+if (_file != null) fileParams.Add("file", ApiClient.ParameterToFile("file", _file));
                 
             // authentication setting, if any
             String[] authSettings = new String[] { "petstore_auth" };

@@ -225,6 +225,12 @@ var JSONSchemaView = (function () {
         return this.element;
       }
 
+        if (this.schema && this.schema.example) {
+            var exampleDiv = document.createElement('div');
+            exampleDiv.innerHTML = '<div style="display: block" class="example">\n          <span style="color: #808080" class="name">example: ' + this.schema.example + '</span>\n        </div>';
+            this.element.appendChild(exampleDiv.querySelector('.example'));
+        }
+
       if (!this.isCollapsed) {
         this.appendChildren(this.element);
       }
