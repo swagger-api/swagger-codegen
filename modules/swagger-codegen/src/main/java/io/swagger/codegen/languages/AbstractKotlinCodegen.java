@@ -3,7 +3,9 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenConstants.ENUM_PROPERTY_NAMING_TYPE;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.utils.EnumPropertyNamingUtils;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -218,15 +220,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
      * @param enumPropertyNamingType The string representation of the naming convention, as defined by {@link CodegenConstants.ENUM_PROPERTY_NAMING_TYPE}
      */
     public void setEnumPropertyNaming(final String enumPropertyNamingType) {
-        try {
-            this.enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.valueOf(enumPropertyNamingType);
-        } catch (IllegalArgumentException ex) {
-            StringBuilder sb = new StringBuilder(enumPropertyNamingType + " is an invalid enum property naming option. Please choose from:");
-            for (CodegenConstants.ENUM_PROPERTY_NAMING_TYPE t : CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.values()) {
-                sb.append("\n  ").append(t.name());
-            }
-            throw new RuntimeException(sb.toString());
-        }
+        this.enumPropertyNaming = EnumPropertyNamingUtils.parseEnumPropertyNaming(enumPropertyNamingType);
     }
 
     /**
@@ -376,28 +370,11 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
             modified = sanitizeKotlinSpecificNames(modified);
         }
 
-        switch (getEnumPropertyNaming()) {
-            case original:
-                // NOTE: This is provided as a last-case allowance, but will still result in reserved words being escaped.
-                modified = value;
-                break;
-            case camelCase:
-                // NOTE: Removes hyphens and underscores
-                modified = camelize(modified, true);
-                break;
-            case PascalCase:
-                // NOTE: Removes hyphens and underscores
-                String result = camelize(modified);
-                modified = titleCase(result);
-                break;
-            case snake_case:
-                // NOTE: Removes hyphens
-                modified = underscore(modified);
-                break;
-            case UPPERCASE:
-                modified = modified.toUpperCase();
-                break;
+        if (getEnumPropertyNaming() == ENUM_PROPERTY_NAMING_TYPE.original) {
+          // NOTE: This is provided as a last-case allowance, but will still result in reserved words being escaped.
+            modified = value;
         }
+        modified = EnumPropertyNamingUtils.applyEnumPropertyCapitalisation(modified, getEnumPropertyNaming());
 
         if (reservedWords.contains(modified)) {
             return escapeReservedWord(modified);
@@ -533,10 +510,6 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         }
 
         return word;
-    }
-
-    private String titleCase(final String input) {
-        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 
     @Override
