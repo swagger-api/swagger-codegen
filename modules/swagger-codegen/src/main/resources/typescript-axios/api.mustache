@@ -38,7 +38,7 @@ export class {{classname}}Resource {
 {{/hasFormParams}}
         let reqConfig = {
             ...axiosConfig,
-            method: '{{httpMethod}}',
+            method: '{{httpMethod}}' as const,
             url: reqPath{{#hasQueryParams}},
             params: query{{/hasQueryParams}}{{#bodyParam}},
             data: {{paramName}}{{/bodyParam}}{{#hasFormParams}},
