@@ -1243,6 +1243,14 @@ public class DefaultCodegen {
     }
 
     /**
+     * Capitalise first character of string
+     */
+    @SuppressWarnings("static-method")
+    public static String titleCase(final String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    /**
      * Capitalize the string
      *
      * @param name string to be capitalized
@@ -1381,7 +1389,13 @@ public class DefaultCodegen {
         m.classname = toModelName(name);
         m.classVarName = toVarName(name);
         m.classFilename = toModelFilename(name);
-        m.modelJson = Json.pretty(model);
+        // NOTE: not using Json.pretty() to write out model, as it
+        // can raise memory consumption (see comment in ExampleGenerator)
+        try {
+            m.modelJson = Json.mapper().writeValueAsString(model);
+        } catch (Exception e) {
+            m.modelJson = "{}";
+        }
         m.externalDocs = model.getExternalDocs();
         m.vendorExtensions = model.getVendorExtensions();
         m.isAlias = typeAliases.containsKey(name);

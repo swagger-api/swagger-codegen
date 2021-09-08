@@ -1,0 +1,46 @@
+name: 'Builder'
+description: 'build project'
+inputs:
+  path:
+    description: 'project root path'
+    required: true
+  job-name:
+    description: 'Job name'
+    required: true
+  build-commands:
+    description: 'Build Commands'
+    required: true
+outputs:
+  logs:
+    description: "logs"
+    value: ${{ steps.build.outputs.logs }}
+  path:
+    description: "output path"
+    value: ${{ steps.build.outputs.path }}
+runs:
+  using: "composite"
+  steps:
+    - id: build
+      name: build
+      run: |
+        buildlogfile=${{ inputs.job-name }}-build.log
+        echo "::set-output name=path::$(echo generated/${{ inputs.job-name }})"
+        curdir=$(pwd)
+        echo -e "\n****** BUILD ******\n" >> $curdir/$buildlogfile
+        cd ${{ inputs.path }}
+        echo -e "${{ inputs.build-commands }}" > $curdir/buildcommands.log
+        echo "::set-output name=logs::$(echo $curdir/$buildlogfile)"
+        buildcommands=$(cat $curdir/buildcommands.log)
+
+        while [ "$buildcommands" ] ;do
+            iter=${buildcommands%%__&&__*}
+            echo -e "\n****** executing: $iter ******\n"
+            echo -e "\n****** executing: $iter ******\n" >> $curdir/$buildlogfile
+            $iter  2>&1 | tee --append $curdir/$buildlogfile
+            [ "$buildcommands" = "$iter" ] && \
+                buildcommands='' || \
+                buildcommands="${buildcommands#*__&&__}"
+        done
+        cd ${curdir}
+        echo "::set-output name=logs::$(echo $curdir/$buildlogfile)"
+      shell: bash
