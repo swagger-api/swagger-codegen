@@ -404,7 +404,7 @@ use {{invokerPackage}}\ObjectSerializer;
         if (${{paramName}} !== null) {
             {{#isFile}}
             $multipart = true;
-            $formParams['{{baseName}}'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue(${{paramName}}), 'rb');
+            $formParams['{{baseName}}'] = \GuzzleHttp\Psr7\Utils::TryFopen(ObjectSerializer::toFormValue(${{paramName}}), 'rb');
             {{/isFile}}
             {{^isFile}}
             $formParams['{{baseName}}'] = ObjectSerializer::toFormValue(${{paramName}});
