@@ -149,6 +149,10 @@ public class Generate implements Runnable {
             description = CodegenConstants.GIT_REPO_ID_DESC)
     private String gitRepoId;
 
+    @Option(name = {"--git-repo-base-url"}, title = "git repo base url",
+            description = CodegenConstants.GIT_REPO_BASE_URL_DESC)
+    private String gitRepoBaseURL;
+
     @Option(name = {"--release-note"}, title = "release note",
             description = CodegenConstants.RELEASE_NOTE_DESC)
     private String releaseNote;
@@ -261,6 +265,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(gitRepoId)) {
             configurator.setGitRepoId(gitRepoId);
+        }
+
+        if (isNotEmpty(gitRepoBaseURL)) {
+            configurator.setGitRepoBaseURL(gitRepoBaseURL);
         }
 
         if (isNotEmpty(releaseNote)) {
