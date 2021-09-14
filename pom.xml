@@ -947,6 +947,6 @@
         <surefire-version>2.19.1</surefire-version>
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
-        <snakeyaml-version>1.24</snakeyaml-version>
+        <snakeyaml-version>1.29</snakeyaml-version>
     </properties>
 </project>
