@@ -65,7 +65,7 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: javascript
+          language: typescript-angular
           job-name: ${{ env.JOB_NAME }}
           spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore.yaml
           options: -DnpmName=@swagger/angular2-typescript-petstore,npmVersion=0.0.1,npmRepository=https://skimdb.npmjs.com/registry,snapshot=false,ngVersion=4
@@ -136,7 +136,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: "npm install -g @angular/cli__&&__npm install -g ng-packagr__&&__npm i__&&__ng-packagr -p ng-package.json"
+          build-commands: "npm install -g @angular/cli__&&__npm install -g ng-packagr__&&__npm i__&&__npm run build"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"

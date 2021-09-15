@@ -9,10 +9,12 @@ import java.util.*;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenConstants.ENUM_PROPERTY_NAMING_TYPE;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.utils.EnumPropertyNamingUtils;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateProperty;
@@ -31,6 +33,12 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
     private static final String UNDEFINED_VALUE = "undefined";
 
     protected String modelPropertyNaming= "camelCase";
+    /**
+     * Enum variables are PascalCase by default.
+     * ref: https://basarat.gitbooks.io/typescript/content/docs/enums.html
+     */
+    protected ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = ENUM_PROPERTY_NAMING_TYPE.PascalCase;
+
     protected Boolean supportsES6 = true;
     protected HashSet<String> languageGenericTypes;
 
@@ -101,6 +109,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         typeMapping.put("Error", "Error");
 
         cliOptions.add(new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC).defaultValue("camelCase"));
+        cliOptions.add(new CliOption(CodegenConstants.ENUM_PROPERTY_NAMING, CodegenConstants.ENUM_PROPERTY_NAMING_DESC).defaultValue(enumPropertyNaming.name()));
         cliOptions.add(new CliOption(CodegenConstants.SUPPORTS_ES6, CodegenConstants.SUPPORTS_ES6_DESC).defaultValue("false"));
 
     }
@@ -111,6 +120,9 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
         if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
             setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
+        }
+        if (additionalProperties.containsKey(CodegenConstants.ENUM_PROPERTY_NAMING)) {
+            setEnumPropertyNaming((String) additionalProperties.get(CodegenConstants.ENUM_PROPERTY_NAMING));
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SUPPORTS_ES6)) {
@@ -409,8 +421,19 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         }
     }
 
+    /**
+     * @param enumPropertyNamingType The string representation of the naming convention, as defined by {@link ENUM_PROPERTY_NAMING_TYPE}
+     */
+    public void setEnumPropertyNaming(final String enumPropertyNamingType) {
+        enumPropertyNaming = EnumPropertyNamingUtils.parseEnumPropertyNaming(enumPropertyNamingType);
+    }
+
     public String getModelPropertyNaming() {
         return this.modelPropertyNaming;
+    }
+
+    public ENUM_PROPERTY_NAMING_TYPE getEnumPropertyNaming() {
+        return enumPropertyNaming;
     }
 
     public String getNameUsingModelPropertyNaming(String name) {
@@ -448,7 +471,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
 
         // for symbol, e.g. $, #
         if (getSymbolName(name) != null) {
-            return camelize(getSymbolName(name));
+            return EnumPropertyNamingUtils.applyEnumPropertyCapitalisation(getSymbolName(name), enumPropertyNaming);
         }
 
         // number
@@ -466,9 +489,7 @@ public abstract class AbstractTypeScriptClientCodegen extends DefaultCodegen imp
         enumName = enumName.replaceFirst("^_", "");
         enumName = enumName.replaceFirst("_$", "");
 
-        // camelize the enum variable name
-        // ref: https://basarat.gitbooks.io/typescript/content/docs/enums.html
-        enumName = camelize(enumName);
+        enumName = EnumPropertyNamingUtils.applyEnumPropertyCapitalisation(enumName, enumPropertyNaming);
 
         if (enumName.matches("\\d.*")) { // starts with number
             return "_" + enumName;

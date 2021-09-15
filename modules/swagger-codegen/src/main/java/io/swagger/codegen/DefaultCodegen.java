@@ -1243,6 +1243,14 @@ public class DefaultCodegen {
     }
 
     /**
+     * Capitalise first character of string
+     */
+    @SuppressWarnings("static-method")
+    public static String titleCase(final String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    /**
      * Capitalize the string
      *
      * @param name string to be capitalized

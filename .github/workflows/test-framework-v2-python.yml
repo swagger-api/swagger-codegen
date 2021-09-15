@@ -34,7 +34,7 @@ jobs:
           cp samples/client/petstore/python/tests -r python-v2-sample-test-config-files
           cp samples/client/petstore/python/Makefile python-v2-sample-test-config-files
           cp samples/client/petstore/python/pom.xml python-v2-sample-test-config-files
-          cp samples/client/petstore/python/setup.cfg python-v2-sample-test-config-files
+          cp samples/client/petstore/python/setup.py python-v2-sample-test-config-files
           cp samples/client/petstore/python/setup.cfg python-v2-sample-test-config-files
           cp samples/client/petstore/python/test_python2.sh python-v2-sample-test-config-files
           cp samples/client/petstore/python/test_python2_and_3.sh python-v2-sample-test-config-files
@@ -152,7 +152,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: make test-all
+          build-commands: "python setup.py install__&&__pip install tox__&&__make test-all"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
