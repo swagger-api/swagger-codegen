@@ -99,6 +99,33 @@ public class GeneratorServiceTest {
         }
     }
 
+    @Test(description = "test generator service with java enum parameters in type")
+    public void testGeneratorService_WithEnumParametersType() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-11166/issue-11166.yaml", true, false))
+                .options(
+                        new Options()
+                                     .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/ResponseCreateMeetingSettings.java".equals(relPath)) {
+                String fileContent = FileUtils.readFileToString(f);
+                Assert.assertTrue(fileContent.contains("public static ApprovalTypeEnum fromValue(Integer input)"));
+                Assert.assertTrue(fileContent.contains("b.value.equals(input)"));
+            }
+        }
+    }
+
     @Test(description = "test generator service with java")
     public void testGeneratorService_notNullJacksonAnnotationJava_False() throws IOException {
 

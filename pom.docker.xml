@@ -1058,7 +1058,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.28-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>3.0.29-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.1.10</swagger-core-version>
         <swagger-core-version-v1>1.6.2</swagger-core-version-v1>
         <swagger-parser-version>2.0.27</swagger-parser-version>
