@@ -18,6 +18,119 @@ import java.nio.file.Files;
 import java.util.List;
 
 public class GeneratorServiceTest {
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV2() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V2)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("2_0/readme149.yaml", true, true))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+                                .gitRepoBaseURL("gitlab")
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("gitlab"));
+            }
+            if ("/SwaggerClient-php/git_push.sh".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("https://github.com"));
+            }
+        }
+    }
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV2_NoOption() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V2)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("2_0/readme149.yaml", true, true))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("https://github.com/testuser"));
+            }
+        }
+    }
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV3() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("3_0_0/readme149_v3.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+                                .gitRepoBaseURL("gitlab")
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("gitlab"));
+            }
+            if ("/SwaggerClient-php/git_push.sh".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("https://github.com"));
+            }
+        }
+    }
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV3_NoOption() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("3_0_0/readme149_v3.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("http://github.com/testuser"));
+            }
+        }
+    }
     
     @Test(description = "test generator service with html2")
     public void testGeneratorService_HTML2_Bearer() throws IOException {
