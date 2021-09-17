@@ -185,6 +185,9 @@ public class GeneratorUtil {
         if (isNotEmpty(options.getGitRepoId())) {
             codegenConfig.additionalProperties().put(CodegenConstants.GIT_REPO_ID, options.getGitRepoId());
         }
+        if (isNotEmpty(options.getGitRepoBaseURL())) {
+            codegenConfig.additionalProperties().put(CodegenConstants.GIT_REPO_BASE_URL, options.getGitRepoBaseURL());
+        }
         if (isNotEmpty(options.getReleaseNote())) {
             codegenConfig.additionalProperties().put(CodegenConstants.RELEASE_NOTE, options.getReleaseNote());
         }
@@ -304,6 +307,9 @@ public class GeneratorUtil {
         }
         if (isNotEmpty(options.getGitRepoId())) {
             configurator.setGitRepoId(options.getGitRepoId());
+        }
+        if (isNotEmpty(options.getGitRepoBaseURL())) {
+            configurator.setGitRepoBaseURL(options.getGitRepoBaseURL());
         }
         if (isNotEmpty(options.getReleaseNote())) {
             configurator.setReleaseNote(options.getReleaseNote());

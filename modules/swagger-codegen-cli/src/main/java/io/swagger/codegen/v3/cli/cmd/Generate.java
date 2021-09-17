@@ -69,6 +69,7 @@ public class Generate implements Runnable {
     protected String library;
     protected String gitUserId;
     protected String gitRepoId;
+    protected String gitRepoBaseURL;
     protected String releaseNote;
     protected String httpUserAgent;
     protected List<String> reservedWordsMappings = new ArrayList<>();
@@ -80,6 +81,7 @@ public class Generate implements Runnable {
     protected Boolean flattenInlineSchema;
     private String url;
     private List<CodegenArgument> codegenArguments;
+
 
     public void setVerbose(Boolean verbose) {
         this.verbose = verbose;
@@ -187,6 +189,10 @@ public class Generate implements Runnable {
 
     public void setGitRepoId(String gitRepoId) {
         this.gitRepoId = gitRepoId;
+    }
+
+    public void setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
     }
 
     public void setReleaseNote(String releaseNote) {
@@ -322,6 +328,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(gitRepoId)) {
             configurator.setGitRepoId(gitRepoId);
+        }
+
+        if (isNotEmpty(gitRepoBaseURL)) {
+            configurator.setGitRepoBaseURL(gitRepoBaseURL);
         }
 
         if (isNotEmpty(releaseNote)) {
