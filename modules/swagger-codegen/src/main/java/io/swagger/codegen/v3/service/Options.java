@@ -28,6 +28,7 @@ public class Options {
     private String library;
     private String gitUserId;
     private String gitRepoId;
+    private String gitRepoBaseURL;
     private String releaseNote;
     private String httpUserAgent;
     private Map<String, String> reservedWordsMappings = new LinkedHashMap<>();
@@ -366,6 +367,19 @@ public class Options {
         this.gitRepoId = gitRepoId;
     }
 
+    public Options gitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+        return this;
+    }
+
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
+    }
+
+    public void setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+    }
+
     public Options releaseNote(String releaseNote) {
         this.releaseNote = releaseNote;
         return this;
@@ -490,5 +504,4 @@ public class Options {
         this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
         return this;
     }
-
 }

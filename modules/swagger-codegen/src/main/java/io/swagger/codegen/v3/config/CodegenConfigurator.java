@@ -87,6 +87,7 @@ public class CodegenConfigurator implements Serializable {
 
     private String gitUserId="GIT_USER_ID";
     private String gitRepoId="GIT_REPO_ID";
+    private String gitRepoBaseURL = "github";
     private String releaseNote="Minor update";
     private String httpUserAgent;
 
@@ -402,6 +403,16 @@ public class CodegenConfigurator implements Serializable {
         return this;
     }
 
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
+    }
+
+    public CodegenConfigurator setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+        return this;
+    }
+
+
     public String getReleaseNote() {
         return releaseNote;
     }
@@ -633,6 +644,7 @@ public class CodegenConfigurator implements Serializable {
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
         checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
+        checkAndSetAdditionalProperty(gitRepoBaseURL, CodegenConstants.GIT_REPO_BASE_URL);
         checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
         checkAndSetAdditionalProperty(httpUserAgent, CodegenConstants.HTTP_USER_AGENT);
 
