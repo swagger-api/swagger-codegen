@@ -182,6 +182,9 @@ public class CodegenConstants {
     public static final String GIT_REPO_ID = "gitRepoId";
     public static final String GIT_REPO_ID_DESC = "Git repo ID, e.g. swagger-codegen.";
 
+    public static final String GIT_REPO_BASE_URL = "gitRepoBaseURL";
+    public static final String GIT_REPO_BASE_URL_DESC = "Git repo Base URL, e.g. swagger-codegen.";
+
     public static final String RELEASE_NOTE = "releaseNote";
     public static final String RELEASE_NOTE_DESC = "Release note, default to 'Minor update'.";
 
