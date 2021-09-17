@@ -103,7 +103,7 @@ public class DefaultCodegen {
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
     protected Boolean allowUnicodeIdentifiers = false;
-    protected String gitUserId, gitRepoId, releaseNote;
+    protected String gitUserId, gitRepoId, releaseNote, gitRepoBaseURL /*= "github"*/;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
     protected Boolean skipAliasGeneration;
@@ -116,6 +116,7 @@ public class DefaultCodegen {
     protected Map<String, String> typeAliases = null;
 
     protected String ignoreFilePathOverride;
+
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -3657,6 +3658,24 @@ public class DefaultCodegen {
      */
     public String getGitRepoId() {
         return gitRepoId;
+    }
+
+    /**
+     * Set Git repo Base URL.
+     *
+     * @param gitRepoBaseURL Git repo ID
+     */
+    public void setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+    }
+
+    /**
+     * Git repo Base URL
+     *
+     * @return Git Base URL
+     */
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
     }
 
     /**
