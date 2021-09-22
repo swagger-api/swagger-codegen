@@ -143,6 +143,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(CodegenConstants.GIT_USER_ID, CodegenConstants.GIT_USER_ID_DESC));
         cliOptions.add(new CliOption(COMPOSER_PROJECT_NAME, "The project name used in the composer package name. The template uses {{composerVendorName}}/{{composerProjectName}} for the composer package name. e.g. petstore-client. IMPORTANT NOTE (2016/03): composerProjectName will be deprecated and replaced by gitRepoId in the next swagger-codegen release"));
         cliOptions.add(new CliOption(CodegenConstants.GIT_REPO_ID, CodegenConstants.GIT_REPO_ID_DESC));
+        cliOptions.add(new CliOption(CodegenConstants.GIT_REPO_BASE_URL, CodegenConstants.GIT_REPO_BASE_URL_DESC));
         cliOptions.add(new CliOption(CodegenConstants.ARTIFACT_VERSION, "The version to use in the composer package version field. e.g. 1.2.3"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.ALLOW_UNICODE_IDENTIFIERS_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
@@ -269,6 +270,16 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
             this.setGitRepoId((String) additionalProperties.get(CodegenConstants.GIT_REPO_ID));
         } else {
             additionalProperties.put(CodegenConstants.GIT_REPO_ID, gitRepoId);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.GIT_REPO_BASE_URL)) {
+            this.setGitRepoBaseURL((String) additionalProperties.get(CodegenConstants.GIT_REPO_BASE_URL));
+        } else {
+            if (gitRepoBaseURL == null) {
+                gitRepoBaseURL = "github";
+            }
+                additionalProperties.put(CodegenConstants.GIT_REPO_BASE_URL, gitRepoBaseURL);
+
         }
 
         if (additionalProperties.containsKey(CodegenConstants.ARTIFACT_VERSION)) {

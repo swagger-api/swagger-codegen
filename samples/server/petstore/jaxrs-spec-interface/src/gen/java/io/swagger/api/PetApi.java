@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import java.io.File;
+import java.io.InputStream;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
@@ -125,6 +126,5 @@ public interface PetApi {
     }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = ModelApiResponse.class) })
-    ModelApiResponse uploadFile(@PathParam("petId") @ApiParam("ID of pet to update") Long petId,@FormParam(value = "additionalMetadata")  String additionalMetadata, @FormParam(value = "file") InputStream fileInputStream,
-   @FormParam(value = "file") Attachment fileDetail);
+    ModelApiResponse uploadFile(@PathParam("petId") @ApiParam("ID of pet to update") Long petId,@FormParam(value = "additionalMetadata")  String additionalMetadata, @FormParam(value = "file") InputStream fileInputStream);
 }

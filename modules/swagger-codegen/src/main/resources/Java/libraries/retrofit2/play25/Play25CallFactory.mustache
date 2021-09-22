@@ -3,6 +3,7 @@ package {{invokerPackage}};
 import okhttp3.*;
 import okio.Buffer;
 import okio.BufferedSource;
+import okio.Timeout;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.libs.ws.WSResponse;
@@ -32,7 +33,7 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
 
     /** Extra query parameters to add to request */
     private List<Pair> extraQueryParams = new ArrayList<>();
-    
+
     /** Filters (interceptors) */
     private List<WSRequestFilter> filters = new ArrayList<>();
 
@@ -106,6 +107,10 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
         @Override
         public Request request() {
             return request;
+        }
+
+        public Timeout timeout() {
+            return null;
         }
 
         @Override
@@ -189,7 +194,7 @@ public class Play25CallFactory implements okhttp3.Call.Factory {
                        }
 
                    });
-                   
+
             for (Map.Entry<String, List<String>> entry : r.getAllHeaders().entrySet()) {
                 for (String value : entry.getValue()) {
                     builder.addHeader(entry.getKey(), value);

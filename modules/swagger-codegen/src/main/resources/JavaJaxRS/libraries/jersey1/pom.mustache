@@ -175,7 +175,8 @@
         <artifactId>validation-api</artifactId>
         <version>1.1.0.Final</version>
     </dependency>
-{{/useBeanValidation}}    
+
+{{/useBeanValidation}}
   </dependencies>
   <repositories>
     <repository>
@@ -187,15 +188,15 @@
     </repository>
   </repositories>
   <properties>
-    <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
+    <java.version>{{#java11}}11{{/java11}}{{^java11}}{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}{{/java11}}</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <swagger-core-version>1.5.18</swagger-core-version>
+    <swagger-core-version>1.5.24</swagger-core-version>
     <jetty-version>9.3.27.v20190418</jetty-version>
     <jersey-version>1.19.1</jersey-version>
-    <jackson-version>2.10.1</jackson-version>
+    <jackson-version>2.11.4</jackson-version>
     <slf4j-version>1.7.21</slf4j-version>
-    <junit-version>4.12</junit-version>
+    <junit-version>4.13.1</junit-version>
     <servlet-api-version>2.5</servlet-api-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

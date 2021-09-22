@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.OuterEnum;
 import java.io.Serializable;
 import javax.validation.constraints.*;
@@ -93,7 +95,7 @@ public enum EnumIntegerEnum {
         value = v;
     }
 
-    public String value() {
+    public Integer value() {
         return value;
     }
 
@@ -127,7 +129,7 @@ public enum EnumNumberEnum {
         value = v;
     }
 
-    public String value() {
+    public Double value() {
         return value;
     }
 
