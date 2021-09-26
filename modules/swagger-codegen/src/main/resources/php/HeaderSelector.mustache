@@ -1,7 +1,7 @@
 <?php
 /**
- * ApiException
- * PHP version 5
+ * HeaderSelector
+ * PHP versions 5
  *
  * @category Class
  * @package  {{invokerPackage}}
@@ -18,10 +18,8 @@
 
 namespace {{invokerPackage}};
 
-use \Exception;
-
 /**
- * ApiException Class Doc Comment
+ * Header Selector Class Doc Comment
  *
  * @category Class
  * @package  {{invokerPackage}}
@@ -30,70 +28,67 @@ use \Exception;
  */
 class HeaderSelector
 {
-
     /**
-     * @param string[] $accept
-     * @param string[] $contentTypes
-     * @return array
+     * @param string[] $accepts An array of 'Accept' headers
+     * @param string[] $contentTypes An array of content types
+     * @return string[]
      */
-    public function selectHeaders($accept, $contentTypes)
+    public function selectHeaders($accepts, $contentTypes)
     {
         $headers = [];
-
-        $accept = $this->selectAcceptHeader($accept);
+        $accept = $this->selectAcceptHeader($accepts);
         if ($accept !== null) {
             $headers['Accept'] = $accept;
         }
-
         $headers['Content-Type'] = $this->selectContentTypeHeader($contentTypes);
         return $headers;
     }
 
     /**
-     * @param string[] $accept
-     * @return array
+     * @param string[] $accepts An array of headers
+     * @return string[]
      */
-    public function selectHeadersForMultipart($accept)
+    public function selectHeadersForMultipart($accepts)
     {
-        $headers = $this->selectHeaders($accept, []);
-
+        $headers = $this->selectHeaders($accepts, []);
         unset($headers['Content-Type']);
         return $headers;
     }
 
     /**
-     * Return the header 'Accept' based on an array of Accept provided
+     * Return the header 'Accept' based on an array of accept provided
      *
-     * @param string[] $accept Array of header
-     *
-     * @return string Accept (e.g. application/json)
+     * @param string[] $accepts An array of headers
+     * @return string|null Accept (e.g. `application/json`)
      */
-    private function selectAcceptHeader($accept)
+    private function selectAcceptHeader(array $accepts)
     {
-        if (count($accept) === 0 || (count($accept) === 1 && $accept[0] === '')) {
+        $countAccepts = count($accepts);
+        if ($countAccepts === 0 || ($countAccepts === 1 && $accepts[0] === '')) {
             return null;
-        } elseif (preg_grep("/application\/json/i", $accept)) {
-            return 'application/json';
-        } else {
-            return implode(',', $accept);
         }
+        if (preg_grep("/application\/json/i", $accepts)) {
+            return 'application/json';
+        }
+        return implode(',', $accepts);
     }
 
     /**
      * Return the content type based on an array of content-type provided
      *
-     * @param string[] $contentType Array fo content-type
-     *
-     * @return string Content-Type (e.g. application/json)
+     * @param string[] $contentTypes An array of content types
+     * @return string Content-Type (e.g. `application/json`, `application/json,application/xml`)
      */
-    private function selectContentTypeHeader($contentType)
+    private function selectContentTypeHeader($contentTypes)
     {
-        if (count($contentType) === 0 || (count($contentType) === 1 && $contentType[0] === '')) {
+        $countTypes = count($contentTypes);
+        if (
+            $countTypes === 0
+            || ($countTypes === 1 && $contentTypes[0] === '')
+            || preg_grep("/application\/json/i", $contentTypes)
+        ) {
             return 'application/json';
-        } elseif (preg_grep("/application\/json/i", $contentType)) {
-            return 'application/json';
-        } else {
-            return implode(',', $contentType);
         }
+        return implode(',', $contentType);
     }
 }
