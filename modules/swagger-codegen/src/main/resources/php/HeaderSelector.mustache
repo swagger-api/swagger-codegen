@@ -1,7 +1,7 @@
 <?php
 /**
  * HeaderSelector
- * PHP versions 5
+ * PHP version 5
  *
  * @category Class
  * @package  {{invokerPackage}}
@@ -61,7 +61,7 @@ class HeaderSelector
      * @param string[] $accepts An array of headers
      * @return string|null Accept (e.g. `application/json`)
      */
-    private function selectAcceptHeader(array $accepts)
+    private function selectAcceptHeader($accepts)
     {
         $countAccepts = count($accepts);
         if ($countAccepts === 0 || ($countAccepts === 1 && $accepts[0] === '')) {
