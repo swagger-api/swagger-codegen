@@ -31,19 +31,13 @@ public class HandlebarTemplateEngine implements TemplateEngine {
     }
 
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
-        final boolean needFileTemplateLoader = StringUtils.isNotBlank(config.customTemplateDir());
-        final boolean fileExist = new File(templateFile).exists();
         templateFile = templateFile.replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
         final String templateDir = config.templateDir().replace("\\", "/");
         final TemplateLoader templateLoader;
-        if (needFileTemplateLoader && fileExist) {
-            String customTemplateDir = config.customTemplateDir().replace("\\", "/");
-            templateFile = resolveTemplateFile(customTemplateDir, templateFile);
-            templateLoader = new CodegenTemplateLoader("/" + templateDir, customTemplateDir, ".mustache");
-        } else {
-            templateFile = resolveTemplateFile(templateDir, templateFile);
-            templateLoader = new ClassPathTemplateLoader("/" + templateDir, ".mustache");
-        }
+        String customTemplateDir = config.customTemplateDir() != null ? config.customTemplateDir().replace("\\", "/") : null;
+        templateFile = resolveTemplateFile(templateDir, templateFile);
+        templateLoader = new CodegenTemplateLoader("/" + templateDir, ".mustache")
+                .customTemplateDir(customTemplateDir);
         final Handlebars handlebars = new Handlebars(templateLoader);
         handlebars.prettyPrint(true);
         config.addHandlebarHelpers(handlebars);
