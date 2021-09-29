@@ -27,7 +27,6 @@ import javax.validation.Valid;
 /**
  * EnumTest
  */
-
 public class EnumTest  implements Serializable {
   /**
    * Gets or Sets enumString

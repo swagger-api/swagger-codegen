@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * NumberOnly
  */
-
 public class NumberOnly   {
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;

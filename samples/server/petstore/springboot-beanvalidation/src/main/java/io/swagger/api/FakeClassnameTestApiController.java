@@ -40,7 +40,7 @@ public class FakeClassnameTestApiController implements FakeClassnameTestApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Client>(objectMapper.readValue("{  \"client\" : \"client\"}", Client.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Client>(objectMapper.readValue("{\"empty\": false}", Client.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);

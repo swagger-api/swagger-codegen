@@ -28,7 +28,6 @@ import javax.validation.Valid;
 /**
  * ArrayTest
  */
-
 public class ArrayTest  implements Serializable {
   @JsonProperty("array_of_string")
   private List<String> arrayOfString = null;

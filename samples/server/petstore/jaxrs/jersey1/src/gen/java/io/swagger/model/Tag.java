@@ -24,7 +24,6 @@ import javax.validation.Valid;
 /**
  * Tag
  */
-
 public class Tag   {
   @JsonProperty("id")
   private Long id = null;

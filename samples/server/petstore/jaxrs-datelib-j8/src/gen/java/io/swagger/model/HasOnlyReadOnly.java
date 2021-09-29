@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * HasOnlyReadOnly
  */
-
 public class HasOnlyReadOnly  implements Serializable {
   @JsonProperty("bar")
   private String bar = null;

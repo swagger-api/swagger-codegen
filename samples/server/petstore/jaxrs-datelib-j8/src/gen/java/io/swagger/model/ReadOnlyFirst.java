@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * ReadOnlyFirst
  */
-
 public class ReadOnlyFirst  implements Serializable {
   @JsonProperty("bar")
   private String bar = null;
