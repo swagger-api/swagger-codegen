@@ -158,6 +158,15 @@
             <version>${jackson-threetenbp-version}</version>
         </dependency>
         {{/threetenbp}}
+        {{^threetenbp}}
+        {{^isJava8or11}}
+        <dependency>
+            <groupId>com.github.joschi.jackson</groupId>
+            <artifactId>jackson-datatype-threetenbp</artifactId>
+            <version>${jackson-threetenbp-version}</version>
+        </dependency>
+        {{/isJava8or11}}
+        {{/threetenbp}}
 
         <dependency>
             <groupId>junit</groupId>
