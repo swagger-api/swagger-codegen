@@ -21,7 +21,7 @@ public class StoreApiTest {
     @Before
     public void setup() {
         ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath("https://petstore.swagger.io/v2");
+        apiClient.setBasePath("http://petstore.swagger.io:80/v2");
         api = apiClient.buildClient(StoreApi.class);
     }
 
