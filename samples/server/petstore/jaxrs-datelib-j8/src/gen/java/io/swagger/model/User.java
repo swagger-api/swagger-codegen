@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * User
  */
-
 public class User  implements Serializable {
   @JsonProperty("id")
   private Long id = null;

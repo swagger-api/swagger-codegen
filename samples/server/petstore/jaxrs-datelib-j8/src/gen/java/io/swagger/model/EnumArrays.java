@@ -28,7 +28,6 @@ import javax.validation.Valid;
 /**
  * EnumArrays
  */
-
 public class EnumArrays  implements Serializable {
   /**
    * Gets or Sets justSymbol

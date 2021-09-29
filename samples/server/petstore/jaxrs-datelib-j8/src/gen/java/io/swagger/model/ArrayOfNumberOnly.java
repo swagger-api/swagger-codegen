@@ -28,7 +28,6 @@ import javax.validation.Valid;
 /**
  * ArrayOfNumberOnly
  */
-
 public class ArrayOfNumberOnly  implements Serializable {
   @JsonProperty("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
