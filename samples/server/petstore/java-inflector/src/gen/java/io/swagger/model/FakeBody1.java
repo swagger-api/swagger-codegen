@@ -10,7 +10,7 @@ import java.util.Date;
 
 
 
-public class Body2   {
+public class FakeBody1   {
   @JsonProperty("integer")
   private Integer integer = null;
   @JsonProperty("int32")
@@ -44,7 +44,7 @@ public class Body2   {
    * minimum: 10
    * maximum: 100
    **/
-  public Body2 integer(Integer integer) {
+  public FakeBody1 integer(Integer integer) {
     this.integer = integer;
     return this;
   }
@@ -64,7 +64,7 @@ public class Body2   {
    * minimum: 20
    * maximum: 200
    **/
-  public Body2 int32(Integer int32) {
+  public FakeBody1 int32(Integer int32) {
     this.int32 = int32;
     return this;
   }
@@ -82,7 +82,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 int64(Long int64) {
+  public FakeBody1 int64(Long int64) {
     this.int64 = int64;
     return this;
   }
@@ -102,7 +102,7 @@ public class Body2   {
    * minimum: 32
    * maximum: 543
    **/
-  public Body2 number(BigDecimal number) {
+  public FakeBody1 number(BigDecimal number) {
     this.number = number;
     return this;
   }
@@ -121,7 +121,7 @@ public class Body2   {
    * None
    * maximum: 987
    **/
-  public Body2 _float(Float _float) {
+  public FakeBody1 _float(Float _float) {
     this._float = _float;
     return this;
   }
@@ -141,7 +141,7 @@ public class Body2   {
    * minimum: 67
    * maximum: 123
    **/
-  public Body2 _double(Double _double) {
+  public FakeBody1 _double(Double _double) {
     this._double = _double;
     return this;
   }
@@ -159,7 +159,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 string(String string) {
+  public FakeBody1 string(String string) {
     this.string = string;
     return this;
   }
@@ -177,7 +177,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 patternWithoutDelimiter(String patternWithoutDelimiter) {
+  public FakeBody1 patternWithoutDelimiter(String patternWithoutDelimiter) {
     this.patternWithoutDelimiter = patternWithoutDelimiter;
     return this;
   }
@@ -195,7 +195,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 _byte(byte[] _byte) {
+  public FakeBody1 _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -213,7 +213,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 binary(File binary) {
+  public FakeBody1 binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -231,7 +231,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 date(Date date) {
+  public FakeBody1 date(Date date) {
     this.date = date;
     return this;
   }
@@ -249,7 +249,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 dateTime(Date dateTime) {
+  public FakeBody1 dateTime(Date dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -267,7 +267,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 password(String password) {
+  public FakeBody1 password(String password) {
     this.password = password;
     return this;
   }
@@ -285,7 +285,7 @@ public class Body2   {
   /**
    * None
    **/
-  public Body2 callback(String callback) {
+  public FakeBody1 callback(String callback) {
     this.callback = callback;
     return this;
   }
@@ -309,21 +309,21 @@ public class Body2   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body2 body2 = (Body2) o;
-    return Objects.equals(integer, body2.integer) &&
-        Objects.equals(int32, body2.int32) &&
-        Objects.equals(int64, body2.int64) &&
-        Objects.equals(number, body2.number) &&
-        Objects.equals(_float, body2._float) &&
-        Objects.equals(_double, body2._double) &&
-        Objects.equals(string, body2.string) &&
-        Objects.equals(patternWithoutDelimiter, body2.patternWithoutDelimiter) &&
-        Objects.equals(_byte, body2._byte) &&
-        Objects.equals(binary, body2.binary) &&
-        Objects.equals(date, body2.date) &&
-        Objects.equals(dateTime, body2.dateTime) &&
-        Objects.equals(password, body2.password) &&
-        Objects.equals(callback, body2.callback);
+    FakeBody1 fakeBody1 = (FakeBody1) o;
+    return Objects.equals(integer, fakeBody1.integer) &&
+        Objects.equals(int32, fakeBody1.int32) &&
+        Objects.equals(int64, fakeBody1.int64) &&
+        Objects.equals(number, fakeBody1.number) &&
+        Objects.equals(_float, fakeBody1._float) &&
+        Objects.equals(_double, fakeBody1._double) &&
+        Objects.equals(string, fakeBody1.string) &&
+        Objects.equals(patternWithoutDelimiter, fakeBody1.patternWithoutDelimiter) &&
+        Objects.equals(_byte, fakeBody1._byte) &&
+        Objects.equals(binary, fakeBody1.binary) &&
+        Objects.equals(date, fakeBody1.date) &&
+        Objects.equals(dateTime, fakeBody1.dateTime) &&
+        Objects.equals(password, fakeBody1.password) &&
+        Objects.equals(callback, fakeBody1.callback);
   }
 
   @Override
@@ -334,7 +334,7 @@ public class Body2   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body2 {\n");
+    sb.append("class FakeBody1 {\n");
     sb.append("    integer: ").append(toIndentedString(integer)).append("\n");
     sb.append("    int32: ").append(toIndentedString(int32)).append("\n");
     sb.append("    int64: ").append(toIndentedString(int64)).append("\n");

@@ -8,7 +8,7 @@ import java.io.File;
 
 
 
-public class Body1   {
+public class PetIdUploadImageBody   {
   @JsonProperty("additionalMetadata")
   private String additionalMetadata = null;
   @JsonProperty("file")
@@ -16,7 +16,7 @@ public class Body1   {
   /**
    * Additional data to pass to server
    **/
-  public Body1 additionalMetadata(String additionalMetadata) {
+  public PetIdUploadImageBody additionalMetadata(String additionalMetadata) {
     this.additionalMetadata = additionalMetadata;
     return this;
   }
@@ -34,7 +34,7 @@ public class Body1   {
   /**
    * file to upload
    **/
-  public Body1 file(File file) {
+  public PetIdUploadImageBody file(File file) {
     this.file = file;
     return this;
   }
@@ -58,9 +58,9 @@ public class Body1   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body1 body1 = (Body1) o;
-    return Objects.equals(additionalMetadata, body1.additionalMetadata) &&
-        Objects.equals(file, body1.file);
+    PetIdUploadImageBody petIdUploadImageBody = (PetIdUploadImageBody) o;
+    return Objects.equals(additionalMetadata, petIdUploadImageBody.additionalMetadata) &&
+        Objects.equals(file, petIdUploadImageBody.file);
   }
 
   @Override
@@ -71,7 +71,7 @@ public class Body1   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body1 {\n");
+    sb.append("class PetIdUploadImageBody {\n");
     sb.append("    additionalMetadata: ").append(toIndentedString(additionalMetadata)).append("\n");
     sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("}");
