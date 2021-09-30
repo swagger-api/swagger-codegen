@@ -39,6 +39,6 @@ public interface FakeClassnameTags123Api  {
     @Produces({ "application/json" })
     @Operation(summary = "To test class name in snake case", tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     public Client testClassname(@Valid Client body);
 }

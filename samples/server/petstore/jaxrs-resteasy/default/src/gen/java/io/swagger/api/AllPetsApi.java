@@ -40,7 +40,7 @@ public class AllPetsApi  {
     @Produces({ "application/json" })
     @Operation(summary = "", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(schema = @Schema(implementation = AllPetsResponse.class))) })
+        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AllPetsResponse.class))) })
     public Response getAllPets(@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getAllPets(securityContext);

@@ -126,8 +126,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ "available", "pending", "sold" ],
-              "default" : "available"
+              "default" : "available",
+              "enum" : [ "available", "pending", "sold" ]
             }
           }
         } ],
@@ -283,7 +283,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body"
+                "$ref" : "#/components/schemas/pet_petId_body"
               }
             }
           }
@@ -355,7 +355,7 @@
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_1"
+                "$ref" : "#/components/schemas/petId_uploadImage_body"
               }
             }
           }
@@ -899,8 +899,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ ">", "$" ],
-              "default" : "$"
+              "default" : "$",
+              "enum" : [ ">", "$" ]
             }
           }
         }, {
@@ -912,8 +912,8 @@
           "explode" : false,
           "schema" : {
             "type" : "string",
-            "enum" : [ "_abc", "-efg", "(xyz)" ],
-            "default" : "-efg"
+            "default" : "-efg",
+            "enum" : [ "_abc", "-efg", "(xyz)" ]
           }
         }, {
           "name" : "enum_query_string_array",
@@ -926,8 +926,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ ">", "$" ],
-              "default" : "$"
+              "default" : "$",
+              "enum" : [ ">", "$" ]
             }
           }
         }, {
@@ -939,8 +939,8 @@
           "explode" : true,
           "schema" : {
             "type" : "string",
-            "enum" : [ "_abc", "-efg", "(xyz)" ],
-            "default" : "-efg"
+            "default" : "-efg",
+            "enum" : [ "_abc", "-efg", "(xyz)" ]
           }
         }, {
           "name" : "enum_query_integer",
@@ -975,12 +975,12 @@
           "content" : {
             "application/xml; charset=utf-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_2"
+                "$ref" : "#/components/schemas/fake_body"
               }
             },
             "application/json; charset=utf-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_3"
+                "$ref" : "#/components/schemas/fake_body_1"
               }
             }
           },
@@ -1040,7 +1040,7 @@
           "content" : {
             "*/*" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_4"
+                "$ref" : "#/components/schemas/enum_form_body"
               }
             }
           }
@@ -1186,7 +1186,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_5"
+                "$ref" : "#/components/schemas/fake_jsonFormData_body"
               }
             }
           },
@@ -1386,7 +1386,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_6"
+                "$ref" : "#/components/schemas/animal_animalId_body"
               }
             }
           }
@@ -1559,7 +1559,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_7"
+                "$ref" : "#/components/schemas/dog_dogId_body"
               }
             }
           }
@@ -1786,8 +1786,8 @@
       },
       "EnumClass" : {
         "type" : "string",
-        "enum" : [ "_abc", "-efg", "(xyz)" ],
-        "default" : "-efg"
+        "default" : "-efg",
+        "enum" : [ "_abc", "-efg", "(xyz)" ]
       },
       "List" : {
         "type" : "object",
@@ -2336,7 +2336,7 @@
           }
         }
       },
-      "body" : {
+      "pet_petId_body" : {
         "properties" : {
           "name" : {
             "type" : "string",
@@ -2348,7 +2348,7 @@
           }
         }
       },
-      "body_1" : {
+      "petId_uploadImage_body" : {
         "properties" : {
           "additionalMetadata" : {
             "type" : "string",
@@ -2361,7 +2361,7 @@
           }
         }
       },
-      "body_2" : {
+      "fake_body" : {
         "required" : [ "byte", "double", "number", "pattern_without_delimiter" ],
         "properties" : {
           "integer" : {
@@ -2444,7 +2444,7 @@
           }
         }
       },
-      "body_3" : {
+      "fake_body_1" : {
         "required" : [ "byte", "double", "number", "pattern_without_delimiter" ],
         "properties" : {
           "integer" : {
@@ -2527,22 +2527,22 @@
           }
         }
       },
-      "body_4" : {
+      "enum_form_body" : {
         "properties" : {
           "enum_form_string_array" : {
             "type" : "array",
             "description" : "Form parameter enum test (string array)",
             "items" : {
               "type" : "string",
-              "enum" : [ ">", "$" ],
-              "default" : "$"
+              "default" : "$",
+              "enum" : [ ">", "$" ]
             }
           },
           "enum_form_string" : {
             "type" : "string",
             "description" : "Form parameter enum test (string)",
-            "enum" : [ "_abc", "-efg", "(xyz)" ],
-            "default" : "-efg"
+            "default" : "-efg",
+            "enum" : [ "_abc", "-efg", "(xyz)" ]
           },
           "enum_query_double" : {
             "type" : "number",
@@ -2552,7 +2552,7 @@
           }
         }
       },
-      "body_5" : {
+      "fake_jsonFormData_body" : {
         "required" : [ "param", "param2" ],
         "properties" : {
           "param" : {
@@ -2565,7 +2565,7 @@
           }
         }
       },
-      "body_6" : {
+      "animal_animalId_body" : {
         "properties" : {
           "name" : {
             "type" : "string",
@@ -2577,7 +2577,7 @@
           }
         }
       },
-      "body_7" : {
+      "dog_dogId_body" : {
         "properties" : {
           "name" : {
             "type" : "string",

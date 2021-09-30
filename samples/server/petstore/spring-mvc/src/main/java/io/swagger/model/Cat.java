@@ -18,6 +18,8 @@ import javax.validation.constraints.*;
  * Cat
  */
 @Validated
+
+
 public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("hunts")
   private Boolean hunts = null;
@@ -33,7 +35,7 @@ public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePe
   /**
    * Get hunts
    * @return hunts
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Boolean isHunts() {
@@ -52,7 +54,7 @@ public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePe
   /**
    * Get age
    * @return age
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Integer getAge() {

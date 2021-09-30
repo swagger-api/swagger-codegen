@@ -15,11 +15,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 import java.util.Map;
@@ -72,7 +72,7 @@ public class FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class))) })
+        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(mediaType = "*/*", schema = @Schema(implementation = Boolean.class))) })
     public Response fakeOuterBooleanSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input boolean as post body" ) Boolean body
 
 ,@Context SecurityContext securityContext)
@@ -85,7 +85,7 @@ public class FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class))) })
+        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(mediaType = "*/*", schema = @Schema(implementation = OuterComposite.class))) })
     public Response fakeOuterCompositeSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input composite as post body" ) OuterComposite body
 
 ,@Context SecurityContext securityContext)
@@ -98,7 +98,7 @@ public class FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class))) })
+        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(mediaType = "*/*", schema = @Schema(implementation = BigDecimal.class))) })
     public Response fakeOuterNumberSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input number as post body" ) BigDecimal body
 
 ,@Context SecurityContext securityContext)
@@ -111,7 +111,7 @@ public class FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class))) })
+        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(mediaType = "*/*", schema = @Schema(implementation = String.class))) })
     public Response fakeOuterStringSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input string as post body" ) String body
 
 ,@Context SecurityContext securityContext)
@@ -124,7 +124,7 @@ public class FakeApi  {
     @Produces({ "application/json" })
     @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     public Response testClientModel(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
 
 ,@Context SecurityContext securityContext)
@@ -141,7 +141,7 @@ public class FakeApi  {
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public Response testEndpointParameters(@Parameter(in = ParameterIn.DEFAULT, description = "" ,required=true) Body2 body
+    public Response testEndpointParameters(@Parameter(in = ParameterIn.DEFAULT, description = "" ,required=true) FakeBody body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -183,7 +183,7 @@ public class FakeApi  {
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         
         @ApiResponse(responseCode = "404", description = "Not found") })
-    public Response testEnumRequestBody(@Parameter(in = ParameterIn.DEFAULT, description = "" ) Body4 body
+    public Response testEnumRequestBody(@Parameter(in = ParameterIn.DEFAULT, description = "" ) EnumFormBody body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -209,7 +209,7 @@ public class FakeApi  {
     @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public Response testJsonFormData(@Parameter(in = ParameterIn.DEFAULT, description = "" ,required=true) Body5 body
+    public Response testJsonFormData(@Parameter(in = ParameterIn.DEFAULT, description = "" ,required=true) FakeJsonFormDataBody body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

@@ -56,7 +56,7 @@ public class StoreApi  {
         @SecurityRequirement(name = "api_key")
     }, tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Response getInventory(@Context SecurityContext securityContext)
     throws NotFoundException {
         return service.getInventory(securityContext);
@@ -67,7 +67,7 @@ public class StoreApi  {
     @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value >= 1 and <= 10.\\ \\ Other values will generated exceptions", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
@@ -82,7 +82,7 @@ public class StoreApi  {
     @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
     public Response placeOrder(@Parameter(description = "order placed for purchasing the pet" ,required=true) Order body,@Context SecurityContext securityContext)

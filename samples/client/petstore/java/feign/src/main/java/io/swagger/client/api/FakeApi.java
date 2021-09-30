@@ -4,11 +4,11 @@ import io.swagger.client.ApiClient;
 import io.swagger.client.EncodingUtils;
 
 import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public interface FakeApi extends ApiClient.Api {
       "Content-Type: application/xml; charset&#x3D;utf-8",
       "Accept: */*",
   })
-  void testEndpointParameters(Body2 body);
+  void testEndpointParameters(FakeBody body);
   /**
    * To test enum parameters
    * To test enum parameters
@@ -162,7 +162,7 @@ public interface FakeApi extends ApiClient.Api {
       "Content-Type: */*",
       "Accept: */*",
   })
-  void testEnumRequestBody(Body4 body);
+  void testEnumRequestBody(EnumFormBody body);
   /**
    * test inline additionalProperties
    * 
@@ -184,5 +184,5 @@ public interface FakeApi extends ApiClient.Api {
       "Content-Type: application/json",
       "Accept: */*",
   })
-  void testJsonFormData(Body5 body);
+  void testJsonFormData(FakeJsonFormDataBody body);
 }

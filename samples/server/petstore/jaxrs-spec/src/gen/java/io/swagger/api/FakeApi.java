@@ -1,11 +1,11 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 import javax.ws.rs.*;
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:35:29.140-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:11:08.645-05:00[America/Bogota]")
 public class FakeApi {
 
     @POST
@@ -92,7 +92,7 @@ public class FakeApi {
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public Response testEndpointParameters(@Valid Body2 body) {
+    public Response testEndpointParameters(@Valid FakeBody body) {
         return Response.ok().entity("magic!").build();
     }
     @GET
@@ -127,7 +127,7 @@ public class FakeApi {
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found")
     })
-    public Response testEnumRequestBody(@Valid Body4 body) {
+    public Response testEnumRequestBody(@Valid EnumFormBody body) {
         return Response.ok().entity("magic!").build();
     }
     @POST
@@ -147,6 +147,6 @@ public class FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
-    public Response testJsonFormData(@Valid Body5 body) {
+    public Response testJsonFormData(@Valid FakeJsonFormDataBody body) {
         return Response.ok().entity("magic!").build();
     }}
