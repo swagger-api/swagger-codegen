@@ -119,7 +119,7 @@ public class UserApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Get user by user name", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
@@ -135,7 +135,7 @@ public class UserApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = String.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
     public Response loginUser(@Parameter(in = ParameterIn.QUERY, description = "The user name for login",required=true) @QueryParam("username") String username
