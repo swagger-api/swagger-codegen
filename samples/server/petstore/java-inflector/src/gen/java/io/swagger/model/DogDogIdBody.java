@@ -7,21 +7,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
-public class Body   {
+public class DogDogIdBody   {
   @JsonProperty("name")
   private String name = null;
   @JsonProperty("status")
   private String status = null;
   /**
-   * Updated name of the pet
+   * Updated name of the dog
    **/
-  public Body name(String name) {
+  public DogDogIdBody name(String name) {
     this.name = name;
     return this;
   }
 
   
-  @Schema(description = "Updated name of the pet")
+  @Schema(description = "Updated name of the dog")
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -31,15 +31,15 @@ public class Body   {
   }
 
   /**
-   * Updated status of the pet
+   * Updated status of the dog
    **/
-  public Body status(String status) {
+  public DogDogIdBody status(String status) {
     this.status = status;
     return this;
   }
 
   
-  @Schema(description = "Updated status of the pet")
+  @Schema(description = "Updated status of the dog")
   @JsonProperty("status")
   public String getStatus() {
     return status;
@@ -57,9 +57,9 @@ public class Body   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body body = (Body) o;
-    return Objects.equals(name, body.name) &&
-        Objects.equals(status, body.status);
+    DogDogIdBody dogDogIdBody = (DogDogIdBody) o;
+    return Objects.equals(name, dogDogIdBody.name) &&
+        Objects.equals(status, dogDogIdBody.status);
   }
 
   @Override
@@ -70,7 +70,7 @@ public class Body   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body {\n");
+    sb.append("class DogDogIdBody {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");

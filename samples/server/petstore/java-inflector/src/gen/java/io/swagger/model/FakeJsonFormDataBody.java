@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
-public class Body5   {
+public class FakeJsonFormDataBody   {
   @JsonProperty("param")
   private String param = null;
   @JsonProperty("param2")
@@ -15,7 +15,7 @@ public class Body5   {
   /**
    * field1
    **/
-  public Body5 param(String param) {
+  public FakeJsonFormDataBody param(String param) {
     this.param = param;
     return this;
   }
@@ -33,7 +33,7 @@ public class Body5   {
   /**
    * field2
    **/
-  public Body5 param2(String param2) {
+  public FakeJsonFormDataBody param2(String param2) {
     this.param2 = param2;
     return this;
   }
@@ -57,9 +57,9 @@ public class Body5   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body5 body5 = (Body5) o;
-    return Objects.equals(param, body5.param) &&
-        Objects.equals(param2, body5.param2);
+    FakeJsonFormDataBody fakeJsonFormDataBody = (FakeJsonFormDataBody) o;
+    return Objects.equals(param, fakeJsonFormDataBody.param) &&
+        Objects.equals(param2, fakeJsonFormDataBody.param2);
   }
 
   @Override
@@ -70,7 +70,7 @@ public class Body5   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body5 {\n");
+    sb.append("class FakeJsonFormDataBody {\n");
     sb.append("    param: ").append(toIndentedString(param)).append("\n");
     sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
     sb.append("}");

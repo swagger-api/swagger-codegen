@@ -10,7 +10,7 @@ import java.util.List;
 
 
 
-public class Body4   {
+public class EnumFormBody   {
   /**
    * Gets or Sets enumFormStringArray
    */
@@ -112,7 +112,7 @@ public class Body4   {
   /**
    * Form parameter enum test (string array)
    **/
-  public Body4 enumFormStringArray(List<EnumFormStringArrayEnum> enumFormStringArray) {
+  public EnumFormBody enumFormStringArray(List<EnumFormStringArrayEnum> enumFormStringArray) {
     this.enumFormStringArray = enumFormStringArray;
     return this;
   }
@@ -130,7 +130,7 @@ public class Body4   {
   /**
    * Form parameter enum test (string)
    **/
-  public Body4 enumFormString(EnumFormStringEnum enumFormString) {
+  public EnumFormBody enumFormString(EnumFormStringEnum enumFormString) {
     this.enumFormString = enumFormString;
     return this;
   }
@@ -148,7 +148,7 @@ public class Body4   {
   /**
    * Query parameter enum test (double)
    **/
-  public Body4 enumQueryDouble(EnumQueryDoubleEnum enumQueryDouble) {
+  public EnumFormBody enumQueryDouble(EnumQueryDoubleEnum enumQueryDouble) {
     this.enumQueryDouble = enumQueryDouble;
     return this;
   }
@@ -172,10 +172,10 @@ public class Body4   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body4 body4 = (Body4) o;
-    return Objects.equals(enumFormStringArray, body4.enumFormStringArray) &&
-        Objects.equals(enumFormString, body4.enumFormString) &&
-        Objects.equals(enumQueryDouble, body4.enumQueryDouble);
+    EnumFormBody enumFormBody = (EnumFormBody) o;
+    return Objects.equals(enumFormStringArray, enumFormBody.enumFormStringArray) &&
+        Objects.equals(enumFormString, enumFormBody.enumFormString) &&
+        Objects.equals(enumQueryDouble, enumFormBody.enumQueryDouble);
   }
 
   @Override
@@ -186,7 +186,7 @@ public class Body4   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body4 {\n");
+    sb.append("class EnumFormBody {\n");
     sb.append("    enumFormStringArray: ").append(toIndentedString(enumFormStringArray)).append("\n");
     sb.append("    enumFormString: ").append(toIndentedString(enumFormString)).append("\n");
     sb.append("    enumQueryDouble: ").append(toIndentedString(enumQueryDouble)).append("\n");
