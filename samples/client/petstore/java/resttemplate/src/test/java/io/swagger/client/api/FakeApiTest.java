@@ -12,15 +12,18 @@
 
 package io.swagger.client.api;
 
+import java.math.BigDecimal;
 import io.swagger.client.model.Client;
 import io.swagger.client.model.EnumFormBody;
 import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
 import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Ignore;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

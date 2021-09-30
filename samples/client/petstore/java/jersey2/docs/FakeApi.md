@@ -264,7 +264,7 @@ http_basic_test.setUsername("YOUR USERNAME");
 http_basic_test.setPassword("YOUR PASSWORD");
 
 FakeApi apiInstance = new FakeApi();
-Body2 body = new Body2(); // Body2 | 
+FakeBody body = new FakeBody(); // FakeBody | 
 try {
     apiInstance.testEndpointParameters(body);
 } catch (ApiException e) {
@@ -277,7 +277,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body2**](Body2.md)|  |
+ **body** | [**FakeBody**](FakeBody.md)|  |
 
 ### Return type
 
@@ -360,7 +360,7 @@ To test enum parameters
 
 
 FakeApi apiInstance = new FakeApi();
-Body4 body = new Body4(); // Body4 | 
+EnumFormBody body = new EnumFormBody(); // EnumFormBody | 
 try {
     apiInstance.testEnumRequestBody(body);
 } catch (ApiException e) {
@@ -373,7 +373,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body4**](Body4.md)|  | [optional]
+ **body** | [**EnumFormBody**](EnumFormBody.md)|  | [optional]
 
 ### Return type
 
@@ -444,7 +444,7 @@ test json serialization of form data
 
 
 FakeApi apiInstance = new FakeApi();
-Body5 body = new Body5(); // Body5 | 
+FakeJsonFormDataBody body = new FakeJsonFormDataBody(); // FakeJsonFormDataBody | 
 try {
     apiInstance.testJsonFormData(body);
 } catch (ApiException e) {
@@ -457,7 +457,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body5**](Body5.md)|  |
+ **body** | [**FakeJsonFormDataBody**](FakeJsonFormDataBody.md)|  |
 
 ### Return type
 
