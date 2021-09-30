@@ -13,6 +13,8 @@ import javax.validation.constraints.*;
  * ModelApiResponse
  */
 @Validated
+
+
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;
@@ -31,7 +33,7 @@ public class ModelApiResponse   {
   /**
    * Get code
    * @return code
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public Integer getCode() {
@@ -50,7 +52,7 @@ public class ModelApiResponse   {
   /**
    * Get type
    * @return type
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public String getType() {
@@ -69,7 +71,7 @@ public class ModelApiResponse   {
   /**
    * Get message
    * @return message
-  **/
+   **/
   @ApiModelProperty(value = "")
   
     public String getMessage() {
