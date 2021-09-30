@@ -10,20 +10,22 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.client.api;
 
+import java.math.BigDecimal;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
 import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
 import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Ignore;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * API tests for FakeApi
@@ -33,7 +35,6 @@ public class FakeApiTest {
 
     private final FakeApi api = new FakeApi();
 
-    
     /**
      * 
      *
@@ -44,14 +45,11 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterBooleanSerializeTest() {
-        
         Boolean body = null;
-        
         Boolean response = api.fakeOuterBooleanSerialize(body);
 
         // TODO: test validations
     }
-    
     /**
      * 
      *
@@ -62,14 +60,11 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterCompositeSerializeTest() {
-        
-        OuterComposite outercomposite = null;
-        
-        OuterComposite response = api.fakeOuterCompositeSerialize(outercomposite);
+        OuterComposite body = null;
+        OuterComposite response = api.fakeOuterCompositeSerialize(body);
 
         // TODO: test validations
     }
-    
     /**
      * 
      *
@@ -80,14 +75,11 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterNumberSerializeTest() {
-        
         BigDecimal body = null;
-        
         BigDecimal response = api.fakeOuterNumberSerialize(body);
 
         // TODO: test validations
     }
-    
     /**
      * 
      *
@@ -98,14 +90,11 @@ public class FakeApiTest {
      */
     @Test
     public void fakeOuterStringSerializeTest() {
-        
         String body = null;
-        
         String response = api.fakeOuterStringSerialize(body);
 
         // TODO: test validations
     }
-    
     /**
      * To test \&quot;client\&quot; model
      *
@@ -116,14 +105,11 @@ public class FakeApiTest {
      */
     @Test
     public void testClientModelTest() {
-        
-        Client client = null;
-        
-        Client response = api.testClientModel(client);
+        Client body = null;
+        Client response = api.testClientModel(body);
 
         // TODO: test validations
     }
-    
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      *
@@ -134,14 +120,11 @@ public class FakeApiTest {
      */
     @Test
     public void testEndpointParametersTest() {
-        
         FakeBody body = null;
-        
         api.testEndpointParameters(body);
 
         // TODO: test validations
     }
-    
     /**
      * To test enum parameters
      *
@@ -153,20 +136,29 @@ public class FakeApiTest {
     @Test
     public void testEnumParametersTest() {
         List<String> enumHeaderStringArray = null;
-        
         String enumHeaderString = null;
-        
         List<String> enumQueryStringArray = null;
-        
         String enumQueryString = null;
-        
         Integer enumQueryInteger = null;
-        
         api.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
 
         // TODO: test validations
     }
-    
+    /**
+     * To test enum parameters
+     *
+     * To test enum parameters
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testEnumRequestBodyTest() {
+        EnumFormBody body = null;
+        api.testEnumRequestBody(body);
+
+        // TODO: test validations
+    }
     /**
      * test inline additionalProperties
      *
@@ -177,14 +169,11 @@ public class FakeApiTest {
      */
     @Test
     public void testInlineAdditionalPropertiesTest() {
-        
         Map<String, String> body = null;
-        
         api.testInlineAdditionalProperties(body);
 
         // TODO: test validations
     }
-    
     /**
      * test json serialization of form data
      *
@@ -195,12 +184,9 @@ public class FakeApiTest {
      */
     @Test
     public void testJsonFormDataTest() {
-        
         FakeJsonFormDataBody body = null;
-        
         api.testJsonFormData(body);
 
         // TODO: test validations
     }
-    
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Bean;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -24,7 +25,7 @@ import java.util.List;
 @Configuration
 @ComponentScan(basePackages = "io.swagger.api")
 @EnableWebMvc
-@EnableSwagger2 //Loads the spring beans required by the framework
+@EnableSwagger2
 @PropertySource("classpath:swagger.properties")
 @Import(SwaggerDocumentationConfig.class)
 public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
@@ -75,6 +76,12 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
     super.configureMessageConverters(converters);
+  }
+
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
+    registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
   }
 
   @Bean

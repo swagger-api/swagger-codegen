@@ -82,7 +82,7 @@ public class StoreApi  {
     @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
         @SecurityRequirement(name = "api_key")    }, tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Response getInventory(@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getInventory(securityContext);
@@ -93,7 +93,7 @@ public class StoreApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
@@ -110,7 +110,7 @@ public class StoreApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Order.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
     public Response placeOrder(@Parameter(in = ParameterIn.DEFAULT, description = "order placed for purchasing the pet" ,required=true) Order body
