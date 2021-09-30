@@ -1,11 +1,11 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -64,7 +64,7 @@ public class FakeApiController implements FakeApi {
         return delegate.testClientModel(body);
     }
 
-    public ResponseEntity<Void> testEndpointParameters(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Body2 body) {
+    public ResponseEntity<Void> testEndpointParameters(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody FakeBody body) {
         return delegate.testEndpointParameters(body);
     }
 
@@ -77,7 +77,7 @@ public class FakeApiController implements FakeApi {
         return delegate.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
     }
 
-    public ResponseEntity<Void> testEnumRequestBody(@Parameter(in = ParameterIn.DEFAULT, description = "", schema=@Schema()) @Valid @RequestBody Body4 body) {
+    public ResponseEntity<Void> testEnumRequestBody(@Parameter(in = ParameterIn.DEFAULT, description = "", schema=@Schema()) @Valid @RequestBody EnumFormBody body) {
         return delegate.testEnumRequestBody(body);
     }
 
@@ -85,7 +85,7 @@ public class FakeApiController implements FakeApi {
         return delegate.testInlineAdditionalProperties(body);
     }
 
-    public ResponseEntity<Void> testJsonFormData(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Body5 body) {
+    public ResponseEntity<Void> testJsonFormData(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody FakeJsonFormDataBody body) {
         return delegate.testJsonFormData(body);
     }
 

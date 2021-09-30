@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-@Controller
+
+@RestController
 public class StoreApiController implements StoreApi {
 
     private static final Logger log = LoggerFactory.getLogger(StoreApiController.class);
@@ -38,8 +39,8 @@ public class StoreApiController implements StoreApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> deleteOrder(@Min(1L)@ApiParam(value = "ID of the order that needs to be deleted",required=true, allowableValues="") @PathVariable("orderId") Long orderId
-) {
+    public ResponseEntity<Void> deleteOrder(@Min(1L)@ApiParam(value = "ID of the order that needs to be deleted", required=true, allowableValues="range=[1, infinity]"
+) @PathVariable("orderId") Long orderId) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
@@ -58,8 +59,8 @@ public class StoreApiController implements StoreApi {
         return new ResponseEntity<Map<String, Integer>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(10L) @ApiParam(value = "ID of pet that needs to be fetched",required=true, allowableValues="") @PathVariable("orderId") Long orderId
-) {
+    public ResponseEntity<Order> getOrderById(@Min(1L) @Max(10L) @ApiParam(value = "ID of pet that needs to be fetched", required=true, allowableValues="range=[1, 10]"
+) @PathVariable("orderId") Long orderId) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -73,8 +74,7 @@ public class StoreApiController implements StoreApi {
         return new ResponseEntity<Order>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet" ,required=true )  @Valid @RequestBody Order body
-) {
+    public ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet", required=true ) @Valid @RequestBody Order body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

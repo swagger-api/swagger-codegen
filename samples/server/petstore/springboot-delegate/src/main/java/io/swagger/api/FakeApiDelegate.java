@@ -1,11 +1,11 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,7 +55,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEndpointParameters
      */
-    ResponseEntity<Void> testEndpointParameters( Body2  body);
+    ResponseEntity<Void> testEndpointParameters( FakeBody  body);
 
     /**
      * @see FakeApi#testEnumParameters
@@ -69,7 +69,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEnumRequestBody
      */
-    ResponseEntity<Void> testEnumRequestBody( Body4  body);
+    ResponseEntity<Void> testEnumRequestBody( EnumFormBody  body);
 
     /**
      * @see FakeApi#testInlineAdditionalProperties
@@ -79,6 +79,6 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testJsonFormData
      */
-    ResponseEntity<Void> testJsonFormData( Body5  body);
+    ResponseEntity<Void> testJsonFormData( FakeJsonFormDataBody  body);
 
 }
