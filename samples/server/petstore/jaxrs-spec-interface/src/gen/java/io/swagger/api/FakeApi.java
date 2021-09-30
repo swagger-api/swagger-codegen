@@ -1,11 +1,11 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 import javax.ws.rs.*;
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:40:20.525-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:12:16.280-05:00[America/Bogota]")
 public interface FakeApi {
 
     @POST
@@ -76,7 +76,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
-    void testEndpointParameters(@Valid Body2 body);
+    void testEndpointParameters(@Valid FakeBody body);
     @GET
     @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
@@ -105,7 +105,7 @@ public interface FakeApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found") })
-    void testEnumRequestBody(@Valid Body4 body);
+    void testEnumRequestBody(@Valid EnumFormBody body);
     @POST
     @Path("/inline-additionalProperties")
     @Consumes({ "application/json" })
@@ -119,4 +119,4 @@ public interface FakeApi {
     @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    void testJsonFormData(@Valid Body5 body);}
+    void testJsonFormData(@Valid FakeJsonFormDataBody body);}

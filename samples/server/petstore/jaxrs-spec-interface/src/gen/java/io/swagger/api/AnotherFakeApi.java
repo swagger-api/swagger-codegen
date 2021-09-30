@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Path("/another-fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-04-27T14:40:20.525-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:12:16.280-05:00[America/Bogota]")
 public interface AnotherFakeApi {
 
     @PATCH

@@ -94,7 +94,7 @@ public class DogApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Find dog by ID", description = "Returns a single dog", tags={ "dog" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Dog.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Dog.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
