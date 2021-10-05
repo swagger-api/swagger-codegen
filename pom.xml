@@ -129,6 +129,8 @@
                     <argLine>-XX:+StartAttachListener</argLine>
                     <argLine>
                         -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar
+                        -XX:+IgnoreUnrecognizedVMOptions
+                        --add-opens=java.base/java.util=ALL-UNNAMED
                     </argLine>
                 </configuration>
                 <executions>
@@ -261,6 +263,11 @@
                     <groupId>net.revelc.code</groupId>
                     <artifactId>formatter-maven-plugin</artifactId>
                     <version>0.5.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
