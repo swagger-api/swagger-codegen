@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.v3.service.GenerationRequest;
 import io.swagger.codegen.v3.service.Options;
 import io.swagger.v3.core.util.Json;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -161,7 +159,7 @@ public class GeneratorControllerIT {
 
     @Test
     public void generateJava() throws Exception {
-        String json = FileUtils.readFileToString(new File("src/test/resources/petstore-oas3.json"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("petstore-oas3.json"));
         JsonNode node = Json.mapper().readTree(json);
         Map<String, Object> spec = Json.mapper().convertValue(node, LinkedHashMap.class);
 
@@ -188,7 +186,7 @@ public class GeneratorControllerIT {
     @Test
     public void generateHtml() throws Exception {
         HttpClient client = HttpClientBuilder.create().build();
-        String json = FileUtils.readFileToString(new File("src/test/resources/petstore-oas3.json"));
+        String json = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("petstore-oas3.json"));
         JsonNode node = Json.mapper().readTree(json);
         Map<String, Object> spec = Json.mapper().convertValue(node, LinkedHashMap.class);
 
