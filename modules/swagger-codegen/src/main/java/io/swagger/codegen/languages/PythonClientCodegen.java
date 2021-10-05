@@ -112,7 +112,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
                     "and", "del", "from", "not", "while", "as", "elif", "global", "or", "with",
                     "assert", "else", "if", "pass", "yield", "break", "except", "import",
                     "print", "class", "exec", "in", "raise", "continue", "finally", "is",
-                    "return", "def", "for", "lambda", "try", "self", "nonlocal", "None", "True", "nonlocal",
+                    "return", "def", "for", "lambda", "try", "self", "nonlocal", "None", "True",
                     "float", "int", "str", "date", "datetime"));
 
         regexModifiers = new HashMap<Character, String>();
