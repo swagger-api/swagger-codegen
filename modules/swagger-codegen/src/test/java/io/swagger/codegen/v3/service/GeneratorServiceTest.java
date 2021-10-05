@@ -131,7 +131,7 @@ public class GeneratorServiceTest {
             }
         }
     }
-    
+
     @Test(description = "test generator service with html2")
     public void testGeneratorService_HTML2_Bearer() throws IOException {
 
@@ -786,6 +786,23 @@ public class GeneratorServiceTest {
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
         Assert.assertTrue(spec.contains("additionalProperties: true"));
 
+    }
+
+    @Test(description = "test generator service with typescript-angular 3.0")
+    public void testGeneratorServiceTypescriptAngular3() {
+
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("typescript-angular")
+                .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
+                .options(
+                        new Options()
+                                .outputDir(getTmpFolder().getAbsolutePath())
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
     }
 
     protected static File getTmpFolder() {
