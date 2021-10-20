@@ -421,7 +421,7 @@ public class UserApi {
 
         // create path and map variables
         String localVarPath = "/user/{username}"
-            .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
+            .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(apiClient.parameterToString(username)));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -540,7 +540,7 @@ public class UserApi {
 
         // create path and map variables
         String localVarPath = "/user/{username}"
-            .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
+            .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(apiClient.parameterToString(username)));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -908,7 +908,7 @@ public class UserApi {
 
         // create path and map variables
         String localVarPath = "/user/{username}"
-            .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
+            .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(apiClient.parameterToString(username)));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
