@@ -340,6 +340,14 @@
             <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
+        {{#wiremock}}
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
+        {{/wiremock}}
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
