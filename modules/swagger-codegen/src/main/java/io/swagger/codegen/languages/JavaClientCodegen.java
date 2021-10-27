@@ -119,6 +119,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
     @Override
     public void processOpts() {
+        if (RETROFIT_1.equalsIgnoreCase(library)) {
+            dateLibrary = "joda";
+        }
+
         super.processOpts();
 
         if (additionalProperties.containsKey(USE_RX_JAVA) && additionalProperties.containsKey(USE_RX_JAVA2)) {
