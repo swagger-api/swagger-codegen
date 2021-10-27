@@ -1,4 +1,4 @@
-name: Test Framework V2 Java 11 Feign
+name: Test Framework V2 Java 11 Retrofit
 
 on:
   # execute on demand
@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-custom-test-files
-          path: samples/custom-tests/java/v2/feign
+          path: samples/custom-tests/java/v2/retrofit
 
   generate:
 
@@ -70,7 +70,7 @@ jobs:
           language: "java"
           job-name: ${{ env.JOB_NAME }}
           spec-url: "https://petstore.swagger.io/v2/swagger.json"
-          options: " --library feign --additional-properties java11=true,wiremock=true"
+          options: "  --library retrofit --additional-properties java11=true,wiremock=true"
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -92,7 +92,7 @@ jobs:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
     env:
-      JOB_NAME: "java11-feign-v2-sample"
+      JOB_NAME: "java11-retrofit-v2-sample"
 
   build:
 
@@ -171,4 +171,4 @@ jobs:
           name: ${{ env.JOB_NAME }}logs
           path: ${{ steps.build.outputs.logs }}
     env:
-      JOB_NAME: "java11-feign-v2-sample"
+      JOB_NAME: "java11-retrofit-v2-sample"
