@@ -1,4 +1,4 @@
-name: Test Framework V2 Gradle Java 11 OkHttp-Gson
+name: Test Framework V2 Gradle Java 11 Jersey2
 
 on:
   # execute on demand
@@ -138,7 +138,6 @@ jobs:
       - name: setup test files
         id: test-files
         run: |
-          gradle --version
           echo "removing default test files (with not cases)"
           rm generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/client/api/PetApiTest.java
           rm generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/client/api/StoreApiTest.java

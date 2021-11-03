@@ -1,4 +1,4 @@
-name: Test Framework V2 Java 11 Jersey2
+name: Test Framework V3 Gradle Java 11 Retrofit2
 
 on:
   # execute on demand
@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-custom-test-files
-          path: samples/custom-tests/java/v2/okhttp-gson
+          path: samples/custom-tests/java/v3/retrofit2
 
   generate:
 
@@ -69,8 +69,8 @@ jobs:
         with:
           language: "java"
           job-name: ${{ env.JOB_NAME }}
-          spec-url: "https://petstore.swagger.io/v2/swagger.json"
-          options: "  --library jersey2 --additional-properties java11=true,wiremock=true"
+          spec-url: "https://petstore3.swagger.io/api/v3/openapi.json"
+          options: "  --library retrofit2 --additional-properties java11=true,wiremock=true"
       - id: outcome
         run: |
           echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
@@ -92,7 +92,7 @@ jobs:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
     env:
-      JOB_NAME: "java11-jersey2-v2-sample"
+      JOB_NAME: "gradle-java11-retrofit2-v3-sample"
 
   build:
 
@@ -155,7 +155,7 @@ jobs:
         with:
           path: generated/${{ env.JOB_NAME }}
           job-name: ${{ env.JOB_NAME }}
-          build-commands: "mvn clean package -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3"
+          build-commands: "gradle build"
       - id: outcome
         run: |
           echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
@@ -171,4 +171,4 @@ jobs:
           name: ${{ env.JOB_NAME }}logs
           path: ${{ steps.build.outputs.logs }}
     env:
-      JOB_NAME: "java11-jersey2-v2-sample"
+      JOB_NAME: "gradle-java11-retrofit2-v3-sample"
