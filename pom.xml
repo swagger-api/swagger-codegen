@@ -1156,7 +1156,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.30-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>zoom-development-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.1.11</swagger-core-version>
         <swagger-core-version-v1>1.6.3</swagger-core-version-v1>
         <swagger-parser-version>2.0.28</swagger-parser-version>
