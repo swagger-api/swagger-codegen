@@ -138,7 +138,6 @@ jobs:
       - name: setup test files
         id: test-files
         run: |
-          gradle --version
           echo "removing default test files (with not cases)"
           rm generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/client/api/PetApiTest.java
           rm generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/client/api/StoreApiTest.java
