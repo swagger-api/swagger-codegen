@@ -15,7 +15,6 @@ package io.swagger.client.api;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import io.swagger.client.ApiException;
 import io.swagger.client.model.Pet;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -82,10 +81,10 @@ public class PetApiTest {
     /**
      * Add a new pet to the store
      *
-     * @throws ApiException if the Api call fails
+     * @throws Exception if the Api call fails
      */
     @Test
-    public void addPetTest() throws ApiException {
+    public void addPetTest() throws Exception {
         Pet body = new Pet()
                 .id(10L)
                 .name("doggie")
@@ -99,10 +98,10 @@ public class PetApiTest {
     /**
      * Deletes a pet
      *
-     * @throws ApiException if the Api call fails
+     * @throws Exception if the Api call fails
      */
     @Test
-    public void deletePetTest() throws ApiException {
+    public void deletePetTest() throws Exception {
         Long petId = 10L;
         String apiKey = "abc123";
         api.deletePet(petId, apiKey);
@@ -115,10 +114,10 @@ public class PetApiTest {
      * <p>
      * Multiple status values can be provided with comma separated strings
      *
-     * @throws ApiException if the Api call fails
+     * @throws Exception if the Api call fails
      */
     @Test
-    public void findPetsByStatusTest() throws ApiException {
+    public void findPetsByStatusTest() throws Exception {
         List<String> status = Arrays.asList("available");
         List<Pet> response = api.findPetsByStatus(status);
 
@@ -133,10 +132,10 @@ public class PetApiTest {
      * <p>
      * Returns a single pet
      *
-     * @throws ApiException if the Api call fails
+     * @throws Exception if the Api call fails
      */
     @Test
-    public void getPetByIdTest() throws ApiException {
+    public void getPetByIdTest() throws Exception {
         Long petId = 10L;
         Pet response = api.getPetById(petId);
 
@@ -150,10 +149,10 @@ public class PetApiTest {
     /**
      * Update an existing pet
      *
-     * @throws ApiException if the Api call fails
+     * @throws Exception if the Api call fails
      */
     @Test
-    public void updatePetTest() throws ApiException {
+    public void updatePetTest() throws Exception {
         Pet body = new Pet()
                 .id(10L)
                 .name("doggie")

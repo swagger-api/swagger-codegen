@@ -13,7 +13,6 @@
 
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import io.swagger.client.model.Order;
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,11 +82,11 @@ public class StoreApiTest {
      *
      * For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void deleteOrderTest() throws ApiException {
+    public void deleteOrderTest() throws Exception {
         Long orderId = 10L;
         api.deleteOrder(orderId);
 
@@ -99,11 +98,11 @@ public class StoreApiTest {
      *
      * Returns a map of status codes to quantities
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void getInventoryTest() throws ApiException {
+    public void getInventoryTest() throws Exception {
         Map<String, Integer> response = api.getInventory();
 
         Assert.assertNotNull(response);
@@ -117,11 +116,11 @@ public class StoreApiTest {
      *
      * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10. Other values will generated exceptions
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void getOrderByIdTest() throws ApiException {
+    public void getOrderByIdTest() throws Exception {
         Long orderId = 10L;
         Order response = api.getOrderById(orderId);
         Assert.assertNotNull(response);
@@ -137,11 +136,11 @@ public class StoreApiTest {
      *
      * 
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void placeOrderTest() throws ApiException {
+    public void placeOrderTest() throws Exception {
         Order body = new Order().id(10L)
                 .petId(10L)
                 .complete(false)
