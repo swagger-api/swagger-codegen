@@ -13,7 +13,6 @@
 
 package io.swagger.client.api;
 
-import io.swagger.client.ApiException;
 import io.swagger.client.model.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -86,11 +85,11 @@ public class UserApiTest {
      *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void createUserTest() throws ApiException {
+    public void createUserTest() throws Exception {
         User body = new User().id(10L).username("user1");
         api.createUser(body);
 
@@ -102,11 +101,11 @@ public class UserApiTest {
      *
      *
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void createUsersWithListInputTest() throws ApiException {
+    public void createUsersWithListInputTest() throws Exception {
         User user = new User().id(10L).username("user1");
         List<User> body = Arrays.asList(user);
         api.createUsersWithListInput(body);
@@ -119,11 +118,11 @@ public class UserApiTest {
      *
      * This can only be done by the logged in user.
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void deleteUserTest() throws ApiException {
+    public void deleteUserTest() throws Exception {
         String username = "user1";
         api.deleteUser(username);
 
@@ -135,11 +134,11 @@ public class UserApiTest {
      *
      *
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void getUserByNameTest() throws ApiException {
+    public void getUserByNameTest() throws Exception {
         String username = "user1";
         User response = api.getUserByName(username);
 
