@@ -1,4 +1,4 @@
-name: Test Framework V2 Gradle Java 11 OkHttp-Gson
+name: Test Framework V2 Gradle Java 11 Jersey2
 
 on:
   # execute on demand
