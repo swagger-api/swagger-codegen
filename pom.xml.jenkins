@@ -996,7 +996,7 @@
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <swagger-core-version>1.6.3</swagger-core-version>
-        <commons-io-version>2.7</commons-io-version>
+        <commons-io-version>2.11.0</commons-io-version>
         <commons-cli-version>1.2</commons-cli-version>
         <junit-version>4.13.1</junit-version>
         <jackson-version>2.11.4</jackson-version>
