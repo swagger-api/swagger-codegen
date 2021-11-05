@@ -1,0 +1,549 @@
+type: object
+description: The base meeting object.
+properties:
+  topic:
+    type: string
+    description: The meeting's topic.
+  type:
+    type: integer
+    description: |-
+      The type of meeting:
+      * `1` — An instant meeting.
+      * `2` — A scheduled meeting.
+      * `3` — A recurring meeting with no fixed time.
+      * `8` — A recurring meeting with fixed time.
+    default: 2
+    #### THIS CAUSES PROBLEM IN THE SERIALIZATION BECAUSE THE ENUMS VALUES ARE NUMBERS AND NOT STRINGS
+    enum:
+      - 1
+      - 2
+      - 3
+      - 8
+    x-enum-descriptions:
+      - Instant meeting.
+      - Scheduled meeting.
+      - Recurring meeting with no fixed time.
+      - Recurring meeting with fixed time.
+  pre_schedule:
+    type: boolean
+    default: false
+    description: >-
+      Whether to create a prescheduled meeting. This field only supports
+      schedule meetings (`2`):
+
+      * `true` — Create a prescheduled meeting.
+
+      * `false` — Create a regular meeting.
+  start_time:
+    type: string
+    format: date-time
+    description: >-
+      The meeting's start time. This field is only used for scheduled and/or
+      recurring meetings with a fixed time. This supports local time and GMT
+      formats.
+
+      * To set a meeting's start time in GMT, use the `yyyy-MM-ddTHH:mm:ssZ` date-time format. For example, `2020-03-31T12:02:00Z`.
+
+  duration:
+    type: integer
+    description:
+      The meeting's scheduled duration, in minutes. This field is only
+      used for scheduled meetings (`2`).
+  schedule_for:
+    type: string
+    description: The email address or user ID of the user to schedule a meeting for.
+  timezone:
+    type: string
+    description: >-
+      The timezome to assign to the `start_time` value. This field is only used
+      for scheduled meetings (`2`).
+
+
+  password:
+    type: string
+    description: >-
+      The password required to join the meeting. By default, a password can
+      **only** have a maximum length of 10 characters and only contain
+      alphanumeric characters and the `@`, `-`, `_`, and `*` characters.
+
+    maxLength: 10
+  agenda:
+    type: string
+    description: The meeting's agenda. This value has a maximum length of 2,000 characters.
+    maxLength: 2000
+  tracking_fields:
+    type: array
+    description: Information about the meeting's tracking fields.
+    items:
+      type: object
+      required:
+        - field
+      properties:
+        field:
+          type: string
+          description: The tracking field's label.
+        value:
+          type: string
+          description: The tracking field's value.
+  recurrence:
+    type: object
+    description:
+      "Recurrence object. Use this object only for a meeting with type
+      `8` i.e., a recurring meeting with fixed time. "
+    required:
+      - type
+    properties:
+      type:
+        type: integer
+        description:
+          Recurrence meeting types:<br>`1` - Daily.<br>`2` - Weekly.<br>`3` -
+          Monthly.
+        enum:
+          - 1
+          - 2
+          - 3
+        x-enum-descriptions:
+          - Daily
+          - Weekly
+          - Monthly
+      repeat_interval:
+        type: integer
+        description: >+
+          Define the interval at which the meeting should recur. For instance,
+          if you would like to schedule a meeting that recurs every two months,
+          you must set the value of this field as `2` and the value of the
+          `type` parameter as `3`.
+
+
+          For a daily meeting, the maximum interval you can set is `90` days. For a weekly meeting the maximum interval that you can set is  of `12` weeks. For a monthly meeting, there is a maximum of `3` months.
+
+      weekly_days:
+        type: string
+        description: >-
+          This field is required **if you're scheduling a recurring meeting of
+          type** `2` to state which day(s) of the week the meeting should
+          repeat. <br> <br> The value for this field could be a number between
+          `1` to `7` in string format. For instance, if the meeting should recur
+          on Sunday, provide `"1"` as the value of this field.<br><br> **Note:**
+          If you would like the meeting to occur on multiple days of a week, you
+          should provide comma separated values for this field. For instance, if
+          the meeting should recur on Sundays and Tuesdays provide `"1,3"` as
+          the value of this field.
+
+           <br>`1`  - Sunday. <br>`2` - Monday.<br>`3` - Tuesday.<br>`4` -  Wednesday.<br>`5` -  Thursday.<br>`6` - Friday.<br>`7` - Saturday.
+        enum:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+        default: "1"
+      monthly_day:
+        type: integer
+        description: >-
+          Use this field **only if you're scheduling a recurring meeting of
+          type** `3` to state which day in a month, the meeting should recur.
+          The value range is from 1 to 31.
+
+
+          For instance, if you would like the meeting to recur on 23rd of each month, provide `23` as the value of this field and `1` as the value of the `repeat_interval` field. Instead, if you would like the meeting to recur every three months, on 23rd of the month, change the value of the `repeat_interval` field to `3`.
+        default: 1
+      monthly_week:
+        type: integer
+        description:
+          Use this field **only if you're scheduling a recurring meeting of
+          type** `3` to state the week of the month when the meeting should
+          recur. If you use this field, **you must also use the
+          `monthly_week_day` field to state the day of the week when the meeting
+          should recur.** <br>`-1` - Last week of the month.<br>`1` - First week
+          of the month.<br>`2` - Second week of the month.<br>`3` - Third week
+          of the month.<br>`4` - Fourth week of the month.
+        enum:
+          - -1
+          - 1
+          - 2
+          - 3
+          - 4
+        x-enum-descriptions:
+          - Last week
+          - First week
+          - Second week
+          - Third week
+          - Fourth week
+      monthly_week_day:
+        type: integer
+        description: >-
+          Use this field **only if you're scheduling a recurring meeting of
+          type** `3` to state a specific day in a week when the monthly meeting
+          should recur. To use this field, you must also use the `monthly_week`
+          field.
+
+
+          <br>`1` - Sunday.<br>`2` - Monday.<br>`3` - Tuesday.<br>`4` -  Wednesday.<br>`5` - Thursday.<br>`6` - Friday.<br>`7` - Saturday.
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+        x-enum-descriptions:
+          - Sunday
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+      end_times:
+        type: integer
+        description: Select how many times the meeting should recur before it is
+          canceled. (Cannot be used with "end_date_time".)
+        default: 1
+        maximum: 365
+      end_date_time:
+        type: string
+        description:
+          Select the final date on which the meeting will recur before it is
+          canceled. Should be in UTC time, such as 2017-11-25T12:00:00Z. (Cannot
+          be used with "end_times".)
+        format: date-time
+  settings:
+    type: object
+    description: Information about the meeting's settings.
+    properties:
+      host_video:
+        type: boolean
+        description: Whether to start meetings with the host video on.
+      participant_video:
+        type: boolean
+        description: Whether to start meetings with the participant video on.
+      cn_meeting:
+        type: boolean
+        description:
+          Whether to host the meeting in China (CN). This value defaults to
+          `false`.
+        default: false
+      in_meeting:
+        type: boolean
+        description:
+          Whether to host the meeting in India (IN). This value defaults to
+          `false`.
+        default: false
+      join_before_host:
+        type: boolean
+        description: >-
+          Whether participants can join the meeting before its host. This field
+          is only used for scheduled meetings (`2`) or recurring meetings (`3`
+          and `8`). This value defaults to `false`.
+
+
+        default: false
+      jbh_time:
+        type: integer
+        description: >-
+          If the value of the `join_before_host` field is `true`, this field
+          indicates the time limits within which a participant can join a
+          meeting before the meeting's host:
+
+
+          * `0` — Allow the participant to join the meeting at anytime.
+
+          * `5` — Allow the participant to join 5 minutes before the meeting's start time.
+
+          * `10` — Allow the participant to join 10 minutes before the meeting's start time.
+        enum:
+          - 0
+          - 5
+          - 10
+      mute_upon_entry:
+        type: boolean
+        description: Whether to mute participants upon entry.
+        default: false
+      watermark:
+        type: boolean
+        description: Whether to add a watermark when viewing a shared screen.
+        default: false
+      use_pmi:
+        type: boolean
+        description: Whether to use a [PMI (Personal Meeting ID)]
+          instead of a generated meeting ID. This field is only used for
+          scheduled meetings (`2`), instant meetings (`1`), or recurring
+          meetings with no fixed time (`3`). This value defaults to `false`.
+        default: false
+      approval_type:
+        type: integer
+        default: 2
+        description: |-
+          Enable meeting registration approval:
+          * `0` — Automatically approve registration.
+          * `1` — Manually approve registration.
+          * `2` — No registration required.
+
+          This value defaults to `2`.
+        enum:
+          - 0
+          - 1
+          - 2
+        x-enum-descriptions:
+          - Automatically approve registration.
+          - Manually approve registration.
+          - No registration required.
+      registration_type:
+        type: integer
+        description: >-
+          The meeting's registration type:
+
+          * `1` — Attendees register once and can attend any meeting occurrence.
+
+          * `2` — Attendees must register for each meeting occurrence.
+
+          * `3` — Attendees register once and can select one or more meeting occurrences to attend.
+
+
+          This field is only for recurring meetings with fixed times (`8`). This value defaults to `1`.
+        default: 1
+        enum:
+          - 1
+          - 2
+          - 3
+        x-enum-descriptions:
+          - Attendees register once and can attend any meeting occurrence.
+          - Attendees must register for each meeting occurrence.
+          - Attendees register once and can select one or more meeting
+            occurrences to attend.
+      audio:
+        type: string
+        description: |-
+          How participants join the audio portion of the meeting:
+          * `both` — Both telephony and VoIP.
+          * `telephony` — Telephony only.
+          * `voip` — VoIP only.
+
+          This value defaults to `both`.
+        default: both
+        enum:
+          - both
+          - telephony
+          - voip
+        x-enum-descriptions:
+          - Telephony and VoIP.
+          - Telephony only.
+          - VoIP only.
+      auto_recording:
+        type: string
+        description: |-
+          The automatic recording settings:
+          * `local` — Record the meeting locally.
+          * `cloud` — Record the meeting to the cloud.
+          * `none` — Auto-recording disabled.
+
+          This value defaults to `none`.
+        default: none
+        enum:
+          - local
+          - cloud
+          - none
+        x-enum-descriptions:
+          - Record the meeting locally.
+          - Record the meeting to the cloud.
+          - Auto-recording disabled.
+      alternative_hosts:
+        type: string
+        description:
+          The alternative hosts' email addresses or IDs. Comma-separate
+          multiple values.
+      close_registration:
+        type: boolean
+        description:
+          Whether to close registration after the event date. This value
+          defaults to `false`.
+        default: false
+      waiting_room:
+        type: boolean
+        description: Whether to enable the [**Waiting Room** feature]
+          If this value is `true`, this **disables** the `join_before_host`
+          setting.
+      global_dial_in_countries:
+        type: array
+        description: A list of available global dial-in countries.
+        items:
+          type: string
+      contact_name:
+        type: string
+        description: The contact name for meeting registration.
+      contact_email:
+        type: string
+        description: The contact email address for meeting registration.
+      registrants_email_notification:
+        type: boolean
+        description: >-
+          Whether to send registrants email notifications about their
+          registration approval, cancellation, or rejection:
+
+
+          * `true` — Send an email notification.
+
+          * `false` — Do not send an email notification.
+
+           Set this value to `true` to also use the `registrants_confirmation_email` parameter.
+      registrants_confirmation_email:
+        type: boolean
+        description: |-
+          Whether to send registrants an email confirmation:
+          * `true` — Send a confirmation email.
+          * `false` — Do not send a confirmation email.
+      meeting_authentication:
+        type: boolean
+        description: If true, only [authenticated] users can join the meeting.
+      authentication_option:
+        type: string
+        description: >-
+          If the `meeting_authentication` value is `true`, the type of
+          authentication required for users to join a meeting.
+          To get this value, use the `authentication_options` array's `id` value in the API response.
+      authentication_domains:
+        type: string
+        description:
+          The meeting's authenticated domains. Only users whose email
+          address contains an authenticated domain can join the meeting.
+          Comma-separate multiple domains or use a wildcard for listing domains.
+      authentication_exception:
+        type: array
+        description:
+          A list of participants that can bypass meeting authentication.
+          These participants will receive a unique meeting invite.
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The participant's name.
+            email:
+              type: string
+              description: The participant's email address.
+              format: email
+      additional_data_center_regions:
+        description: >-
+
+          To include "India" and "Japan" as additional data centers, use the `["IN", "TY"]` value for this field.
+        type: array
+        items:
+          type: string
+      breakout_room:
+        type: object
+        description: The [pre-assigned breakout rooms]
+        properties:
+          enable:
+            type: boolean
+            description: Whether to enable the [**Breakout Room **]
+          rooms:
+            type: array
+            description: Information about the breakout rooms.
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The breakout room's name.
+                participants:
+                  type: array
+                  description:
+                    The email addresses of the participants to assign to the breakout
+                    room.
+                  items:
+                    type: string
+      language_interpretation:
+        type: object
+        description: >-
+          The meeting's seetings for language_interpretation
+
+          This feature is only available for certain Webinar add-on, Education, Business and higher plans. If this feature is **not** enabled on the host's account, this setting will **not** be applied to the meeting.
+        properties:
+          enable:
+            type: boolean
+            description: Whether to enable [language interpretation]
+          interpreters:
+            type: array
+            description: Information about the meeting's interpreter.
+            items:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The interpreter's email address.
+                  format: email
+                languages:
+                  type: string
+                  description:
+                    The available interpretation languages. This string **must**
+                    contain at least two comma-separated
+                    For example, if the interpretation is English to Chinese,
+                    use the `"US,CN"` value.
+      show_share_button:
+        type: boolean
+        description:
+          Whether to include social media sharing butons on the meeting's
+          registration page. This setting is only applied to meetings with
+          registration enabled.
+      allow_multiple_devices:
+        type: boolean
+        description:
+          Whether to allow attendees to join a meeting from multiple devices.
+          This setting is only applied to meetings with registration enabled.
+      encryption_type:
+        type: string
+        description: >-
+          The type of [end-to-end (E2EE) encryption]
+          use for the meeting:
+
+          * `enhanced_encryption` — Enhanced encryption. Encryption is stored in the cloud when you enable this option.
+
+          * `e2ee` — End-to-end encryption. The encryption key is stored on your local device and **cannot** be obtained by anyone else.
+        enum:
+          - enhanced_encryption
+          - e2ee
+      approved_or_denied_countries_or_regions:
+        type: object
+        description:
+          The list of approved or blocked users from specific countries or
+          regions who can join the meeting.
+        properties:
+          enable:
+            type: boolean
+            description:
+              blank
+          method:
+            type: string
+            enum:
+              - approve
+              - deny
+            description: >-
+              Whether to allow or block users from specific countries or
+              regions:
+
+              * `approve` — Allow users from specific countries or regions to join the meeting. If you select this setting, you must include the approved countries or regions in the `approved_list` field.
+
+              * `deny` — Block users from specific countries or regions from joining the meeting. If you select this setting, you must include the blocked countries or regions in the `denied_list` field.
+          approved_list:
+            type: array
+            description: The list of approved countries or regions.
+            items:
+              type: string
+          denied_list:
+            type: array
+            description: The list of blocked countries or regions.
+            items:
+              type: string
+      alternative_hosts_email_notification:
+        type: boolean
+        description:
+          Whether to send email notifications to alternative hosts. This
+          value defaults to `true`.
+        default: true
+  template_id:
+    type: string
+    description: >-
