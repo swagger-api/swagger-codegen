@@ -72,6 +72,25 @@ public class AdditionalPropertiesClass  {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AdditionalPropertiesClass additionalPropertiesClass = (AdditionalPropertiesClass) o;
+    return Objects.equals(mapProperty, additionalPropertiesClass.mapProperty) &&
+        Objects.equals(mapOfMapProperty, additionalPropertiesClass.mapOfMapProperty);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(mapProperty, mapOfMapProperty);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AdditionalPropertiesClass {\n");

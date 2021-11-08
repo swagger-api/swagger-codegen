@@ -61,6 +61,25 @@ public class Animal  {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Animal animal = (Animal) o;
+    return Objects.equals(className, animal.className) &&
+        Objects.equals(color, animal.color);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(className, color);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Animal {\n");

@@ -63,6 +63,25 @@ public class Model200Response  {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Model200Response _200Response = (Model200Response) o;
+    return Objects.equals(name, _200Response.name) &&
+        Objects.equals(propertyClass, _200Response.propertyClass);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, propertyClass);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Model200Response {\n");

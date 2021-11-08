@@ -268,6 +268,28 @@ public enum EnumNumberEnum {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    EnumTest enumTest = (EnumTest) o;
+    return Objects.equals(enumString, enumTest.enumString) &&
+        Objects.equals(enumStringRequired, enumTest.enumStringRequired) &&
+        Objects.equals(enumInteger, enumTest.enumInteger) &&
+        Objects.equals(enumNumber, enumTest.enumNumber) &&
+        Objects.equals(outerEnum, enumTest.outerEnum);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(enumString, enumStringRequired, enumInteger, enumNumber, outerEnum);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class EnumTest {\n");

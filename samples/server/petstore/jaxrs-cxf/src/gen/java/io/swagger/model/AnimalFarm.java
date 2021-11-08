@@ -19,6 +19,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AnimalFarm extends ArrayList<Animal> {
   
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AnimalFarm animalFarm = (AnimalFarm) o;
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash();
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AnimalFarm {\n");

@@ -134,6 +134,25 @@ public enum ArrayEnumEnum {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    EnumArrays enumArrays = (EnumArrays) o;
+    return Objects.equals(justSymbol, enumArrays.justSymbol) &&
+        Objects.equals(arrayEnum, enumArrays.arrayEnum);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(justSymbol, arrayEnum);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class EnumArrays {\n");

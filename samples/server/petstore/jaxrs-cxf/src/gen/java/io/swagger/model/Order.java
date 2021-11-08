@@ -182,6 +182,29 @@ public enum StatusEnum {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Order order = (Order) o;
+    return Objects.equals(id, order.id) &&
+        Objects.equals(petId, order.petId) &&
+        Objects.equals(quantity, order.quantity) &&
+        Objects.equals(shipDate, order.shipDate) &&
+        Objects.equals(status, order.status) &&
+        Objects.equals(complete, order.complete);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, petId, quantity, shipDate, status, complete);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Order {\n");

@@ -37,6 +37,24 @@ public class Client  {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Client client = (Client) o;
+    return Objects.equals(client, client.client);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(client);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Client {\n");

@@ -105,6 +105,25 @@ public enum InnerEnum {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MapTest mapTest = (MapTest) o;
+    return Objects.equals(mapMapOfString, mapTest.mapMapOfString) &&
+        Objects.equals(mapOfEnumString, mapTest.mapOfEnumString);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(mapMapOfString, mapOfEnumString);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MapTest {\n");

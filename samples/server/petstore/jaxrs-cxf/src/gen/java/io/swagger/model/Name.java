@@ -90,6 +90,27 @@ public class Name  {
 
 
   @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Name name = (Name) o;
+    return Objects.equals(name, name.name) &&
+        Objects.equals(snakeCase, name.snakeCase) &&
+        Objects.equals(property, name.property) &&
+        Objects.equals(_123Number, name._123Number);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, snakeCase, property, _123Number);
+  }
+
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Name {\n");
