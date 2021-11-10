@@ -75,7 +75,7 @@ public class OuterComposite   {
    **/
   @Schema(description = "")
   
-    public Boolean getMyBoolean() {
+    public Boolean isMyBoolean() {
     return myBoolean;
   }
 
