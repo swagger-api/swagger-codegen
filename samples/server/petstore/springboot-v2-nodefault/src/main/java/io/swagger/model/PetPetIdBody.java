@@ -9,19 +9,19 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Body
+ * PetPetIdBody
  */
 @Validated
 
 
-public class Body   {
+public class PetPetIdBody   {
   @JsonProperty("name")
   private String name = null;
 
   @JsonProperty("status")
   private String status = null;
 
-  public Body name(String name) {
+  public PetPetIdBody name(String name) {
     this.name = name;
     return this;
   }
@@ -40,7 +40,7 @@ public class Body   {
     this.name = name;
   }
 
-  public Body status(String status) {
+  public PetPetIdBody status(String status) {
     this.status = status;
     return this;
   }
@@ -68,9 +68,9 @@ public class Body   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body body = (Body) o;
-    return Objects.equals(this.name, body.name) &&
-        Objects.equals(this.status, body.status);
+    PetPetIdBody petPetIdBody = (PetPetIdBody) o;
+    return Objects.equals(this.name, petPetIdBody.name) &&
+        Objects.equals(this.status, petPetIdBody.status);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class Body   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body {\n");
+    sb.append("class PetPetIdBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
