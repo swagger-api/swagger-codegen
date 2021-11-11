@@ -27,7 +27,6 @@ import javax.validation.Valid;
 /**
  * Order
  */
-
 public class Order  implements Serializable {
   @JsonProperty("id")
   private Long id = null;

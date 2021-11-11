@@ -24,7 +24,6 @@ import javax.validation.Valid;
 /**
  * Client
  */
-
 public class Client   {
   @JsonProperty("client")
   private String client = null;

@@ -47,7 +47,7 @@ public class StoreApiController implements StoreApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Map<String, Integer>>(objectMapper.readValue("{  \"key\" : 0}", Map.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Map<String, Integer>>(objectMapper.readValue("{\"empty\": false}", Map.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Map<String, Integer>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,7 +70,7 @@ public class StoreApiController implements StoreApi {
 
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Order>(objectMapper.readValue("{  \"petId\" : 6,  \"quantity\" : 1,  \"id\" : 0,  \"shipDate\" : \"2000-01-23T04:56:07.000+00:00\",  \"complete\" : false,  \"status\" : \"placed\"}", Order.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Order>(objectMapper.readValue("{\"empty\": false}", Order.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Order>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -93,7 +93,7 @@ public class StoreApiController implements StoreApi {
 
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Order>(objectMapper.readValue("{  \"petId\" : 6,  \"quantity\" : 1,  \"id\" : 0,  \"shipDate\" : \"2000-01-23T04:56:07.000+00:00\",  \"complete\" : false,  \"status\" : \"placed\"}", Order.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Order>(objectMapper.readValue("{\"empty\": false}", Order.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Order>(HttpStatus.INTERNAL_SERVER_ERROR);
