@@ -48,7 +48,11 @@ import java.util.Map;
 
 
 /**
- * API tests for StoreApi
+ * Swagger Petstore
+ *
+ * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ *
+ * API tests for StoreApi 
  */
 public class StoreApiTest {
 
@@ -61,7 +65,7 @@ public class StoreApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("http://petstore.swagger.io/v2", StoreApi.class, providers);
+        api = JAXRSClientFactory.create("http://petstore.swagger.io:80/v2", StoreApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
@@ -79,7 +83,7 @@ public class StoreApiTest {
     @Test
     public void deleteOrderTest() {
         String orderId = null;
-	//api.deleteOrder(orderId);
+        //api.deleteOrder(orderId);
         
         // TODO: test validations
         
@@ -114,7 +118,7 @@ public class StoreApiTest {
     @Test
     public void getOrderByIdTest() {
         Long orderId = null;
-	//Order response = api.getOrderById(orderId);
+        //Order response = api.getOrderById(orderId);
         //assertNotNull(response);
         // TODO: test validations
         
@@ -132,7 +136,7 @@ public class StoreApiTest {
     @Test
     public void placeOrderTest() {
         Order body = null;
-	//Order response = api.placeOrder(body);
+        //Order response = api.placeOrder(body);
         //assertNotNull(response);
         // TODO: test validations
         

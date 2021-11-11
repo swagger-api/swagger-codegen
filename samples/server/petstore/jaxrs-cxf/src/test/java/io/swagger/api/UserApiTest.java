@@ -48,7 +48,11 @@ import java.util.Map;
 
 
 /**
- * API tests for UserApi
+ * Swagger Petstore
+ *
+ * <p>This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\
+ *
+ * API tests for UserApi 
  */
 public class UserApiTest {
 
@@ -61,7 +65,7 @@ public class UserApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("http://petstore.swagger.io/v2", UserApi.class, providers);
+        api = JAXRSClientFactory.create("http://petstore.swagger.io:80/v2", UserApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
@@ -79,7 +83,7 @@ public class UserApiTest {
     @Test
     public void createUserTest() {
         User body = null;
-	//api.createUser(body);
+        //api.createUser(body);
         
         // TODO: test validations
         
@@ -97,7 +101,7 @@ public class UserApiTest {
     @Test
     public void createUsersWithArrayInputTest() {
         List<User> body = null;
-	//api.createUsersWithArrayInput(body);
+        //api.createUsersWithArrayInput(body);
         
         // TODO: test validations
         
@@ -115,7 +119,7 @@ public class UserApiTest {
     @Test
     public void createUsersWithListInputTest() {
         List<User> body = null;
-	//api.createUsersWithListInput(body);
+        //api.createUsersWithListInput(body);
         
         // TODO: test validations
         
@@ -133,7 +137,7 @@ public class UserApiTest {
     @Test
     public void deleteUserTest() {
         String username = null;
-	//api.deleteUser(username);
+        //api.deleteUser(username);
         
         // TODO: test validations
         
@@ -151,7 +155,7 @@ public class UserApiTest {
     @Test
     public void getUserByNameTest() {
         String username = null;
-	//User response = api.getUserByName(username);
+        //User response = api.getUserByName(username);
         //assertNotNull(response);
         // TODO: test validations
         
@@ -170,7 +174,7 @@ public class UserApiTest {
     public void loginUserTest() {
         String username = null;
         String password = null;
-	//String response = api.loginUser(username, password);
+        //String response = api.loginUser(username, password);
         //assertNotNull(response);
         // TODO: test validations
         
@@ -187,7 +191,7 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() {
-	//api.logoutUser();
+        //api.logoutUser();
         
         // TODO: test validations
         
@@ -206,7 +210,7 @@ public class UserApiTest {
     public void updateUserTest() {
         String username = null;
         User body = null;
-	//api.updateUser(username, body);
+        //api.updateUser(username, body);
         
         // TODO: test validations
         
