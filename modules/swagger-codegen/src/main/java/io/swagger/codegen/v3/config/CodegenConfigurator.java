@@ -87,7 +87,7 @@ public class CodegenConfigurator implements Serializable {
 
     private String gitUserId="GIT_USER_ID";
     private String gitRepoId="GIT_REPO_ID";
-    private String gitRepoBaseURL = "github";
+    private String gitRepoBaseURL = "https://github.com";
     private String releaseNote="Minor update";
     private String httpUserAgent;
 
