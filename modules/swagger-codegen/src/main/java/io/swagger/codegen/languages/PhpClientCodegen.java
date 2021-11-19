@@ -276,7 +276,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
             this.setGitRepoBaseURL((String) additionalProperties.get(CodegenConstants.GIT_REPO_BASE_URL));
         } else {
             if (gitRepoBaseURL == null) {
-                gitRepoBaseURL = "github";
+                gitRepoBaseURL = "https://github.com";
             }
                 additionalProperties.put(CodegenConstants.GIT_REPO_BASE_URL, gitRepoBaseURL);
 
