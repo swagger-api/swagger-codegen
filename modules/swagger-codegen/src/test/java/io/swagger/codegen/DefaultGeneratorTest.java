@@ -65,7 +65,7 @@ public class DefaultGeneratorTest {
         codegenConfig.setOutputDir(output.getAbsolutePath());
         codegenConfig.setGitRepoId("test_repository");
         codegenConfig.setGitUserId("user");
-        codegenConfig.setGitRepoBaseURL("gitlab");
+        codegenConfig.setGitRepoBaseURL("https://gitlab.com");
 
         ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 
@@ -103,7 +103,7 @@ public class DefaultGeneratorTest {
 
         final File gitPush = new File(output, "/SwaggerClient-php/git_push.sh");
         assertTrue(gitPush.exists());
-        assertFalse(FileUtils.readFileToString(gitPush).contains("https://github.com"));
+        assertTrue(FileUtils.readFileToString(gitPush).contains("https://github.com"));
     }
 
     @Test
