@@ -90,7 +90,7 @@ public class GeneratorServiceTest {
                                 .outputDir(path)
                                 .gitRepoId("TestRepo")
                                 .gitUserId("testuser")
-                                .gitRepoBaseURL("gitlab")
+                                .gitRepoBaseURL("https://gitlab.com")
                 );
         List<File> files = new GeneratorService().generationRequest(request).generate();
         Assert.assertFalse(files.isEmpty());
@@ -127,7 +127,7 @@ public class GeneratorServiceTest {
         for (File f: files) {
             String relPath = f.getAbsolutePath().substring(path.length());
             if ("/SwaggerClient-php/README.md".equals(relPath)) {
-                Assert.assertTrue(FileUtils.readFileToString(f).contains("http://github.com/testuser"));
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("https://github.com/testuser"));
             }
         }
     }
