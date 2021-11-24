@@ -101,6 +101,7 @@ public class LuaClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("object", "TODO_OBJECT_MAPPING");
+        typeMapping.put(null, "TODO_UNTYPED_MAPPING");
 
         importMapping = new HashMap<String, String>();
         importMapping.put("time.Time", "time");

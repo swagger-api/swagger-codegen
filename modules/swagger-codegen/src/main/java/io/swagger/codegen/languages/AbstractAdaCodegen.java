@@ -114,6 +114,7 @@ abstract public class AbstractAdaCodegen extends DefaultCodegen implements Codeg
         typeMapping.put("array", "Swagger.Vector");
         typeMapping.put("map", "Swagger.Map");
         typeMapping.put("object", "Swagger.Object");
+        typeMapping.put(null, "Swagger.Object");
         typeMapping.put("number", "Swagger.Number");
         typeMapping.put("UUID", "Swagger.UString");
         typeMapping.put("file", "Swagger.Http_Content_Type");

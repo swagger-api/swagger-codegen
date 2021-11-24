@@ -90,6 +90,7 @@ public class RClientCodegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("binary", "Character");
         typeMapping.put("ByteArray", "Character");
         typeMapping.put("object", "TODO_OBJECT_MAPPING");
+        typeMapping.put(null, "TODO_UNTYPED_MAPPING");
 
         cliOptions.clear();
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "R package name (convention: lowercase).")

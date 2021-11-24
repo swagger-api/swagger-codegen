@@ -57,6 +57,7 @@ public class JavascriptClosureAngularClientCodegen extends DefaultCodegen implem
         typeMapping.put("char", "string");
         typeMapping.put("double", "number");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("Object", "Object");
         typeMapping.put("File", "Blob");
         typeMapping.put("file", "Blob");

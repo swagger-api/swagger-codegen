@@ -87,6 +87,7 @@ public class FinchServerCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("list", "List");
         typeMapping.put("map", "Map");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("binary", "Array[Byte]");
         typeMapping.put("Date", "LocalDateTime");
         typeMapping.put("DateTime", "ZonedDateTime");

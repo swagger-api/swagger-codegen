@@ -874,6 +874,7 @@ public class DefaultCodegen {
         typeMapping.put("char", "String");
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("integer", "Integer");
         typeMapping.put("ByteArray", "byte[]");
         typeMapping.put("binary", "byte[]");

@@ -78,6 +78,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("object", "interface{}");
+        typeMapping.put(null, "interface{}");
         typeMapping.put("UUID", "string");
 
         importMapping = new HashMap<String, String>();

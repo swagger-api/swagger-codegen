@@ -62,6 +62,7 @@ public class FlashClientCodegen extends DefaultCodegen implements CodegenConfig 
         typeMapping.put("date", "Date");
         typeMapping.put("DateTime", "Date");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("file", "File");
         typeMapping.put("UUID", "String");
         //TODO binary should be mapped to byte array

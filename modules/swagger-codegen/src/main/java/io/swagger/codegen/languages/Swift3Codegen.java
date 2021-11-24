@@ -151,6 +151,7 @@ public class Swift3Codegen extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("number", "Double");
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
+        typeMapping.put(null, "Any");
         typeMapping.put("file", "URL");
         typeMapping.put("binary", "Data");
         typeMapping.put("ByteArray", "Data");

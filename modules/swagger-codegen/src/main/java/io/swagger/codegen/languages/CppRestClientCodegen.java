@@ -146,6 +146,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         typeMapping.put("map", "std::map");
         typeMapping.put("file", "HttpContent");
         typeMapping.put("object", "Object");
+        typeMapping.put(null, "Object");
         typeMapping.put("binary", "std::string");
         typeMapping.put("number", "double");
         typeMapping.put("UUID", "utility::string_t");

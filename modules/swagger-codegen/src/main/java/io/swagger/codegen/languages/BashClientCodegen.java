@@ -184,6 +184,7 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
     typeMapping.put("char", "string");
     typeMapping.put("double", "float");
     typeMapping.put("object", "map");
+    typeMapping.put(null, "map");
     typeMapping.put("integer", "integer");
     typeMapping.put("ByteArray", "string");
     typeMapping.put("binary", "binary");

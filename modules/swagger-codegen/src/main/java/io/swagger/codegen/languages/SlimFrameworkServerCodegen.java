@@ -92,6 +92,7 @@ public class SlimFrameworkServerCodegen extends DefaultCodegen implements Codege
         typeMapping.put("array", "array");
         typeMapping.put("list", "array");
         typeMapping.put("object", "object");
+        typeMapping.put(null, "object");
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "string");

@@ -118,6 +118,7 @@ public class RestbedCodegen extends AbstractCppCodegen {
       typeMapping.put("map", "std::map");
       typeMapping.put("file", "std::string");
       typeMapping.put("object", "Object");
+      typeMapping.put(null, "Object");
       typeMapping.put("binary", "restbed::Bytes");
       typeMapping.put("number", "double");
       typeMapping.put("UUID", "std::string");

@@ -146,6 +146,7 @@ public class PowerShellClientCodegen extends DefaultCodegen implements CodegenCo
         typeMapping.put("date", "System.DateTime");
         typeMapping.put("file", "String");
         typeMapping.put("object", "String");
+        typeMapping.put(null, "String");
         typeMapping.put("binary", "String");
         typeMapping.put("Date", "System.DateTime");
         typeMapping.put("DateTime", "System.DateTime");

@@ -142,6 +142,7 @@ public class ScalaGatlingCodegen extends AbstractScalaCodegen implements Codegen
         typeMapping.put("char", "Char");
         typeMapping.put("double", "Double");
         typeMapping.put("object", "Any");
+        typeMapping.put(null, "Any");
         typeMapping.put("file", "File");
         typeMapping.put("binary", "String");
         typeMapping.put("ByteArray", "String");
