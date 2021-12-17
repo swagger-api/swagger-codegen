@@ -116,8 +116,6 @@ public class CodegenModel extends CodegenObject {
             return false;
         if (interfaceModels != null ? !interfaceModels.equals(that.interfaceModels) : that.interfaceModels != null)
             return false;
-        if (children != null ? !children.equals(that.children) : that.children != null)
-            return false;
         if (subTypes != null ? !subTypes.equals(that.subTypes) : that.subTypes != null)
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null)
@@ -178,7 +176,6 @@ public class CodegenModel extends CodegenObject {
         result = 31 * result + (parentSchema != null ? parentSchema.hashCode() : 0);
         result = 31 * result + (interfaces != null ? interfaces.hashCode() : 0);
         result = 31 * result + (parentModel != null ? parentModel.hashCode() : 0);
-        result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (subTypes != null ? subTypes.hashCode() : 0);
         result = 31 * result + (interfaceModels != null ? interfaceModels.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
