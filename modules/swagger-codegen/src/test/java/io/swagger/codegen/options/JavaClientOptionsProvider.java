@@ -28,6 +28,7 @@ public class JavaClientOptionsProvider extends JavaOptionsProvider {
         options.put(JavaClientCodegen.JAVA8_MODE, "false");
         options.put(JavaClientCodegen.NOT_NULL_JACKSON_ANNOTATION, "false");
         options.put(JavaClientCodegen.IGNORE_UNKNOWN_JACKSON_ANNOTATION, "false");
+        options.put(JavaClientCodegen.WIREMOCK_OPTION, "false");
         return options;
     }
 

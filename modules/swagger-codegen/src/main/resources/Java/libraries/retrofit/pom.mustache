@@ -146,7 +146,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -194,6 +194,22 @@
                 </plugins>
             </build>
         </profile>
+        {{#java11}}
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>2.3.3</version>
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+        </profile>
+        {{/java11}}
     </profiles>
 
     <dependencies>
@@ -240,6 +256,14 @@
             <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
+        {{#wiremock}}
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
+        {{/wiremock}}
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

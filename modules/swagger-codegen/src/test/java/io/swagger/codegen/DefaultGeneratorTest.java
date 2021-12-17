@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.PhpClientCodegen;
 import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
@@ -11,6 +12,7 @@ import io.swagger.parser.util.ParseOptions;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.rules.TemporaryFolder;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -51,6 +53,57 @@ public class DefaultGeneratorTest {
     @AfterMethod
     public void tearDown() throws Exception {
         folder.delete();
+    }
+
+    @Test
+    public void testPHPRepositoryBaseURLOption() throws Exception {
+        final File output = folder.getRoot();
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/readmePHP_149.yaml",null, parseOptions);
+        CodegenConfig codegenConfig = new PhpClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.setGitRepoId("test_repository");
+        codegenConfig.setGitUserId("user");
+        codegenConfig.setGitRepoBaseURL("https://gitlab.com");
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+
+        final File readme = new File(output, "/SwaggerClient-php/README.md");
+        assertTrue(readme.exists());
+        assertTrue(FileUtils.readFileToString(readme).contains("gitlab"));
+
+        final File gitPush = new File(output, "/SwaggerClient-php/git_push.sh");
+        assertTrue(gitPush.exists());
+        assertFalse(FileUtils.readFileToString(gitPush).contains("https://github.com"));
+    }
+
+    @Test
+    public void testPHPRepositoryBaseURLOption_NoOption() throws Exception {
+        final File output = folder.getRoot();
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/readmePHP_149.yaml",null, parseOptions);
+        CodegenConfig codegenConfig = new PhpClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.setGitRepoId("test_repository");
+        codegenConfig.setGitUserId("user");
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+
+        final File readme = new File(output, "/SwaggerClient-php/README.md");
+        assertTrue(readme.exists());
+        assertTrue(FileUtils.readFileToString(readme).contains("https://github.com/user"));
+
+        final File gitPush = new File(output, "/SwaggerClient-php/git_push.sh");
+        assertTrue(gitPush.exists());
+        assertTrue(FileUtils.readFileToString(gitPush).contains("https://github.com"));
     }
 
     @Test
@@ -444,6 +497,56 @@ public class DefaultGeneratorTest {
         assertFalse(FileUtils.readFileToString(model).contains("@JsonIgnoreProperties(ignoreUnknown = true)"));
         assertFalse(FileUtils.readFileToString(model).contains("import com.fasterxml.jackson.annotation.JsonIgnoreProperties;"));
     }
+    
+    @Test
+    public void testAdditionalModelTypeAnnotations() throws IOException {
+        final File output = folder.getRoot();
+
+        CodegenConfigurator codegenConfigurator = new CodegenConfigurator();
+        codegenConfigurator.setInputSpec("src/test/resources/2_0/allOfTest.yaml");
+        codegenConfigurator.setOutputDir(output.getAbsolutePath());
+        codegenConfigurator.setLang("jaxrs");
+
+        Map<String, Object> additionalProperties = new HashMap<>();
+        additionalProperties.put("dateLibrary", "java8");
+        additionalProperties.put("apiTests", false);
+        additionalProperties.put("hideGenerationTimestamp", true);
+        additionalProperties.put("invokerPackage", "com.mycompany.generated.client");
+        additionalProperties.put("modelPackage", "com.mycompany.generated.client.model");
+        additionalProperties.put("apiPackage", "com.mycompany.generated.client.api");
+        additionalProperties.put("additionalModelTypeAnnotations",
+                "@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true);"
+                + "@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_NULL)");
+
+        codegenConfigurator.setAdditionalProperties(additionalProperties);
+
+        Map<String, String> importMapping = new HashMap<>();
+
+        importMapping.put("LocalDateTime", "java.time.LocalDateTime");
+        importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("DayOfWeek", "java.time.DayOfWeek");
+        importMapping.put("Duration", "java.time.Duration");
+        importMapping.put("ChronoUnit", "java.time.temporal.ChronoUnit");
+        importMapping.put("Currency", "java.util.Currency");
+        importMapping.put("LocalDate", "java.time.LocalDate");
+        importMapping.put("Locale", "java.util.Locale");
+        importMapping.put("ZoneId", "java.time.ZoneId");
+
+        codegenConfigurator.setImportMappings(importMapping);
+
+        DefaultGenerator generator = new DefaultGenerator();
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.MODEL_DOCS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_TESTS, "false");
+        generator.setGeneratorPropertyDefault(CodegenConstants.API_DOCS, "false");
+
+        //generate
+        generator.opts(codegenConfigurator.toClientOptInput()).generate();
+        final File model = new File(output, "src/gen/java/com/mycompany/generated/client/model/ModelOne.java");
+        assertTrue(model.exists());
+        assertTrue(FileUtils.readFileToString(model).contains("@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)"));
+        assertTrue(FileUtils.readFileToString(model).contains("@com.fasterxml.jackson.annotation.JsonInclude(JsonInclude.Include.NON_NULL)"));
+    }
 
     @Test
     public void testSecurityWithoutGlobal() throws Exception {
@@ -649,6 +752,7 @@ public class DefaultGeneratorTest {
         CodegenConfig codegenConfig = new SpringCodegen();
         codegenConfig.setLibrary("spring-cloud");
         codegenConfig.setOutputDir(output.getAbsolutePath());
+
 
         ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 

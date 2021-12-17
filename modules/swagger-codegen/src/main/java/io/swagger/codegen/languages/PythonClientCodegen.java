@@ -27,12 +27,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     public static final String WRITE_BINARY_OPTION = "writeBinary";
 
+    public static final String CASE_OPTION = "case";
+    public static final String CAMEL_CASE_OPTION = "camel";
+    public static final String SNAKE_CASE_OPTION = "snake";
+    public static final String KEBAB_CASE_OPTION = "kebab";
+
     protected String packageName; // e.g. petstore_api
     protected String packageVersion;
     protected String projectName; // for setup.py, e.g. petstore-api
     protected String packageUrl;
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
+    protected String caseType;
 
     protected Map<Character, String> regexModifiers;
 
@@ -142,6 +148,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         libraryOption.setDefault(DEFAULT_LIBRARY);
         cliOptions.add(libraryOption);
         setLibrary(DEFAULT_LIBRARY);
+
+        this.caseType = SNAKE_CASE_OPTION;
     }
 
     @Override
@@ -161,7 +169,8 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         if (additionalProperties.containsKey(CodegenConstants.PROJECT_NAME)) {
-            setProjectName((String) additionalProperties.get(CodegenConstants.PROJECT_NAME));
+            String projectName = (String) additionalProperties.get(CodegenConstants.PROJECT_NAME);
+            setProjectName(projectName.replaceAll("[^a-zA-Z0-9\\s\\-_]",""));
         }
         else {
             // default: set project based on package name
@@ -193,16 +202,20 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
             setPackageUrl((String) additionalProperties.get(PACKAGE_URL));
         }
 
+        this.setCaseType();
+
+        final String packageFolder = packageName.replace('.', File.separatorChar);
+
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
         supportingFiles.add(new SupportingFile("tox.mustache", "", "tox.ini"));
         supportingFiles.add(new SupportingFile("test-requirements.mustache", "", "test-requirements.txt"));
         supportingFiles.add(new SupportingFile("requirements.mustache", "", "requirements.txt"));
 
-        supportingFiles.add(new SupportingFile("configuration.mustache", packageName, "configuration.py"));
-        supportingFiles.add(new SupportingFile("__init__package.mustache", packageName, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__model.mustache", packageName + File.separatorChar + modelPackage, "__init__.py"));
-        supportingFiles.add(new SupportingFile("__init__api.mustache", packageName + File.separatorChar + apiPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("configuration.mustache", packageFolder, "configuration.py"));
+        supportingFiles.add(new SupportingFile("__init__package.mustache", packageFolder, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__model.mustache", packageFolder + File.separatorChar + modelPackage, "__init__.py"));
+        supportingFiles.add(new SupportingFile("__init__api.mustache", packageFolder + File.separatorChar + apiPackage, "__init__.py"));
 
         if(Boolean.FALSE.equals(excludeTests)) {
             supportingFiles.add(new SupportingFile("__init__test.mustache", testFolder, "__init__.py"));
@@ -211,16 +224,16 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("travis.mustache", "", ".travis.yml"));
         supportingFiles.add(new SupportingFile("setup.mustache", "", "setup.py"));
-        supportingFiles.add(new SupportingFile("api_client.mustache", packageName, "api_client.py"));
+        supportingFiles.add(new SupportingFile("api_client.mustache", packageFolder, "api_client.py"));
 
         if ("asyncio".equals(getLibrary())) {
-            supportingFiles.add(new SupportingFile("asyncio/rest.mustache", packageName, "rest.py"));
+            supportingFiles.add(new SupportingFile("asyncio/rest.mustache", packageFolder, "rest.py"));
             additionalProperties.put("asyncio", "true");
         } else if ("tornado".equals(getLibrary())) {
-            supportingFiles.add(new SupportingFile("tornado/rest.mustache", packageName, "rest.py"));
+            supportingFiles.add(new SupportingFile("tornado/rest.mustache", packageFolder, "rest.py"));
             additionalProperties.put("tornado", "true");
         } else {
-            supportingFiles.add(new SupportingFile("rest.mustache", packageName, "rest.py"));
+            supportingFiles.add(new SupportingFile("rest.mustache", packageFolder, "rest.py"));
         }
 
         modelPackage = packageName + "." + modelPackage;
@@ -290,6 +303,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
             vendorExtensions.put("x-regex", regex);
             vendorExtensions.put("x-modifiers", modifiers);
+        }
+    }
+
+    protected void setCaseType() {
+        final String caseType = String.valueOf(additionalProperties.get(CASE_OPTION));
+        if (CAMEL_CASE_OPTION.equalsIgnoreCase(caseType) || SNAKE_CASE_OPTION.equalsIgnoreCase(caseType) || KEBAB_CASE_OPTION.equalsIgnoreCase(caseType)) {
+            this.caseType = caseType;
+        } else {
+            this.caseType = SNAKE_CASE_OPTION;
         }
     }
 
@@ -407,13 +429,18 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         if (name.matches("^[A-Z_]*$")) {
             name = name.toLowerCase();
         }
+        if (CAMEL_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
+            name = camelize(name, true);
+        } else if (KEBAB_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
+            name = dashize(name);
+        } else {
+            // underscore the variable name
+            // petId => pet_id
+            name = underscore(name);
 
-        // underscore the variable name
-        // petId => pet_id
-        name = underscore(name);
-
-        // remove leading underscore
-        name = name.replaceAll("^_*", "");
+            // remove leading underscore
+            name = name.replaceAll("^_*", "");
+        }
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name) || name.matches("^\\d.*")) {

@@ -103,7 +103,7 @@ public class DefaultCodegen {
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
     protected Boolean allowUnicodeIdentifiers = false;
-    protected String gitUserId, gitRepoId, releaseNote;
+    protected String gitUserId, gitRepoId, releaseNote, gitRepoBaseURL;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
     protected Boolean skipAliasGeneration;
@@ -116,6 +116,7 @@ public class DefaultCodegen {
     protected Map<String, String> typeAliases = null;
 
     protected String ignoreFilePathOverride;
+
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -1243,6 +1244,14 @@ public class DefaultCodegen {
     }
 
     /**
+     * Capitalise first character of string
+     */
+    @SuppressWarnings("static-method")
+    public static String titleCase(final String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    /**
      * Capitalize the string
      *
      * @param name string to be capitalized
@@ -1381,7 +1390,13 @@ public class DefaultCodegen {
         m.classname = toModelName(name);
         m.classVarName = toVarName(name);
         m.classFilename = toModelFilename(name);
-        m.modelJson = Json.pretty(model);
+        // NOTE: not using Json.pretty() to write out model, as it
+        // can raise memory consumption (see comment in ExampleGenerator)
+        try {
+            m.modelJson = Json.mapper().writeValueAsString(model);
+        } catch (Exception e) {
+            m.modelJson = "{}";
+        }
         m.externalDocs = model.getExternalDocs();
         m.vendorExtensions = model.getVendorExtensions();
         m.isAlias = typeAliases.containsKey(name);
@@ -3643,6 +3658,24 @@ public class DefaultCodegen {
      */
     public String getGitRepoId() {
         return gitRepoId;
+    }
+
+    /**
+     * Set Git repo Base URL.
+     *
+     * @param gitRepoBaseURL Git repo ID
+     */
+    public void setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+    }
+
+    /**
+     * Git repo Base URL
+     *
+     * @return Git Base URL
+     */
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
     }
 
     /**
