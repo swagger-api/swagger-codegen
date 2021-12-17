@@ -1,11 +1,11 @@
 package io.swagger.api;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -146,7 +146,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEndpointParameters
      */
-    default ResponseEntity<Void> testEndpointParameters( Body2  body) {
+    default ResponseEntity<Void> testEndpointParameters( FakeBody  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -172,7 +172,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testEnumRequestBody
      */
-    default ResponseEntity<Void> testEnumRequestBody( Body4  body) {
+    default ResponseEntity<Void> testEnumRequestBody( EnumFormBody  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");
@@ -194,7 +194,7 @@ public interface FakeApiDelegate {
     /**
      * @see FakeApi#testJsonFormData
      */
-    default ResponseEntity<Void> testJsonFormData( Body5  body) {
+    default ResponseEntity<Void> testJsonFormData( FakeJsonFormDataBody  body) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default FakeApi interface so no example is generated");

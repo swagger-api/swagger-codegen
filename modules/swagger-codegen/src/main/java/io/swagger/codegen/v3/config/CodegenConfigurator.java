@@ -10,6 +10,7 @@ import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenConfigLoader;
 import io.swagger.codegen.v3.CodegenConstants;
 import io.swagger.codegen.v3.auth.AuthParser;
+import io.swagger.codegen.v3.service.HostAccessControl;
 import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.core.util.Json;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,6 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -84,6 +87,7 @@ public class CodegenConfigurator implements Serializable {
 
     private String gitUserId="GIT_USER_ID";
     private String gitRepoId="GIT_REPO_ID";
+    private String gitRepoBaseURL = "https://github.com";
     private String releaseNote="Minor update";
     private String httpUserAgent;
 
@@ -91,6 +95,25 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator() {
         this.setOutputDir(".");
+    }
+
+    private List<HostAccessControl> allowedAuthHosts = new ArrayList<>();
+    private List<HostAccessControl> deniedAuthHosts = new ArrayList<>();
+
+    public List<HostAccessControl> getAllowedAuthHosts() {
+        return allowedAuthHosts;
+    }
+
+    public void setAllowedAuthHosts(List<HostAccessControl> allowedAuthHosts) {
+        this.allowedAuthHosts = allowedAuthHosts;
+    }
+
+    public List<HostAccessControl> getDeniedAuthHosts() {
+        return deniedAuthHosts;
+    }
+
+    public void setDeniedAuthHosts(List<HostAccessControl> deniedAuthHosts) {
+        this.deniedAuthHosts = deniedAuthHosts;
     }
 
     public CodegenConfigurator setLang(String lang) {
@@ -380,6 +403,16 @@ public class CodegenConfigurator implements Serializable {
         return this;
     }
 
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
+    }
+
+    public CodegenConfigurator setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+        return this;
+    }
+
+
     public String getReleaseNote() {
         return releaseNote;
     }
@@ -470,8 +503,59 @@ public class CodegenConfigurator implements Serializable {
 
         CodegenConfig config = CodegenConfigLoader.forName(lang);
         ClientOptInput input = new ClientOptInput();
+
+        Predicate<URL> urlMatcher = null;
+        if (!allowedAuthHosts.isEmpty() || !deniedAuthHosts.isEmpty()) {
+            urlMatcher = (url) -> {
+                String host = url.getHost();
+                // first check denies
+                for (HostAccessControl check: deniedAuthHosts) {
+                    if (check.isRegex()) {
+                        if (host.matches(check.getHost())) {
+                            return false;
+                        }
+                    } else if (check.isEndsWith()){
+                        if (host.toLowerCase().endsWith(check.getHost().toLowerCase())){
+                            return false;
+                        }
+                    } else {
+                        if (host.equalsIgnoreCase(check.getHost())) {
+                            return false;
+                        }
+                    }
+                }
+                // then allows
+                for (HostAccessControl check: allowedAuthHosts) {
+                    if (check.isRegex()) {
+                        if (!host.matches(check.getHost())) {
+                            return false;
+                        }
+                    } else if (check.isEndsWith()){
+                        if (!host.toLowerCase().endsWith(check.getHost().toLowerCase())){
+                            return false;
+                        }
+                    } else {
+                        if (!host.equalsIgnoreCase(check.getHost())) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            };
+        }
+
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
+        if (!authorizationValues.isEmpty() && urlMatcher != null) {
+            for (AuthorizationValue authVal: authorizationValues) {
+                if (authVal.getUrlMatcher() == null) {
+                    authVal.setUrlMatcher(urlMatcher);
+                }
+            }
+        }
         if (authorizationValue != null) {
+            if (urlMatcher != null) {
+                authorizationValue.setUrlMatcher(urlMatcher);
+            }
             authorizationValues.add(authorizationValue);
         }
 
@@ -560,6 +644,7 @@ public class CodegenConfigurator implements Serializable {
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
         checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
+        checkAndSetAdditionalProperty(gitRepoBaseURL, CodegenConstants.GIT_REPO_BASE_URL);
         checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
         checkAndSetAdditionalProperty(httpUserAgent, CodegenConstants.HTTP_USER_AGENT);
 

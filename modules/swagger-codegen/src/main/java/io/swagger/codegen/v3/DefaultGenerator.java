@@ -202,7 +202,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
         
         // Additional properties could be set already (f.e. using Maven plugin)
-        if (useOas2Option != null || !config.additionalProperties().containsKey(CodegenConstants.USE_OAS2)) {
+        if (useOas2Option != null && !config.additionalProperties().containsKey(CodegenConstants.USE_OAS2)) {
             config.additionalProperties().put(CodegenConstants.USE_OAS2, useOas2);
         }
 
@@ -922,7 +922,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     codegenOperation.getVendorExtensions().put(CodegenConstants.HAS_AUTH_METHODS_EXT_NAME, Boolean.TRUE);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
                 String msg = "Could not process operation:\n" //
                         + "  Tag: " + tag + "\n"//
                         + "  Operation: " + operation.getOperationId() + "\n" //

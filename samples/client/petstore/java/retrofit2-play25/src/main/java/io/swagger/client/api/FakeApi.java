@@ -10,11 +10,11 @@ import retrofit2.http.*;
 import okhttp3.RequestBody;
 
 import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public interface FakeApi {
   })
   @POST("fake")
   CompletionStage<Response<Void>> testEndpointParameters(
-                    @retrofit2.http.Body Body2 body    
+                    @retrofit2.http.Body FakeBody body    
   );
 
   /**
@@ -136,7 +136,7 @@ public interface FakeApi {
   })
   @POST("fake/enum/form")
   CompletionStage<Response<Void>> testEnumRequestBody(
-                    @retrofit2.http.Body Body4 body    
+                    @retrofit2.http.Body EnumFormBody body    
   );
 
   /**
@@ -164,7 +164,7 @@ public interface FakeApi {
   })
   @POST("fake/jsonFormData")
   CompletionStage<Response<Void>> testJsonFormData(
-                    @retrofit2.http.Body Body5 body    
+                    @retrofit2.http.Body FakeJsonFormDataBody body    
   );
 
 }

@@ -63,7 +63,7 @@ public interface AnimalApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Find animal by ID", tags={ "animal" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Animal.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Animal.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Pet not found") })
     public Animal getAnimalById(@PathParam("animalId") Long animalId);

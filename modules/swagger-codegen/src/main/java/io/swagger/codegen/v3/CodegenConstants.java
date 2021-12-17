@@ -161,8 +161,8 @@ public class CodegenConstants {
     public static final String DOTNET_FRAMEWORK = "targetFramework";
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 
-    public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
-    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
+    public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, kebab_case, original}
+    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, kebab_case, original, UPPERCASE}
 
     public static final String ENUM_PROPERTY_NAMING = "enumPropertyNaming";
     public static final String ENUM_PROPERTY_NAMING_DESC = "Naming convention for enum properties: 'camelCase', 'PascalCase', 'snake_case', 'UPPERCASE', and 'original'";
@@ -181,6 +181,9 @@ public class CodegenConstants {
 
     public static final String GIT_REPO_ID = "gitRepoId";
     public static final String GIT_REPO_ID_DESC = "Git repo ID, e.g. swagger-codegen.";
+
+    public static final String GIT_REPO_BASE_URL = "gitRepoBaseURL";
+    public static final String GIT_REPO_BASE_URL_DESC = "Git repo Base URL, e.g. swagger-codegen.";
 
     public static final String RELEASE_NOTE = "releaseNote";
     public static final String RELEASE_NOTE_DESC = "Release note, default to 'Minor update'.";

@@ -208,6 +208,10 @@ public interface CodegenConfig {
 
     String getGitRepoId();
 
+    void setGitRepoBaseURL(String gitRepoBaseURL);
+
+    String getGitRepoBaseURL();
+
     void setReleaseNote(String releaseNote);
 
     String getReleaseNote();

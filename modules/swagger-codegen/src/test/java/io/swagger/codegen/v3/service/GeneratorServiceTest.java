@@ -19,6 +19,119 @@ import java.util.List;
 
 public class GeneratorServiceTest {
 
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV2() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V2)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("2_0/readme149.yaml", true, true))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+                                .gitRepoBaseURL("gitlab")
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("gitlab"));
+            }
+            if ("/SwaggerClient-php/git_push.sh".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("https://github.com"));
+            }
+        }
+    }
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV2_NoOption() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V2)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("2_0/readme149.yaml", true, true))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("https://github.com/testuser"));
+            }
+        }
+    }
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV3() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("3_0_0/readme149_v3.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+                                .gitRepoBaseURL("https://gitlab.com")
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("gitlab"));
+            }
+            if ("/SwaggerClient-php/git_push.sh".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("https://github.com"));
+            }
+        }
+    }
+
+    @Test(description = "readme reference url")
+    public void testGeneratorService_readmeV3_NoOption() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("php")
+                .spec(loadSpecAsNode("3_0_0/readme149_v3.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .gitRepoId("TestRepo")
+                                .gitUserId("testuser")
+
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/SwaggerClient-php/README.md".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("https://github.com/testuser"));
+            }
+        }
+    }
+
     @Test(description = "test generator service with html2")
     public void testGeneratorService_HTML2_Bearer() throws IOException {
 
@@ -49,7 +162,6 @@ public class GeneratorServiceTest {
                         " -H \"Authorization: Bearer [[accessToken]]\"\\"));
             }
         }
-
     }
 
     @Test(description = "test generator service with html2")
@@ -94,6 +206,33 @@ public class GeneratorServiceTest {
             if ("/src/main/java/io/swagger/client/model/OrderLineAudit.java".equals(relPath)) {
                 Assert.assertTrue(FileUtils.readFileToString(f).contains("@JsonInclude(JsonInclude.Include.NON_NULL)"));
                 Assert.assertTrue(FileUtils.readFileToString(f).contains("import com.fasterxml.jackson.annotation.JsonInclude"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with java enum parameters in type")
+    public void testGeneratorService_WithEnumParametersType() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-11166/issue-11166.yaml", true, false))
+                .options(
+                        new Options()
+                                     .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/ResponseCreateMeetingSettings.java".equals(relPath)) {
+                String fileContent = FileUtils.readFileToString(f);
+                Assert.assertTrue(fileContent.contains("public static ApprovalTypeEnum fromValue(Integer input)"));
+                Assert.assertTrue(fileContent.contains("b.value.equals(input)"));
             }
         }
     }
@@ -674,6 +813,23 @@ public class GeneratorServiceTest {
         spec = FileUtils.readFileToString(new File(path + File.separator + "openapi.yaml"));
         Assert.assertTrue(spec.contains("additionalProperties: true"));
 
+    }
+
+    @Test(description = "test generator service with typescript-angular 3.0")
+    public void testGeneratorServiceTypescriptAngular3() {
+
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("typescript-angular")
+                .spec(loadSpecAsNode("3_0_0/petstore.json", false, false))
+                .options(
+                        new Options()
+                                .outputDir(getTmpFolder().getAbsolutePath())
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
     }
 
     protected static File getTmpFolder() {

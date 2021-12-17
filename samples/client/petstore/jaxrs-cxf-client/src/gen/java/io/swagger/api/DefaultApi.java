@@ -31,6 +31,6 @@ public interface DefaultApi  {
     @Produces({ "application/json" })
     @Operation(summary = "", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "peticion realizada con exito", content = @Content(array = @ArraySchema(schema = @Schema(implementation = String.class)))) })
+        @ApiResponse(responseCode = "200", description = "peticion realizada con exito", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = String.class)))) })
     public List<String> testMethod();
 }

@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @Component("io.swagger.client.api.AnimalApi")
 public class AnimalApi {
@@ -50,10 +51,22 @@ public class AnimalApi {
      * Add a new animal to the store
      * 
      * <p><b>405</b> - Invalid input
-     * @param body Animal object that needs to be added to the store
+     * @param body Animal object that needs to be added to the store (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void addAnimal(Animal body) throws RestClientException {
+        addAnimalWithHttpInfo(body);
+    }
+
+    /**
+     * Add a new animal to the store
+     * 
+     * <p><b>405</b> - Invalid input
+     * @param body Animal object that needs to be added to the store (required)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> addAnimalWithHttpInfo(Animal body) throws RestClientException {
         Object postBody = body;
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -75,7 +88,7 @@ public class AnimalApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     public static class DeleteAnimalOptionals {
         public String apiKey() {
@@ -118,11 +131,24 @@ public class AnimalApi {
      * Deletes a animal
      * 
      * <p><b>400</b> - Invalid animal value
-     * @param animalId Animal id to delete
-     * @param apiKey The apiKey parameter
+     * @param animalId Animal id to delete (required)
+     * @param apiKey  (optional)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void deleteAnimal(Long animalId, String apiKey) throws RestClientException {
+        deleteAnimalWithHttpInfo(animalId, apiKey);
+    }
+
+    /**
+     * Deletes a animal
+     * 
+     * <p><b>400</b> - Invalid animal value
+     * @param animalId Animal id to delete (required)
+     * @param apiKey  (optional)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> deleteAnimalWithHttpInfo(Long animalId, String apiKey) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'animalId' is set
         if (animalId == null) {
@@ -147,7 +173,7 @@ public class AnimalApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
 
 
@@ -157,11 +183,25 @@ public class AnimalApi {
      * <p><b>200</b> - successful operation
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Pet not found
-     * @param animalId ID of pet to return
+     * @param animalId ID of pet to return (required)
      * @return Animal
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public Animal getAnimalById(Long animalId) throws RestClientException {
+        return getAnimalByIdWithHttpInfo(animalId).getBody();
+    }
+
+    /**
+     * Find animal by ID
+     * Returns a single animal
+     * <p><b>200</b> - successful operation
+     * <p><b>400</b> - Invalid ID supplied
+     * <p><b>404</b> - Pet not found
+     * @param animalId ID of pet to return (required)
+     * @return ResponseEntity&lt;Animal&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Animal> getAnimalByIdWithHttpInfo(Long animalId) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'animalId' is set
         if (animalId == null) {
@@ -196,10 +236,24 @@ public class AnimalApi {
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Animal not found
      * <p><b>405</b> - Validation exception
-     * @param body Animal object that needs to be added.
+     * @param body Animal object that needs to be added. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void updateAnimal(Animal body) throws RestClientException {
+        updateAnimalWithHttpInfo(body);
+    }
+
+    /**
+     * Update an existing animal
+     * 
+     * <p><b>400</b> - Invalid ID supplied
+     * <p><b>404</b> - Animal not found
+     * <p><b>405</b> - Validation exception
+     * @param body Animal object that needs to be added. (required)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> updateAnimalWithHttpInfo(Animal body) throws RestClientException {
         Object postBody = body;
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -221,7 +275,7 @@ public class AnimalApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     public static class UpdateAnimalWithFormOptionals {
         public String name() {
@@ -274,12 +328,26 @@ public class AnimalApi {
      * Updates a animal
      * 
      * <p><b>405</b> - Invalid input
-     * @param animalId ID of animal that needs to be updated
-     * @param name The name parameter
-     * @param status The status parameter
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param name  (optional)
+     * @param status  (optional)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void updateAnimalWithForm(Long animalId, String name, String status) throws RestClientException {
+        updateAnimalWithFormWithHttpInfo(animalId, name, status);
+    }
+
+    /**
+     * Updates a animal
+     * 
+     * <p><b>405</b> - Invalid input
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param name  (optional)
+     * @param status  (optional)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> updateAnimalWithFormWithHttpInfo(Long animalId, String name, String status) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'animalId' is set
         if (animalId == null) {
@@ -308,6 +376,6 @@ public class AnimalApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
 }
