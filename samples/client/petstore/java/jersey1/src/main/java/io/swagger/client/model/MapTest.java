@@ -52,9 +52,9 @@ public class MapTest {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static InnerEnum fromValue(String text) {
+    public static InnerEnum fromValue(String input) {
       for (InnerEnum b : InnerEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }

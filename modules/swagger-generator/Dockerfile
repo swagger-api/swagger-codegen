@@ -25,6 +25,7 @@ WORKDIR $JETTY_BASE
 RUN addgroup --gid 2000 codegengroup
 RUN adduser --home "/generator" --ingroup codegengroup --disabled-password --gecos '' --shell "/bin/bash" --uid "1000" codegenuser
 RUN chown -R codegenuser /generator
+RUN chown -R codegenuser /jetty_home
 
 USER codegenuser
 CMD ["./start"]

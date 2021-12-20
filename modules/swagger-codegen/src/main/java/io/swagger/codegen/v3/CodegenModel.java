@@ -20,6 +20,7 @@ public class CodegenModel extends CodegenObject {
     public CodegenModel parentModel;
     public List<CodegenModel> interfaceModels;
     public List<CodegenModel> children;
+    public List<CodegenModel> subTypes;
 
     public String name, classname, title, description, classVarName, modelJson, dataType, xmlPrefix, xmlNamespace, xmlName;
     public String classFilename; // store the class file name, mainly used for import
@@ -114,6 +115,8 @@ public class CodegenModel extends CodegenObject {
         if (parentModel != null ? !parentModel.equals(that.parentModel) : that.parentModel != null)
             return false;
         if (interfaceModels != null ? !interfaceModels.equals(that.interfaceModels) : that.interfaceModels != null)
+            return false;
+        if (subTypes != null ? !subTypes.equals(that.subTypes) : that.subTypes != null)
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null)
             return false;
@@ -249,6 +252,22 @@ public class CodegenModel extends CodegenObject {
 
     public void setChildren(List<CodegenModel> children) {
         this.children = children;
+    }
+
+    public List<CodegenModel> getSubTypes() {
+        return subTypes;
+    }
+
+    public void setSubTypes(List<CodegenModel> subTypes) {
+        this.subTypes = subTypes;
+    }
+
+    public CodegenModel addSubType(CodegenModel subType) {
+        if (this.subTypes == null) {
+            this.subTypes = new ArrayList<>();
+        }
+        this.subTypes.add(subType);
+        return this;
     }
 
     public String getName() {
