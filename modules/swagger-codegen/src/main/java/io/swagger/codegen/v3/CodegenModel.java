@@ -176,7 +176,6 @@ public class CodegenModel extends CodegenObject {
         result = 31 * result + (parentSchema != null ? parentSchema.hashCode() : 0);
         result = 31 * result + (interfaces != null ? interfaces.hashCode() : 0);
         result = 31 * result + (parentModel != null ? parentModel.hashCode() : 0);
-        result = 31 * result + (subTypes != null ? subTypes.hashCode() : 0);
         result = 31 * result + (interfaceModels != null ? interfaceModels.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (classname != null ? classname.hashCode() : 0);
