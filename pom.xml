@@ -1157,9 +1157,9 @@
     </repositories>
     <properties>
         <swagger-codegen-generators-version>1.0.31-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.1.11</swagger-core-version>
-        <swagger-core-version-v1>1.6.3</swagger-core-version-v1>
-        <swagger-parser-version>2.0.28</swagger-parser-version>
+        <swagger-core-version>2.1.12</swagger-core-version>
+        <swagger-core-version-v1>1.6.4</swagger-core-version-v1>
+        <swagger-parser-version>2.0.29</swagger-parser-version>
         <swagger-parser-version-v1>1.0.56</swagger-parser-version-v1>
         <jackson-version>2.12.1</jackson-version>
         <scala-version>2.11.1</scala-version>
@@ -1170,7 +1170,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.4</commons-lang-version>
         <slf4j-version>1.7.32</slf4j-version>
-        <logback-version>1.2.3</logback-version>
+        <logback-version>1.2.9</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.12</jmustache-version>
         <testng-version>6.9.6</testng-version>
