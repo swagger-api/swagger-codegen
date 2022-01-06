@@ -23,11 +23,12 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     // This is the name of elixir project name;
     protected static final String defaultPackageName = "swagger_client";
 
-    String supportedElixirVersion = "1.4";
+    String supportedElixirVersion = "1.12";
     List<String> extraApplications = Arrays.asList(":logger");
     List<String> deps = Arrays.asList(
-            "{:tesla, \"~> 0.8\"}",
-            "{:poison, \">= 1.0.0\"}"
+            "{:tesla, \"~> 1.4\"}",
+            "{:poison, \"~> 5.0\"}",
+            "{:dialyxir, \"~> 1.1\", only: [:dev], runtime: false}"
     );
 
     public ElixirClientCodegen() {

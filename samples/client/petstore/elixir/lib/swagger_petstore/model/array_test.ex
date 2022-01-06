@@ -9,15 +9,15 @@ defmodule SwaggerPetstore.Model.ArrayTest do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"array_of_string",
-    :"array_array_of_integer",
-    :"array_array_of_model"
+    :array_of_string,
+    :array_array_of_integer,
+    :array_array_of_model
   ]
 
   @type t :: %__MODULE__{
-    :"array_of_string" => [String.t],
-    :"array_array_of_integer" => [[integer()]],
-    :"array_array_of_model" => [[ReadOnlyFirst]]
+    :array_of_string => [String.t],
+    :array_array_of_integer => [[integer()]],
+    :array_array_of_model => [[ReadOnlyFirst]]
   }
 end
 

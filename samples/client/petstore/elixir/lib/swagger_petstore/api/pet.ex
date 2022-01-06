@@ -31,7 +31,7 @@ defmodule SwaggerPetstore.Api.Pet do
     %{}
     |> method(:post)
     |> url("/pet")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -56,7 +56,7 @@ defmodule SwaggerPetstore.Api.Pet do
   @spec delete_pet(Tesla.Env.client, integer(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def delete_pet(connection, pet_id, opts \\ []) do
     optional_params = %{
-      :"api_key" => :headers
+      :api_key => :headers
     }
     %{}
     |> method(:delete)
@@ -87,7 +87,7 @@ defmodule SwaggerPetstore.Api.Pet do
     %{}
     |> method(:get)
     |> url("/pet/findByStatus")
-    |> add_param(:query, :"status", status)
+    |> add_param(:query, :status, status)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode([%SwaggerPetstore.Model.Pet{}])
@@ -113,7 +113,7 @@ defmodule SwaggerPetstore.Api.Pet do
     %{}
     |> method(:get)
     |> url("/pet/findByTags")
-    |> add_param(:query, :"tags", tags)
+    |> add_param(:query, :tags, tags)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode([%SwaggerPetstore.Model.Pet{}])
@@ -164,7 +164,7 @@ defmodule SwaggerPetstore.Api.Pet do
     %{}
     |> method(:put)
     |> url("/pet")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -190,8 +190,8 @@ defmodule SwaggerPetstore.Api.Pet do
   @spec update_pet_with_form(Tesla.Env.client, integer(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def update_pet_with_form(connection, pet_id, opts \\ []) do
     optional_params = %{
-      :"name" => :form,
-      :"status" => :form
+      :name => :form,
+      :status => :form
     }
     %{}
     |> method(:post)
@@ -222,8 +222,8 @@ defmodule SwaggerPetstore.Api.Pet do
   @spec upload_file(Tesla.Env.client, integer(), keyword()) :: {:ok, SwaggerPetstore.Model.ApiResponse.t} | {:error, Tesla.Env.t}
   def upload_file(connection, pet_id, opts \\ []) do
     optional_params = %{
-      :"additionalMetadata" => :form,
-      :"file" => :form
+      :additionalMetadata => :form,
+      :file => :form
     }
     %{}
     |> method(:post)

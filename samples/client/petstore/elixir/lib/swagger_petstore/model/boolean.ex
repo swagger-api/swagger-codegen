@@ -2,22 +2,22 @@
 # https://github.com/swagger-api/swagger-codegen.git
 # Do not edit the class manually.
 
-defmodule SwaggerPetstore.Model.ArrayOfArrayOfNumberOnly do
+defmodule SwaggerPetstore.Model.Boolean do
   @moduledoc """
-  
+  True or False indicator
   """
 
   @derive [Poison.Encoder]
   defstruct [
-    :ArrayArrayNumber
+    
   ]
 
   @type t :: %__MODULE__{
-    :ArrayArrayNumber => [[float()]]
+    
   }
 end
 
-defimpl Poison.Decoder, for: SwaggerPetstore.Model.ArrayOfArrayOfNumberOnly do
+defimpl Poison.Decoder, for: SwaggerPetstore.Model.Boolean do
   def decode(value, _options) do
     value
   end

@@ -31,7 +31,7 @@ defmodule SwaggerPetstore.Api.User do
     %{}
     |> method(:post)
     |> url("/user")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -57,7 +57,7 @@ defmodule SwaggerPetstore.Api.User do
     %{}
     |> method(:post)
     |> url("/user/createWithArray")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -83,7 +83,7 @@ defmodule SwaggerPetstore.Api.User do
     %{}
     |> method(:post)
     |> url("/user/createWithList")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -160,8 +160,8 @@ defmodule SwaggerPetstore.Api.User do
     %{}
     |> method(:get)
     |> url("/user/login")
-    |> add_param(:query, :"username", username)
-    |> add_param(:query, :"password", password)
+    |> add_param(:query, :username, username)
+    |> add_param(:query, :password, password)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -212,7 +212,7 @@ defmodule SwaggerPetstore.Api.User do
     %{}
     |> method(:put)
     |> url("/user/#{username}")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)

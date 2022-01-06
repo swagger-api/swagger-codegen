@@ -9,11 +9,11 @@ defmodule SwaggerPetstore.Model.NumberOnly do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"JustNumber"
+    :JustNumber
   ]
 
   @type t :: %__MODULE__{
-    :"JustNumber" => float()
+    :JustNumber => float()
   }
 end
 

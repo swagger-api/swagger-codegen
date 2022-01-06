@@ -31,7 +31,7 @@ defmodule SwaggerPetstore.Api.AnotherFake do
     %{}
     |> method(:patch)
     |> url("/another-fake/dummy")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%SwaggerPetstore.Model.Client{})

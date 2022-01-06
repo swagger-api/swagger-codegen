@@ -31,7 +31,7 @@ defmodule SwaggerPetstore.Api.FakeClassnameTags123 do
     %{}
     |> method(:patch)
     |> url("/fake_classname_test")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%SwaggerPetstore.Model.Client{})

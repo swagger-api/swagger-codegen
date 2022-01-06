@@ -4,7 +4,7 @@ defmodule SwaggerPetstore.Mixfile do
   def project do
     [app: :swagger_petstore,
      version: "0.1.0",
-     elixir: "~> 1.4",
+     elixir: "~> 1.12",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -29,8 +29,9 @@ defmodule SwaggerPetstore.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:tesla, "~> 0.8"},
-      {:poison, ">= 1.0.0"}
+      {:tesla, "~> 1.4"},
+      {:poison, "~> 5.0"},
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
     ]
   end
 end
