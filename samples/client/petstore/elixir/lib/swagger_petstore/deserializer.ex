@@ -12,7 +12,6 @@ defmodule SwaggerPetstore.Deserializer do
   @doc """
   Update the provided model with a deserialization of a nested value
   """
-  #@spec deserialize(struct(), :atom, target_type(), struct(), Poison.Decoder.options()) :: struct() | no_return()
   @spec deserialize(struct(), atom(), target_type(), any(), Poison.Decoder.options()) :: struct() | no_return()
   def deserialize(model, field, :list, mod, options) do
     model
@@ -38,7 +37,7 @@ defmodule SwaggerPetstore.Deserializer do
       false -> model
     end
   end
-
+  
   @spec decode!(any(), Poison.Decoder.options(), any()) :: any() | no_return()
   defp decode!(val, options, target), do: Poison.decode!(val, Map.put(options, :as, target))
 end
