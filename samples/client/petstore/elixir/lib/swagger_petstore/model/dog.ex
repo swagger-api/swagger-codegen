@@ -9,15 +9,15 @@ defmodule SwaggerPetstore.Model.Dog do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"className",
-    :"color",
-    :"breed"
+    :className,
+    :color,
+    :breed
   ]
 
   @type t :: %__MODULE__{
-    :"className" => String.t,
-    :"color" => String.t,
-    :"breed" => String.t
+    :className => String.t,
+    :color => String.t,
+    :breed => String.t
   }
 end
 

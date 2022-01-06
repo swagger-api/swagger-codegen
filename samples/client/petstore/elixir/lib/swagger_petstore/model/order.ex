@@ -9,21 +9,21 @@ defmodule SwaggerPetstore.Model.Order do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"id",
-    :"petId",
-    :"quantity",
-    :"shipDate",
-    :"status",
-    :"complete"
+    :id,
+    :petId,
+    :quantity,
+    :shipDate,
+    :status,
+    :complete
   ]
 
   @type t :: %__MODULE__{
-    :"id" => integer(),
-    :"petId" => integer(),
-    :"quantity" => integer(),
-    :"shipDate" => DateTime.t,
-    :"status" => String.t,
-    :"complete" => boolean()
+    :id => integer(),
+    :petId => integer(),
+    :quantity => integer(),
+    :shipDate => DateTime.t,
+    :status => String.t,
+    :complete => boolean()
   }
 end
 

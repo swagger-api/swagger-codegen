@@ -9,16 +9,16 @@ defmodule SwaggerPetstore.Model.Name do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"name",
-    :"snake_case",
-    :"property",
+    :name,
+    :snake_case,
+    :property,
     :"123Number"
   ]
 
   @type t :: %__MODULE__{
-    :"name" => integer(),
-    :"snake_case" => integer(),
-    :"property" => String.t,
+    :name => integer(),
+    :snake_case => integer(),
+    :property => String.t,
     :"123Number" => integer()
   }
 end
@@ -28,4 +28,3 @@ defimpl Poison.Decoder, for: SwaggerPetstore.Model.Name do
     value
   end
 end
-

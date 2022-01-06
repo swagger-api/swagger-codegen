@@ -9,11 +9,11 @@ defmodule SwaggerPetstore.Model.ArrayOfNumberOnly do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"ArrayNumber"
+    :ArrayNumber
   ]
 
   @type t :: %__MODULE__{
-    :"ArrayNumber" => [float()]
+    :ArrayNumber => [float()]
   }
 end
 

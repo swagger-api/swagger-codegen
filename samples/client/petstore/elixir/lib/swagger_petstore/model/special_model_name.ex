@@ -4,7 +4,7 @@
 
 defmodule SwaggerPetstore.Model.SpecialModelName do
   @moduledoc """
-  
+
   """
 
   @derive [Poison.Encoder]
@@ -22,4 +22,3 @@ defimpl Poison.Decoder, for: SwaggerPetstore.Model.SpecialModelName do
     value
   end
 end
-

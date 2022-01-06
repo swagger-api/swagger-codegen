@@ -105,7 +105,7 @@ defmodule SwaggerPetstore.Api.Store do
     %{}
     |> method(:post)
     |> url("/store/order")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%SwaggerPetstore.Model.Order{})

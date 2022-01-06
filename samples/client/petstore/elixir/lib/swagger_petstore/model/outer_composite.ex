@@ -9,15 +9,15 @@ defmodule SwaggerPetstore.Model.OuterComposite do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"my_number",
-    :"my_string",
-    :"my_boolean"
+    :my_number,
+    :my_string,
+    :my_boolean
   ]
 
   @type t :: %__MODULE__{
-    :"my_number" => OuterNumber,
-    :"my_string" => OuterString,
-    :"my_boolean" => OuterBoolean
+    :my_number => OuterNumber,
+    :my_string => OuterString,
+    :my_boolean => OuterBoolean
   }
 end
 
@@ -25,9 +25,9 @@ defimpl Poison.Decoder, for: SwaggerPetstore.Model.OuterComposite do
   import SwaggerPetstore.Deserializer
   def decode(value, options) do
     value
-    |> deserialize(:"my_number", :struct, SwaggerPetstore.Model.OuterNumber, options)
-    |> deserialize(:"my_string", :struct, SwaggerPetstore.Model.OuterString, options)
-    |> deserialize(:"my_boolean", :struct, SwaggerPetstore.Model.OuterBoolean, options)
+    |> deserialize(:my_number, :struct, SwaggerPetstore.Model.OuterNumber, options)
+    |> deserialize(:my_string, :struct, SwaggerPetstore.Model.OuterString, options)
+    |> deserialize(:my_boolean, :struct, SwaggerPetstore.Model.OuterBoolean, options)
   end
 end
 

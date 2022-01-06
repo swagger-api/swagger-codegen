@@ -28,7 +28,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_boolean_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterBoolean.t} | {:error, Tesla.Env.t}
   def fake_outer_boolean_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -56,7 +56,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_composite_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterComposite.t} | {:error, Tesla.Env.t}
   def fake_outer_composite_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -84,7 +84,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_number_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterNumber.t} | {:error, Tesla.Env.t}
   def fake_outer_number_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -112,7 +112,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_string_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterString.t} | {:error, Tesla.Env.t}
   def fake_outer_string_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -128,8 +128,8 @@ defmodule SwaggerPetstore.Api.Fake do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - body (User): 
-  - query (String.t): 
+  - body (User):
+  - query (String.t):
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -142,8 +142,8 @@ defmodule SwaggerPetstore.Api.Fake do
     %{}
     |> method(:put)
     |> url("/fake/body-with-query-params")
-    |> add_param(:body, :"body", body)
-    |> add_param(:query, :"query", query)
+    |> add_param(:body, :body, body)
+    |> add_param(:query, :query, query)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -169,15 +169,15 @@ defmodule SwaggerPetstore.Api.Fake do
     %{}
     |> method(:patch)
     |> url("/fake")
-    |> add_param(:body, :"body", body)
+    |> add_param(:body, :body, body)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%SwaggerPetstore.Model.Client{})
   end
 
   @doc """
-  Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-  Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+  Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+  Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
 
   ## Parameters
 
@@ -206,24 +206,24 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec test_endpoint_parameters(Tesla.Env.client, float(), float(), String.t, binary(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def test_endpoint_parameters(connection, number, double, pattern_without_delimiter, byte, opts \\ []) do
     optional_params = %{
-      :"integer" => :form,
-      :"int32" => :form,
-      :"int64" => :form,
-      :"float" => :form,
-      :"string" => :form,
-      :"binary" => :form,
-      :"date" => :form,
-      :"dateTime" => :form,
-      :"password" => :form,
-      :"callback" => :form
+      :integer => :form,
+      :int32 => :form,
+      :int64 => :form,
+      :float => :form,
+      :string => :form,
+      :binary => :form,
+      :date => :form,
+      :dateTime => :form,
+      :password => :form,
+      :callback => :form
     }
     %{}
     |> method(:post)
     |> url("/fake")
-    |> add_param(:form, :"number", number)
-    |> add_param(:form, :"double", double)
-    |> add_param(:form, :"pattern_without_delimiter", pattern_without_delimiter)
-    |> add_param(:form, :"byte", byte)
+    |> add_param(:form, :number, number)
+    |> add_param(:form, :double, double)
+    |> add_param(:form, :pattern_without_delimiter, pattern_without_delimiter)
+    |> add_param(:form, :byte, byte)
     |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
@@ -255,19 +255,19 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec test_enum_parameters(Tesla.Env.client, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def test_enum_parameters(connection, opts \\ []) do
     optional_params = %{
-      :"enum_form_string_array" => :form,
-      :"enum_form_string" => :form,
-      :"enum_header_string_array" => :headers,
-      :"enum_header_string" => :headers,
-      :"enum_query_string_array" => :query,
-      :"enum_query_string" => :query,
-      :"enum_query_integer" => :query,
-      :"enum_query_double" => :form
+      :enum_form_string_array => :form,
+      :enum_form_string => :form,
+      :enum_header_string_array => :headers,
+      :enum_header_string => :headers,
+      :enum_query_string_array => :query,
+      :enum_query_string => :query,
+      :enum_query_integer => :query,
+      :enum_query_double => :form
     }
     %{}
     |> method(:get)
     |> url("/fake")
-    |> add_optional_params(optional_params, opts)
+  |> add_optional_params(optional_params, opts)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -275,7 +275,7 @@ defmodule SwaggerPetstore.Api.Fake do
 
   @doc """
   test inline additionalProperties
-  
+
 
   ## Parameters
 
@@ -293,7 +293,7 @@ defmodule SwaggerPetstore.Api.Fake do
     %{}
     |> method(:post)
     |> url("/fake/inline-additionalProperties")
-    |> add_param(:body, :"param", param)
+    |> add_param(:body, :param, param)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
@@ -301,7 +301,7 @@ defmodule SwaggerPetstore.Api.Fake do
 
   @doc """
   test json serialization of form data
-  
+
 
   ## Parameters
 
@@ -320,8 +320,8 @@ defmodule SwaggerPetstore.Api.Fake do
     %{}
     |> method(:get)
     |> url("/fake/jsonFormData")
-    |> add_param(:form, :"param", param)
-    |> add_param(:form, :"param2", param2)
+    |> add_param(:form, :param, param)
+    |> add_param(:form, :param2, param2)
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(false)
