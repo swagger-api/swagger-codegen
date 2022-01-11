@@ -266,7 +266,7 @@
                     <plugin>
                         <groupId>com.spotify</groupId>
                         <artifactId>dockerfile-maven-plugin</artifactId>
-                        <version>1.4.3</version>
+                        <version>1.4.13</version>
                         <executions>
                             <execution>
                                 <id>build</id>
@@ -284,6 +284,22 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>build-root</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
+                                    <tag>${docker-latest-tag}</tag>
+                                    <buildArgs>
+                                        <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
+                                        <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
+                                        <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
+                                    </buildArgs>
+                                    <dockerfile>Dockerfile_root</dockerfile>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>tag</id>
                                 <goals>
                                     <goal>tag</goal>
@@ -294,12 +310,32 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>tag-root</id>
+                                <goals>
+                                    <goal>tag</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
+                                    <tag>${project.version}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>push</id>
                                 <goals>
                                     <goal>push</goal>
                                 </goals>
                                 <configuration>
                                     <repository>swaggerapi/swagger-generator-v3</repository>
+                                    <tag>${docker-latest-tag}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>push-root</id>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
                                     <tag>${docker-latest-tag}</tag>
                                 </configuration>
                             </execution>
