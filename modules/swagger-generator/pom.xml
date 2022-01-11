@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.32</version>
+        <version>3.0.33-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
@@ -284,6 +284,16 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>tag</id>
+                                <goals>
+                                    <goal>tag</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3</repository>
+                                    <tag>${project.version}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>build-root</id>
                                 <goals>
                                     <goal>build</goal>
@@ -297,16 +307,6 @@
                                         <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
                                     </buildArgs>
                                     <dockerfile>Dockerfile_root</dockerfile>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>tag</id>
-                                <goals>
-                                    <goal>tag</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3</repository>
-                                    <tag>${project.version}</tag>
                                 </configuration>
                             </execution>
                             <execution>
