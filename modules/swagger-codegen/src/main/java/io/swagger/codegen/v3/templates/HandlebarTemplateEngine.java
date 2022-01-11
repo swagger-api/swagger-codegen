@@ -32,7 +32,7 @@ public class HandlebarTemplateEngine implements TemplateEngine {
 
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
         templateFile = templateFile.replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
-        String templateDir = config.customTemplateDir() != null ? "" : "handlebars/JavaSpring/";
+        String templateDir = config.customTemplateDir() != null ? "" : config.templateDir().replace("\\", "/");
         String customTemplateDir = config.customTemplateDir() != null ? config.customTemplateDir().replace("\\", "/") : null;
         final TemplateLoader templateLoader;
         templateFile = resolveTemplateFile(templateDir, templateFile);
