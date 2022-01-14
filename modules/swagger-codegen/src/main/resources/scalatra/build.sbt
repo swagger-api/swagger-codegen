@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   "org.eclipse.jetty" %  "jetty-server"         % "9.4.8.v20171121",
   "org.eclipse.jetty" %  "jetty-webapp"         % "9.4.8.v20171121",
   "javax.servlet"     %  "javax.servlet-api"    % "3.1.0",
-  "ch.qos.logback"    %  "logback-classic"      % "1.2.3" % Provided
+  "ch.qos.logback"    %  "logback-classic"      % "1.2.9" % Provided
 )
 
 enablePlugins(JettyPlugin)

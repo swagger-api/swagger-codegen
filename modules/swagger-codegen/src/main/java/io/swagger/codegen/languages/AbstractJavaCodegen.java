@@ -484,6 +484,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
         if (additionalProperties.containsKey(DATE_LIBRARY)) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
+        } else if (java8Mode) {
+            setDateLibrary("java8");
         }
 
         if ("threetenbp".equals(dateLibrary)) {
