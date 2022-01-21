@@ -126,6 +126,7 @@
                 <configuration>
                     <testNGArtifactName>none:none</testNGArtifactName>
                     <argLine>-XX:+StartAttachListener</argLine>
+                    <argLine>-Djdk.attach.allowAttachSelf=true</argLine>
                 </configuration>
                 <executions>
                     <execution>
