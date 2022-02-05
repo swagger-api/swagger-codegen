@@ -3,7 +3,7 @@
   "dependencies": {
     "@swagger/typescript-fetch-petstore": "file:../../builds/with-npm-version",
     "chai": "^4.1.0",
-    "ts-node": "^3.3.0"
+    "ts-node": "^4.0.0"
   },
   "scripts": {
     "prepublish": "npm install ../../builds/with-npm-version && npm run build && npm run webpack && npm run browserify",
