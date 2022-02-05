@@ -97,7 +97,7 @@ ext {
     swagger_annotations_version = "1.5.24"
     jackson_version = "2.11.4"
     google_api_client_version = "1.23.0"
-    jersey_common_version = "2.29.1"
+    jersey_common_version = "2.34"
     jodatime_version = "2.10.5"
     junit_version = "4.12"
     jackson_threeten_version = "2.6.4"
