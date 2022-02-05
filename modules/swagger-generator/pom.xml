@@ -320,7 +320,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
         <zip-version>1.3.2</zip-version>
-        <jetty-version>9.4.34.v20201102</jetty-version>
+        <jetty-version>9.4.41.v20210516</jetty-version>
         <jersey2-version>2.29.1</jersey2-version>
     </properties>
 </project>
