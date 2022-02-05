@@ -2,6 +2,7 @@ package io.swagger.codegen.v3.templates;
 
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,9 @@ public class CodegenTemplateLoader extends FileTemplateLoader {
 
     private String resolveTemplateFile(String templateDir, String templateFile) {
         if (templateFile.startsWith(templateDir)) {
+            if (SystemUtils.IS_OS_WINDOWS) {
+                templateDir = templateDir + "/";
+            }
             templateFile = StringUtils.replaceOnce(templateFile, templateDir, StringUtils.EMPTY);
         }
         return templateFile;
