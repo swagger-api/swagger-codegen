@@ -1,39 +1,54 @@
 package io.swagger.codegen.v3.templates;
 
-import com.github.jknack.handlebars.io.FileTemplateLoader;
-import org.apache.commons.lang3.StringUtils;
+import com.github.jknack.handlebars.io.URLTemplateLoader;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class CodegenTemplateLoader extends FileTemplateLoader {
+public class CodegenTemplateLoader extends URLTemplateLoader {
     private String templateDir;
     private String customTemplateDir;
 
-    public CodegenTemplateLoader(String templateDir, String suffix) {
-        super(templateDir, suffix);
-        this.templateDir = templateDir;
+    public CodegenTemplateLoader() {
+        setSuffix(".mustache");
     }
 
+    @Override
+    public String resolve(String uri) {
+        if (!uri.endsWith(this.getSuffix())) {
+            uri = uri + this.getSuffix();
+        }
+        File templateFile = new File(uri);
+        if (templateFile.exists()) {
+            return templateFile.toString();
+        }
+        templateFile = new File(this.getPrefix() + this.normalize(uri));
+        if (templateFile.exists()) {
+            return templateFile.toString();
+        }
+        if (this.customTemplateDir != null) {
+            templateFile = new File(this.customTemplateDir, this.normalize(uri));
+            if (templateFile.exists()) {
+                return templateFile.toString();
+            }
+        }
+        if (getClass().getResource(this.getPrefix() + this.normalize(uri)) != null) {
+            return this.getPrefix() + this.normalize(uri);
+        }
+        return this.templateDir + this.normalize(uri);
+    }
+
+    @Override
     public URL getResource(String location) throws IOException {
         if (this.customTemplateDir == null) {
             return this.getClass().getResource(location);
         }
-        String templateFile = resolveTemplateFile(this.templateDir, location);
-        templateFile = resolveTemplateFile(this.customTemplateDir, templateFile);
-        final File file = new File(this.customTemplateDir, templateFile);
+        final File file = new File(location);
         if (file.exists()) {
             return file.toURI().toURL();
         }
         return this.getClass().getResource(location);
-    }
-
-    private String resolveTemplateFile(String templateDir, String templateFile) {
-        if (templateFile.startsWith(templateDir)) {
-            templateFile = StringUtils.replaceOnce(templateFile, templateDir, StringUtils.EMPTY);
-        }
-        return templateFile;
     }
 
     public String getCustomTemplateDir() {
@@ -46,6 +61,22 @@ public class CodegenTemplateLoader extends FileTemplateLoader {
 
     public CodegenTemplateLoader customTemplateDir(String customTemplateDir) {
         this.customTemplateDir = customTemplateDir;
+        return this;
+    }
+
+    public String getTemplateDir() {
+        return templateDir;
+    }
+
+    public void setTemplateDir(String templateDir) {
+        this.templateDir = this.getPrefix() + templateDir;
+        if (!this.templateDir.endsWith("/")) {
+            this.templateDir = this.templateDir + "/";
+        }
+    }
+
+    public CodegenTemplateLoader templateDir(String templateDir) {
+        setTemplateDir(templateDir);
         return this;
     }
 }
