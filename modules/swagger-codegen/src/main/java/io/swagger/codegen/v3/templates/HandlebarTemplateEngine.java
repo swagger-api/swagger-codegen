@@ -32,9 +32,9 @@ public class HandlebarTemplateEngine implements TemplateEngine {
 
     private com.github.jknack.handlebars.Template getHandlebars(String templateFile) throws IOException {
         templateFile = templateFile.replace(".mustache", StringUtils.EMPTY).replace("\\", "/");
-        final String templateDir = config.templateDir().replace("\\", "/");
-        final TemplateLoader templateLoader;
+        String templateDir = config.customTemplateDir() != null ? "" : config.templateDir().replace("\\", "/");
         String customTemplateDir = config.customTemplateDir() != null ? config.customTemplateDir().replace("\\", "/") : null;
+        final TemplateLoader templateLoader;
         templateFile = resolveTemplateFile(templateDir, templateFile);
         templateLoader = new CodegenTemplateLoader("/" + templateDir, ".mustache")
                 .customTemplateDir(customTemplateDir);
