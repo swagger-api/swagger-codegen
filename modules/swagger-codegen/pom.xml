@@ -3,7 +3,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.33-SNAPSHOT</version>
+        <version>3.0.33</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -200,7 +200,7 @@
     </reporting>
     <properties>
         <diffutils-version>1.3.0</diffutils-version>
-        <swagger-codegen-v2-version>2.4.26-SNAPSHOT</swagger-codegen-v2-version>
+        <swagger-codegen-v2-version>2.4.26</swagger-codegen-v2-version>
     </properties>
     <dependencies>
         <dependency>
@@ -265,7 +265,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>23.0</version>
+            <version>31.0.1-jre</version>
         </dependency>
         <dependency>
             <groupId>com.github.jknack</groupId>
@@ -275,7 +275,7 @@
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark</artifactId>
-            <version>0.9.0</version>
+            <version>0.17.0</version>
         </dependency>
 
         <dependency>
