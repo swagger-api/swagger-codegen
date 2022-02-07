@@ -273,7 +273,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <gson-fire-version>1.8.3</gson-fire-version>
         <swagger-core-version>1.5.24</swagger-core-version>
-                <jackson-version>2.11.4</jackson-version>
+                <jackson-version>2.12.6</jackson-version>
                 <play-version>2.4.11</play-version>
         <retrofit-version>2.7.1</retrofit-version>
         <oltu-version>1.0.1</oltu-version>

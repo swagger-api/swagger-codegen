@@ -258,7 +258,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <swagger-core-version>1.5.24</swagger-core-version>
             <jersey-version>2.29.1</jersey-version>
-        <jackson-version>2.11.4</jackson-version>
+        <jackson-version>2.12.6</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.13.1</junit-version>
     </properties>
