@@ -425,7 +425,7 @@
         <dockerfile.tag.skip>true</dockerfile.tag.skip>
         <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <jetty-version>9.4.34.v20201102</jetty-version>
+        <jetty-version>9.4.40.v20210413</jetty-version>
         <inflector-version>2.0.5</inflector-version>
         <junit-version>4.8.2</junit-version>
         <servlet-api.version>3.1.0</servlet-api.version>
