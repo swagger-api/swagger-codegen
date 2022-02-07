@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    providedCompile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
+    providedCompile 'org.jboss.resteasy:resteasy-jaxrs:3.12.0.Final'
     providedCompile 'org.jboss.resteasy:jaxrs-api:3.0.11.Final'
     providedCompile 'org.jboss.resteasy:resteasy-validator-provider-11:3.0.11.Final'
     providedCompile 'org.jboss.resteasy:resteasy-multipart-provider:3.0.11.Final'
