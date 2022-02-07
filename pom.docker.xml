@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.33-SNAPSHOT</version>
+    <version>3.0.33</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -1063,29 +1063,29 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.32-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.1.12</swagger-core-version>
-        <swagger-core-version-v1>1.6.4</swagger-core-version-v1>
-        <swagger-parser-version>2.0.29</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.56</swagger-parser-version-v1>
+        <swagger-codegen-generators-version>1.0.32</swagger-codegen-generators-version>
+        <swagger-core-version>2.1.13</swagger-core-version>
+        <swagger-core-version-v1>1.6.5</swagger-core-version-v1>
+        <swagger-parser-version>2.0.30</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.57</swagger-parser-version-v1>
         <jackson-version>2.12.1</jackson-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.11.0</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
+        <commons-cli-version>1.5.0</commons-cli-version>
         <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.4</commons-lang-version>
-        <slf4j-version>1.7.32</slf4j-version>
-        <logback-version>1.2.9</logback-version>
+        <commons-lang-version>3.12.0</commons-lang-version>
+        <slf4j-version>1.7.35</slf4j-version>
+        <logback-version>1.2.10</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
-        <jmustache-version>1.12</jmustache-version>
+        <jmustache-version>1.15</jmustache-version>
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.22.0</surefire-version>
-        <jmockit-version>1.25</jmockit-version>
+        <jmockit-version>1.42</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
-        <snakeyaml-version>1.27</snakeyaml-version>
+        <snakeyaml-version>1.30</snakeyaml-version>
         <handlebars-version>4.1.2</handlebars-version>
     </properties>
 </project>
