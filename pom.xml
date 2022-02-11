@@ -1179,6 +1179,6 @@
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
         <snakeyaml-version>1.30</snakeyaml-version>
-        <handlebars-version>4.1.2</handlebars-version>
+        <handlebars-version>4.2.1</handlebars-version>
     </properties>
 </project>
