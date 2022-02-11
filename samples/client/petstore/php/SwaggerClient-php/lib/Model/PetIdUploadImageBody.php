@@ -1,6 +1,6 @@
 <?php
 /**
- * User
+ * PetIdUploadImageBody
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * User Class Doc Comment
+ * PetIdUploadImageBody Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class User implements ModelInterface, ArrayAccess
+class PetIdUploadImageBody implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class User implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'User';
+    protected static $swaggerModelName = 'petId_uploadImage_body';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,14 +56,8 @@ class User implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'id' => 'int',
-'username' => 'string',
-'first_name' => 'string',
-'last_name' => 'string',
-'email' => 'string',
-'password' => 'string',
-'phone' => 'string',
-'user_status' => 'int'    ];
+        'additional_metadata' => 'string',
+'file' => 'string'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -71,14 +65,8 @@ class User implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'id' => 'int64',
-'username' => null,
-'first_name' => null,
-'last_name' => null,
-'email' => null,
-'password' => null,
-'phone' => null,
-'user_status' => 'int32'    ];
+        'additional_metadata' => null,
+'file' => 'binary'    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -107,14 +95,8 @@ class User implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-'username' => 'username',
-'first_name' => 'firstName',
-'last_name' => 'lastName',
-'email' => 'email',
-'password' => 'password',
-'phone' => 'phone',
-'user_status' => 'userStatus'    ];
+        'additional_metadata' => 'additionalMetadata',
+'file' => 'file'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -122,14 +104,8 @@ class User implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-'username' => 'setUsername',
-'first_name' => 'setFirstName',
-'last_name' => 'setLastName',
-'email' => 'setEmail',
-'password' => 'setPassword',
-'phone' => 'setPhone',
-'user_status' => 'setUserStatus'    ];
+        'additional_metadata' => 'setAdditionalMetadata',
+'file' => 'setFile'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -137,14 +113,8 @@ class User implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-'username' => 'getUsername',
-'first_name' => 'getFirstName',
-'last_name' => 'getLastName',
-'email' => 'getEmail',
-'password' => 'getPassword',
-'phone' => 'getPhone',
-'user_status' => 'getUserStatus'    ];
+        'additional_metadata' => 'getAdditionalMetadata',
+'file' => 'getFile'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -204,14 +174,8 @@ class User implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['username'] = isset($data['username']) ? $data['username'] : null;
-        $this->container['first_name'] = isset($data['first_name']) ? $data['first_name'] : null;
-        $this->container['last_name'] = isset($data['last_name']) ? $data['last_name'] : null;
-        $this->container['email'] = isset($data['email']) ? $data['email'] : null;
-        $this->container['password'] = isset($data['password']) ? $data['password'] : null;
-        $this->container['phone'] = isset($data['phone']) ? $data['phone'] : null;
-        $this->container['user_status'] = isset($data['user_status']) ? $data['user_status'] : null;
+        $this->container['additional_metadata'] = isset($data['additional_metadata']) ? $data['additional_metadata'] : null;
+        $this->container['file'] = isset($data['file']) ? $data['file'] : null;
     }
 
     /**
@@ -239,193 +203,49 @@ class User implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param int $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets username
+     * Gets additional_metadata
      *
      * @return string
      */
-    public function getUsername()
+    public function getAdditionalMetadata()
     {
-        return $this->container['username'];
+        return $this->container['additional_metadata'];
     }
 
     /**
-     * Sets username
+     * Sets additional_metadata
      *
-     * @param string $username username
+     * @param string $additional_metadata Additional data to pass to server
      *
      * @return $this
      */
-    public function setUsername($username)
+    public function setAdditionalMetadata($additional_metadata)
     {
-        $this->container['username'] = $username;
+        $this->container['additional_metadata'] = $additional_metadata;
 
         return $this;
     }
 
     /**
-     * Gets first_name
+     * Gets file
      *
      * @return string
      */
-    public function getFirstName()
+    public function getFile()
     {
-        return $this->container['first_name'];
+        return $this->container['file'];
     }
 
     /**
-     * Sets first_name
+     * Sets file
      *
-     * @param string $first_name first_name
+     * @param string $file file to upload
      *
      * @return $this
      */
-    public function setFirstName($first_name)
+    public function setFile($file)
     {
-        $this->container['first_name'] = $first_name;
-
-        return $this;
-    }
-
-    /**
-     * Gets last_name
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->container['last_name'];
-    }
-
-    /**
-     * Sets last_name
-     *
-     * @param string $last_name last_name
-     *
-     * @return $this
-     */
-    public function setLastName($last_name)
-    {
-        $this->container['last_name'] = $last_name;
-
-        return $this;
-    }
-
-    /**
-     * Gets email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->container['email'];
-    }
-
-    /**
-     * Sets email
-     *
-     * @param string $email email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
-    {
-        $this->container['email'] = $email;
-
-        return $this;
-    }
-
-    /**
-     * Gets password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->container['password'];
-    }
-
-    /**
-     * Sets password
-     *
-     * @param string $password password
-     *
-     * @return $this
-     */
-    public function setPassword($password)
-    {
-        $this->container['password'] = $password;
-
-        return $this;
-    }
-
-    /**
-     * Gets phone
-     *
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->container['phone'];
-    }
-
-    /**
-     * Sets phone
-     *
-     * @param string $phone phone
-     *
-     * @return $this
-     */
-    public function setPhone($phone)
-    {
-        $this->container['phone'] = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Gets user_status
-     *
-     * @return int
-     */
-    public function getUserStatus()
-    {
-        return $this->container['user_status'];
-    }
-
-    /**
-     * Sets user_status
-     *
-     * @param int $user_status User Status
-     *
-     * @return $this
-     */
-    public function setUserStatus($user_status)
-    {
-        $this->container['user_status'] = $user_status;
+        $this->container['file'] = $file;
 
         return $this;
     }
