@@ -1,6 +1,6 @@
 <?php
 /**
- * FormatTest
+ * FakeBody1
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * FormatTest Class Doc Comment
+ * FakeBody1 Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class FormatTest implements ModelInterface, ArrayAccess
+class FakeBody1 implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class FormatTest implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'format_test';
+    protected static $swaggerModelName = 'fake_body_1';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -63,12 +63,13 @@ class FormatTest implements ModelInterface, ArrayAccess
 'float' => 'float',
 'double' => 'double',
 'string' => 'string',
+'pattern_without_delimiter' => 'string',
 'byte' => 'string',
 'binary' => 'string',
 'date' => '\DateTime',
 'date_time' => '\DateTime',
-'uuid' => 'string',
-'password' => 'string'    ];
+'password' => 'string',
+'callback' => 'string'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -76,19 +77,20 @@ class FormatTest implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'integer' => null,
+        'integer' => 'int32',
 'int32' => 'int32',
 'int64' => 'int64',
 'number' => null,
 'float' => 'float',
 'double' => 'double',
 'string' => null,
+'pattern_without_delimiter' => null,
 'byte' => 'byte',
 'binary' => 'binary',
 'date' => 'date',
 'date_time' => 'date-time',
-'uuid' => 'uuid',
-'password' => 'password'    ];
+'password' => 'password',
+'callback' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -124,12 +126,13 @@ class FormatTest implements ModelInterface, ArrayAccess
 'float' => 'float',
 'double' => 'double',
 'string' => 'string',
+'pattern_without_delimiter' => 'pattern_without_delimiter',
 'byte' => 'byte',
 'binary' => 'binary',
 'date' => 'date',
 'date_time' => 'dateTime',
-'uuid' => 'uuid',
-'password' => 'password'    ];
+'password' => 'password',
+'callback' => 'callback'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -144,12 +147,13 @@ class FormatTest implements ModelInterface, ArrayAccess
 'float' => 'setFloat',
 'double' => 'setDouble',
 'string' => 'setString',
+'pattern_without_delimiter' => 'setPatternWithoutDelimiter',
 'byte' => 'setByte',
 'binary' => 'setBinary',
 'date' => 'setDate',
 'date_time' => 'setDateTime',
-'uuid' => 'setUuid',
-'password' => 'setPassword'    ];
+'password' => 'setPassword',
+'callback' => 'setCallback'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -164,12 +168,13 @@ class FormatTest implements ModelInterface, ArrayAccess
 'float' => 'getFloat',
 'double' => 'getDouble',
 'string' => 'getString',
+'pattern_without_delimiter' => 'getPatternWithoutDelimiter',
 'byte' => 'getByte',
 'binary' => 'getBinary',
 'date' => 'getDate',
 'date_time' => 'getDateTime',
-'uuid' => 'getUuid',
-'password' => 'getPassword'    ];
+'password' => 'getPassword',
+'callback' => 'getCallback'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -236,12 +241,13 @@ class FormatTest implements ModelInterface, ArrayAccess
         $this->container['float'] = isset($data['float']) ? $data['float'] : null;
         $this->container['double'] = isset($data['double']) ? $data['double'] : null;
         $this->container['string'] = isset($data['string']) ? $data['string'] : null;
+        $this->container['pattern_without_delimiter'] = isset($data['pattern_without_delimiter']) ? $data['pattern_without_delimiter'] : null;
         $this->container['byte'] = isset($data['byte']) ? $data['byte'] : null;
         $this->container['binary'] = isset($data['binary']) ? $data['binary'] : null;
         $this->container['date'] = isset($data['date']) ? $data['date'] : null;
         $this->container['date_time'] = isset($data['date_time']) ? $data['date_time'] : null;
-        $this->container['uuid'] = isset($data['uuid']) ? $data['uuid'] : null;
         $this->container['password'] = isset($data['password']) ? $data['password'] : null;
+        $this->container['callback'] = isset($data['callback']) ? $data['callback'] : null;
     }
 
     /**
@@ -256,14 +262,14 @@ class FormatTest implements ModelInterface, ArrayAccess
         if ($this->container['number'] === null) {
             $invalidProperties[] = "'number' can't be null";
         }
+        if ($this->container['double'] === null) {
+            $invalidProperties[] = "'double' can't be null";
+        }
+        if ($this->container['pattern_without_delimiter'] === null) {
+            $invalidProperties[] = "'pattern_without_delimiter' can't be null";
+        }
         if ($this->container['byte'] === null) {
             $invalidProperties[] = "'byte' can't be null";
-        }
-        if ($this->container['date'] === null) {
-            $invalidProperties[] = "'date' can't be null";
-        }
-        if ($this->container['password'] === null) {
-            $invalidProperties[] = "'password' can't be null";
         }
         return $invalidProperties;
     }
@@ -293,7 +299,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets integer
      *
-     * @param int $integer integer
+     * @param int $integer None
      *
      * @return $this
      */
@@ -317,7 +323,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets int32
      *
-     * @param int $int32 int32
+     * @param int $int32 None
      *
      * @return $this
      */
@@ -341,7 +347,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets int64
      *
-     * @param int $int64 int64
+     * @param int $int64 None
      *
      * @return $this
      */
@@ -365,7 +371,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets number
      *
-     * @param float $number number
+     * @param float $number None
      *
      * @return $this
      */
@@ -389,7 +395,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets float
      *
-     * @param float $float float
+     * @param float $float None
      *
      * @return $this
      */
@@ -413,7 +419,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets double
      *
-     * @param double $double double
+     * @param double $double None
      *
      * @return $this
      */
@@ -437,13 +443,37 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets string
      *
-     * @param string $string string
+     * @param string $string None
      *
      * @return $this
      */
     public function setString($string)
     {
         $this->container['string'] = $string;
+
+        return $this;
+    }
+
+    /**
+     * Gets pattern_without_delimiter
+     *
+     * @return string
+     */
+    public function getPatternWithoutDelimiter()
+    {
+        return $this->container['pattern_without_delimiter'];
+    }
+
+    /**
+     * Sets pattern_without_delimiter
+     *
+     * @param string $pattern_without_delimiter None
+     *
+     * @return $this
+     */
+    public function setPatternWithoutDelimiter($pattern_without_delimiter)
+    {
+        $this->container['pattern_without_delimiter'] = $pattern_without_delimiter;
 
         return $this;
     }
@@ -461,7 +491,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets byte
      *
-     * @param string $byte byte
+     * @param string $byte None
      *
      * @return $this
      */
@@ -485,7 +515,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets binary
      *
-     * @param string $binary binary
+     * @param string $binary None
      *
      * @return $this
      */
@@ -509,7 +539,7 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets date
      *
-     * @param \DateTime $date date
+     * @param \DateTime $date None
      *
      * @return $this
      */
@@ -533,37 +563,13 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets date_time
      *
-     * @param \DateTime $date_time date_time
+     * @param \DateTime $date_time None
      *
      * @return $this
      */
     public function setDateTime($date_time)
     {
         $this->container['date_time'] = $date_time;
-
-        return $this;
-    }
-
-    /**
-     * Gets uuid
-     *
-     * @return string
-     */
-    public function getUuid()
-    {
-        return $this->container['uuid'];
-    }
-
-    /**
-     * Sets uuid
-     *
-     * @param string $uuid uuid
-     *
-     * @return $this
-     */
-    public function setUuid($uuid)
-    {
-        $this->container['uuid'] = $uuid;
 
         return $this;
     }
@@ -581,13 +587,37 @@ class FormatTest implements ModelInterface, ArrayAccess
     /**
      * Sets password
      *
-     * @param string $password password
+     * @param string $password None
      *
      * @return $this
      */
     public function setPassword($password)
     {
         $this->container['password'] = $password;
+
+        return $this;
+    }
+
+    /**
+     * Gets callback
+     *
+     * @return string
+     */
+    public function getCallback()
+    {
+        return $this->container['callback'];
+    }
+
+    /**
+     * Sets callback
+     *
+     * @param string $callback None
+     *
+     * @return $this
+     */
+    public function setCallback($callback)
+    {
+        $this->container['callback'] = $callback;
 
         return $this;
     }

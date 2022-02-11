@@ -1,6 +1,6 @@
 <?php
 /**
- * Pet
+ * FakeBody
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * Pet Class Doc Comment
+ * FakeBody Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Pet implements ModelInterface, ArrayAccess
+class FakeBody implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class Pet implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'Pet';
+    protected static $swaggerModelName = 'fake_body';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,12 +56,9 @@ class Pet implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'id' => 'int',
-'category' => '\Swagger\Client\Model\Category',
-'name' => 'string',
-'photo_urls' => 'string[]',
-'tags' => '\Swagger\Client\Model\Tag[]',
-'status' => 'string'    ];
+        'enum_form_string_array' => 'string[]',
+'enum_form_string' => 'string',
+'enum_query_double' => 'double'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -69,12 +66,9 @@ class Pet implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'id' => 'int64',
-'category' => null,
-'name' => null,
-'photo_urls' => null,
-'tags' => null,
-'status' => null    ];
+        'enum_form_string_array' => null,
+'enum_form_string' => null,
+'enum_query_double' => 'double'    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -103,12 +97,9 @@ class Pet implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-'category' => 'category',
-'name' => 'name',
-'photo_urls' => 'photoUrls',
-'tags' => 'tags',
-'status' => 'status'    ];
+        'enum_form_string_array' => 'enum_form_string_array',
+'enum_form_string' => 'enum_form_string',
+'enum_query_double' => 'enum_query_double'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -116,12 +107,9 @@ class Pet implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-'category' => 'setCategory',
-'name' => 'setName',
-'photo_urls' => 'setPhotoUrls',
-'tags' => 'setTags',
-'status' => 'setStatus'    ];
+        'enum_form_string_array' => 'setEnumFormStringArray',
+'enum_form_string' => 'setEnumFormString',
+'enum_query_double' => 'setEnumQueryDouble'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -129,12 +117,9 @@ class Pet implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-'category' => 'getCategory',
-'name' => 'getName',
-'photo_urls' => 'getPhotoUrls',
-'tags' => 'getTags',
-'status' => 'getStatus'    ];
+        'enum_form_string_array' => 'getEnumFormStringArray',
+'enum_form_string' => 'getEnumFormString',
+'enum_query_double' => 'getEnumQueryDouble'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -177,21 +162,47 @@ class Pet implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const STATUS_AVAILABLE = 'available';
-const STATUS_PENDING = 'pending';
-const STATUS_SOLD = 'sold';
+    const ENUM_FORM_STRING_ARRAY_GREATER_THAN = '>';
+const ENUM_FORM_STRING_ARRAY_DOLLAR = '$';
+const ENUM_FORM_STRING_ABC = '_abc';
+const ENUM_FORM_STRING_EFG = '-efg';
+const ENUM_FORM_STRING_XYZ = '(xyz)';
+const ENUM_QUERY_DOUBLE_1_DOT_1 = 1.1;
+const ENUM_QUERY_DOUBLE_MINUS_1_DOT_2 = -1.2;
 
     /**
      * Gets allowable values of the enum
      *
      * @return string[]
      */
-    public function getStatusAllowableValues()
+    public function getEnumFormStringArrayAllowableValues()
     {
         return [
-            self::STATUS_AVAILABLE,
-self::STATUS_PENDING,
-self::STATUS_SOLD,        ];
+            self::ENUM_FORM_STRING_ARRAY_GREATER_THAN,
+self::ENUM_FORM_STRING_ARRAY_DOLLAR,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getEnumFormStringAllowableValues()
+    {
+        return [
+            self::ENUM_FORM_STRING_ABC,
+self::ENUM_FORM_STRING_EFG,
+self::ENUM_FORM_STRING_XYZ,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getEnumQueryDoubleAllowableValues()
+    {
+        return [
+            self::ENUM_QUERY_DOUBLE_1_DOT_1,
+self::ENUM_QUERY_DOUBLE_MINUS_1_DOT_2,        ];
     }
 
     /**
@@ -209,12 +220,9 @@ self::STATUS_SOLD,        ];
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['category'] = isset($data['category']) ? $data['category'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['photo_urls'] = isset($data['photo_urls']) ? $data['photo_urls'] : null;
-        $this->container['tags'] = isset($data['tags']) ? $data['tags'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['enum_form_string_array'] = isset($data['enum_form_string_array']) ? $data['enum_form_string_array'] : null;
+        $this->container['enum_form_string'] = isset($data['enum_form_string']) ? $data['enum_form_string'] : '-efg';
+        $this->container['enum_query_double'] = isset($data['enum_query_double']) ? $data['enum_query_double'] : null;
     }
 
     /**
@@ -226,16 +234,18 @@ self::STATUS_SOLD,        ];
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
-        }
-        if ($this->container['photo_urls'] === null) {
-            $invalidProperties[] = "'photo_urls' can't be null";
-        }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+        $allowedValues = $this->getEnumFormStringAllowableValues();
+        if (!is_null($this->container['enum_form_string']) && !in_array($this->container['enum_form_string'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
-                "invalid value for 'status', must be one of '%s'",
+                "invalid value for 'enum_form_string', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getEnumQueryDoubleAllowableValues();
+        if (!is_null($this->container['enum_query_double']) && !in_array($this->container['enum_query_double'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'enum_query_double', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -256,154 +266,100 @@ self::STATUS_SOLD,        ];
 
 
     /**
-     * Gets id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param int $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets category
-     *
-     * @return \Swagger\Client\Model\Category
-     */
-    public function getCategory()
-    {
-        return $this->container['category'];
-    }
-
-    /**
-     * Sets category
-     *
-     * @param \Swagger\Client\Model\Category $category category
-     *
-     * @return $this
-     */
-    public function setCategory($category)
-    {
-        $this->container['category'] = $category;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string $name name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets photo_urls
+     * Gets enum_form_string_array
      *
      * @return string[]
      */
-    public function getPhotoUrls()
+    public function getEnumFormStringArray()
     {
-        return $this->container['photo_urls'];
+        return $this->container['enum_form_string_array'];
     }
 
     /**
-     * Sets photo_urls
+     * Sets enum_form_string_array
      *
-     * @param string[] $photo_urls photo_urls
+     * @param string[] $enum_form_string_array Form parameter enum test (string array)
      *
      * @return $this
      */
-    public function setPhotoUrls($photo_urls)
+    public function setEnumFormStringArray($enum_form_string_array)
     {
-        $this->container['photo_urls'] = $photo_urls;
-
-        return $this;
-    }
-
-    /**
-     * Gets tags
-     *
-     * @return \Swagger\Client\Model\Tag[]
-     */
-    public function getTags()
-    {
-        return $this->container['tags'];
-    }
-
-    /**
-     * Sets tags
-     *
-     * @param \Swagger\Client\Model\Tag[] $tags tags
-     *
-     * @return $this
-     */
-    public function setTags($tags)
-    {
-        $this->container['tags'] = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Gets status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->container['status'];
-    }
-
-    /**
-     * Sets status
-     *
-     * @param string $status pet status in the store
-     *
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($status) && !in_array($status, $allowedValues, true)) {
+        $allowedValues = $this->getEnumFormStringArrayAllowableValues();
+        if (!is_null($enum_form_string_array) && array_diff($enum_form_string_array, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for 'status', must be one of '%s'",
+                    "Invalid value for 'enum_form_string_array', must be one of '%s'",
                     implode("', '", $allowedValues)
                 )
             );
         }
-        $this->container['status'] = $status;
+        $this->container['enum_form_string_array'] = $enum_form_string_array;
+
+        return $this;
+    }
+
+    /**
+     * Gets enum_form_string
+     *
+     * @return string
+     */
+    public function getEnumFormString()
+    {
+        return $this->container['enum_form_string'];
+    }
+
+    /**
+     * Sets enum_form_string
+     *
+     * @param string $enum_form_string Form parameter enum test (string)
+     *
+     * @return $this
+     */
+    public function setEnumFormString($enum_form_string)
+    {
+        $allowedValues = $this->getEnumFormStringAllowableValues();
+        if (!is_null($enum_form_string) && !in_array($enum_form_string, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'enum_form_string', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['enum_form_string'] = $enum_form_string;
+
+        return $this;
+    }
+
+    /**
+     * Gets enum_query_double
+     *
+     * @return double
+     */
+    public function getEnumQueryDouble()
+    {
+        return $this->container['enum_query_double'];
+    }
+
+    /**
+     * Sets enum_query_double
+     *
+     * @param double $enum_query_double Query parameter enum test (double)
+     *
+     * @return $this
+     */
+    public function setEnumQueryDouble($enum_query_double)
+    {
+        $allowedValues = $this->getEnumQueryDoubleAllowableValues();
+        if (!is_null($enum_query_double) && !in_array($enum_query_double, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'enum_query_double', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['enum_query_double'] = $enum_query_double;
 
         return $this;
     }

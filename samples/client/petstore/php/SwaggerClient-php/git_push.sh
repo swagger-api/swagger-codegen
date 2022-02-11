@@ -6,6 +6,7 @@
 git_user_id=$1
 git_repo_id=$2
 release_note=$3
+git_repo_base_url=$4
 
 if [ "$git_user_id" = "" ]; then
     git_user_id="GIT_USER_ID"
@@ -20,6 +21,11 @@ fi
 if [ "$release_note" = "" ]; then
     release_note="Minor update"
     echo "[INFO] No command line input provided. Set \$release_note to $release_note"
+fi
+
+if [ "$git_repo_base_url" = "" ]; then
+    git_repo_base_url="https://github.com"
+    echo "[INFO] No command line input provided. Set \$git_repo_base_url to $git_repo_base_url"
 fi
 
 # Initialize the local directory as a Git repository
@@ -37,9 +43,11 @@ if [ "$git_remote" = "" ]; then # git remote not defined
 
     if [ "$GIT_TOKEN" = "" ]; then
         echo "[INFO] \$GIT_TOKEN (environment variable) is not set. Using the git credential in your environment."
-        git remote add origin https://github.com/${git_user_id}/${git_repo_id}.git
+        git remote add origin ${git_repo_base_url}/${git_user_id}/${git_repo_id}.git
     else
-        git remote add origin https://${git_user_id}:${GIT_TOKEN}@github.com/${git_user_id}/${git_repo_id}.git
+        git_repo_base_url=${git_repo_base_url#*//}
+        git_repo_base_url=${git_repo_base_url%%.*}
+        git remote add origin https://${git_user_id}:${GIT_TOKEN}@${git_repo_base_url}/${git_user_id}/${git_repo_id}.git
     fi
 
 fi
@@ -47,6 +55,6 @@ fi
 git pull origin master
 
 # Pushes (Forces) the changes in the local repository up to the remote repository
-echo "Git pushing to https://github.com/${git_user_id}/${git_repo_id}.git"
+echo "Git pushing to ${git_repo_base_url}/${git_user_id}/${git_repo_id}.git"
 git push origin master 2>&1 | grep -v 'To https'
 
