@@ -5,15 +5,10 @@
 from __future__ import absolute_import
 
 import io
-import json
 import logging
-import re
-import ssl
 
-import certifi
 # python 2 and python 3 compatibility library
 import six
-from six.moves.urllib.parse import urlencode
 
 try:
     import requests
@@ -51,7 +46,7 @@ class RESTClientObject(object):
         # Custom SSL certificates and client certificates: http://urllib3.readthedocs.io/en/latest/advanced-usage.html  # noqa: E501
 
         self.session = configuration.session or requests.Session()
-        # TODO https://stackoverflow.com/questions/34837026/whats-the-meaning-of-pool-connections-in-requests-adapters-httpadapter
+        # TODO https://stackoverflow.com/questions/34837026/whats-the-meaning-of-pool-connections-in-requests-adapters-httpadapter  # noqa: E501
 
         # cert_reqs
         self.session.verify = configuration.verify_ssl
@@ -63,7 +58,10 @@ class RESTClientObject(object):
         # client cert
         if configuration.cert_file:
             if configuration.key_file:
-                self.session.cert = (configuration.cert_file, configuration.key_file)
+                self.session.cert = (
+                                        configuration.cert_file,
+                                        configuration.key_file
+                                    )
             else:
                 self.session.cert = configuration.cert_file
 
@@ -102,7 +100,6 @@ class RESTClientObject(object):
             raise ValueError(
                 "body parameter cannot be used with post_params parameter."
             )
-
 
         r = self.session.request(method,
                                  url,
