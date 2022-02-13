@@ -51,6 +51,7 @@ class RESTClientObject(object):
         # Custom SSL certificates and client certificates: http://urllib3.readthedocs.io/en/latest/advanced-usage.html  # noqa: E501
 
         self.session = configuration.session or requests.Session()
+        # TODO https://stackoverflow.com/questions/34837026/whats-the-meaning-of-pool-connections-in-requests-adapters-httpadapter
 
         # cert_reqs
         self.session.verify = configuration.verify_ssl
@@ -85,7 +86,7 @@ class RESTClientObject(object):
         :param post_params: request post parameters,
                             `application/x-www-form-urlencoded`
                             and `multipart/form-data`
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
+        :param _preload_content: if False, the requests.Response object will
                                  be returned without reading/decoding response
                                  data. Default is True.
         :param _request_timeout: timeout setting for this request. If one
