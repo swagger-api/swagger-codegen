@@ -50,6 +50,10 @@ class Configuration(object):
         # access token for OAuth
         self.access_token = ""
 {{/isOAuth}}{{/authMethods}}
+{{#requests}}
+        # preconfigured Session object
+        self.session = None
+{{/requests}}
         # Logging Settings
         self.logger = {}
         self.logger["package_logger"] = logging.getLogger("{{packageName}}")
