@@ -200,7 +200,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
-        
+
         // Additional properties could be set already (f.e. using Maven plugin)
         if (useOas2Option != null && !config.additionalProperties().containsKey(CodegenConstants.USE_OAS2)) {
             config.additionalProperties().put(CodegenConstants.USE_OAS2, useOas2);
@@ -247,7 +247,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             LOGGER.error("Missing required field info version. Default appVersion set to 1.0.0");
             config.additionalProperties().put("appVersion", "1.0.0");
         }
-        
+
         if (StringUtils.isEmpty(info.getDescription())) {
             // set a default description if none is provided
             config.additionalProperties().put("appDescription",
@@ -467,6 +467,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             hasModel = false;
         }
 
+        if (this.openAPI.getPaths() == null) {
+            return;
+        }
         Map<String, List<CodegenOperation>> paths = processPaths(this.openAPI.getPaths());
         Set<String> apisToGenerate = null;
         String apiNames = System.getProperty("apis");
