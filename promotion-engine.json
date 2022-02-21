@@ -23,6 +23,14 @@
       "description": "Cart Evaluation Log Resource"
     },
     {
+      "name": "code-based-promotion-meta-resource",
+      "description": "Code Based Promotion Meta Resource"
+    },
+    {
+      "name": "code-based-promotion-resource",
+      "description": "Code Based Promotion Resource"
+    },
+    {
       "name": "health-check-resource",
       "description": "Health Check Resource"
     },
@@ -120,6 +128,12 @@
             "format": "int64"
           },
           {
+            "name": "isLoyaltyOnly",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
             "name": "limit",
             "in": "query",
             "required": false,
@@ -174,11 +188,22 @@
             ]
           },
           {
+            "name": "promotionMode",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "DISCOUNT",
+              "PAYMENT_VOUCHER"
+            ]
+          },
+          {
             "name": "promotionType",
             "in": "query",
             "required": false,
             "type": "string",
             "enum": [
+              "CODE",
               "CUSTOMER",
               "EARNING",
               "POS",
@@ -479,6 +504,12 @@
             "format": "int64"
           },
           {
+            "name": "isLoyaltyOnly",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
             "name": "limit",
             "in": "query",
             "required": false,
@@ -533,11 +564,22 @@
             ]
           },
           {
+            "name": "promotionMode",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "DISCOUNT",
+              "PAYMENT_VOUCHER"
+            ]
+          },
+          {
             "name": "promotionType",
             "in": "query",
             "required": false,
             "type": "string",
             "enum": [
+              "CODE",
               "CUSTOMER",
               "EARNING",
               "POS",
@@ -768,6 +810,19 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "mode",
+            "in": "query",
+            "description": "mode",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "DISCOUNT",
+              "PAYMENT_VOUCHER"
+            ]
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -947,6 +1002,95 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ResponseWrapper«boolean»"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/management/promotions/{promotionId}/code_meta": {
+      "get": {
+        "tags": [
+          "code-based-promotion-meta-resource"
+        ],
+        "summary": "getAllCodeBasedMetaConfigs",
+        "operationId": "getAllCodeBasedMetaConfigsUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "promotionId",
+            "in": "path",
+            "description": "promotionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseWrapper«List«CodeBasedPromotionMetaRO»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "code-based-promotion-meta-resource"
+        ],
+        "summary": "createCodeBasedPromotionJob",
+        "operationId": "createCodeBasedPromotionJobUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "codeBasedPromotionMetaRO",
+            "description": "codeBasedPromotionMetaRO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CodeBasedPromotionMetaRO"
+            }
+          },
+          {
+            "name": "promotionId",
+            "in": "path",
+            "description": "promotionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseWrapper«CodeBasedPromotionMetaRO»"
             }
           },
           "201": {
@@ -1366,6 +1510,57 @@
         }
       }
     },
+    "/v1/promotions/code": {
+      "get": {
+        "tags": [
+          "code-based-promotion-resource"
+        ],
+        "summary": "getPromotionForCodes",
+        "operationId": "getPromotionForCodesUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "codes",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "DISCOUNT",
+              "PAYMENT_VOUCHER"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseWrapper«List«CodeBasedPromotionRO»»"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v1/promotions/config": {
       "get": {
         "tags": [
@@ -1452,11 +1647,33 @@
             "type": "boolean"
           },
           {
+            "name": "includeRedemptions",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "includeSupplementaryPromotions",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
             "name": "limit",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "DISCOUNT",
+              "PAYMENT_VOUCHER"
+            ]
           },
           {
             "name": "order",
@@ -1571,7 +1788,7 @@
             "description": "cart",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CartRO"
+              "$ref": "#/definitions/CartROReq"
             }
           }
         ],
@@ -1621,6 +1838,16 @@
             "required": false,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "DISCOUNT",
+              "PAYMENT_VOUCHER"
+            ]
           },
           {
             "name": "order",
@@ -1788,10 +2015,15 @@
           {
             "name": "customerId",
             "in": "query",
-            "description": "customerId",
             "required": true,
             "type": "integer",
             "format": "int64"
+          },
+          {
+            "name": "earnId",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "promotionId",
@@ -1840,10 +2072,15 @@
           {
             "name": "customerId",
             "in": "query",
-            "description": "customerId",
             "required": true,
             "type": "integer",
             "format": "int64"
+          },
+          {
+            "name": "earnId",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "promotionId",
@@ -1948,13 +2185,17 @@
         "productBasedAction": {
           "$ref": "#/definitions/ProductBasedAction"
         },
+        "tenderBasedAction": {
+          "$ref": "#/definitions/TenderBasedAction"
+        },
         "type": {
           "type": "string",
           "enum": [
             "CART_BASED",
             "FIXED_PRICE",
             "FREE_PRODUCT",
-            "PRODUCT_BASED"
+            "PRODUCT_BASED",
+            "TENDER"
           ]
         }
       },
@@ -1994,15 +2235,31 @@
         "name": {
           "type": "string"
         },
+        "promoCode": {
+          "type": "string"
+        },
         "promotionAppliedOnQuantity": {
           "type": "string"
         },
         "promotionId": {
           "type": "string"
         },
+        "promotionMode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
+        "redeemableVoucherValue": {
+          "type": "string"
+        },
         "redemptionCount": {
           "type": "integer",
           "format": "int64"
+        },
+        "totalVoucherValue": {
+          "type": "string"
         }
       },
       "title": "AppliedPromotionRO"
@@ -2169,6 +2426,9 @@
     "CartEvaluationRO": {
       "type": "object",
       "properties": {
+        "cartRO": {
+          "$ref": "#/definitions/CartRO"
+        },
         "createdOn": {
           "type": "string",
           "format": "date-time"
@@ -2242,12 +2502,17 @@
       "type": "object",
       "required": [
         "amount",
-        "cartItems",
-        "customerId"
+        "cartItems"
       ],
       "properties": {
         "amount": {
           "type": "string"
+        },
+        "appliedPaymentVouchers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedPromotionRO"
+          }
         },
         "appliedPromotions": {
           "type": "array",
@@ -2261,18 +2526,417 @@
             "$ref": "#/definitions/CartItemRO"
           }
         },
+        "cartTenders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartTenderRO"
+          }
+        },
         "categoryHierarchySentInPayload": {
           "type": "boolean"
         },
         "customerId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "minimum": 1,
+          "exclusiveMinimum": false
         },
         "evaluationId": {
           "type": "string"
+        },
+        "paymentVoucherEvaluationLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedEvaluationLog"
+          }
+        },
+        "paymentVouchers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "promoCodeEvaluationLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedEvaluationLog"
+          }
+        },
+        "promoCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "title": "CartRO"
+    },
+    "CartROReq": {
+      "type": "object",
+      "required": [
+        "amount",
+        "cartItems"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "appliedPaymentVouchers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedPromotionRO"
+          }
+        },
+        "appliedPromotions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedPromotionRO"
+          }
+        },
+        "cartItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartItemRO"
+          }
+        },
+        "cartTenders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartTenderRO"
+          }
+        },
+        "categoryHierarchySentInPayload": {
+          "type": "boolean"
+        },
+        "customerId": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1,
+          "exclusiveMinimum": false
+        },
+        "evaluationId": {
+          "type": "string"
+        },
+        "paymentVoucherEvaluationLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedEvaluationLogReq"
+          }
+        },
+        "paymentVouchers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "promoCodeEvaluationLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedEvaluationLogReq"
+          }
+        },
+        "promoCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "CartROReq"
+    },
+    "CartRORes": {
+      "type": "object",
+      "required": [
+        "amount",
+        "cartItems"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "appliedPaymentVouchers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedPromotionRO"
+          }
+        },
+        "appliedPromotions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedPromotionRO"
+          }
+        },
+        "cartItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartItemRO"
+          }
+        },
+        "cartTenders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartTenderRO"
+          }
+        },
+        "categoryHierarchySentInPayload": {
+          "type": "boolean"
+        },
+        "customerId": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1,
+          "exclusiveMinimum": false
+        },
+        "evaluationId": {
+          "type": "string"
+        },
+        "paymentVoucherEvaluationLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedEvaluationLogRes"
+          }
+        },
+        "paymentVouchers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "promoCodeEvaluationLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedEvaluationLogRes"
+          }
+        },
+        "promoCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "CartRORes"
+    },
+    "CartTenderRO": {
+      "type": "object",
+      "required": [
+        "identifier"
+      ],
+      "properties": {
+        "adjustedAmount": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        }
+      },
+      "title": "CartTenderRO"
+    },
+    "CodeBasedEvaluationLog": {
+      "type": "object",
+      "properties": {
+        "codeType": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "promoCode": {
+          "type": "string"
+        }
+      },
+      "title": "CodeBasedEvaluationLog"
+    },
+    "CodeBasedEvaluationLogReq": {
+      "type": "object",
+      "properties": {
+        "codeType": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "promoCode": {
+          "type": "string"
+        }
+      },
+      "title": "CodeBasedEvaluationLogReq"
+    },
+    "CodeBasedEvaluationLogRes": {
+      "type": "object",
+      "properties": {
+        "codeType": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "promoCode": {
+          "type": "string"
+        }
+      },
+      "title": "CodeBasedEvaluationLogRes"
+    },
+    "CodeBasedPromotionMetaRO": {
+      "type": "object",
+      "required": [
+        "codeJobType"
+      ],
+      "properties": {
+        "codeJobType": {
+          "type": "string",
+          "enum": [
+            "AUTO_GENERATED",
+            "UPLOADED"
+          ]
+        },
+        "codeLength": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 5,
+          "maximum": 40,
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        "createdBy": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdOn": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "errorFileHandle": {
+          "type": "string"
+        },
+        "errorMessages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "isAlphaNumeric": {
+          "type": "boolean"
+        },
+        "lastUpdatedBy": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lastUpdatedOn": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "promotionId": {
+          "type": "string"
+        },
+        "savedCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "COMPLETED",
+            "ERRORED",
+            "GENERATING_CODE",
+            "OPEN",
+            "UPLOADING"
+          ]
+        },
+        "successFileHandle": {
+          "type": "string"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64",
+          "maximum": 10000000,
+          "exclusiveMaximum": false
+        },
+        "uploadedFile": {
+          "$ref": "#/definitions/UploadedFileRO"
+        }
+      },
+      "title": "CodeBasedPromotionMetaRO"
+    },
+    "CodeBasedPromotionRO": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "apiError": {
+          "$ref": "#/definitions/ApiError"
+        },
+        "code": {
+          "type": "string"
+        },
+        "createdOn": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isRedeemable": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "promotionId": {
+          "type": "string"
+        },
+        "promotionName": {
+          "type": "string"
+        },
+        "validTill": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CodeBasedPromotionRO"
     },
     "ComboProductConditionRO": {
       "type": "object",
@@ -2352,12 +3016,16 @@
         "productCondition": {
           "$ref": "#/definitions/ProductCondition"
         },
+        "tenderCondition": {
+          "$ref": "#/definitions/TenderCondition"
+        },
         "type": {
           "type": "string",
           "enum": [
             "CART",
             "COMBO_PRODUCT",
-            "PRODUCT"
+            "PRODUCT",
+            "TENDER"
           ]
         }
       },
@@ -2413,6 +3081,9 @@
             "REWARD"
           ]
         },
+        "errorDetails": {
+          "$ref": "#/definitions/ErrorDetails"
+        },
         "eventDetails": {
           "$ref": "#/definitions/EventDetailsRO"
         },
@@ -2436,6 +3107,13 @@
     "CustomerPromotionRO": {
       "type": "object",
       "properties": {
+        "applicationMode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
         "customFieldValues": {
           "type": "object",
           "additionalProperties": {
@@ -2486,6 +3164,15 @@
             "ACTIVE",
             "INACTIVE"
           ]
+        },
+        "restrictions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/RestrictionDetailsRO"
+            }
+          }
         },
         "supplementaryCriteria": {
           "$ref": "#/definitions/SupplementaryCriteria"
@@ -3091,6 +3778,7 @@
         "promotionType": {
           "type": "string",
           "enum": [
+            "CODE",
             "CUSTOMER",
             "EARNING",
             "POS",
@@ -3201,6 +3889,9 @@
         "message": {
           "type": "string"
         },
+        "promoCode": {
+          "type": "string"
+        },
         "promotionId": {
           "type": "string"
         }
@@ -3261,6 +3952,9 @@
         "id": {
           "type": "string"
         },
+        "isLoyaltyOnly": {
+          "type": "boolean"
+        },
         "languagesConfigured": {
           "type": "array",
           "items": {
@@ -3283,8 +3977,23 @@
           "type": "integer",
           "format": "int32"
         },
+        "maxIssuancePerCustomer": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 10,
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
         "messageLabel": {
           "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
         },
         "name": {
           "type": "string",
@@ -3330,6 +4039,7 @@
         "type": {
           "type": "string",
           "enum": [
+            "CODE",
             "CUSTOMER",
             "EARNING",
             "POS",
@@ -3393,6 +4103,9 @@
         "id": {
           "type": "string"
         },
+        "isLoyaltyOnly": {
+          "type": "boolean"
+        },
         "languagesConfigured": {
           "type": "array",
           "items": {
@@ -3415,8 +4128,23 @@
           "type": "integer",
           "format": "int32"
         },
+        "maxIssuancePerCustomer": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 10,
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
         "messageLabel": {
           "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
         },
         "name": {
           "type": "string",
@@ -3462,6 +4190,7 @@
         "type": {
           "type": "string",
           "enum": [
+            "CODE",
             "CUSTOMER",
             "EARNING",
             "POS",
@@ -3525,6 +4254,9 @@
         "id": {
           "type": "string"
         },
+        "isLoyaltyOnly": {
+          "type": "boolean"
+        },
         "languagesConfigured": {
           "type": "array",
           "items": {
@@ -3547,8 +4279,23 @@
           "type": "integer",
           "format": "int32"
         },
+        "maxIssuancePerCustomer": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 10,
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
         "messageLabel": {
           "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
         },
         "name": {
           "type": "string",
@@ -3594,6 +4341,7 @@
         "type": {
           "type": "string",
           "enum": [
+            "CODE",
             "CUSTOMER",
             "EARNING",
             "POS",
@@ -3636,6 +4384,9 @@
           "type": "integer",
           "format": "int64"
         },
+        "promoCode": {
+          "type": "string"
+        },
         "promotionAppliedQuantity": {
           "type": "string"
         },
@@ -3664,7 +4415,8 @@
           "type": "string",
           "enum": [
             "CART",
-            "LINEITEM"
+            "LINEITEM",
+            "PAYMENT_VOUCHER"
           ]
         },
         "sku": {
@@ -3688,10 +4440,7 @@
     "PromotionStrategyRO": {
       "type": "object",
       "required": [
-        "conditionBasedRankingStrategy",
-        "promotionRankingStrategies",
-        "rewardStrategy",
-        "singlePromotionPerLineitem"
+        "promotionRankingStrategies"
       ],
       "properties": {
         "conditionBasedRankingStrategy": {
@@ -3707,20 +4456,42 @@
         "isActive": {
           "type": "boolean"
         },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "PAYMENT_VOUCHER"
+          ]
+        },
         "promotionRankingStrategies": {
           "type": "array",
           "items": {
             "type": "string",
             "enum": [
+              "BEST_COMBINATION",
               "EXPIRY_BASED",
               "MAX_DISCOUNT",
+              "MIN_DISCOUNT",
               "PRIORITY"
+            ]
+          }
+        },
+        "rewardRankingStrategies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CODE_FIRST",
+              "NO_STRATEGY",
+              "PROMOTION_FIRST",
+              "REWARDS_FIRST"
             ]
           }
         },
         "rewardStrategy": {
           "type": "string",
           "enum": [
+            "CODE_FIRST",
             "NO_STRATEGY",
             "PROMOTION_FIRST",
             "REWARDS_FIRST"
@@ -3769,6 +4540,7 @@
         "promotionType": {
           "type": "string",
           "enum": [
+            "CODE",
             "CUSTOMER",
             "EARNING",
             "POS",
@@ -3795,6 +4567,14 @@
         },
         "totalEarned": {
           "type": "string"
+        },
+        "totalIssuedCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalPromoCodeCreated": {
+          "type": "integer",
+          "format": "int64"
         },
         "totalPromotionAppliedQuantity": {
           "type": "number",
@@ -3877,7 +4657,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/CartRO"
+          "$ref": "#/definitions/CartRORes"
         },
         "errors": {
           "type": "array",
@@ -3887,6 +4667,21 @@
         }
       },
       "title": "ResponseWrapper«CartRO»"
+    },
+    "ResponseWrapper«CodeBasedPromotionMetaRO»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/CodeBasedPromotionMetaRO"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiError"
+          }
+        }
+      },
+      "title": "ResponseWrapper«CodeBasedPromotionMetaRO»"
     },
     "ResponseWrapper«CustomerEarnedPromotionRO»": {
       "type": "object",
@@ -3938,6 +4733,42 @@
         }
       },
       "title": "ResponseWrapper«List«BulkEarnedPromotionRO»»"
+    },
+    "ResponseWrapper«List«CodeBasedPromotionMetaRO»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedPromotionMetaRO"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiError"
+          }
+        }
+      },
+      "title": "ResponseWrapper«List«CodeBasedPromotionMetaRO»»"
+    },
+    "ResponseWrapper«List«CodeBasedPromotionRO»»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CodeBasedPromotionRO"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApiError"
+          }
+        }
+      },
+      "title": "ResponseWrapper«List«CodeBasedPromotionRO»»"
     },
     "ResponseWrapper«List«CustomMetadataFieldRO»»": {
       "type": "object",
@@ -4173,6 +5004,34 @@
       },
       "title": "ResponseWrapper«object»"
     },
+    "RestrictionDetailsRO": {
+      "type": "object",
+      "properties": {
+        "kpi": {
+          "type": "string",
+          "enum": [
+            "DISCOUNT",
+            "REDEMPTION",
+            "TRANSACTION"
+          ]
+        },
+        "maxLimit": {
+          "type": "number"
+        },
+        "periodEnd": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "periodStart": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "remainingRedemption": {
+          "type": "number"
+        }
+      },
+      "title": "RestrictionDetailsRO"
+    },
     "RestrictionKPIRO": {
       "type": "object",
       "properties": {
@@ -4291,6 +5150,49 @@
         }
       },
       "title": "SupplementaryCriteria"
+    },
+    "TenderBasedAction": {
+      "type": "object",
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "ABSOLUTE",
+            "PERCENTAGE"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "TenderBasedAction"
+    },
+    "TenderCondition": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/Condition"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "CARD",
+            "CASH",
+            "PAYMENT_VOUCHER"
+          ]
+        }
+      },
+      "title": "TenderCondition"
     },
     "TimeCriteria": {
       "type": "object",
@@ -4420,6 +5322,22 @@
         }
       },
       "title": "TimeCriteriaRes"
+    },
+    "UploadedFileRO": {
+      "type": "object",
+      "properties": {
+        "codeColumnIndex": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "containsHeader": {
+          "type": "boolean"
+        },
+        "fileHandle": {
+          "type": "string"
+        }
+      },
+      "title": "UploadedFileRO"
     }
   }
 }
