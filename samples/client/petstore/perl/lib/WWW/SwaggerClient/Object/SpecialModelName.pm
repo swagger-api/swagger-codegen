@@ -148,7 +148,7 @@ __PACKAGE__->method_documentation({
     	base_name => '$special[property.name]',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

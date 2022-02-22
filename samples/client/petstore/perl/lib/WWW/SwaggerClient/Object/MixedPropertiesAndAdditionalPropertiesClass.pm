@@ -150,21 +150,21 @@ __PACKAGE__->method_documentation({
     	base_name => 'uuid',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'date_time' => {
     	datatype => 'DateTime',
     	base_name => 'dateTime',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'map' => {
     	datatype => 'HASH[string,Animal]',
     	base_name => 'map',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

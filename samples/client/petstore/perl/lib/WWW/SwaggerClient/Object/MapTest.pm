@@ -148,14 +148,14 @@ __PACKAGE__->method_documentation({
     	base_name => 'map_map_of_string',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'map_of_enum_string' => {
     	datatype => 'HASH[string,string]',
     	base_name => 'map_of_enum_string',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

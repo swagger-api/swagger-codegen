@@ -301,11 +301,7 @@ fun Route.PetApi() {
                 call.respond(HttpStatusCode.Unauthorized)
             } else {
                 val exampleContentType = "application/json"
-                val exampleContentString = """{
-                  "code" : 0,
-                  "type" : "type",
-                  "message" : "message"
-                }"""
+                val exampleContentString = """{"empty": false}"""
                 
                 when(exampleContentType) {
                     "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

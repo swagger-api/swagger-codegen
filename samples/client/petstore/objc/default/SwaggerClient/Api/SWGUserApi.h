@@ -64,8 +64,8 @@ extern NSInteger kSWGUserApiMissingParamErrorCode;
 ///
 /// @param username The name that needs to be deleted
 /// 
-///  code:400 message:"Invalid username supplied",
-///  code:404 message:"User not found"
+///  code:404 message:"User not found",
+///  code:400 message:"Invalid username supplied"
 ///
 /// @return void
 -(NSURLSessionTask*) deleteUserWithUsername: (NSString*) username
@@ -77,9 +77,9 @@ extern NSInteger kSWGUserApiMissingParamErrorCode;
 ///
 /// @param username The name that needs to be fetched. Use user1 for testing. 
 /// 
+///  code:404 message:"User not found",
 ///  code:200 message:"successful operation",
-///  code:400 message:"Invalid username supplied",
-///  code:404 message:"User not found"
+///  code:400 message:"Invalid username supplied"
 ///
 /// @return SWGUser*
 -(NSURLSessionTask*) getUserByNameWithUsername: (NSString*) username
@@ -118,8 +118,8 @@ extern NSInteger kSWGUserApiMissingParamErrorCode;
 /// @param username name that need to be deleted
 /// @param body Updated user object (optional)
 /// 
-///  code:400 message:"Invalid user supplied",
-///  code:404 message:"User not found"
+///  code:404 message:"User not found",
+///  code:400 message:"Invalid user supplied"
 ///
 /// @return void
 -(NSURLSessionTask*) updateUserWithUsername: (NSString*) username

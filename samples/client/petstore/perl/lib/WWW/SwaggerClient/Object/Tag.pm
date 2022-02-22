@@ -148,14 +148,14 @@ __PACKAGE__->method_documentation({
     	base_name => 'id',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'name' => {
     	datatype => 'string',
     	base_name => 'name',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

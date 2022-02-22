@@ -148,7 +148,7 @@ __PACKAGE__->method_documentation({
     	base_name => '123-list',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

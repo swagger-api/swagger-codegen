@@ -148,14 +148,14 @@ __PACKAGE__->method_documentation({
     	base_name => 'bar',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'true',
     		},
     'baz' => {
     	datatype => 'string',
     	base_name => 'baz',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

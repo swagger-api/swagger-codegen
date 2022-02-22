@@ -125,6 +125,10 @@ arrayTestArrayArrayOfModelL f ArrayTest{..} = (\arrayTestArrayArrayOfModel -> Ar
 
 
 
+-- * Boolean
+
+
+
 -- * Capitalization
 
 -- | 'capitalizationSmallCamel' Lens
@@ -159,6 +163,25 @@ capitalizationAttNameL f Capitalization{..} = (\capitalizationAttName -> Capital
 
 
 
+-- * Cat
+
+-- | 'catClassName' Lens
+catClassNameL :: Lens_' Cat (Text)
+catClassNameL f Cat{..} = (\catClassName -> Cat { catClassName, ..} ) <$> f catClassName
+{-# INLINE catClassNameL #-}
+
+-- | 'catColor' Lens
+catColorL :: Lens_' Cat (Maybe Text)
+catColorL f Cat{..} = (\catColor -> Cat { catColor, ..} ) <$> f catColor
+{-# INLINE catColorL #-}
+
+-- | 'catDeclawed' Lens
+catDeclawedL :: Lens_' Cat (Maybe Bool)
+catDeclawedL f Cat{..} = (\catDeclawed -> Cat { catDeclawed, ..} ) <$> f catDeclawed
+{-# INLINE catDeclawedL #-}
+
+
+
 -- * Category
 
 -- | 'categoryId' Lens
@@ -188,6 +211,25 @@ classModelClassL f ClassModel{..} = (\classModelClass -> ClassModel { classModel
 clientClientL :: Lens_' Client (Maybe Text)
 clientClientL f Client{..} = (\clientClient -> Client { clientClient, ..} ) <$> f clientClient
 {-# INLINE clientClientL #-}
+
+
+
+-- * Dog
+
+-- | 'dogClassName' Lens
+dogClassNameL :: Lens_' Dog (Text)
+dogClassNameL f Dog{..} = (\dogClassName -> Dog { dogClassName, ..} ) <$> f dogClassName
+{-# INLINE dogClassNameL #-}
+
+-- | 'dogColor' Lens
+dogColorL :: Lens_' Dog (Maybe Text)
+dogColorL f Dog{..} = (\dogColor -> Dog { dogColor, ..} ) <$> f dogColor
+{-# INLINE dogColorL #-}
+
+-- | 'dogBreed' Lens
+dogBreedL :: Lens_' Dog (Maybe Text)
+dogBreedL f Dog{..} = (\dogBreed -> Dog { dogBreed, ..} ) <$> f dogBreed
+{-# INLINE dogBreedL #-}
 
 
 
@@ -321,6 +363,10 @@ hasOnlyReadOnlyFooL f HasOnlyReadOnly{..} = (\hasOnlyReadOnlyFoo -> HasOnlyReadO
 
 
 
+-- * Ints
+
+
+
 -- * MapTest
 
 -- | 'mapTestMapMapOfString' Lens
@@ -416,6 +462,10 @@ name123NumberL f Name{..} = (\name123Number -> Name { name123Number, ..} ) <$> f
 numberOnlyJustNumberL :: Lens_' NumberOnly (Maybe Double)
 numberOnlyJustNumberL f NumberOnly{..} = (\numberOnlyJustNumber -> NumberOnly { numberOnlyJustNumber, ..} ) <$> f numberOnlyJustNumber
 {-# INLINE numberOnlyJustNumberL #-}
+
+
+
+-- * Numbers
 
 
 
@@ -600,43 +650,5 @@ userPhoneL f User{..} = (\userPhone -> User { userPhone, ..} ) <$> f userPhone
 userUserStatusL :: Lens_' User (Maybe Int)
 userUserStatusL f User{..} = (\userUserStatus -> User { userUserStatus, ..} ) <$> f userUserStatus
 {-# INLINE userUserStatusL #-}
-
-
-
--- * Cat
-
--- | 'catClassName' Lens
-catClassNameL :: Lens_' Cat (Text)
-catClassNameL f Cat{..} = (\catClassName -> Cat { catClassName, ..} ) <$> f catClassName
-{-# INLINE catClassNameL #-}
-
--- | 'catColor' Lens
-catColorL :: Lens_' Cat (Maybe Text)
-catColorL f Cat{..} = (\catColor -> Cat { catColor, ..} ) <$> f catColor
-{-# INLINE catColorL #-}
-
--- | 'catDeclawed' Lens
-catDeclawedL :: Lens_' Cat (Maybe Bool)
-catDeclawedL f Cat{..} = (\catDeclawed -> Cat { catDeclawed, ..} ) <$> f catDeclawed
-{-# INLINE catDeclawedL #-}
-
-
-
--- * Dog
-
--- | 'dogClassName' Lens
-dogClassNameL :: Lens_' Dog (Text)
-dogClassNameL f Dog{..} = (\dogClassName -> Dog { dogClassName, ..} ) <$> f dogClassName
-{-# INLINE dogClassNameL #-}
-
--- | 'dogColor' Lens
-dogColorL :: Lens_' Dog (Maybe Text)
-dogColorL f Dog{..} = (\dogColor -> Dog { dogColor, ..} ) <$> f dogColor
-{-# INLINE dogColorL #-}
-
--- | 'dogBreed' Lens
-dogBreedL :: Lens_' Dog (Maybe Text)
-dogBreedL f Dog{..} = (\dogBreed -> Dog { dogBreed, ..} ) <$> f dogBreed
-{-# INLINE dogBreedL #-}
 
 
