@@ -7,7 +7,7 @@ if [ "$Branch" = "snapshot" ]
     version="https://newapi.crm-nightly-new.cc.capillarytech.com/version"
 elif [ "$Branch" = "production" ]
   then
-    url="https://intouch-api-swagger.crm-staging-new.cc.capillarytech.com/swagger.json"
+    url="https://newapi.crm-staging-new.cc.capillarytech.com/swagger.json"
     version="https://newapi.crm-staging-new.cc.capillarytech.com/version"
 else " No Branch is selected"
 fi
