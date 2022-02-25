@@ -26,7 +26,6 @@ import javax.validation.Valid;
 /**
  * NumberOnly
  */
-
 public class NumberOnly  implements Serializable {
   @JsonProperty("JustNumber")
   private BigDecimal justNumber = null;

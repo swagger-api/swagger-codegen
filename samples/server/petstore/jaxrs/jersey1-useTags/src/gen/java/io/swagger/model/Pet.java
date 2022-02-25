@@ -29,7 +29,6 @@ import javax.validation.Valid;
 /**
  * Pet
  */
-
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;

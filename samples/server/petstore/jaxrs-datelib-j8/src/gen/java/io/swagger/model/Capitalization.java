@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * Capitalization
  */
-
 public class Capitalization  implements Serializable {
   @JsonProperty("smallCamel")
   private String smallCamel = null;

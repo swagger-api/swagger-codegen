@@ -31,7 +31,6 @@ import javax.validation.Valid;
 /**
  * MixedPropertiesAndAdditionalPropertiesClass
  */
-
 public class MixedPropertiesAndAdditionalPropertiesClass  implements Serializable {
   @JsonProperty("uuid")
   private UUID uuid = null;

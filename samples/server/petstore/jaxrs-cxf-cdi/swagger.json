@@ -33,7 +33,7 @@
       "url" : "http://swagger.io"
     }
   } ],
-  "schemes" : [ "https" ],
+  "schemes" : [ "http" ],
   "paths" : {
     "/pet" : {
       "post" : {

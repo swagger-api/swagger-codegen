@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * SpecialModelName
  */
-
 public class SpecialModelName  implements Serializable {
   @JsonProperty("$special[property.name]")
   private Long specialPropertyName = null;

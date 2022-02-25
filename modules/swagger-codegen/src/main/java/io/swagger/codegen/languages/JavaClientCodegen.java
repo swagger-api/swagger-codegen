@@ -10,6 +10,7 @@ import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
 import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 
+import io.swagger.codegen.mustache.LowercaseLambda;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -43,6 +44,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String RETROFIT_2 = "retrofit2";
     public static final String REST_ASSURED = "rest-assured";
 
+    public static final String WIREMOCK_OPTION = "wiremock";
+
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
     protected boolean useRxJava2 = false;
@@ -75,6 +78,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
         cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
+
+        cliOptions.add(CliOption.newBoolean(WIREMOCK_OPTION, "Use wiremock to generate endpoint calls to mock on generated tests."));
 
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.11.4. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.11.4");
@@ -114,6 +119,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
     @Override
     public void processOpts() {
+        if (RETROFIT_1.equalsIgnoreCase(library)) {
+            dateLibrary = "joda";
+        }
+
         super.processOpts();
 
         if (additionalProperties.containsKey(USE_RX_JAVA) && additionalProperties.containsKey(USE_RX_JAVA2)) {
@@ -159,6 +168,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             this.setUseRuntimeException(convertPropertyToBooleanAndWriteBack(USE_RUNTIME_EXCEPTION));
         }
 
+        if (additionalProperties.containsKey(WIREMOCK_OPTION)) {
+            final boolean useWireMock = additionalProperties.get(WIREMOCK_OPTION) != null && Boolean.parseBoolean(additionalProperties.get(WIREMOCK_OPTION).toString());
+            additionalProperties.put(WIREMOCK_OPTION, useWireMock);
+        }
+
+        additionalProperties.put("lowercase", new LowercaseLambda());
+
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
         final String apiFolder = (sourceFolder + '/' + apiPackage).replace(".", "/");
@@ -166,7 +182,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         //Common files
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        writeOptional(outputFolder, new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+        if (java11Mode) {
+            writeOptional(outputFolder, new SupportingFile("build.gradle.java11.mustache", "", "build.gradle"));
+        } else {
+            writeOptional(outputFolder, new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+        }
         writeOptional(outputFolder, new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         writeOptional(outputFolder, new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
         writeOptional(outputFolder, new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));

@@ -25,7 +25,6 @@ import javax.validation.Valid;
  * Model for testing model name starting with number
  */
 @ApiModel(description = "Model for testing model name starting with number")
-
 public class Model200Response   {
   @JsonProperty("name")
   private Integer name = null;

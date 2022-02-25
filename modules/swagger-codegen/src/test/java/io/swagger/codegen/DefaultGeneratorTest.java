@@ -2,6 +2,7 @@ package io.swagger.codegen;
 
 import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.PhpClientCodegen;
 import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.Swagger;
@@ -11,6 +12,7 @@ import io.swagger.parser.util.ParseOptions;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.rules.TemporaryFolder;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -51,6 +53,57 @@ public class DefaultGeneratorTest {
     @AfterMethod
     public void tearDown() throws Exception {
         folder.delete();
+    }
+
+    @Test
+    public void testPHPRepositoryBaseURLOption() throws Exception {
+        final File output = folder.getRoot();
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/readmePHP_149.yaml",null, parseOptions);
+        CodegenConfig codegenConfig = new PhpClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.setGitRepoId("test_repository");
+        codegenConfig.setGitUserId("user");
+        codegenConfig.setGitRepoBaseURL("https://gitlab.com");
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+
+        final File readme = new File(output, "/SwaggerClient-php/README.md");
+        assertTrue(readme.exists());
+        assertTrue(FileUtils.readFileToString(readme).contains("gitlab"));
+
+        final File gitPush = new File(output, "/SwaggerClient-php/git_push.sh");
+        assertTrue(gitPush.exists());
+        assertFalse(FileUtils.readFileToString(gitPush).contains("https://github.com"));
+    }
+
+    @Test
+    public void testPHPRepositoryBaseURLOption_NoOption() throws Exception {
+        final File output = folder.getRoot();
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setFlatten(true);
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/readmePHP_149.yaml",null, parseOptions);
+        CodegenConfig codegenConfig = new PhpClientCodegen();
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.setGitRepoId("test_repository");
+        codegenConfig.setGitUserId("user");
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+
+        final File readme = new File(output, "/SwaggerClient-php/README.md");
+        assertTrue(readme.exists());
+        assertTrue(FileUtils.readFileToString(readme).contains("https://github.com/user"));
+
+        final File gitPush = new File(output, "/SwaggerClient-php/git_push.sh");
+        assertTrue(gitPush.exists());
+        assertTrue(FileUtils.readFileToString(gitPush).contains("https://github.com"));
     }
 
     @Test
@@ -699,6 +752,7 @@ public class DefaultGeneratorTest {
         CodegenConfig codegenConfig = new SpringCodegen();
         codegenConfig.setLibrary("spring-cloud");
         codegenConfig.setOutputDir(output.getAbsolutePath());
+
 
         ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
 

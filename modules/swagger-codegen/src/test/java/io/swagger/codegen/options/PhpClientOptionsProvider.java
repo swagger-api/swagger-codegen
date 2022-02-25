@@ -20,6 +20,7 @@ public class PhpClientOptionsProvider implements OptionsProvider {
     public static final String COMPOSER_PROJECT_NAME_VALUE = "swagger-client-php";
     public static final String GIT_USER_ID_VALUE = "gitSwaggerPhp";
     public static final String GIT_REPO_ID_VALUE = "git-swagger-client-php";
+    public static final String GIT_REPO_BASE_URL_VALUE = "githubPhp";
     public static final String ARTIFACT_VERSION_VALUE = "1.0.0-SNAPSHOT";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
 
@@ -44,6 +45,7 @@ public class PhpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.GIT_USER_ID, GIT_USER_ID_VALUE)
                 .put(PhpClientCodegen.COMPOSER_PROJECT_NAME, COMPOSER_PROJECT_NAME_VALUE)
                 .put(CodegenConstants.GIT_REPO_ID, GIT_REPO_ID_VALUE)
+                .put(CodegenConstants.GIT_REPO_BASE_URL, GIT_REPO_BASE_URL_VALUE)
                 .put(CodegenConstants.ARTIFACT_VERSION, ARTIFACT_VERSION_VALUE)
                 .put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
