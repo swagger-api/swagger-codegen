@@ -177,7 +177,7 @@
     <jersey2-version>2.22.2</jersey2-version>
     <jackson-version>2.11.4</jackson-version>
     <junit-version>4.13.1</junit-version>
-    <logback-version>1.1.7</logback-version>
+    <logback-version>1.2.9</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
