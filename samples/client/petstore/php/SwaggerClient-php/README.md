@@ -128,6 +128,10 @@ Class | Method | HTTP request | Description
  - [EnumArrays](docs/Model/EnumArrays.md)
  - [EnumClass](docs/Model/EnumClass.md)
  - [EnumTest](docs/Model/EnumTest.md)
+ - [FakeBody](docs/Model/FakeBody.md)
+ - [FakeBody1](docs/Model/FakeBody1.md)
+ - [FakeBody2](docs/Model/FakeBody2.md)
+ - [FakeJsonFormDataBody](docs/Model/FakeJsonFormDataBody.md)
  - [FormatTest](docs/Model/FormatTest.md)
  - [HasOnlyReadOnly](docs/Model/HasOnlyReadOnly.md)
  - [MapTest](docs/Model/MapTest.md)
@@ -144,6 +148,8 @@ Class | Method | HTTP request | Description
  - [OuterNumber](docs/Model/OuterNumber.md)
  - [OuterString](docs/Model/OuterString.md)
  - [Pet](docs/Model/Pet.md)
+ - [PetIdUploadImageBody](docs/Model/PetIdUploadImageBody.md)
+ - [PetPetIdBody](docs/Model/PetPetIdBody.md)
  - [ReadOnlyFirst](docs/Model/ReadOnlyFirst.md)
  - [SpecialModelName](docs/Model/SpecialModelName.md)
  - [Tag](docs/Model/Tag.md)
@@ -174,7 +180,8 @@ Class | Method | HTTP request | Description
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
- - ****: 
+ - **write:pets**: modify pets in your account
+ - **read:pets**: read your pets
 
 
 ## Author
