@@ -175,11 +175,13 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("__main__.mustache", packageName, "__main__.py"));
         supportingFiles.add(new SupportingFile("encoder.mustache", packageName, "encoder.py"));
         supportingFiles.add(new SupportingFile("util.mustache", packageName, "util.py"));
+        supportingFiles.add(new SupportingFile("type_util.mustache", packageName, "type_util.py"));
         supportingFiles.add(new SupportingFile("__init__.mustache", packageName + File.separatorChar + controllerPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__model.mustache", packageName + File.separatorChar + modelPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("base_model_.mustache", packageName + File.separatorChar + modelPackage, "base_model_.py"));
         supportingFiles.add(new SupportingFile("__init__test.mustache", packageName + File.separatorChar + testPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("swagger.mustache", packageName + File.separatorChar + "swagger", "swagger.yaml"));
+        supportingFiles.add(new SupportingFile("authorization_controller.mustache", packageName + File.separatorChar + controllerPackage, "authorization_controller.py"));
 
         modelPackage = packageName + "." + modelPackage;
         controllerPackage = packageName + "." + controllerPackage;
