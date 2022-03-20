@@ -10,6 +10,8 @@ import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import io.swagger.models.auth.AbstractSecuritySchemeDefinition;
+import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import io.swagger.util.Yaml;
@@ -342,6 +344,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                 }
             }
         }
+        addSecurityExtensions(swagger.getSecurityDefinitions());
     }
 
     @SuppressWarnings("unchecked")
@@ -679,6 +682,27 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
     @Override
     public void postProcessParameter(CodegenParameter parameter){
         postProcessPattern(parameter.pattern, parameter.vendorExtensions);
+    }
+
+    protected void addSecurityExtensions(Map<String, SecuritySchemeDefinition> securitySchemes) {
+        if (securitySchemes == null || securitySchemes.isEmpty()) {
+            return;
+        }
+        for (String securityName : securitySchemes.keySet()) {
+            final AbstractSecuritySchemeDefinition securityScheme = (AbstractSecuritySchemeDefinition) securitySchemes.get(securityName);
+            final String functionName = controllerPackage + ".authorization_controller.check_" + securityName;
+
+            if ("oauth2".equalsIgnoreCase(securityScheme.getType())) {
+                securityScheme.getVendorExtensions().put("x-tokenInfoFunc", functionName);
+                securityScheme.getVendorExtensions().put("x-scopeValidateFunc", controllerPackage + ".authorization_controller.validate_scope_" + securityName);
+            } else if ("basic".equalsIgnoreCase(securityScheme.getType())) {
+                securityScheme.getVendorExtensions().put("x-basicInfoFunc", functionName);
+            } else if ("apiKey".equalsIgnoreCase(securityScheme.getType())) {
+                securityScheme.getVendorExtensions().put("x-apikeyInfoFunc", functionName);
+            } else {
+                LOGGER.warn("Security type " + securityScheme.getType().toString() + " is not supported.");
+            }
+        }
     }
 
     /*
