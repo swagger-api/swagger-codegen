@@ -854,7 +854,7 @@
 <!--                <module>samples/client/petstore/elixir</module>-->
 <!--                <module>samples/client/petstore/haskell-http-client</module>-->
                 <module>samples/client/petstore/akka-scala</module>
-                <module>samples/client/petstore/scala</module>
+                <!--<module>samples/client/petstore/scala</module>-->
                 <!--<module>samples/client/petstore/scalaz</module>-->
                 <!--<module>samples/client/petstore/clojure</module>-->
                 <module>samples/client/petstore/java/feign</module>
