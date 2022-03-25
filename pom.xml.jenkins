@@ -851,10 +851,10 @@
             <modules>
                 <!-- clients -->
                 <!-- test java-related projects -->
-                <module>samples/client/petstore/elixir</module>
-                <module>samples/client/petstore/haskell-http-client</module>
+<!--                <module>samples/client/petstore/elixir</module>-->
+<!--                <module>samples/client/petstore/haskell-http-client</module>-->
                 <module>samples/client/petstore/akka-scala</module>
-                <module>samples/client/petstore/scala</module>
+                <!--<module>samples/client/petstore/scala</module>-->
                 <!--<module>samples/client/petstore/scalaz</module>-->
                 <!--<module>samples/client/petstore/clojure</module>-->
                 <module>samples/client/petstore/java/feign</module>
@@ -887,7 +887,7 @@
                 <module>samples/server/petstore/java-play-framework-no-interface</module>
                 <module>samples/server/petstore/java-play-framework-no-exception-handling</module>
                 <module>samples/server/petstore/java-play-framework-no-bean-validation</module>
-                <module>samples/server/petstore/java-play-framework-fake-endpoints</module>
+                <!-- <module>samples/server/petstore/java-play-framework-fake-endpointmsf4js</module> -->
                 <module>samples/server/petstore/java-play-framework-controller-only</module>
                 <module>samples/server/petstore/java-play-framework-api-package-override</module>
                 <module>samples/server/petstore/undertow</module>
@@ -912,7 +912,7 @@
                 <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
                 <module>samples/server/petstore/jaxrs-cxf-cdi</module>
                 <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
-                <module>samples/server/petstore/java-msf4j</module>
+<!--                <module>samples/server/petstore/java-msf4j</module>-->
                 <module>samples/server/petstore/jaxrs-spec-interface</module>
                 <module>samples/server/petstore/scala-lagom-server</module>
                 <module>samples/server/petstore/scalatra</module>
