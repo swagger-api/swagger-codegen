@@ -1,5 +1,6 @@
 package io.swagger.codegen.go;
 
+import com.google.common.collect.Sets;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
@@ -13,8 +14,7 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-
-import com.google.common.collect.Sets;
+import io.swagger.models.properties.UUIDProperty;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -49,6 +49,62 @@ public class GoModelTest {
         Assert.assertTrue(property1.hasMore);
         Assert.assertTrue(property1.required);
         Assert.assertTrue(property1.isPrimitiveType);
+        Assert.assertTrue(property1.isNotContainer);
+
+        final CodegenProperty property2 = cm.vars.get(1);
+        Assert.assertEquals(property2.baseName, "name");
+        Assert.assertEquals(property2.datatype, "string");
+        Assert.assertEquals(property2.name, "Name");
+        Assert.assertEquals(property2.defaultValue, "null");
+        Assert.assertEquals(property2.baseType, "string");
+        Assert.assertTrue(property2.hasMore);
+        Assert.assertTrue(property2.required);
+        Assert.assertTrue(property2.isPrimitiveType);
+        Assert.assertTrue(property2.isNotContainer);
+
+        final CodegenProperty property3 = cm.vars.get(2);
+        Assert.assertEquals(property3.baseName, "createdAt");
+        Assert.assertEquals(property3.complexType, "time.Time");
+        Assert.assertEquals(property3.datatype, "time.Time");
+        Assert.assertEquals(property3.name, "CreatedAt");
+        Assert.assertEquals(property3.defaultValue, "null");
+        Assert.assertEquals(property3.baseType, "time.Time");
+        Assert.assertFalse(property3.hasMore);
+        Assert.assertFalse(property3.required);
+        Assert.assertTrue(property3.isNotContainer);
+    }
+
+    @Test(description = "convert a model with custom type-mappings and import-mappings")
+    public void customTypedPropertyTest() {
+        final Model model = new ModelImpl()
+                .description("a model with custom type (uuid.UUID from google)")
+                .property("id", new UUIDProperty())
+                .property("name", new StringProperty())
+                .property("createdAt", new DateTimeProperty())
+                .required("id")
+                .required("name");
+        final DefaultCodegen codegen = new GoClientCodegen();
+
+        codegen.typeMapping().put("UUID", "uuid.UUID");
+        codegen.importMapping().put("uuid.UUID", "github.com/google/uuid");
+
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        Assert.assertEquals(cm.name, "sample");
+        Assert.assertEquals(cm.classname, "Sample");
+        Assert.assertEquals(cm.description, "a model with custom type (uuid.UUID from google)");
+        Assert.assertEquals(cm.vars.size(), 3);
+        Assert.assertEquals(cm.imports.size(), 2);
+
+        final CodegenProperty property1 = cm.vars.get(0);
+        Assert.assertEquals(property1.baseName, "id");
+        Assert.assertEquals(property1.datatype, "uuid.UUID");
+        Assert.assertEquals(property1.name, "Id");
+        Assert.assertEquals(property1.defaultValue, "null");
+        Assert.assertEquals(property1.baseType, "uuid.UUID");
+        Assert.assertTrue(property1.hasMore);
+        Assert.assertTrue(property1.required);
+        Assert.assertFalse(property1.isPrimitiveType);
         Assert.assertTrue(property1.isNotContainer);
 
         final CodegenProperty property2 = cm.vars.get(1);

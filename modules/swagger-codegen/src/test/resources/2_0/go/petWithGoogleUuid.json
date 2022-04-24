@@ -1,0 +1,157 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Pet Swagger documentation",
+    "title": "Pet API",
+    "contact": {
+      "name": "Pets",
+      "url": "",
+      "email": ""
+    },
+    "version": "1.0.0"
+  },
+  "host": "localhost",
+  "basePath": "/api",
+  "paths": {
+    "/v1/pets": {
+      "get": {
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "description": "Gets all pet",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Pets"
+        ],
+        "summary": "Get pets",
+        "operationId": "GetPetsV1",
+        "parameters": [
+          {
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "type": "string",
+            "description": "The sorting direction",
+            "name": "direction",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "The desired page number",
+            "name": "page",
+            "in": "query",
+            "required": true
+          },
+          {
+            "minimum": 1,
+            "type": "integer",
+            "default": 25,
+            "description": "The desired number of items per page",
+            "name": "pageSize",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "The sorting parameter",
+            "name": "sort",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PetListPageResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PetDTO": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "description": "The creation timestamp",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "description": "The user who created",
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": true
+        },
+        "id": {
+          "description": "The ID",
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "description": "The name of the pet",
+          "type": "string"
+        }
+      }
+    },
+    "PetListPageResponse": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "description": "The actual page number",
+          "type": "integer",
+          "example": 1
+        },
+        "items": {
+          "description": "The items",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PetDTO"
+          }
+        },
+        "pageSize": {
+          "description": "The number of items per page",
+          "type": "integer",
+          "example": 50
+        },
+        "totalCount": {
+          "description": "The total count of items",
+          "type": "integer",
+          "example": 69
+        },
+        "totalPages": {
+          "description": "The total pages",
+          "type": "integer",
+          "example": 2
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
