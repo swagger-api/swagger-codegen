@@ -52,13 +52,13 @@ paths:
         schema:
           $ref: "#/definitions/Pet"
         x-exportParamName: "Body"
-      responses:
-        "405":
-          description: "Invalid input"
       security:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      responses:
+        "405":
+          description: "Invalid input"
     put:
       tags:
       - "pet"
@@ -79,6 +79,10 @@ paths:
         schema:
           $ref: "#/definitions/Pet"
         x-exportParamName: "Body"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
       responses:
         "400":
           description: "Invalid ID supplied"
@@ -86,10 +90,6 @@ paths:
           description: "Pet not found"
         "405":
           description: "Validation exception"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /pet/findByStatus:
     get:
       tags:
@@ -108,13 +108,17 @@ paths:
         type: "array"
         items:
           type: "string"
-          default: "available"
           enum:
           - "available"
           - "pending"
           - "sold"
+          default: "available"
         collectionFormat: "csv"
         x-exportParamName: "Status"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
       responses:
         "200":
           description: "successful operation"
@@ -124,10 +128,6 @@ paths:
               $ref: "#/definitions/Pet"
         "400":
           description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /pet/findByTags:
     get:
       tags:
@@ -149,6 +149,11 @@ paths:
           type: "string"
         collectionFormat: "csv"
         x-exportParamName: "Tags"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+      deprecated: true
       responses:
         "200":
           description: "successful operation"
@@ -158,11 +163,6 @@ paths:
               $ref: "#/definitions/Pet"
         "400":
           description: "Invalid tag value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-      deprecated: true
   /pet/{petId}:
     get:
       tags:
@@ -181,6 +181,8 @@ paths:
         type: "integer"
         format: "int64"
         x-exportParamName: "PetId"
+      security:
+      - api_key: []
       responses:
         "200":
           description: "successful operation"
@@ -190,8 +192,6 @@ paths:
           description: "Invalid ID supplied"
         "404":
           description: "Pet not found"
-      security:
-      - api_key: []
     post:
       tags:
       - "pet"
@@ -225,13 +225,13 @@ paths:
         type: "string"
         x-exportParamName: "Status"
         x-optionalDataType: "String"
-      responses:
-        "405":
-          description: "Invalid input"
       security:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      responses:
+        "405":
+          description: "Invalid input"
     delete:
       tags:
       - "pet"
@@ -255,13 +255,13 @@ paths:
         type: "integer"
         format: "int64"
         x-exportParamName: "PetId"
-      responses:
-        "400":
-          description: "Invalid pet value"
       security:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
+      responses:
+        "400":
+          description: "Invalid pet value"
   /pet/{petId}/uploadImage:
     post:
       tags:
@@ -294,15 +294,15 @@ paths:
         required: false
         type: "file"
         x-exportParamName: "File"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
       responses:
         "200":
           description: "successful operation"
           schema:
             $ref: "#/definitions/ApiResponse"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /store/inventory:
     get:
       tags:
@@ -313,6 +313,8 @@ paths:
       produces:
       - "application/json"
       parameters: []
+      security:
+      - api_key: []
       responses:
         "200":
           description: "successful operation"
@@ -321,8 +323,6 @@ paths:
             additionalProperties:
               type: "integer"
               format: "int32"
-      security:
-      - api_key: []
   /store/order:
     post:
       tags:
