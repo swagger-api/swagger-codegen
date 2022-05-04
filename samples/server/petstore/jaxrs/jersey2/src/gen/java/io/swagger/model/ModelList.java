@@ -24,7 +24,6 @@ import javax.validation.Valid;
 /**
  * ModelList
  */
-
 public class ModelList   {
   @JsonProperty("123-list")
   private String _123List = null;

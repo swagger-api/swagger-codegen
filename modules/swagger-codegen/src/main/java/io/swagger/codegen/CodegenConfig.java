@@ -202,6 +202,10 @@ public interface CodegenConfig {
 
     String getGitRepoId();
 
+    void setGitRepoBaseURL(String repositoryBaseURL);
+
+    String getGitRepoBaseURL();
+
     void setReleaseNote(String releaseNote);
 
     String getReleaseNote();
@@ -233,5 +237,4 @@ public interface CodegenConfig {
     void setIgnoreImportMapping(boolean ignoreImportMapping);
 
     boolean defaultIgnoreImportMappingOption();
-
 }

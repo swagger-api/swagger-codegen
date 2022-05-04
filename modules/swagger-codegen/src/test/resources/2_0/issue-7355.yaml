@@ -1,0 +1,30 @@
+swagger: '2.0'
+info:
+  title: API contract for testing the "equals" method generation in POJOs
+  description: API for testing
+  version: v1
+consumes:
+  - application/json; charset=utf-8
+produces:
+  - application/json; charset=utf-8
+paths:
+  '/dummyPath':
+    get:
+      responses:
+        '200':
+          description: OK
+definitions:
+  ModelWithoutProps:
+    type: array
+    items:
+      properties:
+        value:
+          type: string
+  ModelWithProps:
+    type: object
+    allOf:
+      - $ref: '#/definitions/ArrayWithoutProps'
+      - type: object
+        properties:
+          anotherValue:
+            type: string

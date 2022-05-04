@@ -25,7 +25,6 @@ import javax.validation.Valid;
 /**
  * ModelList
  */
-
 public class ModelList  implements Serializable {
   @JsonProperty("123-list")
   private String _123List = null;
