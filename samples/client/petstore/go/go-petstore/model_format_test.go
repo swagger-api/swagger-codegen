@@ -25,7 +25,7 @@ type FormatTest struct {
 	Byte_ string `json:"byte"`
 	Binary string `json:"binary,omitempty"`
 	Date string `json:"date"`
-	DateTime time.Time `json:"dateTime,omitempty"`
+	DateTime *time.Time `json:"dateTime,omitempty"`
 	Uuid string `json:"uuid,omitempty"`
 	Password string `json:"password"`
 }
