@@ -4,11 +4,11 @@ import io.swagger.client.ApiClient;
 import io.swagger.client.EncodingUtils;
 
 import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
@@ -89,14 +89,14 @@ public interface FakeApi extends ApiClient.Api {
       "Content-Type: application/xml; charset&#x3D;utf-8",
       "Accept: */*",
   })
-  void testEndpointParameters(Body2 body);
+  void testEndpointParameters(FakeBody body);
   /**
    * To test enum parameters
    * To test enum parameters
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-   * @param enumQueryString Query parameter enum test (string) (optional)
+   * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    */
   @RequestLine("GET /fake?enum_query_string_array={enumQueryStringArray}&enum_query_string={enumQueryString}&enum_query_integer={enumQueryInteger}")
@@ -116,12 +116,12 @@ public interface FakeApi extends ApiClient.Api {
    * used with the {@link TestEnumParametersQueryParams} class that allows for
    * building up this map in a fluent style.
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param queryParams Map of query parameters as name-value pairs
    *   <p>The following elements may be specified in the query map:</p>
    *   <ul>
    *   <li>enumQueryStringArray - Query parameter enum test (string array) (optional)</li>
-   *   <li>enumQueryString - Query parameter enum test (string) (optional)</li>
+   *   <li>enumQueryString - Query parameter enum test (string) (optional, default to -efg)</li>
    *   <li>enumQueryInteger - Query parameter enum test (double) (optional)</li>
    *   </ul>
 
@@ -162,7 +162,7 @@ public interface FakeApi extends ApiClient.Api {
       "Content-Type: */*",
       "Accept: */*",
   })
-  void testEnumRequestBody(Body4 body);
+  void testEnumRequestBody(EnumFormBody body);
   /**
    * test inline additionalProperties
    * 
@@ -184,5 +184,5 @@ public interface FakeApi extends ApiClient.Api {
       "Content-Type: application/json",
       "Accept: */*",
   })
-  void testJsonFormData(Body5 body);
+  void testJsonFormData(FakeJsonFormDataBody body);
 }

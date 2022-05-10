@@ -47,6 +47,28 @@ public class JSON {
 
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
+          .registerTypeSelector(Category.class, new TypeSelector() {
+            @Override
+            public Class getClassForElement(JsonElement readElement) {
+                Map classByDiscriminatorValue = new HashMap();
+                classByDiscriminatorValue.put("AllOfSubCategoryCategory".toUpperCase(), AllOfSubCategoryCategory.class);
+                classByDiscriminatorValue.put("Category".toUpperCase(), Category.class);
+                return getClassByDiscriminator(
+                            classByDiscriminatorValue,
+                            getDiscriminatorValue(readElement, ""));
+            }
+          })
+          .registerTypeSelector(Pet.class, new TypeSelector() {
+            @Override
+            public Class getClassForElement(JsonElement readElement) {
+                Map classByDiscriminatorValue = new HashMap();
+                classByDiscriminatorValue.put("AllOfSubCategoryPetsItems".toUpperCase(), AllOfSubCategoryPetsItems.class);
+                classByDiscriminatorValue.put("Pet".toUpperCase(), Pet.class);
+                return getClassByDiscriminator(
+                            classByDiscriminatorValue,
+                            getDiscriminatorValue(readElement, ""));
+            }
+          })
           .registerTypeSelector(Animal.class, new TypeSelector() {
             @Override
             public Class getClassForElement(JsonElement readElement) {

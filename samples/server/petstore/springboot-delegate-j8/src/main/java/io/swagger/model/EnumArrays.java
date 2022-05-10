@@ -4,8 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +15,7 @@ import javax.validation.constraints.*;
  * EnumArrays
  */
 @Validated
+
 
 public class EnumArrays   {
   /**
@@ -48,7 +48,6 @@ public class EnumArrays   {
       return null;
     }
   }
-
   @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
 
@@ -82,7 +81,6 @@ public class EnumArrays   {
       return null;
     }
   }
-
   @JsonProperty("array_enum")
   @Valid
   private List<ArrayEnumEnum> arrayEnum = null;
@@ -95,11 +93,10 @@ public class EnumArrays   {
   /**
    * Get justSymbol
    * @return justSymbol
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public JustSymbolEnum getJustSymbol() {
+   **/
+  @Schema(description = "")
+  
+    public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
 
@@ -123,11 +120,10 @@ public class EnumArrays   {
   /**
    * Get arrayEnum
    * @return arrayEnum
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public List<ArrayEnumEnum> getArrayEnum() {
+   **/
+  @Schema(description = "")
+  
+    public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
 
@@ -176,4 +172,3 @@ public class EnumArrays   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

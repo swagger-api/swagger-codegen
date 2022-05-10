@@ -3,9 +3,12 @@ package io.swagger.api.impl;
 import io.swagger.api.*;
 import io.swagger.model.*;
 
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -25,7 +28,12 @@ public class PetApiServiceImpl extends PetApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response deletePet(Integer petId, String apiKey, SecurityContext securityContext) throws NotFoundException {
+    public Response deletePet(Long petId, String apiKey, SecurityContext securityContext) throws NotFoundException {
+        // do some magic!
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
+    public Response doCategoryStuff(SubCategory body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -40,7 +48,17 @@ public class PetApiServiceImpl extends PetApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response getPetById(Integer petId, SecurityContext securityContext) throws NotFoundException {
+    public Response getAllPets(SecurityContext securityContext) throws NotFoundException {
+        // do some magic!
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
+    public Response getPetById(Long petId, SecurityContext securityContext) throws NotFoundException {
+        // do some magic!
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
+    public Response getRandomPet(SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -50,12 +68,12 @@ public class PetApiServiceImpl extends PetApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response updatePetWithForm(Integer petId, String name, String status, SecurityContext securityContext) throws NotFoundException {
+    public Response updatePetWithForm(Long petId, String name, String status, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response uploadFile(Integer petId, String additionalMetadata, InputStream fileInputStream, FormDataContentDisposition fileDetail, SecurityContext securityContext) throws NotFoundException {
+    public Response uploadFile(Long petId, String additionalMetadata, InputStream fileInputStream, FormDataContentDisposition fileDetail, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }

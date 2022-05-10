@@ -22,12 +22,12 @@ import javax.validation.Valid;
 
 @Path("/store")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:11:08.645-05:00[America/Bogota]")
 public class StoreApi {
 
     @DELETE
     @Path("/order/{order_id}")
-    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={  })
+    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found")
@@ -42,9 +42,9 @@ public class StoreApi {
     @Path("/inventory")
     @Produces({ "application/json" })
     @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
-        @SecurityRequirement(name = "api_key")    }, tags={  })
+        @SecurityRequirement(name = "api_key")    }, tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class))))
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Map.class))))
     })
     public Response getInventory() {
         return Response.ok().entity("magic!").build();
@@ -52,15 +52,15 @@ public class StoreApi {
     @GET
     @Path("/order/{order_id}")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={  })
+    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found")
     })
-    public Response getOrderById( @DecimalMin("1") @DecimalMax("5") @PathParam("order_id")
+    public Response getOrderById( @Min(1L) @Max(5L) @PathParam("order_id")
 
- @Parameter(description = "ID of pet that needs to be fetched") Integer orderId
+ @Parameter(description = "ID of pet that needs to be fetched") Long orderId
 ) {
         return Response.ok().entity("magic!").build();
     }
@@ -68,9 +68,9 @@ public class StoreApi {
     @Path("/order")
     @Consumes({ "*/*" })
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Place an order for a pet", description = "", tags={  })
+    @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid Order")
     })
     public Response placeOrder(@Valid Order body) {

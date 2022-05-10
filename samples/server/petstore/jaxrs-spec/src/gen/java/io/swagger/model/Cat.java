@@ -11,7 +11,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Cat extends Animal implements Serializable {
+public class Cat extends Animal implements Serializable , OneOfAllPetsResponseItems, , OneOfSinglePetResponsePet  {
+
   private @Valid Boolean declawed = null;
 
   /**
@@ -25,7 +26,7 @@ public class Cat extends Animal implements Serializable {
   @ApiModelProperty(value = "")
   @JsonProperty("declawed")
 
-  public Boolean isisDeclawed() {
+  public Boolean isDeclawed() {
     return declawed;
   }
   public void setDeclawed(Boolean declawed) {

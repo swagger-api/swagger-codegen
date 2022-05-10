@@ -32,17 +32,17 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ArrayOfArrayOfNumberOnly" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        public ArrayOfArrayOfNumberOnly(List<List<BigDecimal>>  = default(List<List<BigDecimal>>))
+        /// <param name="arrayArrayNumber">arrayArrayNumber.</param>
+        public ArrayOfArrayOfNumberOnly(List<List<decimal?>> arrayArrayNumber = default(List<List<decimal?>>))
         {
-            this.ArrayArrayNumber = ;
+            this.ArrayArrayNumber = arrayArrayNumber;
         }
         
         /// <summary>
         /// Gets or Sets ArrayArrayNumber
         /// </summary>
         [DataMember(Name="ArrayArrayNumber", EmitDefaultValue=false)]
-        public List<List<BigDecimal>> ArrayArrayNumber { get; set; }
+        public List<List<decimal?>> ArrayArrayNumber { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -90,6 +90,7 @@ namespace IO.Swagger.Model
                 (
                     this.ArrayArrayNumber == input.ArrayArrayNumber ||
                     this.ArrayArrayNumber != null &&
+                    input.ArrayArrayNumber != null &&
                     this.ArrayArrayNumber.SequenceEqual(input.ArrayArrayNumber)
                 );
         }

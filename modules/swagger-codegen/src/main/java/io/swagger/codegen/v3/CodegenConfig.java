@@ -41,6 +41,8 @@ public interface CodegenConfig {
 
     String embeddedTemplateDir();
 
+    String customTemplateDir();
+
     String getTemplateVersion();
 
     String modelFileFolder();
@@ -206,6 +208,10 @@ public interface CodegenConfig {
 
     String getGitRepoId();
 
+    void setGitRepoBaseURL(String gitRepoBaseURL);
+
+    String getGitRepoBaseURL();
+
     void setReleaseNote(String releaseNote);
 
     String getReleaseNote();
@@ -233,4 +239,20 @@ public interface CodegenConfig {
     List<CodegenArgument> getLanguageArguments();
 
     void setLanguageArguments(List<CodegenArgument> codegenArguments);
+
+    boolean needsUnflattenedSpec();
+
+    void setUnflattenedOpenAPI(OpenAPI unflattenedOpenAPI);
+
+    boolean getIgnoreImportMapping();
+
+    void setIgnoreImportMapping(boolean ignoreImportMapping);
+
+    boolean defaultIgnoreImportMappingOption();
+
+    ISchemaHandler getSchemaHandler();
+
+    default boolean checkAliasModel() {
+        return false;
+    }
 }

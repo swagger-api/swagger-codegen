@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,8 +11,9 @@ import javax.validation.constraints.*;
 /**
  * Model for testing model name starting with number
  */
-@ApiModel(description = "Model for testing model name starting with number")
+@Schema(description = "Model for testing model name starting with number")
 @Validated
+
 
 public class Model200Response   {
   @JsonProperty("name")
@@ -30,11 +30,10 @@ public class Model200Response   {
   /**
    * Get name
    * @return name
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Integer getName() {
+   **/
+  @Schema(description = "")
+  
+    public Integer getName() {
     return name;
   }
 
@@ -50,11 +49,10 @@ public class Model200Response   {
   /**
    * Get propertyClass
    * @return propertyClass
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getPropertyClass() {
+   **/
+  @Schema(description = "")
+  
+    public String getPropertyClass() {
     return propertyClass;
   }
 
@@ -103,4 +101,3 @@ public class Model200Response   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -39,12 +39,12 @@ namespace IO.Swagger.Model
             /// Enum UPPER for value: UPPER
             /// </summary>
             [EnumMember(Value = "UPPER")]
-            UPPER = 0,
+            UPPER = 1,
             /// <summary>
             /// Enum Lower for value: lower
             /// </summary>
             [EnumMember(Value = "lower")]
-            Lower = 1        }
+            Lower = 2        }
         /// <summary>
         /// Gets or Sets MapOfEnumString
         /// </summary>

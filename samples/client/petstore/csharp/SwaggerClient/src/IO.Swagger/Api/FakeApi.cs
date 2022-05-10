@@ -31,8 +31,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>OuterBoolean</returns>
-        OuterBoolean FakeOuterBooleanSerialize (bool? body = null);
+        /// <returns>bool?</returns>
+        bool? FakeOuterBooleanSerialize (bool? body = null);
 
         /// <summary>
         /// 
@@ -42,8 +42,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>ApiResponse of OuterBoolean</returns>
-        ApiResponse<OuterBoolean> FakeOuterBooleanSerializeWithHttpInfo (bool? body = null);
+        /// <returns>ApiResponse of bool?</returns>
+        ApiResponse<bool?> FakeOuterBooleanSerializeWithHttpInfo (bool? body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -73,8 +73,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>OuterNumber</returns>
-        OuterNumber FakeOuterNumberSerialize (decimal? body = null);
+        /// <returns>decimal?</returns>
+        decimal? FakeOuterNumberSerialize (decimal? body = null);
 
         /// <summary>
         /// 
@@ -84,8 +84,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>ApiResponse of OuterNumber</returns>
-        ApiResponse<OuterNumber> FakeOuterNumberSerializeWithHttpInfo (decimal? body = null);
+        /// <returns>ApiResponse of decimal?</returns>
+        ApiResponse<decimal?> FakeOuterNumberSerializeWithHttpInfo (decimal? body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -94,8 +94,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>OuterString</returns>
-        OuterString FakeOuterStringSerialize (string body = null);
+        /// <returns>string</returns>
+        string FakeOuterStringSerialize (string body = null);
 
         /// <summary>
         /// 
@@ -105,8 +105,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>ApiResponse of OuterString</returns>
-        ApiResponse<OuterString> FakeOuterStringSerializeWithHttpInfo (string body = null);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> FakeOuterStringSerializeWithHttpInfo (string body = null);
         /// <summary>
         /// To test \&quot;client\&quot; model
         /// </summary>
@@ -115,8 +115,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ClientModel</returns>
-        ClientModel TestClientModel (ClientModel body);
+        /// <returns>ModelClient</returns>
+        ModelClient TestClientModel (ModelClient body);
 
         /// <summary>
         /// To test \&quot;client\&quot; model
@@ -126,8 +126,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ClientModel</returns>
-        ApiResponse<ClientModel> TestClientModelWithHttpInfo (ClientModel body);
+        /// <returns>ApiResponse of ModelClient</returns>
+        ApiResponse<ModelClient> TestClientModelWithHttpInfo (ModelClient body);
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         /// </summary>
@@ -157,9 +157,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns></returns>
         void TestEnumParameters (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null);
@@ -172,9 +172,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> TestEnumParametersWithHttpInfo (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null);
@@ -251,8 +251,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>Task of OuterBoolean</returns>
-        System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (bool? body = null);
+        /// <returns>Task of bool?</returns>
+        System.Threading.Tasks.Task<bool?> FakeOuterBooleanSerializeAsync (bool? body = null);
 
         /// <summary>
         /// 
@@ -262,8 +262,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>Task of ApiResponse (OuterBoolean)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (bool? body = null);
+        /// <returns>Task of ApiResponse (bool?)</returns>
+        System.Threading.Tasks.Task<ApiResponse<bool?>> FakeOuterBooleanSerializeAsyncWithHttpInfo (bool? body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -293,8 +293,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>Task of OuterNumber</returns>
-        System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (decimal? body = null);
+        /// <returns>Task of decimal?</returns>
+        System.Threading.Tasks.Task<decimal?> FakeOuterNumberSerializeAsync (decimal? body = null);
 
         /// <summary>
         /// 
@@ -304,8 +304,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>Task of ApiResponse (OuterNumber)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (decimal? body = null);
+        /// <returns>Task of ApiResponse (decimal?)</returns>
+        System.Threading.Tasks.Task<ApiResponse<decimal?>> FakeOuterNumberSerializeAsyncWithHttpInfo (decimal? body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -314,8 +314,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>Task of OuterString</returns>
-        System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (string body = null);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> FakeOuterStringSerializeAsync (string body = null);
 
         /// <summary>
         /// 
@@ -325,8 +325,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>Task of ApiResponse (OuterString)</returns>
-        System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (string body = null);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> FakeOuterStringSerializeAsyncWithHttpInfo (string body = null);
         /// <summary>
         /// To test \&quot;client\&quot; model
         /// </summary>
@@ -335,8 +335,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ClientModel</returns>
-        System.Threading.Tasks.Task<ClientModel> TestClientModelAsync (ClientModel body);
+        /// <returns>Task of ModelClient</returns>
+        System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body);
 
         /// <summary>
         /// To test \&quot;client\&quot; model
@@ -346,8 +346,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ClientModel)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ClientModel>> TestClientModelAsyncWithHttpInfo (ClientModel body);
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body);
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
         /// </summary>
@@ -377,9 +377,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of void</returns>
         System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null);
@@ -392,9 +392,9 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null);
@@ -577,10 +577,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>OuterBoolean</returns>
-        public OuterBoolean FakeOuterBooleanSerialize (bool? body = null)
+        /// <returns>bool?</returns>
+        public bool? FakeOuterBooleanSerialize (bool? body = null)
         {
-             ApiResponse<OuterBoolean> localVarResponse = FakeOuterBooleanSerializeWithHttpInfo(body);
+             ApiResponse<bool?> localVarResponse = FakeOuterBooleanSerializeWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -589,8 +589,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>ApiResponse of OuterBoolean</returns>
-        public ApiResponse< OuterBoolean > FakeOuterBooleanSerializeWithHttpInfo (bool? body = null)
+        /// <returns>ApiResponse of bool?</returns>
+        public ApiResponse< bool? > FakeOuterBooleanSerializeWithHttpInfo (bool? body = null)
         {
 
             var localVarPath = "/fake/outer/boolean";
@@ -637,9 +637,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<OuterBoolean>(localVarStatusCode,
+            return new ApiResponse<bool?>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (OuterBoolean) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterBoolean)));
+                (bool?) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(bool?)));
         }
 
         /// <summary>
@@ -647,10 +647,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>Task of OuterBoolean</returns>
-        public async System.Threading.Tasks.Task<OuterBoolean> FakeOuterBooleanSerializeAsync (bool? body = null)
+        /// <returns>Task of bool?</returns>
+        public async System.Threading.Tasks.Task<bool?> FakeOuterBooleanSerializeAsync (bool? body = null)
         {
-             ApiResponse<OuterBoolean> localVarResponse = await FakeOuterBooleanSerializeAsyncWithHttpInfo(body);
+             ApiResponse<bool?> localVarResponse = await FakeOuterBooleanSerializeAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -660,8 +660,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input boolean as post body (optional)</param>
-        /// <returns>Task of ApiResponse (OuterBoolean)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterBoolean>> FakeOuterBooleanSerializeAsyncWithHttpInfo (bool? body = null)
+        /// <returns>Task of ApiResponse (bool?)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<bool?>> FakeOuterBooleanSerializeAsyncWithHttpInfo (bool? body = null)
         {
 
             var localVarPath = "/fake/outer/boolean";
@@ -708,9 +708,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<OuterBoolean>(localVarStatusCode,
+            return new ApiResponse<bool?>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (OuterBoolean) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterBoolean)));
+                (bool?) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(bool?)));
         }
 
         /// <summary>
@@ -859,10 +859,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>OuterNumber</returns>
-        public OuterNumber FakeOuterNumberSerialize (decimal? body = null)
+        /// <returns>decimal?</returns>
+        public decimal? FakeOuterNumberSerialize (decimal? body = null)
         {
-             ApiResponse<OuterNumber> localVarResponse = FakeOuterNumberSerializeWithHttpInfo(body);
+             ApiResponse<decimal?> localVarResponse = FakeOuterNumberSerializeWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -871,8 +871,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>ApiResponse of OuterNumber</returns>
-        public ApiResponse< OuterNumber > FakeOuterNumberSerializeWithHttpInfo (decimal? body = null)
+        /// <returns>ApiResponse of decimal?</returns>
+        public ApiResponse< decimal? > FakeOuterNumberSerializeWithHttpInfo (decimal? body = null)
         {
 
             var localVarPath = "/fake/outer/number";
@@ -919,9 +919,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<OuterNumber>(localVarStatusCode,
+            return new ApiResponse<decimal?>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (OuterNumber) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
+                (decimal?) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(decimal?)));
         }
 
         /// <summary>
@@ -929,10 +929,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>Task of OuterNumber</returns>
-        public async System.Threading.Tasks.Task<OuterNumber> FakeOuterNumberSerializeAsync (decimal? body = null)
+        /// <returns>Task of decimal?</returns>
+        public async System.Threading.Tasks.Task<decimal?> FakeOuterNumberSerializeAsync (decimal? body = null)
         {
-             ApiResponse<OuterNumber> localVarResponse = await FakeOuterNumberSerializeAsyncWithHttpInfo(body);
+             ApiResponse<decimal?> localVarResponse = await FakeOuterNumberSerializeAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -942,8 +942,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input number as post body (optional)</param>
-        /// <returns>Task of ApiResponse (OuterNumber)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterNumber>> FakeOuterNumberSerializeAsyncWithHttpInfo (decimal? body = null)
+        /// <returns>Task of ApiResponse (decimal?)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<decimal?>> FakeOuterNumberSerializeAsyncWithHttpInfo (decimal? body = null)
         {
 
             var localVarPath = "/fake/outer/number";
@@ -990,9 +990,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<OuterNumber>(localVarStatusCode,
+            return new ApiResponse<decimal?>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (OuterNumber) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterNumber)));
+                (decimal?) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(decimal?)));
         }
 
         /// <summary>
@@ -1000,10 +1000,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>OuterString</returns>
-        public OuterString FakeOuterStringSerialize (string body = null)
+        /// <returns>string</returns>
+        public string FakeOuterStringSerialize (string body = null)
         {
-             ApiResponse<OuterString> localVarResponse = FakeOuterStringSerializeWithHttpInfo(body);
+             ApiResponse<string> localVarResponse = FakeOuterStringSerializeWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -1012,8 +1012,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>ApiResponse of OuterString</returns>
-        public ApiResponse< OuterString > FakeOuterStringSerializeWithHttpInfo (string body = null)
+        /// <returns>ApiResponse of string</returns>
+        public ApiResponse< string > FakeOuterStringSerializeWithHttpInfo (string body = null)
         {
 
             var localVarPath = "/fake/outer/string";
@@ -1060,9 +1060,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<OuterString>(localVarStatusCode,
+            return new ApiResponse<string>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (OuterString) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterString)));
+                (string) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
         }
 
         /// <summary>
@@ -1070,10 +1070,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>Task of OuterString</returns>
-        public async System.Threading.Tasks.Task<OuterString> FakeOuterStringSerializeAsync (string body = null)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> FakeOuterStringSerializeAsync (string body = null)
         {
-             ApiResponse<OuterString> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(body);
+             ApiResponse<string> localVarResponse = await FakeOuterStringSerializeAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -1083,8 +1083,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">Input string as post body (optional)</param>
-        /// <returns>Task of ApiResponse (OuterString)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<OuterString>> FakeOuterStringSerializeAsyncWithHttpInfo (string body = null)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<string>> FakeOuterStringSerializeAsyncWithHttpInfo (string body = null)
         {
 
             var localVarPath = "/fake/outer/string";
@@ -1131,9 +1131,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<OuterString>(localVarStatusCode,
+            return new ApiResponse<string>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (OuterString) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(OuterString)));
+                (string) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
         }
 
         /// <summary>
@@ -1141,10 +1141,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ClientModel</returns>
-        public ClientModel TestClientModel (ClientModel body)
+        /// <returns>ModelClient</returns>
+        public ModelClient TestClientModel (ModelClient body)
         {
-             ApiResponse<ClientModel> localVarResponse = TestClientModelWithHttpInfo(body);
+             ApiResponse<ModelClient> localVarResponse = TestClientModelWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -1153,8 +1153,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of ClientModel</returns>
-        public ApiResponse< ClientModel > TestClientModelWithHttpInfo (ClientModel body)
+        /// <returns>ApiResponse of ModelClient</returns>
+        public ApiResponse< ModelClient > TestClientModelWithHttpInfo (ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1204,9 +1204,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ClientModel>(localVarStatusCode,
+            return new ApiResponse<ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ClientModel) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ClientModel)));
+                (ModelClient) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
         }
 
         /// <summary>
@@ -1214,10 +1214,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ClientModel</returns>
-        public async System.Threading.Tasks.Task<ClientModel> TestClientModelAsync (ClientModel body)
+        /// <returns>Task of ModelClient</returns>
+        public async System.Threading.Tasks.Task<ModelClient> TestClientModelAsync (ModelClient body)
         {
-             ApiResponse<ClientModel> localVarResponse = await TestClientModelAsyncWithHttpInfo(body);
+             ApiResponse<ModelClient> localVarResponse = await TestClientModelAsyncWithHttpInfo(body);
              return localVarResponse.Data;
 
         }
@@ -1227,8 +1227,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Task of ApiResponse (ClientModel)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ClientModel>> TestClientModelAsyncWithHttpInfo (ClientModel body)
+        /// <returns>Task of ApiResponse (ModelClient)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ModelClient>> TestClientModelAsyncWithHttpInfo (ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -1278,9 +1278,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<ClientModel>(localVarStatusCode,
+            return new ApiResponse<ModelClient>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (ClientModel) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ClientModel)));
+                (ModelClient) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
         }
 
         /// <summary>
@@ -1445,9 +1445,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns></returns>
         public void TestEnumParameters (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null)
@@ -1460,9 +1460,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
         public ApiResponse<Object> TestEnumParametersWithHttpInfo (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null)
@@ -1517,9 +1517,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task TestEnumParametersAsync (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null)
@@ -1533,9 +1533,9 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="enumHeaderStringArray">Header parameter enum test (string array) (optional)</param>
-        /// <param name="enumHeaderString">Header parameter enum test (string) (optional)</param>
+        /// <param name="enumHeaderString">Header parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryStringArray">Query parameter enum test (string array) (optional)</param>
-        /// <param name="enumQueryString">Query parameter enum test (string) (optional)</param>
+        /// <param name="enumQueryString">Query parameter enum test (string) (optional, default to -efg)</param>
         /// <param name="enumQueryInteger">Query parameter enum test (double) (optional)</param>
         /// <returns>Task of ApiResponse</returns>
         public async System.Threading.Tasks.Task<ApiResponse<Object>> TestEnumParametersAsyncWithHttpInfo (List<string> enumHeaderStringArray = null, string enumHeaderString = null, List<string> enumQueryStringArray = null, string enumQueryString = null, int? enumQueryInteger = null)

@@ -12,12 +12,14 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
   * Model for testing reserved words
  **/
 @Schema(description="Model for testing reserved words")
-public class ModelReturn  {
+public class ModelReturn   {
   
   @Schema(description = "")
   private Integer _return = null;

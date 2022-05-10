@@ -11,11 +11,16 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Order  implements Serializable {
+public class Order  implements Serializable  {
+
   private @Valid Long id = null;
+
   private @Valid Long petId = null;
+
   private @Valid Integer quantity = null;
+
   private @Valid Date shipDate = null;
+
 public enum StatusEnum {
 
     PLACED(String.valueOf("placed")), APPROVED(String.valueOf("approved")), DELIVERED(String.valueOf("delivered"));
@@ -48,6 +53,7 @@ public enum StatusEnum {
     }
 }
   private @Valid StatusEnum status = null;
+
   private @Valid Boolean complete = false;
 
   /**
@@ -152,7 +158,7 @@ public enum StatusEnum {
   @ApiModelProperty(value = "")
   @JsonProperty("complete")
 
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {

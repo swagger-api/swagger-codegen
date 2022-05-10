@@ -5,8 +5,11 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
+from swagger_server.models.all_pets_response import AllPetsResponse  # noqa: E501
 from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.pet import Pet  # noqa: E501
+from swagger_server.models.single_pet_response import SinglePetResponse  # noqa: E501
+from swagger_server.models.sub_category import SubCategory  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
@@ -40,6 +43,20 @@ class TestPetController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_do_category_stuff(self):
+        """Test case for do_category_stuff
+
+        
+        """
+        body = SubCategory()
+        response = self.client.open(
+            '/pet/category',
+            method='POST',
+            data=json.dumps(body),
+            content_type='application/json')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
     def test_find_pets_by_status(self):
         """Test case for find_pets_by_status
 
@@ -66,6 +83,17 @@ class TestPetController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_get_all_pets(self):
+        """Test case for get_all_pets
+
+        
+        """
+        response = self.client.open(
+            '/allPets',
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
     def test_get_pet_by_id(self):
         """Test case for get_pet_by_id
 
@@ -73,6 +101,17 @@ class TestPetController(BaseTestCase):
         """
         response = self.client.open(
             '/pet/{petId}'.format(pet_id=789),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_get_random_pet(self):
+        """Test case for get_random_pet
+
+        
+        """
+        response = self.client.open(
+            '/randomPet',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

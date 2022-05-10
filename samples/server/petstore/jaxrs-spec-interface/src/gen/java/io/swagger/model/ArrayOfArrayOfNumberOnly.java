@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class ArrayOfArrayOfNumberOnly   {
+
   private @Valid List<List<BigDecimal>> arrayArrayNumber = new ArrayList<List<BigDecimal>>();
 
   /**

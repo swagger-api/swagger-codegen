@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,7 @@ import javax.validation.constraints.*;
  * HasOnlyReadOnly
  */
 @Validated
+
 
 public class HasOnlyReadOnly   {
   @JsonProperty("bar")
@@ -29,11 +29,10 @@ public class HasOnlyReadOnly   {
   /**
    * Get bar
    * @return bar
-  **/
-  @ApiModelProperty(readOnly = true, value = "")
-
-
-  public String getBar() {
+   **/
+  @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "")
+  
+    public String getBar() {
     return bar;
   }
 
@@ -49,11 +48,10 @@ public class HasOnlyReadOnly   {
   /**
    * Get foo
    * @return foo
-  **/
-  @ApiModelProperty(readOnly = true, value = "")
-
-
-  public String getFoo() {
+   **/
+  @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "")
+  
+    public String getFoo() {
     return foo;
   }
 
@@ -102,4 +100,3 @@ public class HasOnlyReadOnly   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

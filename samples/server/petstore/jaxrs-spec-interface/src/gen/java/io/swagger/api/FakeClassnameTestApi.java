@@ -21,14 +21,14 @@ import javax.validation.Valid;
 
 @Path("/fake_classname_test")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:02:53.126-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:12:16.280-05:00[America/Bogota]")
 public interface FakeClassnameTestApi {
 
     @PATCH
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @Operation(summary = "To test class name in snake case", description = "", security = {
-        @SecurityRequirement(name = "api_key_query")    }, tags={  })
+        @SecurityRequirement(name = "api_key_query")    }, tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     Client testClassname(@Valid Client body);}

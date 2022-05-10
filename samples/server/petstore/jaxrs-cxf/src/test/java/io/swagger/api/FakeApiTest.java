@@ -26,6 +26,10 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 import org.junit.Test;
 import org.junit.Before;
@@ -150,7 +154,7 @@ public class FakeApiTest {
      */
     @Test
     public void testEndpointParametersTest() {
-        Object body = null;
+        FakeBody body = null;
         //api.testEndpointParameters(body);
         
         // TODO: test validations
@@ -167,13 +171,29 @@ public class FakeApiTest {
      */
     @Test
     public void testEnumParametersTest() {
-        Object body = null;
         List<String> enumHeaderStringArray = null;
         String enumHeaderString = null;
         List<String> enumQueryStringArray = null;
         String enumQueryString = null;
         Integer enumQueryInteger = null;
-        //api.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+        //api.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+        
+        // TODO: test validations
+        
+        
+    }
+    /**
+     * To test enum parameters
+     *
+     * To test enum parameters
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void testEnumRequestBodyTest() {
+        EnumFormBody body = null;
+        //api.testEnumRequestBody(body);
         
         // TODO: test validations
         
@@ -202,7 +222,7 @@ public class FakeApiTest {
      */
     @Test
     public void testJsonFormDataTest() {
-        Object body = null;
+        FakeJsonFormDataBody body = null;
         //api.testJsonFormData(body);
         
         // TODO: test validations

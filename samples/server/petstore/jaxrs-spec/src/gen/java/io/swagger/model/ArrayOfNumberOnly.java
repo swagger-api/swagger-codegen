@@ -13,7 +13,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ArrayOfNumberOnly  implements Serializable {
+public class ArrayOfNumberOnly  implements Serializable  {
+
   private @Valid List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
 
   /**

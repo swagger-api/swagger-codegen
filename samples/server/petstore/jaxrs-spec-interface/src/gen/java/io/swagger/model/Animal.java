@@ -1,6 +1,7 @@
 package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -12,7 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Animal   {
+
   private @Valid String className = null;
+
   private @Valid String color = "red";
 
   /**

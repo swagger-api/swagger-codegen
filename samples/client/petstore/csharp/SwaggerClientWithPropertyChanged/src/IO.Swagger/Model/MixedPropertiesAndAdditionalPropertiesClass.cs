@@ -32,14 +32,14 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MixedPropertiesAndAdditionalPropertiesClass" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public MixedPropertiesAndAdditionalPropertiesClass(Guid?  = default(Guid?), DateTime?  = default(DateTime?), Dictionary<string, Animal>  = default(Dictionary<string, Animal>))
+        /// <param name="uuid">uuid.</param>
+        /// <param name="dateTime">dateTime.</param>
+        /// <param name="map">map.</param>
+        public MixedPropertiesAndAdditionalPropertiesClass(Guid? uuid = default(Guid?), DateTime? dateTime = default(DateTime?), Dictionary<string, Animal> map = default(Dictionary<string, Animal>))
         {
-            this.Uuid = ;
-            this.DateTime = ;
-            this.Map = ;
+            this.Uuid = uuid;
+            this.DateTime = dateTime;
+            this.Map = map;
         }
         
         /// <summary>
@@ -118,6 +118,7 @@ namespace IO.Swagger.Model
                 (
                     this.Map == input.Map ||
                     this.Map != null &&
+                    input.Map != null &&
                     this.Map.SequenceEqual(input.Map)
                 );
         }

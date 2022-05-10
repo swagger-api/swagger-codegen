@@ -1,5 +1,4 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -10,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+
+
 
 public class MixedPropertiesAndAdditionalPropertiesClass   {
   @JsonProperty("uuid")

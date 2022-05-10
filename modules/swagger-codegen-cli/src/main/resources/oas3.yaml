@@ -128,6 +128,11 @@ components:
           title: "import mappings"
           description: "specifies mappings between a given class and the import that should be used for that class in the format of type=import,type=import. You can also have multiple occurrences of this option."
           x-option: "--import-mappings"
+        ignoreImportMappings:
+          type: "boolean"
+          title: "ignore import mapping"
+          description: "allow generate model classes using names previously listed on import mappings."
+          x-option: "--ignore-import-mapping"
         invokerPackage:
           type: "string"
           title: "invoker package"
@@ -201,6 +206,16 @@ components:
           title: "disable examples"
           description: "avoid writing json/xml examples on generated operations."
           x-option: "--disable-examples"
+        resolveFully:
+          type: "boolean"
+          title: "fully resolve schemas"
+          description: "fully resolves json schemas when loading definitions."
+          x-option: "--resolve-fully"
+        flattenInlineSchema:
+          type: "boolean"
+          title: "flatten inline schemas"
+          description: "flattens inline composed schemas."
+          x-option: "--flatten-inline-schema"
     ConfigHelp:
       x-command: "config-help"
       x-command-description: "Config help for chosen lang"

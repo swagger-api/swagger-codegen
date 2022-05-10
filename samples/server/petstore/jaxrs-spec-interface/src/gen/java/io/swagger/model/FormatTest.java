@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -14,18 +15,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class FormatTest   {
+
   private @Valid Integer integer = null;
+
   private @Valid Integer int32 = null;
+
   private @Valid Long int64 = null;
+
   private @Valid BigDecimal number = null;
+
   private @Valid Float _float = null;
+
   private @Valid Double _double = null;
+
   private @Valid String string = null;
-  private @Valid String _byte = null;
-  private @Valid String binary = null;
+
+  private @Valid byte[] _byte = null;
+
+  private @Valid File binary = null;
+
   private @Valid LocalDate date = null;
+
   private @Valid Date dateTime = null;
+
   private @Valid UUID uuid = null;
+
   private @Valid String password = null;
 
   /**
@@ -167,7 +181,7 @@ public class FormatTest   {
 
   /**
    **/
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -176,17 +190,17 @@ public class FormatTest   {
   @ApiModelProperty(required = true, value = "")
   @JsonProperty("byte")
   @NotNull
- @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
-  public String getByte() {
+
+  public byte[] getByte() {
     return _byte;
   }
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
 
   /**
    **/
-  public FormatTest binary(String binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -195,10 +209,10 @@ public class FormatTest   {
   @ApiModelProperty(value = "")
   @JsonProperty("binary")
 
-  public String getBinary() {
+  public File getBinary() {
     return binary;
   }
-  public void setBinary(String binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
 

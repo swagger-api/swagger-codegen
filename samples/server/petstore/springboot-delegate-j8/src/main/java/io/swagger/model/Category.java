@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,7 @@ import javax.validation.constraints.*;
  * Category
  */
 @Validated
+
 
 public class Category   {
   @JsonProperty("id")
@@ -29,11 +29,10 @@ public class Category   {
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getId() {
     return id;
   }
 
@@ -49,11 +48,10 @@ public class Category   {
   /**
    * Get name
    * @return name
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getName() {
+   **/
+  @Schema(description = "")
+  
+    public String getName() {
     return name;
   }
 
@@ -102,4 +100,3 @@ public class Category   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

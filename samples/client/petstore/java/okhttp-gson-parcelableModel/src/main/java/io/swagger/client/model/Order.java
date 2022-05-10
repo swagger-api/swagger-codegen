@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,13 +24,12 @@ import java.io.IOException;
 import org.threeten.bp.OffsetDateTime;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Order
  */
 
-public class Order {
 
+public class Order implements Parcelable {
   @SerializedName("id")
   private Long id = null;
 
@@ -41,6 +41,7 @@ public class Order {
 
   @SerializedName("shipDate")
   private OffsetDateTime shipDate = null;
+
   /**
    * Order Status
    */
@@ -79,124 +80,127 @@ public class Order {
 
       @Override
       public StatusEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return StatusEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("status")
+  }  @SerializedName("status")
   private StatusEnum status = null;
 
   @SerializedName("complete")
   private Boolean complete = false;
+
+  public Order() {
+  }
   public Order id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
   @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Order petId(Long petId) {
     this.petId = petId;
     return this;
   }
 
-  
-
-  /**
-  * Get petId
-  * @return petId
+   /**
+   * Get petId
+   * @return petId
   **/
   @Schema(description = "")
   public Long getPetId() {
     return petId;
   }
+
   public void setPetId(Long petId) {
     this.petId = petId;
   }
+
   public Order quantity(Integer quantity) {
     this.quantity = quantity;
     return this;
   }
 
-  
-
-  /**
-  * Get quantity
-  * @return quantity
+   /**
+   * Get quantity
+   * @return quantity
   **/
   @Schema(description = "")
   public Integer getQuantity() {
     return quantity;
   }
+
   public void setQuantity(Integer quantity) {
     this.quantity = quantity;
   }
+
   public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
-  
-
-  /**
-  * Get shipDate
-  * @return shipDate
+   /**
+   * Get shipDate
+   * @return shipDate
   **/
   @Schema(description = "")
   public OffsetDateTime getShipDate() {
     return shipDate;
   }
+
   public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
+
   public Order status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * Order Status
-  * @return status
+   /**
+   * Order Status
+   * @return status
   **/
   @Schema(description = "Order Status")
   public StatusEnum getStatus() {
     return status;
   }
+
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+
   public Order complete(Boolean complete) {
     this.complete = complete;
     return this;
   }
 
-  
-
-  /**
-  * Get complete
-  * @return complete
+   /**
+   * Get complete
+   * @return complete
   **/
   @Schema(description = "")
   public Boolean isComplete() {
     return complete;
   }
+
   public void setComplete(Boolean complete) {
     this.complete = complete;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -216,8 +220,9 @@ public class Order {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, petId, quantity, shipDate, status, complete);
+    return Objects.hash(id, petId, quantity, shipDate, status, complete);
   }
+
 
   @Override
   public String toString() {
@@ -245,8 +250,8 @@ public class Order {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(id);
     out.writeValue(petId);
     out.writeValue(quantity);
@@ -255,24 +260,13 @@ public class Order {
     out.writeValue(complete);
   }
 
-  public Order() {
-    super();
-  }
-
   Order(Parcel in) {
-    
     id = (Long)in.readValue(null);
-    
     petId = (Long)in.readValue(null);
-    
     quantity = (Integer)in.readValue(null);
-    
-    
     shipDate = (OffsetDateTime)in.readValue(OffsetDateTime.class.getClassLoader());
     status = (StatusEnum)in.readValue(null);
-    
     complete = (Boolean)in.readValue(null);
-    
   }
 
   public int describeContents() {

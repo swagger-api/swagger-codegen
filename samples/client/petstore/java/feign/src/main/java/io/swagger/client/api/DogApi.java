@@ -62,7 +62,7 @@ public interface DogApi extends ApiClient.Api {
   /**
    * Updates a dog
    * 
-   * @param animalId ID of dog that needs to be updated (required)
+   * @param dogId ID of dog that needs to be updated (required)
    * @param name  (optional)
    * @param status  (optional)
    */
@@ -71,5 +71,5 @@ public interface DogApi extends ApiClient.Api {
       "Content-Type: application/x-www-form-urlencoded",
       "Accept: */*",
   })
-  void updateDogWithForm(@Param("animalId") Long animalId, @Param("name") String name, @Param("status") String status);
+  void updateDogWithForm(@Param("dogId") Long dogId, @Param("name") String name, @Param("status") String status);
 }

@@ -10,10 +10,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * A User who is purchasing from the pet store
+ * User
  */
-@ApiModel(description = "A User who is purchasing from the pet store")
 @Validated
+
+
 public class User   {
   @JsonProperty("id")
   private Long id = null;
@@ -47,10 +48,10 @@ public class User   {
   /**
    * Get id
    * @return id
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public Long getId() {
+  
+    public Long getId() {
     return id;
   }
 
@@ -66,10 +67,10 @@ public class User   {
   /**
    * Get username
    * @return username
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public String getUsername() {
+  
+    public String getUsername() {
     return username;
   }
 
@@ -85,10 +86,10 @@ public class User   {
   /**
    * Get firstName
    * @return firstName
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public String getFirstName() {
+  
+    public String getFirstName() {
     return firstName;
   }
 
@@ -104,10 +105,10 @@ public class User   {
   /**
    * Get lastName
    * @return lastName
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public String getLastName() {
+  
+    public String getLastName() {
     return lastName;
   }
 
@@ -123,10 +124,10 @@ public class User   {
   /**
    * Get email
    * @return email
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public String getEmail() {
+  
+    public String getEmail() {
     return email;
   }
 
@@ -142,10 +143,10 @@ public class User   {
   /**
    * Get password
    * @return password
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public String getPassword() {
+  
+    public String getPassword() {
     return password;
   }
 
@@ -161,10 +162,10 @@ public class User   {
   /**
    * Get phone
    * @return phone
-  **/
+   **/
   @ApiModelProperty(value = "")
-
-  public String getPhone() {
+  
+    public String getPhone() {
     return phone;
   }
 
@@ -180,10 +181,10 @@ public class User   {
   /**
    * User Status
    * @return userStatus
-  **/
+   **/
   @ApiModelProperty(value = "User Status")
-
-  public Integer getUserStatus() {
+  
+    public Integer getUserStatus() {
     return userStatus;
   }
 

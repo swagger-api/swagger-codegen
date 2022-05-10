@@ -26,6 +26,7 @@ public class CodegenOperation extends CodegenObject {
     public List<CodegenParameter> pathParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> queryParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> headerParams = new ArrayList<CodegenParameter>();
+    public List<CodegenParameter> cookieParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> formParams = new ArrayList<CodegenParameter>();
     public List<CodegenParameter> requiredParams = new ArrayList<CodegenParameter>();
     public List<CodegenSecurity> authMethods;
@@ -64,7 +65,22 @@ public class CodegenOperation extends CodegenObject {
      * @return true if query parameter exists, false otherwise
      */
     public boolean getHasQueryParams() {
-        return nonempty(queryParams);
+        if (nonempty(queryParams)) {
+            return true;
+        }
+
+        if (authMethods == null || authMethods.isEmpty()) {
+            return false;
+        }
+
+        // Check if one of the authMethods is a query param
+        for (CodegenSecurity sec : authMethods) {
+            if (sec.getIsKeyInQuery()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -74,6 +90,15 @@ public class CodegenOperation extends CodegenObject {
      */
     public boolean getHasHeaderParams() {
         return nonempty(headerParams);
+    }
+
+    /**
+     * Check if there's at least one cookie parameter
+     *
+     * @return true if cookie parameter exists, false otherwise
+     */
+    public boolean getHasCookieParams() {
+        return nonempty(cookieParams);
     }
 
     /**
@@ -292,6 +317,7 @@ public class CodegenOperation extends CodegenObject {
         result = 31 * result + (pathParams != null ? pathParams.hashCode() : 0);
         result = 31 * result + (queryParams != null ? queryParams.hashCode() : 0);
         result = 31 * result + (headerParams != null ? headerParams.hashCode() : 0);
+        result = 31 * result + (cookieParams != null ? cookieParams.hashCode() : 0);
         result = 31 * result + (formParams != null ? formParams.hashCode() : 0);
         result = 31 * result + (authMethods != null ? authMethods.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
@@ -401,6 +427,10 @@ public class CodegenOperation extends CodegenObject {
 
     public List<CodegenParameter> getHeaderParams() {
         return headerParams;
+    }
+
+    public List<CodegenParameter> getCookieParams() {
+        return cookieParams;
     }
 
     public List<CodegenParameter> getFormParams() {

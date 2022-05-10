@@ -3,9 +3,8 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.ReadOnlyFirst;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +15,7 @@ import javax.validation.constraints.*;
  * ArrayTest
  */
 @Validated
+
 
 public class ArrayTest   {
   @JsonProperty("array_of_string")
@@ -46,11 +46,10 @@ public class ArrayTest   {
   /**
    * Get arrayOfString
    * @return arrayOfString
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getArrayOfString() {
+   **/
+  @Schema(description = "")
+  
+    public List<String> getArrayOfString() {
     return arrayOfString;
   }
 
@@ -74,12 +73,10 @@ public class ArrayTest   {
   /**
    * Get arrayArrayOfInteger
    * @return arrayArrayOfInteger
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<List<Long>> getArrayArrayOfInteger() {
+   **/
+  @Schema(description = "")
+      @Valid
+    public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
 
@@ -103,12 +100,10 @@ public class ArrayTest   {
   /**
    * Get arrayArrayOfModel
    * @return arrayArrayOfModel
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
+   **/
+  @Schema(description = "")
+      @Valid
+    public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }
 
@@ -159,4 +154,3 @@ public class ArrayTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

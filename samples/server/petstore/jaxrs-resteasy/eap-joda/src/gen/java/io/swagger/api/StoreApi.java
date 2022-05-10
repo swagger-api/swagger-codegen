@@ -33,12 +33,12 @@ public interface StoreApi  {
     @Path("/order/{orderId}")
     
     
-    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", tags={ "store" })
+    @Operation(summary = "Delete purchase order by ID", description = "For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors", tags={ "store" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
                 @ApiResponse(responseCode = "404", description = "Order not found")
          })
-    Response deleteOrder( @PathParam("orderId") String orderId,@Context SecurityContext securityContext);
+    Response deleteOrder( @Min(1) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext);
 
     @GET
     @Path("/inventory")
@@ -47,29 +47,29 @@ public interface StoreApi  {
     @Operation(summary = "Returns pet inventories by status", description = "Returns a map of status codes to quantities", security = {
         @SecurityRequirement(name = "api_key")    }, tags={ "store" })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class))))
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Map.class))))
          })
     Response getInventory(@Context SecurityContext securityContext);
 
     @GET
     @Path("/order/{orderId}")
     
-    @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", tags={ "store" })
+    @Produces({ "application/json", "application/xml" })
+    @Operation(summary = "Find purchase order by ID", description = "For valid response try integer IDs with value >= 1 and <= 10.\\ \\ Other values will generated exceptions", tags={ "store" })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))),
                 @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
                 @ApiResponse(responseCode = "404", description = "Order not found")
          })
-    Response getOrderById( @Min(1) @Max(5) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext);
+    Response getOrderById( @Min(1) @Max(10) @PathParam("orderId") Long orderId,@Context SecurityContext securityContext);
 
     @POST
     @Path("/order")
-    @Consumes({ "*/*" })
-    @Produces({ "application/xml", "application/json" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Place an order for a pet", description = "", tags={ "store" })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))),
                 @ApiResponse(responseCode = "400", description = "Invalid Order")
          })
     Response placeOrder(@Parameter(description = "order placed for purchasing the pet" ,required=true) Order body,@Context SecurityContext securityContext);

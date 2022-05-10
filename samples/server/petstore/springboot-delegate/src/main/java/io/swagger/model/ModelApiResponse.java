@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,7 @@ import javax.validation.constraints.*;
  * ModelApiResponse
  */
 @Validated
+
 
 public class ModelApiResponse   {
   @JsonProperty("code")
@@ -32,11 +32,10 @@ public class ModelApiResponse   {
   /**
    * Get code
    * @return code
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Integer getCode() {
+   **/
+  @Schema(description = "")
+  
+    public Integer getCode() {
     return code;
   }
 
@@ -52,11 +51,10 @@ public class ModelApiResponse   {
   /**
    * Get type
    * @return type
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getType() {
+   **/
+  @Schema(description = "")
+  
+    public String getType() {
     return type;
   }
 
@@ -72,11 +70,10 @@ public class ModelApiResponse   {
   /**
    * Get message
    * @return message
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getMessage() {
+   **/
+  @Schema(description = "")
+  
+    public String getMessage() {
     return message;
   }
 
@@ -127,4 +124,3 @@ public class ModelApiResponse   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

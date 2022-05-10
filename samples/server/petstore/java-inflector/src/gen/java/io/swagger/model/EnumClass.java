@@ -1,7 +1,8 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonValue;
+
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**

@@ -1,9 +1,11 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
-import java.io.File;
+import io.swagger.model.AllPetsResponse;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,7 +22,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 /**
  * Swagger Petstore
  *
- * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * <p>This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  */
 public class PetApiServiceImpl implements PetApi {
@@ -38,10 +40,16 @@ public class PetApiServiceImpl implements PetApi {
      * Deletes a pet
      *
      */
-    public void deletePet(Integer petId, String apiKey) {
+    public void deletePet(Long petId, String apiKey) {
         // TODO: Implement...
         
         
+    }
+    
+    public ModelApiResponse doCategoryStuff(SubCategory body) {
+        // TODO: Implement...
+        
+        return null;
     }
     
     /**
@@ -59,10 +67,16 @@ public class PetApiServiceImpl implements PetApi {
     /**
      * Finds Pets by tags
      *
-     * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+     * Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
      *
      */
     public List<Pet> findPetsByTags(List<String> tags) {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
+    public AllPetsResponse getAllPets() {
         // TODO: Implement...
         
         return null;
@@ -74,7 +88,13 @@ public class PetApiServiceImpl implements PetApi {
      * Returns a single pet
      *
      */
-    public Pet getPetById(Integer petId) {
+    public Pet getPetById(Long petId) {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
+    public SinglePetResponse getRandomPet() {
         // TODO: Implement...
         
         return null;
@@ -94,7 +114,7 @@ public class PetApiServiceImpl implements PetApi {
      * Updates a pet in the store with form data
      *
      */
-    public void updatePetWithForm(Integer petId, String name, String status) {
+    public void updatePetWithForm(Long petId, String name, String status) {
         // TODO: Implement...
         
         
@@ -104,7 +124,7 @@ public class PetApiServiceImpl implements PetApi {
      * uploads an image
      *
      */
-    public ModelApiResponse uploadFile(Integer petId, String additionalMetadata,  Attachment fileDetail) {
+    public ModelApiResponse uploadFile(Long petId, Object body) {
         // TODO: Implement...
         
         return null;

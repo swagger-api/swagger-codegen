@@ -5,9 +5,12 @@ import io.swagger.model.*;
 
 import com.sun.jersey.multipart.FormDataParam;
 
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.util.Map;
 import java.util.List;
@@ -24,18 +27,24 @@ import javax.validation.constraints.*;
 public abstract class PetApiService {
       public abstract Response addPet(Pet body,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response deletePet(Integer petId,String apiKey,SecurityContext securityContext)
+      public abstract Response deletePet(Long petId,String apiKey,SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response doCategoryStuff(SubCategory body,SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response findPetsByStatus( @NotNull List<String> status,SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response findPetsByTags( @NotNull List<String> tags,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response getPetById(Integer petId,SecurityContext securityContext)
+      public abstract Response getAllPets(SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response getPetById(Long petId,SecurityContext securityContext)
+      throws NotFoundException;
+      public abstract Response getRandomPet(SecurityContext securityContext)
       throws NotFoundException;
       public abstract Response updatePet(Pet body,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response updatePetWithForm(Integer petId,String name,String status,SecurityContext securityContext)
+      public abstract Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext)
       throws NotFoundException;
-      public abstract Response uploadFile(Integer petId,String additionalMetadata,InputStream fileInputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext)
+      public abstract Response uploadFile(Long petId,String additionalMetadata,InputStream fileInputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext)
       throws NotFoundException;
 }

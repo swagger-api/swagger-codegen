@@ -1,12 +1,15 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+
 /**
  * Model for testing model with \&quot;_class\&quot; property
- **/@Schema(description = "Model for testing model with \"_class\" property")
+ **/
+@Schema(description = "Model for testing model with \"_class\" property")
+
 public class ClassModel   {
   @JsonProperty("_class")
   private String propertyClass = null;

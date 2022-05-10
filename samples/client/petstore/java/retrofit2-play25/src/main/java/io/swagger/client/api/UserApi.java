@@ -93,7 +93,7 @@ public interface UserApi {
    */
   @GET("user/login")
   CompletionStage<Response<String>> loginUser(
-        @retrofit2.http.Path("username") String username                ,     @retrofit2.http.Path("password") String password                
+        @retrofit2.http.Query("username") String username                ,     @retrofit2.http.Query("password") String password                
   );
 
   /**

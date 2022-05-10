@@ -10,6 +10,7 @@ import io.swagger.codegen.v3.service.GeneratorService;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.codegen.v3.service.GenerationRequest;
 import io.swagger.v3.generator.model.HiddenOptions;
+import io.swagger.v3.generator.util.FileAccessSecurityManager;
 import io.swagger.v3.generator.util.ZipUtil;
 import io.swagger.oas.inflector.models.RequestContext;
 import io.swagger.oas.inflector.models.ResponseContext;
@@ -30,6 +31,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,6 +54,13 @@ public class GeneratorController {
     private static String PROP_HIDDEN_OPTIONS = "HIDDEN_OPTIONS";
 
     static {
+        // allow writing files only to directories configgured via generatorWriteDirs sys prop
+        // e.g. -DgeneratorWriteDirs="/tmp"
+        System.setSecurityManager(new FileAccessSecurityManager());
+        // Enabling a SecurityManager disables DNS cache expiration. This can cause issues
+        // for long-running instances of swagger-generator when the IP addresses of referenced
+        // domains change.
+        Security.setProperty("networkaddress.cache.ttl", "60");
 
         hiddenOptions = loadHiddenOptions();
         final ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
@@ -477,9 +486,7 @@ public class GeneratorController {
 
     protected static File getTmpFolder() {
         try {
-            File outputFolder = File.createTempFile("codegen-", "-tmp");
-            outputFolder.delete();
-            outputFolder.mkdir();
+            File outputFolder = Files.createTempDirectory("codegen-").toFile();
             outputFolder.deleteOnExit();
             return outputFolder;
         } catch (Exception e) {

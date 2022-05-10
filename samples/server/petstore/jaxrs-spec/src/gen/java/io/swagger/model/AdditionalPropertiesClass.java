@@ -13,8 +13,10 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class AdditionalPropertiesClass  implements Serializable {
+public class AdditionalPropertiesClass  implements Serializable  {
+
   private @Valid Map<String, String> mapProperty = new HashMap<String, String>();
+
   private @Valid Map<String, Map<String, String>> mapOfMapProperty = new HashMap<String, Map<String, String>>();
 
   /**

@@ -6,6 +6,7 @@ import io.swagger.api.factories.FakeClassnameTestApiServiceFactory;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -30,6 +31,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
+
 
 @Path("/fake_classname_test")
 
@@ -62,10 +64,11 @@ public class FakeClassnameTestApi  {
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @Operation(summary = "To test class name in snake case", description = "", tags={ "fake_classname_tags 123#$%^" })
+    @Operation(summary = "To test class name in snake case", description = "", security = {
+        @SecurityRequirement(name = "api_key_query")    }, tags={ "fake_classname_tags 123#$%^" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
-    public Response testClassname(@Parameter(description = "client model" ,required=true) Client body
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
+    public Response testClassname(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

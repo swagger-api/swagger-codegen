@@ -13,62 +13,62 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Tag
  */
 
+
 public class Tag {
-
   @JsonProperty("id")
-
   private Long id = null;
 
   @JsonProperty("name")
-
   private String name = null;
+
   public Tag id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Tag name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -84,8 +84,9 @@ public class Tag {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, name);
+    return Objects.hash(id, name);
   }
+
 
   @Override
   public String toString() {

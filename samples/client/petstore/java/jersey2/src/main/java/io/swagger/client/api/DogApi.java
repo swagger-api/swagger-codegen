@@ -55,7 +55,6 @@ public class DogApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -96,7 +95,6 @@ public class DogApi {
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
 
-
     final String[] localVarAccepts = {
       
     };
@@ -132,7 +130,6 @@ public class DogApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -173,7 +170,6 @@ public class DogApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -191,26 +187,25 @@ public class DogApi {
   /**
    * Updates a dog
    * 
-   * @param animalId ID of dog that needs to be updated (required)
+   * @param dogId ID of dog that needs to be updated (required)
    * @param name  (optional)
    * @param status  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void updateDogWithForm(Long animalId, String name, String status) throws ApiException {
+  public void updateDogWithForm(Long dogId, String name, String status) throws ApiException {
     Object localVarPostBody = null;
-    // verify the required parameter 'animalId' is set
-    if (animalId == null) {
-      throw new ApiException(400, "Missing the required parameter 'animalId' when calling updateDogWithForm");
+    // verify the required parameter 'dogId' is set
+    if (dogId == null) {
+      throw new ApiException(400, "Missing the required parameter 'dogId' when calling updateDogWithForm");
     }
     // create path and map variables
     String localVarPath = "/dog/{dogId}"
-      .replaceAll("\\{" + "animalId" + "\\}", apiClient.escapeString(animalId.toString()));
+      .replaceAll("\\{" + "dogId" + "\\}", apiClient.escapeString(dogId.toString()));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
     if (name != null)

@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.12-SNAPSHOT</version>
+    <version>3.0.35-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -129,6 +129,8 @@
                     <argLine>-XX:+StartAttachListener</argLine>
                     <argLine>
                         -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar
+                        -XX:+IgnoreUnrecognizedVMOptions
+                        --add-opens=java.base/java.util=ALL-UNNAMED
                     </argLine>
                 </configuration>
                 <executions>
@@ -262,10 +264,37 @@
                     <artifactId>formatter-maven-plugin</artifactId>
                     <version>0.5.2</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
     <profiles>
+        <profile>
+            <id>security</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>6.5.3</version>
+                        <configuration>
+                            <skipSystemScope>true</skipSystemScope>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>release-profile</id>
             <properties>
@@ -416,18 +445,6 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/java/jersey2</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>java-client-jersey2-java6</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/java/jersey2-java6</module>
             </modules>
         </profile>
         <profile>
@@ -887,9 +904,9 @@
                 <!--<module>samples/client/petstore/jaxrs-cxf-client</module>-->
                 <module>samples/client/petstore/java/resttemplate</module>
                 <module>samples/client/petstore/java/resttemplate-withXml</module>
-                <module>samples/client/petstore/java/vertx</module>
+                <!--<module>samples/client/petstore/java/vertx</module>-->
                 <module>samples/client/petstore/java/resteasy</module>
-                <module>samples/client/petstore/java/google-api-client</module>
+                <!--<module>samples/client/petstore/java/google-api-client</module>-->
                 <!--<module>samples/client/petstore/kotlin/</module>-->
                 <!-- test non-java projects -->
                 <!--<module>samples/client/petstore/go</module>-->
@@ -1060,7 +1077,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson-version}</version>
+                <version>${jackson-databind-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -1161,28 +1178,34 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.12-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.0.9</swagger-core-version>
-        <swagger-core-version-v1>1.5.23</swagger-core-version-v1>
-        <swagger-parser-version>2.0.14</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.46</swagger-parser-version-v1>
-        <jackson-version>2.9.9</jackson-version>
+        <swagger-codegen-generators-version>1.0.35-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.1.13</swagger-core-version>
+        <swagger-core-version-v1>1.6.6</swagger-core-version-v1>
+        <swagger-parser-version>2.0.30</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.59</swagger-parser-version-v1>
+        <jackson-version>2.13.2</jackson-version>
+        <!--
+          jackson-databind 2.13.2 is still affected by CVE-2020-36518.
+          This version pin for jackson-databind can be removed when bumping jackson to 2.14
+          -->
+        <jackson-databind-version>2.13.2.2</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <commons-io-version>2.4</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.8.1</junit-version>
+        <commons-io-version>2.11.0</commons-io-version>
+        <commons-cli-version>1.5.0</commons-cli-version>
+        <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.4</commons-lang-version>
-        <slf4j-version>1.7.25</slf4j-version>
-        <logback-version>1.2.3</logback-version>
+        <commons-lang-version>3.12.0</commons-lang-version>
+        <slf4j-version>1.7.35</slf4j-version>
+        <logback-version>1.2.10</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
-        <jmustache-version>1.12</jmustache-version>
+        <jmustache-version>1.15</jmustache-version>
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.22.0</surefire-version>
-        <jmockit-version>1.25</jmockit-version>
+        <jmockit-version>1.42</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
-        <snakeyaml-version>1.23</snakeyaml-version>
+        <snakeyaml-version>1.30</snakeyaml-version>
+        <handlebars-version>4.3.0</handlebars-version>
     </properties>
 </project>

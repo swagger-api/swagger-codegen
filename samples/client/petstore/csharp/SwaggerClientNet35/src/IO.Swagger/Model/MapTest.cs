@@ -36,15 +36,15 @@ namespace IO.Swagger.Model
                 public enum InnerEnum
         {
             /// <summary>
-            /// Enum UPPER for value: "UPPER"
+            /// Enum UPPER for value: UPPER
             /// </summary>
-            [EnumMember(Value = ""UPPER"")]
-            UPPER = 0,
+            [EnumMember(Value = "UPPER")]
+            UPPER = 1,
             /// <summary>
-            /// Enum LOWER for value: "lower"
+            /// Enum Lower for value: lower
             /// </summary>
-            [EnumMember(Value = ""lower"")]
-            LOWER = 1        }
+            [EnumMember(Value = "lower")]
+            Lower = 2        }
         /// <summary>
         /// Gets or Sets MapOfEnumString
         /// </summary>
@@ -53,12 +53,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MapTest" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public MapTest(Dictionary<string, Dictionary<string, string>>  = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum>  = default(Dictionary<string, InnerEnum>))
+        /// <param name="mapMapOfString">mapMapOfString.</param>
+        /// <param name="mapOfEnumString">mapOfEnumString.</param>
+        public MapTest(Dictionary<string, Dictionary<string, string>> mapMapOfString = default(Dictionary<string, Dictionary<string, string>>), Dictionary<string, InnerEnum> mapOfEnumString = default(Dictionary<string, InnerEnum>))
         {
-            this.MapMapOfString = ;
-            this.MapOfEnumString = ;
+            this.MapMapOfString = mapMapOfString;
+            this.MapOfEnumString = mapOfEnumString;
         }
         
         /// <summary>
@@ -115,11 +115,13 @@ namespace IO.Swagger.Model
                 (
                     this.MapMapOfString == input.MapMapOfString ||
                     this.MapMapOfString != null &&
+                    input.MapMapOfString != null &&
                     this.MapMapOfString.SequenceEqual(input.MapMapOfString)
                 ) && 
                 (
                     this.MapOfEnumString == input.MapOfEnumString ||
                     this.MapOfEnumString != null &&
+                    input.MapOfEnumString != null &&
                     this.MapOfEnumString.SequenceEqual(input.MapOfEnumString)
                 );
         }

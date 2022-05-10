@@ -21,12 +21,16 @@ open class FakeClassnameTags123API: APIBase {
         }
     }
 
+
     /**
      To test class name in snake case
      - PATCH /fake_classname_test
      - API Key:
-     - type: apiKey api_key_query 
-     - name: api_key_query
+       - type: apiKey api_key_query (QUERY)
+       - name: api_key_query
+     - examples: [{contentType=application/json, example={
+  "client" : "client"
+}}]
      - parameter body: (body) client model 
      - returns: RequestBuilder<Client> 
      */
@@ -34,10 +38,12 @@ open class FakeClassnameTags123API: APIBase {
         let path = "/fake_classname_test"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Client>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
 }

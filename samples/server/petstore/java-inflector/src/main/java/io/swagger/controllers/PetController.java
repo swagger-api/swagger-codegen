@@ -13,6 +13,7 @@ import io.swagger.model.*;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 public class PetController  {
   /** 
@@ -22,49 +23,69 @@ public class PetController  {
    **/
 
   /*
-    public ResponseContext addPet(RequestContext request , Pet body ) {
+    public ResponseContext addPet(RequestContext request , Pet body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext deletePet(RequestContext request , Long petId , String apiKey ) {
+    public ResponseContext deletePet(RequestContext request , Long petId 
+, String apiKey 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext findPetsByStatus(RequestContext request , List<String> status ) {
+    public ResponseContext doCategoryStuff(RequestContext request , SubCategory body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext findPetsByTags(RequestContext request , List<String> tags ) {
+    public ResponseContext findPetsByStatus(RequestContext request , List<String> status 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext getPetById(RequestContext request , Long petId ) {
+    public ResponseContext findPetsByTags(RequestContext request , List<String> tags 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext updatePet(RequestContext request , Pet body ) {
+    public ResponseContext getPetById(RequestContext request , Long petId 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext updatePetWithForm(RequestContext request , Long petId ,  String name,  String status) {
+    public ResponseContext updatePet(RequestContext request , Pet body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext uploadFile(RequestContext request , Long petId ,  String additionalMetadata,  File file) {
+    public ResponseContext updatePetWithForm(RequestContext request , Long petId 
+,  String name
+,  String status
+) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext uploadFile(RequestContext request , Long petId 
+,  String additionalMetadata
+,  FormDataContentDisposition fileDetail
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

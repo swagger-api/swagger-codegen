@@ -9,19 +9,20 @@
  */
 using System;
 using System.IO;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using IO.Swagger.Filters;
 using IO.Swagger.Security;
-
-using Microsoft.AspNetCore.Authentication;
 
 namespace IO.Swagger
 {
@@ -30,7 +31,7 @@ namespace IO.Swagger
     /// </summary>
     public class Startup
     {
-        private readonly IHostingEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _hostingEnv;
 
         private IConfiguration Configuration { get; }
 
@@ -39,7 +40,7 @@ namespace IO.Swagger
         /// </summary>
         /// <param name="env"></param>
         /// <param name="configuration"></param>
-        public Startup(IHostingEnvironment env, IConfiguration configuration)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             _hostingEnv = env;
             Configuration = configuration;
@@ -53,13 +54,15 @@ namespace IO.Swagger
         {
             // Add framework services.
             services
-                .AddMvc()
-                .AddJsonOptions(opts =>
+                .AddMvc(options =>
+                {
+                    options.InputFormatters.RemoveType<Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter>();
+                    options.OutputFormatters.RemoveType<Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter>();
+                })
+                .AddNewtonsoftJson(opts =>
                 {
                     opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    opts.SerializerSettings.Converters.Add(new StringEnumConverter {
-                        CamelCaseText = true
-                    });
+                    opts.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
                 })
                 .AddXmlSerializerFormatters();
 
@@ -73,21 +76,20 @@ namespace IO.Swagger
             services
                 .AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("1.0.0", new Info
+                    c.SwaggerDoc("1.0.0", new OpenApiInfo
                     {
                         Version = "1.0.0",
                         Title = "Swagger Petstore",
-                        Description = "Swagger Petstore (ASP.NET Core 2.0)",
-                        Contact = new Contact()
+                        Description = "Swagger Petstore (ASP.NET Core 3.1)",
+                        Contact = new OpenApiContact()
                         {
                            Name = "Swagger Codegen Contributors",
-                           Url = "https://github.com/swagger-api/swagger-codegen",
+                           Url = new Uri("https://github.com/swagger-api/swagger-codegen"),
                            Email = "apiteam@swagger.io"
                         },
-                        TermsOfService = "http://swagger.io/terms/"
+                        TermsOfService = new Uri("http://swagger.io/terms/")
                     });
-                    c.CustomSchemaIds(type => type.FriendlyId(true));
-                    c.DescribeAllEnumsAsStrings();
+                    c.CustomSchemaIds(type => type.FullName);
                     c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
 
                     // Include DataAnnotation attributes on Controller Action parameters as Swagger validation rules (e.g required, pattern, ..)
@@ -102,21 +104,32 @@ namespace IO.Swagger
         /// <param name="app"></param>
         /// <param name="env"></param>
         /// <param name="loggerFactory"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            app
-                .UseMvc()
-                .UseDefaultFiles()
-                .UseStaticFiles()
-                .UseSwagger()
-                .UseSwaggerUI(c =>
-                {
-                    //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
-                    c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Swagger Petstore");
+            app.UseRouting();
 
-                    //TODO: Or alternatively use the original Swagger contract that's included in the static files
-                    // c.SwaggerEndpoint("/swagger-original.json", "Swagger Petstore Original");
-                });
+            //TODO: Uncomment this if you need wwwroot folder
+            // app.UseStaticFiles();
+
+            app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
+                c.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Swagger Petstore");
+
+                //TODO: Or alternatively use the original Swagger contract that's included in the static files
+                // c.SwaggerEndpoint("/swagger-original.json", "Swagger Petstore Original");
+            });
+
+            //TODO: Use Https Redirection
+            // app.UseHttpsRedirection();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             if (env.IsDevelopment())
             {
@@ -125,7 +138,9 @@ namespace IO.Swagger
             else
             {
                 //TODO: Enable production exception handling (https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling)
-                // app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+
+                app.UseHsts();
             }
         }
     }

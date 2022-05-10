@@ -12,8 +12,10 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class Cat extends Animal {
+public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet  {
   
   @Schema(description = "")
   private Boolean declawed = null;
@@ -22,7 +24,7 @@ public class Cat extends Animal {
    * @return declawed
   **/
   @JsonProperty("declawed")
-  public Boolean isisDeclawed() {
+  public Boolean isDeclawed() {
     return declawed;
   }
 

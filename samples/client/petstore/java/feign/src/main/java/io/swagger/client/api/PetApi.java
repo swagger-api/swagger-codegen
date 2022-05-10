@@ -8,6 +8,7 @@ import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 import io.swagger.client.model.SinglePetResponse;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,18 @@ public interface PetApi extends ApiClient.Api {
     "api_key: {apiKey}"
   })
   void deletePet(@Param("petId") Long petId, @Param("apiKey") String apiKey);
+  /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return ModelApiResponse
+   */
+  @RequestLine("POST /pet/category")
+  @Headers({
+      "Content-Type: application/json",
+      "Accept: application/json",
+  })
+  ModelApiResponse doCategoryStuff(SubCategory body);
   /**
    * Finds Pets by status
    * Multiple status values can be provided with comma separated strings

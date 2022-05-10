@@ -4,18 +4,17 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * An order for a pets from the pet store
+ * Order
  */
-@ApiModel(description = "An order for a pets from the pet store")
 @Validated
+
 
 public class Order   {
   @JsonProperty("id")
@@ -62,7 +61,6 @@ public class Order   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -77,11 +75,10 @@ public class Order   {
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getId() {
     return id;
   }
 
@@ -97,11 +94,10 @@ public class Order   {
   /**
    * Get petId
    * @return petId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getPetId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getPetId() {
     return petId;
   }
 
@@ -117,11 +113,10 @@ public class Order   {
   /**
    * Get quantity
    * @return quantity
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Integer getQuantity() {
+   **/
+  @Schema(description = "")
+  
+    public Integer getQuantity() {
     return quantity;
   }
 
@@ -137,12 +132,11 @@ public class Order   {
   /**
    * Get shipDate
    * @return shipDate
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getShipDate() {
+   **/
+  @Schema(description = "")
+  
+    @Valid
+    public OffsetDateTime getShipDate() {
     return shipDate;
   }
 
@@ -158,11 +152,10 @@ public class Order   {
   /**
    * Order Status
    * @return status
-  **/
-  @ApiModelProperty(value = "Order Status")
-
-
-  public StatusEnum getStatus() {
+   **/
+  @Schema(description = "Order Status")
+  
+    public StatusEnum getStatus() {
     return status;
   }
 
@@ -178,11 +171,10 @@ public class Order   {
   /**
    * Get complete
    * @return complete
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isComplete() {
+   **/
+  @Schema(description = "")
+  
+    public Boolean isComplete() {
     return complete;
   }
 
@@ -239,4 +231,3 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

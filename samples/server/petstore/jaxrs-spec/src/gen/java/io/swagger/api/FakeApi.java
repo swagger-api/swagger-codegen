@@ -2,6 +2,10 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 import javax.ws.rs.*;
@@ -23,16 +27,16 @@ import javax.validation.Valid;
 
 @Path("/fake")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:11:08.645-05:00[America/Bogota]")
 public class FakeApi {
 
     @POST
     @Path("/outer/boolean")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={  })
+    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class)))
+        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(mediaType = "*/*", schema = @Schema(implementation = Boolean.class)))
     })
     public Response fakeOuterBooleanSerialize(@Valid Boolean body) {
         return Response.ok().entity("magic!").build();
@@ -41,9 +45,9 @@ public class FakeApi {
     @Path("/outer/composite")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={  })
+    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class)))
+        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(mediaType = "*/*", schema = @Schema(implementation = OuterComposite.class)))
     })
     public Response fakeOuterCompositeSerialize(@Valid OuterComposite body) {
         return Response.ok().entity("magic!").build();
@@ -52,9 +56,9 @@ public class FakeApi {
     @Path("/outer/number")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of outer number types", tags={  })
+    @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class)))
+        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(mediaType = "*/*", schema = @Schema(implementation = BigDecimal.class)))
     })
     public Response fakeOuterNumberSerialize(@Valid BigDecimal body) {
         return Response.ok().entity("magic!").build();
@@ -63,9 +67,9 @@ public class FakeApi {
     @Path("/outer/string")
     @Consumes({ "*/*" })
     @Produces({ "*/*" })
-    @Operation(summary = "", description = "Test serialization of outer string types", tags={  })
+    @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class)))
+        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(mediaType = "*/*", schema = @Schema(implementation = String.class)))
     })
     public Response fakeOuterStringSerialize(@Valid String body) {
         return Response.ok().entity("magic!").build();
@@ -73,9 +77,9 @@ public class FakeApi {
     @PATCH
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={  })
+    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class)))
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class)))
     })
     public Response testClientModel(@Valid Client body) {
         return Response.ok().entity("magic!").build();
@@ -83,31 +87,30 @@ public class FakeApi {
     @POST
     @Consumes({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
     @Operation(summary = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", description = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", security = {
-        @SecurityRequirement(name = "http_basic_test")    }, tags={  })
+        @SecurityRequirement(name = "http_basic_test")    }, tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public Response testEndpointParameters(@Valid Object body) {
+    public Response testEndpointParameters(@Valid FakeBody body) {
         return Response.ok().entity("magic!").build();
     }
     @GET
-    @Consumes({ "*/*" })
-    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={  })
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found")
     })
-    public Response testEnumParameters(@Valid Object body,  @HeaderParam("enum_header_string_array") 
+    public Response testEnumParameters(  @HeaderParam("enum_header_string_array") 
 
  @Parameter(description = "Header parameter enum test (string array)") List<String> enumHeaderStringArray
-,  @HeaderParam("enum_header_string") 
+,  @HeaderParam("enum_header_string") @DefaultValue("-efg") 
 
  @Parameter(description = "Header parameter enum test (string)") String enumHeaderString
 ,  @QueryParam("enum_query_string_array") 
 
  @Parameter(description = "Query parameter enum test (string array)")  List<String> enumQueryStringArray
-,  @QueryParam("enum_query_string") 
+,  @QueryParam("enum_query_string") @DefaultValue("-efg") 
 
  @Parameter(description = "Query parameter enum test (string)")  String enumQueryString
 ,  @QueryParam("enum_query_integer") 
@@ -117,22 +120,33 @@ public class FakeApi {
         return Response.ok().entity("magic!").build();
     }
     @POST
+    @Path("/enum/form")
+    @Consumes({ "*/*" })
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
+    public Response testEnumRequestBody(@Valid EnumFormBody body) {
+        return Response.ok().entity("magic!").build();
+    }
+    @POST
     @Path("/inline-additionalProperties")
     @Consumes({ "application/json" })
-    @Operation(summary = "test inline additionalProperties", description = "", tags={  })
+    @Operation(summary = "test inline additionalProperties", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
     public Response testInlineAdditionalProperties(@Valid Map<String, String> body) {
         return Response.ok().entity("magic!").build();
     }
-    @GET
+    @POST
     @Path("/jsonFormData")
     @Consumes({ "application/json" })
-    @Operation(summary = "test json serialization of form data", description = "", tags={  })
+    @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
-    public Response testJsonFormData(@Valid Object body) {
+    public Response testJsonFormData(@Valid FakeJsonFormDataBody body) {
         return Response.ok().entity("magic!").build();
     }}

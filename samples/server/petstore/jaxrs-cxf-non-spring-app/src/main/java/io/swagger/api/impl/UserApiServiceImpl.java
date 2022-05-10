@@ -18,7 +18,7 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 /**
  * Swagger Petstore
  *
- * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * <p>This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  */
 public class UserApiServiceImpl implements UserApi {
@@ -102,7 +102,7 @@ public class UserApiServiceImpl implements UserApi {
      * This can only be done by the logged in user.
      *
      */
-    public void updateUser(User body, String username) {
+    public void userUsernamePut(User body, String username) {
         // TODO: Implement...
         
         

@@ -10,9 +10,12 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ModelApiResponse  implements Serializable {
+public class ModelApiResponse  implements Serializable  {
+
   private @Valid Integer code = null;
+
   private @Valid String type = null;
+
   private @Valid String message = null;
 
   /**

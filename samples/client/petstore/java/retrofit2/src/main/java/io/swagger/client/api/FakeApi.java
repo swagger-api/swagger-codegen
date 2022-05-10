@@ -9,11 +9,11 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
@@ -103,16 +103,16 @@ public interface FakeApi {
   })
   @POST("fake")
   Call<Void> testEndpointParameters(
-                    @retrofit2.http.Body Body2 body    
+                    @retrofit2.http.Body FakeBody body    
   );
 
   /**
    * To test enum parameters
    * To test enum parameters
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-   * @param enumQueryString Query parameter enum test (string) (optional)
+   * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @return Call&lt;Void&gt;
    */
@@ -132,7 +132,7 @@ public interface FakeApi {
   })
   @POST("fake/enum/form")
   Call<Void> testEnumRequestBody(
-                    @retrofit2.http.Body Body4 body    
+                    @retrofit2.http.Body EnumFormBody body    
   );
 
   /**
@@ -160,7 +160,7 @@ public interface FakeApi {
   })
   @POST("fake/jsonFormData")
   Call<Void> testJsonFormData(
-                    @retrofit2.http.Body Body5 body    
+                    @retrofit2.http.Body FakeJsonFormDataBody body    
   );
 
 }

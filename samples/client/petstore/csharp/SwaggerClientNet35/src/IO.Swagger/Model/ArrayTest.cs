@@ -32,14 +32,14 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ArrayTest" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public ArrayTest(List<string>  = default(List<string>), List<List<long?>>  = default(List<List<long?>>), List<List<ReadOnlyFirst>>  = default(List<List<ReadOnlyFirst>>))
+        /// <param name="arrayOfString">arrayOfString.</param>
+        /// <param name="arrayArrayOfInteger">arrayArrayOfInteger.</param>
+        /// <param name="arrayArrayOfModel">arrayArrayOfModel.</param>
+        public ArrayTest(List<string> arrayOfString = default(List<string>), List<List<long?>> arrayArrayOfInteger = default(List<List<long?>>), List<List<ReadOnlyFirst>> arrayArrayOfModel = default(List<List<ReadOnlyFirst>>))
         {
-            this.ArrayOfString = ;
-            this.ArrayArrayOfInteger = ;
-            this.ArrayArrayOfModel = ;
+            this.ArrayOfString = arrayOfString;
+            this.ArrayArrayOfInteger = arrayArrayOfInteger;
+            this.ArrayArrayOfModel = arrayArrayOfModel;
         }
         
         /// <summary>
@@ -108,16 +108,19 @@ namespace IO.Swagger.Model
                 (
                     this.ArrayOfString == input.ArrayOfString ||
                     this.ArrayOfString != null &&
+                    input.ArrayOfString != null &&
                     this.ArrayOfString.SequenceEqual(input.ArrayOfString)
                 ) && 
                 (
                     this.ArrayArrayOfInteger == input.ArrayArrayOfInteger ||
                     this.ArrayArrayOfInteger != null &&
+                    input.ArrayArrayOfInteger != null &&
                     this.ArrayArrayOfInteger.SequenceEqual(input.ArrayArrayOfInteger)
                 ) && 
                 (
                     this.ArrayArrayOfModel == input.ArrayArrayOfModel ||
                     this.ArrayArrayOfModel != null &&
+                    input.ArrayArrayOfModel != null &&
                     this.ArrayArrayOfModel.SequenceEqual(input.ArrayArrayOfModel)
                 );
         }

@@ -21,12 +21,12 @@ import javax.validation.Valid;
 
 @Path("/user")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2019-02-14T23:05:13.797-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJAXRSSpecServerCodegen", date = "2021-09-29T20:11:08.645-05:00[America/Bogota]")
 public class UserApi {
 
     @POST
     @Consumes({ "*/*" })
-    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={  })
+    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
@@ -36,7 +36,7 @@ public class UserApi {
     @POST
     @Path("/createWithArray")
     @Consumes({ "*/*" })
-    @Operation(summary = "Creates list of users with given input array", description = "", tags={  })
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
@@ -46,7 +46,7 @@ public class UserApi {
     @POST
     @Path("/createWithList")
     @Consumes({ "*/*" })
-    @Operation(summary = "Creates list of users with given input array", description = "", tags={  })
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
@@ -55,7 +55,7 @@ public class UserApi {
     }
     @DELETE
     @Path("/{username}")
-    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={  })
+    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")
@@ -69,9 +69,9 @@ public class UserApi {
     @GET
     @Path("/{username}")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Get user by user name", description = "", tags={  })
+    @Operation(summary = "Get user by user name", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")
     })
@@ -84,9 +84,9 @@ public class UserApi {
     @GET
     @Path("/login")
     @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Logs user into the system", description = "", tags={  })
+    @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = String.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied")
     })
     public Response loginUser( @NotNull  @QueryParam("username") 
@@ -100,7 +100,7 @@ public class UserApi {
     }
     @GET
     @Path("/logout")
-    @Operation(summary = "Logs out current logged in user session", description = "", tags={  })
+    @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation")
     })
@@ -110,7 +110,7 @@ public class UserApi {
     @PUT
     @Path("/{username}")
     @Consumes({ "*/*" })
-    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={  })
+    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
         @ApiResponse(responseCode = "404", description = "User not found")

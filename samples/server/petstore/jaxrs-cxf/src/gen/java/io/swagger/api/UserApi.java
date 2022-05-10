@@ -90,7 +90,7 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Get user by user name", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
     public User getUserByName(@PathParam("username") String username);
@@ -104,7 +104,7 @@ public interface UserApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Logs user into the system", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = String.class))),
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
     public String loginUser(@QueryParam("username") @NotNull String username, @QueryParam("password") @NotNull String password);
 

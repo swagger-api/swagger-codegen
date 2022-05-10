@@ -11,10 +11,11 @@ import java.util.List;
 import io.swagger.model.*;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 public class FakeController  {
@@ -25,61 +26,75 @@ public class FakeController  {
    **/
 
   /*
-    public ResponseContext fakeOuterBooleanSerialize(RequestContext request , Boolean body ) {
+    public ResponseContext fakeOuterBooleanSerialize(RequestContext request , Boolean body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext fakeOuterCompositeSerialize(RequestContext request , OuterComposite body ) {
+    public ResponseContext fakeOuterCompositeSerialize(RequestContext request , OuterComposite body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext fakeOuterNumberSerialize(RequestContext request , BigDecimal body ) {
+    public ResponseContext fakeOuterNumberSerialize(RequestContext request , BigDecimal body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext fakeOuterStringSerialize(RequestContext request , String body ) {
+    public ResponseContext fakeOuterStringSerialize(RequestContext request , String body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testClientModel(RequestContext request , Client body ) {
+    public ResponseContext testClientModel(RequestContext request , Client body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testEndpointParameters(RequestContext request , Body2 body ) {
+    public ResponseContext testEndpointParameters(RequestContext request , FakeBody body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testEnumParameters(RequestContext request , List<String> enumHeaderStringArray , String enumHeaderString , List<String> enumQueryStringArray , String enumQueryString , Integer enumQueryInteger ) {
+    public ResponseContext testEnumParameters(RequestContext request , List<String> enumHeaderStringArray 
+, String enumHeaderString 
+, List<String> enumQueryStringArray 
+, String enumQueryString 
+, Integer enumQueryInteger 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testEnumRequestBody(RequestContext request , Body4 body ) {
+    public ResponseContext testEnumRequestBody(RequestContext request , EnumFormBody body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testInlineAdditionalProperties(RequestContext request , Map<String, String> body ) {
+    public ResponseContext testInlineAdditionalProperties(RequestContext request , Map<String, String> body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
 
   /*
-    public ResponseContext testJsonFormData(RequestContext request , Body5 body ) {
+    public ResponseContext testJsonFormData(RequestContext request , FakeJsonFormDataBody body 
+) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */

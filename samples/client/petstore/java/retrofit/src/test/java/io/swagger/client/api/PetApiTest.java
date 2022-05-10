@@ -1,18 +1,19 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiClient;
+import io.swagger.client.model.AllPetsResponse;
+import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
-
+import io.swagger.client.model.SinglePetResponse;
+import io.swagger.client.model.SubCategory;
 import org.junit.Before;
 import org.junit.Test;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * API tests for PetApi
@@ -26,7 +27,6 @@ public class PetApiTest {
         api = new ApiClient().createService(PetApi.class);
     }
 
-    
     /**
      * Add a new pet to the store
      *
@@ -34,14 +34,11 @@ public class PetApiTest {
      */
     @Test
     public void addPetTest() {
-        
-        Pet pet = null;
-        
-        // Void response = api.addPet(pet);
+        Pet body = null;
+        // Void response = api.addPet(body);
 
         // TODO: test validations
     }
-    
     /**
      * Deletes a pet
      *
@@ -49,16 +46,24 @@ public class PetApiTest {
      */
     @Test
     public void deletePetTest() {
-        
-        Integer petId = null;
-        
+        Long petId = null;
         String apiKey = null;
-        
         // Void response = api.deletePet(petId, apiKey);
 
         // TODO: test validations
     }
-    
+    /**
+     * 
+     *
+     * 
+     */
+    @Test
+    public void doCategoryStuffTest() {
+        SubCategory body = null;
+        // ModelApiResponse response = api.doCategoryStuff(body);
+
+        // TODO: test validations
+    }
     /**
      * Finds Pets by status
      *
@@ -66,14 +71,11 @@ public class PetApiTest {
      */
     @Test
     public void findPetsByStatusTest() {
-        
         List<String> status = null;
-        
         // List<Pet> response = api.findPetsByStatus(status);
 
         // TODO: test validations
     }
-    
     /**
      * Finds Pets by tags
      *
@@ -81,14 +83,22 @@ public class PetApiTest {
      */
     @Test
     public void findPetsByTagsTest() {
-        
         List<String> tags = null;
-        
         // List<Pet> response = api.findPetsByTags(tags);
 
         // TODO: test validations
     }
-    
+    /**
+     * 
+     *
+     * 
+     */
+    @Test
+    public void getAllPetsTest() {
+        // AllPetsResponse response = api.getAllPets();
+
+        // TODO: test validations
+    }
     /**
      * Find pet by ID
      *
@@ -96,14 +106,22 @@ public class PetApiTest {
      */
     @Test
     public void getPetByIdTest() {
-        
-        Integer petId = null;
-        
+        Long petId = null;
         // Pet response = api.getPetById(petId);
 
         // TODO: test validations
     }
-    
+    /**
+     * 
+     *
+     * 
+     */
+    @Test
+    public void getRandomPetTest() {
+        // SinglePetResponse response = api.getRandomPet();
+
+        // TODO: test validations
+    }
     /**
      * Update an existing pet
      *
@@ -111,14 +129,11 @@ public class PetApiTest {
      */
     @Test
     public void updatePetTest() {
-        
-        Pet pet = null;
-        
-        // Void response = api.updatePet(pet);
+        Pet body = null;
+        // Void response = api.updatePet(body);
 
         // TODO: test validations
     }
-    
     /**
      * Updates a pet in the store with form data
      *
@@ -126,16 +141,13 @@ public class PetApiTest {
      */
     @Test
     public void updatePetWithFormTest() {
-        
-        Integer petId = null;
-        
-        Object body = null;
-        
-        // Void response = api.updatePetWithForm(petId, body);
+        Long petId = null;
+        String name = null;
+        String status = null;
+        // Void response = api.updatePetWithForm(petId, name, status);
 
         // TODO: test validations
     }
-    
     /**
      * uploads an image
      *
@@ -143,14 +155,11 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileTest() {
-        
-        Integer petId = null;
-        
-        Object body = null;
-        
-        // ModelApiResponse response = api.uploadFile(petId, body);
+        Long petId = null;
+        String additionalMetadata = null;
+        File file = null;
+        // ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);
 
         // TODO: test validations
     }
-    
 }

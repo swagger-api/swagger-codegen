@@ -72,7 +72,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Order</returns>
-        Order GetOrderById (int? orderId);
+        Order GetOrderById (long? orderId);
 
         /// <summary>
         /// Find purchase order by ID
@@ -83,7 +83,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>ApiResponse of Order</returns>
-        ApiResponse<Order> GetOrderByIdWithHttpInfo (int? orderId);
+        ApiResponse<Order> GetOrderByIdWithHttpInfo (long? orderId);
         /// <summary>
         /// Place an order for a pet
         /// </summary>
@@ -156,7 +156,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of Order</returns>
-        System.Threading.Tasks.Task<Order> GetOrderByIdAsync (int? orderId);
+        System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId);
 
         /// <summary>
         /// Find purchase order by ID
@@ -167,7 +167,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (int? orderId);
+        System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId);
         /// <summary>
         /// Place an order for a pet
         /// </summary>
@@ -206,6 +206,17 @@ namespace IO.Swagger.Api
         public StoreApi(String basePath)
         {
             this.Configuration = new IO.Swagger.Client.Configuration { BasePath = basePath };
+
+            ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StoreApi"/> class
+        /// </summary>
+        /// <returns></returns>
+        public StoreApi()
+        {
+            this.Configuration = IO.Swagger.Client.Configuration.Default;
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
         }
@@ -334,7 +345,6 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -349,7 +359,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 null);
         }
 
@@ -399,7 +409,6 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -414,7 +423,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Object>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 null);
         }
 
@@ -458,7 +467,6 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-
             // authentication (api_key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("api_key")))
             {
@@ -479,7 +487,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Dictionary<string, int?>>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Dictionary<string, int?>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
         }
 
@@ -524,7 +532,6 @@ namespace IO.Swagger.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-
             // authentication (api_key) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("api_key")))
             {
@@ -545,7 +552,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Dictionary<string, int?>>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Dictionary<string, int?>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dictionary<string, int?>)));
         }
 
@@ -555,7 +562,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Order</returns>
-        public Order GetOrderById (int? orderId)
+        public Order GetOrderById (long? orderId)
         {
              ApiResponse<Order> localVarResponse = GetOrderByIdWithHttpInfo(orderId);
              return localVarResponse.Data;
@@ -567,7 +574,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>ApiResponse of Order</returns>
-        public ApiResponse< Order > GetOrderByIdWithHttpInfo (int? orderId)
+        public ApiResponse< Order > GetOrderByIdWithHttpInfo (long? orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
@@ -596,7 +603,6 @@ namespace IO.Swagger.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
-
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
@@ -612,7 +618,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Order>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
@@ -622,7 +628,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of Order</returns>
-        public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (int? orderId)
+        public async System.Threading.Tasks.Task<Order> GetOrderByIdAsync (long? orderId)
         {
              ApiResponse<Order> localVarResponse = await GetOrderByIdAsyncWithHttpInfo(orderId);
              return localVarResponse.Data;
@@ -635,7 +641,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (int? orderId)
+        public async System.Threading.Tasks.Task<ApiResponse<Order>> GetOrderByIdAsyncWithHttpInfo (long? orderId)
         {
             // verify the required parameter 'orderId' is set
             if (orderId == null)
@@ -665,7 +671,6 @@ namespace IO.Swagger.Api
 
             if (orderId != null) localVarPathParams.Add("order_id", this.Configuration.ApiClient.ParameterToString(orderId)); // path parameter
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -680,7 +685,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Order>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
@@ -740,7 +745,6 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -755,7 +759,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Order>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 
@@ -816,7 +820,6 @@ namespace IO.Swagger.Api
                 localVarPostBody = body; // byte array
             }
 
-
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
@@ -831,7 +834,7 @@ namespace IO.Swagger.Api
             }
 
             return new ApiResponse<Order>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (Order) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
         }
 

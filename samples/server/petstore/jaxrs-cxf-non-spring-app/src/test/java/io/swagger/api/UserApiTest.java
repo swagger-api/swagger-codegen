@@ -1,6 +1,6 @@
 /**
  * Swagger Petstore
- * This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  * OpenAPI spec version: 1.0.0
  * Contact: apiteam@swagger.io
@@ -48,7 +48,7 @@ import java.util.Map;
 /**
  * Swagger Petstore
  *
- * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * <p>This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  * API tests for UserApi 
  */
@@ -63,7 +63,7 @@ public class UserApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("http://petstore.swagger.io/v2", UserApi.class, providers);
+        api = JAXRSClientFactory.create("/", UserApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
@@ -187,10 +187,10 @@ public class UserApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateUserTest() {
+    public void userUsernamePutTest() {
         User body = null;
         String username = null;
-        //api.updateUser(body, username);
+        //api.userUsernamePut(body, username);
         
         // TODO: test validations
         

@@ -200,9 +200,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         config.additionalProperties().put(CodegenConstants.GENERATE_API_DOCS, generateApiDocumentation);
         config.additionalProperties().put(CodegenConstants.GENERATE_MODEL_DOCS, generateModelDocumentation);
-        
+
         // Additional properties could be set already (f.e. using Maven plugin)
-        if (useOas2Option != null || !config.additionalProperties().containsKey(CodegenConstants.USE_OAS2)) {
+        if (useOas2Option != null && !config.additionalProperties().containsKey(CodegenConstants.USE_OAS2)) {
             config.additionalProperties().put(CodegenConstants.USE_OAS2, useOas2);
         }
 
@@ -247,7 +247,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             LOGGER.error("Missing required field info version. Default appVersion set to 1.0.0");
             config.additionalProperties().put("appVersion", "1.0.0");
         }
-        
+
         if (StringUtils.isEmpty(info.getDescription())) {
             // set a default description if none is provided
             config.additionalProperties().put("appDescription",
@@ -365,7 +365,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         for (String name : modelKeys) {
             try {
                 //don't generate models that have an import mapping
-                if(config.importMapping().containsKey(name)) {
+                if(!config.getIgnoreImportMapping() && config.importMapping().containsKey(name)) {
                     LOGGER.info("Model " + name + " not imported due to import mapping");
                     continue;
                 }
@@ -382,26 +382,22 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 if (modelList == null || modelList.isEmpty()) {
                     continue;
                 }
-
-                for (Object object : modelList) {
-                    Map<String, Object> modelMap = (Map<String, Object>) object;
-                    CodegenModel codegenModel = null;
-                    if (modelMap.containsKey("oneOf-model")) {
-                        codegenModel = (CodegenModel) modelMap.get("oneOf-model");
-                    }
-                    if (modelMap.containsKey("anyOf-model")) {
-                        codegenModel = (CodegenModel) modelMap.get("anyOf-model");
-                    }
-                    if (codegenModel != null) {
-                        models = processModel(codegenModel, config, schemas);
-                        models.put("classname", config.toModelName(codegenModel.name));
-                        models.putAll(config.additionalProperties());
-                        allProcessedModels.put(codegenModel.name, models);
-                        break;
-                    }
-                }
             } catch (Exception e) {
                 throw new RuntimeException("Could not process model '" + name + "'" + ".Please make sure that your schema is correct!", e);
+            }
+        }
+
+        final ISchemaHandler schemaHandler = config.getSchemaHandler();
+        schemaHandler.readProcessedModels(allProcessedModels);
+
+        final List<CodegenModel> composedModels = schemaHandler.getModels();
+
+         if (composedModels != null && !composedModels.isEmpty()) {
+            for (CodegenModel composedModel : composedModels) {
+                final Map<String, Object> models = processModel(composedModel, config, schemas);
+                models.put("classname", config.toModelName(composedModel.name));
+                models.putAll(config.additionalProperties());
+                allProcessedModels.put(composedModel.name, models);
             }
         }
 
@@ -413,11 +409,11 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             Map<String, Object> models = (Map<String, Object>)allProcessedModels.get(modelName);
             try {
                 //don't generate models that have an import mapping
-                if(config.importMapping().containsKey(modelName)) {
+                if(!config.getIgnoreImportMapping() && config.importMapping().containsKey(modelName)) {
                     continue;
                 }
                 Map<String, Object> modelTemplate = (Map<String, Object>) ((List<Object>) models.get("models")).get(0);
-                if (isJavaCodegen(config.getName())) {
+                if (config.checkAliasModel()) {
                     // Special handling of aliases only applies to Java
                     if (modelTemplate != null && modelTemplate.containsKey("model")) {
                         CodegenModel codegenModel = (CodegenModel) modelTemplate.get("model");
@@ -471,6 +467,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             hasModel = false;
         }
 
+        if (this.openAPI.getPaths() == null) {
+            return;
+        }
         Map<String, List<CodegenOperation>> paths = processPaths(this.openAPI.getPaths());
         Set<String> apisToGenerate = null;
         String apiNames = System.getProperty("apis");
@@ -496,6 +495,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     }
                 });
                 Map<String, Object> operation = processOperations(config, tag, ops, allModels);
+
+                processSecurityProperties(operation);
 
                 operation.put("basePath", basePath);
                 operation.put("basePathWithoutHost", basePathWithoutHost);
@@ -743,12 +744,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
         bundle.put("modelPackage", config.modelPackage());
 
-        final Map<String, SecurityScheme> securitySchemeMap = openAPI.getComponents() != null ? openAPI.getComponents().getSecuritySchemes() : null;
-        final List<CodegenSecurity> authMethods = config.fromSecurity(securitySchemeMap);
-        if (authMethods != null && !authMethods.isEmpty()) {
-            bundle.put("authMethods", authMethods);
-            bundle.put("hasAuthMethods", true);
-        }
+        processSecurityProperties(bundle);
+
         if (openAPI.getExternalDocs() != null) {
             bundle.put("externalDocs", openAPI.getExternalDocs());
         }
@@ -928,7 +925,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     codegenOperation.getVendorExtensions().put(CodegenConstants.HAS_AUTH_METHODS_EXT_NAME, Boolean.TRUE);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
                 String msg = "Could not process operation:\n" //
                         + "  Tag: " + tag + "\n"//
                         + "  Operation: " + operation.getOperationId() + "\n" //
@@ -1017,7 +1013,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             CodegenModel cm = config.fromModel(key, schema, allDefinitions);
             Map<String, Object> mo = new HashMap<>();
             mo.put("model", cm);
+            mo.put("schema", schema);
             mo.put("importPath", config.toModelImport(cm.classname));
+            /**
             if (cm.vendorExtensions.containsKey("oneOf-model")) {
                 CodegenModel oneOfModel = (CodegenModel) cm.vendorExtensions.get("oneOf-model");
                 mo.put("oneOf-model", oneOfModel);
@@ -1026,6 +1024,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 CodegenModel anyOfModel = (CodegenModel) cm.vendorExtensions.get("anyOf-model");
                 mo.put("anyOf-model", anyOfModel);
             }
+            */
             models.add(mo);
 
             allImports.addAll(cm.imports);
@@ -1062,9 +1061,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         objs.put("package", config.modelPackage());
         List<Object> models = new ArrayList<>();
 
-        if (codegenModel.vendorExtensions.containsKey("x-is-composed-model")) {
-            objs.put("x-is-composed-model", codegenModel.vendorExtensions.get("x-is-composed-model"));
-        }
+        objs.put("x-is-composed-model", codegenModel.isComposedModel);
 
         Map<String, Object> modelObject = new HashMap<>();
         modelObject.put("model", codegenModel);
@@ -1117,11 +1114,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return authMethods;
     }
 
-    private boolean isJavaCodegen(String name) {
-        return name.equalsIgnoreCase("java")
-                || name.equalsIgnoreCase("inflector");
-    }
-
     private Boolean getCustomOptionBooleanValue(String option) {
         List<CodegenArgument> languageArguments = config.getLanguageArguments();
         if (languageArguments == null || languageArguments.isEmpty()) {
@@ -1136,4 +1128,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         return Boolean.valueOf(optionalCodegenArgument.get().getValue());
     }
+
+    protected void processSecurityProperties (Map<String, Object> bundle) {
+        final Map<String, SecurityScheme> securitySchemeMap = openAPI.getComponents() != null ? openAPI.getComponents().getSecuritySchemes() : null;
+        final List<CodegenSecurity> authMethods = config.fromSecurity(securitySchemeMap);
+        if (authMethods != null && !authMethods.isEmpty()) {
+            bundle.put("authMethods", authMethods);
+            bundle.put("hasAuthMethods", true);
+        }
+    }
+
 }

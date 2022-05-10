@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,7 @@ import javax.validation.constraints.*;
  * Capitalization
  */
 @Validated
+
 
 public class Capitalization   {
   @JsonProperty("smallCamel")
@@ -41,11 +41,10 @@ public class Capitalization   {
   /**
    * Get smallCamel
    * @return smallCamel
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getSmallCamel() {
+   **/
+  @Schema(description = "")
+  
+    public String getSmallCamel() {
     return smallCamel;
   }
 
@@ -61,11 +60,10 @@ public class Capitalization   {
   /**
    * Get capitalCamel
    * @return capitalCamel
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getCapitalCamel() {
+   **/
+  @Schema(description = "")
+  
+    public String getCapitalCamel() {
     return capitalCamel;
   }
 
@@ -81,11 +79,10 @@ public class Capitalization   {
   /**
    * Get smallSnake
    * @return smallSnake
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getSmallSnake() {
+   **/
+  @Schema(description = "")
+  
+    public String getSmallSnake() {
     return smallSnake;
   }
 
@@ -101,11 +98,10 @@ public class Capitalization   {
   /**
    * Get capitalSnake
    * @return capitalSnake
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getCapitalSnake() {
+   **/
+  @Schema(description = "")
+  
+    public String getCapitalSnake() {
     return capitalSnake;
   }
 
@@ -121,11 +117,10 @@ public class Capitalization   {
   /**
    * Get scAETHFlowPoints
    * @return scAETHFlowPoints
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getScAETHFlowPoints() {
+   **/
+  @Schema(description = "")
+  
+    public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
 
@@ -141,11 +136,10 @@ public class Capitalization   {
   /**
    * Name of the pet 
    * @return ATT_NAME
-  **/
-  @ApiModelProperty(value = "Name of the pet ")
-
-
-  public String getATTNAME() {
+   **/
+  @Schema(description = "Name of the pet ")
+  
+    public String getATTNAME() {
     return ATT_NAME;
   }
 
@@ -202,4 +196,3 @@ public class Capitalization   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

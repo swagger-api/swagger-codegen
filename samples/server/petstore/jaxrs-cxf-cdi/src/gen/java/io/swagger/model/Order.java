@@ -2,17 +2,15 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
-/**
- * An order for a pets from the pet store
- **/
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.*;
 
-@Schema(description = "An order for a pets from the pet store")
+
 
 public class Order   {
   private Long id = null;
@@ -118,6 +116,7 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("shipDate")
+  @Valid
   public java.util.Date getShipDate() {
     return shipDate;
   }
@@ -155,7 +154,7 @@ public enum StatusEnum {
   
   @Schema(description = "")
   @JsonProperty("complete")
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {

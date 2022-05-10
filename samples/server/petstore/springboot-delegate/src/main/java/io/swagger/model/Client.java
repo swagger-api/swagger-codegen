@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,6 +12,7 @@ import javax.validation.constraints.*;
  * Client
  */
 @Validated
+
 
 public class Client   {
   @JsonProperty("client")
@@ -26,11 +26,10 @@ public class Client   {
   /**
    * Get client
    * @return client
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getClient() {
+   **/
+  @Schema(description = "")
+  
+    public String getClient() {
     return client;
   }
 
@@ -77,4 +76,3 @@ public class Client   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

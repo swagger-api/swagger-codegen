@@ -36,7 +36,7 @@ public class UserApi  {
 
     @POST
     
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     
     @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
@@ -47,7 +47,7 @@ public class UserApi  {
     }
     @POST
     @Path("/createWithArray")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     
     @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
@@ -58,7 +58,7 @@ public class UserApi  {
     }
     @POST
     @Path("/createWithList")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     
     @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
     @ApiResponses(value = { 
@@ -83,10 +83,10 @@ public class UserApi  {
     @GET
     @Path("/{username}")
     
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Get user by user name", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = User.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
@@ -98,10 +98,10 @@ public class UserApi  {
     @GET
     @Path("/login")
     
-    @Produces({ "application/xml", "application/json" })
+    @Produces({ "application/json", "application/xml" })
     @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
     public Response loginUser( @NotNull  @QueryParam("username") String username, @NotNull  @QueryParam("password") String password,@Context SecurityContext securityContext)
@@ -121,15 +121,15 @@ public class UserApi  {
     }
     @PUT
     @Path("/{username}")
-    @Consumes({ "*/*" })
+    @Consumes({ "application/json" })
     
     @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
         
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public Response updateUser(@Parameter(description = "Updated user object" ,required=true) User body, @PathParam("username") String username,@Context SecurityContext securityContext)
+    public Response userUsernamePut(@Parameter(description = "Updated user object" ,required=true) User body, @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return service.updateUser(body,username,securityContext);
+        return service.userUsernamePut(body,username,securityContext);
     }
 }

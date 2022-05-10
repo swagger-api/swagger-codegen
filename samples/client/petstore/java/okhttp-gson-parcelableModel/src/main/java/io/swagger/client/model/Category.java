@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,54 +23,57 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Category
  */
 
-public class Category {
 
+public class Category implements Parcelable {
   @SerializedName("id")
   private Long id = null;
 
   @SerializedName("name")
   private String name = null;
+
+  public Category() {
+  }
   public Category id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
   @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Category name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
   @Schema(description = "")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -85,8 +89,9 @@ public class Category {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, name);
+    return Objects.hash(id, name);
   }
+
 
   @Override
   public String toString() {
@@ -110,22 +115,15 @@ public class Category {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(id);
     out.writeValue(name);
   }
 
-  public Category() {
-    super();
-  }
-
   Category(Parcel in) {
-    
     id = (Long)in.readValue(null);
-    
     name = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {
