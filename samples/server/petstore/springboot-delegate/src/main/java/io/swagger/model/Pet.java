@@ -4,10 +4,9 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +17,7 @@ import javax.validation.constraints.*;
  * Pet
  */
 @Validated
+
 
 public class Pet   {
   @JsonProperty("id")
@@ -69,7 +69,6 @@ public class Pet   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -81,11 +80,10 @@ public class Pet   {
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getId() {
     return id;
   }
 
@@ -101,12 +99,11 @@ public class Pet   {
   /**
    * Get category
    * @return category
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Category getCategory() {
+   **/
+  @Schema(description = "")
+  
+    @Valid
+    public Category getCategory() {
     return category;
   }
 
@@ -122,12 +119,11 @@ public class Pet   {
   /**
    * Get name
    * @return name
-  **/
-  @ApiModelProperty(example = "doggie", required = true, value = "")
-  @NotNull
+   **/
+  @Schema(example = "doggie", required = true, description = "")
+      @NotNull
 
-
-  public String getName() {
+    public String getName() {
     return name;
   }
 
@@ -148,12 +144,11 @@ public class Pet   {
   /**
    * Get photoUrls
    * @return photoUrls
-  **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+   **/
+  @Schema(required = true, description = "")
+      @NotNull
 
-
-  public List<String> getPhotoUrls() {
+    public List<String> getPhotoUrls() {
     return photoUrls;
   }
 
@@ -177,12 +172,10 @@ public class Pet   {
   /**
    * Get tags
    * @return tags
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<Tag> getTags() {
+   **/
+  @Schema(description = "")
+      @Valid
+    public List<Tag> getTags() {
     return tags;
   }
 
@@ -198,11 +191,10 @@ public class Pet   {
   /**
    * pet status in the store
    * @return status
-  **/
-  @ApiModelProperty(value = "pet status in the store")
-
-
-  public StatusEnum getStatus() {
+   **/
+  @Schema(description = "pet status in the store")
+  
+    public StatusEnum getStatus() {
     return status;
   }
 
@@ -259,4 +251,3 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

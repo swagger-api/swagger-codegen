@@ -161,8 +161,8 @@ public class CodegenConstants {
     public static final String DOTNET_FRAMEWORK = "targetFramework";
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 
-    public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
-    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
+    public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, kebab_case, original}
+    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, kebab_case, original, UPPERCASE}
 
     public static final String ENUM_PROPERTY_NAMING = "enumPropertyNaming";
     public static final String ENUM_PROPERTY_NAMING_DESC = "Naming convention for enum properties: 'camelCase', 'PascalCase', 'snake_case', 'UPPERCASE', and 'original'";
@@ -181,6 +181,9 @@ public class CodegenConstants {
 
     public static final String GIT_REPO_ID = "gitRepoId";
     public static final String GIT_REPO_ID_DESC = "Git repo ID, e.g. swagger-codegen.";
+
+    public static final String GIT_REPO_BASE_URL = "gitRepoBaseURL";
+    public static final String GIT_REPO_BASE_URL_DESC = "Git repo Base URL, e.g. swagger-codegen.";
 
     public static final String RELEASE_NOTE = "releaseNote";
     public static final String RELEASE_NOTE_DESC = "Release note, default to 'Minor update'.";
@@ -236,6 +239,7 @@ public class CodegenConstants {
 
     public static final String TEMPLATE_ENGINE = "templateEngine";
     public static final String DISABLE_EXAMPLES_OPTION = "disableExample";
+    public static final String IGNORE_IMPORT_MAPPING_OPTION = "ignoreImportMappings";
 
     public static final String IS_ENUM_EXT_NAME = PREFIX_IS + "enum";
     public static final String IS_ALIAS_EXT_NAME = PREFIX_IS + "alias";
@@ -247,9 +251,12 @@ public class CodegenConstants {
     public static final String HAS_OPTIONAL_EXT_NAME = PREFIX_HAS + "optional";
     public static final String HAS_CHILDREN_EXT_NAME = PREFIX_HAS + "children";
     public static final String HAS_ONLY_READ_ONLY_EXT_NAME = PREFIX_HAS + "only-read-only";
+    public static final String HAS_INNER_OBJECT_NAME = PREFIX_HAS + "inner-object";
 
     public static final String IS_SIMPLE_TYPE_EXT_NAME = PREFIX_IS + "simple-type";
+    public static final String IS_NULLABLE_EXT_NAME = PREFIX_IS + "nullable";
     public static final String IS_PRIMITIVE_TYPE_EXT_NAME = PREFIX_IS + "primitive-type";
+    public static final String IS_OBJECT_EXT_NAME = PREFIX_IS + "object";
     public static final String IS_CONTAINER_EXT_NAME = PREFIX_IS + "container";
     public static final String IS_NOT_CONTAINER_EXT_NAME = PREFIX_IS + "not-container";
     public static final String IS_DEFAULT_EXT_NAME = PREFIX_IS + "default";

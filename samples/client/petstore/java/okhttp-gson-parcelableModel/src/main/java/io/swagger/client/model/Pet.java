@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -26,13 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Pet
  */
 
-public class Pet {
 
+public class Pet implements Parcelable {
   @SerializedName("id")
   private Long id = null;
 
@@ -47,6 +47,7 @@ public class Pet {
 
   @SerializedName("tags")
   private List<Tag> tags = null;
+
   /**
    * pet status in the store
    */
@@ -85,67 +86,69 @@ public class Pet {
 
       @Override
       public StatusEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return StatusEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("status")
+  }  @SerializedName("status")
   private StatusEnum status = null;
+
+  public Pet() {
+  }
   public Pet id(Long id) {
     this.id = id;
     return this;
   }
 
-  
-
-  /**
-  * Get id
-  * @return id
+   /**
+   * Get id
+   * @return id
   **/
   @Schema(description = "")
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
+
   public Pet category(Category category) {
     this.category = category;
     return this;
   }
 
-  
-
-  /**
-  * Get category
-  * @return category
+   /**
+   * Get category
+   * @return category
   **/
   @Schema(description = "")
   public Category getCategory() {
     return category;
   }
+
   public void setCategory(Category category) {
     this.category = category;
   }
+
   public Pet name(String name) {
     this.name = name;
     return this;
   }
 
-  
-
-  /**
-  * Get name
-  * @return name
+   /**
+   * Get name
+   * @return name
   **/
   @Schema(example = "doggie", required = true, description = "")
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
+
   public Pet photoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
     return this;
@@ -156,17 +159,19 @@ public class Pet {
     return this;
   }
 
-  /**
-  * Get photoUrls
-  * @return photoUrls
+   /**
+   * Get photoUrls
+   * @return photoUrls
   **/
   @Schema(required = true, description = "")
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
+
   public void setPhotoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
   }
+
   public Pet tags(List<Tag> tags) {
     this.tags = tags;
     return this;
@@ -180,35 +185,38 @@ public class Pet {
     return this;
   }
 
-  /**
-  * Get tags
-  * @return tags
+   /**
+   * Get tags
+   * @return tags
   **/
   @Schema(description = "")
   public List<Tag> getTags() {
     return tags;
   }
+
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
+
   public Pet status(StatusEnum status) {
     this.status = status;
     return this;
   }
 
-  
-
-  /**
-  * pet status in the store
-  * @return status
+   /**
+   * pet status in the store
+   * @return status
   **/
   @Schema(description = "pet status in the store")
   public StatusEnum getStatus() {
     return status;
   }
+
   public void setStatus(StatusEnum status) {
     this.status = status;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -228,8 +236,9 @@ public class Pet {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(id, category, name, photoUrls, tags, status);
+    return Objects.hash(id, category, name, photoUrls, tags, status);
   }
+
 
   @Override
   public String toString() {
@@ -257,8 +266,8 @@ public class Pet {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(id);
     out.writeValue(category);
     out.writeValue(name);
@@ -267,24 +276,13 @@ public class Pet {
     out.writeValue(status);
   }
 
-  public Pet() {
-    super();
-  }
-
   Pet(Parcel in) {
-    
     id = (Long)in.readValue(null);
-    
-    
     category = (Category)in.readValue(Category.class.getClassLoader());
     name = (String)in.readValue(null);
-    
     photoUrls = (List<String>)in.readValue(null);
-    
-    
     tags = (List<Tag>)in.readValue(Tag.class.getClassLoader());
     status = (StatusEnum)in.readValue(null);
-    
   }
 
   public int describeContents() {

@@ -24,25 +24,25 @@ import javax.validation.Valid;
 /**
  * Swagger Petstore
  *
- * <p>This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+ * <p>This is a sample Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
  *
  */
-@Path("/v2")
+@Path("")
 public interface StoreApi  {
 
     /**
      * Delete purchase order by ID
      *
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
      *
      */
     @DELETE
     @Path("/store/order/{orderId}")
-    @Operation(summary = "Delete purchase order by ID", tags={  })
+    @Operation(summary = "Delete purchase order by ID", tags={ "store" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public void deleteOrder(@PathParam("orderId") String orderId);
+    public void deleteOrder(@PathParam("orderId") @Min(1L) Long orderId);
 
     /**
      * Returns pet inventories by status
@@ -53,26 +53,26 @@ public interface StoreApi  {
     @GET
     @Path("/store/inventory")
     @Produces({ "application/json" })
-    @Operation(summary = "Returns pet inventories by status", tags={  })
+    @Operation(summary = "Returns pet inventories by status", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Map<String, Integer> getInventory();
 
     /**
      * Find purchase order by ID
      *
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10.\\ \\ Other values will generated exceptions
      *
      */
     @GET
     @Path("/store/order/{orderId}")
-    @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Find purchase order by ID", tags={  })
+    @Produces({ "application/json", "application/xml" })
+    @Operation(summary = "Find purchase order by ID", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Order getOrderById(@PathParam("orderId") @DecimalMin("1") @DecimalMax("5") Integer orderId);
+    public Order getOrderById(@PathParam("orderId") @Min(1L) @Max(10L) Long orderId);
 
     /**
      * Place an order for a pet
@@ -80,11 +80,11 @@ public interface StoreApi  {
      */
     @POST
     @Path("/store/order")
-    @Consumes({ "*/*" })
-    @Produces({ "application/xml", "application/json" })
-    @Operation(summary = "Place an order for a pet", tags={  })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json", "application/xml" })
+    @Operation(summary = "Place an order for a pet", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
     public Order placeOrder(@Valid Order body);
 }

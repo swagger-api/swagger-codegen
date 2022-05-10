@@ -3,7 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ArrayNumber** | [**List&lt;BigDecimal&gt;**](BigDecimal.md) |  | [optional] 
+**ArrayNumber** | [**List&lt;decimal?&gt;**](BigDecimal.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

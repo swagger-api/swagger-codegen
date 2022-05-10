@@ -74,7 +74,7 @@ public class UserApiControllerIntegrationTest {
     public void updateUserTest() throws Exception {
         User body = new User();
         String username = "username_example";
-        ResponseEntity<Void> responseEntity = api.updateUser(body, username);
+        ResponseEntity<Void> responseEntity = api.userUsernamePut(username, body);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

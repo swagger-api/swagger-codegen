@@ -13,6 +13,7 @@ import java.io.File;
 import io.swagger.client.model.ModelApiResponse;
 import io.swagger.client.model.Pet;
 import io.swagger.client.model.SinglePetResponse;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,20 @@ public interface PetApi {
   @DELETE("pet/{petId}")
   Observable<Void> deletePet(
             @retrofit2.http.Path("petId") Long petId            ,             @retrofit2.http.Header("api_key") String apiKey        
+  );
+
+  /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return Call&lt;ModelApiResponse&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("pet/category")
+  Observable<ModelApiResponse> doCategoryStuff(
+                    @retrofit2.http.Body SubCategory body    
   );
 
   /**

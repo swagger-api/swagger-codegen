@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -14,6 +13,7 @@ import javax.validation.constraints.*;
  * OuterComposite
  */
 @Validated
+
 
 public class OuterComposite   {
   @JsonProperty("my_number")
@@ -33,12 +33,11 @@ public class OuterComposite   {
   /**
    * Get myNumber
    * @return myNumber
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public BigDecimal getMyNumber() {
+   **/
+  @Schema(description = "")
+  
+    @Valid
+    public BigDecimal getMyNumber() {
     return myNumber;
   }
 
@@ -54,11 +53,10 @@ public class OuterComposite   {
   /**
    * Get myString
    * @return myString
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getMyString() {
+   **/
+  @Schema(description = "")
+  
+    public String getMyString() {
     return myString;
   }
 
@@ -74,11 +72,10 @@ public class OuterComposite   {
   /**
    * Get myBoolean
    * @return myBoolean
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean getMyBoolean() {
+   **/
+  @Schema(description = "")
+  
+    public Boolean isMyBoolean() {
     return myBoolean;
   }
 
@@ -129,4 +126,3 @@ public class OuterComposite   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

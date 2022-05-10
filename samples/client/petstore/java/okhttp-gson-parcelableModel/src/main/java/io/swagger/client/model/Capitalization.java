@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,13 +23,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Capitalization
  */
 
-public class Capitalization {
 
+public class Capitalization implements Parcelable {
   @SerializedName("smallCamel")
   private String smallCamel = null;
 
@@ -46,114 +46,118 @@ public class Capitalization {
 
   @SerializedName("ATT_NAME")
   private String ATT_NAME = null;
+
+  public Capitalization() {
+  }
   public Capitalization smallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
     return this;
   }
 
-  
-
-  /**
-  * Get smallCamel
-  * @return smallCamel
+   /**
+   * Get smallCamel
+   * @return smallCamel
   **/
   @Schema(description = "")
   public String getSmallCamel() {
     return smallCamel;
   }
+
   public void setSmallCamel(String smallCamel) {
     this.smallCamel = smallCamel;
   }
+
   public Capitalization capitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
     return this;
   }
 
-  
-
-  /**
-  * Get capitalCamel
-  * @return capitalCamel
+   /**
+   * Get capitalCamel
+   * @return capitalCamel
   **/
   @Schema(description = "")
   public String getCapitalCamel() {
     return capitalCamel;
   }
+
   public void setCapitalCamel(String capitalCamel) {
     this.capitalCamel = capitalCamel;
   }
+
   public Capitalization smallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
     return this;
   }
 
-  
-
-  /**
-  * Get smallSnake
-  * @return smallSnake
+   /**
+   * Get smallSnake
+   * @return smallSnake
   **/
   @Schema(description = "")
   public String getSmallSnake() {
     return smallSnake;
   }
+
   public void setSmallSnake(String smallSnake) {
     this.smallSnake = smallSnake;
   }
+
   public Capitalization capitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
     return this;
   }
 
-  
-
-  /**
-  * Get capitalSnake
-  * @return capitalSnake
+   /**
+   * Get capitalSnake
+   * @return capitalSnake
   **/
   @Schema(description = "")
   public String getCapitalSnake() {
     return capitalSnake;
   }
+
   public void setCapitalSnake(String capitalSnake) {
     this.capitalSnake = capitalSnake;
   }
+
   public Capitalization scAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
     return this;
   }
 
-  
-
-  /**
-  * Get scAETHFlowPoints
-  * @return scAETHFlowPoints
+   /**
+   * Get scAETHFlowPoints
+   * @return scAETHFlowPoints
   **/
   @Schema(description = "")
   public String getScAETHFlowPoints() {
     return scAETHFlowPoints;
   }
+
   public void setScAETHFlowPoints(String scAETHFlowPoints) {
     this.scAETHFlowPoints = scAETHFlowPoints;
   }
+
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
     return this;
   }
 
-  
-
-  /**
-  * Name of the pet 
-  * @return ATT_NAME
+   /**
+   * Name of the pet 
+   * @return ATT_NAME
   **/
   @Schema(description = "Name of the pet ")
   public String getATTNAME() {
     return ATT_NAME;
   }
+
   public void setATTNAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -173,8 +177,9 @@ public class Capitalization {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
+    return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
+
 
   @Override
   public String toString() {
@@ -202,8 +207,8 @@ public class Capitalization {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(smallCamel);
     out.writeValue(capitalCamel);
     out.writeValue(smallSnake);
@@ -212,24 +217,13 @@ public class Capitalization {
     out.writeValue(ATT_NAME);
   }
 
-  public Capitalization() {
-    super();
-  }
-
   Capitalization(Parcel in) {
-    
     smallCamel = (String)in.readValue(null);
-    
     capitalCamel = (String)in.readValue(null);
-    
     smallSnake = (String)in.readValue(null);
-    
     capitalSnake = (String)in.readValue(null);
-    
     scAETHFlowPoints = (String)in.readValue(null);
-    
     ATT_NAME = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

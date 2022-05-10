@@ -9,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Gets or Sets EnumClass
  */
 public enum EnumClass {
-_ABC("_abc"),
+  _ABC("_abc"),
+  
   _EFG("-efg"),
+  
   _XYZ_("(xyz)");
 
   private String value;

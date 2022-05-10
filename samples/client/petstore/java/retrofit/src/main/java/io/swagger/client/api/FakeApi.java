@@ -7,11 +7,11 @@ import retrofit.http.*;
 import retrofit.mime.*;
 
 import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,7 +138,7 @@ public interface FakeApi {
    */
   @POST("/fake")
   Void testEndpointParameters(
-    @retrofit.http.Body Body2 body
+    @retrofit.http.Body FakeBody body
   );
 
   /**
@@ -149,16 +149,16 @@ public interface FakeApi {
    */
   @POST("/fake")
   void testEndpointParameters(
-    @retrofit.http.Body Body2 body, Callback<Void> cb
+    @retrofit.http.Body FakeBody body, Callback<Void> cb
   );
   /**
    * To test enum parameters
    * Sync method
    * To test enum parameters
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-   * @param enumQueryString Query parameter enum test (string) (optional)
+   * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @return Void
    */
@@ -171,9 +171,9 @@ public interface FakeApi {
    * To test enum parameters
    * Async method
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-   * @param enumQueryString Query parameter enum test (string) (optional)
+   * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @param cb callback method
    */
@@ -190,7 +190,7 @@ public interface FakeApi {
    */
   @POST("/fake/enum/form")
   Void testEnumRequestBody(
-    @retrofit.http.Body Body4 body
+    @retrofit.http.Body EnumFormBody body
   );
 
   /**
@@ -201,7 +201,7 @@ public interface FakeApi {
    */
   @POST("/fake/enum/form")
   void testEnumRequestBody(
-    @retrofit.http.Body Body4 body, Callback<Void> cb
+    @retrofit.http.Body EnumFormBody body, Callback<Void> cb
   );
   /**
    * test inline additionalProperties
@@ -234,7 +234,7 @@ public interface FakeApi {
    */
   @POST("/fake/jsonFormData")
   Void testJsonFormData(
-    @retrofit.http.Body Body5 body
+    @retrofit.http.Body FakeJsonFormDataBody body
   );
 
   /**
@@ -245,6 +245,6 @@ public interface FakeApi {
    */
   @POST("/fake/jsonFormData")
   void testJsonFormData(
-    @retrofit.http.Body Body5 body, Callback<Void> cb
+    @retrofit.http.Body FakeJsonFormDataBody body, Callback<Void> cb
   );
 }

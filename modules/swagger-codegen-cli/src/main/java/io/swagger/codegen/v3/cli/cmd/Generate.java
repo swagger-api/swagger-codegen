@@ -69,14 +69,19 @@ public class Generate implements Runnable {
     protected String library;
     protected String gitUserId;
     protected String gitRepoId;
+    protected String gitRepoBaseURL;
     protected String releaseNote;
     protected String httpUserAgent;
     protected List<String> reservedWordsMappings = new ArrayList<>();
     protected String ignoreFileOverride;
     protected Boolean removeOperationIdPrefix;
     protected Boolean disableExamples;
+    protected Boolean resolveFully;
+    protected Boolean ignoreImportMappings;
+    protected Boolean flattenInlineSchema;
     private String url;
     private List<CodegenArgument> codegenArguments;
+
 
     public void setVerbose(Boolean verbose) {
         this.verbose = verbose;
@@ -186,6 +191,10 @@ public class Generate implements Runnable {
         this.gitRepoId = gitRepoId;
     }
 
+    public void setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+    }
+
     public void setReleaseNote(String releaseNote) {
         this.releaseNote = releaseNote;
     }
@@ -216,6 +225,18 @@ public class Generate implements Runnable {
 
     public void setDisableExamples(Boolean disableExamples) {
         this.disableExamples = disableExamples;
+    }
+    
+    public void setResolveFully(Boolean resolveFully) {
+        this.resolveFully = resolveFully;
+    }
+
+    public void setFlattenInlineSchema(Boolean flattenInlineSchema) {
+        this.flattenInlineSchema = flattenInlineSchema;
+    }
+
+    public void setIgnoreImportMappings(Boolean ignoreImportMappings) {
+        this.ignoreImportMappings = ignoreImportMappings;
     }
 
     @Override
@@ -309,6 +330,10 @@ public class Generate implements Runnable {
             configurator.setGitRepoId(gitRepoId);
         }
 
+        if (isNotEmpty(gitRepoBaseURL)) {
+            configurator.setGitRepoBaseURL(gitRepoBaseURL);
+        }
+
         if (isNotEmpty(releaseNote)) {
             configurator.setReleaseNote(releaseNote);
         }
@@ -319,6 +344,10 @@ public class Generate implements Runnable {
 
         if (isNotEmpty(ignoreFileOverride)) {
             configurator.setIgnoreFileOverride(ignoreFileOverride);
+        }
+
+        if (flattenInlineSchema != null) {
+            configurator.setFlattenInlineSchema(flattenInlineSchema);
         }
 
         if (removeOperationIdPrefix != null) {
@@ -333,6 +362,14 @@ public class Generate implements Runnable {
             additionalProperties.add(String.format("%s=%s", CodegenConstants.DISABLE_EXAMPLES_OPTION, disableExamples.toString()));
         }
 
+        if (ignoreImportMappings != null) {
+            additionalProperties.add(String.format("%s=%s", CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION, Boolean.parseBoolean(ignoreImportMappings.toString())));
+        }
+
+        if (resolveFully != null) {
+            configurator.setResolveFully(resolveFully);
+        }
+      
         if (CodegenConstants.MUSTACHE_TEMPLATE_ENGINE.equalsIgnoreCase(templateEngine)) {
             additionalProperties.add(String.format("%s=%s", CodegenConstants.TEMPLATE_ENGINE, CodegenConstants.MUSTACHE_TEMPLATE_ENGINE));
         } else {

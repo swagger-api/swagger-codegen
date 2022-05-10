@@ -13,7 +13,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing reserved words")
 
-public class ModelReturn  implements Serializable {
+public class ModelReturn  implements Serializable  {
+
   private @Valid Integer _return = null;
 
   /**

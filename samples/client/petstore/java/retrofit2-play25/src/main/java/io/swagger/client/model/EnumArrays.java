@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -21,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * EnumArrays
  */
+
 
 public class EnumArrays {
   /**
@@ -58,10 +59,9 @@ public class EnumArrays {
       return null;
     }
 
-  }
-  @JsonProperty("just_symbol")
-
+  }  @JsonProperty("just_symbol")
   private JustSymbolEnum justSymbol = null;
+
   /**
    * Gets or Sets arrayEnum
    */
@@ -93,28 +93,27 @@ public class EnumArrays {
       return null;
     }
 
-  }
-  @JsonProperty("array_enum")
-
+  }  @JsonProperty("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
+
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-  
-
-  /**
-  * Get justSymbol
-  * @return justSymbol
+   /**
+   * Get justSymbol
+   * @return justSymbol
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
+
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
+
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
@@ -128,17 +127,20 @@ public class EnumArrays {
     return this;
   }
 
-  /**
-  * Get arrayEnum
-  * @return arrayEnum
+   /**
+   * Get arrayEnum
+   * @return arrayEnum
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
+
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -154,8 +156,9 @@ public class EnumArrays {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justSymbol, arrayEnum);
+    return Objects.hash(justSymbol, arrayEnum);
   }
+
 
   @Override
   public String toString() {

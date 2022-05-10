@@ -11,8 +11,9 @@ Method | HTTP request | Description
 [**testClientModel**](FakeApi.md#testClientModel) | **PATCH** fake | To test \&quot;client\&quot; model
 [**testEndpointParameters**](FakeApi.md#testEndpointParameters) | **POST** fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 [**testEnumParameters**](FakeApi.md#testEnumParameters) | **GET** fake | To test enum parameters
+[**testEnumRequestBody**](FakeApi.md#testEnumRequestBody) | **POST** fake/enum/form | To test enum parameters
 [**testInlineAdditionalProperties**](FakeApi.md#testInlineAdditionalProperties) | **POST** fake/inline-additionalProperties | test inline additionalProperties
-[**testJsonFormData**](FakeApi.md#testJsonFormData) | **GET** fake/jsonFormData | test json serialization of form data
+[**testJsonFormData**](FakeApi.md#testJsonFormData) | **POST** fake/jsonFormData | test json serialization of form data
 
 <a name="fakeOuterBooleanSerialize"></a>
 # **fakeOuterBooleanSerialize**
@@ -263,7 +264,7 @@ http_basic_test.setUsername("YOUR USERNAME");
 http_basic_test.setPassword("YOUR PASSWORD");
 
 FakeApi apiInstance = new FakeApi();
-Object body = null; // Object | 
+FakeBody body = new FakeBody(); // FakeBody | 
 try {
     Void result = apiInstance.testEndpointParameters(body);
     System.out.println(result);
@@ -277,7 +278,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Object**](Object.md)|  |
+ **body** | [**FakeBody**](FakeBody.md)|  |
 
 ### Return type
 
@@ -294,7 +295,7 @@ Name | Type | Description  | Notes
 
 <a name="testEnumParameters"></a>
 # **testEnumParameters**
-> Void testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger)
+> Void testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger)
 
 To test enum parameters
 
@@ -308,14 +309,13 @@ To test enum parameters
 
 
 FakeApi apiInstance = new FakeApi();
-Object body = null; // Object | 
 List<String> enumHeaderStringArray = Arrays.asList("enumHeaderStringArray_example"); // List<String> | Header parameter enum test (string array)
-String enumHeaderString = "enumHeaderString_example"; // String | Header parameter enum test (string)
+String enumHeaderString = "-efg"; // String | Header parameter enum test (string)
 List<String> enumQueryStringArray = Arrays.asList("enumQueryStringArray_example"); // List<String> | Query parameter enum test (string array)
-String enumQueryString = "enumQueryString_example"; // String | Query parameter enum test (string)
+String enumQueryString = "-efg"; // String | Query parameter enum test (string)
 Integer enumQueryInteger = 56; // Integer | Query parameter enum test (double)
 try {
-    Void result = apiInstance.testEnumParameters(body, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
+    Void result = apiInstance.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling FakeApi#testEnumParameters");
@@ -327,12 +327,56 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Object**](Object.md)|  | [optional]
  **enumHeaderStringArray** | [**List&lt;String&gt;**](String.md)| Header parameter enum test (string array) | [optional] [enum: >, $]
- **enumHeaderString** | [**String**](.md)| Header parameter enum test (string) | [optional]
+ **enumHeaderString** | **String**| Header parameter enum test (string) | [optional] [default to -efg] [enum: _abc, -efg, (xyz)]
  **enumQueryStringArray** | [**List&lt;String&gt;**](String.md)| Query parameter enum test (string array) | [optional] [enum: >, $]
- **enumQueryString** | [**String**](.md)| Query parameter enum test (string) | [optional]
- **enumQueryInteger** | [**Integer**](.md)| Query parameter enum test (double) | [optional]
+ **enumQueryString** | **String**| Query parameter enum test (string) | [optional] [default to -efg] [enum: _abc, -efg, (xyz)]
+ **enumQueryInteger** | **Integer**| Query parameter enum test (double) | [optional] [enum: 1, -2]
+
+### Return type
+
+[**Void**](.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+<a name="testEnumRequestBody"></a>
+# **testEnumRequestBody**
+> Void testEnumRequestBody(body)
+
+To test enum parameters
+
+To test enum parameters
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.FakeApi;
+
+
+FakeApi apiInstance = new FakeApi();
+EnumFormBody body = new EnumFormBody(); // EnumFormBody | 
+try {
+    Void result = apiInstance.testEnumRequestBody(body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling FakeApi#testEnumRequestBody");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**EnumFormBody**](EnumFormBody.md)|  | [optional]
 
 ### Return type
 
@@ -404,7 +448,7 @@ test json serialization of form data
 
 
 FakeApi apiInstance = new FakeApi();
-Object body = null; // Object | 
+FakeJsonFormDataBody body = new FakeJsonFormDataBody(); // FakeJsonFormDataBody | 
 try {
     Void result = apiInstance.testJsonFormData(body);
     System.out.println(result);
@@ -418,7 +462,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Object**](Object.md)|  |
+ **body** | [**FakeJsonFormDataBody**](FakeJsonFormDataBody.md)|  |
 
 ### Return type
 

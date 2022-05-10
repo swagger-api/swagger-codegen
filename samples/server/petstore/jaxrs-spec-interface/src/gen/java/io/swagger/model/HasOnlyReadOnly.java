@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class HasOnlyReadOnly   {
+
   private @Valid String bar = null;
+
   private @Valid String foo = null;
 
   /**

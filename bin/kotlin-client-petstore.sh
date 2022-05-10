@@ -26,6 +26,6 @@ fi
 
 # if you've executed sbt assembly previously it will use that instead.
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
-ags="generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l kotlin-client --artifact-id kotlin-petstore-client -o samples/client/petstore/kotlin $@"
+ags="generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -l kotlin-client --artifact-id kotlin-petstore-client -o samples/client/petstore/kotlin $@"
 
 java ${JAVA_OPTS} -jar ${executable} ${ags}

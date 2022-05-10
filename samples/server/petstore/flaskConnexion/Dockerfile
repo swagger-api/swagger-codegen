@@ -1,4 +1,4 @@
-FROM python:3-alpine
+FROM python:3.6-alpine
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

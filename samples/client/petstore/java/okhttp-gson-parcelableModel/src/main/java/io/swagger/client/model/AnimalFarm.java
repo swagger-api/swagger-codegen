@@ -13,17 +13,22 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import io.swagger.client.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * AnimalFarm
  */
 
-public class AnimalFarm extends ArrayList<Animal> {
+
+public class AnimalFarm extends ArrayList<Animal> implements Parcelable {
+  public AnimalFarm() {
+    super();
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -37,8 +42,9 @@ public class AnimalFarm extends ArrayList<Animal> {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(super.hashCode());
+    return Objects.hash(super.hashCode());
   }
+
 
   @Override
   public String toString() {
@@ -60,14 +66,13 @@ public class AnimalFarm extends ArrayList<Animal> {
     return o.toString().replace("\n", "\n    ");
   }
 
-  public void writeToParcel(Parcel out, int flags) {
-  }
 
-  public AnimalFarm() {
-    super();
+  public void writeToParcel(Parcel out, int flags) {
+    out.writeList(this);
   }
 
   AnimalFarm(Parcel in) {
+    in.readTypedList(this, Animal.CREATOR);
   }
 
   public int describeContents() {
@@ -76,7 +81,9 @@ public class AnimalFarm extends ArrayList<Animal> {
 
   public static final Parcelable.Creator<AnimalFarm> CREATOR = new Parcelable.Creator<AnimalFarm>() {
     public AnimalFarm createFromParcel(Parcel in) {
-      return new AnimalFarm(in);
+      AnimalFarm result = new AnimalFarm();
+      result.addAll(in.readArrayList(Animal.class.getClassLoader()));
+      return result;
     }
     public AnimalFarm[] newArray(int size) {
       return new AnimalFarm[size];

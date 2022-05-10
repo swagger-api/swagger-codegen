@@ -11,9 +11,12 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class OuterComposite  implements Serializable {
+public class OuterComposite  implements Serializable  {
+
   private @Valid BigDecimal myNumber = null;
+
   private @Valid String myString = null;
+
   private @Valid Boolean myBoolean = null;
 
   /**

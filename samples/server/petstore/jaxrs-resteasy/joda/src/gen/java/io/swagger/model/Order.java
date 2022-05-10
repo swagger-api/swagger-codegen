@@ -5,22 +5,19 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.joda.time.DateTime;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description="An order for a pets from the pet store")
+
 public class Order   {
   private Long id = null;  private Long petId = null;  private Integer quantity = null;  private DateTime shipDate = null;  /**
    * Order Status
    */
   public enum StatusEnum {
     PLACED("placed"),
-
-        APPROVED("approved"),
-
-        DELIVERED("delivered");
+    APPROVED("approved"),
+    DELIVERED("delivered");
     private String value;
 
     StatusEnum(String value) {
@@ -101,7 +98,7 @@ public class Order   {
   
   @Schema(description = "")
   @JsonProperty("complete")
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {

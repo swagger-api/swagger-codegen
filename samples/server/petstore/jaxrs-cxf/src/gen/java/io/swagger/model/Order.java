@@ -12,8 +12,10 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class Order  {
+public class Order   {
   
   @Schema(description = "")
   private Long id = null;
@@ -26,38 +28,35 @@ public class Order  {
   
   @Schema(description = "")
   private Date shipDate = null;
-@XmlType(name="StatusEnum")
-@XmlEnum(String.class)
-public enum StatusEnum {
-
-@XmlEnumValue("placed") PLACED(String.valueOf("placed")), @XmlEnumValue("approved") APPROVED(String.valueOf("approved")), @XmlEnumValue("delivered") DELIVERED(String.valueOf("delivered"));
-
+  public enum StatusEnum {
+    PLACED("placed"),
+    APPROVED("approved"),
+    DELIVERED("delivered");
 
     private String value;
 
-    StatusEnum (String v) {
-        value = v;
+    StatusEnum(String value) {
+      this.value = value;
     }
-
-    public String value() {
-        return value;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static StatusEnum fromValue(String v) {
-        for (StatusEnum b : StatusEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "Order Status")
  /**
    * Order Status  
@@ -147,7 +146,7 @@ public enum StatusEnum {
     if (status == null) {
       return null;
     }
-    return status.value();
+    return status.getValue();
   }
 
   public void setStatus(StatusEnum status) {
@@ -164,7 +163,7 @@ public enum StatusEnum {
    * @return complete
   **/
   @JsonProperty("complete")
-  public Boolean isisComplete() {
+  public Boolean isComplete() {
     return complete;
   }
 

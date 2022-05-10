@@ -53,7 +53,7 @@ public class StoreApiServiceImpl implements StoreApi {
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
      *
      */
-    public Order getOrderById(Integer orderId) {
+    public Order getOrderById(Long orderId) {
         // TODO: Implement...
         
         return null;

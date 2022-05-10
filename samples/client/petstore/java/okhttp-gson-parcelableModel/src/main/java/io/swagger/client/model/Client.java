@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,33 +23,36 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Client
  */
 
-public class Client {
 
+public class Client implements Parcelable {
   @SerializedName("client")
   private String client = null;
+
+  public Client() {
+  }
   public Client client(String client) {
     this.client = client;
     return this;
   }
 
-  
-
-  /**
-  * Get client
-  * @return client
+   /**
+   * Get client
+   * @return client
   **/
   @Schema(description = "")
   public String getClient() {
     return client;
   }
+
   public void setClient(String client) {
     this.client = client;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,8 +67,9 @@ public class Client {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(client);
+    return Objects.hash(client);
   }
+
 
   @Override
   public String toString() {
@@ -87,19 +92,13 @@ public class Client {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(client);
   }
 
-  public Client() {
-    super();
-  }
-
   Client(Parcel in) {
-    
     client = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

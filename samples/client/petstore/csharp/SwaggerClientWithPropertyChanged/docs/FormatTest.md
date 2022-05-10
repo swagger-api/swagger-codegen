@@ -6,12 +6,12 @@ Name | Type | Description | Notes
 **Integer** | **int?** |  | [optional] 
 **Int32** | **int?** |  | [optional] 
 **Int64** | **long?** |  | [optional] 
-**Number** | [**BigDecimal**](BigDecimal.md) |  | 
-**Float** | **float?** |  | [optional] 
-**Double** | **double?** |  | [optional] 
-**String** | **string** |  | [optional] 
-**Byte** | **string** |  | 
-**Binary** | **string** |  | [optional] 
+**Number** | [**decimal?**](BigDecimal.md) |  | 
+**_Float** | **float?** |  | [optional] 
+**_Double** | **double?** |  | [optional] 
+**_String** | **string** |  | [optional] 
+**_Byte** | **byte[]** |  | 
+**Binary** | **byte[]** |  | [optional] 
 **Date** | **DateTime?** |  | 
 **DateTime** | **DateTime?** |  | [optional] 
 **Uuid** | **Guid?** |  | [optional] 

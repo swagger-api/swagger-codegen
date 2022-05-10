@@ -317,10 +317,6 @@ class Decoders {
         // Decoder for Animal
         Decoders.addDecoder(clazz: Animal.self) { (source: AnyObject, instance: AnyObject?) -> Decoded<Animal> in
             if let sourceDictionary = source as? [AnyHashable: Any] {
-                // Check discriminator to support inheritance
-            if let discriminator = sourceDictionary["className"] as? String, instance == nil && discriminator != "Animal"{
-                return Decoders.decode(clazz: Animal.self, discriminator: discriminator, source: source)
-            }
                 guard let classNameSource = sourceDictionary["className"] as AnyObject? else {
                     return .failure(.missingKey(key: "className"))
                 }

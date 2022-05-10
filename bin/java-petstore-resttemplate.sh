@@ -30,5 +30,6 @@ ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore-wi
 
 echo "Removing files and folders under samples/client/petstore/java/resttemplate/src/main"
 rm -rf samples/client/petstore/java/resttemplate/src/main
+rm -rf samples/client/petstore/java/resttemplate/src/gen
 find samples/client/petstore/java/resttemplate -maxdepth 1 -type f ! -name "README.md" -exec rm {} +
 java $JAVA_OPTS -jar $executable $ags

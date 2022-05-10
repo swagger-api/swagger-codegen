@@ -55,7 +55,7 @@ public interface StoreApi  {
     @Produces({ "application/json" })
     @Operation(summary = "Returns pet inventories by status", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Map.class)))) })
     public Map<String, Integer> getInventory();
 
     /**
@@ -69,10 +69,10 @@ public interface StoreApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Find purchase order by ID", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Order not found") })
-    public Order getOrderById(@PathParam("order_id") @DecimalMin("1") @DecimalMax("5") Integer orderId);
+    public Order getOrderById(@PathParam("order_id") @Min(1L) @Max(5L) Long orderId);
 
     /**
      * Place an order for a pet
@@ -84,7 +84,7 @@ public interface StoreApi  {
     @Produces({ "application/xml", "application/json" })
     @Operation(summary = "Place an order for a pet", tags={ "store" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Order.class))),
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = Order.class))),
         @ApiResponse(responseCode = "400", description = "Invalid Order") })
     public Order placeOrder(@Valid Order body);
 }

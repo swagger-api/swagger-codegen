@@ -1,9 +1,12 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.*;
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,10 +41,16 @@ public class PetApiServiceImpl implements PetApi {
      * Deletes a pet
      *
      */
-    public void deletePet(Integer petId, String apiKey) {
+    public void deletePet(Long petId, String apiKey) {
         // TODO: Implement...
         
         
+    }
+    
+    public ModelApiResponse doCategoryStuff(SubCategory body) {
+        // TODO: Implement...
+        
+        return null;
     }
     
     /**
@@ -68,13 +77,25 @@ public class PetApiServiceImpl implements PetApi {
         return null;
     }
     
+    public AllPetsResponse getAllPets() {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
     /**
      * Find pet by ID
      *
      * Returns a single pet
      *
      */
-    public Pet getPetById(Integer petId) {
+    public Pet getPetById(Long petId) {
+        // TODO: Implement...
+        
+        return null;
+    }
+    
+    public SinglePetResponse getRandomPet() {
         // TODO: Implement...
         
         return null;
@@ -94,7 +115,7 @@ public class PetApiServiceImpl implements PetApi {
      * Updates a pet in the store with form data
      *
      */
-    public void updatePetWithForm(Integer petId, String name, String status) {
+    public void updatePetWithForm(Long petId, String name, String status) {
         // TODO: Implement...
         
         
@@ -104,7 +125,7 @@ public class PetApiServiceImpl implements PetApi {
      * uploads an image
      *
      */
-    public ModelApiResponse uploadFile(Integer petId, String additionalMetadata,  Attachment fileDetail) {
+    public ModelApiResponse uploadFile(Long petId, String additionalMetadata,  Attachment fileDetail) {
         // TODO: Implement...
         
         return null;

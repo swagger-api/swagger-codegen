@@ -94,8 +94,8 @@ if(hasProperty('target') && target == 'android') {
 
 ext {
     swagger_annotations_version = "2.0.0"
-    jackson_version = "2.9.9"
-    jersey_version = "2.25.1"
+    jackson_version = "2.10.1"
+    jersey_version = "2.26"
     junit_version = "4.12"
 }
 
@@ -107,6 +107,6 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version",
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
     testCompile "junit:junit:$junit_version"
 }

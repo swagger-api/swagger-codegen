@@ -32,10 +32,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Cat" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        public Cat(bool?  = default(bool?), string  = default(string), string  = "red") : base(, )
+        /// <param name="declawed">declawed.</param>
+        public Cat(bool? declawed = default(bool?), string className = default(string), string color = "red") : base(className, color)
         {
-            this.Declawed = ;
+            this.Declawed = declawed;
         }
         
         /// <summary>
@@ -117,7 +117,6 @@ namespace IO.Swagger.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            foreach(var x in BaseValidate(validationContext)) yield return x;
             yield break;
         }
     }

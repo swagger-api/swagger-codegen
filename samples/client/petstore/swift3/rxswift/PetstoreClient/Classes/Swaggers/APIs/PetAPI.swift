@@ -21,6 +21,7 @@ open class PetAPI: APIBase {
             completion(error)
         }
     }
+
     /**
      Add a new pet to the store
      - parameter body: (body) Pet object that needs to be added to the store 
@@ -44,8 +45,8 @@ open class PetAPI: APIBase {
      Add a new pet to the store
      - POST /pet
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
      - parameter body: (body) Pet object that needs to be added to the store 
      - returns: RequestBuilder<Void> 
      */
@@ -53,10 +54,12 @@ open class PetAPI: APIBase {
         let path = "/pet"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -65,18 +68,19 @@ open class PetAPI: APIBase {
      - parameter apiKey: (header)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deletePet(petId: Int32, apiKey: String? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+    open class func deletePet(petId: Int64, apiKey: String? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         deletePetWithRequestBuilder(petId: petId, apiKey: apiKey).execute { (response, error) -> Void in
             completion(error)
         }
     }
+
     /**
      Deletes a pet
      - parameter petId: (path) Pet id to delete 
      - parameter apiKey: (header)  (optional)
      - returns: Observable<Void>
      */
-    open class func deletePet(petId: Int32, apiKey: String? = nil) -> Observable<Void> {
+    open class func deletePet(petId: Int64, apiKey: String? = nil) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
             deletePet(petId: petId, apiKey: apiKey) { error in
                 if let error = error {
@@ -94,18 +98,19 @@ open class PetAPI: APIBase {
      Deletes a pet
      - DELETE /pet/{petId}
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
      - parameter petId: (path) Pet id to delete 
      - parameter apiKey: (header)  (optional)
      - returns: RequestBuilder<Void> 
      */
-    open class func deletePetWithRequestBuilder(petId: Int32, apiKey: String? = nil) -> RequestBuilder<Void> {
+    open class func deletePetWithRequestBuilder(petId: Int64, apiKey: String? = nil) -> RequestBuilder<Void> {
         var path = "/pet/{petId}"
         let petIdPreEscape = "\(petId)"
         let petIdPostEscape = petIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{petId}", with: petIdPostEscape, options: .literal, range: nil)
-        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
@@ -115,7 +120,7 @@ open class PetAPI: APIBase {
 
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: , headers: headerParameters)
+        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -126,6 +131,7 @@ open class PetAPI: APIBase {
         case pending = "pending"
         case sold = "sold"
     }
+
     /**
      Finds Pets by status
      - parameter status: (query) Status values that need to be considered for filter 
@@ -136,6 +142,7 @@ open class PetAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      Finds Pets by status
      - parameter status: (query) Status values that need to be considered for filter 
@@ -160,19 +167,56 @@ open class PetAPI: APIBase {
      - GET /pet/findByStatus
      - Multiple status values can be provided with comma separated strings
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
+     - examples: [{contentType=application/json, example=[ {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+}, {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ]}]
      - parameter status: (query) Status values that need to be considered for filter 
      - returns: RequestBuilder<[Pet]> 
      */
     open class func findPetsByStatusWithRequestBuilder(status: [String]) -> RequestBuilder<[Pet]> {
         let path = "/pet/findByStatus"
-        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+                        "status": status
+        ])
 
-        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<[Pet]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -185,6 +229,7 @@ open class PetAPI: APIBase {
             completion(response?.body, error)
         }
     }
+
     /**
      Finds Pets by tags
      - parameter tags: (query) Tags to filter by 
@@ -209,19 +254,56 @@ open class PetAPI: APIBase {
      - GET /pet/findByTags
      - Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
+     - examples: [{contentType=application/json, example=[ {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+}, {
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+} ]}]
      - parameter tags: (query) Tags to filter by 
      - returns: RequestBuilder<[Pet]> 
      */
     open class func findPetsByTagsWithRequestBuilder(tags: [String]) -> RequestBuilder<[Pet]> {
         let path = "/pet/findByTags"
-        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        var url = URLComponents(string: URLString)
+        url?.queryItems = APIHelper.mapValuesToQueryItems(values:[
+                        "tags": tags
+        ])
 
-        let url = URLComponents(string: URLString)
         let requestBuilder: RequestBuilder<[Pet]>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -229,17 +311,18 @@ open class PetAPI: APIBase {
      - parameter petId: (path) ID of pet to return 
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getPetById(petId: Int32, completion: @escaping ((_ data: Pet?, _ error: ErrorResponse?) -> Void)) {
+    open class func getPetById(petId: Int64, completion: @escaping ((_ data: Pet?, _ error: ErrorResponse?) -> Void)) {
         getPetByIdWithRequestBuilder(petId: petId).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
+
     /**
      Find pet by ID
      - parameter petId: (path) ID of pet to return 
      - returns: Observable<Pet>
      */
-    open class func getPetById(petId: Int32) -> Observable<Pet> {
+    open class func getPetById(petId: Int64) -> Observable<Pet> {
         return Observable.create { observer -> Disposable in
             getPetById(petId: petId) { data, error in
                 if let error = error {
@@ -258,22 +341,41 @@ open class PetAPI: APIBase {
      - GET /pet/{petId}
      - Returns a single pet
      - API Key:
-     - type: apiKey api_key 
-     - name: api_key
+       - type: apiKey api_key 
+       - name: api_key
+     - examples: [{contentType=application/json, example={
+  "photoUrls" : [ "photoUrls", "photoUrls" ],
+  "name" : "doggie",
+  "id" : 0,
+  "category" : {
+    "name" : "name",
+    "id" : 6
+  },
+  "tags" : [ {
+    "name" : "name",
+    "id" : 1
+  }, {
+    "name" : "name",
+    "id" : 1
+  } ],
+  "status" : "available"
+}}]
      - parameter petId: (path) ID of pet to return 
      - returns: RequestBuilder<Pet> 
      */
-    open class func getPetByIdWithRequestBuilder(petId: Int32) -> RequestBuilder<Pet> {
+    open class func getPetByIdWithRequestBuilder(petId: Int64) -> RequestBuilder<Pet> {
         var path = "/pet/{petId}"
         let petIdPreEscape = "\(petId)"
         let petIdPostEscape = petIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{petId}", with: petIdPostEscape, options: .literal, range: nil)
-        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Pet>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -286,6 +388,7 @@ open class PetAPI: APIBase {
             completion(error)
         }
     }
+
     /**
      Update an existing pet
      - parameter body: (body) Pet object that needs to be added to the store 
@@ -309,8 +412,8 @@ open class PetAPI: APIBase {
      Update an existing pet
      - PUT /pet
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
      - parameter body: (body) Pet object that needs to be added to the store 
      - returns: RequestBuilder<Void> 
      */
@@ -318,10 +421,12 @@ open class PetAPI: APIBase {
         let path = "/pet"
         let URLString = PetstoreClientAPI.basePath + path
         let parameters = body.encodeToJSON()
+
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "PUT", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 
     /**
@@ -331,11 +436,12 @@ open class PetAPI: APIBase {
      - parameter status: (form)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updatePetWithForm(petId: Int32, name: String? = nil, status: String? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
+    open class func updatePetWithForm(petId: Int64, name: String? = nil, status: String? = nil, completion: @escaping ((_ error: ErrorResponse?) -> Void)) {
         updatePetWithFormWithRequestBuilder(petId: petId, name: name, status: status).execute { (response, error) -> Void in
             completion(error)
         }
     }
+
     /**
      Updates a pet in the store with form data
      - parameter petId: (path) ID of pet that needs to be updated 
@@ -343,7 +449,7 @@ open class PetAPI: APIBase {
      - parameter status: (form)  (optional)
      - returns: Observable<Void>
      */
-    open class func updatePetWithForm(petId: Int32, name: String? = nil, status: String? = nil) -> Observable<Void> {
+    open class func updatePetWithForm(petId: Int64, name: String? = nil, status: String? = nil) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
             updatePetWithForm(petId: petId, name: name, status: status) { error in
                 if let error = error {
@@ -361,24 +467,32 @@ open class PetAPI: APIBase {
      Updates a pet in the store with form data
      - POST /pet/{petId}
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
      - parameter petId: (path) ID of pet that needs to be updated 
      - parameter name: (form)  (optional)
      - parameter status: (form)  (optional)
      - returns: RequestBuilder<Void> 
      */
-    open class func updatePetWithFormWithRequestBuilder(petId: Int32, name: String? = nil, status: String? = nil) -> RequestBuilder<Void> {
+    open class func updatePetWithFormWithRequestBuilder(petId: Int64, name: String? = nil, status: String? = nil) -> RequestBuilder<Void> {
         var path = "/pet/{petId}"
         let petIdPreEscape = "\(petId)"
         let petIdPostEscape = petIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{petId}", with: petIdPostEscape, options: .literal, range: nil)
-        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path
+        let formParams: [String:Any?] = [
+                        "name": name,
+                        "status": status
+        ]
+
+        let nonNullParameters = APIHelper.rejectNil(formParams)
+        let parameters = APIHelper.convertBoolToString(nonNullParameters)
 
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<Void>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
     /**
@@ -388,11 +502,12 @@ open class PetAPI: APIBase {
      - parameter file: (form)  (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func uploadFile(petId: Int32, additionalMetadata: String? = nil, file: URL? = nil, completion: @escaping ((_ data: ApiResponse?, _ error: ErrorResponse?) -> Void)) {
+    open class func uploadFile(petId: Int64, additionalMetadata: String? = nil, file: Data? = nil, completion: @escaping ((_ data: ApiResponse?, _ error: ErrorResponse?) -> Void)) {
         uploadFileWithRequestBuilder(petId: petId, additionalMetadata: additionalMetadata, file: file).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
+
     /**
      uploads an image
      - parameter petId: (path) ID of pet to update 
@@ -400,7 +515,7 @@ open class PetAPI: APIBase {
      - parameter file: (form)  (optional)
      - returns: Observable<ApiResponse>
      */
-    open class func uploadFile(petId: Int32, additionalMetadata: String? = nil, file: URL? = nil) -> Observable<ApiResponse> {
+    open class func uploadFile(petId: Int64, additionalMetadata: String? = nil, file: Data? = nil) -> Observable<ApiResponse> {
         return Observable.create { observer -> Disposable in
             uploadFile(petId: petId, additionalMetadata: additionalMetadata, file: file) { data, error in
                 if let error = error {
@@ -418,24 +533,37 @@ open class PetAPI: APIBase {
      uploads an image
      - POST /pet/{petId}/uploadImage
      - OAuth:
-     - type: oauth2
-     - name: petstore_auth
+       - type: oauth2
+       - name: petstore_auth
+     - examples: [{contentType=application/json, example={
+  "code" : 0,
+  "type" : "type",
+  "message" : "message"
+}}]
      - parameter petId: (path) ID of pet to update 
      - parameter additionalMetadata: (form)  (optional)
      - parameter file: (form)  (optional)
      - returns: RequestBuilder<ApiResponse> 
      */
-    open class func uploadFileWithRequestBuilder(petId: Int32, additionalMetadata: String? = nil, file: URL? = nil) -> RequestBuilder<ApiResponse> {
+    open class func uploadFileWithRequestBuilder(petId: Int64, additionalMetadata: String? = nil, file: Data? = nil) -> RequestBuilder<ApiResponse> {
         var path = "/pet/{petId}/uploadImage"
         let petIdPreEscape = "\(petId)"
         let petIdPostEscape = petIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{petId}", with: petIdPostEscape, options: .literal, range: nil)
-        let URLString = PetstoreClientAPI.basePath + path        let parameters: [String:Any]? = nil
+        let URLString = PetstoreClientAPI.basePath + path
+        let formParams: [String:Any?] = [
+                        "additionalMetadata": additionalMetadata,
+                        "file": file
+        ]
+
+        let nonNullParameters = APIHelper.rejectNil(formParams)
+        let parameters = APIHelper.convertBoolToString(nonNullParameters)
 
         let url = URLComponents(string: URLString)
+
         let requestBuilder: RequestBuilder<ApiResponse>.Type = PetstoreClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: )
+        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
     }
 
 }

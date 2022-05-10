@@ -264,7 +264,7 @@ http_basic_test.setUsername("YOUR USERNAME");
 http_basic_test.setPassword("YOUR PASSWORD");
 
 FakeApi apiInstance = new FakeApi();
-Body2 body = new Body2(); // Body2 | 
+FakeBody body = new FakeBody(); // FakeBody | 
 try {
     apiInstance.testEndpointParameters(body);
 } catch (ApiException e) {
@@ -277,7 +277,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body2**](Body2.md)|  |
+ **body** | [**FakeBody**](FakeBody.md)|  |
 
 ### Return type
 
@@ -309,9 +309,9 @@ To test enum parameters
 
 FakeApi apiInstance = new FakeApi();
 List<String> enumHeaderStringArray = Arrays.asList("enumHeaderStringArray_example"); // List<String> | Header parameter enum test (string array)
-String enumHeaderString = "enumHeaderString_example"; // String | Header parameter enum test (string)
+String enumHeaderString = "-efg"; // String | Header parameter enum test (string)
 List<String> enumQueryStringArray = Arrays.asList("enumQueryStringArray_example"); // List<String> | Query parameter enum test (string array)
-String enumQueryString = "enumQueryString_example"; // String | Query parameter enum test (string)
+String enumQueryString = "-efg"; // String | Query parameter enum test (string)
 Integer enumQueryInteger = 56; // Integer | Query parameter enum test (double)
 try {
     apiInstance.testEnumParameters(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger);
@@ -326,9 +326,9 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **enumHeaderStringArray** | [**List&lt;String&gt;**](String.md)| Header parameter enum test (string array) | [optional] [enum: >, $]
- **enumHeaderString** | **String**| Header parameter enum test (string) | [optional] [enum: _abc, -efg, (xyz)]
+ **enumHeaderString** | **String**| Header parameter enum test (string) | [optional] [default to -efg] [enum: _abc, -efg, (xyz)]
  **enumQueryStringArray** | [**List&lt;String&gt;**](String.md)| Query parameter enum test (string array) | [optional] [enum: >, $]
- **enumQueryString** | **String**| Query parameter enum test (string) | [optional] [enum: _abc, -efg, (xyz)]
+ **enumQueryString** | **String**| Query parameter enum test (string) | [optional] [default to -efg] [enum: _abc, -efg, (xyz)]
  **enumQueryInteger** | **Integer**| Query parameter enum test (double) | [optional] [enum: 1, -2]
 
 ### Return type
@@ -360,7 +360,7 @@ To test enum parameters
 
 
 FakeApi apiInstance = new FakeApi();
-Body4 body = new Body4(); // Body4 | 
+EnumFormBody body = new EnumFormBody(); // EnumFormBody | 
 try {
     apiInstance.testEnumRequestBody(body);
 } catch (ApiException e) {
@@ -373,7 +373,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body4**](Body4.md)|  | [optional]
+ **body** | [**EnumFormBody**](EnumFormBody.md)|  | [optional]
 
 ### Return type
 
@@ -444,7 +444,7 @@ test json serialization of form data
 
 
 FakeApi apiInstance = new FakeApi();
-Body5 body = new Body5(); // Body5 | 
+FakeJsonFormDataBody body = new FakeJsonFormDataBody(); // FakeJsonFormDataBody | 
 try {
     apiInstance.testJsonFormData(body);
 } catch (ApiException e) {
@@ -457,7 +457,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body5**](Body5.md)|  |
+ **body** | [**FakeJsonFormDataBody**](FakeJsonFormDataBody.md)|  |
 
 ### Return type
 

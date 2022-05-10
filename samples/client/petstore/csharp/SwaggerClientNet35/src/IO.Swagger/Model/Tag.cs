@@ -32,12 +32,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Tag" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        public Tag(long?  = default(long?), string  = default(string))
+        /// <param name="id">id.</param>
+        /// <param name="name">name.</param>
+        public Tag(long? id = default(long?), string name = default(string))
         {
-            this.Id = ;
-            this.Name = ;
+            this.Id = id;
+            this.Name = name;
         }
         
         /// <summary>

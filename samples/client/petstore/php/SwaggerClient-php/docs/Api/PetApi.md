@@ -4,14 +4,14 @@ All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addPet**](PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
-[**deletePet**](PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
-[**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
-[**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** /pet/findByTags | Finds Pets by tags
-[**getPetById**](PetApi.md#getPetById) | **GET** /pet/{petId} | Find pet by ID
-[**updatePet**](PetApi.md#updatePet) | **PUT** /pet | Update an existing pet
-[**updatePetWithForm**](PetApi.md#updatePetWithForm) | **POST** /pet/{petId} | Updates a pet in the store with form data
-[**uploadFile**](PetApi.md#uploadFile) | **POST** /pet/{petId}/uploadImage | uploads an image
+[**addPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
+[**deletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+[**findPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
+[**findPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
+[**getPetById**](PetApi.md#getpetbyid) | **GET** /pet/{petId} | Find pet by ID
+[**updatePet**](PetApi.md#updatepet) | **PUT** /pet | Update an existing pet
+[**updatePetWithForm**](PetApi.md#updatepetwithform) | **POST** /pet/{petId} | Updates a pet in the store with form data
+[**uploadFile**](PetApi.md#uploadfile) | **POST** /pet/{petId}/uploadImage | uploads an image
 
 # **addPet**
 > addPet($body)
@@ -82,7 +82,7 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 56; // int | Pet id to delete
+$pet_id = 789; // int | Pet id to delete
 $api_key = "api_key_example"; // string | 
 
 try {
@@ -97,8 +97,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | [**int**](../Model/.md)| Pet id to delete |
- **api_key** | [**string**](../Model/.md)|  | [optional]
+ **pet_id** | **int**| Pet id to delete |
+ **api_key** | **string**|  | [optional]
 
 ### Return type
 
@@ -243,7 +243,7 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 56; // int | ID of pet to return
+$pet_id = 789; // int | ID of pet to return
 
 try {
     $result = $apiInstance->getPetById($pet_id);
@@ -258,7 +258,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | [**int**](../Model/.md)| ID of pet to return |
+ **pet_id** | **int**| ID of pet to return |
 
 ### Return type
 
@@ -344,7 +344,7 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 56; // int | ID of pet that needs to be updated
+$pet_id = 789; // int | ID of pet that needs to be updated
 $name = "name_example"; // string | 
 $status = "status_example"; // string | 
 
@@ -360,9 +360,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | [**int**](../Model/.md)| ID of pet that needs to be updated |
- **name** | [**string**](../Model/.md)|  | [optional]
- **status** | [**string**](../Model/.md)|  | [optional]
+ **pet_id** | **int**| ID of pet that needs to be updated |
+ **name** | **string**|  | [optional]
+ **status** | **string**|  | [optional]
 
 ### Return type
 
@@ -398,9 +398,9 @@ $apiInstance = new Swagger\Client\Api\PetApi(
     new GuzzleHttp\Client(),
     $config
 );
-$pet_id = 56; // int | ID of pet to update
+$pet_id = 789; // int | ID of pet to update
 $additional_metadata = "additional_metadata_example"; // string | 
-$file = "file_example"; // \SplFileObject | 
+$file = "file_example"; // string | 
 
 try {
     $result = $apiInstance->uploadFile($pet_id, $additional_metadata, $file);
@@ -415,9 +415,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pet_id** | [**int**](../Model/.md)| ID of pet to update |
- **additional_metadata** | [**string**](../Model/.md)|  | [optional]
- **file** | **\SplFileObject****\SplFileObject**|  | [optional]
+ **pet_id** | **int**| ID of pet to update |
+ **additional_metadata** | **string**|  | [optional]
+ **file** | **string****string**|  | [optional]
 
 ### Return type
 

@@ -4,9 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.OuterEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,6 +14,7 @@ import javax.validation.constraints.*;
  * EnumTest
  */
 @Validated
+
 
 public class EnumTest   {
   /**
@@ -49,7 +49,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
 
@@ -83,7 +82,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_integer")
   private EnumIntegerEnum enumInteger = null;
 
@@ -117,7 +115,6 @@ public class EnumTest   {
       return null;
     }
   }
-
   @JsonProperty("enum_number")
   private EnumNumberEnum enumNumber = null;
 
@@ -132,11 +129,10 @@ public class EnumTest   {
   /**
    * Get enumString
    * @return enumString
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public EnumStringEnum getEnumString() {
+   **/
+  @Schema(description = "")
+  
+    public EnumStringEnum getEnumString() {
     return enumString;
   }
 
@@ -152,11 +148,10 @@ public class EnumTest   {
   /**
    * Get enumInteger
    * @return enumInteger
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public EnumIntegerEnum getEnumInteger() {
+   **/
+  @Schema(description = "")
+  
+    public EnumIntegerEnum getEnumInteger() {
     return enumInteger;
   }
 
@@ -172,11 +167,10 @@ public class EnumTest   {
   /**
    * Get enumNumber
    * @return enumNumber
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public EnumNumberEnum getEnumNumber() {
+   **/
+  @Schema(description = "")
+  
+    public EnumNumberEnum getEnumNumber() {
     return enumNumber;
   }
 
@@ -192,12 +186,11 @@ public class EnumTest   {
   /**
    * Get outerEnum
    * @return outerEnum
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OuterEnum getOuterEnum() {
+   **/
+  @Schema(description = "")
+  
+    @Valid
+    public OuterEnum getOuterEnum() {
     return outerEnum;
   }
 
@@ -250,4 +243,3 @@ public class EnumTest   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

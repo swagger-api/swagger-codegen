@@ -308,6 +308,8 @@ paths:
       summary: Place an order for a pet
       description: ''
       operationId: placeOrder
+      consumes:
+        - application/json
       produces:
         - application/xml
         - application/json
@@ -380,6 +382,8 @@ paths:
       summary: Create user
       description: This can only be done by the logged in user.
       operationId: createUser
+      consumes:
+        - application/json
       produces:
         - application/xml
         - application/json
@@ -400,6 +404,8 @@ paths:
       summary: Creates list of users with given input array
       description: ''
       operationId: createUsersWithArrayInput
+      consumes:
+        - application/json
       produces:
         - application/xml
         - application/json
@@ -422,6 +428,8 @@ paths:
       summary: Creates list of users with given input array
       description: ''
       operationId: createUsersWithListInput
+      consumes:
+        - application/json
       produces:
         - application/xml
         - application/json

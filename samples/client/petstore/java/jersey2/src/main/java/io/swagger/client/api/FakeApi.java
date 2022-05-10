@@ -8,11 +8,11 @@ import io.swagger.client.Pair;
 import javax.ws.rs.core.GenericType;
 
 import java.math.BigDecimal;
-import io.swagger.client.model.Body2;
-import io.swagger.client.model.Body3;
-import io.swagger.client.model.Body4;
-import io.swagger.client.model.Body5;
 import io.swagger.client.model.Client;
+import io.swagger.client.model.EnumFormBody;
+import io.swagger.client.model.FakeBody;
+import io.swagger.client.model.FakeBody1;
+import io.swagger.client.model.FakeJsonFormDataBody;
 import io.swagger.client.model.OuterComposite;
 
 import java.util.ArrayList;
@@ -58,7 +58,6 @@ public class FakeApi {
 
 
 
-
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -90,7 +89,6 @@ public class FakeApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -128,7 +126,6 @@ public class FakeApi {
 
 
 
-
     final String[] localVarAccepts = {
       "*/*"
     };
@@ -160,7 +157,6 @@ public class FakeApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -202,7 +198,6 @@ public class FakeApi {
 
 
 
-
     final String[] localVarAccepts = {
       "application/json"
     };
@@ -224,7 +219,7 @@ public class FakeApi {
    * @param body  (required)
    * @throws ApiException if fails to make API call
    */
-  public void testEndpointParameters(Body2 body) throws ApiException {
+  public void testEndpointParameters(FakeBody body) throws ApiException {
     Object localVarPostBody = body;
     // verify the required parameter 'body' is set
     if (body == null) {
@@ -237,7 +232,6 @@ public class FakeApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -259,9 +253,9 @@ public class FakeApi {
    * To test enum parameters
    * To test enum parameters
    * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
-   * @param enumHeaderString Header parameter enum test (string) (optional)
+   * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
    * @param enumQueryStringArray Query parameter enum test (string array) (optional)
-   * @param enumQueryString Query parameter enum test (string) (optional)
+   * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @throws ApiException if fails to make API call
    */
@@ -284,7 +278,6 @@ public class FakeApi {
     if (enumHeaderString != null)
       localVarHeaderParams.put("enum_header_string", apiClient.parameterToString(enumHeaderString));
 
-
     final String[] localVarAccepts = {
       
     };
@@ -305,7 +298,7 @@ public class FakeApi {
    * @param body  (optional)
    * @throws ApiException if fails to make API call
    */
-  public void testEnumRequestBody(Body4 body) throws ApiException {
+  public void testEnumRequestBody(EnumFormBody body) throws ApiException {
     Object localVarPostBody = body;
     // create path and map variables
     String localVarPath = "/fake/enum/form";
@@ -314,7 +307,6 @@ public class FakeApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 
@@ -354,7 +346,6 @@ public class FakeApi {
 
 
 
-
     final String[] localVarAccepts = {
       
     };
@@ -375,7 +366,7 @@ public class FakeApi {
    * @param body  (required)
    * @throws ApiException if fails to make API call
    */
-  public void testJsonFormData(Body5 body) throws ApiException {
+  public void testJsonFormData(FakeJsonFormDataBody body) throws ApiException {
     Object localVarPostBody = body;
     // verify the required parameter 'body' is set
     if (body == null) {
@@ -388,7 +379,6 @@ public class FakeApi {
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
 
 
 

@@ -24,9 +24,12 @@
 
 package io.swagger.api;
 
+import io.swagger.model.AllPetsResponse;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SinglePetResponse;
+import io.swagger.model.SubCategory;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -94,10 +97,23 @@ public class PetApiTest {
      */
     @Test
     public void deletePetTest() {
-        Integer petId = null;
+        Long petId = null;
         String apiKey = null;
         //api.deletePet(petId, apiKey);
         
+        // TODO: test validations
+        
+        
+    }
+    /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void doCategoryStuffTest() {
+        SubCategory body = null;
+        //ModelApiResponse response = api.doCategoryStuff(body);
+        //assertNotNull(response);
         // TODO: test validations
         
         
@@ -137,6 +153,18 @@ public class PetApiTest {
         
     }
     /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getAllPetsTest() {
+        //AllPetsResponse response = api.getAllPets();
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    /**
      * Find pet by ID
      *
      * Returns a single pet
@@ -146,8 +174,20 @@ public class PetApiTest {
      */
     @Test
     public void getPetByIdTest() {
-        Integer petId = null;
+        Long petId = null;
         //Pet response = api.getPetById(petId);
+        //assertNotNull(response);
+        // TODO: test validations
+        
+        
+    }
+    /**
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getRandomPetTest() {
+        //SinglePetResponse response = api.getRandomPet();
         //assertNotNull(response);
         // TODO: test validations
         
@@ -176,7 +216,7 @@ public class PetApiTest {
      */
     @Test
     public void updatePetWithFormTest() {
-        Integer petId = null;
+        Long petId = null;
         String name = null;
         String status = null;
         //api.updatePetWithForm(petId, name, status);
@@ -193,7 +233,7 @@ public class PetApiTest {
      */
     @Test
     public void uploadFileTest() {
-        Integer petId = null;
+        Long petId = null;
         String additionalMetadata = null;
         org.apache.cxf.jaxrs.ext.multipart.Attachment file = null;
         //ModelApiResponse response = api.uploadFile(petId, additionalMetadata, file);

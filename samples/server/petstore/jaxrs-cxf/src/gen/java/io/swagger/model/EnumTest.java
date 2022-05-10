@@ -12,108 +12,99 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class EnumTest  {
-@XmlType(name="EnumStringEnum")
-@XmlEnum(String.class)
-public enum EnumStringEnum {
-
-@XmlEnumValue("UPPER") UPPER(String.valueOf("UPPER")), @XmlEnumValue("lower") LOWER(String.valueOf("lower")), @XmlEnumValue("") EMPTY(String.valueOf(""));
-
+public class EnumTest   {
+  public enum EnumStringEnum {
+    UPPER("UPPER"),
+    LOWER("lower"),
+    EMPTY("");
 
     private String value;
 
-    EnumStringEnum (String v) {
-        value = v;
+    EnumStringEnum(String value) {
+      this.value = value;
     }
-
-    public String value() {
-        return value;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static EnumStringEnum fromValue(String v) {
-        for (EnumStringEnum b : EnumStringEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static EnumStringEnum fromValue(String text) {
+      for (EnumStringEnum b : EnumStringEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "")
   private EnumStringEnum enumString = null;
-@XmlType(name="EnumIntegerEnum")
-@XmlEnum(Integer.class)
-public enum EnumIntegerEnum {
-
-@XmlEnumValue("1") NUMBER_1(Integer.valueOf(1)), @XmlEnumValue("-1") NUMBER_MINUS_1(Integer.valueOf(-1));
-
+  public enum EnumIntegerEnum {
+    NUMBER_1(1),
+    NUMBER_MINUS_1(-1);
 
     private Integer value;
 
-    EnumIntegerEnum (Integer v) {
-        value = v;
+    EnumIntegerEnum(Integer value) {
+      this.value = value;
     }
-
-    public Integer value() {
-        return value;
+    @JsonValue
+    public Integer getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static EnumIntegerEnum fromValue(String v) {
-        for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static EnumIntegerEnum fromValue(String text) {
+      for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "")
   private EnumIntegerEnum enumInteger = null;
-@XmlType(name="EnumNumberEnum")
-@XmlEnum(Double.class)
-public enum EnumNumberEnum {
-
-@XmlEnumValue("1.1") NUMBER_1_DOT_1(Double.valueOf(1.1)), @XmlEnumValue("-1.2") NUMBER_MINUS_1_DOT_2(Double.valueOf(-1.2));
-
+  public enum EnumNumberEnum {
+    NUMBER_1_DOT_1(1.1),
+    NUMBER_MINUS_1_DOT_2(-1.2);
 
     private Double value;
 
-    EnumNumberEnum (Double v) {
-        value = v;
+    EnumNumberEnum(Double value) {
+      this.value = value;
     }
-
-    public Double value() {
-        return value;
+    @JsonValue
+    public Double getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static EnumNumberEnum fromValue(String v) {
-        for (EnumNumberEnum b : EnumNumberEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static EnumNumberEnum fromValue(String text) {
+      for (EnumNumberEnum b : EnumNumberEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "")
   private EnumNumberEnum enumNumber = null;
   
@@ -128,7 +119,7 @@ public enum EnumNumberEnum {
     if (enumString == null) {
       return null;
     }
-    return enumString.value();
+    return enumString.getValue();
   }
 
   public void setEnumString(EnumStringEnum enumString) {
@@ -149,7 +140,7 @@ public enum EnumNumberEnum {
     if (enumInteger == null) {
       return null;
     }
-    return enumInteger.value();
+    return enumInteger.getValue();
   }
 
   public void setEnumInteger(EnumIntegerEnum enumInteger) {
@@ -170,7 +161,7 @@ public enum EnumNumberEnum {
     if (enumNumber == null) {
       return null;
     }
-    return enumNumber.value();
+    return enumNumber.getValue();
   }
 
   public void setEnumNumber(EnumNumberEnum enumNumber) {

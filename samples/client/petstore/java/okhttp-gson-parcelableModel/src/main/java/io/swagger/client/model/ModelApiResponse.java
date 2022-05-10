@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,13 +23,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * ModelApiResponse
  */
 
-public class ModelApiResponse {
 
+public class ModelApiResponse implements Parcelable {
   @SerializedName("code")
   private Integer code = null;
 
@@ -37,60 +37,64 @@ public class ModelApiResponse {
 
   @SerializedName("message")
   private String message = null;
+
+  public ModelApiResponse() {
+  }
   public ModelApiResponse code(Integer code) {
     this.code = code;
     return this;
   }
 
-  
-
-  /**
-  * Get code
-  * @return code
+   /**
+   * Get code
+   * @return code
   **/
   @Schema(description = "")
   public Integer getCode() {
     return code;
   }
+
   public void setCode(Integer code) {
     this.code = code;
   }
+
   public ModelApiResponse type(String type) {
     this.type = type;
     return this;
   }
 
-  
-
-  /**
-  * Get type
-  * @return type
+   /**
+   * Get type
+   * @return type
   **/
   @Schema(description = "")
   public String getType() {
     return type;
   }
+
   public void setType(String type) {
     this.type = type;
   }
+
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
   }
 
-  
-
-  /**
-  * Get message
-  * @return message
+   /**
+   * Get message
+   * @return message
   **/
   @Schema(description = "")
   public String getMessage() {
     return message;
   }
+
   public void setMessage(String message) {
     this.message = message;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -107,8 +111,9 @@ public class ModelApiResponse {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(code, type, message);
+    return Objects.hash(code, type, message);
   }
+
 
   @Override
   public String toString() {
@@ -133,25 +138,17 @@ public class ModelApiResponse {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(code);
     out.writeValue(type);
     out.writeValue(message);
   }
 
-  public ModelApiResponse() {
-    super();
-  }
-
   ModelApiResponse(Parcel in) {
-    
     code = (Integer)in.readValue(null);
-    
     type = (String)in.readValue(null);
-    
     message = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -25,15 +26,17 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * ArrayOfArrayOfNumberOnly
  */
 
-public class ArrayOfArrayOfNumberOnly {
 
+public class ArrayOfArrayOfNumberOnly implements Parcelable {
   @SerializedName("ArrayArrayNumber")
   private List<List<BigDecimal>> arrayArrayNumber = null;
+
+  public ArrayOfArrayOfNumberOnly() {
+  }
   public ArrayOfArrayOfNumberOnly arrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
     return this;
@@ -47,17 +50,20 @@ public class ArrayOfArrayOfNumberOnly {
     return this;
   }
 
-  /**
-  * Get arrayArrayNumber
-  * @return arrayArrayNumber
+   /**
+   * Get arrayArrayNumber
+   * @return arrayArrayNumber
   **/
   @Schema(description = "")
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }
+
   public void setArrayArrayNumber(List<List<BigDecimal>> arrayArrayNumber) {
     this.arrayArrayNumber = arrayArrayNumber;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -72,8 +78,9 @@ public class ArrayOfArrayOfNumberOnly {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(arrayArrayNumber);
+    return Objects.hash(arrayArrayNumber);
   }
+
 
   @Override
   public String toString() {
@@ -96,18 +103,12 @@ public class ArrayOfArrayOfNumberOnly {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(arrayArrayNumber);
   }
 
-  public ArrayOfArrayOfNumberOnly() {
-    super();
-  }
-
   ArrayOfArrayOfNumberOnly(Parcel in) {
-    
-    
     arrayArrayNumber = (List<List<BigDecimal>>)in.readValue(List.class.getClassLoader());
   }
 

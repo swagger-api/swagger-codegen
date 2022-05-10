@@ -2,12 +2,12 @@ package io.swagger.codegen.v3.maven.plugin;
 
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -52,7 +52,7 @@ import io.swagger.codegen.v3.config.CodegenConfigurator;
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
  */
-@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, threadSafe = true)
 public class CodeGenMojo extends AbstractMojo {
 
     @Parameter(name = "verbose", required = false, defaultValue = "false")
@@ -220,7 +220,7 @@ public class CodeGenMojo extends AbstractMojo {
      * A map of reserved names and how they should be escaped
      */
     @Parameter(name = "reservedWordsMappings")
-    private List<String> reservedWordsMappings;    
+    private List<String> reservedWordsMappings;
 
     /**
      * Generate the apis
@@ -320,6 +320,13 @@ public class CodeGenMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        // Using the naive approach for achieving thread safety
+        synchronized (CodeGenMojo.class) {
+            execute_();
+        }
+    }
+
+    protected void execute_() throws MojoExecutionException {
 
         if (skip) {
             getLog().info("Code generation is skipped.");

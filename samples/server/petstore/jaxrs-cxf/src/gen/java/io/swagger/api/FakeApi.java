@@ -2,6 +2,10 @@ package io.swagger.api;
 
 import java.math.BigDecimal;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 import java.io.InputStream;
@@ -37,7 +41,7 @@ public interface FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(schema = @Schema(implementation = Boolean.class))) })
+        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(mediaType = "*/*", schema = @Schema(implementation = Boolean.class))) })
     public Boolean fakeOuterBooleanSerialize(@Valid Boolean body);
 
     @POST
@@ -46,7 +50,7 @@ public interface FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(schema = @Schema(implementation = OuterComposite.class))) })
+        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(mediaType = "*/*", schema = @Schema(implementation = OuterComposite.class))) })
     public OuterComposite fakeOuterCompositeSerialize(@Valid OuterComposite body);
 
     @POST
@@ -55,7 +59,7 @@ public interface FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(schema = @Schema(implementation = BigDecimal.class))) })
+        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(mediaType = "*/*", schema = @Schema(implementation = BigDecimal.class))) })
     public BigDecimal fakeOuterNumberSerialize(@Valid BigDecimal body);
 
     @POST
@@ -64,7 +68,7 @@ public interface FakeApi  {
     @Produces({ "*/*" })
     @Operation(summary = "", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(schema = @Schema(implementation = String.class))) })
+        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(mediaType = "*/*", schema = @Schema(implementation = String.class))) })
     public String fakeOuterStringSerialize(@Valid String body);
 
     /**
@@ -79,7 +83,7 @@ public interface FakeApi  {
     @Produces({ "application/json" })
     @Operation(summary = "To test \"client\" model", tags={ "fake" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     public Client testClientModel(@Valid Client body);
 
     /**
@@ -95,7 +99,7 @@ public interface FakeApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public void testEndpointParameters(@Valid Object body);
+    public void testEndpointParameters(@Valid FakeBody body);
 
     /**
      * To test enum parameters
@@ -105,12 +109,26 @@ public interface FakeApi  {
      */
     @GET
     @Path("/fake")
+    @Operation(summary = "To test enum parameters", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
+        @ApiResponse(responseCode = "404", description = "Not found") })
+    public void testEnumParameters(@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray, @HeaderParam("enum_header_string") String enumHeaderString, @QueryParam("enum_query_string_array") List<String> enumQueryStringArray, @QueryParam("enum_query_string") @DefaultValue("-efg") String enumQueryString, @QueryParam("enum_query_integer") Integer enumQueryInteger);
+
+    /**
+     * To test enum parameters
+     *
+     * To test enum parameters
+     *
+     */
+    @POST
+    @Path("/fake/enum/form")
     @Consumes({ "*/*" })
     @Operation(summary = "To test enum parameters", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid request"),
         @ApiResponse(responseCode = "404", description = "Not found") })
-    public void testEnumParameters(@Valid Object body, @HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray, @HeaderParam("enum_header_string") String enumHeaderString, @QueryParam("enum_query_string_array") List<String> enumQueryStringArray, @QueryParam("enum_query_string") String enumQueryString, @QueryParam("enum_query_integer") Integer enumQueryInteger);
+    public void testEnumRequestBody(@Valid EnumFormBody body);
 
     /**
      * test inline additionalProperties
@@ -128,11 +146,11 @@ public interface FakeApi  {
      * test json serialization of form data
      *
      */
-    @GET
+    @POST
     @Path("/fake/jsonFormData")
     @Consumes({ "application/json" })
     @Operation(summary = "test json serialization of form data", tags={ "fake" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
-    public void testJsonFormData(@Valid Object body);
+    public void testJsonFormData(@Valid FakeJsonFormDataBody body);
 }

@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,28 +13,28 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class SpecialModelName   {
   @JsonProperty("$special[property.name]")
-  private Long specialPropertyName = null;
+  private Long $specialPropertyName = null;
 
-  public SpecialModelName specialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+  public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
   /**
-   * Get specialPropertyName
-   * @return specialPropertyName
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getSpecialPropertyName() {
-    return specialPropertyName;
+   * Get $specialPropertyName
+   * @return $specialPropertyName
+   **/
+  @Schema(description = "")
+  
+    public Long get$SpecialPropertyName() {
+    return $specialPropertyName;
   }
 
-  public void setSpecialPropertyName(Long specialPropertyName) {
-    this.specialPropertyName = specialPropertyName;
+  public void set$SpecialPropertyName(Long $specialPropertyName) {
+    this.$specialPropertyName = $specialPropertyName;
   }
 
 
@@ -47,13 +46,13 @@ public class SpecialModelName   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SpecialModelName specialModelName = (SpecialModelName) o;
-    return Objects.equals(this.specialPropertyName, specialModelName.specialPropertyName);
+    SpecialModelName $specialModelName = (SpecialModelName) o;
+    return Objects.equals(this.$specialPropertyName, $specialModelName.$specialPropertyName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(specialPropertyName);
+    return Objects.hash($specialPropertyName);
   }
 
   @Override
@@ -61,7 +60,7 @@ public class SpecialModelName   {
     StringBuilder sb = new StringBuilder();
     sb.append("class SpecialModelName {\n");
     
-    sb.append("    specialPropertyName: ").append(toIndentedString(specialPropertyName)).append("\n");
+    sb.append("    $specialPropertyName: ").append(toIndentedString($specialPropertyName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -77,4 +76,3 @@ public class SpecialModelName   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

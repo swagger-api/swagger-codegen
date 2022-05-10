@@ -5,9 +5,9 @@ import io.swagger.model.*;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
-import java.io.File;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
 import java.util.List;
 
@@ -25,7 +25,12 @@ public class PetApiServiceImpl implements PetApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response deletePet(Integer petId, String apiKey, SecurityContext securityContext) {
+      public Response deletePet(Long petId, String apiKey, SecurityContext securityContext) {
+      // do some magic!
+      return Response.ok().entity("magic!").build();
+  }
+      @Override
+      public Response doCategoryStuff(SubCategory body, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
@@ -40,7 +45,7 @@ public class PetApiServiceImpl implements PetApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response getPetById(Integer petId, SecurityContext securityContext) {
+      public Response getPetById(Long petId, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
@@ -50,12 +55,12 @@ public class PetApiServiceImpl implements PetApiService {
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response updatePetWithForm(Integer petId, String name, String status, SecurityContext securityContext) {
+      public Response updatePetWithForm(Long petId, String name, String status, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }
       @Override
-      public Response uploadFile(Integer petId, String additionalMetadata, InputStream fileInputStream, Attachment fileDetail, SecurityContext securityContext) {
+      public Response uploadFile(Long petId, Object body, SecurityContext securityContext) {
       // do some magic!
       return Response.ok().entity("magic!").build();
   }

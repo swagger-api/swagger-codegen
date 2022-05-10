@@ -6,6 +6,7 @@ import io.swagger.api.factories.AnotherFakeApiServiceFactory;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -31,7 +32,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.validation.constraints.*;
 
-@Path("/AnotherFake")
+@Path("/another-fake/dummy")
+
 
 
 public class AnotherFakeApi  {
@@ -64,8 +66,8 @@ public class AnotherFakeApi  {
     @Produces({ "application/json" })
     @Operation(summary = "To test special tags", description = "To test special tags", tags={ "$another-fake?" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(schema = @Schema(implementation = Client.class))) })
-    public Response testSpecialTags(@Parameter(description = "client model" ,required=true) Client body
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
+    public Response testSpecialTags(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
 
 ,@Context SecurityContext securityContext)
     throws NotFoundException {

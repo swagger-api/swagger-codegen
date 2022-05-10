@@ -37,20 +37,20 @@ namespace IO.Swagger.Model
                 public enum StatusEnum
         {
             /// <summary>
-            /// Enum PLACED for value: "placed"
+            /// Enum Placed for value: placed
             /// </summary>
-            [EnumMember(Value = ""placed"")]
-            PLACED = 0,
+            [EnumMember(Value = "placed")]
+            Placed = 1,
             /// <summary>
-            /// Enum APPROVED for value: "approved"
+            /// Enum Approved for value: approved
             /// </summary>
-            [EnumMember(Value = ""approved"")]
-            APPROVED = 1,
+            [EnumMember(Value = "approved")]
+            Approved = 2,
             /// <summary>
-            /// Enum DELIVERED for value: "delivered"
+            /// Enum Delivered for value: delivered
             /// </summary>
-            [EnumMember(Value = ""delivered"")]
-            DELIVERED = 2        }
+            [EnumMember(Value = "delivered")]
+            Delivered = 3        }
         /// <summary>
         /// Order Status
         /// </summary>
@@ -60,27 +60,27 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Order" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">Order Status.</param>
-        /// <param name=""> (default to false).</param>
-        public Order(long?  = default(long?), long?  = default(long?), int?  = default(int?), DateTime?  = default(DateTime?), StatusEnum?  = default(StatusEnum?), bool?  = false)
+        /// <param name="id">id.</param>
+        /// <param name="petId">petId.</param>
+        /// <param name="quantity">quantity.</param>
+        /// <param name="shipDate">shipDate.</param>
+        /// <param name="status">Order Status.</param>
+        /// <param name="complete">complete (default to false).</param>
+        public Order(long? id = default(long?), long? petId = default(long?), int? quantity = default(int?), DateTime? shipDate = default(DateTime?), StatusEnum? status = default(StatusEnum?), bool? complete = false)
         {
-            this.Id = ;
-            this.PetId = ;
-            this.Quantity = ;
-            this.ShipDate = ;
-            this.Status = ;
-            // use default value if no "" provided
-            if ( == null)
+            this.Id = id;
+            this.PetId = petId;
+            this.Quantity = quantity;
+            this.ShipDate = shipDate;
+            this.Status = status;
+            // use default value if no "complete" provided
+            if (complete == null)
             {
                 this.Complete = false;
             }
             else
             {
-                this.Complete = ;
+                this.Complete = complete;
             }
         }
         

@@ -15,8 +15,10 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class Pet  {
+public class Pet   {
   
   @Schema(description = "")
   private Long id = null;
@@ -32,38 +34,35 @@ public class Pet  {
   
   @Schema(description = "")
   private List<Tag> tags = null;
-@XmlType(name="StatusEnum")
-@XmlEnum(String.class)
-public enum StatusEnum {
-
-@XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
-
+  public enum StatusEnum {
+    AVAILABLE("available"),
+    PENDING("pending"),
+    SOLD("sold");
 
     private String value;
 
-    StatusEnum (String v) {
-        value = v;
+    StatusEnum(String value) {
+      this.value = value;
     }
-
-    public String value() {
-        return value;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static StatusEnum fromValue(String v) {
-        for (StatusEnum b : StatusEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "pet status in the store")
  /**
    * pet status in the store  
@@ -180,7 +179,7 @@ public enum StatusEnum {
     if (status == null) {
       return null;
     }
-    return status.value();
+    return status.getValue();
   }
 
   public void setStatus(StatusEnum status) {

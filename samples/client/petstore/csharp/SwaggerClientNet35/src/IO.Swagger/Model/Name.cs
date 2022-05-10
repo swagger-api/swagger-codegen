@@ -32,20 +32,20 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Name" /> class.
         /// </summary>
-        /// <param name=""> (required).</param>
-        /// <param name="">.</param>
-        public Name(int?  = default(int?), string  = default(string))
+        /// <param name="name">name (required).</param>
+        /// <param name="property">property.</param>
+        public Name(int? name = default(int?), string property = default(string))
         {
-            // to ensure "" is required (not null)
-            if ( == null)
+            // to ensure "name" is required (not null)
+            if (name == null)
             {
-                throw new InvalidDataException(" is a required property for Name and cannot be null");
+                throw new InvalidDataException("name is a required property for Name and cannot be null");
             }
             else
             {
-                this._Name = ;
+                this._Name = name;
             }
-            this.Property = ;
+            this.Property = property;
         }
         
         /// <summary>

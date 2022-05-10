@@ -17,10 +17,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * FormatTest
@@ -48,10 +50,10 @@ public class FormatTest   {
   private String string = null;
 
   @JsonProperty("byte")
-  private String _byte = null;
+  private byte[] _byte = null;
 
   @JsonProperty("binary")
-  private String binary = null;
+  private File binary = null;
 
   @JsonProperty("date")
   private Date date = null;
@@ -140,6 +142,7 @@ public class FormatTest   {
   @JsonProperty("number")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
  @DecimalMin("32") @DecimalMax("543")  public BigDecimal getNumber() {
     return number;
   }
@@ -209,7 +212,7 @@ public class FormatTest   {
     this.string = string;
   }
 
-  public FormatTest _byte(String _byte) {
+  public FormatTest _byte(byte[] _byte) {
     this._byte = _byte;
     return this;
   }
@@ -221,15 +224,15 @@ public class FormatTest   {
   @JsonProperty("byte")
   @ApiModelProperty(required = true, value = "")
   @NotNull
- @Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")  public String getByte() {
+  public byte[] getByte() {
     return _byte;
   }
 
-  public void setByte(String _byte) {
+  public void setByte(byte[] _byte) {
     this._byte = _byte;
   }
 
-  public FormatTest binary(String binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }
@@ -240,11 +243,12 @@ public class FormatTest   {
    **/
   @JsonProperty("binary")
   @ApiModelProperty(value = "")
-  public String getBinary() {
+  @Valid
+  public File getBinary() {
     return binary;
   }
 
-  public void setBinary(String binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
 
@@ -260,6 +264,7 @@ public class FormatTest   {
   @JsonProperty("date")
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  @Valid
   public Date getDate() {
     return date;
   }
@@ -279,6 +284,7 @@ public class FormatTest   {
    **/
   @JsonProperty("dateTime")
   @ApiModelProperty(value = "")
+  @Valid
   public Date getDateTime() {
     return dateTime;
   }
@@ -298,6 +304,7 @@ public class FormatTest   {
    **/
   @JsonProperty("uuid")
   @ApiModelProperty(value = "")
+  @Valid
   public UUID getUuid() {
     return uuid;
   }

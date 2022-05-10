@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * ArrayOfArrayOfNumberOnly
@@ -47,6 +48,7 @@ public class ArrayOfArrayOfNumberOnly   {
    **/
   @JsonProperty("ArrayArrayNumber")
   @Schema(description = "")
+  @Valid
   public List<List<BigDecimal>> getArrayArrayNumber() {
     return arrayArrayNumber;
   }

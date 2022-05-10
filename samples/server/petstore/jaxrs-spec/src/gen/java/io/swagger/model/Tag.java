@@ -10,8 +10,10 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Tag  implements Serializable {
+public class Tag  implements Serializable  {
+
   private @Valid Long id = null;
+
   private @Valid String name = null;
 
   /**

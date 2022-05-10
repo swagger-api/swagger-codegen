@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @Component("io.swagger.client.api.DogApi")
 public class DogApi {
@@ -48,10 +49,22 @@ public class DogApi {
      * Add a new dog to the store
      * 
      * <p><b>405</b> - Invalid input
-     * @param body Dog object that needs to be added to the store
+     * @param body Dog object that needs to be added to the store (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void addDog(Dog body) throws RestClientException {
+        addDogWithHttpInfo(body);
+    }
+
+    /**
+     * Add a new dog to the store
+     * 
+     * <p><b>405</b> - Invalid input
+     * @param body Dog object that needs to be added to the store (required)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> addDogWithHttpInfo(Dog body) throws RestClientException {
         Object postBody = body;
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -73,17 +86,30 @@ public class DogApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     /**
      * Deletes a dog
      * 
      * <p><b>400</b> - Invalid dog value
-     * @param dogId Dog id to delete
-     * @param apiKey The apiKey parameter
+     * @param dogId Dog id to delete (required)
+     * @param apiKey  (optional)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void deleteDog(Long dogId, String apiKey) throws RestClientException {
+        deleteDogWithHttpInfo(dogId, apiKey);
+    }
+
+    /**
+     * Deletes a dog
+     * 
+     * <p><b>400</b> - Invalid dog value
+     * @param dogId Dog id to delete (required)
+     * @param apiKey  (optional)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> deleteDogWithHttpInfo(Long dogId, String apiKey) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'dogId' is set
         if (dogId == null) {
@@ -108,7 +134,7 @@ public class DogApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     /**
      * Find dog by ID
@@ -116,11 +142,25 @@ public class DogApi {
      * <p><b>200</b> - successful operation
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Pet not found
-     * @param dogId ID of dog to return
+     * @param dogId ID of dog to return (required)
      * @return Dog
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public Dog getDogById(Long dogId) throws RestClientException {
+        return getDogByIdWithHttpInfo(dogId).getBody();
+    }
+
+    /**
+     * Find dog by ID
+     * Returns a single dog
+     * <p><b>200</b> - successful operation
+     * <p><b>400</b> - Invalid ID supplied
+     * <p><b>404</b> - Pet not found
+     * @param dogId ID of dog to return (required)
+     * @return ResponseEntity&lt;Dog&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Dog> getDogByIdWithHttpInfo(Long dogId) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'dogId' is set
         if (dogId == null) {
@@ -153,10 +193,24 @@ public class DogApi {
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Animal not found
      * <p><b>405</b> - Validation exception
-     * @param body Dog object that needs to be added.
+     * @param body Dog object that needs to be added. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void updateDog(Dog body) throws RestClientException {
+        updateDogWithHttpInfo(body);
+    }
+
+    /**
+     * Update an existing dog
+     * 
+     * <p><b>400</b> - Invalid ID supplied
+     * <p><b>404</b> - Animal not found
+     * <p><b>405</b> - Validation exception
+     * @param body Dog object that needs to be added. (required)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> updateDogWithHttpInfo(Dog body) throws RestClientException {
         Object postBody = body;
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -178,26 +232,40 @@ public class DogApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     /**
      * Updates a dog
      * 
      * <p><b>405</b> - Invalid input
-     * @param animalId ID of dog that needs to be updated
-     * @param name The name parameter
-     * @param status The status parameter
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param name  (optional)
+     * @param status  (optional)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void updateDogWithForm(Long animalId, String name, String status) throws RestClientException {
+    public void updateDogWithForm(Long dogId, String name, String status) throws RestClientException {
+        updateDogWithFormWithHttpInfo(dogId, name, status);
+    }
+
+    /**
+     * Updates a dog
+     * 
+     * <p><b>405</b> - Invalid input
+     * @param dogId ID of dog that needs to be updated (required)
+     * @param name  (optional)
+     * @param status  (optional)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> updateDogWithFormWithHttpInfo(Long dogId, String name, String status) throws RestClientException {
         Object postBody = null;
-        // verify the required parameter 'animalId' is set
-        if (animalId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'animalId' when calling updateDogWithForm");
+        // verify the required parameter 'dogId' is set
+        if (dogId == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'dogId' when calling updateDogWithForm");
         }
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("animalId", animalId);
+        uriVariables.put("dogId", dogId);
         String path = UriComponentsBuilder.fromPath("/dog/{dogId}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
@@ -218,6 +286,6 @@ public class DogApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
 }

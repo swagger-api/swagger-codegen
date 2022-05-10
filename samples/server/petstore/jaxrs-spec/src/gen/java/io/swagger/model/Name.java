@@ -13,10 +13,14 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Schema(description = "Model for testing model name same as property name")
 
-public class Name  implements Serializable {
+public class Name  implements Serializable  {
+
   private @Valid Integer name = null;
+
   private @Valid Integer snakeCase = null;
+
   private @Valid String property = null;
+
   private @Valid Integer _123Number = null;
 
   /**

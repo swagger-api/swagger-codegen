@@ -3,8 +3,7 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,7 @@ import javax.validation.constraints.*;
  * AdditionalPropertiesClass
  */
 @Validated
+
 
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
@@ -42,11 +42,10 @@ public class AdditionalPropertiesClass   {
   /**
    * Get mapProperty
    * @return mapProperty
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Map<String, String> getMapProperty() {
+   **/
+  @Schema(description = "")
+  
+    public Map<String, String> getMapProperty() {
     return mapProperty;
   }
 
@@ -70,12 +69,10 @@ public class AdditionalPropertiesClass   {
   /**
    * Get mapOfMapProperty
    * @return mapOfMapProperty
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Map<String, Map<String, String>> getMapOfMapProperty() {
+   **/
+  @Schema(description = "")
+      @Valid
+    public Map<String, Map<String, String>> getMapOfMapProperty() {
     return mapOfMapProperty;
   }
 
@@ -124,4 +121,3 @@ public class AdditionalPropertiesClass   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

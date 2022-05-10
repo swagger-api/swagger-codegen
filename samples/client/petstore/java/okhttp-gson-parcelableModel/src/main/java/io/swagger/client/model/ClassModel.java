@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,33 +23,36 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * Model for testing model with \&quot;_class\&quot; property
  */
 @Schema(description = "Model for testing model with \"_class\" property")
-public class ClassModel {
 
+public class ClassModel implements Parcelable {
   @SerializedName("_class")
   private String propertyClass = null;
+
+  public ClassModel() {
+  }
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
 
-  
-
-  /**
-  * Get propertyClass
-  * @return propertyClass
+   /**
+   * Get propertyClass
+   * @return propertyClass
   **/
   @Schema(description = "")
   public String getPropertyClass() {
     return propertyClass;
   }
+
   public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,8 +67,9 @@ public class ClassModel {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(propertyClass);
+    return Objects.hash(propertyClass);
   }
+
 
   @Override
   public String toString() {
@@ -87,19 +92,13 @@ public class ClassModel {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(propertyClass);
   }
 
-  public ClassModel() {
-    super();
-  }
-
   ClassModel(Parcel in) {
-    
     propertyClass = (String)in.readValue(null);
-    
   }
 
   public int describeContents() {

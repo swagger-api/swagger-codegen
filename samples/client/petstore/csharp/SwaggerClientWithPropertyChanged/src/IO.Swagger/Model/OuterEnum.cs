@@ -30,18 +30,18 @@ namespace IO.Swagger.Model
         public enum OuterEnum
     {
         /// <summary>
-        /// Enum PLACED for value: "placed"
+        /// Enum Placed for value: placed
         /// </summary>
-        [EnumMember(Value = ""placed"")]
-        PLACED = 0,
+        [EnumMember(Value = "placed")]
+        Placed = 1,
         /// <summary>
-        /// Enum APPROVED for value: "approved"
+        /// Enum Approved for value: approved
         /// </summary>
-        [EnumMember(Value = ""approved"")]
-        APPROVED = 1,
+        [EnumMember(Value = "approved")]
+        Approved = 2,
         /// <summary>
-        /// Enum DELIVERED for value: "delivered"
+        /// Enum Delivered for value: delivered
         /// </summary>
-        [EnumMember(Value = ""delivered"")]
-        DELIVERED = 2    }
+        [EnumMember(Value = "delivered")]
+        Delivered = 3    }
 }

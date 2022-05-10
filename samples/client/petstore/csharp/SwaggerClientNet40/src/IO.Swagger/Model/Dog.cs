@@ -32,10 +32,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Dog" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        public Dog(string  = default(string), string  = default(string), string  = "red") : base(, )
+        /// <param name="breed">breed.</param>
+        public Dog(string breed = default(string), string className = default(string), string color = "red") : base(className, color)
         {
-            this.Breed = ;
+            this.Breed = breed;
         }
         
         /// <summary>
@@ -117,7 +117,6 @@ namespace IO.Swagger.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            foreach(var x in BaseValidate(validationContext)) yield return x;
             yield break;
         }
     }

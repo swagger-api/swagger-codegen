@@ -19,11 +19,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Dog
  */
-public class Dog extends Animal  {
+public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet  {
   @JsonProperty("breed")
   private String breed = null;
 

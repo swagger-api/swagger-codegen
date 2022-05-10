@@ -40,6 +40,14 @@ namespace IO.Swagger.Controllers
         IActionResult DeletePet([FromRoute][Required]long? petId, [FromHeader]string apiKey);
 
         /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        IActionResult DoCategoryStuff([FromBody]SubCategory body);
+
+        /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <remarks>Multiple status values can be provided with comma separated strings</remarks>
@@ -58,6 +66,13 @@ namespace IO.Swagger.Controllers
         IActionResult FindPetsByTags([FromQuery][Required()]List<string> tags);
 
         /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <response code="200">a single random pet</response>
+        IActionResult GetAllPets();
+
+        /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <remarks>Returns a single pet</remarks>
@@ -66,6 +81,13 @@ namespace IO.Swagger.Controllers
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Pet not found</response>
         IActionResult GetPetById([FromRoute][Required]long? petId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <response code="200">a single random pet</response>
+        IActionResult GetRandomPet();
 
         /// <summary>
         /// Update an existing pet

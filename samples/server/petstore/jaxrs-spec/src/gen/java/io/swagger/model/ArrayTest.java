@@ -13,9 +13,12 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ArrayTest  implements Serializable {
+public class ArrayTest  implements Serializable  {
+
   private @Valid List<String> arrayOfString = new ArrayList<String>();
+
   private @Valid List<List<Long>> arrayArrayOfInteger = new ArrayList<List<Long>>();
+
   private @Valid List<List<ReadOnlyFirst>> arrayArrayOfModel = new ArrayList<List<ReadOnlyFirst>>();
 
   /**

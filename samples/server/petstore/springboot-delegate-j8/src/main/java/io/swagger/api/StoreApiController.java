@@ -1,8 +1,8 @@
 package io.swagger.api;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class StoreApiController implements StoreApi {
 
     private final StoreApiDelegate delegate;

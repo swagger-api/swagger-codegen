@@ -18,11 +18,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Dog
  */
-public class Dog extends Animal  {
+public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet  {
   @JsonProperty("breed")
   private String breed = null;
 

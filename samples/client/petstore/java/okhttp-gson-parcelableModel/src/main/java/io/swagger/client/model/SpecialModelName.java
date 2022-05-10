@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,33 +23,36 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * SpecialModelName
  */
 
-public class SpecialModelName {
 
+public class SpecialModelName implements Parcelable {
   @SerializedName("$special[property.name]")
   private Long $specialPropertyName = null;
+
+  public SpecialModelName() {
+  }
   public SpecialModelName $specialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
     return this;
   }
 
-  
-
-  /**
-  * Get $specialPropertyName
-  * @return $specialPropertyName
+   /**
+   * Get $specialPropertyName
+   * @return $specialPropertyName
   **/
   @Schema(description = "")
   public Long get$SpecialPropertyName() {
     return $specialPropertyName;
   }
+
   public void set$SpecialPropertyName(Long $specialPropertyName) {
     this.$specialPropertyName = $specialPropertyName;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,8 +67,9 @@ public class SpecialModelName {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash($specialPropertyName);
+    return Objects.hash($specialPropertyName);
   }
+
 
   @Override
   public String toString() {
@@ -87,19 +92,13 @@ public class SpecialModelName {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue($specialPropertyName);
   }
 
-  public SpecialModelName() {
-    super();
-  }
-
   SpecialModelName(Parcel in) {
-    
     $specialPropertyName = (Long)in.readValue(null);
-    
   }
 
   public int describeContents() {

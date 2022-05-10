@@ -14,43 +14,41 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class MapTest  {
+public class MapTest   {
   
   @Schema(description = "")
   private Map<String, Map<String, String>> mapMapOfString = null;
-@XmlType(name="InnerEnum")
-@XmlEnum(String.class)
-public enum InnerEnum {
-
-@XmlEnumValue("UPPER") UPPER(String.valueOf("UPPER")), @XmlEnumValue("lower") LOWER(String.valueOf("lower"));
-
+  public enum InnerEnum {
+    UPPER("UPPER"),
+    LOWER("lower");
 
     private String value;
 
-    InnerEnum (String v) {
-        value = v;
+    InnerEnum(String value) {
+      this.value = value;
     }
-
-    public String value() {
-        return value;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+      return String.valueOf(value);
     }
-
-    public static InnerEnum fromValue(String v) {
-        for (InnerEnum b : InnerEnum.values()) {
-            if (String.valueOf(b.value).equals(v)) {
-                return b;
-            }
+    @JsonCreator
+    public static InnerEnum fromValue(String text) {
+      for (InnerEnum b : InnerEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
         }
-        return null;
+      }
+      return null;
     }
-}
-  
+  }  
   @Schema(description = "")
   private Map<String, InnerEnum> mapOfEnumString = null;
  /**

@@ -116,6 +116,14 @@ public abstract class CodegenObject implements VendorExtendable {
         return getBooleanValue(CodegenConstants.IS_PRIMITIVE_TYPE_EXT_NAME);
     }
 
+    public Boolean getIsObject() {
+        return getBooleanValue(CodegenConstants.IS_OBJECT_EXT_NAME);
+    }
+
+    public Boolean getHasInnerObject() {
+        return getBooleanValue(CodegenConstants.HAS_INNER_OBJECT_NAME);
+    }
+
     public Boolean getIsContainer() {
         return getBooleanValue(CodegenConstants.IS_CONTAINER_EXT_NAME);
     }
@@ -126,6 +134,10 @@ public abstract class CodegenObject implements VendorExtendable {
 
     public Boolean getIsReadOnly() {
         return getBooleanValue(CodegenConstants.IS_READ_ONLY_EXT_NAME);
+    }
+
+    public Boolean getIsNullable() {
+        return getBooleanValue(CodegenConstants.IS_NULLABLE_EXT_NAME);
     }
 
     public Boolean getIsCollectionFormatMulti() {

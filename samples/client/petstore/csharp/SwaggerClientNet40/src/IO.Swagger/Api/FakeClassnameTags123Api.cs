@@ -31,8 +31,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Client</returns>
-        Client TestClassname (Client body);
+        /// <returns>ModelClient</returns>
+        ModelClient TestClassname (ModelClient body);
 
         /// <summary>
         /// To test class name in snake case
@@ -42,8 +42,8 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of Client</returns>
-        ApiResponse<Client> TestClassnameWithHttpInfo (Client body);
+        /// <returns>ApiResponse of ModelClient</returns>
+        ApiResponse<ModelClient> TestClassnameWithHttpInfo (ModelClient body);
         #endregion Synchronous Operations
     }
 
@@ -61,6 +61,17 @@ namespace IO.Swagger.Api
         public FakeClassnameTags123Api(String basePath)
         {
             this.Configuration = new IO.Swagger.Client.Configuration { BasePath = basePath };
+
+            ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FakeClassnameTags123Api"/> class
+        /// </summary>
+        /// <returns></returns>
+        public FakeClassnameTags123Api()
+        {
+            this.Configuration = IO.Swagger.Client.Configuration.Default;
 
             ExceptionFactory = IO.Swagger.Client.Configuration.DefaultExceptionFactory;
         }
@@ -149,10 +160,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>Client</returns>
-        public Client TestClassname (Client body)
+        /// <returns>ModelClient</returns>
+        public ModelClient TestClassname (ModelClient body)
         {
-             ApiResponse<Client> localVarResponse = TestClassnameWithHttpInfo(body);
+             ApiResponse<ModelClient> localVarResponse = TestClassnameWithHttpInfo(body);
              return localVarResponse.Data;
         }
 
@@ -161,8 +172,8 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
-        /// <returns>ApiResponse of Client</returns>
-        public ApiResponse< Client > TestClassnameWithHttpInfo (Client body)
+        /// <returns>ApiResponse of ModelClient</returns>
+        public ApiResponse< ModelClient > TestClassnameWithHttpInfo (ModelClient body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -198,7 +209,6 @@ namespace IO.Swagger.Api
             {
                 localVarPostBody = body; // byte array
             }
-
             // authentication (api_key_query) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("api_key_query")))
             {
@@ -218,9 +228,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Client>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Client) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Client)));
+            return new ApiResponse<ModelClient>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (ModelClient) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ModelClient)));
         }
 
     }

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -20,34 +21,34 @@ import io.swagger.client.model.Animal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-
 /**
  * Cat
  */
 
-public class Cat extends Animal {
 
+public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("declawed")
-
   private Boolean declawed = null;
+
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
   }
 
-  
-
-  /**
-  * Get declawed
-  * @return declawed
+   /**
+   * Get declawed
+   * @return declawed
   **/
-    @Schema(description = "")
+  @Schema(description = "")
   public Boolean isDeclawed() {
     return declawed;
   }
+
   public void setDeclawed(Boolean declawed) {
     this.declawed = declawed;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -63,8 +64,9 @@ public class Cat extends Animal {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(declawed, super.hashCode());
+    return Objects.hash(declawed, super.hashCode());
   }
+
 
   @Override
   public String toString() {

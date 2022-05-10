@@ -24,8 +24,7 @@ public class StoreApiControllerIntegrationTest {
 
     @Test
     public void deleteOrderTest() throws Exception {
-        String orderId = "orderId_example";
-        ResponseEntity<Void> responseEntity = api.deleteOrder(orderId);
+        ResponseEntity<Void> responseEntity = api.deleteOrder(10L);
         assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
     }
 

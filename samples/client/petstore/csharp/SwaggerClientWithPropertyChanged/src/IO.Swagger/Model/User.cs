@@ -32,24 +32,24 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">.</param>
-        /// <param name="">User Status.</param>
-        public User(long?  = default(long?), string  = default(string), string  = default(string), string  = default(string), string  = default(string), string  = default(string), string  = default(string), int?  = default(int?))
+        /// <param name="id">id.</param>
+        /// <param name="username">username.</param>
+        /// <param name="firstName">firstName.</param>
+        /// <param name="lastName">lastName.</param>
+        /// <param name="email">email.</param>
+        /// <param name="password">password.</param>
+        /// <param name="phone">phone.</param>
+        /// <param name="userStatus">User Status.</param>
+        public User(long? id = default(long?), string username = default(string), string firstName = default(string), string lastName = default(string), string email = default(string), string password = default(string), string phone = default(string), int? userStatus = default(int?))
         {
-            this.Id = ;
-            this.Username = ;
-            this.FirstName = ;
-            this.LastName = ;
-            this.Email = ;
-            this.Password = ;
-            this.Phone = ;
-            this.UserStatus = ;
+            this.Id = id;
+            this.Username = username;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Email = email;
+            this.Password = password;
+            this.Phone = phone;
+            this.UserStatus = userStatus;
         }
         
         /// <summary>

@@ -13,6 +13,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,12 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Parcelable;
 import android.os.Parcel;
-
 /**
  * EnumArrays
  */
 
-public class EnumArrays {
+
+public class EnumArrays implements Parcelable {
   /**
    * Gets or Sets justSymbol
    */
@@ -67,13 +68,13 @@ public class EnumArrays {
 
       @Override
       public JustSymbolEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return JustSymbolEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("just_symbol")
+  }  @SerializedName("just_symbol")
   private JustSymbolEnum justSymbol = null;
+
   /**
    * Gets or Sets arrayEnum
    */
@@ -111,31 +112,33 @@ public class EnumArrays {
 
       @Override
       public ArrayEnumEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
+        Object value = jsonReader.nextString();
         return ArrayEnumEnum.fromValue(String.valueOf(value));
       }
     }
-  }
-  @SerializedName("array_enum")
+  }  @SerializedName("array_enum")
   private List<ArrayEnumEnum> arrayEnum = null;
+
+  public EnumArrays() {
+  }
   public EnumArrays justSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
     return this;
   }
 
-  
-
-  /**
-  * Get justSymbol
-  * @return justSymbol
+   /**
+   * Get justSymbol
+   * @return justSymbol
   **/
   @Schema(description = "")
   public JustSymbolEnum getJustSymbol() {
     return justSymbol;
   }
+
   public void setJustSymbol(JustSymbolEnum justSymbol) {
     this.justSymbol = justSymbol;
   }
+
   public EnumArrays arrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
     return this;
@@ -149,17 +152,20 @@ public class EnumArrays {
     return this;
   }
 
-  /**
-  * Get arrayEnum
-  * @return arrayEnum
+   /**
+   * Get arrayEnum
+   * @return arrayEnum
   **/
   @Schema(description = "")
   public List<ArrayEnumEnum> getArrayEnum() {
     return arrayEnum;
   }
+
   public void setArrayEnum(List<ArrayEnumEnum> arrayEnum) {
     this.arrayEnum = arrayEnum;
   }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -175,8 +181,9 @@ public class EnumArrays {
 
   @Override
   public int hashCode() {
-    return java.util.Objects.hash(justSymbol, arrayEnum);
+    return Objects.hash(justSymbol, arrayEnum);
   }
+
 
   @Override
   public String toString() {
@@ -200,22 +207,15 @@ public class EnumArrays {
     return o.toString().replace("\n", "\n    ");
   }
 
+
   public void writeToParcel(Parcel out, int flags) {
-    
     out.writeValue(justSymbol);
     out.writeValue(arrayEnum);
   }
 
-  public EnumArrays() {
-    super();
-  }
-
   EnumArrays(Parcel in) {
-    
     justSymbol = (JustSymbolEnum)in.readValue(null);
-    
     arrayEnum = (List<ArrayEnumEnum>)in.readValue(null);
-    
   }
 
   public int describeContents() {

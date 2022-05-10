@@ -48,7 +48,7 @@ public interface StoreApi {
    */
   @GET("store/order/{order_id}")
   CompletionStage<Response<Order>> getOrderById(
-            @retrofit2.http.Path("order_id") Integer orderId            
+            @retrofit2.http.Path("order_id") Long orderId            
   );
 
   /**
