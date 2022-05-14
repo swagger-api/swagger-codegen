@@ -64,7 +64,7 @@ jobs:
         continue-on-error: true
         uses: ./.github/actions/generate
         with:
-          language: java
+          language: spring
           job-name: ${{ env.JOB_NAME }}
           spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/3.0.0/modules/swagger-codegen/src/test/resources/3_0_0/petstore-with-issue-cases.yaml
           options: --library spring-mvc -Djava8=true
