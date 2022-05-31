@@ -4110,4 +4110,8 @@ public class DefaultCodegen {
         }
         return false;
     }
+
+    public boolean isUsingFlattenSpec() {
+        return true;
+    }
 }
