@@ -446,7 +446,9 @@ public class CodegenConfigurator implements Serializable {
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
         ParseOptions parseOptions = new ParseOptions();
         parseOptions.setResolve(true);
-        parseOptions.setFlatten(true);
+        if (config.isUsingFlattenSpec()) {
+            parseOptions.setFlatten(true);
+        }
         Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, parseOptions);
 
         input.opts(new ClientOpts())
