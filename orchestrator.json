@@ -1,0 +1,4934 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api Documentation",
+    "description": "Api Documentation",
+    "termsOfService": "urn:tos",
+    "contact": {},
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8100",
+      "description": "Inferred Url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "_2c-2p-callback-resource",
+      "description": "_2c 2p Callback Resource"
+    },
+    {
+      "name": "admin-workflow-resource",
+      "description": "Admin Workflow Resource"
+    },
+    {
+      "name": "basic-error-controller",
+      "description": "Basic Error Controller"
+    },
+    {
+      "name": "cancel-sandbox",
+      "description": "Cancel Sandbox"
+    },
+    {
+      "name": "eghl-call-back-resource",
+      "description": "Eghl Call Back Resource"
+    },
+    {
+      "name": "health-check-resource",
+      "description": "Health Check Resource"
+    },
+    {
+      "name": "mobile-card-registration-resource",
+      "description": "Mobile Card Registration Resource"
+    },
+    {
+      "name": "operation-handler",
+      "description": "Operation Handler"
+    },
+    {
+      "name": "payments-resource",
+      "description": "Payments Resource"
+    },
+    {
+      "name": "psp-callback-resource",
+      "description": "Psp Callback Resource"
+    },
+    {
+      "name": "psp-performance-resource",
+      "description": "Psp Performance Resource"
+    },
+    {
+      "name": "psp-reconciliation",
+      "description": "PSP Reconciliation"
+    },
+    {
+      "name": "pump-life-cycle-resource",
+      "description": "Pump Life Cycle Resource"
+    },
+    {
+      "name": "pump-performance-resource",
+      "description": "Pump Performance Resource"
+    },
+    {
+      "name": "shell-server-to-server-resource",
+      "description": "Shell Server To Server Resource"
+    },
+    {
+      "name": "test-fuelling-workflow-resource",
+      "description": "Test Fuelling Workflow Resource"
+    },
+    {
+      "name": "transaction-status-resource",
+      "description": "Transaction Status Resource"
+    },
+    {
+      "name": "txn-status-resource",
+      "description": "Txn Status Resource"
+    },
+    {
+      "name": "web-mvc-links-handler",
+      "description": "Web Mvc Links Handler"
+    }
+  ],
+  "paths": {
+    "/orchestrator/payments/webhooks/2c2p/fuelling-callback": {
+      "post": {
+        "tags": [
+          "_2c-2p-callback-resource"
+        ],
+        "summary": "fuellingCallBack",
+        "operationId": "fuellingCallBackUsingPOST",
+        "parameters": [
+          {
+            "name": "defaultCard",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "extCorrelationID",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "paymentProvider",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/_2c2pCallbackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/webhooks/2c2p/register-callback": {
+      "post": {
+        "tags": [
+          "_2c-2p-callback-resource"
+        ],
+        "summary": "registerCallBack",
+        "operationId": "registerCallBackUsingPOST",
+        "parameters": [
+          {
+            "name": "defaultCard",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "extCorrelationID",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "paymentProvider",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/_2c2pCallbackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/workflow": {
+      "get": {
+        "tags": [
+          "admin-workflow-resource"
+        ],
+        "summary": "get",
+        "operationId": "getUsingGET",
+        "parameters": [
+          {
+            "name": "allVersions",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEntityResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin-workflow-resource"
+        ],
+        "summary": "create",
+        "operationId": "createUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkflowProcess"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse«WorkFlowCreationResponse»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/workflow/promotion": {
+      "put": {
+        "tags": [
+          "admin-workflow-resource"
+        ],
+        "summary": "promoteWorkFlow",
+        "operationId": "promoteWorkFlowUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkFlowPromote"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatedEntityResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/error": {
+      "get": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingPUT",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingPOST",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingDELETE",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "options": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingOPTIONS",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingHEAD",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingPATCH",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "trace": {
+        "tags": [
+          "basic-error-controller"
+        ],
+        "summary": "errorHtml",
+        "operationId": "errorHtmlUsingTRACE",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelAndView"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/v1/site/cancel": {
+      "post": {
+        "tags": [
+          "cancel-sandbox"
+        ],
+        "summary": "cancel",
+        "operationId": "cancelUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/webhooks/eghl/callback": {
+      "post": {
+        "tags": [
+          "eghl-call-back-resource"
+        ],
+        "summary": "saveToken",
+        "operationId": "saveTokenUsingPOST",
+        "parameters": [
+          {
+            "name": "shouldSave",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/webhooks/eghl/payment-identifier": {
+      "post": {
+        "tags": [
+          "eghl-call-back-resource"
+        ],
+        "summary": "generateToken",
+        "operationId": "generateTokenUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenizeRO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«TokenizeRO»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/webhooks/eghl/transaction": {
+      "post": {
+        "tags": [
+          "eghl-call-back-resource"
+        ],
+        "summary": "callback",
+        "operationId": "callbackUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/ping": {
+      "get": {
+        "tags": [
+          "health-check-resource"
+        ],
+        "summary": "application health check",
+        "operationId": "healthCheckUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/register-paymentIdV1": {
+      "post": {
+        "tags": [
+          "mobile-card-registration-resource"
+        ],
+        "summary": "registerPaymentId",
+        "operationId": "registerPaymentIdUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRegisterROReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«CardRegisterRO»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/register-paymentId": {
+      "post": {
+        "tags": [
+          "mobile-card-registration-resource"
+        ],
+        "summary": "generatePaymentIdentifier",
+        "operationId": "generatePaymentIdentifierUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenizeRO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«TokenizeRO»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/actuator/health": {
+      "get": {
+        "tags": [
+          "operation-handler"
+        ],
+        "summary": "handle",
+        "operationId": "handleUsingGET",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/actuator/health/**": {
+      "get": {
+        "tags": [
+          "operation-handler"
+        ],
+        "summary": "handle",
+        "operationId": "handleUsingGET_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/actuator/info": {
+      "get": {
+        "tags": [
+          "operation-handler"
+        ],
+        "summary": "handle",
+        "operationId": "handleUsingGET_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/actuator/prometheus": {
+      "get": {
+        "tags": [
+          "operation-handler"
+        ],
+        "summary": "handle",
+        "operationId": "handleUsingGET_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain;version=0.0.4;charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/openmetrics-text;version=1.0.0;charset=utf-8": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/workflow/shell/billing/evaluateOffer": {
+      "post": {
+        "tags": [
+          "payments-resource"
+        ],
+        "summary": "evaluateOffers",
+        "operationId": "evaluateOffersUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OfferEvaluationReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse«OfferEvaluation»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/workflow/shell/billing/transactionAdd": {
+      "post": {
+        "tags": [
+          "payments-resource"
+        ],
+        "summary": "txnAdd",
+        "operationId": "txnAddUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionAddRO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionAddResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/workflow/psp/payment-identifier": {
+      "post": {
+        "tags": [
+          "psp-callback-resource"
+        ],
+        "summary": "generateToken",
+        "operationId": "generateTokenUsingPOST_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenizeRO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«TokenizeRO»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/failure-rate/bank": {
+      "get": {
+        "tags": [
+          "psp-performance-resource"
+        ],
+        "summary": "pspStat",
+        "operationId": "pspStatUsingGET",
+        "parameters": [
+          {
+            "name": "bankName",
+            "in": "query",
+            "required": false,
+            "style": "pipeDelimited",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "durationHours",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "maximum": 12,
+              "exclusiveMaximum": false,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "psp",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatResponse«Map«string,PerformanceBo»»"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/reconciliation/capture": {
+      "post": {
+        "tags": [
+          "psp-reconciliation"
+        ],
+        "summary": "reconciliationCapture",
+        "operationId": "reconciliationCaptureUsingPOST",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/reconciliation/registration-reversal": {
+      "post": {
+        "tags": [
+          "psp-reconciliation"
+        ],
+        "summary": "reconciliationRegistrationReversal",
+        "operationId": "reconciliationRegistrationReversalUsingPOST",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/pump-activate": {
+      "post": {
+        "tags": [
+          "pump-life-cycle-resource"
+        ],
+        "summary": "activatePump",
+        "operationId": "activatePumpUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreAuthorizeStep"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«PreAuthorizeStep»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/pump-cancel": {
+      "post": {
+        "tags": [
+          "pump-life-cycle-resource"
+        ],
+        "summary": "cancelPump",
+        "operationId": "cancelPumpUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/pump-reserve": {
+      "post": {
+        "tags": [
+          "pump-life-cycle-resource"
+        ],
+        "summary": "pumpReserve",
+        "operationId": "pumpReserveUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PumpReserve"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«PumpReserve»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/failure-rate/pump": {
+      "get": {
+        "tags": [
+          "pump-performance-resource"
+        ],
+        "summary": "pumpStat",
+        "operationId": "pumpStatUsingGET",
+        "parameters": [
+          {
+            "name": "durationHours",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "maximum": 12,
+              "exclusiveMaximum": false,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatResponse«Map«string,PerformanceBo»»"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/v1/site/finalize-txn": {
+      "post": {
+        "tags": [
+          "shell-server-to-server-resource"
+        ],
+        "summary": "finalizeTransaction",
+        "operationId": "finalizeTransactionUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionAddRO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/v1/site/get-offers": {
+      "post": {
+        "tags": [
+          "shell-server-to-server-resource"
+        ],
+        "summary": "offerEvaluation",
+        "operationId": "offerEvaluationUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OfferEvaluation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferEvaluation"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/pumpReserve/{version}": {
+      "post": {
+        "tags": [
+          "test-fuelling-workflow-resource"
+        ],
+        "summary": "pumpReserveWithGivenVersion",
+        "operationId": "pumpReserveWithGivenVersionUsingPOST",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "description": "version",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PumpReserve"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MobileResponseBody«PumpReserve»"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/app/v1/fuelling-status": {
+      "get": {
+        "tags": [
+          "transaction-status-resource"
+        ],
+        "summary": "status",
+        "operationId": "statusUsingGET",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "paymentId",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppTransactionStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/intouch/txn-status/payment-id/{paymentId}": {
+      "get": {
+        "tags": [
+          "txn-status-resource"
+        ],
+        "summary": "getStatusByPaymentId",
+        "operationId": "getStatusByPaymentIdUsingGET",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "paymentId",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse«TxnStatusBo»"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/orchestrator/payments/intouch/txn-status/user-id/{userId}": {
+      "get": {
+        "tags": [
+          "txn-status-resource"
+        ],
+        "summary": "getStatusByUserId",
+        "operationId": "getStatusByUserIdUsingGET",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleResponse«UserTxnsBo»"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/actuator": {
+      "get": {
+        "tags": [
+          "web-mvc-links-handler"
+        ],
+        "summary": "links",
+        "operationId": "linksUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionInput": {
+        "title": "ActionInput",
+        "type": "object",
+        "properties": {
+          "actionName": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/CustomerInfo"
+          },
+          "entityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "input": {
+            "type": "object"
+          },
+          "orgId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "workFlowName": {
+            "type": "string"
+          }
+        }
+      },
+      "AppTransactionStatusResponse": {
+        "title": "AppTransactionStatusResponse",
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "preAuthAmount": {
+            "type": "string"
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "pumpNumber": {
+            "type": "string"
+          },
+          "stationId": {
+            "type": "string"
+          },
+          "transactionState": {
+            "type": "string",
+            "enum": [
+              "BILL_GENERATED",
+              "FUELING_CANCELLED_BY_CUSTOMER",
+              "FUELING_CANCELLED_BY_STATION",
+              "PUMP_ACTIVATION_FAIL",
+              "PUMP_ACTIVATION_SUCCESS",
+              "PUMP_RESERVE_FAIL",
+              "PUMP_RESERVE_SUCCESS",
+              "TXN_STATE_UNKNOWN"
+            ]
+          }
+        }
+      },
+      "ApplicableVoucher": {
+        "title": "ApplicableVoucher",
+        "type": "object",
+        "properties": {
+          "additionVoucherInfo": {
+            "type": "string"
+          },
+          "expiryDate": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "promotionType": {
+            "type": "string"
+          },
+          "referenceID": {
+            "type": "string"
+          },
+          "voucherCode": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "string"
+          },
+          "voucherValue": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "ApplicableVoucherReq": {
+        "title": "ApplicableVoucherReq",
+        "type": "object",
+        "properties": {
+          "additionVoucherInfo": {
+            "type": "string"
+          },
+          "expiryDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "promotionType": {
+            "type": "string"
+          },
+          "referenceID": {
+            "type": "string"
+          },
+          "voucherCode": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "string"
+          },
+          "voucherValue": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicableVoucherRes": {
+        "title": "ApplicableVoucherRes",
+        "type": "object",
+        "properties": {
+          "additionVoucherInfo": {
+            "type": "string"
+          },
+          "expiryDate": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "promotionType": {
+            "type": "string"
+          },
+          "referenceID": {
+            "type": "string"
+          },
+          "voucherCode": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "string"
+          },
+          "voucherValue": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "Authorization": {
+        "title": "Authorization",
+        "type": "object",
+        "properties": {
+          "approvalCode": {
+            "type": "string"
+          },
+          "batch": {
+            "type": "string"
+          },
+          "couponCode": {
+            "type": "string"
+          },
+          "coupons": {
+            "type": "string"
+          },
+          "merchantName": {
+            "type": "string"
+          },
+          "siteAddress": {
+            "type": "string"
+          },
+          "siteName": {
+            "type": "string"
+          },
+          "stan": {
+            "type": "string"
+          },
+          "terminalID": {
+            "type": "string"
+          }
+        }
+      },
+      "CallBackLogsDto": {
+        "title": "CallBackLogsDto",
+        "type": "object",
+        "properties": {
+          "callbackVerified": {
+            "type": "boolean"
+          },
+          "captureAmount": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "finalStatus": {
+            "type": "string",
+            "enum": [
+              "FAILED",
+              "IN_PROGRESS",
+              "SUCCESS"
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "metaData": {
+            "type": "string"
+          },
+          "nextStep": {
+            "type": "string"
+          },
+          "nonTerminatingErrorLocation": {
+            "type": "string"
+          },
+          "nonTerminatingErrorMessage": {
+            "type": "string"
+          },
+          "orgId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "paymentProviderName": {
+            "type": "string"
+          },
+          "preAuthAmount": {
+            "type": "string"
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string"
+          },
+          "terminatingErrorLocation": {
+            "type": "string"
+          },
+          "terminatingErrorMessage": {
+            "type": "string"
+          },
+          "transactionErrorMessage": {
+            "type": "string"
+          },
+          "transactionFailureFlag": {
+            "type": "string",
+            "enum": [
+              "CALLBACK_SOURCE_UNKNOWN",
+              "FRAUD_AUTH_NOT_EXIST",
+              "FUELLING_AUTH_CONFIRMED",
+              "FUELLING_CALLBACK_PROCESSED",
+              "FUELLING_CAPTURE",
+              "FUELLING_CAPTURE_AMOUNT_MORE_THAN_AUTH",
+              "FUELLING_CAPTURE_FAIL",
+              "NON",
+              "PAYMENT_ID_GENERATED",
+              "PAYMENT_ID_MISSING_IN_DB",
+              "PSP_AUTH_FAIL",
+              "REGISTRATION_CALLBACK_PROCESSED",
+              "REGISTRATION_CARD_REVERSAL",
+              "REGISTRATION_REVERSAL_FAIL_RETRY",
+              "REVERSAL_AMOUNT_BELOW_MIN",
+              "ROLLBACK_REVERSAL",
+              "ROLLBACK_REVERSAL_FAIL_RETRY",
+              "TAMPERED_DATA"
+            ]
+          },
+          "txnProcessingState": {
+            "type": "string",
+            "enum": [
+              "CALLBACK_SOURCE_UNKNOWN",
+              "FRAUD_AUTH_NOT_EXIST",
+              "FUELLING_AUTH_CONFIRMED",
+              "FUELLING_CALLBACK_PROCESSED",
+              "FUELLING_CAPTURE",
+              "FUELLING_CAPTURE_AMOUNT_MORE_THAN_AUTH",
+              "FUELLING_CAPTURE_FAIL",
+              "NON",
+              "PAYMENT_ID_GENERATED",
+              "PAYMENT_ID_MISSING_IN_DB",
+              "PSP_AUTH_FAIL",
+              "REGISTRATION_CALLBACK_PROCESSED",
+              "REGISTRATION_CARD_REVERSAL",
+              "REGISTRATION_REVERSAL_FAIL_RETRY",
+              "REVERSAL_AMOUNT_BELOW_MIN",
+              "ROLLBACK_REVERSAL",
+              "ROLLBACK_REVERSAL_FAIL_RETRY",
+              "TAMPERED_DATA"
+            ]
+          },
+          "txnReferenceNumber": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "workflowName": {
+            "type": "string"
+          }
+        }
+      },
+      "CancelRO": {
+        "title": "CancelRO",
+        "type": "object",
+        "properties": {
+          "mobilePaymentData": {
+            "$ref": "#/components/schemas/MobilePaymentData"
+          },
+          "requestData": {
+            "$ref": "#/components/schemas/RequestData"
+          }
+        }
+      },
+      "CancelRequest": {
+        "title": "CancelRequest",
+        "type": "object",
+        "properties": {
+          "processInstanceId": {
+            "type": "string"
+          }
+        }
+      },
+      "CancelResponse": {
+        "title": "CancelResponse",
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "CardRegisterROReq": {
+        "title": "CardRegisterROReq",
+        "required": [
+          "currencyCode",
+          "customerInfo",
+          "paymentProviderName",
+          "registrationAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/CustomerInfo"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "paymentProviderName": {
+            "type": "string"
+          },
+          "registrationAmount": {
+            "type": "string"
+          }
+        }
+      },
+      "CardRegisterRORes": {
+        "title": "CardRegisterRORes",
+        "required": [
+          "currencyCode",
+          "customerInfo",
+          "paymentProviderName",
+          "registrationAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/CustomerInfo"
+          },
+          "loyaltyPan": {
+            "type": "string"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "paymentProviderName": {
+            "type": "string"
+          },
+          "registrationAmount": {
+            "type": "string"
+          }
+        }
+      },
+      "CardValue": {
+        "title": "CardValue",
+        "type": "object",
+        "properties": {
+          "cardCircuit": {
+            "type": "string"
+          },
+          "cardEntryMode": {
+            "type": "string"
+          },
+          "cardID": {
+            "type": "string"
+          },
+          "inString": {
+            "type": "string"
+          },
+          "loyaltyExceptionIndicator": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "methodOfPaymentID": {
+            "type": "string"
+          },
+          "methodOfPaymentName": {
+            "type": "string"
+          },
+          "pointsRedeemed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAmount": {
+            "type": "string"
+          },
+          "trackers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tracker"
+            }
+          }
+        }
+      },
+      "CustomerData": {
+        "title": "CustomerData",
+        "required": [
+          "customerDataType",
+          "customerDataValue"
+        ],
+        "type": "object",
+        "properties": {
+          "customerDataType": {
+            "type": "string"
+          },
+          "customerDataValue": {
+            "type": "string"
+          },
+          "loyaltyType": {
+            "type": "string"
+          },
+          "pointsRedeemed": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "CustomerDataReq": {
+        "title": "CustomerDataReq",
+        "type": "object",
+        "properties": {
+          "customerDataType": {
+            "type": "string"
+          },
+          "customerDataValue": {
+            "type": "string"
+          },
+          "loyaltyType": {
+            "type": "string"
+          },
+          "pointsRedeemed": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "CustomerDataRes": {
+        "title": "CustomerDataRes",
+        "required": [
+          "customerDataType",
+          "customerDataValue"
+        ],
+        "type": "object",
+        "properties": {
+          "customerDataType": {
+            "type": "string"
+          },
+          "customerDataValue": {
+            "type": "string"
+          },
+          "loyaltyType": {
+            "type": "string"
+          },
+          "pointsRedeemed": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "CustomerInfo": {
+        "title": "CustomerInfo",
+        "required": [
+          "identifierName"
+        ],
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "identifierName": {
+            "type": "string",
+            "enum": [
+              "cardnumber",
+              "email",
+              "externalId",
+              "mobile",
+              "wechat"
+            ]
+          },
+          "identifierValue": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      },
+      "GetEntityResponse": {
+        "title": "GetEntityResponse",
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "workflowMeta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgWorkflowMetaDto"
+            }
+          }
+        }
+      },
+      "Link": {
+        "title": "Link",
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "templated": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LoyaltyDetails": {
+        "title": "LoyaltyDetails",
+        "type": "object",
+        "properties": {
+          "loyaltyPAN": {
+            "type": "string"
+          },
+          "loyaltyType": {
+            "type": "string"
+          },
+          "methodOfPaymentID": {
+            "type": "string"
+          },
+          "methodOfPaymentName": {
+            "type": "string"
+          },
+          "pointsRedeemed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "trackers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tracker"
+            }
+          }
+        }
+      },
+      "LoyaltyOffer": {
+        "title": "LoyaltyOffer",
+        "type": "object",
+        "properties": {
+          "loyaltyOfferDescription": {
+            "type": "string"
+          },
+          "loyaltyOfferID": {
+            "type": "string"
+          },
+          "promotionType": {
+            "type": "string",
+            "enum": [
+              "Cart",
+              "lineitem"
+            ]
+          },
+          "referenceID": {
+            "type": "string"
+          }
+        }
+      },
+      "Message": {
+        "title": "Message",
+        "type": "object",
+        "properties": {
+          "cashierMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "MobilePaymentData": {
+        "title": "MobilePaymentData",
+        "type": "object",
+        "properties": {
+          "acquirerID": {
+            "type": "string"
+          },
+          "globalRetailSiteID": {
+            "type": "string"
+          },
+          "loyaltyDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoyaltyDetails"
+            }
+          },
+          "loyaltyExceptionIndicator": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "merchantID": {
+            "type": "string"
+          },
+          "methodOfPaymentID": {
+            "type": "string"
+          },
+          "methodOfPaymentName": {
+            "type": "string"
+          },
+          "paymentData": {
+            "type": "string"
+          },
+          "paymentServiceProvider": {
+            "type": "string"
+          },
+          "pumpNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "MobileResponseBody«CardRegisterRO»": {
+        "title": "MobileResponseBody«CardRegisterRO»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CardRegisterRORes"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "MobileResponseBody«PreAuthorizeStep»": {
+        "title": "MobileResponseBody«PreAuthorizeStep»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PreAuthorizeStep"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "MobileResponseBody«PumpReserve»": {
+        "title": "MobileResponseBody«PumpReserve»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PumpReserve"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "MobileResponseBody«TokenizeRO»": {
+        "title": "MobileResponseBody«TokenizeRO»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TokenizeRO"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "ModelAndView": {
+        "title": "ModelAndView",
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          },
+          "model": {
+            "type": "object"
+          },
+          "modelMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          },
+          "reference": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "ALREADY_REPORTED",
+              "BAD_GATEWAY",
+              "BAD_REQUEST",
+              "BANDWIDTH_LIMIT_EXCEEDED",
+              "CHECKPOINT",
+              "CONFLICT",
+              "CONTINUE",
+              "CREATED",
+              "DESTINATION_LOCKED",
+              "EXPECTATION_FAILED",
+              "FAILED_DEPENDENCY",
+              "FORBIDDEN",
+              "FOUND",
+              "GATEWAY_TIMEOUT",
+              "GONE",
+              "HTTP_VERSION_NOT_SUPPORTED",
+              "IM_USED",
+              "INSUFFICIENT_SPACE_ON_RESOURCE",
+              "INSUFFICIENT_STORAGE",
+              "INTERNAL_SERVER_ERROR",
+              "I_AM_A_TEAPOT",
+              "LENGTH_REQUIRED",
+              "LOCKED",
+              "LOOP_DETECTED",
+              "METHOD_FAILURE",
+              "METHOD_NOT_ALLOWED",
+              "MOVED_PERMANENTLY",
+              "MOVED_TEMPORARILY",
+              "MULTIPLE_CHOICES",
+              "MULTI_STATUS",
+              "NETWORK_AUTHENTICATION_REQUIRED",
+              "NON_AUTHORITATIVE_INFORMATION",
+              "NOT_ACCEPTABLE",
+              "NOT_EXTENDED",
+              "NOT_FOUND",
+              "NOT_IMPLEMENTED",
+              "NOT_MODIFIED",
+              "NO_CONTENT",
+              "OK",
+              "PARTIAL_CONTENT",
+              "PAYLOAD_TOO_LARGE",
+              "PAYMENT_REQUIRED",
+              "PERMANENT_REDIRECT",
+              "PRECONDITION_FAILED",
+              "PRECONDITION_REQUIRED",
+              "PROCESSING",
+              "PROXY_AUTHENTICATION_REQUIRED",
+              "REQUESTED_RANGE_NOT_SATISFIABLE",
+              "REQUEST_ENTITY_TOO_LARGE",
+              "REQUEST_HEADER_FIELDS_TOO_LARGE",
+              "REQUEST_TIMEOUT",
+              "REQUEST_URI_TOO_LONG",
+              "RESET_CONTENT",
+              "SEE_OTHER",
+              "SERVICE_UNAVAILABLE",
+              "SWITCHING_PROTOCOLS",
+              "TEMPORARY_REDIRECT",
+              "TOO_EARLY",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "UNAVAILABLE_FOR_LEGAL_REASONS",
+              "UNPROCESSABLE_ENTITY",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "UPGRADE_REQUIRED",
+              "URI_TOO_LONG",
+              "USE_PROXY",
+              "VARIANT_ALSO_NEGOTIATES"
+            ]
+          },
+          "view": {
+            "$ref": "#/components/schemas/View"
+          },
+          "viewName": {
+            "type": "string"
+          }
+        }
+      },
+      "OfferEvaluation": {
+        "title": "OfferEvaluation",
+        "required": [
+          "customerData",
+          "posData",
+          "requestData",
+          "saleItems",
+          "siteData",
+          "tenders",
+          "totalAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "applicableVouchers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicableVoucher"
+            }
+          },
+          "customerData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerData"
+            }
+          },
+          "messages": {
+            "$ref": "#/components/schemas/Message"
+          },
+          "posData": {
+            "$ref": "#/components/schemas/PosData"
+          },
+          "predictedTender": {
+            "$ref": "#/components/schemas/PredictedTender"
+          },
+          "receipt": {
+            "$ref": "#/components/schemas/Receipt"
+          },
+          "requestData": {
+            "$ref": "#/components/schemas/RequestData"
+          },
+          "responseData": {
+            "$ref": "#/components/schemas/ResponseData"
+          },
+          "saleItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItem"
+            }
+          },
+          "siteData": {
+            "$ref": "#/components/schemas/SiteData"
+          },
+          "tenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tender"
+            }
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "voucherCodesResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoucherCodesResult"
+            }
+          }
+        }
+      },
+      "OfferEvaluationReq": {
+        "title": "OfferEvaluationReq",
+        "required": [
+          "customerData",
+          "posData",
+          "requestData",
+          "saleItems",
+          "siteData",
+          "tenders",
+          "totalAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "applicableVouchers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicableVoucherReq"
+            }
+          },
+          "customerData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerDataReq"
+            }
+          },
+          "messages": {
+            "$ref": "#/components/schemas/Message"
+          },
+          "posData": {
+            "$ref": "#/components/schemas/PosDataReq"
+          },
+          "predictedTender": {
+            "$ref": "#/components/schemas/PredictedTender"
+          },
+          "receipt": {
+            "$ref": "#/components/schemas/ReceiptReq"
+          },
+          "requestData": {
+            "$ref": "#/components/schemas/RequestDataReq"
+          },
+          "responseData": {
+            "$ref": "#/components/schemas/ResponseDataReq"
+          },
+          "saleItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItemReq"
+            }
+          },
+          "siteData": {
+            "$ref": "#/components/schemas/SiteDataReq"
+          },
+          "tenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TenderReq"
+            }
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "voucherCodesResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoucherCodesResult"
+            }
+          }
+        }
+      },
+      "OfferEvaluationRes": {
+        "title": "OfferEvaluationRes",
+        "required": [
+          "customerData",
+          "posData",
+          "requestData",
+          "saleItems",
+          "siteData",
+          "tenders",
+          "totalAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "applicableVouchers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicableVoucherRes"
+            }
+          },
+          "customerData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerDataRes"
+            }
+          },
+          "messages": {
+            "$ref": "#/components/schemas/Message"
+          },
+          "posData": {
+            "$ref": "#/components/schemas/PosDataRes"
+          },
+          "predictedTender": {
+            "$ref": "#/components/schemas/PredictedTender"
+          },
+          "receipt": {
+            "$ref": "#/components/schemas/ReceiptRes"
+          },
+          "requestData": {
+            "$ref": "#/components/schemas/RequestDataRes"
+          },
+          "responseData": {
+            "$ref": "#/components/schemas/ResponseDataRes"
+          },
+          "saleItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItemRes"
+            }
+          },
+          "siteData": {
+            "$ref": "#/components/schemas/SiteDataRes"
+          },
+          "tenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TenderRes"
+            }
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "voucherCodesResult": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoucherCodesResult"
+            }
+          }
+        }
+      },
+      "OrgWorkflowMetaDto": {
+        "title": "OrgWorkflowMetaDto",
+        "type": "object",
+        "properties": {
+          "autoUpdateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isApproved": {
+            "type": "boolean"
+          },
+          "isAsync": {
+            "type": "boolean"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "orgId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "processId": {
+            "type": "string"
+          },
+          "promotedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "versionName": {
+            "type": "string"
+          },
+          "workflowName": {
+            "type": "string"
+          }
+        }
+      },
+      "OriginalTransaction": {
+        "title": "OriginalTransaction",
+        "type": "object",
+        "properties": {
+          "approvalCode": {
+            "type": "string"
+          },
+          "authorizationToken": {
+            "type": "string"
+          },
+          "stan": {
+            "type": "string"
+          },
+          "terminalBatch": {
+            "type": "string"
+          },
+          "terminalID": {
+            "type": "string"
+          },
+          "timeStamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PerformanceBo": {
+        "title": "PerformanceBo",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "failurePercentage": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "PosData": {
+        "title": "PosData",
+        "required": [
+          "posTimeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "languageCode": {
+            "type": "string"
+          },
+          "posTimeStamp": {
+            "type": "string"
+          },
+          "transactionNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "PosDataReq": {
+        "title": "PosDataReq",
+        "type": "object",
+        "properties": {
+          "actionCode": {
+            "type": "string"
+          },
+          "actionCodeDescription": {
+            "type": "string"
+          },
+          "clerkID": {
+            "type": "string"
+          },
+          "originalSalePosTimeStamp": {
+            "type": "string"
+          },
+          "posTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pumpNumber": {
+            "type": "string"
+          },
+          "terminalID": {
+            "type": "string"
+          },
+          "transactionNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "PosDataRes": {
+        "title": "PosDataRes",
+        "required": [
+          "posTimeStamp"
+        ],
+        "type": "object",
+        "properties": {
+          "languageCode": {
+            "type": "string"
+          },
+          "posTimeStamp": {
+            "type": "string"
+          },
+          "transactionNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "PreAuthorizeStep": {
+        "title": "PreAuthorizeStep",
+        "type": "object",
+        "properties": {
+          "processInstanceId": {
+            "type": "string"
+          },
+          "pspReferenceNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "PredictedTender": {
+        "title": "PredictedTender",
+        "type": "object",
+        "properties": {
+          "acquire": {
+            "type": "string"
+          },
+          "methodOfPayment": {
+            "type": "string"
+          },
+          "subtractDiscountAmount": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PriceAdjustment": {
+        "title": "PriceAdjustment",
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "loyaltyOfferID": {
+            "type": "string"
+          },
+          "priceAdjustmentID": {
+            "type": "string"
+          },
+          "priceAdjustmentType": {
+            "type": "string",
+            "enum": [
+              "Coupon",
+              "Gift",
+              "Local Discount",
+              "Price Override",
+              "RealtimeOffer-A",
+              "RealtimeOffer-U",
+              "Voucher"
+            ]
+          },
+          "promotionType": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "referenceID": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "PriceAdjustmentReq": {
+        "title": "PriceAdjustmentReq",
+        "required": [
+          "amount",
+          "loyaltyOfferID",
+          "reason",
+          "referenceID"
+        ],
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "loyaltyOfferID": {
+            "type": "string"
+          },
+          "netAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "originalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "originalNetAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "priceAdjustmentID": {
+            "type": "string"
+          },
+          "priceAdjustmentType": {
+            "type": "string",
+            "enum": [
+              "Coupon",
+              "Gift",
+              "Local Discount",
+              "Price Override",
+              "RealtimeOffer-A",
+              "RealtimeOffer-U",
+              "Voucher"
+            ]
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "promotionType": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "referenceID": {
+            "type": "string"
+          },
+          "taxSplit": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaxSplit"
+            }
+          },
+          "unitOfMeasure": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "vat": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "PriceAdjustmentRes": {
+        "title": "PriceAdjustmentRes",
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "loyaltyOfferID": {
+            "type": "string"
+          },
+          "priceAdjustmentID": {
+            "type": "string"
+          },
+          "priceAdjustmentType": {
+            "type": "string",
+            "enum": [
+              "Coupon",
+              "Gift",
+              "Local Discount",
+              "Price Override",
+              "RealtimeOffer-A",
+              "RealtimeOffer-U",
+              "Voucher"
+            ]
+          },
+          "promotionType": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "referenceID": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "ProcessInstanceDetails": {
+        "title": "ProcessInstanceDetails",
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/CustomerInfo"
+          },
+          "loyaltyPan": {
+            "type": "string"
+          },
+          "tillId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "version": {
+            "type": "string"
+          },
+          "workflowName": {
+            "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "title": "Product",
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "additionalProductInfo": {
+            "type": "string"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "subCategoryCode": {
+            "type": "string"
+          }
+        }
+      },
+      "PumpReserve": {
+        "title": "PumpReserve",
+        "required": [
+          "currencyCode",
+          "customerInfo",
+          "methodOfPaymentId",
+          "paymentProviderName",
+          "preAuthAmount",
+          "siteId"
+        ],
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/CustomerInfo"
+          },
+          "languageCode": {
+            "type": "string"
+          },
+          "loyaltyPan": {
+            "type": "string"
+          },
+          "methodOfPaymentId": {
+            "type": "string"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "paymentProviderName": {
+            "type": "string"
+          },
+          "preAuthAmount": {
+            "type": "string"
+          },
+          "pumpNumber": {
+            "type": "string"
+          },
+          "siteId": {
+            "type": "string"
+          }
+        }
+      },
+      "Receipt": {
+        "title": "Receipt",
+        "type": "object",
+        "properties": {
+          "receiptLines": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReceiptReq": {
+        "title": "ReceiptReq",
+        "required": [
+          "receiptLines"
+        ],
+        "type": "object",
+        "properties": {
+          "receiptLines": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReceiptRes": {
+        "title": "ReceiptRes",
+        "type": "object",
+        "properties": {
+          "receiptLines": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RequestData": {
+        "title": "RequestData",
+        "required": [
+          "requestID",
+          "requestType",
+          "workstationID"
+        ],
+        "type": "object",
+        "properties": {
+          "cartEvaluationID": {
+            "type": "string"
+          },
+          "payTokenID": {
+            "type": "string"
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "requestID": {
+            "type": "string"
+          },
+          "requestType": {
+            "type": "string"
+          },
+          "workstationID": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestDataReq": {
+        "title": "RequestDataReq",
+        "type": "object",
+        "properties": {
+          "actionCode": {
+            "type": "string"
+          },
+          "actionCodeDescription": {
+            "type": "string"
+          },
+          "cartEvaluationID": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "extCorrelationId": {
+            "type": "string"
+          },
+          "payTokenID": {
+            "type": "string"
+          },
+          "paymentServiceProvider": {
+            "type": "string"
+          },
+          "processInstanceId": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "requestID": {
+            "type": "string"
+          },
+          "requestType": {
+            "type": "string"
+          },
+          "transactionNumber": {
+            "type": "string"
+          },
+          "workstationID": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestDataRes": {
+        "title": "RequestDataRes",
+        "type": "object",
+        "properties": {
+          "overallResult": {
+            "type": "string"
+          },
+          "requestID": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseData": {
+        "title": "ResponseData",
+        "type": "object",
+        "properties": {
+          "actionCode": {
+            "type": "string"
+          },
+          "actionCodeDescription": {
+            "type": "string"
+          },
+          "cartEvaluationID": {
+            "type": "string"
+          },
+          "overallResult": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "requestID": {
+            "type": "string"
+          },
+          "requestType": {
+            "type": "string"
+          },
+          "workstationID": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseDataReq": {
+        "title": "ResponseDataReq",
+        "type": "object",
+        "properties": {
+          "actionCode": {
+            "type": "string"
+          },
+          "actionCodeDescription": {
+            "type": "string"
+          },
+          "cartEvaluationID": {
+            "type": "string"
+          },
+          "overallResult": {
+            "type": "string"
+          },
+          "referenceNumber": {
+            "type": "string"
+          },
+          "requestID": {
+            "type": "string"
+          },
+          "requestType": {
+            "type": "string"
+          },
+          "workstationID": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseDataRes": {
+        "title": "ResponseDataRes",
+        "type": "object",
+        "properties": {
+          "requestType": {
+            "type": "string"
+          }
+        }
+      },
+      "SaleItem": {
+        "title": "SaleItem",
+        "required": [
+          "additionalProductInfo",
+          "amount",
+          "originalAmount",
+          "quantity",
+          "saleItemType",
+          "unitMeasure",
+          "unitPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "additionalProductInfo": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "itemID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "loyaltyOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoyaltyOffer"
+            }
+          },
+          "markDownIndicator": {
+            "type": "boolean"
+          },
+          "originalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "priceAdjustments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceAdjustment"
+            }
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "saleChannel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "saleItemType": {
+            "type": "string"
+          },
+          "subCategoryCode": {
+            "type": "string"
+          },
+          "unitMeasure": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "vatRate": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "SaleItemReq": {
+        "title": "SaleItemReq",
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "additionalProductInfo": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "lineNo": {
+            "type": "string"
+          },
+          "loyaltyOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoyaltyOffer"
+            }
+          },
+          "markDownIndicator": {
+            "type": "boolean"
+          },
+          "netAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "originalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "originalNetAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "priceAdjustments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceAdjustmentReq"
+            }
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "saleChannel": {
+            "type": "string"
+          },
+          "saleItemType": {
+            "type": "string"
+          },
+          "taxAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "taxCode": {
+            "type": "string"
+          },
+          "taxRate": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "unitOfMeasure": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "vatRate": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "SaleItemRes": {
+        "title": "SaleItemRes",
+        "required": [
+          "additionalProductInfo",
+          "amount",
+          "originalAmount",
+          "quantity",
+          "saleItemType",
+          "unitMeasure",
+          "unitPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "additionalProductCode": {
+            "type": "string"
+          },
+          "additionalProductInfo": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "categoryCode": {
+            "type": "string"
+          },
+          "itemID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "loyaltyOffers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoyaltyOffer"
+            }
+          },
+          "markDownIndicator": {
+            "type": "boolean"
+          },
+          "originalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "priceAdjustments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceAdjustmentRes"
+            }
+          },
+          "productCode": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "saleChannel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "saleItemType": {
+            "type": "string"
+          },
+          "subCategoryCode": {
+            "type": "string"
+          },
+          "unitMeasure": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "vatRate": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "SaleTransaction": {
+        "title": "SaleTransaction",
+        "required": [
+          "totalAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "authorization": {
+            "$ref": "#/components/schemas/Authorization"
+          },
+          "coupons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "currency": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "extraDiscountAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "loyaltyPointAmount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "merchantName": {
+            "type": "string"
+          },
+          "netAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "siteAddress": {
+            "type": "string"
+          },
+          "siteName": {
+            "type": "string"
+          },
+          "taxReferenceNumber": {
+            "type": "string"
+          },
+          "timeStamp": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalDiscountAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalTaxAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "transactionNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "ShellTransactionResponse": {
+        "title": "ShellTransactionResponse",
+        "type": "object",
+        "properties": {
+          "requestData": {
+            "$ref": "#/components/schemas/RequestDataRes"
+          },
+          "responseData": {
+            "$ref": "#/components/schemas/ResponseDataRes"
+          }
+        }
+      },
+      "SingleResponse«OfferEvaluation»": {
+        "title": "SingleResponse«OfferEvaluation»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/OfferEvaluationRes"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processId": {
+            "type": "string"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "SingleResponse«TxnStatusBo»": {
+        "title": "SingleResponse«TxnStatusBo»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TxnStatusBo"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processId": {
+            "type": "string"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "SingleResponse«UserTxnsBo»": {
+        "title": "SingleResponse«UserTxnsBo»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UserTxnsBo"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processId": {
+            "type": "string"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "SingleResponse«WorkFlowCreationResponse»": {
+        "title": "SingleResponse«WorkFlowCreationResponse»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/WorkFlowCreationResponse"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "processId": {
+            "type": "string"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "SiteData": {
+        "title": "SiteData",
+        "required": [
+          "countryCode",
+          "siteID"
+        ],
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string"
+          },
+          "siteID": {
+            "type": "string"
+          }
+        }
+      },
+      "SiteDataReq": {
+        "title": "SiteDataReq",
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string"
+          },
+          "siteId": {
+            "type": "string"
+          }
+        }
+      },
+      "SiteDataRes": {
+        "title": "SiteDataRes",
+        "required": [
+          "countryCode",
+          "siteID"
+        ],
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string"
+          },
+          "siteID": {
+            "type": "string"
+          }
+        }
+      },
+      "StatResponse«Map«string,PerformanceBo»»": {
+        "title": "StatResponse«Map«string,PerformanceBo»»",
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PerformanceBo"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "StatusCode": {
+        "title": "StatusCode",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isWarning": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "TaxSplit": {
+        "title": "TaxSplit",
+        "type": "object",
+        "properties": {
+          "additionalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "amount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "code": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "taxID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Tender": {
+        "title": "Tender",
+        "required": [
+          "acquirerID"
+        ],
+        "type": "object",
+        "properties": {
+          "acquirerID": {
+            "type": "string"
+          },
+          "methodOfPayment": {
+            "type": "string"
+          },
+          "methodOfPaymentID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "netTenderAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "pointsRedeemed": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "substractDiscountAmount": {
+            "type": "boolean"
+          },
+          "tenderID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "voucherRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoucherRule"
+            }
+          }
+        }
+      },
+      "TenderReq": {
+        "title": "TenderReq",
+        "type": "object",
+        "properties": {
+          "acquirerID": {
+            "type": "string"
+          },
+          "methodOfPayment": {
+            "type": "string"
+          },
+          "methodOfPaymentID": {
+            "type": "string"
+          },
+          "netTenderAmount": {
+            "type": "string"
+          },
+          "pointsRedeemed": {
+            "type": "string"
+          },
+          "substractDiscountAmount": {
+            "type": "boolean"
+          },
+          "tenderID": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "string"
+          },
+          "voucherRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoucherRuleReq"
+            }
+          }
+        }
+      },
+      "TenderRes": {
+        "title": "TenderRes",
+        "required": [
+          "acquirerID"
+        ],
+        "type": "object",
+        "properties": {
+          "acquirerID": {
+            "type": "string"
+          },
+          "methodOfPayment": {
+            "type": "string"
+          },
+          "methodOfPaymentID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "netTenderAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "pointsRedeemed": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "substractDiscountAmount": {
+            "type": "boolean"
+          },
+          "tenderID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          },
+          "voucherRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoucherRuleRes"
+            }
+          }
+        }
+      },
+      "Terminal": {
+        "title": "Terminal",
+        "type": "object",
+        "properties": {
+          "stan": {
+            "type": "string"
+          },
+          "terminalBatch": {
+            "type": "string"
+          }
+        }
+      },
+      "TokenizeRO": {
+        "title": "TokenizeRO",
+        "required": [
+          "currencyCode",
+          "customerInfo",
+          "loyaltyPan",
+          "paymentProviderName",
+          "registrationAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "customerInfo": {
+            "$ref": "#/components/schemas/CustomerInfo"
+          },
+          "loyaltyPan": {
+            "type": "string"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "paymentProviderName": {
+            "type": "string"
+          },
+          "registrationAmount": {
+            "type": "string"
+          }
+        }
+      },
+      "Tracker": {
+        "title": "Tracker",
+        "type": "object",
+        "properties": {
+          "trackerEarned": {
+            "type": "string"
+          },
+          "trackerRedeemed": {
+            "type": "string"
+          },
+          "trackerType": {
+            "type": "string"
+          },
+          "trackerValue": {
+            "type": "string"
+          }
+        }
+      },
+      "TransactionAddRO": {
+        "title": "TransactionAddRO",
+        "required": [
+          "cardValues",
+          "receipt",
+          "requestData",
+          "saleItems",
+          "saleTransaction"
+        ],
+        "type": "object",
+        "properties": {
+          "applicableVouchers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicableVoucher"
+            }
+          },
+          "cardValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardValue"
+            }
+          },
+          "customerData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerData"
+            }
+          },
+          "mobilePaymentData": {
+            "$ref": "#/components/schemas/MobilePaymentData"
+          },
+          "originalTransaction": {
+            "$ref": "#/components/schemas/OriginalTransaction"
+          },
+          "posData": {
+            "$ref": "#/components/schemas/PosData"
+          },
+          "receipt": {
+            "$ref": "#/components/schemas/Receipt"
+          },
+          "requestData": {
+            "$ref": "#/components/schemas/RequestData"
+          },
+          "saleItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItem"
+            }
+          },
+          "saleTransaction": {
+            "$ref": "#/components/schemas/SaleTransaction"
+          },
+          "siteData": {
+            "$ref": "#/components/schemas/SiteData"
+          },
+          "tenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tender"
+            }
+          },
+          "terminal": {
+            "$ref": "#/components/schemas/Terminal"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "TransactionAddResponse": {
+        "title": "TransactionAddResponse",
+        "type": "object",
+        "properties": {
+          "shellResponse": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShellTransactionResponse"
+            }
+          }
+        }
+      },
+      "TxnStatusBo": {
+        "title": "TxnStatusBo",
+        "type": "object",
+        "properties": {
+          "currencyCode": {
+            "type": "string"
+          },
+          "extCorrelationId": {
+            "type": "string"
+          },
+          "finalStatus": {
+            "type": "string"
+          },
+          "instanceVariables": {
+            "type": "object"
+          },
+          "languageCode": {
+            "type": "string"
+          },
+          "methodOfPaymentId": {
+            "type": "string"
+          },
+          "orgId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paymentId": {
+            "type": "string"
+          },
+          "paymentProviderName": {
+            "type": "string"
+          },
+          "preAuthAmount": {
+            "type": "string"
+          },
+          "pumpNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "siteId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "stepRequests": {
+            "type": "object"
+          },
+          "workFlowDetails": {
+            "$ref": "#/components/schemas/ProcessInstanceDetails"
+          }
+        }
+      },
+      "UpdatedEntityResponse": {
+        "title": "UpdatedEntityResponse",
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Violation"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCode"
+            }
+          }
+        }
+      },
+      "UserTxnsBo": {
+        "title": "UserTxnsBo",
+        "type": "object",
+        "properties": {
+          "failedTxns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CallBackLogsDto"
+            }
+          },
+          "inProgressTxns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CallBackLogsDto"
+            }
+          },
+          "successTxns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CallBackLogsDto"
+            }
+          }
+        }
+      },
+      "View": {
+        "title": "View",
+        "type": "object",
+        "properties": {
+          "contentType": {
+            "type": "string"
+          }
+        }
+      },
+      "Violation": {
+        "title": "Violation",
+        "type": "object",
+        "properties": {
+          "fieldName": {
+            "type": "string"
+          },
+          "invalidValue": {
+            "type": "object"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "VoucherCodesResult": {
+        "title": "VoucherCodesResult",
+        "type": "object",
+        "properties": {
+          "actionCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actionCodeDescription": {
+            "type": "string"
+          },
+          "voucherCode": {
+            "type": "string"
+          }
+        }
+      },
+      "VoucherRule": {
+        "title": "VoucherRule",
+        "required": [
+          "voucherCode"
+        ],
+        "type": "object",
+        "properties": {
+          "additionalVoucherInfo": {
+            "type": "string"
+          },
+          "expiryDate": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "voucherCode": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "string"
+          },
+          "voucherValue": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "VoucherRuleReq": {
+        "title": "VoucherRuleReq",
+        "type": "object",
+        "properties": {
+          "additionalVoucherInfo": {
+            "type": "string"
+          },
+          "expiryDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "referenceId": {
+            "type": "string"
+          },
+          "voucherCode": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "string"
+          },
+          "voucherValue": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "VoucherRuleRes": {
+        "title": "VoucherRuleRes",
+        "required": [
+          "voucherCode"
+        ],
+        "type": "object",
+        "properties": {
+          "additionalVoucherInfo": {
+            "type": "string"
+          },
+          "expiryDate": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "voucherCode": {
+            "type": "string"
+          },
+          "voucherType": {
+            "type": "string"
+          },
+          "voucherValue": {
+            "type": "number",
+            "format": "bigdecimal"
+          }
+        }
+      },
+      "WorkFlowCreationResponse": {
+        "title": "WorkFlowCreationResponse",
+        "type": "object",
+        "properties": {
+          "deploymentId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "WorkFlowPromote": {
+        "title": "WorkFlowPromote",
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "workFlowName": {
+            "type": "string"
+          }
+        }
+      },
+      "WorkflowInputAction": {
+        "title": "WorkflowInputAction",
+        "required": [
+          "httpCallInputProperties"
+        ],
+        "type": "object",
+        "properties": {
+          "actionGroupType": {
+            "type": "string",
+            "enum": [
+              "PARALLEL",
+              "SERIAL",
+              "XOR"
+            ]
+          },
+          "delayTimeInRetrial": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "httpCallInputProperties": {
+            "$ref": "#/components/schemas/ActionInput"
+          },
+          "httpCallInputPropertiesRollback": {
+            "$ref": "#/components/schemas/ActionInput"
+          },
+          "isAsync": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "properties": {
+            "type": "object"
+          },
+          "retrialCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rollBackProperties": {
+            "type": "object"
+          },
+          "serialNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CCCaptureAction",
+              "addTransactionAction",
+              "authorizePaymentWithPsp",
+              "confirmAuthWithPSPAction",
+              "eghlCapturePaymentAction",
+              "eghlTokenizationAction",
+              "emptyAction",
+              "generatePaymentIdAction",
+              "ifredeemPointsAction",
+              "invalid",
+              "oAuthHttpAction",
+              "offerEvaluationAction",
+              "redeemPointsAction",
+              "saveCCardAction"
+            ]
+          }
+        }
+      },
+      "WorkflowProcess": {
+        "title": "WorkflowProcess",
+        "type": "object",
+        "properties": {
+          "isAsync": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkflowStep"
+            }
+          }
+        }
+      },
+      "WorkflowStep": {
+        "title": "WorkflowStep",
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkflowInputAction"
+            }
+          },
+          "maxWaitTimeInMillis": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "serialNumber": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "_2c2pCallbackRequest": {
+        "title": "_2c2pCallbackRequest",
+        "type": "object",
+        "properties": {
+          "payload": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
