@@ -14,7 +14,6 @@ elif [ "$Branch" = "production" ]; then
 else
   "No Branch is selected"
 fi
-mkdir orchestrator/php_client
 
 if [ "$Client" = "java" ]; then
   rm -rf promotion_engine/java_client/java
@@ -31,6 +30,7 @@ if [ "$Client" = "java" ]; then
 
 elif [ "$Client" = "php" ]; then
   rm -rf orchestrator/php_client/php
+  mkdir -p orchestrator/php_client/php
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
     -i orchestrator.json \
     -l php \
