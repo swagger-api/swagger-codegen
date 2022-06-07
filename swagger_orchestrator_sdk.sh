@@ -35,7 +35,7 @@ elif [ "$Client" = "php" ]; then
     -i orchestrator.json \
     -l php \
     -o orchestrator/php_client/php \
-    -c config_php.json
+    -c config.json
   tar cvzf orchestrator/php_client/php_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./orchestrator/php_client/php/ .
   fpm -f -s "dir" -t "deb" -a "all" -n "swagger-orchestrator-sdk" -v $BUILD_NUMBER -C ./orchestrator/php_client --deb-no-default-config-files php="/usr/share/php/capillary-libs/swagger-orchestrator-sdk"
 else
