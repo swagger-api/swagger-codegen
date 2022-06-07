@@ -32,7 +32,7 @@ elif [ "$Client" = "php" ]; then
   rm -rf orchestrator/php_client/php
   mkdir -p orchestrator/php_client/php
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-    -i promotion-engine.json \
+    -i orchestrator.json \
     -l php \
     -o orchestrator/php_client/php \
     -c config.json
