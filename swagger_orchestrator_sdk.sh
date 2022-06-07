@@ -14,6 +14,7 @@ elif [ "$Branch" = "production" ]; then
 else
   "No Branch is selected"
 fi
+mkdir orchestrator/php_client
 
 if [ "$Client" = "java" ]; then
   rm -rf promotion_engine/java_client/java
