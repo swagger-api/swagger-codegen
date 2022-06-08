@@ -16,17 +16,17 @@ else
 fi
 
 if [ "$Client" = "java" ]; then
-  rm -rf promotion_engine/java_client/java
-  mkdir -p promotion_engine/java_client/java
+  rm -rf orchestrator/java_client/java
+  mkdir -p orchestrator/java_client/java
   java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-    -i promotion-engine.json \
+    -i orchestrator.json \
     -l java \
     -DdateLibrary=java11 \
-    -o promotion_engine/java_client/java \
+    -o orchestrator/java_client/java \
     -c config.json --group-id com.capillary.promotion.engine --model-package com.capillary.promotion.engine.models --api-package com.capillary.promotion.engine.api --artifact-id promotion-engine-swagger-sdk
-  tar cvzf promotion_engine/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./promotion_engine/java_client/java/ .
-  mvn3 clean deploy -f promotion_engine/java_client/java/pom.xml
-  fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-promotion-engine-sdk" -v $BUILD_NUMBER -C ./promotion_engine/java_client --deb-no-default-config-files java="/usr/share/java/capillary-libs/swagger_sdk_gen_promotion_engine"
+  tar cvzf orchestrator/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./orchestrator/java_client/java/ .
+  mvn3 clean deploy -f orchestrator/java_client/java/pom.xml
+  fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-orchestrator-sdk" -v $BUILD_NUMBER -C ./orchestrator/java_client --deb-no-default-config-files java="/usr/share/java/capillary-libs/swagger-orchestrator-sdk"
 
 elif [ "$Client" = "php" ]; then
   rm -rf orchestrator/php_client/php

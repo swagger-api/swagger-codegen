@@ -718,7 +718,7 @@
         "summary": "getStatusByPaymentId",
         "operationId": "getStatusByPaymentIdUsingGET",
         "produces": [
-          "*/*"
+          "application/json"
         ],
         "parameters": [
           {
