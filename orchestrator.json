@@ -2469,6 +2469,12 @@
             "PUMP_RESERVE_SUCCESS",
             "TXN_STATE_UNKNOWN"
           ]
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Violation"
+          }
         }
       },
       "title": "AppTransactionStatusResponse"
@@ -4588,11 +4594,20 @@
         "finalStatus": {
           "type": "string"
         },
-        "instanceVariables": {
-          "type": "object"
+        "invoice": {
+          "type": "string"
         },
         "languageCode": {
           "type": "string"
+        },
+        "metaData": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
         },
         "methodOfPaymentId": {
           "type": "string"
@@ -4611,17 +4626,19 @@
           "type": "string"
         },
         "pumpNumber": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "siteId": {
+          "type": "string"
+        },
+        "startTimestamp": {
           "type": "string"
         },
         "status": {
           "type": "string"
         },
-        "stepRequests": {
-          "type": "object"
+        "type": {
+          "type": "string"
         },
         "workFlowDetails": {
           "$ref": "#/definitions/ProcessInstanceDetails"
