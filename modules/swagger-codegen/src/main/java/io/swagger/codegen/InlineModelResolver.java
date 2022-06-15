@@ -22,7 +22,7 @@ import java.util.Map;
  *  ParseOptions parseOptions = new ParseOptions();
  *  parseOptions.setFlatten(true);
  *  Swagger swagger = new SwaggerParser().read(rootNode, new ArrayList<>(), parseOptions);*/
-
+@Deprecated
 public class InlineModelResolver {
     private Swagger swagger;
     private boolean skipMatches;
