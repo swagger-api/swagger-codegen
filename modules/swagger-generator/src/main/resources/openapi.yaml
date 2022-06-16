@@ -4,7 +4,7 @@ servers:
 info:
   description: 'This is an online swagger codegen server.  You can find out more at
     https://github.com/swagger-api/swagger-codegen or on [irc.freenode.net, #swagger](http://swagger.io/irc/).'
-  version: 3.0.34-SNAPSHOT
+  version: 3.0.35-SNAPSHOT
   title: Swagger Generator
   license:
     name: Apache 2.0

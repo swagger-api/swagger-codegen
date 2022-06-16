@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.0.35-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -193,13 +193,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.0.1</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <source>1.8</source>
                     <encoding>UTF-8</encoding>
                     <maxmemory>1g</maxmemory>
+                    <links>
+                        <link>http://docs.oracle.com/javase/8/docs/api</link>
+                    </links>
                     <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
+                    <additionalOptions>
+                        <additionalOption>-Xdoclint:none</additionalOption>
+                    </additionalOptions>
                 </configuration>
                 <executions>
                     <execution>
@@ -962,7 +968,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson-version}</version>
+                <version>${jackson-databind-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -1063,12 +1069,17 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.34-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.35-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.1.13</swagger-core-version>
-        <swagger-core-version-v1>1.6.5</swagger-core-version-v1>
+        <swagger-core-version-v1>1.6.6</swagger-core-version-v1>
         <swagger-parser-version>2.0.30</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.57</swagger-parser-version-v1>
-        <jackson-version>2.12.1</jackson-version>
+        <swagger-parser-version-v1>1.0.59</swagger-parser-version-v1>
+        <jackson-version>2.13.2</jackson-version>
+        <!--
+          jackson-databind 2.13.2 is still affected by CVE-2020-36518.
+          This version pin for jackson-databind can be removed when bumping jackson to 2.14
+          -->
+        <jackson-databind-version>2.13.2.2</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.11.0</commons-io-version>
@@ -1086,6 +1097,6 @@
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
         <snakeyaml-version>1.30</snakeyaml-version>
-        <handlebars-version>4.1.2</handlebars-version>
+        <handlebars-version>4.3.0</handlebars-version>
     </properties>
 </project>

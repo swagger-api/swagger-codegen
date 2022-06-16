@@ -289,6 +289,12 @@ public class CodeGenMojo extends AbstractMojo {
     private Boolean skip;
 
     /**
+     * Skip matches
+     */
+    @Parameter(name = "skipInlineModelMatches", required = false)
+    private Boolean skipInlineModelMatches = false;
+
+    /**
      * Add the output directory to the project as a source root, so that the generated java types
      * are compiled and included in the project artifact.
      */
@@ -367,6 +373,8 @@ public class CodeGenMojo extends AbstractMojo {
         configurator.setLang(language);
 
         configurator.setOutputDir(output.getAbsolutePath());
+
+        configurator.setSkipInlineModelMatches(skipInlineModelMatches);
 
         if (isNotEmpty(auth)) {
             configurator.setAuth(auth);

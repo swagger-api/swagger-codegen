@@ -3,7 +3,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.34-SNAPSHOT</version>
+        <version>3.0.35-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -200,7 +200,7 @@
     </reporting>
     <properties>
         <diffutils-version>1.3.0</diffutils-version>
-        <swagger-codegen-v2-version>2.4.27-SNAPSHOT</swagger-codegen-v2-version>
+        <swagger-codegen-v2-version>2.4.28-SNAPSHOT</swagger-codegen-v2-version>
     </properties>
     <dependencies>
         <dependency>

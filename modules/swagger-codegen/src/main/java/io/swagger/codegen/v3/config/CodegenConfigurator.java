@@ -61,6 +61,7 @@ public class CodegenConfigurator implements Serializable {
     private boolean verbose;
     private boolean skipOverwrite;
     private boolean removeOperationIdPrefix;
+    private boolean skipInlineModelMatches;
     private String templateDir;
     private String templateVersion;
     private String auth;
@@ -172,6 +173,15 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator setRemoveOperationIdPrefix(boolean removeOperationIdPrefix) {
         this.removeOperationIdPrefix = removeOperationIdPrefix;
+        return this;
+    }
+
+    public boolean getSkipInlineModelMatches() {
+        return skipInlineModelMatches;
+    }
+
+    public CodegenConfigurator setSkipInlineModelMatches(boolean skipInlineModelMatches) {
+        this.skipInlineModelMatches = skipInlineModelMatches;
         return this;
     }
 
@@ -561,11 +571,10 @@ public class CodegenConfigurator implements Serializable {
 
         if (!StringUtils.isBlank(inputSpec)) {
             config.setInputSpec(inputSpec);
-            ParseOptions options = new ParseOptions();
-            options.setResolve(true);
-            options.setResolveFully(resolveFully);
-            options.setFlatten(true);
-            options.setFlattenComposedSchemas(flattenInlineSchema);
+
+            ParseOptions options = buildParseOptions();
+
+
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
             if (config.needsUnflattenedSpec()) {
@@ -597,13 +606,11 @@ public class CodegenConfigurator implements Serializable {
                 throw new IllegalArgumentException(msg);
             }
             config.setInputSpec(specContent);
+
             config.setInputURL(sanitizedSpecificationUrl);
-            ParseOptions options = new ParseOptions();
-            options.setResolve(true);
-            options.setResolveFully(resolveFully);
-            options.setFlatten(true);
-            options.setFlattenComposedSchemas(flattenInlineSchema);
+            ParseOptions options = buildParseOptions();
             SwaggerParseResult result = new OpenAPIParser().readLocation(sanitizedSpecificationUrl, authorizationValues, options);
+
             OpenAPI openAPI = result.getOpenAPI();
             LOGGER.debug("getClientOptInput - parsed inputSpecURL " + sanitizedSpecificationUrl);
             input.opts(new ClientOpts())
@@ -658,6 +665,16 @@ public class CodegenConfigurator implements Serializable {
 
         input.config(config);
         return input;
+    }
+
+    private ParseOptions buildParseOptions() {
+        ParseOptions options = new ParseOptions();
+        options.setResolve(true);
+        options.setResolveFully(resolveFully);
+        options.setFlatten(true);
+        options.setFlattenComposedSchemas(flattenInlineSchema);
+        options.setSkipMatches(this.skipInlineModelMatches);
+        return options;
     }
 
     @JsonAnySetter
