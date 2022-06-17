@@ -45,7 +45,7 @@ JETTY_OPTS="-Djetty.http.port=${HTTP_PORT-8000} "
 JAVA_DEBUG_OPTIONS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8005,server=y,suspend=n "
 
 # APP options
-APP_OPTS="-DHIDDEN_OPTIONS_PATH=${HIDDEN_OPTIONS_PATH} -DHIDDEN_OPTIONS=${HIDDEN_OPTIONS}"
+APP_OPTS="-DHIDDEN_OPTIONS_PATH=${HIDDEN_OPTIONS_PATH} -DHIDDEN_OPTIONS=${HIDDEN_OPTIONS} -Dconfig=${INFLECTOR_CONFIG_PATH}"
 # JVM options
 JAVA_OPTS="-Djava.security.manager -Djava.security.policy==grantall.policy -DgeneratorWriteDirs="/tmp" -server -Duser.timezone=GMT -Xms${HEAP} -Xmx${HEAP} -XX:NewSize=${NEW_SIZE} -XX:MaxNewSize=${NEW_SIZE} ${EXIT_ON_OUTOFMEMORYERROR_OPTION} -Dfile.encoding=UTF-8"
 
