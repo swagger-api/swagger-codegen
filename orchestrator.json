@@ -10,7 +10,7 @@
     },
     "license": {}
   },
-  "host": "localhost:8100",
+  "host": "orchestratoradmin.crm-nightly-new.cctools.capillarytech.com",
   "basePath": "/",
   "tags": [
     {
@@ -44,10 +44,6 @@
     {
       "name": "payments-resource",
       "description": "Payments Resource"
-    },
-    {
-      "name": "psp-callback-resource",
-      "description": "Psp Callback Resource"
     },
     {
       "name": "psp-performance-resource",
@@ -182,7 +178,7 @@
             "description": "cardRegisterRO",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CardRegisterROReq"
+              "$ref": "#/definitions/CardRegisterRO"
             }
           }
         ],
@@ -1228,148 +1224,6 @@
         ]
       }
     },
-    "/orchestrator/payments/webhooks/eghl/callback": {
-      "post": {
-        "tags": [
-          "eghl-call-back-resource"
-        ],
-        "summary": "saveToken",
-        "operationId": "saveTokenUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "processData",
-            "description": "processData",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "shouldSave",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "X-CAP-API-AUTH-ORG-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-API-AUTH-ENTITY-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-CODE": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-ID": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
-    "/orchestrator/payments/webhooks/eghl/payment-identifier": {
-      "post": {
-        "tags": [
-          "eghl-call-back-resource"
-        ],
-        "summary": "generateToken",
-        "operationId": "generateTokenUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "tokenizeRO",
-            "description": "tokenizeRO",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/TokenizeRO"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/MobileResponseBody«TokenizeRO»"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "X-CAP-API-AUTH-ORG-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-API-AUTH-ENTITY-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-CODE": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-ID": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
     "/orchestrator/payments/webhooks/eghl/transaction": {
       "post": {
         "tags": [
@@ -1769,74 +1623,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/UpdatedEntityResponse"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "X-CAP-API-AUTH-ORG-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-API-AUTH-ENTITY-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-CODE": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-ID": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
-    "/v1/workflow/psp/payment-identifier": {
-      "post": {
-        "tags": [
-          "psp-callback-resource"
-        ],
-        "summary": "generateToken",
-        "operationId": "generateTokenUsingPOST_1",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "tokenizeRO",
-            "description": "tokenizeRO",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/TokenizeRO"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/MobileResponseBody«TokenizeRO»"
             }
           },
           "201": {
@@ -2463,6 +2249,7 @@
             "BILL_GENERATED",
             "FUELING_CANCELLED_BY_CUSTOMER",
             "FUELING_CANCELLED_BY_STATION",
+            "PSP_AUTH_FAIL",
             "PUMP_ACTIVATION_FAIL",
             "PUMP_ACTIVATION_SUCCESS",
             "PUMP_RESERVE_FAIL",
@@ -2627,7 +2414,7 @@
     "CancelRequest": {
       "type": "object",
       "properties": {
-        "processInstanceId": {
+        "paymentID": {
           "type": "string"
         }
       },
@@ -2642,7 +2429,7 @@
             "$ref": "#/definitions/StatusCode"
           }
         },
-        "processInstanceId": {
+        "paymentId": {
           "type": "string"
         },
         "success": {
@@ -2657,7 +2444,7 @@
       },
       "title": "CancelResponse"
     },
-    "CardRegisterROReq": {
+    "CardRegisterRO": {
       "type": "object",
       "properties": {
         "currencyCode": {
@@ -2666,41 +2453,17 @@
         "customerInfo": {
           "$ref": "#/definitions/CustomerInfo"
         },
-        "paymentId": {
+        "merchantIdentifier": {
           "type": "string"
         },
-        "paymentProviderName": {
+        "paymentId": {
           "type": "string"
         },
         "registrationAmount": {
           "type": "string"
         }
       },
-      "title": "CardRegisterROReq"
-    },
-    "CardRegisterRORes": {
-      "type": "object",
-      "properties": {
-        "currencyCode": {
-          "type": "string"
-        },
-        "customerInfo": {
-          "$ref": "#/definitions/CustomerInfo"
-        },
-        "loyaltyPan": {
-          "type": "string"
-        },
-        "paymentId": {
-          "type": "string"
-        },
-        "paymentProviderName": {
-          "type": "string"
-        },
-        "registrationAmount": {
-          "type": "string"
-        }
-      },
-      "title": "CardRegisterRORes"
+      "title": "CardRegisterRO"
     },
     "CardValue": {
       "type": "object",
@@ -2775,6 +2538,7 @@
           "type": "string",
           "enum": [
             "cardnumber",
+            "customerId",
             "email",
             "externalId",
             "mobile",
@@ -2930,7 +2694,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/CardRegisterRORes"
+          "$ref": "#/definitions/CardRegisterRO"
         },
         "errors": {
           "type": "array",
@@ -3283,6 +3047,9 @@
         "versionName": {
           "type": "string"
         },
+        "vertical": {
+          "type": "string"
+        },
         "workflowName": {
           "type": "string"
         }
@@ -3583,32 +3350,6 @@
       },
       "title": "PriceAdjustmentRes"
     },
-    "ProcessInstanceDetails": {
-      "type": "object",
-      "properties": {
-        "customerId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "customerInfo": {
-          "$ref": "#/definitions/CustomerInfo"
-        },
-        "loyaltyPan": {
-          "type": "string"
-        },
-        "tillId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "version": {
-          "type": "string"
-        },
-        "workflowName": {
-          "type": "string"
-        }
-      },
-      "title": "ProcessInstanceDetails"
-    },
     "Product": {
       "type": "object",
       "properties": {
@@ -3633,6 +3374,9 @@
     "PumpReserve": {
       "type": "object",
       "properties": {
+        "cardIdentifier": {
+          "type": "string"
+        },
         "currencyCode": {
           "type": "string"
         },
@@ -3642,16 +3386,10 @@
         "languageCode": {
           "type": "string"
         },
-        "loyaltyPan": {
-          "type": "string"
-        },
-        "methodOfPaymentId": {
+        "merchantIdentifier": {
           "type": "string"
         },
         "paymentId": {
-          "type": "string"
-        },
-        "paymentProviderName": {
           "type": "string"
         },
         "preAuthAmount": {
@@ -3661,6 +3399,9 @@
           "type": "string"
         },
         "siteId": {
+          "type": "string"
+        },
+        "siteName": {
           "type": "string"
         }
       },
@@ -4474,13 +4215,13 @@
         "customerInfo": {
           "$ref": "#/definitions/CustomerInfo"
         },
-        "loyaltyPan": {
+        "digitalCard": {
+          "type": "string"
+        },
+        "merchantIdentifier": {
           "type": "string"
         },
         "paymentId": {
-          "type": "string"
-        },
-        "paymentProviderName": {
           "type": "string"
         },
         "registrationAmount": {
@@ -4588,6 +4329,9 @@
         "currencyCode": {
           "type": "string"
         },
+        "digitalCard": {
+          "type": "string"
+        },
         "extCorrelationId": {
           "type": "string"
         },
@@ -4598,6 +4342,12 @@
           "type": "string"
         },
         "languageCode": {
+          "type": "string"
+        },
+        "maskedCard": {
+          "type": "string"
+        },
+        "merchantId": {
           "type": "string"
         },
         "metaData": {
@@ -4625,10 +4375,16 @@
         "preAuthAmount": {
           "type": "string"
         },
+        "processInstanceId": {
+          "type": "string"
+        },
         "pumpNumber": {
           "type": "string"
         },
         "siteId": {
+          "type": "string"
+        },
+        "siteName": {
           "type": "string"
         },
         "startTimestamp": {
@@ -4640,8 +4396,11 @@
         "type": {
           "type": "string"
         },
-        "workFlowDetails": {
-          "$ref": "#/definitions/ProcessInstanceDetails"
+        "workFlowName": {
+          "type": "string"
+        },
+        "workFlowVersion": {
+          "type": "string"
         }
       },
       "title": "TxnStatusBo"
@@ -4845,6 +4604,13 @@
         "version": {
           "type": "string"
         },
+        "vertical": {
+          "type": "string",
+          "enum": [
+            "FUELLING",
+            "NON"
+          ]
+        },
         "workFlowName": {
           "type": "string"
         }
@@ -4888,6 +4654,28 @@
         "rollBackProperties": {
           "type": "object"
         },
+        "rollbackName": {
+          "type": "string"
+        },
+        "rollbackType": {
+          "type": "string",
+          "enum": [
+            "CCCaptureAction",
+            "addTransactionAction",
+            "authorizePaymentWithPsp",
+            "confirmAuthWithPSPAction",
+            "eghlCapturePaymentAction",
+            "eghlTokenizationAction",
+            "emptyAction",
+            "generatePaymentIdAction",
+            "ifredeemPointsAction",
+            "invalid",
+            "oAuthHttpAction",
+            "offerEvaluationAction",
+            "redeemPointsAction",
+            "saveCCardAction"
+          ]
+        },
         "serialNumber": {
           "type": "integer",
           "format": "int32"
@@ -4928,6 +4716,13 @@
           "items": {
             "$ref": "#/definitions/WorkflowStep"
           }
+        },
+        "vertical": {
+          "type": "string",
+          "enum": [
+            "FUELLING",
+            "NON"
+          ]
         }
       },
       "title": "WorkflowProcess"
