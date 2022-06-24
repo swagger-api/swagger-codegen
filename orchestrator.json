@@ -4329,6 +4329,9 @@
         "currencyCode": {
           "type": "string"
         },
+        "customerId": {
+          "type": "string"
+        },
         "digitalCard": {
           "type": "string"
         },
