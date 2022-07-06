@@ -10,7 +10,7 @@
     },
     "license": {}
   },
-  "host": "orchestratoradmin.crm-nightly-new.cctools.capillarytech.com",
+  "host": "localhost:8100",
   "basePath": "/",
   "tags": [
     {
@@ -658,7 +658,7 @@
             "description": "tokenizeRO",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TokenizeRO"
+              "$ref": "#/definitions/TokenizeROReq"
             }
           }
         ],
@@ -2793,7 +2793,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/TokenizeRO"
+          "$ref": "#/definitions/TokenizeRORes"
         },
         "errors": {
           "type": "array",
@@ -3017,6 +3017,9 @@
           "type": "string",
           "format": "date-time"
         },
+        "diffJson": {
+          "type": "string"
+        },
         "id": {
           "type": "integer",
           "format": "int64"
@@ -3048,6 +3051,9 @@
           "type": "string"
         },
         "vertical": {
+          "type": "string"
+        },
+        "workflowJson": {
           "type": "string"
         },
         "workflowName": {
@@ -3158,6 +3164,9 @@
     "PreAuthorizeStep": {
       "type": "object",
       "properties": {
+        "paymentId": {
+          "type": "string"
+        },
         "processInstanceId": {
           "type": "string"
         },
@@ -4206,7 +4215,28 @@
       },
       "title": "Terminal"
     },
-    "TokenizeRO": {
+    "TokenizeROReq": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string"
+        },
+        "customerInfo": {
+          "$ref": "#/definitions/CustomerInfo"
+        },
+        "merchantIdentifier": {
+          "type": "string"
+        },
+        "paymentId": {
+          "type": "string"
+        },
+        "registrationAmount": {
+          "type": "string"
+        }
+      },
+      "title": "TokenizeROReq"
+    },
+    "TokenizeRORes": {
       "type": "object",
       "properties": {
         "currencyCode": {
@@ -4228,7 +4258,7 @@
           "type": "string"
         }
       },
-      "title": "TokenizeRO"
+      "title": "TokenizeRORes"
     },
     "Tracker": {
       "type": "object",
@@ -4363,6 +4393,12 @@
           }
         },
         "methodOfPaymentId": {
+          "type": "string"
+        },
+        "mopId": {
+          "type": "string"
+        },
+        "mopName": {
           "type": "string"
         },
         "orgId": {
@@ -4647,15 +4683,9 @@
         "name": {
           "type": "string"
         },
-        "properties": {
-          "type": "object"
-        },
         "retrialCount": {
           "type": "integer",
           "format": "int32"
-        },
-        "rollBackProperties": {
-          "type": "object"
         },
         "rollbackName": {
           "type": "string"
