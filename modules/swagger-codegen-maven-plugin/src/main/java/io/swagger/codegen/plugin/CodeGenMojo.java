@@ -556,11 +556,12 @@ public class CodeGenMojo extends AbstractMojo {
 
     private void addCompileSourceRootIfConfigured() {
         if (addCompileSourceRoot) {
+
             final Object sourceFolderObject =
                     configOptions == null ? null : configOptions
                             .get(CodegenConstants.SOURCE_FOLDER);
             final String sourceFolder =
-                    sourceFolderObject == null ? "src/main/java" : sourceFolderObject.toString();
+                    sourceFolderObject == null ? "src/gen/java" : sourceFolderObject.toString();
 
             String sourceJavaFolder = output.toString() + "/" + sourceFolder;
             project.addCompileSourceRoot(sourceJavaFolder);
