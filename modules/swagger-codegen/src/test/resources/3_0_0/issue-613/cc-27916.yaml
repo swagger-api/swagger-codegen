@@ -1,0 +1,66 @@
+---
+openapi: 3.0.0
+info:
+  title: issue613
+  description: issue613
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /tests/:
+    post:
+      tags:
+        - MP3 Test
+      summary: TestResource - Create
+      operationId: CreateTest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestResponse'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestResponse'
+components:
+  schemas:
+    TestResponse:
+      type: object
+      description: Used for request and response, can be either TestID, Test, or TestDetail
+      discriminator:
+        propertyName: objectType
+      oneOf:
+        - $ref: '#/components/schemas/TestID'
+        - $ref: '#/components/schemas/Test'
+        - $ref: '#/components/schemas/TestDetail'
+    TestID:
+      required:
+        - objectType
+      type: object
+      properties:
+        objectType:
+          type: string
+        id:
+          type: string
+          example: "12345"
+      discriminator:
+        propertyName: objectType
+    Test:
+      allOf:
+        - $ref: '#/components/schemas/TestID'
+        - type: object
+        - required:
+            - Title
+          properties:
+            Title:
+              maxLength: 512
+              type: string
+    TestDetail:
+      allOf:
+        - $ref: '#/components/schemas/Test'
+        - type: object
+        - properties:
+            ReleaseDate:
+              type: string
