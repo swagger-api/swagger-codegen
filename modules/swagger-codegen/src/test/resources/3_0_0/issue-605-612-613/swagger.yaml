@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /list:
+    get:
+      tags:
+        - demo-controller
+      operationId: epList
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/ClassA'
+                    - $ref: '#/components/schemas/ClassB'
+  /c:
+    get:
+      tags:
+        - demo-controller
+      operationId: epC
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ClassA'
+                  - $ref: '#/components/schemas/ClassB'
+  /d:
+    get:
+      tags:
+        - demo-controller
+      operationId: epD
+      requestBody:
+        description: Inventory item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassAorB'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ClassA'
+                  - $ref: '#/components/schemas/ClassB'
+        '202':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClassAorB'
+  /b:
+    get:
+      tags:
+        - demo-controller
+      operationId: epB
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClassB'
+  /a:
+    get:
+      tags:
+        - demo-controller
+      operationId: epA
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ClassA'
+components:
+  schemas:
+    ClassA:
+      required:
+        - bId
+        - type
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/InterfaceC'
+        - type: object
+          properties:
+            onlyInA:
+              type: string
+    ClassB:
+      required:
+        - bId
+        - type
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/InterfaceC'
+    InterfaceC:
+      type: object
+      properties:
+        currentTime:
+          type: string
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ClassAorB:
+      discriminator:
+        propertyName: type
+      oneOf:
+        - $ref: '#/components/schemas/ClassA'
+        - $ref: '#/components/schemas/ClassB'
