@@ -24,7 +24,7 @@ public interface StoreApi {
    */
   @DELETE("store/order/{order_id}")
   Call<Void> deleteOrder(
-            @retrofit2.http.Path("order_id") String orderId            
+    @retrofit2.http.Path("order_id") String orderId
   );
 
   /**
@@ -44,7 +44,7 @@ public interface StoreApi {
    */
   @GET("store/order/{order_id}")
   Call<Order> getOrderById(
-            @retrofit2.http.Path("order_id") Long orderId            
+    @retrofit2.http.Path("order_id") Long orderId
   );
 
   /**
@@ -58,7 +58,7 @@ public interface StoreApi {
   })
   @POST("store/order")
   Call<Order> placeOrder(
-                    @retrofit2.http.Body Order body    
+    @retrofit2.http.Body Order body
   );
 
 }

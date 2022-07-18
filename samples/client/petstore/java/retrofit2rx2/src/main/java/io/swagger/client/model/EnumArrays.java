@@ -50,9 +50,9 @@ public class EnumArrays {
     public String toString() {
       return String.valueOf(value);
     }
-    public static JustSymbolEnum fromValue(String text) {
+    public static JustSymbolEnum fromValue(String input) {
       for (JustSymbolEnum b : JustSymbolEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -61,13 +61,13 @@ public class EnumArrays {
     public static class Adapter extends TypeAdapter<JustSymbolEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final JustSymbolEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public JustSymbolEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return JustSymbolEnum.fromValue(String.valueOf(value));
+        return JustSymbolEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("just_symbol")
@@ -94,9 +94,9 @@ public class EnumArrays {
     public String toString() {
       return String.valueOf(value);
     }
-    public static ArrayEnumEnum fromValue(String text) {
+    public static ArrayEnumEnum fromValue(String input) {
       for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -105,13 +105,13 @@ public class EnumArrays {
     public static class Adapter extends TypeAdapter<ArrayEnumEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final ArrayEnumEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public ArrayEnumEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return ArrayEnumEnum.fromValue(String.valueOf(value));
+        return ArrayEnumEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("array_enum")

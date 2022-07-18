@@ -27,7 +27,7 @@ public interface DogApi {
   })
   @POST("dog")
   Call<Void> addDog(
-                    @retrofit2.http.Body Dog body    
+    @retrofit2.http.Body Dog body
   );
 
   /**
@@ -39,7 +39,7 @@ public interface DogApi {
    */
   @DELETE("dog/{dogId}")
   Call<Void> deleteDog(
-            @retrofit2.http.Path("dogId") Long dogId            ,             @retrofit2.http.Header("api_key") String apiKey        
+    @retrofit2.http.Path("dogId") Long dogId, @retrofit2.http.Header("api_key") String apiKey
   );
 
   /**
@@ -50,7 +50,7 @@ public interface DogApi {
    */
   @GET("dog/{dogId}")
   Call<Dog> getDogById(
-            @retrofit2.http.Path("dogId") Long dogId            
+    @retrofit2.http.Path("dogId") Long dogId
   );
 
   /**
@@ -64,7 +64,7 @@ public interface DogApi {
   })
   @PUT("dog")
   Call<Void> updateDog(
-                    @retrofit2.http.Body Dog body    
+    @retrofit2.http.Body Dog body
   );
 
   /**
@@ -78,7 +78,7 @@ public interface DogApi {
   @retrofit2.http.FormUrlEncoded
   @POST("dog/{dogId}")
   Call<Void> updateDogWithForm(
-            @retrofit2.http.Path("dogId") Long dogId            ,                     @retrofit2.http.Field("name") String name,                     @retrofit2.http.Field("status") String status
+    @retrofit2.http.Path("dogId") Long dogId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
 }

@@ -27,7 +27,7 @@ public interface UserApi {
   })
   @POST("user")
   Call<Void> createUser(
-                    @retrofit2.http.Body User body    
+    @retrofit2.http.Body User body
   );
 
   /**
@@ -41,7 +41,7 @@ public interface UserApi {
   })
   @POST("user/createWithArray")
   Call<Void> createUsersWithArrayInput(
-                    @retrofit2.http.Body List<User> body    
+    @retrofit2.http.Body List<User> body
   );
 
   /**
@@ -55,7 +55,7 @@ public interface UserApi {
   })
   @POST("user/createWithList")
   Call<Void> createUsersWithListInput(
-                    @retrofit2.http.Body List<User> body    
+    @retrofit2.http.Body List<User> body
   );
 
   /**
@@ -66,7 +66,7 @@ public interface UserApi {
    */
   @DELETE("user/{username}")
   Call<Void> deleteUser(
-            @retrofit2.http.Path("username") String username            
+    @retrofit2.http.Path("username") String username
   );
 
   /**
@@ -77,7 +77,7 @@ public interface UserApi {
    */
   @GET("user/{username}")
   Call<User> getUserByName(
-            @retrofit2.http.Path("username") String username            
+    @retrofit2.http.Path("username") String username
   );
 
   /**
@@ -89,7 +89,7 @@ public interface UserApi {
    */
   @GET("user/login")
   Call<String> loginUser(
-        @retrofit2.http.Query("username") String username                ,     @retrofit2.http.Query("password") String password                
+    @retrofit2.http.Query("username") String username, @retrofit2.http.Query("password") String password
   );
 
   /**
@@ -113,7 +113,7 @@ public interface UserApi {
   })
   @PUT("user/{username}")
   Call<Void> updateUser(
-                    @retrofit2.http.Body User body    ,         @retrofit2.http.Path("username") String username            
+    @retrofit2.http.Body User body, @retrofit2.http.Path("username") String username
   );
 
 }

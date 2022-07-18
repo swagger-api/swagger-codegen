@@ -49,9 +49,9 @@ public class NullableEnumModel {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static EnumPropEnum fromValue(String text) {
+    public static EnumPropEnum fromValue(String input) {
       for (EnumPropEnum b : EnumPropEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
