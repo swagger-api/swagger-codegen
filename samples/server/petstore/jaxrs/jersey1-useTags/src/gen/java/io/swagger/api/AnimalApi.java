@@ -42,8 +42,8 @@ public class AnimalApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
     public Response addAnimal(
-                        @ApiParam(value = "Animal object that needs to be added to the store" ,required=true) Animal body
-        
+        @ApiParam(value = "Animal object that needs to be added to the store" ,required=true) Animal body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -57,11 +57,11 @@ public class AnimalApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid animal value", response = Void.class) })
     public Response deleteAnimal(
-                @ApiParam(value = "Animal id to delete",required=true) @PathParam("animalId") Long animalId        
+        @ApiParam(value = "Animal id to delete",required=true) @PathParam("animalId") Long animalId
 ,
-                        @ApiParam(value = "" )@HeaderParam("api_key") String apiKey
-        
-        
+        @ApiParam(value = "" )@HeaderParam("api_key") String apiKey
+
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -77,7 +77,7 @@ public class AnimalApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
     public Response getAnimalById(
-                @ApiParam(value = "ID of pet to return",required=true) @PathParam("animalId") Long animalId        
+        @ApiParam(value = "ID of pet to return",required=true) @PathParam("animalId") Long animalId
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -93,8 +93,8 @@ public class AnimalApi  {
         @io.swagger.annotations.ApiResponse(code = 404, message = "Animal not found", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
     public Response updateAnimal(
-                        @ApiParam(value = "Animal object that needs to be added." ,required=true) Animal body
-        
+        @ApiParam(value = "Animal object that needs to be added." ,required=true) Animal body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -108,11 +108,11 @@ public class AnimalApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
     public Response updateAnimalWithForm(
-                @ApiParam(value = "ID of animal that needs to be updated",required=true) @PathParam("animalId") Long animalId        
+        @ApiParam(value = "ID of animal that needs to be updated",required=true) @PathParam("animalId") Long animalId
 ,
-                        @ApiParam(value = "")  @FormParam("name")  String name
+        @ApiParam(value = "")  @FormParam("name")  String name
 ,
-                        @ApiParam(value = "")  @FormParam("status")  String status
+        @ApiParam(value = "")  @FormParam("status")  String status
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {

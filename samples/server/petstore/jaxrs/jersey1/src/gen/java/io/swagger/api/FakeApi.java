@@ -11,11 +11,11 @@ import com.sun.jersey.multipart.FormDataParam;
 import javax.validation.constraints.*;
 
 import java.math.BigDecimal;
-import io.swagger.model.Body2;
-import io.swagger.model.Body3;
-import io.swagger.model.Body4;
-import io.swagger.model.Body5;
 import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
 import io.swagger.model.OuterComposite;
 
 import java.util.Map;
@@ -48,8 +48,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Output boolean", response = Boolean.class) })
     public Response fakeOuterBooleanSerialize(
-                        @ApiParam(value = "Input boolean as post body" ) Boolean body
-        
+        @ApiParam(value = "Input boolean as post body" ) Boolean body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -63,8 +63,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Output composite", response = OuterComposite.class) })
     public Response fakeOuterCompositeSerialize(
-                        @ApiParam(value = "Input composite as post body" ) OuterComposite body
-        
+        @ApiParam(value = "Input composite as post body" ) OuterComposite body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -78,8 +78,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Output number", response = BigDecimal.class) })
     public Response fakeOuterNumberSerialize(
-                        @ApiParam(value = "Input number as post body" ) BigDecimal body
-        
+        @ApiParam(value = "Input number as post body" ) BigDecimal body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -93,8 +93,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Output string", response = String.class) })
     public Response fakeOuterStringSerialize(
-                        @ApiParam(value = "Input string as post body" ) String body
-        
+        @ApiParam(value = "Input string as post body" ) String body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -108,8 +108,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     public Response testClientModel(
-                        @ApiParam(value = "client model" ,required=true) Client body
-        
+        @ApiParam(value = "client model" ,required=true) Client body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -125,8 +125,8 @@ public class FakeApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = Void.class) })
     public Response testEndpointParameters(
-                        @ApiParam(value = "" ,required=true) Body2 body
-        
+        @ApiParam(value = "" ,required=true) FakeBody body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -141,24 +141,24 @@ public class FakeApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "Not found", response = Void.class) })
     public Response testEnumParameters(
-                        @ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $"
+        @ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $"
 )@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray
-        
-        
+
+
 ,
-                        @ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)"
+        @ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)"
 , defaultValue="-efg")@HeaderParam("enum_header_string") String enumHeaderString
-        
-        
+
+
 ,
-                @ApiParam(value = "Query parameter enum test (string array)", allowableValues=">, $"
-) @QueryParam("enum_query_string_array") List<String> enumQueryStringArray        
+        @ApiParam(value = "Query parameter enum test (string array)", allowableValues=">, $"
+) @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
 ,
-                @ApiParam(value = "Query parameter enum test (string)", allowableValues="_abc, -efg, (xyz)"
-, defaultValue="-efg") @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString        
+        @ApiParam(value = "Query parameter enum test (string)", allowableValues="_abc, -efg, (xyz)"
+, defaultValue="-efg") @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
 ,
-                @ApiParam(value = "Query parameter enum test (double)", allowableValues="1, -2"
-) @QueryParam("enum_query_integer") Integer enumQueryInteger        
+        @ApiParam(value = "Query parameter enum test (double)", allowableValues="1, -2"
+) @QueryParam("enum_query_integer") Integer enumQueryInteger
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -173,8 +173,8 @@ public class FakeApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "Not found", response = Void.class) })
     public Response testEnumRequestBody(
-                        @ApiParam(value = "" ) Body4 body
-        
+        @ApiParam(value = "" ) EnumFormBody body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -188,8 +188,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
     public Response testInlineAdditionalProperties(
-                        @ApiParam(value = "request body" ,required=true) Map<String, String> body
-        
+        @ApiParam(value = "request body" ,required=true) Map<String, String> body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -203,8 +203,8 @@ public class FakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Void.class) })
     public Response testJsonFormData(
-                        @ApiParam(value = "" ,required=true) Body5 body
-        
+        @ApiParam(value = "" ,required=true) FakeJsonFormDataBody body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {

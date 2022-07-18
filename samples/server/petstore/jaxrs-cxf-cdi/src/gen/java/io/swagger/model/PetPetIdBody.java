@@ -11,14 +11,14 @@ import javax.xml.bind.annotation.*;
 
 
 
-public class Body   {
+public class PetPetIdBody   {
   private String name = null;
   private String status = null;
 
   /**
    * Updated name of the pet
    **/
-  public Body name(String name) {
+  public PetPetIdBody name(String name) {
     this.name = name;
     return this;
   }
@@ -37,7 +37,7 @@ public class Body   {
   /**
    * Updated status of the pet
    **/
-  public Body status(String status) {
+  public PetPetIdBody status(String status) {
     this.status = status;
     return this;
   }
@@ -62,9 +62,9 @@ public class Body   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body body = (Body) o;
-    return Objects.equals(name, body.name) &&
-        Objects.equals(status, body.status);
+    PetPetIdBody petPetIdBody = (PetPetIdBody) o;
+    return Objects.equals(name, petPetIdBody.name) &&
+        Objects.equals(status, petPetIdBody.status);
   }
 
   @Override
@@ -75,7 +75,7 @@ public class Body   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body {\n");
+    sb.append("class PetPetIdBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
