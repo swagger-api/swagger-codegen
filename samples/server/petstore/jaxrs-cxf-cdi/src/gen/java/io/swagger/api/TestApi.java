@@ -46,7 +46,7 @@ public class TestApi  {
     @Operation(summary = "", description = "", security = {
         @SecurityRequirement(name = "bearer")    }, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "peticion realizada con exito", content = @Content(array = @ArraySchema(schema = @Schema(implementation = String.class)))) })
+        @ApiResponse(responseCode = "200", description = "peticion realizada con exito", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = String.class)))) })
     public Response testMethod() {
         return delegate.testMethod(securityContext);
     }

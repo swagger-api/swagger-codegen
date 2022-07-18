@@ -21,53 +21,51 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
- * Body5
+ * DogDogIdBody
  */
-public class Body5   {
-  @JsonProperty("param")
-  private String param = null;
+public class DogDogIdBody   {
+  @JsonProperty("name")
+  private String name = null;
 
-  @JsonProperty("param2")
-  private String param2 = null;
+  @JsonProperty("status")
+  private String status = null;
 
-  public Body5 param(String param) {
-    this.param = param;
+  public DogDogIdBody name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * field1
-   * @return param
+   * Updated name of the dog
+   * @return name
    **/
-  @JsonProperty("param")
-  @ApiModelProperty(required = true, value = "field1")
-  @NotNull
-  public String getParam() {
-    return param;
+  @JsonProperty("name")
+  @ApiModelProperty(value = "Updated name of the dog")
+  public String getName() {
+    return name;
   }
 
-  public void setParam(String param) {
-    this.param = param;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Body5 param2(String param2) {
-    this.param2 = param2;
+  public DogDogIdBody status(String status) {
+    this.status = status;
     return this;
   }
 
   /**
-   * field2
-   * @return param2
+   * Updated status of the dog
+   * @return status
    **/
-  @JsonProperty("param2")
-  @ApiModelProperty(required = true, value = "field2")
-  @NotNull
-  public String getParam2() {
-    return param2;
+  @JsonProperty("status")
+  @ApiModelProperty(value = "Updated status of the dog")
+  public String getStatus() {
+    return status;
   }
 
-  public void setParam2(String param2) {
-    this.param2 = param2;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
@@ -79,24 +77,24 @@ public class Body5   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body5 body5 = (Body5) o;
-    return Objects.equals(this.param, body5.param) &&
-        Objects.equals(this.param2, body5.param2);
+    DogDogIdBody dogDogIdBody = (DogDogIdBody) o;
+    return Objects.equals(this.name, dogDogIdBody.name) &&
+        Objects.equals(this.status, dogDogIdBody.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(param, param2);
+    return Objects.hash(name, status);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body5 {\n");
+    sb.append("class DogDogIdBody {\n");
     
-    sb.append("    param: ").append(toIndentedString(param)).append("\n");
-    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

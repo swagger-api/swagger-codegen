@@ -42,8 +42,8 @@ public class AnotherFakeApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
     public Response testSpecialTags(
-                        @ApiParam(value = "client model" ,required=true) Client body
-        
+        @ApiParam(value = "client model" ,required=true) Client body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {

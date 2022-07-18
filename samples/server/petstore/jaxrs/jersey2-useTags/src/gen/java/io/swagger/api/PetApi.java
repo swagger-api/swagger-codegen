@@ -239,6 +239,6 @@ public class PetApi  {
             @FormDataParam("file") FormDataContentDisposition fileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadFile(petId,additionalMetadata,fileInputStream,fileDetail,securityContext);
+        return delegate.uploadFile(petId,additionalMetadata,file,securityContext);
     }
 }

@@ -46,7 +46,7 @@ public class RandomPetApi  {
     @Produces({ "application/json" })
     @Operation(summary = "", description = "", tags={ "pet" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(schema = @Schema(implementation = SinglePetResponse.class))) })
+        @ApiResponse(responseCode = "200", description = "a single random pet", content = @Content(mediaType = "application/json", schema = @Schema(implementation = SinglePetResponse.class))) })
     public Response getRandomPet() {
         return delegate.getRandomPet(securityContext);
     }
