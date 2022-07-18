@@ -50,9 +50,9 @@ public class EnumFormBody {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static EnumFormStringArrayEnum fromValue(String text) {
+    public static EnumFormStringArrayEnum fromValue(String input) {
       for (EnumFormStringArrayEnum b : EnumFormStringArrayEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -85,9 +85,9 @@ public class EnumFormBody {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static EnumFormStringEnum fromValue(String text) {
+    public static EnumFormStringEnum fromValue(String input) {
       for (EnumFormStringEnum b : EnumFormStringEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -119,9 +119,9 @@ public class EnumFormBody {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static EnumQueryDoubleEnum fromValue(String text) {
+    public static EnumQueryDoubleEnum fromValue(Double input) {
       for (EnumQueryDoubleEnum b : EnumQueryDoubleEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }

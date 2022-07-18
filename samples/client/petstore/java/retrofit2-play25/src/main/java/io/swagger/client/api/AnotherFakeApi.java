@@ -31,7 +31,7 @@ public interface AnotherFakeApi {
   })
   @PATCH("another-fake/dummy")
   CompletionStage<Response<Client>> testSpecialTags(
-                    @retrofit2.http.Body Client body    
+    @retrofit2.http.Body Client body
   );
 
 }

@@ -47,9 +47,9 @@ public enum EnumClass {
     return String.valueOf(value);
   }
 
-  public static EnumClass fromValue(String text) {
+  public static EnumClass fromValue(String input) {
     for (EnumClass b : EnumClass.values()) {
-      if (String.valueOf(b.value).equals(text)) {
+      if (b.value.equals(input)) {
         return b;
       }
     }
@@ -59,13 +59,13 @@ public enum EnumClass {
   public static class Adapter extends TypeAdapter<EnumClass> {
     @Override
     public void write(final JsonWriter jsonWriter, final EnumClass enumeration) throws IOException {
-      jsonWriter.value(enumeration.getValue());
+      jsonWriter.value(String.valueOf(enumeration.getValue()));
     }
 
     @Override
     public EnumClass read(final JsonReader jsonReader) throws IOException {
       Object value = jsonReader.nextString();
-      return EnumClass.fromValue(String.valueOf(value));
+      return EnumClass.fromValue((String)(value));
     }
   }
 }
