@@ -848,7 +848,6 @@ public class GeneratorServiceTest {
     @Test
     public void testIssue605() throws IOException {
         String path = getTmpFolder().getAbsolutePath() + "/client";
-        path = new File("/dati/dev/progetti/swagger/issue-206/client").getAbsolutePath();
         GenerationRequest request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -866,7 +865,6 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
         System.out.println("Generated client in:\n" + path);
         path = getTmpFolder().getAbsolutePath() + "/server";
-        path = new File("/dati/dev/progetti/swagger/issue-206/server").getAbsolutePath();
         request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -887,7 +885,6 @@ public class GeneratorServiceTest {
     public void testIssue612_CC27814() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath() + "/server";
-        path = new File("/dati/dev/progetti/swagger/CC-27814/server").getAbsolutePath();
         GenerationRequest request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -903,7 +900,6 @@ public class GeneratorServiceTest {
         System.out.println("Generated server in:\n" + path);
 
         path = getTmpFolder().getAbsolutePath() + "/client";
-        path = new File("/dati/dev/progetti/swagger/CC-27814/client").getAbsolutePath();
         request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -926,7 +922,6 @@ public class GeneratorServiceTest {
     public void testIssue613_CC27916() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath() + "/client";
-        path = new File("/dati/dev/progetti/swagger/CC-27986/client").getAbsolutePath();
         GenerationRequest request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -942,7 +937,6 @@ public class GeneratorServiceTest {
         System.out.println("Generated client in:\n" + path);
 
         path = getTmpFolder().getAbsolutePath() + "/server";
-        path = new File("/dati/dev/progetti/swagger/CC-27986/server").getAbsolutePath();
         request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -963,7 +957,6 @@ public class GeneratorServiceTest {
     public void testIssue613_605_612() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath() + "/client";
-        path = new File("/dati/dev/progetti/swagger/polycodegen/client").getAbsolutePath();
         GenerationRequest request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -979,7 +972,6 @@ public class GeneratorServiceTest {
         System.out.println("Generated client in:\n" + path);
 
         path = getTmpFolder().getAbsolutePath() + "/server";
-        path = new File("/dati/dev/progetti/swagger/polycodegen/server").getAbsolutePath();
         request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -1000,7 +992,6 @@ public class GeneratorServiceTest {
     public void testIssue613_605_612_non_resteasy() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath() + "/clientdefault";
-        path = new File("/dati/dev/progetti/swagger/polycodegendefault/client").getAbsolutePath();
         GenerationRequest request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
@@ -1016,7 +1007,6 @@ public class GeneratorServiceTest {
         System.out.println("Generated client in:\n" + path);
 
         path = getTmpFolder().getAbsolutePath() + "/server";
-        path = new File("/dati/dev/progetti/swagger/polycodegendefault/serverdefault").getAbsolutePath();
         request = new GenerationRequest();
         request
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
