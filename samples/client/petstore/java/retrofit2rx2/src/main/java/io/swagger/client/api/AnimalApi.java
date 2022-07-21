@@ -27,7 +27,7 @@ public interface AnimalApi {
   })
   @POST("animal")
   Observable<Void> addAnimal(
-                    @retrofit2.http.Body Animal body    
+    @retrofit2.http.Body Animal body
   );
 
   /**
@@ -39,7 +39,7 @@ public interface AnimalApi {
    */
   @DELETE("animal/{animalId}")
   Observable<Void> deleteAnimal(
-            @retrofit2.http.Path("animalId") Long animalId            ,             @retrofit2.http.Header("api_key") String apiKey        
+    @retrofit2.http.Path("animalId") Long animalId, @retrofit2.http.Header("api_key") String apiKey
   );
 
   /**
@@ -50,7 +50,7 @@ public interface AnimalApi {
    */
   @GET("animal/{animalId}")
   Observable<Animal> getAnimalById(
-            @retrofit2.http.Path("animalId") Long animalId            
+    @retrofit2.http.Path("animalId") Long animalId
   );
 
   /**
@@ -64,7 +64,7 @@ public interface AnimalApi {
   })
   @PUT("animal")
   Observable<Void> updateAnimal(
-                    @retrofit2.http.Body Animal body    
+    @retrofit2.http.Body Animal body
   );
 
   /**
@@ -78,7 +78,7 @@ public interface AnimalApi {
   @retrofit2.http.FormUrlEncoded
   @POST("animal/{animalId}")
   Observable<Void> updateAnimalWithForm(
-            @retrofit2.http.Path("animalId") Long animalId            ,                     @retrofit2.http.Field("name") String name,                     @retrofit2.http.Field("status") String status
+    @retrofit2.http.Path("animalId") Long animalId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
 }

@@ -394,8 +394,14 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
          if (composedModels != null && !composedModels.isEmpty()) {
             for (CodegenModel composedModel : composedModels) {
+                if (allProcessedModels.get(composedModel.name) != null) {
+                    final Map<String, Object> models = (Map<String, Object>) allProcessedModels.get(composedModel.name);
+                    models.put("x-is-composed-model", composedModel.isComposedModel);
+                    continue;
+                }
                 final Map<String, Object> models = processModel(composedModel, config, schemas);
                 models.put("classname", config.toModelName(composedModel.name));
+                models.put("x-is-composed-model", composedModel.isComposedModel);
                 models.putAll(config.additionalProperties());
                 allProcessedModels.put(composedModel.name, models);
             }
@@ -1060,8 +1066,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Map<String, Object> objs = new HashMap<>();
         objs.put("package", config.modelPackage());
         List<Object> models = new ArrayList<>();
-
-        objs.put("x-is-composed-model", codegenModel.isComposedModel);
 
         Map<String, Object> modelObject = new HashMap<>();
         modelObject.put("model", codegenModel);

@@ -64,9 +64,9 @@ public class Order implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-    public static StatusEnum fromValue(String text) {
+    public static StatusEnum fromValue(String input) {
       for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -75,13 +75,13 @@ public class Order implements Parcelable {
     public static class Adapter extends TypeAdapter<StatusEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public StatusEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return StatusEnum.fromValue(String.valueOf(value));
+        return StatusEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("status")

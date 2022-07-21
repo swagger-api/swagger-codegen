@@ -56,9 +56,9 @@ public class MapTest implements Parcelable {
     public String toString() {
       return String.valueOf(value);
     }
-    public static InnerEnum fromValue(String text) {
+    public static InnerEnum fromValue(String input) {
       for (InnerEnum b : InnerEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -67,13 +67,13 @@ public class MapTest implements Parcelable {
     public static class Adapter extends TypeAdapter<InnerEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final InnerEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public InnerEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return InnerEnum.fromValue(String.valueOf(value));
+        return InnerEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("map_of_enum_string")

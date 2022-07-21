@@ -96,8 +96,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "default" : "available",
-              "enum" : [ "available", "pending", "sold" ]
+              "enum" : [ "available", "pending", "sold" ],
+              "default" : "available"
             }
           }
         } ],
@@ -249,7 +249,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body"
+                "$ref" : "#/components/schemas/pet_petId_body"
               }
             }
           }
@@ -1074,7 +1074,7 @@
           }
         }
       },
-      "body" : {
+      "pet_petId_body" : {
         "type" : "object",
         "properties" : {
           "name" : {

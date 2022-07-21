@@ -37,7 +37,7 @@ public interface FakeApi {
   })
   @POST("fake/outer/boolean")
   F.Promise<Response<Boolean>> fakeOuterBooleanSerialize(
-                    @retrofit2.http.Body Boolean body    
+    @retrofit2.http.Body Boolean body
   );
 
   /**
@@ -51,7 +51,7 @@ public interface FakeApi {
   })
   @POST("fake/outer/composite")
   F.Promise<Response<OuterComposite>> fakeOuterCompositeSerialize(
-                    @retrofit2.http.Body OuterComposite body    
+    @retrofit2.http.Body OuterComposite body
   );
 
   /**
@@ -65,7 +65,7 @@ public interface FakeApi {
   })
   @POST("fake/outer/number")
   F.Promise<Response<BigDecimal>> fakeOuterNumberSerialize(
-                    @retrofit2.http.Body BigDecimal body    
+    @retrofit2.http.Body BigDecimal body
   );
 
   /**
@@ -79,7 +79,7 @@ public interface FakeApi {
   })
   @POST("fake/outer/string")
   F.Promise<Response<String>> fakeOuterStringSerialize(
-                    @retrofit2.http.Body String body    
+    @retrofit2.http.Body String body
   );
 
   /**
@@ -93,7 +93,7 @@ public interface FakeApi {
   })
   @PATCH("fake")
   F.Promise<Response<Client>> testClientModel(
-                    @retrofit2.http.Body Client body    
+    @retrofit2.http.Body Client body
   );
 
   /**
@@ -107,7 +107,7 @@ public interface FakeApi {
   })
   @POST("fake")
   F.Promise<Response<Void>> testEndpointParameters(
-                    @retrofit2.http.Body FakeBody body    
+    @retrofit2.http.Body FakeBody body
   );
 
   /**
@@ -122,7 +122,7 @@ public interface FakeApi {
    */
   @GET("fake")
   F.Promise<Response<Void>> testEnumParameters(
-                @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray        ,             @retrofit2.http.Header("enum_header_string") String enumHeaderString        ,     @retrofit2.http.Query("enum_query_string_array") List<String> enumQueryStringArray                ,     @retrofit2.http.Query("enum_query_string") String enumQueryString                ,     @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger                
+    @retrofit2.http.Header("enum_header_string_array") List<String> enumHeaderStringArray, @retrofit2.http.Header("enum_header_string") String enumHeaderString, @retrofit2.http.Query("enum_query_string_array") List<String> enumQueryStringArray, @retrofit2.http.Query("enum_query_string") String enumQueryString, @retrofit2.http.Query("enum_query_integer") Integer enumQueryInteger
   );
 
   /**
@@ -136,7 +136,7 @@ public interface FakeApi {
   })
   @POST("fake/enum/form")
   F.Promise<Response<Void>> testEnumRequestBody(
-                    @retrofit2.http.Body EnumFormBody body    
+    @retrofit2.http.Body EnumFormBody body
   );
 
   /**
@@ -150,7 +150,7 @@ public interface FakeApi {
   })
   @POST("fake/inline-additionalProperties")
   F.Promise<Response<Void>> testInlineAdditionalProperties(
-                    @retrofit2.http.Body Map<String, String> body    
+    @retrofit2.http.Body Map<String, String> body
   );
 
   /**
@@ -164,7 +164,7 @@ public interface FakeApi {
   })
   @POST("fake/jsonFormData")
   F.Promise<Response<Void>> testJsonFormData(
-                    @retrofit2.http.Body FakeJsonFormDataBody body    
+    @retrofit2.http.Body FakeJsonFormDataBody body
   );
 
 }

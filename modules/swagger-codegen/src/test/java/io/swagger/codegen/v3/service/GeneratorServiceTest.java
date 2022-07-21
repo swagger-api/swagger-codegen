@@ -832,6 +832,196 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
     }
 
+    /*
+     * testIssue605 testIssue612_CC27814 testIssue613_CC27916 testIssue613_CC27916
+     *
+     * to obtain a runnable server via jetty:run, in generated server code, replace the following files
+     * with the ones in src/test/resources/3_0_0/issue-605/sertemplate
+     *
+     * pom.xml
+     * web.xml
+     * RestApplication.java
+     * InventoryApi.java
+     *
+     *
+     */
+    @Test
+    public void testIssue605() throws IOException {
+        String path = getTmpFolder().getAbsolutePath() + "/client";
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-605/swagger.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .library("resteasy")
+                                .addAdditionalProperty("dateLibray", "time4j")
+
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated client in:\n" + path);
+        path = getTmpFolder().getAbsolutePath() + "/server";
+        request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-resteasy")
+                .spec(loadSpecAsNode("3_0_0/issue-605/swagger.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+
+                );
+        files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated server in:\n" + path);
+    }
+
+    @Test
+    public void testIssue612_CC27814() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath() + "/server";
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-resteasy")
+                .spec(loadSpecAsNode("3_0_0/issue-612/cc-27814.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated server in:\n" + path);
+
+        path = getTmpFolder().getAbsolutePath() + "/client";
+        request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-612/cc-27814.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .library("resteasy")
+                                .addAdditionalProperty("dateLibray", "time4j")
+
+                );
+        files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated client in:\n" + path);
+    }
+
+    @Test
+    public void testIssue613_CC27916() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath() + "/client";
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-613/cc-27916.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated client in:\n" + path);
+
+        path = getTmpFolder().getAbsolutePath() + "/server";
+        request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-resteasy")
+                .spec(loadSpecAsNode("3_0_0/issue-613/cc-27916.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+
+                );
+        files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated server in:\n" + path);
+    }
+
+    @Test
+    public void testIssue613_605_612() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath() + "/client";
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-605-612-613/swagger.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated client in:\n" + path);
+
+        path = getTmpFolder().getAbsolutePath() + "/server";
+        request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-resteasy")
+                .spec(loadSpecAsNode("3_0_0/issue-605-612-613/swagger.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+
+                );
+        files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated server in:\n" + path);
+    }
+
+    @Test
+    public void testIssue613_605_612_non_resteasy() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath() + "/clientdefault";
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-605-612-613/swagger.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated client in:\n" + path);
+
+        path = getTmpFolder().getAbsolutePath() + "/server";
+        request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("jaxrs-jersey")
+                .spec(loadSpecAsNode("3_0_0/issue-605-612-613/swagger.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+
+                );
+        files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        System.out.println("Generated server in:\n" + path);
+    }
     protected static File getTmpFolder() {
         try {
             File outputFolder = Files.createTempFile("codegentest-", "-tmp").toFile();

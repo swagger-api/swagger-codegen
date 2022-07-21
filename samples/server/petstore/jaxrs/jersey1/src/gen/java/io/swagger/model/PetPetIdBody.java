@@ -17,57 +17,55 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.File;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
- * Body1
+ * PetPetIdBody
  */
-public class Body1   {
-  @JsonProperty("additionalMetadata")
-  private String additionalMetadata = null;
+public class PetPetIdBody   {
+  @JsonProperty("name")
+  private String name = null;
 
-  @JsonProperty("file")
-  private File file = null;
+  @JsonProperty("status")
+  private String status = null;
 
-  public Body1 additionalMetadata(String additionalMetadata) {
-    this.additionalMetadata = additionalMetadata;
+  public PetPetIdBody name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Additional data to pass to server
-   * @return additionalMetadata
+   * Updated name of the pet
+   * @return name
    **/
-  @JsonProperty("additionalMetadata")
-  @ApiModelProperty(value = "Additional data to pass to server")
-  public String getAdditionalMetadata() {
-    return additionalMetadata;
+  @JsonProperty("name")
+  @ApiModelProperty(value = "Updated name of the pet")
+  public String getName() {
+    return name;
   }
 
-  public void setAdditionalMetadata(String additionalMetadata) {
-    this.additionalMetadata = additionalMetadata;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Body1 file(File file) {
-    this.file = file;
+  public PetPetIdBody status(String status) {
+    this.status = status;
     return this;
   }
 
   /**
-   * file to upload
-   * @return file
+   * Updated status of the pet
+   * @return status
    **/
-  @JsonProperty("file")
-  @ApiModelProperty(value = "file to upload")
-  @Valid
-  public File getFile() {
-    return file;
+  @JsonProperty("status")
+  @ApiModelProperty(value = "Updated status of the pet")
+  public String getStatus() {
+    return status;
   }
 
-  public void setFile(File file) {
-    this.file = file;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
@@ -79,24 +77,24 @@ public class Body1   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body1 body1 = (Body1) o;
-    return Objects.equals(this.additionalMetadata, body1.additionalMetadata) &&
-        Objects.equals(this.file, body1.file);
+    PetPetIdBody petPetIdBody = (PetPetIdBody) o;
+    return Objects.equals(this.name, petPetIdBody.name) &&
+        Objects.equals(this.status, petPetIdBody.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(additionalMetadata, file);
+    return Objects.hash(name, status);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body1 {\n");
+    sb.append("class PetPetIdBody {\n");
     
-    sb.append("    additionalMetadata: ").append(toIndentedString(additionalMetadata)).append("\n");
-    sb.append("    file: ").append(toIndentedString(file)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

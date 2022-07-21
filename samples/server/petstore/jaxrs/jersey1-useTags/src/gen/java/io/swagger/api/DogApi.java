@@ -42,8 +42,8 @@ public class DogApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
     public Response addDog(
-                        @ApiParam(value = "Dog object that needs to be added to the store" ,required=true) Dog body
-        
+        @ApiParam(value = "Dog object that needs to be added to the store" ,required=true) Dog body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -57,11 +57,11 @@ public class DogApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid dog value", response = Void.class) })
     public Response deleteDog(
-                @ApiParam(value = "Dog id to delete",required=true) @PathParam("dogId") Long dogId        
+        @ApiParam(value = "Dog id to delete",required=true) @PathParam("dogId") Long dogId
 ,
-                        @ApiParam(value = "" )@HeaderParam("api_key") String apiKey
-        
-        
+        @ApiParam(value = "" )@HeaderParam("api_key") String apiKey
+
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -77,7 +77,7 @@ public class DogApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid ID supplied", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 404, message = "Pet not found", response = Void.class) })
     public Response getDogById(
-                @ApiParam(value = "ID of dog to return",required=true) @PathParam("dogId") Long dogId        
+        @ApiParam(value = "ID of dog to return",required=true) @PathParam("dogId") Long dogId
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -93,8 +93,8 @@ public class DogApi  {
         @io.swagger.annotations.ApiResponse(code = 404, message = "Animal not found", response = Void.class),
         @io.swagger.annotations.ApiResponse(code = 405, message = "Validation exception", response = Void.class) })
     public Response updateDog(
-                        @ApiParam(value = "Dog object that needs to be added." ,required=true) Dog body
-        
+        @ApiParam(value = "Dog object that needs to be added." ,required=true) Dog body
+
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {
@@ -108,11 +108,11 @@ public class DogApi  {
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 405, message = "Invalid input", response = Void.class) })
     public Response updateDogWithForm(
-                @ApiParam(value = "ID of dog that needs to be updated",required=true) @PathParam("dogId") Long dogId        
+        @ApiParam(value = "ID of dog that needs to be updated",required=true) @PathParam("dogId") Long dogId
 ,
-                        @ApiParam(value = "")  @FormParam("name")  String name
+        @ApiParam(value = "")  @FormParam("name")  String name
 ,
-                        @ApiParam(value = "")  @FormParam("status")  String status
+        @ApiParam(value = "")  @FormParam("status")  String status
 ,
         @Context SecurityContext securityContext)
     throws NotFoundException {

@@ -21,51 +21,53 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
- * Body7
+ * FakeJsonFormDataBody
  */
-public class Body7   {
-  @JsonProperty("name")
-  private String name = null;
+public class FakeJsonFormDataBody   {
+  @JsonProperty("param")
+  private String param = null;
 
-  @JsonProperty("status")
-  private String status = null;
+  @JsonProperty("param2")
+  private String param2 = null;
 
-  public Body7 name(String name) {
-    this.name = name;
+  public FakeJsonFormDataBody param(String param) {
+    this.param = param;
     return this;
   }
 
   /**
-   * Updated name of the dog
-   * @return name
+   * field1
+   * @return param
    **/
-  @JsonProperty("name")
-  @ApiModelProperty(value = "Updated name of the dog")
-  public String getName() {
-    return name;
+  @JsonProperty("param")
+  @ApiModelProperty(required = true, value = "field1")
+  @NotNull
+  public String getParam() {
+    return param;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setParam(String param) {
+    this.param = param;
   }
 
-  public Body7 status(String status) {
-    this.status = status;
+  public FakeJsonFormDataBody param2(String param2) {
+    this.param2 = param2;
     return this;
   }
 
   /**
-   * Updated status of the dog
-   * @return status
+   * field2
+   * @return param2
    **/
-  @JsonProperty("status")
-  @ApiModelProperty(value = "Updated status of the dog")
-  public String getStatus() {
-    return status;
+  @JsonProperty("param2")
+  @ApiModelProperty(required = true, value = "field2")
+  @NotNull
+  public String getParam2() {
+    return param2;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  public void setParam2(String param2) {
+    this.param2 = param2;
   }
 
 
@@ -77,24 +79,24 @@ public class Body7   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body7 body7 = (Body7) o;
-    return Objects.equals(this.name, body7.name) &&
-        Objects.equals(this.status, body7.status);
+    FakeJsonFormDataBody fakeJsonFormDataBody = (FakeJsonFormDataBody) o;
+    return Objects.equals(this.param, fakeJsonFormDataBody.param) &&
+        Objects.equals(this.param2, fakeJsonFormDataBody.param2);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, status);
+    return Objects.hash(param, param2);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body7 {\n");
+    sb.append("class FakeJsonFormDataBody {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    param: ").append(toIndentedString(param)).append("\n");
+    sb.append("    param2: ").append(toIndentedString(param2)).append("\n");
     sb.append("}");
     return sb.toString();
   }
