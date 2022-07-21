@@ -36,7 +36,7 @@ public interface PetApi {
   })
   @POST("pet")
   CompletionStage<Response<Void>> addPet(
-                    @retrofit2.http.Body Pet body    
+    @retrofit2.http.Body Pet body
   );
 
   /**
@@ -48,7 +48,7 @@ public interface PetApi {
    */
   @DELETE("pet/{petId}")
   CompletionStage<Response<Void>> deletePet(
-            @retrofit2.http.Path("petId") Long petId            ,             @retrofit2.http.Header("api_key") String apiKey        
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Header("api_key") String apiKey
   );
 
   /**
@@ -62,7 +62,7 @@ public interface PetApi {
   })
   @POST("pet/category")
   CompletionStage<Response<ModelApiResponse>> doCategoryStuff(
-                    @retrofit2.http.Body SubCategory body    
+    @retrofit2.http.Body SubCategory body
   );
 
   /**
@@ -73,7 +73,7 @@ public interface PetApi {
    */
   @GET("pet/findByStatus")
   CompletionStage<Response<List<Pet>>> findPetsByStatus(
-        @retrofit2.http.Query("status") List<String> status                
+    @retrofit2.http.Query("status") List<String> status
   );
 
   /**
@@ -84,7 +84,7 @@ public interface PetApi {
    */
   @GET("pet/findByTags")
   CompletionStage<Response<List<Pet>>> findPetsByTags(
-        @retrofit2.http.Query("tags") List<String> tags                
+    @retrofit2.http.Query("tags") List<String> tags
   );
 
   /**
@@ -104,7 +104,7 @@ public interface PetApi {
    */
   @GET("pet/{petId}")
   CompletionStage<Response<Pet>> getPetById(
-            @retrofit2.http.Path("petId") Long petId            
+    @retrofit2.http.Path("petId") Long petId
   );
 
   /**
@@ -127,7 +127,7 @@ public interface PetApi {
   })
   @PUT("pet")
   CompletionStage<Response<Void>> updatePet(
-                    @retrofit2.http.Body Pet body    
+    @retrofit2.http.Body Pet body
   );
 
   /**
@@ -141,7 +141,7 @@ public interface PetApi {
   @retrofit2.http.FormUrlEncoded
   @POST("pet/{petId}")
   CompletionStage<Response<Void>> updatePetWithForm(
-            @retrofit2.http.Path("petId") Long petId            ,                     @retrofit2.http.Field("name") String name,                     @retrofit2.http.Field("status") String status
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
   /**
@@ -155,7 +155,7 @@ public interface PetApi {
   @retrofit2.http.Multipart
   @POST("pet/{petId}/uploadImage")
   CompletionStage<Response<ModelApiResponse>> uploadFile(
-            @retrofit2.http.Path("petId") Long petId            ,                     @retrofit2.http.Part("additionalMetadata") String additionalMetadata,                     @retrofit2.http.Part okhttp3.MultipartBody.Part file
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Part("additionalMetadata") String additionalMetadata, @retrofit2.http.Part okhttp3.MultipartBody.Part file
   );
 
 }

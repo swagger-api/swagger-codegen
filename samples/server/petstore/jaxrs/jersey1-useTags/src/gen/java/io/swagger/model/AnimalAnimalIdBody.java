@@ -21,26 +21,26 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 /**
- * Body
+ * AnimalAnimalIdBody
  */
-public class Body   {
+public class AnimalAnimalIdBody   {
   @JsonProperty("name")
   private String name = null;
 
   @JsonProperty("status")
   private String status = null;
 
-  public Body name(String name) {
+  public AnimalAnimalIdBody name(String name) {
     this.name = name;
     return this;
   }
 
   /**
-   * Updated name of the pet
+   * Updated name of the animal
    * @return name
    **/
   @JsonProperty("name")
-  @ApiModelProperty(value = "Updated name of the pet")
+  @ApiModelProperty(value = "Updated name of the animal")
   public String getName() {
     return name;
   }
@@ -49,17 +49,17 @@ public class Body   {
     this.name = name;
   }
 
-  public Body status(String status) {
+  public AnimalAnimalIdBody status(String status) {
     this.status = status;
     return this;
   }
 
   /**
-   * Updated status of the pet
+   * Updated status of the animal
    * @return status
    **/
   @JsonProperty("status")
-  @ApiModelProperty(value = "Updated status of the pet")
+  @ApiModelProperty(value = "Updated status of the animal")
   public String getStatus() {
     return status;
   }
@@ -77,9 +77,9 @@ public class Body   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body body = (Body) o;
-    return Objects.equals(this.name, body.name) &&
-        Objects.equals(this.status, body.status);
+    AnimalAnimalIdBody animalAnimalIdBody = (AnimalAnimalIdBody) o;
+    return Objects.equals(this.name, animalAnimalIdBody.name) &&
+        Objects.equals(this.status, animalAnimalIdBody.status);
   }
 
   @Override
@@ -91,7 +91,7 @@ public class Body   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body {\n");
+    sb.append("class AnimalAnimalIdBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

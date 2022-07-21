@@ -49,9 +49,9 @@ public class NullableEnumModel {
     public String toString() {
       return String.valueOf(value);
     }
-    public static EnumPropEnum fromValue(String text) {
+    public static EnumPropEnum fromValue(String input) {
       for (EnumPropEnum b : EnumPropEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -60,13 +60,13 @@ public class NullableEnumModel {
     public static class Adapter extends TypeAdapter<EnumPropEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumPropEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public EnumPropEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return EnumPropEnum.fromValue(String.valueOf(value));
+        return EnumPropEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("enumProp")

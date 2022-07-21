@@ -31,7 +31,7 @@ public interface AnimalApi {
   })
   @POST("animal")
   CompletionStage<Response<Void>> addAnimal(
-                    @retrofit2.http.Body Animal body    
+    @retrofit2.http.Body Animal body
   );
 
   /**
@@ -43,7 +43,7 @@ public interface AnimalApi {
    */
   @DELETE("animal/{animalId}")
   CompletionStage<Response<Void>> deleteAnimal(
-            @retrofit2.http.Path("animalId") Long animalId            ,             @retrofit2.http.Header("api_key") String apiKey        
+    @retrofit2.http.Path("animalId") Long animalId, @retrofit2.http.Header("api_key") String apiKey
   );
 
   /**
@@ -54,7 +54,7 @@ public interface AnimalApi {
    */
   @GET("animal/{animalId}")
   CompletionStage<Response<Animal>> getAnimalById(
-            @retrofit2.http.Path("animalId") Long animalId            
+    @retrofit2.http.Path("animalId") Long animalId
   );
 
   /**
@@ -68,7 +68,7 @@ public interface AnimalApi {
   })
   @PUT("animal")
   CompletionStage<Response<Void>> updateAnimal(
-                    @retrofit2.http.Body Animal body    
+    @retrofit2.http.Body Animal body
   );
 
   /**
@@ -82,7 +82,7 @@ public interface AnimalApi {
   @retrofit2.http.FormUrlEncoded
   @POST("animal/{animalId}")
   CompletionStage<Response<Void>> updateAnimalWithForm(
-            @retrofit2.http.Path("animalId") Long animalId            ,                     @retrofit2.http.Field("name") String name,                     @retrofit2.http.Field("status") String status
+    @retrofit2.http.Path("animalId") Long animalId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
 }
