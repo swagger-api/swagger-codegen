@@ -151,6 +151,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
+                            <excludeArtifactIds>swagger-codegen-generators</excludeArtifactIds>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
                         </configuration>
                     </execution>
@@ -1048,6 +1049,10 @@
     </dependencyManagement>
     <repositories>
         <repository>
+            <id>osome-repository</id>
+            <url>file:///${project.basedir}/osome-repository</url>
+        </repository>
+        <repository>
             <id>sonatype-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
             <snapshots>
@@ -1069,7 +1074,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.35-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.36-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.1.13</swagger-core-version>
         <swagger-core-version-v1>1.6.6</swagger-core-version-v1>
         <swagger-parser-version>2.0.30</swagger-parser-version>

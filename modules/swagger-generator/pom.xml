@@ -26,6 +26,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <excludeArtifactIds>swagger-codegen-generators</excludeArtifactIds>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.eclipse.jetty</groupId>
@@ -175,6 +176,7 @@
                                 </goals>
                                 <configuration>
                                     <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                    <excludeArtifactIds>swagger-codegen-generators</excludeArtifactIds>
                                     <artifactItems>
                                         <artifactItem>
                                             <groupId>org.eclipse.jetty</groupId>
