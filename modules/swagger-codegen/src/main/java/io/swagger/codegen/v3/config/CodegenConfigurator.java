@@ -62,6 +62,7 @@ public class CodegenConfigurator implements Serializable {
     private boolean skipOverwrite;
     private boolean removeOperationIdPrefix;
     private boolean skipInlineModelMatches;
+    private boolean resolveRequestBody;
     private String templateDir;
     private String templateVersion;
     private String auth;
@@ -674,6 +675,7 @@ public class CodegenConfigurator implements Serializable {
         options.setFlatten(true);
         options.setFlattenComposedSchemas(flattenInlineSchema);
         options.setSkipMatches(this.skipInlineModelMatches);
+        options.setResolveRequestBody (this.resolveRequestBody);
         return options;
     }
 
@@ -767,4 +769,14 @@ public class CodegenConfigurator implements Serializable {
     public void setFlattenInlineSchema(boolean flattenInlineComposedSchemas) {
         this.flattenInlineSchema = flattenInlineComposedSchemas;
     }
+
+	public boolean isResolveRequestBody() {
+		return resolveRequestBody;
+	}
+
+	public void setResolveRequestBody(boolean resolveRequestBody) {
+		this.resolveRequestBody = resolveRequestBody;
+	}
+    
+    
 }
