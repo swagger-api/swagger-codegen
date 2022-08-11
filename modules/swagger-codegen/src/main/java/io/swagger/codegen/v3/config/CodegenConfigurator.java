@@ -769,14 +769,11 @@ public class CodegenConfigurator implements Serializable {
     public void setFlattenInlineSchema(boolean flattenInlineComposedSchemas) {
         this.flattenInlineSchema = flattenInlineComposedSchemas;
     }
+    public boolean isResolveRequestBody() {
+        return resolveRequestBody;
+    }
 
-	public boolean isResolveRequestBody() {
-		return resolveRequestBody;
-	}
-
-	public void setResolveRequestBody(boolean resolveRequestBody) {
-		this.resolveRequestBody = resolveRequestBody;
-	}
-    
-    
+    public void setResolveRequestBody(boolean resolveRequestBody) {
+        this.resolveRequestBody = resolveRequestBody;
+    }
 }
