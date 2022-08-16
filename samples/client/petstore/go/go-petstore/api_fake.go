@@ -20,11 +20,6 @@ import (
 	"github.com/antihax/optional"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
-
 type FakeApiService service
 
 /*

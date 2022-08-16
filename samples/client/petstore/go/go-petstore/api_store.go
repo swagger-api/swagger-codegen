@@ -20,11 +20,6 @@ import (
 	"fmt"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
-
 type StoreApiService service
 
 /*

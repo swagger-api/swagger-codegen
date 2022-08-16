@@ -22,11 +22,6 @@ import (
 	"os"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
-
 type PetApiService service
 
 /*
