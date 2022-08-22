@@ -32,8 +32,9 @@ var (
 // APIClient manages communication with the {{appName}} API v{{version}}
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
-	cfg    *Configuration
-	common service // Reuse a single struct instead of allocating one for each service on the heap.
+	cfg          *Configuration
+	common       service // Reuse a single struct instead of allocating one for each service on the heap.
+	jsonDecodeRE *regexp.Regexp
 
 	// API Services
 {{#apiInfo}}
@@ -57,9 +58,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 		cfg.HTTPClient = http.DefaultClient
 	}
 
+	jsonDecodeRE, err := regexp.Compile("application/([^ ]*\\+)?json")
+	if err != nil {
+		panic(err)
+	}
+
 	c := &APIClient{}
 	c.cfg = cfg
 	c.common.client = c
+	c.jsonDecodeRE = jsonDecodeRE
 
 {{#apiInfo}}
 	// API Services
@@ -319,7 +326,7 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 				return err
 			}
 			return nil
-		} else if strings.Contains(contentType, "application/json") {
+		} else if c.jsonDecodeRE.MatchString(contentType) {
 			if err = json.Unmarshal(b, v); err != nil {
 				return err
 			}

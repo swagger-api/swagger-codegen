@@ -41,8 +41,9 @@ var (
 // APIClient manages communication with the Swagger Petstore API v1.0.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
-	cfg    *Configuration
-	common service // Reuse a single struct instead of allocating one for each service on the heap.
+	cfg          *Configuration
+	common       service // Reuse a single struct instead of allocating one for each service on the heap.
+	jsonDecodeRE *regexp.Regexp
 
 	// API Services
 
@@ -70,9 +71,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 		cfg.HTTPClient = http.DefaultClient
 	}
 
+	jsonDecodeRE, err := regexp.Compile("application/([^ ]*\\+)?json")
+	if err != nil {
+		panic(err)
+	}
+
 	c := &APIClient{}
 	c.cfg = cfg
 	c.common.client = c
+	c.jsonDecodeRE = jsonDecodeRE
 
 	// API Services
 	c.AnotherFakeApi = (*AnotherFakeApiService)(&c.common)
@@ -326,17 +333,17 @@ func (c *APIClient) prepareRequest(
 }
 
 func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err error) {
-		if strings.Contains(contentType, "application/xml") {
-			if err = xml.Unmarshal(b, v); err != nil {
-				return err
-			}
-			return nil
-		} else if strings.Contains(contentType, "application/json") {
-			if err = json.Unmarshal(b, v); err != nil {
-				return err
-			}
-			return nil
+	if strings.Contains(contentType, "application/xml") {
+		if err = xml.Unmarshal(b, v); err != nil {
+			return err
 		}
+		return nil
+	} else if c.jsonDecodeRE.MatchString(contentType) {
+		if err = json.Unmarshal(b, v); err != nil {
+			return err
+		}
+		return nil
+	}
 	return errors.New("undefined response type")
 }
 
