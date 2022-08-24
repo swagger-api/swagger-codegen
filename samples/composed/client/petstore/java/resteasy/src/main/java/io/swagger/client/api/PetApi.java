@@ -7,12 +7,13 @@ import io.swagger.client.Pair;
 
 import javax.ws.rs.core.GenericType;
 
-import io.swagger.client.model.Body1;
-import io.swagger.client.model.Body2;
 import io.swagger.client.model.InlineResponse200;
 import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.ParrotBody;
+import io.swagger.client.model.ParrotBody1;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class PetApi {
    * @return InlineResponse2001
    * @throws ApiException if fails to make API call
    */
-  public InlineResponse2001 addParrot(Body2 body) throws ApiException {
+  public InlineResponse2001 addParrot(ParrotBody1 body) throws ApiException {
     Object localVarPostBody = body;
     // create path and map variables
     String localVarPath = "/parrot".replaceAll("\\{format\\}","json");
@@ -56,7 +57,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json"
@@ -94,7 +94,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
@@ -136,7 +135,6 @@ public class PetApi {
     if (apiKey != null)
       localVarHeaderParams.put("api_key", apiClient.parameterToString(apiKey));
 
-    
     final String[] localVarAccepts = {
       
     };
@@ -150,6 +148,40 @@ public class PetApi {
     String[] localVarAuthNames = new String[] { "petstore_auth" };
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return ModelApiResponse
+   * @throws ApiException if fails to make API call
+   */
+  public ModelApiResponse doCategoryStuff(SubCategory body) throws ApiException {
+    Object localVarPostBody = body;
+    // create path and map variables
+    String localVarPath = "/pet/category".replaceAll("\\{format\\}","json");
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
   /**
    * Find pet by ID
@@ -203,7 +235,6 @@ public class PetApi {
     if (token != null)
       localVarHeaderParams.put("token", apiClient.parameterToString(token));
 
-    
     final String[] localVarAccepts = {
       
     };
@@ -241,7 +272,6 @@ public class PetApi {
 
     localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "status", status));
 
-    
     
     final String[] localVarAccepts = {
       "application/json", "application/xml"
@@ -284,7 +314,6 @@ public class PetApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "tags", tags));
 
     
-    
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -317,7 +346,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json"
@@ -358,7 +386,6 @@ public class PetApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -381,7 +408,7 @@ public class PetApi {
    * @return InlineResponse200
    * @throws ApiException if fails to make API call
    */
-  public InlineResponse200 updateParrots(Body1 body) throws ApiException {
+  public InlineResponse200 updateParrots(ParrotBody body) throws ApiException {
     Object localVarPostBody = body;
     // create path and map variables
     String localVarPath = "/parrot".replaceAll("\\{format\\}","json");
@@ -392,7 +419,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json"
@@ -430,7 +456,6 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
@@ -470,8 +495,7 @@ public class PetApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    if (name != null)
+        if (name != null)
       localVarFormParams.put("name", name);
 if (status != null)
       localVarFormParams.put("status", status);
@@ -514,7 +538,6 @@ if (status != null)
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json"

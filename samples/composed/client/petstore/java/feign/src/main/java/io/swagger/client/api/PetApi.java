@@ -3,12 +3,13 @@ package io.swagger.client.api;
 import io.swagger.client.ApiClient;
 import io.swagger.client.EncodingUtils;
 
-import io.swagger.client.model.Body1;
-import io.swagger.client.model.Body2;
 import io.swagger.client.model.InlineResponse200;
 import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.ParrotBody;
+import io.swagger.client.model.ParrotBody1;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public interface PetApi extends ApiClient.Api {
       "Content-Type: application/json",
       "Accept: application/json",
   })
-  InlineResponse2001 addParrot(Body2 body);
+  InlineResponse2001 addParrot(ParrotBody1 body);
   /**
    * Add a new pet to the store
    * 
@@ -54,6 +55,18 @@ public interface PetApi extends ApiClient.Api {
     "api_key: {apiKey}"
   })
   void deletePet(@Param("petId") Long petId, @Param("apiKey") String apiKey);
+  /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return ModelApiResponse
+   */
+  @RequestLine("POST /pet/category")
+  @Headers({
+      "Content-Type: application/json",
+      "Accept: application/json",
+  })
+  ModelApiResponse doCategoryStuff(SubCategory body);
   /**
    * Find pet by ID
    * schedule pet feeding
@@ -235,7 +248,7 @@ public interface PetApi extends ApiClient.Api {
       "Content-Type: application/json",
       "Accept: application/json",
   })
-  InlineResponse200 updateParrots(Body1 body);
+  InlineResponse200 updateParrots(ParrotBody body);
   /**
    * Update an existing pet
    * 

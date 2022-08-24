@@ -25,7 +25,7 @@ import javax.validation.Valid;
  */
 
 
-public class Parakeet implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001 {
+public class Parakeet implements OneOfinlineResponse200ParrotsItems, InlineResponse2001, AnyOfparrotBodyParrotsItems, ParrotBody1 {
   @JsonProperty("color")
   private String color = null;
 

@@ -67,7 +67,6 @@ public class UserApi {
 
 
     
-    
     final String[] localVarAccepts = {
       
     };
@@ -105,7 +104,6 @@ public class UserApi {
 
 
     
-    
     final String[] localVarAccepts = {
       
     };
@@ -142,7 +140,6 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
@@ -182,7 +179,6 @@ public class UserApi {
 
 
     
-    
     final String[] localVarAccepts = {
       
     };
@@ -221,7 +217,6 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       "application/json", "application/xml"
@@ -269,7 +264,6 @@ public class UserApi {
     localVarQueryParams.addAll(apiClient.parameterToPair("password", password));
 
     
-    
     final String[] localVarAccepts = {
       "application/json", "application/xml"
     };
@@ -302,7 +296,6 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
@@ -346,7 +339,6 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
     
     final String[] localVarAccepts = {
       
