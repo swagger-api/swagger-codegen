@@ -28,7 +28,7 @@ public interface StoreApi {
    */
   @DELETE("store/order/{orderId}")
   F.Promise<Response<Void>> deleteOrder(
-            @retrofit2.http.Path("orderId") Long orderId            
+    @retrofit2.http.Path("orderId") Long orderId
   );
 
   /**
@@ -48,7 +48,7 @@ public interface StoreApi {
    */
   @GET("store/order/{orderId}")
   F.Promise<Response<Order>> getOrderById(
-            @retrofit2.http.Path("orderId") Long orderId            
+    @retrofit2.http.Path("orderId") Long orderId
   );
 
   /**
@@ -62,7 +62,7 @@ public interface StoreApi {
   })
   @POST("store/order")
   F.Promise<Response<Order>> placeOrder(
-                    @retrofit2.http.Body Order body    
+    @retrofit2.http.Body Order body
   );
 
 }

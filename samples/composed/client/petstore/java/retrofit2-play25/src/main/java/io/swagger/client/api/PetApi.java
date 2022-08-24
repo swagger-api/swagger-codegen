@@ -9,12 +9,13 @@ import retrofit2.http.*;
 
 import okhttp3.RequestBody;
 
-import io.swagger.client.model.Body1;
-import io.swagger.client.model.Body2;
 import io.swagger.client.model.InlineResponse200;
 import io.swagger.client.model.InlineResponse2001;
 import io.swagger.client.model.ModelApiResponse;
+import io.swagger.client.model.ParrotBody;
+import io.swagger.client.model.ParrotBody1;
 import io.swagger.client.model.Pet;
+import io.swagger.client.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public interface PetApi {
   })
   @POST("parrot")
   CompletionStage<Response<InlineResponse2001>> addParrot(
-                    @retrofit2.http.Body Body2 body    
+    @retrofit2.http.Body ParrotBody1 body
   );
 
   /**
@@ -50,7 +51,7 @@ public interface PetApi {
   })
   @POST("pet")
   CompletionStage<Response<Void>> addPet(
-                    @retrofit2.http.Body Pet body    
+    @retrofit2.http.Body Pet body
   );
 
   /**
@@ -62,7 +63,21 @@ public interface PetApi {
    */
   @DELETE("pet/{petId}")
   CompletionStage<Response<Void>> deletePet(
-            @retrofit2.http.Path("petId") Long petId            ,             @retrofit2.http.Header("api_key") String apiKey        
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Header("api_key") String apiKey
+  );
+
+  /**
+   * 
+   * 
+   * @param body  (optional)
+   * @return Call&lt;ModelApiResponse&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @POST("pet/category")
+  CompletionStage<Response<ModelApiResponse>> doCategoryStuff(
+    @retrofit2.http.Body SubCategory body
   );
 
   /**
@@ -81,7 +96,7 @@ public interface PetApi {
   })
   @POST("pet/feed/{petId}")
   CompletionStage<Response<Void>> feedPet(
-                    @retrofit2.http.Body Pet body    ,             @retrofit2.http.Header("token") String token        ,     @retrofit2.http.Query("petType") String petType                ,     @retrofit2.http.Query("status") String status                ,         @retrofit2.http.Path("petId") Long petId            ,                     String sessionId
+    @retrofit2.http.Body Pet body, @retrofit2.http.Header("token") String token, @retrofit2.http.Query("petType") String petType, @retrofit2.http.Query("status") String status, @retrofit2.http.Path("petId") Long petId, String sessionId
   );
 
   /**
@@ -92,7 +107,7 @@ public interface PetApi {
    */
   @GET("pet/findByStatus")
   CompletionStage<Response<List<Pet>>> findPetsByStatus(
-        @retrofit2.http.Query("status") List<String> status                
+    @retrofit2.http.Query("status") List<String> status
   );
 
   /**
@@ -103,7 +118,7 @@ public interface PetApi {
    */
   @GET("pet/findByTags")
   CompletionStage<Response<List<Pet>>> findPetsByTags(
-        @retrofit2.http.Query("tags") List<String> tags                
+    @retrofit2.http.Query("tags") List<String> tags
   );
 
   /**
@@ -123,7 +138,7 @@ public interface PetApi {
    */
   @GET("pet/{petId}")
   CompletionStage<Response<Pet>> getPetById(
-            @retrofit2.http.Path("petId") Long petId            
+    @retrofit2.http.Path("petId") Long petId
   );
 
   /**
@@ -137,7 +152,7 @@ public interface PetApi {
   })
   @PUT("parrot")
   CompletionStage<Response<InlineResponse200>> updateParrots(
-                    @retrofit2.http.Body Body1 body    
+    @retrofit2.http.Body ParrotBody body
   );
 
   /**
@@ -151,7 +166,7 @@ public interface PetApi {
   })
   @PUT("pet")
   CompletionStage<Response<Void>> updatePet(
-                    @retrofit2.http.Body Pet body    
+    @retrofit2.http.Body Pet body
   );
 
   /**
@@ -165,7 +180,7 @@ public interface PetApi {
   @retrofit2.http.FormUrlEncoded
   @POST("pet/{petId}")
   CompletionStage<Response<Void>> updatePetWithForm(
-            @retrofit2.http.Path("petId") Long petId            ,                     @retrofit2.http.Field("name") String name,                     @retrofit2.http.Field("status") String status
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Field("name") String name, @retrofit2.http.Field("status") String status
   );
 
   /**
@@ -180,7 +195,7 @@ public interface PetApi {
   })
   @POST("pet/{petId}/uploadImage")
   CompletionStage<Response<ModelApiResponse>> uploadFile(
-            @retrofit2.http.Path("petId") Long petId            ,                 @retrofit2.http.Body Object body    
+    @retrofit2.http.Path("petId") Long petId, @retrofit2.http.Body Object body
   );
 
 }

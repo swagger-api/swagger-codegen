@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "Macaw")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Macaw")
-public class Macaw implements AnyOfbody1ParrotsItems, AnyOfbody2, OneOfinlineResponse200ParrotsItems, OneOfinlineResponse2001 {
+public class Macaw implements OneOfinlineResponse200ParrotsItems, InlineResponse2001, AnyOfparrotBodyParrotsItems, ParrotBody1 {
   @JsonProperty("color")
   @JacksonXmlProperty(localName = "color")
   @XmlElement(name = "color")

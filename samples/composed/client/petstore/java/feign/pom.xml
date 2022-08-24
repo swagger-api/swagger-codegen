@@ -117,7 +117,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.4</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -218,11 +218,6 @@
       <version>${jackson-version}</version>
     </dependency>
     <dependency>
-      <groupId>com.github.joschi.jackson</groupId>
-      <artifactId>jackson-datatype-threetenbp</artifactId>
-      <version>${jackson-threetenbp-version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
       <artifactId>org.apache.oltu.oauth2.client</artifactId>
       <version>${oltu-version}</version>
@@ -253,10 +248,9 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <swagger-core-version>2.0.0</swagger-core-version>
-    <feign-version>9.4.0</feign-version>
-    <feign-form-version>2.1.0</feign-form-version>
+    <feign-version>11.6</feign-version>
+    <feign-form-version>3.8.0</feign-form-version>
     <jackson-version>2.10.1</jackson-version>
-    <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
     <junit-version>4.13.1</junit-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <oltu-version>1.0.2</oltu-version>
