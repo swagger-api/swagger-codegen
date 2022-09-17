@@ -112,7 +112,10 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
-    compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+    compile ("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version") {
+        exclude group: "org.json", module: "json"
+    }
+    compile "org.json:json:20180130"
     compile "com.brsanthu:migbase64:2.2"
     testCompile "junit:junit:$junit_version"
 }
