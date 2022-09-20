@@ -22,12 +22,12 @@
       "description": "Admin Workflow Resource"
     },
     {
-      "name": "cancel-sandbox",
-      "description": "Cancel Sandbox"
-    },
-    {
       "name": "eghl-call-back-resource",
       "description": "Eghl Call Back Resource"
+    },
+    {
+      "name": "eghl-reconciliation",
+      "description": "EGHL Reconciliation"
     },
     {
       "name": "health-check-resource",
@@ -50,10 +50,6 @@
       "description": "Psp Performance Resource"
     },
     {
-      "name": "psp-reconciliation",
-      "description": "PSP Reconciliation"
-    },
-    {
       "name": "pump-life-cycle-resource",
       "description": "Pump Life Cycle Resource"
     },
@@ -62,8 +58,16 @@
       "description": "Pump Performance Resource"
     },
     {
-      "name": "shell-server-to-server-resource",
-      "description": "Shell Server To Server Resource"
+      "name": "register-rest-controller",
+      "description": "Register Rest Controller"
+    },
+    {
+      "name": "site-cancel-resource",
+      "description": "Site Cancel Resource"
+    },
+    {
+      "name": "site-server-to-server-resource",
+      "description": "Site Server To Server Resource"
     },
     {
       "name": "swagger-config-resource",
@@ -83,6 +87,114 @@
     }
   ],
   "paths": {
+    "/hi": {
+      "post": {
+        "tags": [
+          "register-rest-controller"
+        ],
+        "summary": "register",
+        "operationId": "registerUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/orchestrator/payments/app": {
+      "get": {
+        "tags": [
+          "pump-life-cycle-resource"
+        ],
+        "summary": "get",
+        "operationId": "getUsingGET_1",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
     "/orchestrator/payments/app/pumpReserve/{version}": {
       "post": {
         "tags": [
@@ -658,7 +770,7 @@
             "description": "tokenizeRO",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/TokenizeROReq"
+              "$ref": "#/definitions/TokenizeRO"
             }
           }
         ],
@@ -829,7 +941,7 @@
     "/orchestrator/payments/v1/site/cancel": {
       "post": {
         "tags": [
-          "cancel-sandbox"
+          "site-cancel-resource"
         ],
         "summary": "cancel",
         "operationId": "cancelUsingPOST",
@@ -894,7 +1006,7 @@
     "/orchestrator/payments/v1/site/finalize-txn": {
       "post": {
         "tags": [
-          "shell-server-to-server-resource"
+          "site-server-to-server-resource"
         ],
         "summary": "finalizeTransaction",
         "operationId": "finalizeTransactionUsingPOST",
@@ -959,7 +1071,7 @@
     "/orchestrator/payments/v1/site/get-offers": {
       "post": {
         "tags": [
-          "shell-server-to-server-resource"
+          "site-server-to-server-resource"
         ],
         "summary": "offerEvaluation",
         "operationId": "offerEvaluationUsingPOST",
@@ -1343,120 +1455,6 @@
         ]
       }
     },
-    "/reconciliation/capture": {
-      "post": {
-        "tags": [
-          "psp-reconciliation"
-        ],
-        "summary": "reconciliationCapture",
-        "operationId": "reconciliationCaptureUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "X-CAP-API-AUTH-ORG-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-API-AUTH-ENTITY-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-CODE": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-ID": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
-    "/reconciliation/registration-reversal": {
-      "post": {
-        "tags": [
-          "psp-reconciliation"
-        ],
-        "summary": "reconciliationRegistrationReversal",
-        "operationId": "reconciliationRegistrationReversalUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "X-CAP-API-AUTH-ORG-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-API-AUTH-ENTITY-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-CODE": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-ID": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
     "/v1/workflow": {
       "get": {
         "tags": [
@@ -1623,6 +1621,177 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/UpdatedEntityResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/v1/workflow/psp/reconciliation/capture": {
+      "post": {
+        "tags": [
+          "eghl-reconciliation"
+        ],
+        "summary": "reconciliationCapture",
+        "operationId": "reconciliationCaptureUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/v1/workflow/psp/reconciliation/fuelling-reversal": {
+      "post": {
+        "tags": [
+          "eghl-reconciliation"
+        ],
+        "summary": "reconciliationFuellingReversal",
+        "operationId": "reconciliationFuellingReversalUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/v1/workflow/psp/reconciliation/registration-reversal": {
+      "post": {
+        "tags": [
+          "eghl-reconciliation"
+        ],
+        "summary": "reconciliationRegistrationReversal",
+        "operationId": "reconciliationRegistrationReversalUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
             }
           },
           "201": {
@@ -2212,6 +2381,9 @@
         "processInstanceId": {
           "type": "string"
         },
+        "resetStepOnFailure": {
+          "type": "boolean"
+        },
         "version": {
           "type": "string"
         },
@@ -2224,11 +2396,35 @@
     "AppTransactionStatusResponse": {
       "type": "object",
       "properties": {
+        "billingAmount": {
+          "type": "string"
+        },
+        "billingLines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "customerId": {
           "type": "integer",
           "format": "int64"
         },
+        "digitalCard": {
+          "type": "string"
+        },
+        "maskedCard": {
+          "type": "string"
+        },
+        "mop": {
+          "type": "string"
+        },
+        "mopName": {
+          "type": "string"
+        },
         "paymentId": {
+          "type": "string"
+        },
+        "pointsAllocated": {
           "type": "string"
         },
         "preAuthAmount": {
@@ -2237,7 +2433,16 @@
         "processInstanceId": {
           "type": "string"
         },
+        "pspReferenceNumber": {
+          "type": "string"
+        },
+        "pumpActivateTime": {
+          "type": "string"
+        },
         "pumpNumber": {
+          "type": "string"
+        },
+        "pumpReserveTime": {
           "type": "string"
         },
         "stationId": {
@@ -2246,9 +2451,12 @@
         "transactionState": {
           "type": "string",
           "enum": [
+            "BILLING_IN_PROGRESS",
             "BILL_GENERATED",
+            "CARD_REGISTERED",
             "FUELING_CANCELLED_BY_CUSTOMER",
             "FUELING_CANCELLED_BY_STATION",
+            "IN_PROGRESS",
             "PSP_AUTH_FAIL",
             "PUMP_ACTIVATION_FAIL",
             "PUMP_ACTIVATION_SUCCESS",
@@ -2793,7 +3001,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/TokenizeRORes"
+          "$ref": "#/definitions/TokenizeRO"
         },
         "errors": {
           "type": "array",
@@ -2825,6 +3033,9 @@
     "OfferEvaluation": {
       "type": "object",
       "properties": {
+        "PredictedTender": {
+          "$ref": "#/definitions/PredictedTender"
+        },
         "applicableVouchers": {
           "type": "array",
           "items": {
@@ -2843,11 +3054,11 @@
         "posData": {
           "$ref": "#/definitions/PosData"
         },
-        "predictedTender": {
-          "$ref": "#/definitions/PredictedTender"
-        },
         "receipt": {
           "$ref": "#/definitions/Receipt"
+        },
+        "remainder": {
+          "type": "number"
         },
         "requestData": {
           "$ref": "#/definitions/RequestData"
@@ -2885,6 +3096,9 @@
     "OfferEvaluationReq": {
       "type": "object",
       "properties": {
+        "PredictedTender": {
+          "$ref": "#/definitions/PredictedTender"
+        },
         "applicableVouchers": {
           "type": "array",
           "items": {
@@ -2903,11 +3117,11 @@
         "posData": {
           "$ref": "#/definitions/PosDataReq"
         },
-        "predictedTender": {
-          "$ref": "#/definitions/PredictedTender"
-        },
         "receipt": {
           "$ref": "#/definitions/Receipt"
+        },
+        "remainder": {
+          "type": "number"
         },
         "requestData": {
           "$ref": "#/definitions/RequestDataReq"
@@ -2945,6 +3159,9 @@
     "OfferEvaluationRes": {
       "type": "object",
       "properties": {
+        "PredictedTender": {
+          "$ref": "#/definitions/PredictedTender"
+        },
         "applicableVouchers": {
           "type": "array",
           "items": {
@@ -2963,11 +3180,11 @@
         "posData": {
           "$ref": "#/definitions/PosDataRes"
         },
-        "predictedTender": {
-          "$ref": "#/definitions/PredictedTender"
-        },
         "receipt": {
           "$ref": "#/definitions/Receipt"
+        },
+        "remainder": {
+          "type": "number"
         },
         "requestData": {
           "$ref": "#/definitions/RequestDataRes"
@@ -3103,7 +3320,7 @@
     "PosData": {
       "type": "object",
       "properties": {
-        "languageCode": {
+        "LanguageCode": {
           "type": "string"
         },
         "posTimeStamp": {
@@ -3149,7 +3366,7 @@
     "PosDataRes": {
       "type": "object",
       "properties": {
-        "languageCode": {
+        "LanguageCode": {
           "type": "string"
         },
         "posTimeStamp": {
@@ -3179,13 +3396,16 @@
     "PredictedTender": {
       "type": "object",
       "properties": {
-        "acquire": {
+        "acquirer": {
           "type": "string"
+        },
+        "amount": {
+          "type": "number"
         },
         "methodOfPayment": {
           "type": "string"
         },
-        "subtractDiscountAmount": {
+        "substractDiscountAmount": {
           "type": "boolean"
         }
       },
@@ -3434,6 +3654,9 @@
         "cartEvaluationID": {
           "type": "string"
         },
+        "extCorrelationId": {
+          "type": "string"
+        },
         "payTokenID": {
           "type": "string"
         },
@@ -3524,6 +3747,9 @@
         "cartEvaluationID": {
           "type": "string"
         },
+        "extCorrelationID": {
+          "type": "string"
+        },
         "overallResult": {
           "type": "string"
         },
@@ -3552,6 +3778,9 @@
           "type": "string"
         },
         "cartEvaluationID": {
+          "type": "string"
+        },
+        "extCorrelationID": {
           "type": "string"
         },
         "overallResult": {
@@ -3649,6 +3878,9 @@
     "SaleItemReq": {
       "type": "object",
       "properties": {
+        "LineNo": {
+          "type": "string"
+        },
         "additionalProductCode": {
           "type": "string"
         },
@@ -3659,9 +3891,6 @@
           "type": "number"
         },
         "categoryCode": {
-          "type": "string"
-        },
-        "lineNo": {
           "type": "string"
         },
         "loyaltyOffers": {
@@ -3826,6 +4055,9 @@
           "type": "string"
         },
         "taxReferenceNumber": {
+          "type": "string"
+        },
+        "terminalID": {
           "type": "string"
         },
         "timeStamp": {
@@ -4065,6 +4297,9 @@
         },
         "message": {
           "type": "string"
+        },
+        "resetStep": {
+          "type": "boolean"
         }
       },
       "title": "StatusCode"
@@ -4095,6 +4330,12 @@
       "type": "object",
       "properties": {
         "acquirerID": {
+          "type": "string"
+        },
+        "cashRedeemed": {
+          "type": "number"
+        },
+        "currencyCode": {
           "type": "string"
         },
         "methodOfPayment": {
@@ -4171,6 +4412,12 @@
         "acquirerID": {
           "type": "string"
         },
+        "cashRedeemed": {
+          "type": "number"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
         "methodOfPayment": {
           "type": "string"
         },
@@ -4215,7 +4462,7 @@
       },
       "title": "Terminal"
     },
-    "TokenizeROReq": {
+    "TokenizeRO": {
       "type": "object",
       "properties": {
         "currencyCode": {
@@ -4234,31 +4481,7 @@
           "type": "string"
         }
       },
-      "title": "TokenizeROReq"
-    },
-    "TokenizeRORes": {
-      "type": "object",
-      "properties": {
-        "currencyCode": {
-          "type": "string"
-        },
-        "customerInfo": {
-          "$ref": "#/definitions/CustomerInfo"
-        },
-        "digitalCard": {
-          "type": "string"
-        },
-        "merchantIdentifier": {
-          "type": "string"
-        },
-        "paymentId": {
-          "type": "string"
-        },
-        "registrationAmount": {
-          "type": "string"
-        }
-      },
-      "title": "TokenizeRORes"
+      "title": "TokenizeRO"
     },
     "Tracker": {
       "type": "object",
@@ -4286,6 +4509,9 @@
           "items": {
             "$ref": "#/definitions/ApplicableVoucher"
           }
+        },
+        "billingNumber": {
+          "type": "string"
         },
         "cardValues": {
           "type": "array",
@@ -4429,6 +4655,9 @@
         "startTimestamp": {
           "type": "string"
         },
+        "startTimestampOld": {
+          "type": "string"
+        },
         "status": {
           "type": "string"
         },
@@ -4497,6 +4726,9 @@
           "type": "string"
         },
         "startTimestamp": {
+          "type": "string"
+        },
+        "startTimestampOld": {
           "type": "string",
           "format": "date-time"
         },
@@ -4555,8 +4787,18 @@
             "$ref": "#/definitions/Product"
           }
         },
+        "promotionType": {
+          "type": "string"
+        },
+        "referenceID": {
+          "type": "string"
+        },
         "voucherCode": {
           "type": "string"
+        },
+        "voucherQuantity": {
+          "type": "integer",
+          "format": "int32"
         },
         "voucherType": {
           "type": "string"
@@ -4613,8 +4855,18 @@
             "$ref": "#/definitions/Product"
           }
         },
+        "promotionType": {
+          "type": "string"
+        },
+        "referenceID": {
+          "type": "string"
+        },
         "voucherCode": {
           "type": "string"
+        },
+        "voucherQuantity": {
+          "type": "integer",
+          "format": "int32"
         },
         "voucherType": {
           "type": "string"
@@ -4779,6 +5031,9 @@
         "serialNumber": {
           "type": "integer",
           "format": "int32"
+        },
+        "startUserStep": {
+          "type": "boolean"
         }
       },
       "title": "WorkflowStep"
