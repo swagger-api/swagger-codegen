@@ -74,7 +74,7 @@ namespace Example
 
             try
             {
-                List<Test> result = apiInstance.TestMethod();
+                List<string> result = apiInstance.TestMethod();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -97,6 +97,7 @@ Class | Method | HTTP request | Description
 *PetApi* | [**AddParrot**](docs/PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 *PetApi* | [**AddPet**](docs/PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 *PetApi* | [**DeletePet**](docs/PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+*PetApi* | [**DoCategoryStuff**](docs/PetApi.md#docategorystuff) | **POST** /pet/category | 
 *PetApi* | [**FeedPet**](docs/PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 *PetApi* | [**FindPetsByStatus**](docs/PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 *PetApi* | [**FindPetsByTags**](docs/PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
@@ -122,38 +123,39 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.AllOfSubCategoryCategory](docs/AllOfSubCategoryCategory.md)
+ - [Model.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
  - [Model.AllPetsResponse](docs/AllPetsResponse.md)
- - [Model.AnyOfbody1ParrotsItems](docs/AnyOfbody1ParrotsItems.md)
- - [Model.AnyOfbody2](docs/AnyOfbody2.md)
- - [Model.ApiResponse](docs/ApiResponse.md)
- - [Model.Body](docs/Body.md)
- - [Model.Body1](docs/Body1.md)
- - [Model.Body2](docs/Body2.md)
+ - [Model.AnyOfparrotBodyParrotsItems](docs/AnyOfparrotBodyParrotsItems.md)
  - [Model.Cat](docs/Cat.md)
  - [Model.Category](docs/Category.md)
  - [Model.Dog](docs/Dog.md)
  - [Model.InlineResponse200](docs/InlineResponse200.md)
  - [Model.InlineResponse2001](docs/InlineResponse2001.md)
  - [Model.Macaw](docs/Macaw.md)
+ - [Model.ModelApiResponse](docs/ModelApiResponse.md)
+ - [Model.NullableEnumModel](docs/NullableEnumModel.md)
  - [Model.OneOfAllPetsResponseItems](docs/OneOfAllPetsResponseItems.md)
  - [Model.OneOfPartMasterDestination](docs/OneOfPartMasterDestination.md)
  - [Model.OneOfPartMasterOrigin](docs/OneOfPartMasterOrigin.md)
  - [Model.OneOfPetPartItems](docs/OneOfPetPartItems.md)
  - [Model.OneOfPup](docs/OneOfPup.md)
- - [Model.OneOfinlineResponse2001](docs/OneOfinlineResponse2001.md)
  - [Model.OneOfinlineResponse200ParrotsItems](docs/OneOfinlineResponse200ParrotsItems.md)
  - [Model.OneOfvalMembersValMemberItems](docs/OneOfvalMembersValMemberItems.md)
  - [Model.Order](docs/Order.md)
  - [Model.Parakeet](docs/Parakeet.md)
+ - [Model.ParrotBody](docs/ParrotBody.md)
+ - [Model.ParrotBody1](docs/ParrotBody1.md)
  - [Model.PartFour](docs/PartFour.md)
  - [Model.PartMaster](docs/PartMaster.md)
  - [Model.PartOne](docs/PartOne.md)
  - [Model.PartThree](docs/PartThree.md)
  - [Model.PartTwo](docs/PartTwo.md)
  - [Model.Pet](docs/Pet.md)
+ - [Model.PetPetIdBody](docs/PetPetIdBody.md)
  - [Model.Pup](docs/Pup.md)
+ - [Model.SubCategory](docs/SubCategory.md)
  - [Model.Tag](docs/Tag.md)
- - [Model.Test](docs/Test.md)
  - [Model.User](docs/User.md)
  - [Model.ValMemberChoice1](docs/ValMemberChoice1.md)
  - [Model.ValMemberChoice2](docs/ValMemberChoice2.md)
@@ -180,5 +182,6 @@ Class | Method | HTTP request | Description
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/oauth/dialog
 - **Scopes**: 
-  - : 
+  - write:pets: modify pets in your account
+  - read:pets: read your pets
 
