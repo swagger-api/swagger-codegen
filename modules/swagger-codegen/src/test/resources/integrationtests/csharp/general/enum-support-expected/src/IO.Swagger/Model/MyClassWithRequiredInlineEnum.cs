@@ -153,7 +153,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="json">JSON string.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        public virtual MyClassWithRequiredInlineEnum FromJson(string json)
+        public static MyClassWithRequiredInlineEnum FromJson(string json)
         {
             return JsonConvert.DeserializeObject<MyClassWithRequiredInlineEnum>(json);
         }

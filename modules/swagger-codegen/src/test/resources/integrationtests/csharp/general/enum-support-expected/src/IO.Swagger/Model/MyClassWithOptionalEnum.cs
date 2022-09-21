@@ -90,7 +90,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="json">JSON string.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        public virtual MyClassWithOptionalEnum FromJson(string json)
+        public static MyClassWithOptionalEnum FromJson(string json)
         {
             return JsonConvert.DeserializeObject<MyClassWithOptionalEnum>(json);
         }

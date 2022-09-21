@@ -81,7 +81,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="json">JSON string.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        public virtual MyClassWithInvalidRequiredEnumUsageOnRef FromJson(string json)
+        public static MyClassWithInvalidRequiredEnumUsageOnRef FromJson(string json)
         {
             return JsonConvert.DeserializeObject<MyClassWithInvalidRequiredEnumUsageOnRef>(json);
         }
