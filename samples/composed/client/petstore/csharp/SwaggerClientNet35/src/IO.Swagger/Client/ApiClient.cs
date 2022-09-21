@@ -25,7 +25,7 @@ namespace IO.Swagger.Client
     /// <summary>
     /// API client is mainly responsible for making the HTTP call to the API backend.
     /// </summary>
-        public partial class ApiClient
+    public partial class ApiClient
     {
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
@@ -203,6 +203,11 @@ namespace IO.Swagger.Client
                 return FileParameter.Create(name, ReadAsBytes(stream), Path.GetFileName(((FileStream)stream).Name));
             else
                 return FileParameter.Create(name, ReadAsBytes(stream), "no_file_name_provided");
+        }
+
+        public FileParameter ParameterToFile(string name, byte[] stream)
+        {
+            return FileParameter.Create(name, stream, "no_file_name_provided");
         }
 
         /// <summary>

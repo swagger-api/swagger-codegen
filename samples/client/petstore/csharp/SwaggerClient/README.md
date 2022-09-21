@@ -147,26 +147,24 @@ Class | Method | HTTP request | Description
  - [Model.AllOfSubCategoryPetsItems](docs/AllOfSubCategoryPetsItems.md)
  - [Model.AllPetsResponse](docs/AllPetsResponse.md)
  - [Model.Animal](docs/Animal.md)
+ - [Model.AnimalAnimalIdBody](docs/AnimalAnimalIdBody.md)
  - [Model.AnimalFarm](docs/AnimalFarm.md)
  - [Model.ArrayOfArrayOfNumberOnly](docs/ArrayOfArrayOfNumberOnly.md)
  - [Model.ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [Model.ArrayTest](docs/ArrayTest.md)
- - [Model.Body](docs/Body.md)
- - [Model.Body1](docs/Body1.md)
- - [Model.Body2](docs/Body2.md)
- - [Model.Body3](docs/Body3.md)
- - [Model.Body4](docs/Body4.md)
- - [Model.Body5](docs/Body5.md)
- - [Model.Body6](docs/Body6.md)
- - [Model.Body7](docs/Body7.md)
  - [Model.Capitalization](docs/Capitalization.md)
  - [Model.Cat](docs/Cat.md)
  - [Model.Category](docs/Category.md)
  - [Model.ClassModel](docs/ClassModel.md)
  - [Model.Dog](docs/Dog.md)
+ - [Model.DogDogIdBody](docs/DogDogIdBody.md)
  - [Model.EnumArrays](docs/EnumArrays.md)
  - [Model.EnumClass](docs/EnumClass.md)
+ - [Model.EnumFormBody](docs/EnumFormBody.md)
  - [Model.EnumTest](docs/EnumTest.md)
+ - [Model.FakeBody](docs/FakeBody.md)
+ - [Model.FakeBody1](docs/FakeBody1.md)
+ - [Model.FakeJsonFormDataBody](docs/FakeJsonFormDataBody.md)
  - [Model.FormatTest](docs/FormatTest.md)
  - [Model.HasOnlyReadOnly](docs/HasOnlyReadOnly.md)
  - [Model.MapTest](docs/MapTest.md)
@@ -185,6 +183,8 @@ Class | Method | HTTP request | Description
  - [Model.OuterComposite](docs/OuterComposite.md)
  - [Model.OuterEnum](docs/OuterEnum.md)
  - [Model.Pet](docs/Pet.md)
+ - [Model.PetIdUploadImageBody](docs/PetIdUploadImageBody.md)
+ - [Model.PetPetIdBody](docs/PetPetIdBody.md)
  - [Model.ReadOnlyFirst](docs/ReadOnlyFirst.md)
  - [Model.SinglePetResponse](docs/SinglePetResponse.md)
  - [Model.SpecialModelName](docs/SpecialModelName.md)
@@ -221,5 +221,6 @@ Class | Method | HTTP request | Description
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
 - **Scopes**: 
-  - : 
+  - write:pets: modify pets in your account
+  - read:pets: read your pets
 
