@@ -143,7 +143,7 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         /// </summary>
         /// <param name="json">JSON string.</param>
         /// <returns>Object representation of the JSON string.</returns>
-        public {{#parent}}{{^isArrayModel}}override {{/isArrayModel}}{{/parent}}{{^parent}}static {{/parent}}{{classname}} FromJson(string json)
+        public static {{classname}} FromJson(string json)
         {
             return JsonConvert.DeserializeObject<{{classname}}>(json);
         }
