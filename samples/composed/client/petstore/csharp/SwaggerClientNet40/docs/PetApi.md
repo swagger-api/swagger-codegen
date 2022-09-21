@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**AddParrot**](PetApi.md#addparrot) | **POST** /parrot | Add a new parrow to the store
 [**AddPet**](PetApi.md#addpet) | **POST** /pet | Add a new pet to the store
 [**DeletePet**](PetApi.md#deletepet) | **DELETE** /pet/{petId} | Deletes a pet
+[**DoCategoryStuff**](PetApi.md#docategorystuff) | **POST** /pet/category | 
 [**FeedPet**](PetApi.md#feedpet) | **POST** /pet/feed/{petId} | Find pet by ID
 [**FindPetsByStatus**](PetApi.md#findpetsbystatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**FindPetsByTags**](PetApi.md#findpetsbytags) | **GET** /pet/findByTags | Finds Pets by tags
@@ -19,7 +20,7 @@ Method | HTTP request | Description
 
 <a name="addparrot"></a>
 # **AddParrot**
-> InlineResponse2001 AddParrot (Body2 body = null)
+> InlineResponse2001 AddParrot (ParrotBody1 body = null)
 
 Add a new parrow to the store
 
@@ -38,7 +39,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new PetApi();
-            var body = new Body2(); // Body2 |  (optional) 
+            var body = new ParrotBody1(); // ParrotBody1 |  (optional) 
 
             try
             {
@@ -59,7 +60,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body2**](Body2.md)|  | [optional] 
+ **body** | [**ParrotBody1**](ParrotBody1.md)|  | [optional] 
 
 ### Return type
 
@@ -195,6 +196,63 @@ void (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="docategorystuff"></a>
+# **DoCategoryStuff**
+> ModelApiResponse DoCategoryStuff (SubCategory body = null)
+
+
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class DoCategoryStuffExample
+    {
+        public void main()
+        {
+            var apiInstance = new PetApi();
+            var body = new SubCategory(); // SubCategory |  (optional) 
+
+            try
+            {
+                ModelApiResponse result = apiInstance.DoCategoryStuff(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PetApi.DoCategoryStuff: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional] 
+
+### Return type
+
+[**ModelApiResponse**](ModelApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="feedpet"></a>
@@ -392,7 +450,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="getparrots"></a>
 # **GetParrots**
-> List<> GetParrots ()
+> List<Object> GetParrots ()
 
 get Parrots
 
@@ -415,7 +473,7 @@ namespace Example
             try
             {
                 // get Parrots
-                List&lt;&gt; result = apiInstance.GetParrots();
+                List&lt;Object&gt; result = apiInstance.GetParrots();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -432,7 +490,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List<>**](.md)
+**List<Object>**
 
 ### Authorization
 
@@ -511,7 +569,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="updateparrots"></a>
 # **UpdateParrots**
-> InlineResponse200 UpdateParrots (Body1 body = null)
+> InlineResponse200 UpdateParrots (ParrotBody body = null)
 
 update parrots
 
@@ -530,7 +588,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new PetApi();
-            var body = new Body1(); // Body1 |  (optional) 
+            var body = new ParrotBody(); // ParrotBody |  (optional) 
 
             try
             {
@@ -551,7 +609,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body1**](Body1.md)|  | [optional] 
+ **body** | [**ParrotBody**](ParrotBody.md)|  | [optional] 
 
 ### Return type
 
@@ -693,7 +751,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (long? petId, Object body = null)
+> ModelApiResponse UploadFile (long? petId, Object body = null)
 
 uploads an image
 
@@ -721,7 +779,7 @@ namespace Example
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, body);
+                ModelApiResponse result = apiInstance.UploadFile(petId, body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -742,7 +800,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ApiResponse**](ApiResponse.md)
+[**ModelApiResponse**](ModelApiResponse.md)
 
 ### Authorization
 

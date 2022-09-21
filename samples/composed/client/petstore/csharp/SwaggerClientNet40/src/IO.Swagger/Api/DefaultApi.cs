@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
 using IO.Swagger.Client;
-using IO.Swagger.Model;
 
 namespace IO.Swagger.Api
 {
@@ -30,8 +29,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>List&lt;Test&gt;</returns>
-        List<Test> TestMethod ();
+        /// <returns>List&lt;string&gt;</returns>
+        List<string> TestMethod ();
 
         /// <summary>
         /// 
@@ -40,8 +39,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>ApiResponse of List&lt;Test&gt;</returns>
-        ApiResponse<List<Test>> TestMethodWithHttpInfo ();
+        /// <returns>ApiResponse of List&lt;string&gt;</returns>
+        ApiResponse<List<string>> TestMethodWithHttpInfo ();
         #endregion Synchronous Operations
     }
 
@@ -157,10 +156,10 @@ namespace IO.Swagger.Api
         ///  
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>List&lt;Test&gt;</returns>
-        public List<Test> TestMethod ()
+        /// <returns>List&lt;string&gt;</returns>
+        public List<string> TestMethod ()
         {
-             ApiResponse<List<Test>> localVarResponse = TestMethodWithHttpInfo();
+             ApiResponse<List<string>> localVarResponse = TestMethodWithHttpInfo();
              return localVarResponse.Data;
         }
 
@@ -168,8 +167,8 @@ namespace IO.Swagger.Api
         ///  
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <returns>ApiResponse of List&lt;Test&gt;</returns>
-        public ApiResponse< List<Test> > TestMethodWithHttpInfo ()
+        /// <returns>ApiResponse of List&lt;string&gt;</returns>
+        public ApiResponse< List<string> > TestMethodWithHttpInfo ()
         {
 
             var localVarPath = "/test";
@@ -213,9 +212,9 @@ namespace IO.Swagger.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Test>>(localVarStatusCode,
+            return new ApiResponse<List<string>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Test>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Test>)));
+                (List<string>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<string>)));
         }
 
     }

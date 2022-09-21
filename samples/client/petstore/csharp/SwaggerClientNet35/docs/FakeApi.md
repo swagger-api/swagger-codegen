@@ -313,7 +313,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="testendpointparameters"></a>
 # **TestEndpointParameters**
-> void TestEndpointParameters (Body2 body)
+> void TestEndpointParameters (FakeBody body)
 
 Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 
@@ -338,7 +338,7 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new FakeApi();
-            var body = new Body2(); // Body2 | 
+            var body = new FakeBody(); // FakeBody | 
 
             try
             {
@@ -358,7 +358,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body2**](Body2.md)|  | 
+ **body** | [**FakeBody**](FakeBody.md)|  | 
 
 ### Return type
 
@@ -443,7 +443,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="testenumrequestbody"></a>
 # **TestEnumRequestBody**
-> void TestEnumRequestBody (Body4 body = null)
+> void TestEnumRequestBody (EnumFormBody body = null)
 
 To test enum parameters
 
@@ -464,7 +464,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new Body4(); // Body4 |  (optional) 
+            var body = new EnumFormBody(); // EnumFormBody |  (optional) 
 
             try
             {
@@ -484,7 +484,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body4**](Body4.md)|  | [optional] 
+ **body** | [**EnumFormBody**](EnumFormBody.md)|  | [optional] 
 
 ### Return type
 
@@ -559,7 +559,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 <a name="testjsonformdata"></a>
 # **TestJsonFormData**
-> void TestJsonFormData (Body5 body)
+> void TestJsonFormData (FakeJsonFormDataBody body)
 
 test json serialization of form data
 
@@ -578,7 +578,7 @@ namespace Example
         public void main()
         {
             var apiInstance = new FakeApi();
-            var body = new Body5(); // Body5 | 
+            var body = new FakeJsonFormDataBody(); // FakeJsonFormDataBody | 
 
             try
             {
@@ -598,7 +598,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body5**](Body5.md)|  | 
+ **body** | [**FakeJsonFormDataBody**](FakeJsonFormDataBody.md)|  | 
 
 ### Return type
 

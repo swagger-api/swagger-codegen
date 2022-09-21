@@ -3,7 +3,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Pet** | [**OneOfSinglePetResponsePet**](OneOfSinglePetResponsePet.md) |  | [optional] 
+**Pet** | **OneOfSinglePetResponsePet** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
