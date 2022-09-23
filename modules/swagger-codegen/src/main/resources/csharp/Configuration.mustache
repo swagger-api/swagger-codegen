@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Collections.Concurrent;
 {{/net35}}
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -107,6 +108,7 @@ namespace {{packageName}}.Client
         /// </summary>
         public Configuration()
         {
+            FormatProvider = CultureInfo.CurrentCulture;
             UserAgent = "{{#httpUserAgent}}{{.}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{packageVersion}}/csharp{{/httpUserAgent}}";
             BasePath = "{{{basePath}}}";
             DefaultHeader = new {{^net35}}Concurrent{{/net35}}Dictionary<string, string>();
@@ -347,6 +349,12 @@ namespace {{packageName}}.Client
                 _dateTimeFormat = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the format provider that is used for converting values into strings. Defaults to the CultureInfo.CurrentCulture format provider.
+        /// </summary>
+        /// <value>The desired FormatProvider.</value>
+        public IFormatProvider FormatProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
