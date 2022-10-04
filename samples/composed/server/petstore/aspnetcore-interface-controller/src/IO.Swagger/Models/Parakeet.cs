@@ -29,12 +29,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Color
         /// </summary>
+
         [DataMember(Name="color")]
         public string Color { get; set; }
 
         /// <summary>
         /// Gets or Sets SoundRepeater
         /// </summary>
+
         [DataMember(Name="soundRepeater")]
         public bool? SoundRepeater { get; set; }
 

@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Bark
         /// </summary>
+
         [DataMember(Name="bark")]
         public bool? Bark { get; set; }
 
@@ -62,6 +63,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Breed
         /// </summary>
+
         [DataMember(Name="breed")]
         public BreedEnum? Breed { get; set; }
 

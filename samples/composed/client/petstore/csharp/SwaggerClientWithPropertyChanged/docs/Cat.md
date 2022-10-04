@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **Id** | **long?** |  | [optional] 
 **Name** | **string** |  | 
 **Status** | **string** | pet status in the store | [optional] 
-**Part** | **List&lt;Object&gt;** |  | [optional] 
+**Part** | **List&lt;OneOfPetPartItems&gt;** |  | [optional] 
 **Hunts** | **bool?** |  | [optional] 
 **Age** | **int?** |  | [optional] 
 

@@ -29,12 +29,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Hunts
         /// </summary>
+
         [DataMember(Name="hunts")]
         public bool? Hunts { get; set; }
 
         /// <summary>
         /// Gets or Sets Age
         /// </summary>
+
         [DataMember(Name="age")]
         public int? Age { get; set; }
 

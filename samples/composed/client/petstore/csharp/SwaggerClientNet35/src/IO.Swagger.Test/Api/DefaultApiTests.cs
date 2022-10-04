@@ -18,7 +18,6 @@ using NUnit.Framework;
 
 using IO.Swagger.Client;
 using IO.Swagger.Api;
-using IO.Swagger.Model;
 
 namespace IO.Swagger.Test
 {
@@ -70,7 +69,7 @@ namespace IO.Swagger.Test
         {
             // TODO uncomment below to test the method and replace null with proper value
             //var response = instance.TestMethod();
-            //Assert.IsInstanceOf<List<Test>> (response, "response is List<Test>");
+            //Assert.IsInstanceOf<List<string>> (response, "response is List<string>");
         }
     }
 

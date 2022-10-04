@@ -28,7 +28,7 @@ namespace IO.Swagger.Controllers
         /// <param name="body"></param>
         /// <response code="405">Invalid input</response>
         /// <response code="200">successful operation</response>
-        IActionResult AddParrot([FromBody]Body2 body);
+        IActionResult AddParrot([FromBody]ParrotBody1 body);
 
         /// <summary>
         /// Add a new pet to the store
@@ -47,6 +47,14 @@ namespace IO.Swagger.Controllers
         /// <response code="400">Invalid ID supplied</response>
         /// <response code="404">Pet not found</response>
         IActionResult DeletePet([FromRoute][Required]long? petId, [FromHeader]string apiKey);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        IActionResult DoCategoryStuff([FromBody]SubCategory body);
 
         /// <summary>
         /// Find pet by ID
@@ -102,7 +110,7 @@ namespace IO.Swagger.Controllers
         /// <param name="body"></param>
         /// <response code="405">Invalid input</response>
         /// <response code="200">successful operation</response>
-        IActionResult UpdateParrots([FromBody]Body1 body);
+        IActionResult UpdateParrots([FromBody]ParrotBody body);
 
         /// <summary>
         /// Update an existing pet

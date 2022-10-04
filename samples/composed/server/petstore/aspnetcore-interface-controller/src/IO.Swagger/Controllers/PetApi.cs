@@ -38,7 +38,7 @@ namespace IO.Swagger.Controllers
         [ValidateModelState]
         [SwaggerOperation("AddParrot")]
         [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse2001), description: "successful operation")]
-        public virtual IActionResult AddParrot([FromBody]Body2 body)
+        public virtual IActionResult AddParrot([FromBody]ParrotBody1 body)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -91,6 +91,29 @@ namespace IO.Swagger.Controllers
             // return StatusCode(404);
 
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="200">successful operation</response>
+        [HttpPost]
+        [Route("/pet/category")]
+        [ValidateModelState]
+        [SwaggerOperation("DoCategoryStuff")]
+        [SwaggerResponse(statusCode: 200, type: typeof(ModelApiResponse), description: "successful operation")]
+        public virtual IActionResult DoCategoryStuff([FromBody]SubCategory body)
+        { 
+            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+            // return StatusCode(200, default(ModelApiResponse));
+            string exampleJson = null;
+            exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
+            
+                        var example = exampleJson != null
+                        ? JsonConvert.DeserializeObject<ModelApiResponse>(exampleJson)
+                        : default(ModelApiResponse);            //TODO: Change the data returned
+            return new ObjectResult(example);
         }
 
         /// <summary>
@@ -179,17 +202,17 @@ namespace IO.Swagger.Controllers
         [Route("/parrot")]
         [ValidateModelState]
         [SwaggerOperation("GetParrots")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<>), description: "successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<Object>), description: "successful operation")]
         public virtual IActionResult GetParrots()
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(List<>));
+            // return StatusCode(200, default(List<Object>));
             string exampleJson = null;
             exampleJson = "[ \"\", \"\" ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<>>(exampleJson)
-                        : default(List<>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<Object>>(exampleJson)
+                        : default(List<Object>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -237,7 +260,7 @@ namespace IO.Swagger.Controllers
         [ValidateModelState]
         [SwaggerOperation("UpdateParrots")]
         [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse200), description: "successful operation")]
-        public virtual IActionResult UpdateParrots([FromBody]Body1 body)
+        public virtual IActionResult UpdateParrots([FromBody]ParrotBody body)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -289,17 +312,17 @@ namespace IO.Swagger.Controllers
         [Route("/pet/{petId}/uploadImage")]
         [ValidateModelState]
         [SwaggerOperation("UploadFile")]
-        [SwaggerResponse(statusCode: 200, type: typeof(ApiResponse), description: "successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(ModelApiResponse), description: "successful operation")]
         public virtual IActionResult UploadFile([FromRoute][Required]long? petId, [FromBody]Object body)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(ApiResponse));
+            // return StatusCode(200, default(ModelApiResponse));
             string exampleJson = null;
             exampleJson = "{\n  \"code\" : 0,\n  \"type\" : \"type\",\n  \"message\" : \"message\"\n}";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<ApiResponse>(exampleJson)
-                        : default(ApiResponse);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<ModelApiResponse>(exampleJson)
+                        : default(ModelApiResponse);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }
