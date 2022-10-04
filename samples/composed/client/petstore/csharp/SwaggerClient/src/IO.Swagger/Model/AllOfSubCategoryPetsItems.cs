@@ -32,7 +32,7 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AllOfSubCategoryPetsItems" /> class.
         /// </summary>
-        public AllOfSubCategoryPetsItems(long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<Object> part = default(List<Object>)) : base(id, name, status, part)
+        public AllOfSubCategoryPetsItems(long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>)) : base(id, name, status, part)
         {
         }
         

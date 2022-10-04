@@ -1,12 +1,10 @@
-# IO.Swagger.Model.Pet
+# IO.Swagger.Model.PetPetIdBody
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **long?** |  | [optional] 
-**Name** | **string** |  | 
-**Status** | **string** | pet status in the store | [optional] 
-**Part** | **List&lt;OneOfPetPartItems&gt;** |  | [optional] 
+**Name** | **string** | Updated name of the pet | [optional] 
+**Status** | **string** | Updated status of the pet | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

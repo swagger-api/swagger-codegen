@@ -11,47 +11,29 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// Cat
+    /// AllOfSubCategoryPetsItems
     /// </summary>
     [DataContract]
-        public partial class Cat : Pet,  IEquatable<Cat>
+        public partial class AllOfSubCategoryPetsItems : Pet,  IEquatable<AllOfSubCategoryPetsItems>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Cat" /> class.
+        /// Initializes a new instance of the <see cref="AllOfSubCategoryPetsItems" /> class.
         /// </summary>
-        /// <param name="hunts">hunts.</param>
-        /// <param name="age">age.</param>
-        public Cat(bool? hunts = default(bool?), int? age = default(int?), long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>)) : base(id, name, status, part)
+        public AllOfSubCategoryPetsItems(long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>)) : base(id, name, status, part)
         {
-            this.Hunts = hunts;
-            this.Age = age;
         }
         
-        /// <summary>
-        /// Gets or Sets Hunts
-        /// </summary>
-        [DataMember(Name="hunts", EmitDefaultValue=false)]
-        public bool? Hunts { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Age
-        /// </summary>
-        [DataMember(Name="age", EmitDefaultValue=false)]
-        public int? Age { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -59,10 +41,8 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Cat {\n");
+            sb.Append("class AllOfSubCategoryPetsItems {\n");
             sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
-            sb.Append("  Hunts: ").Append(Hunts).Append("\n");
-            sb.Append("  Age: ").Append(Age).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -83,30 +63,20 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Cat);
+            return this.Equals(input as AllOfSubCategoryPetsItems);
         }
 
         /// <summary>
-        /// Returns true if Cat instances are equal
+        /// Returns true if AllOfSubCategoryPetsItems instances are equal
         /// </summary>
-        /// <param name="input">Instance of Cat to be compared</param>
+        /// <param name="input">Instance of AllOfSubCategoryPetsItems to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Cat input)
+        public bool Equals(AllOfSubCategoryPetsItems input)
         {
             if (input == null)
                 return false;
 
-            return base.Equals(input) && 
-                (
-                    this.Hunts == input.Hunts ||
-                    (this.Hunts != null &&
-                    this.Hunts.Equals(input.Hunts))
-                ) && base.Equals(input) && 
-                (
-                    this.Age == input.Age ||
-                    (this.Age != null &&
-                    this.Age.Equals(input.Age))
-                );
+            return base.Equals(input);
         }
 
         /// <summary>
@@ -118,13 +88,8 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
-                if (this.Hunts != null)
-                    hashCode = hashCode * 59 + this.Hunts.GetHashCode();
-                if (this.Age != null)
-                    hashCode = hashCode * 59 + this.Age.GetHashCode();
                 return hashCode;
             }
         }
-
     }
 }

@@ -11,46 +11,36 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
 
 namespace IO.Swagger.Model
 {
     /// <summary>
-    /// Cat
+    /// ParrotBody
     /// </summary>
     [DataContract]
-        public partial class Cat : Pet,  IEquatable<Cat>
+        public partial class ParrotBody :  IEquatable<ParrotBody>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Cat" /> class.
+        /// Initializes a new instance of the <see cref="ParrotBody" /> class.
         /// </summary>
-        /// <param name="hunts">hunts.</param>
-        /// <param name="age">age.</param>
-        public Cat(bool? hunts = default(bool?), int? age = default(int?), long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>)) : base(id, name, status, part)
+        /// <param name="parrots">parrots.</param>
+        public ParrotBody(List<AnyOfparrotBodyParrotsItems> parrots = default(List<AnyOfparrotBodyParrotsItems>))
         {
-            this.Hunts = hunts;
-            this.Age = age;
+            this.Parrots = parrots;
         }
         
         /// <summary>
-        /// Gets or Sets Hunts
+        /// Gets or Sets Parrots
         /// </summary>
-        [DataMember(Name="hunts", EmitDefaultValue=false)]
-        public bool? Hunts { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Age
-        /// </summary>
-        [DataMember(Name="age", EmitDefaultValue=false)]
-        public int? Age { get; set; }
+        [DataMember(Name="parrots", EmitDefaultValue=false)]
+        public List<AnyOfparrotBodyParrotsItems> Parrots { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -59,10 +49,8 @@ namespace IO.Swagger.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Cat {\n");
-            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
-            sb.Append("  Hunts: ").Append(Hunts).Append("\n");
-            sb.Append("  Age: ").Append(Age).Append("\n");
+            sb.Append("class ParrotBody {\n");
+            sb.Append("  Parrots: ").Append(Parrots).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -71,7 +59,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public override string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -83,29 +71,25 @@ namespace IO.Swagger.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Cat);
+            return this.Equals(input as ParrotBody);
         }
 
         /// <summary>
-        /// Returns true if Cat instances are equal
+        /// Returns true if ParrotBody instances are equal
         /// </summary>
-        /// <param name="input">Instance of Cat to be compared</param>
+        /// <param name="input">Instance of ParrotBody to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Cat input)
+        public bool Equals(ParrotBody input)
         {
             if (input == null)
                 return false;
 
-            return base.Equals(input) && 
+            return 
                 (
-                    this.Hunts == input.Hunts ||
-                    (this.Hunts != null &&
-                    this.Hunts.Equals(input.Hunts))
-                ) && base.Equals(input) && 
-                (
-                    this.Age == input.Age ||
-                    (this.Age != null &&
-                    this.Age.Equals(input.Age))
+                    this.Parrots == input.Parrots ||
+                    this.Parrots != null &&
+                    input.Parrots != null &&
+                    this.Parrots.SequenceEqual(input.Parrots)
                 );
         }
 
@@ -117,14 +101,11 @@ namespace IO.Swagger.Model
         {
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = base.GetHashCode();
-                if (this.Hunts != null)
-                    hashCode = hashCode * 59 + this.Hunts.GetHashCode();
-                if (this.Age != null)
-                    hashCode = hashCode * 59 + this.Age.GetHashCode();
+                int hashCode = 41;
+                if (this.Parrots != null)
+                    hashCode = hashCode * 59 + this.Parrots.GetHashCode();
                 return hashCode;
             }
         }
-
     }
 }
