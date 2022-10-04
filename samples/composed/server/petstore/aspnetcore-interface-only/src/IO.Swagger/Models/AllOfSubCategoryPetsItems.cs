@@ -24,7 +24,7 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Test : IEquatable<Test>
+    public partial class AllOfSubCategoryPetsItems : Pet, IEquatable<AllOfSubCategoryPetsItems>
     { 
         /// <summary>
         /// Returns the string presentation of the object
@@ -33,7 +33,7 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Test {\n");
+            sb.Append("class AllOfSubCategoryPetsItems {\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -42,7 +42,7 @@ namespace IO.Swagger.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public  new string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -56,15 +56,15 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Test)obj);
+            return obj.GetType() == GetType() && Equals((AllOfSubCategoryPetsItems)obj);
         }
 
         /// <summary>
-        /// Returns true if Test instances are equal
+        /// Returns true if AllOfSubCategoryPetsItems instances are equal
         /// </summary>
-        /// <param name="other">Instance of Test to be compared</param>
+        /// <param name="other">Instance of AllOfSubCategoryPetsItems to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Test other)
+        public bool Equals(AllOfSubCategoryPetsItems other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -89,12 +89,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Test left, Test right)
+        public static bool operator ==(AllOfSubCategoryPetsItems left, AllOfSubCategoryPetsItems right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Test left, Test right)
+        public static bool operator !=(AllOfSubCategoryPetsItems left, AllOfSubCategoryPetsItems right)
         {
             return !Equals(left, right);
         }

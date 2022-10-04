@@ -24,8 +24,29 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Body2 : IEquatable<Body2>
+    public partial class SubCategory : IEquatable<SubCategory>
     { 
+        /// <summary>
+        /// Gets or Sets Category
+        /// </summary>
+
+        [DataMember(Name="category")]
+        public AllOfSubCategoryCategory Category { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Category2
+        /// </summary>
+
+        [DataMember(Name="category2")]
+        public Category Category2 { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Pets
+        /// </summary>
+
+        [DataMember(Name="pets")]
+        public List<AllOfSubCategoryPetsItems> Pets { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -33,7 +54,10 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Body2 {\n");
+            sb.Append("class SubCategory {\n");
+            sb.Append("  Category: ").Append(Category).Append("\n");
+            sb.Append("  Category2: ").Append(Category2).Append("\n");
+            sb.Append("  Pets: ").Append(Pets).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -56,20 +80,35 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Body2)obj);
+            return obj.GetType() == GetType() && Equals((SubCategory)obj);
         }
 
         /// <summary>
-        /// Returns true if Body2 instances are equal
+        /// Returns true if SubCategory instances are equal
         /// </summary>
-        /// <param name="other">Instance of Body2 to be compared</param>
+        /// <param name="other">Instance of SubCategory to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Body2 other)
+        public bool Equals(SubCategory other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return false;
+            return 
+                (
+                    Category == other.Category ||
+                    Category != null &&
+                    Category.Equals(other.Category)
+                ) && 
+                (
+                    Category2 == other.Category2 ||
+                    Category2 != null &&
+                    Category2.Equals(other.Category2)
+                ) && 
+                (
+                    Pets == other.Pets ||
+                    Pets != null &&
+                    Pets.SequenceEqual(other.Pets)
+                );
         }
 
         /// <summary>
@@ -82,6 +121,12 @@ namespace IO.Swagger.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
+                    if (Category != null)
+                    hashCode = hashCode * 59 + Category.GetHashCode();
+                    if (Category2 != null)
+                    hashCode = hashCode * 59 + Category2.GetHashCode();
+                    if (Pets != null)
+                    hashCode = hashCode * 59 + Pets.GetHashCode();
                 return hashCode;
             }
         }
@@ -89,12 +134,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Body2 left, Body2 right)
+        public static bool operator ==(SubCategory left, SubCategory right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Body2 left, Body2 right)
+        public static bool operator !=(SubCategory left, SubCategory right)
         {
             return !Equals(left, right);
         }

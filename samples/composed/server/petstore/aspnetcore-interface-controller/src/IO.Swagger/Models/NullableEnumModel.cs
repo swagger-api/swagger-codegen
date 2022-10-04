@@ -24,21 +24,36 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Body : IEquatable<Body>
+    public partial class NullableEnumModel : IEquatable<NullableEnumModel>
     { 
         /// <summary>
-        /// Updated name of the pet
+        /// Gets or Sets EnumProp
         /// </summary>
-        /// <value>Updated name of the pet</value>
-        [DataMember(Name="name")]
-        public string Name { get; set; }
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public enum EnumPropEnum
+        {
+            /// <summary>
+            /// Enum AEnum for a
+            /// </summary>
+            [EnumMember(Value = "a")]
+            AEnum = 0,
+            /// <summary>
+            /// Enum BEnum for b
+            /// </summary>
+            [EnumMember(Value = "b")]
+            BEnum = 1,
+            /// <summary>
+            /// Enum NullEnum for null
+            /// </summary>
+            [EnumMember(Value = null)]
+            NullEnum = 2        }
 
         /// <summary>
-        /// Updated status of the pet
+        /// Gets or Sets EnumProp
         /// </summary>
-        /// <value>Updated status of the pet</value>
-        [DataMember(Name="status")]
-        public string Status { get; set; }
+
+        [DataMember(Name="enumProp")]
+        public EnumPropEnum? EnumProp { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -47,9 +62,8 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Body {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("class NullableEnumModel {\n");
+            sb.Append("  EnumProp: ").Append(EnumProp).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -72,29 +86,24 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Body)obj);
+            return obj.GetType() == GetType() && Equals((NullableEnumModel)obj);
         }
 
         /// <summary>
-        /// Returns true if Body instances are equal
+        /// Returns true if NullableEnumModel instances are equal
         /// </summary>
-        /// <param name="other">Instance of Body to be compared</param>
+        /// <param name="other">Instance of NullableEnumModel to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Body other)
+        public bool Equals(NullableEnumModel other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Name == other.Name ||
-                    Name != null &&
-                    Name.Equals(other.Name)
-                ) && 
-                (
-                    Status == other.Status ||
-                    Status != null &&
-                    Status.Equals(other.Status)
+                    EnumProp == other.EnumProp ||
+                    EnumProp != null &&
+                    EnumProp.Equals(other.EnumProp)
                 );
         }
 
@@ -108,10 +117,8 @@ namespace IO.Swagger.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Name != null)
-                    hashCode = hashCode * 59 + Name.GetHashCode();
-                    if (Status != null)
-                    hashCode = hashCode * 59 + Status.GetHashCode();
+                    if (EnumProp != null)
+                    hashCode = hashCode * 59 + EnumProp.GetHashCode();
                 return hashCode;
             }
         }
@@ -119,12 +126,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Body left, Body right)
+        public static bool operator ==(NullableEnumModel left, NullableEnumModel right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Body left, Body right)
+        public static bool operator !=(NullableEnumModel left, NullableEnumModel right)
         {
             return !Equals(left, right);
         }

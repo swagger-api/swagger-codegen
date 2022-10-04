@@ -24,7 +24,7 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class OneOfinlineResponse2001 : IEquatable<OneOfinlineResponse2001>
+    public partial class ParrotBody1 : IEquatable<ParrotBody1>
     { 
         /// <summary>
         /// Returns the string presentation of the object
@@ -33,7 +33,7 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class OneOfinlineResponse2001 {\n");
+            sb.Append("class ParrotBody1 {\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -56,15 +56,15 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((OneOfinlineResponse2001)obj);
+            return obj.GetType() == GetType() && Equals((ParrotBody1)obj);
         }
 
         /// <summary>
-        /// Returns true if OneOfinlineResponse2001 instances are equal
+        /// Returns true if ParrotBody1 instances are equal
         /// </summary>
-        /// <param name="other">Instance of OneOfinlineResponse2001 to be compared</param>
+        /// <param name="other">Instance of ParrotBody1 to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(OneOfinlineResponse2001 other)
+        public bool Equals(ParrotBody1 other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -89,12 +89,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(OneOfinlineResponse2001 left, OneOfinlineResponse2001 right)
+        public static bool operator ==(ParrotBody1 left, ParrotBody1 right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(OneOfinlineResponse2001 left, OneOfinlineResponse2001 right)
+        public static bool operator !=(ParrotBody1 left, ParrotBody1 right)
         {
             return !Equals(left, right);
         }

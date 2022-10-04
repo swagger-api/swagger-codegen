@@ -24,21 +24,28 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Macaw : IEquatable<Macaw>
+    public partial class ModelApiResponse : IEquatable<ModelApiResponse>
     { 
         /// <summary>
-        /// Gets or Sets Color
+        /// Gets or Sets Code
         /// </summary>
 
-        [DataMember(Name="color")]
-        public string Color { get; set; }
+        [DataMember(Name="code")]
+        public int? Code { get; set; }
 
         /// <summary>
-        /// Gets or Sets Singer
+        /// Gets or Sets Type
         /// </summary>
 
-        [DataMember(Name="singer")]
-        public bool? Singer { get; set; }
+        [DataMember(Name="type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Message
+        /// </summary>
+
+        [DataMember(Name="message")]
+        public string Message { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -47,9 +54,10 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Macaw {\n");
-            sb.Append("  Color: ").Append(Color).Append("\n");
-            sb.Append("  Singer: ").Append(Singer).Append("\n");
+            sb.Append("class ModelApiResponse {\n");
+            sb.Append("  Code: ").Append(Code).Append("\n");
+            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -72,29 +80,34 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Macaw)obj);
+            return obj.GetType() == GetType() && Equals((ModelApiResponse)obj);
         }
 
         /// <summary>
-        /// Returns true if Macaw instances are equal
+        /// Returns true if ModelApiResponse instances are equal
         /// </summary>
-        /// <param name="other">Instance of Macaw to be compared</param>
+        /// <param name="other">Instance of ModelApiResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Macaw other)
+        public bool Equals(ModelApiResponse other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Color == other.Color ||
-                    Color != null &&
-                    Color.Equals(other.Color)
+                    Code == other.Code ||
+                    Code != null &&
+                    Code.Equals(other.Code)
                 ) && 
                 (
-                    Singer == other.Singer ||
-                    Singer != null &&
-                    Singer.Equals(other.Singer)
+                    Type == other.Type ||
+                    Type != null &&
+                    Type.Equals(other.Type)
+                ) && 
+                (
+                    Message == other.Message ||
+                    Message != null &&
+                    Message.Equals(other.Message)
                 );
         }
 
@@ -108,10 +121,12 @@ namespace IO.Swagger.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Color != null)
-                    hashCode = hashCode * 59 + Color.GetHashCode();
-                    if (Singer != null)
-                    hashCode = hashCode * 59 + Singer.GetHashCode();
+                    if (Code != null)
+                    hashCode = hashCode * 59 + Code.GetHashCode();
+                    if (Type != null)
+                    hashCode = hashCode * 59 + Type.GetHashCode();
+                    if (Message != null)
+                    hashCode = hashCode * 59 + Message.GetHashCode();
                 return hashCode;
             }
         }
@@ -119,12 +134,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Macaw left, Macaw right)
+        public static bool operator ==(ModelApiResponse left, ModelApiResponse right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Macaw left, Macaw right)
+        public static bool operator !=(ModelApiResponse left, ModelApiResponse right)
         {
             return !Equals(left, right);
         }

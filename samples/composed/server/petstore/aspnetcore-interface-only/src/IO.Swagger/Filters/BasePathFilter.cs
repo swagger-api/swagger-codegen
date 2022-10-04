@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
 
 namespace IO.Swagger.Filters
 {
@@ -28,11 +29,11 @@ namespace IO.Swagger.Filters
         /// <summary>
         /// Apply the filter
         /// </summary>
-        /// <param name="swaggerDoc">SwaggerDocument</param>
+        /// <param name="swaggerDoc">OpenApiDocument</param>
         /// <param name="context">FilterContext</param>
-        public void Apply(SwaggerDocument swaggerDoc, DocumentFilterContext context)
+        public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
-            swaggerDoc.BasePath = this.BasePath;
+            swaggerDoc.Servers.Add(new OpenApiServer() { Url = this.BasePath });
 
             var pathsToModify = swaggerDoc.Paths.Where(p => p.Key.StartsWith(this.BasePath)).ToList();
 

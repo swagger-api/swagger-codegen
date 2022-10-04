@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+
         [DataMember(Name="id")]
         public long? Id { get; set; }
 
@@ -36,6 +37,7 @@ namespace IO.Swagger.Models
         /// Gets or Sets Name
         /// </summary>
         [Required]
+
         [DataMember(Name="name")]
         public string Name { get; set; }
 
@@ -66,12 +68,14 @@ namespace IO.Swagger.Models
         /// pet status in the store
         /// </summary>
         /// <value>pet status in the store</value>
+
         [DataMember(Name="status")]
         public StatusEnum? Status { get; set; }
 
         /// <summary>
         /// Gets or Sets Part
         /// </summary>
+
         [DataMember(Name="part")]
         public List<OneOfPetPartItems> Part { get; set; }
 

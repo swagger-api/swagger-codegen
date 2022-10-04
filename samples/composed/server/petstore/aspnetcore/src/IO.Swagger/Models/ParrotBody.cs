@@ -24,8 +24,15 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class AnyOfbody2 : IEquatable<AnyOfbody2>
+    public partial class ParrotBody : IEquatable<ParrotBody>
     { 
+        /// <summary>
+        /// Gets or Sets Parrots
+        /// </summary>
+
+        [DataMember(Name="parrots")]
+        public List<AnyOfparrotBodyParrotsItems> Parrots { get; set; }
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -33,7 +40,8 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class AnyOfbody2 {\n");
+            sb.Append("class ParrotBody {\n");
+            sb.Append("  Parrots: ").Append(Parrots).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -56,20 +64,25 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((AnyOfbody2)obj);
+            return obj.GetType() == GetType() && Equals((ParrotBody)obj);
         }
 
         /// <summary>
-        /// Returns true if AnyOfbody2 instances are equal
+        /// Returns true if ParrotBody instances are equal
         /// </summary>
-        /// <param name="other">Instance of AnyOfbody2 to be compared</param>
+        /// <param name="other">Instance of ParrotBody to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(AnyOfbody2 other)
+        public bool Equals(ParrotBody other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return false;
+            return 
+                (
+                    Parrots == other.Parrots ||
+                    Parrots != null &&
+                    Parrots.SequenceEqual(other.Parrots)
+                );
         }
 
         /// <summary>
@@ -82,6 +95,8 @@ namespace IO.Swagger.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
+                    if (Parrots != null)
+                    hashCode = hashCode * 59 + Parrots.GetHashCode();
                 return hashCode;
             }
         }
@@ -89,12 +104,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(AnyOfbody2 left, AnyOfbody2 right)
+        public static bool operator ==(ParrotBody left, ParrotBody right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(AnyOfbody2 left, AnyOfbody2 right)
+        public static bool operator !=(ParrotBody left, ParrotBody right)
         {
             return !Equals(left, right);
         }
