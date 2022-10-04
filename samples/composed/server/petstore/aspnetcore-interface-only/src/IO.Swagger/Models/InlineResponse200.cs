@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Parrots
         /// </summary>
+
         [DataMember(Name="parrots")]
         public List<OneOfinlineResponse200ParrotsItems> Parrots { get; set; }
 

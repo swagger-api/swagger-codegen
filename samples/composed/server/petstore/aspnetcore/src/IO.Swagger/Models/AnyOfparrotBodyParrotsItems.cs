@@ -24,26 +24,8 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class ApiResponse : IEquatable<ApiResponse>
+    public partial class AnyOfparrotBodyParrotsItems : IEquatable<AnyOfparrotBodyParrotsItems>
     { 
-        /// <summary>
-        /// Gets or Sets Code
-        /// </summary>
-        [DataMember(Name="code")]
-        public int? Code { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Type
-        /// </summary>
-        [DataMember(Name="type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Message
-        /// </summary>
-        [DataMember(Name="message")]
-        public string Message { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -51,10 +33,7 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class ApiResponse {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("class AnyOfparrotBodyParrotsItems {\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -77,35 +56,20 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((ApiResponse)obj);
+            return obj.GetType() == GetType() && Equals((AnyOfparrotBodyParrotsItems)obj);
         }
 
         /// <summary>
-        /// Returns true if ApiResponse instances are equal
+        /// Returns true if AnyOfparrotBodyParrotsItems instances are equal
         /// </summary>
-        /// <param name="other">Instance of ApiResponse to be compared</param>
+        /// <param name="other">Instance of AnyOfparrotBodyParrotsItems to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ApiResponse other)
+        public bool Equals(AnyOfparrotBodyParrotsItems other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return 
-                (
-                    Code == other.Code ||
-                    Code != null &&
-                    Code.Equals(other.Code)
-                ) && 
-                (
-                    Type == other.Type ||
-                    Type != null &&
-                    Type.Equals(other.Type)
-                ) && 
-                (
-                    Message == other.Message ||
-                    Message != null &&
-                    Message.Equals(other.Message)
-                );
+            return false;
         }
 
         /// <summary>
@@ -118,12 +82,6 @@ namespace IO.Swagger.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Code != null)
-                    hashCode = hashCode * 59 + Code.GetHashCode();
-                    if (Type != null)
-                    hashCode = hashCode * 59 + Type.GetHashCode();
-                    if (Message != null)
-                    hashCode = hashCode * 59 + Message.GetHashCode();
                 return hashCode;
             }
         }
@@ -131,12 +89,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(ApiResponse left, ApiResponse right)
+        public static bool operator ==(AnyOfparrotBodyParrotsItems left, AnyOfparrotBodyParrotsItems right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ApiResponse left, ApiResponse right)
+        public static bool operator !=(AnyOfparrotBodyParrotsItems left, AnyOfparrotBodyParrotsItems right)
         {
             return !Equals(left, right);
         }

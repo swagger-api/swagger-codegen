@@ -24,13 +24,35 @@ namespace IO.Swagger.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Body1 : IEquatable<Body1>
+    public partial class AllOfSubCategoryCategory : Category, IEquatable<AllOfSubCategoryCategory>
     { 
         /// <summary>
-        /// Gets or Sets Parrots
+        /// Gets or Sets Foo
         /// </summary>
-        [DataMember(Name="parrots")]
-        public List<AnyOfbody1ParrotsItems> Parrots { get; set; }
+
+        [DataMember(Name="foo")]
+        public bool? Foo { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Bar
+        /// </summary>
+
+        [DataMember(Name="bar")]
+        public int? Bar { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Beer
+        /// </summary>
+
+        [DataMember(Name="beer")]
+        public string Beer { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Drunk
+        /// </summary>
+
+        [DataMember(Name="drunk")]
+        public User Drunk { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -39,8 +61,11 @@ namespace IO.Swagger.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Body1 {\n");
-            sb.Append("  Parrots: ").Append(Parrots).Append("\n");
+            sb.Append("class AllOfSubCategoryCategory {\n");
+            sb.Append("  Foo: ").Append(Foo).Append("\n");
+            sb.Append("  Bar: ").Append(Bar).Append("\n");
+            sb.Append("  Beer: ").Append(Beer).Append("\n");
+            sb.Append("  Drunk: ").Append(Drunk).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -49,7 +74,7 @@ namespace IO.Swagger.Models
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public  new string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
@@ -63,24 +88,39 @@ namespace IO.Swagger.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Body1)obj);
+            return obj.GetType() == GetType() && Equals((AllOfSubCategoryCategory)obj);
         }
 
         /// <summary>
-        /// Returns true if Body1 instances are equal
+        /// Returns true if AllOfSubCategoryCategory instances are equal
         /// </summary>
-        /// <param name="other">Instance of Body1 to be compared</param>
+        /// <param name="other">Instance of AllOfSubCategoryCategory to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Body1 other)
+        public bool Equals(AllOfSubCategoryCategory other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Parrots == other.Parrots ||
-                    Parrots != null &&
-                    Parrots.SequenceEqual(other.Parrots)
+                    Foo == other.Foo ||
+                    Foo != null &&
+                    Foo.Equals(other.Foo)
+                ) && 
+                (
+                    Bar == other.Bar ||
+                    Bar != null &&
+                    Bar.Equals(other.Bar)
+                ) && 
+                (
+                    Beer == other.Beer ||
+                    Beer != null &&
+                    Beer.Equals(other.Beer)
+                ) && 
+                (
+                    Drunk == other.Drunk ||
+                    Drunk != null &&
+                    Drunk.Equals(other.Drunk)
                 );
         }
 
@@ -94,8 +134,14 @@ namespace IO.Swagger.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Parrots != null)
-                    hashCode = hashCode * 59 + Parrots.GetHashCode();
+                    if (Foo != null)
+                    hashCode = hashCode * 59 + Foo.GetHashCode();
+                    if (Bar != null)
+                    hashCode = hashCode * 59 + Bar.GetHashCode();
+                    if (Beer != null)
+                    hashCode = hashCode * 59 + Beer.GetHashCode();
+                    if (Drunk != null)
+                    hashCode = hashCode * 59 + Drunk.GetHashCode();
                 return hashCode;
             }
         }
@@ -103,12 +149,12 @@ namespace IO.Swagger.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Body1 left, Body1 right)
+        public static bool operator ==(AllOfSubCategoryCategory left, AllOfSubCategoryCategory right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Body1 left, Body1 right)
+        public static bool operator !=(AllOfSubCategoryCategory left, AllOfSubCategoryCategory right)
         {
             return !Equals(left, right);
         }

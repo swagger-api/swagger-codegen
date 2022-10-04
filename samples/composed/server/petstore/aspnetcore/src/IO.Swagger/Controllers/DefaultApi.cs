@@ -36,17 +36,17 @@ namespace IO.Swagger.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("TestMethod")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<Test>), description: "peticion realizada con exito")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<string>), description: "peticion realizada con exito")]
         public virtual IActionResult TestMethod()
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(List<Test>));
+            // return StatusCode(200, default(List<string>));
             string exampleJson = null;
             exampleJson = "[ \"\", \"\" ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<Test>>(exampleJson)
-                        : default(List<Test>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<string>>(exampleJson)
+                        : default(List<string>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }
