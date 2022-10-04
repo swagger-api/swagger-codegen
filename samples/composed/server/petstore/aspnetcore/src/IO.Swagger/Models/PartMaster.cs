@@ -29,12 +29,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Destination
         /// </summary>
+
         [DataMember(Name="destination")]
         public OneOfPartMasterDestination Destination { get; set; }
 
         /// <summary>
         /// Gets or Sets Origin
         /// </summary>
+
         [DataMember(Name="origin")]
         public OneOfPartMasterOrigin Origin { get; set; }
 
