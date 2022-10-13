@@ -523,6 +523,10 @@ use {{invokerPackage}}\ObjectSerializer;
             }
         }
 
+        if(!empty($this->config->getRequestOptions())) {
+            $options = array_merge($options, $this->config->getRequestOptions());
+        }
+
         return $options;
     }
 }
