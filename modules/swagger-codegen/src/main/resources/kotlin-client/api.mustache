@@ -21,7 +21,17 @@ class {{classname}}(basePath: kotlin.String = "{{{basePath}}}", baseHeaders: Map
     */{{#returnType}}
     @Suppress("UNCHECKED_CAST"){{/returnType}}
     fun {{operationId}}({{#allParams}}{{{paramName}}}: {{{dataType}}}{{^required}}? = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) : {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}} {
-        val localVariableBody: kotlin.Any? = {{#hasBodyParam}}{{#bodyParams}}{{paramName}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}null{{/hasFormParams}}{{#hasFormParams}}mapOf({{#formParams}}"{{{baseName}}}" to {{paramName}}{{#hasMore}}, {{/hasMore}}{{/formParams}}){{/hasFormParams}}{{/hasBodyParam}}
+        val localVariableBody = mutableMapOf<String, Any?>()
+        {{#bodyParams}}
+        if ({{baseName}} != null) {
+            localVariableBody["{{baseName}}"] = listOf("${{baseName}}")
+        }
+        {{/bodyParams}}
+        {{#formParams}}
+        if ({{baseName}} != null) {
+            localVariableBody["{{baseName}}"] = listOf("${{baseName}}")
+        }
+        {{/formParams}}
         val localVariableQuery = mutableMapOf<String,List<String>>()
         {{#queryParams}}
         if ({{baseName}} != null) {
