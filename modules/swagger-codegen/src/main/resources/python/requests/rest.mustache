@@ -66,7 +66,7 @@ class RESTClientObject(object):
                 self.session.cert = configuration.cert_file
 
         if configuration.proxy:
-            self.session.proxy.update({
+            self.session.proxies.update({
                 'http': configuration.proxy,
                 'https': configuration.proxy,
             })
