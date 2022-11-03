@@ -1,0 +1,51 @@
+//> using scala "3.2.0"
+//> using lib "com.lihaoyi::cask:0.8.3"
+//> using lib "com.lihaoyi::scalatags:0.12.0"
+//> using lib "com.softwaremill.sttp.client3::core:3.8.3"
+{{>licenseInfo}}
+
+package {{packageName}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+import _root_.{{modelPackage}}.*
+import _root_.{{apiPackage}}.*
+
+
+trait AppRoutes {
+{{#operations}}
+  def app{{classname}}Service = {{classname}}Service()
+  def routeFor{{classname}} = {{classname}}Routes(app{{classname}}Service)
+{{/operations}}
+
+   def appRoutes = Seq(
+{{#operations}}
+      routeFor{{classname}}{{#hasMore}},{{/hasMore}}
+{{/operations}}
+    )
+}
+
+
+object App extends cask.MainRoutes with AppRoutes {
+
+  override def allRoutes = appRoutes
+{{^operations}}
+// no operations!
+{{/operations}}
+
+  override def host: String = "0.0.0.0"
+
+  override def port = sys.env.get("PORT").map(_.toInt).getOrElse(8070)
+
+  locally {
+    initialize()
+    println(box(
+      s""" 🚀 browse to localhost:$port 🚀
+         |      host : $host
+         |      port : $port
+         |   verbose : $verbose
+         | debugMode : $debugMode
+         |""".stripMargin))
+    java.awt.Desktop.getDesktop.browse(new java.net.URI(s"http://localhost:${port}"))
+  }
+}

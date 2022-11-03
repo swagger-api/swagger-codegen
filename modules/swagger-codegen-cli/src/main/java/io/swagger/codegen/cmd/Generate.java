@@ -190,7 +190,7 @@ public class Generate implements Runnable {
 
         // if a config file wasn't specified or we were unable to read it
         if (configurator == null) {
-            // createa a fresh configurator
+            // create a fresh configurator
             configurator = new CodegenConfigurator();
         }
 

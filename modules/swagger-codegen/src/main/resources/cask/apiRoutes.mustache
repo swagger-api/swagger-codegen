@@ -1,0 +1,53 @@
+//> using scala "3.2.0"
+//> using lib "com.lihaoyi::cask:0.8.3"
+//> using lib "com.lihaoyi::scalatags:0.12.0"
+//> using lib "com.softwaremill.sttp.client3::core:3.8.3"
+{{>licenseInfo}}
+
+package {{apiPackage}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{vendorExtensions.x-debug}}
+final case class {{classname}}Routes(service : {{classname}}Service) extends cask.Routes {
+
+{{#route-groups}}
+    {{caskAnnotation}}("{{pathPrefix}}", true)
+    def {{methodName}}(request: cask.Request{{>queryParamsTyped}}) = {
+        request.remainingPathSegments match {
+    {{#operations}}
+            case Seq({{>pathExtractor}}) => {{operationId}}({{>pathExtractorParams}}request{{>queryParams}})
+    {{/operations}}
+        }
+    }
+{{/route-groups}}
+{{#operations}}
+    {{#operation}}
+        {{vendorExtensions.x-debug}}
+        /** {{summary}}
+         * {{description}}
+         */
+        {{vendorExtensions.x-annotation}}("{{vendorExtensions.x-cask-path}}")
+        def {{operationId}}({{vendorExtensions.x-cask-path-typed}}) = {
+        {{#authMethods}}
+            // auth method {{name}} : {{type}}, keyParamName: {{keyParamName}}
+        {{/authMethods}}
+
+        val serviceResponse = {{>parseHttpParams}}
+
+        asHttpResponse(serviceResponse)
+      }
+    {{/operation}}
+{{/operations}}
+
+  private def asHttpResponse[A](serviceResponse : Either[String, ServiceResponse[A]]): cask.Response[String] = {
+        serviceResponse match {
+            case Right(ServiceResponse.Ok(value)) => cask.Response(value.toString())
+            case Right(ServiceResponse.NotFound) => cask.Response("Not Found", statusCode = 404)
+            case Right(ServiceResponse.Other(code, msg)) => cask.Response(msg.getOrElse(s"Service returned $code"), statusCode = code)
+            case Left(err) => cask.Response(s"Error: $err", statusCode = 500)
+        }
+  }
+  initialize()
+}
