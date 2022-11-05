@@ -21,14 +21,14 @@ install {
 }
 
 task execute(type:JavaExec) {
-    main = System.getProperty('mainClass')
-    classpath = sourceSets.main.runtimeClasspath
+   main = System.getProperty('mainClass')
+   classpath = sourceSets.main.runtimeClasspath
 }
 
 ext {
-    swagger_annotations_version = "1.5.17"
+    swagger_annotations_version = "1.5.24"
     threetenbp_version = "2.6.4"
-    jackson_version = "2.10.1"
+    jackson_version = "2.11.4"
     vertx_version = "3.4.2"
     junit_version = "4.12"
 }

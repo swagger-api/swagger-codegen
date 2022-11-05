@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Describes the result of uploading an image resource")
 @Validated
 
+
 public class ModelApiResponse   {
   @JsonProperty("code")
   private Integer code = null;

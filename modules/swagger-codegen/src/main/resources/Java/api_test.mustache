@@ -2,11 +2,18 @@
 
 package {{package}};
 
-import {{invokerPackage}}.ApiException;
 {{#imports}}import {{import}};
 {{/imports}}
 import org.junit.Test;
 import org.junit.Ignore;
+
+{{#wiremock}}
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import java.net.HttpURLConnection;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+{{/wiremock}}
 
 {{^fullJavaUtil}}
 import java.util.ArrayList;
@@ -15,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 {{/fullJavaUtil}}
 
+{{#wiremock}}
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+{{/wiremock}}
 /**
  * API tests for {{classname}}
  */
@@ -22,6 +32,33 @@ import java.util.Map;
 public class {{classname}}Test {
 
     private final {{classname}} api = new {{classname}}();
+    {{#wiremock}}
+    private static WireMockServer wireMockServer;
+
+    public {{classname}}Test() {
+        api.getApiClient().setBasePath("http://localhost:" + wireMockServer.port());
+    }
+
+    @BeforeClass
+    public static void setUp() {
+        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort());
+        wireMockServer.start();
+
+        configureFor(wireMockServer.port());
+    {{#operations}}
+    {{#operation}}
+        stubFor({{#lowercase}}{{httpMethod}}{{/lowercase}}(urlPathMatching("{{{path}}}"))
+                .willReturn(aResponse()
+                        .withStatus(HttpURLConnection.HTTP_OK)));
+    {{/operation}}
+    {{/operations}}
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        wireMockServer.stop();
+    }
+    {{/wiremock}}
 
     {{#operations}}{{#operation}}
     /**
@@ -29,11 +66,11 @@ public class {{classname}}Test {
      *
      * {{notes}}
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void {{operationId}}Test() throws ApiException {
+    public void {{operationId}}Test() throws Exception {
         {{#allParams}}
         {{{dataType}}} {{paramName}} = null;
         {{/allParams}}

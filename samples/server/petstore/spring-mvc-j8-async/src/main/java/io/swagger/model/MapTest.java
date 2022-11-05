@@ -18,6 +18,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class MapTest   {
   @JsonProperty("map_map_of_string")
   @Valid

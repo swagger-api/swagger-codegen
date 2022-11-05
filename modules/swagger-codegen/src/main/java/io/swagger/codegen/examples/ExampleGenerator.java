@@ -4,6 +4,7 @@ import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.*;
 import io.swagger.util.Json;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,15 @@ public class ExampleGenerator {
                 Map<String, String> kv = new HashMap<>();
                 kv.put(CONTENT_TYPE, mediaType);
                 if (property != null && mediaType.startsWith(MIME_TYPE_JSON)) {
-                    String example = Json.pretty(resolvePropertyToExample("", mediaType, property, processedModels));
+                    /*
+                        org.json is used to pretty print example, because of an issue with
+                        Jackson pretty printing for large specs, where for some reason
+                        memory usage goes up to OOM errors.
+                        TODO if bug (?) is fixed in Jackson pretty printing, remove the dep and use jackson instead
+                     */
+                    //String example = Json.pretty(resolvePropertyToExample("", mediaType, property, processedModels));
+                    String example = new JSONObject(resolvePropertyToExample("", mediaType, property, processedModels)).toString(2);
+
 
                     if (example != null) {
                         kv.put(EXAMPLE, example);
@@ -91,7 +100,14 @@ public class ExampleGenerator {
                     final Model model = this.examples.get(modelName);
                     if (model != null) {
 
-                        String example = Json.pretty(resolveModelToExample(modelName, mediaType, model, processedModels));
+                        /*
+                            org.json is used to pretty print example, because of an issue with
+                            Jackson pretty printing for large specs, where for some reason
+                            memory usage goes up to OOM errors.
+                            TODO if bug (?) is fixed in Jackson pretty printing, remove the dep and use jackson instead
+                         */
+                        // String example = Json.pretty(resolveModelToExample(modelName, mediaType, model, processedModels));
+                        String example = new JSONObject(resolveModelToExample(modelName, mediaType, model, processedModels)).toString(2);
 
                         if (example != null) {
                             kv.put(EXAMPLE, example);
@@ -216,7 +232,7 @@ public class ExampleGenerator {
             }
             logger.warn("Ref property with empty model.");
         } else if (property instanceof UUIDProperty) {
-            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91"; 
+            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
         }
 
         return "";
