@@ -14,6 +14,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @deprecated use instead the option flatten in SwaggerParser
+ */
+/*
+ *  Use flatten option in Swagger parser like this:
+ *  ParseOptions parseOptions = new ParseOptions();
+ *  parseOptions.setFlatten(true);
+ *  Swagger swagger = new SwaggerParser().read(rootNode, new ArrayList<>(), parseOptions);*/
+@Deprecated
 public class InlineModelResolver {
     private Swagger swagger;
     private boolean skipMatches;

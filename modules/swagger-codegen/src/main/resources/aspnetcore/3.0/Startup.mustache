@@ -89,8 +89,8 @@ namespace {{packageName}}
                            Name = "{{#infoName}}{{{infoName}}}{{/infoName}}{{^infoName}}Swagger Codegen Contributors{{/infoName}}",
                            Url = new Uri("{{#infoUrl}}{{{infoUrl}}}{{/infoUrl}}{{^infoUrl}}https://github.com/swagger-api/swagger-codegen{{/infoUrl}}"),
                            Email = "{{#infoEmail}}{{{infoEmail}}}{{/infoEmail}}"
-                        },{{#termsOfService}}
-                        TermsOfService = "{{termsOfService}}"{{/termsOfService}}
+                        },
+                        TermsOfService = new Uri("{{#termsOfService}}{{{termsOfService}}}{{/termsOfService}}")
                     });
                     c.CustomSchemaIds(type => type.FullName);
                     c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");

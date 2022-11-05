@@ -6,12 +6,10 @@
 
 [![Build Status](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master-java7/badge/icon?subject=jenkins%20build%20-%20java%207)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master-java7/)
 
-- Master (2.4.16-SNAPSHOT): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
-[![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-master)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
+- Master (2.4.29-SNAPSHOT): [![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-master)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=master&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 
-- 3.0.22-SNAPSHOT:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
-[![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-3)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
+- 3.0.36-SNAPSHOT:  [![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-3)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
 [![Windows Test](https://ci.appveyor.com/api/projects/status/github/swagger-api/swagger-codegen?branch=3.0.0&svg=true&passingText=Windows%20Test%20-%20OK&failingText=Windows%20Test%20-%20Fails)](https://ci.appveyor.com/project/swaggerhub-bot/swagger-codegen)
 
 
@@ -52,13 +50,13 @@ dependency example:
 <dependency>
     <groupId>io.swagger</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>2.4.15</version>
+    <version>2.4.28</version>
 </dependency>
 ```
 
 ### Swagger Codegen 3.X ([`3.0.0` branch](https://github.com/swagger-api/swagger-codegen/tree/3.0.0))
 
-Swagger Codegen 2.X supports OpenAPI version 3 (and version 2 via spec conversion to version 3)
+Swagger Codegen 3.X supports OpenAPI version 3 (and version 2 via spec conversion to version 3)
 [Online generator of version 3.X](https://github.com/swagger-api/swagger-codegen/tree/3.0.0#online-generators) supports both generation from Swagger/OpenAPI version 2 (by using engine + generators of 2.X) and version 3 specifications.
 
 group id: `io.swagger.codegen.v3`
@@ -70,7 +68,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.21</version>
+    <version>3.0.35</version>
 </dependency>
 ```
 
@@ -133,9 +131,23 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
 The OpenAPI Specification has undergone 3 revisions since initial creation in 2010.  The Swagger Codegen project has the following compatibilities with the OpenAPI Specification:
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
--------------------------- | ------------ | -------------------------- | -----
-3.0.22-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.22-SNAPSHOT/)| TBD | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.21](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.21) (**current stable**) | 2020-07-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.21](https://github.com/swagger-api/swagger-codegen/tree/v3.0.21)
+-------------------------- |--------------| -------------------------- | -----
+3.0.36-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.36-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.35](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.35) (**current stable**) | 2022-08-15   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.35](https://github.com/swagger-api/swagger-codegen/tree/v3.0.35)
+[3.0.34](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.34) | 2022-04-12   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.34](https://github.com/swagger-api/swagger-codegen/tree/v3.0.34)
+[3.0.33](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.33) | 2022-02-07   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.33](https://github.com/swagger-api/swagger-codegen/tree/v3.0.33)
+[3.0.32](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.32) | 2022-01-11   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.32](https://github.com/swagger-api/swagger-codegen/tree/v3.0.32)
+[3.0.31](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.31) | 2021-12-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.31](https://github.com/swagger-api/swagger-codegen/tree/v3.0.31)
+[3.0.30](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.30) | 2021-11-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.30](https://github.com/swagger-api/swagger-codegen/tree/v3.0.30)
+[3.0.29](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.29) | 2021-10-05   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.29](https://github.com/swagger-api/swagger-codegen/tree/v3.0.29)
+[3.0.28](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.28) | 2021-09-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.28](https://github.com/swagger-api/swagger-codegen/tree/v3.0.28)
+[3.0.27](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.27) | 2021-06-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.27](https://github.com/swagger-api/swagger-codegen/tree/v3.0.27)
+[3.0.26](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.26) | 2021-05-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.26](https://github.com/swagger-api/swagger-codegen/tree/v3.0.26)
+[3.0.25](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.25) | 2021-03-04   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.25](https://github.com/swagger-api/swagger-codegen/tree/v3.0.25)
+[3.0.24](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.24) | 2020-12-29   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.24](https://github.com/swagger-api/swagger-codegen/tree/v3.0.24)
+[3.0.23](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.23) | 2020-11-02   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.23](https://github.com/swagger-api/swagger-codegen/tree/v3.0.23)
+[3.0.22](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.22) | 2020-10-05   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.22](https://github.com/swagger-api/swagger-codegen/tree/v3.0.22)
+[3.0.21](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.21) | 2020-07-28   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.21](https://github.com/swagger-api/swagger-codegen/tree/v3.0.21)
 [3.0.20](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.20) | 2020-05-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.20](https://github.com/swagger-api/swagger-codegen/tree/v3.0.20)
 [3.0.19](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.19) | 2020-04-02   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.19](https://github.com/swagger-api/swagger-codegen/tree/v3.0.19)
 [3.0.18](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.18) | 2020-02-26   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.18](https://github.com/swagger-api/swagger-codegen/tree/v3.0.18)
@@ -153,11 +165,24 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 [3.0.5](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.5) | 2019-02-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.5](https://github.com/swagger-api/swagger-codegen/tree/v3.0.5)
 [3.0.4](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.4) | 2019-01-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.4](https://github.com/swagger-api/swagger-codegen/tree/v3.0.4)
 [3.0.3](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.3) | 2018-11-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.3](https://github.com/swagger-api/swagger-codegen/tree/v3.0.3)
-[3.0.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.2)| 2018-10-19 | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.1)| 2018-10-05 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
-[3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)| 2018-09-06 | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
-2.4.16-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.16-SNAPSHOT/)| TBD   | 1.0, 1.1, 1.2, 2.0   | Minor release
-[2.4.15](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.15) (**current stable**) | 2020-07-28   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.15](https://github.com/swagger-api/swagger-codegen/tree/v2.4.15)
+[3.0.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.2)| 2018-10-19   | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.1)| 2018-10-05   | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
+[3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)| 2018-09-06   | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
+2.4.29-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.29-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
+[2.4.28](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.28) (**current stable**) | 2022-08-15   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.28](https://github.com/swagger-api/swagger-codegen/tree/v2.4.28)
+[2.4.27](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.27) | 2022-04-12   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.27](https://github.com/swagger-api/swagger-codegen/tree/v2.4.27)
+[2.4.26](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.26) | 2022-02-07   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.26](https://github.com/swagger-api/swagger-codegen/tree/v2.4.26)
+[2.4.25](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.25) | 2021-12-28   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.25](https://github.com/swagger-api/swagger-codegen/tree/v2.4.25)
+[2.4.24](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.24) | 2021-11-18   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.24](https://github.com/swagger-api/swagger-codegen/tree/v2.4.24)
+[2.4.23](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.23) | 2021-10-08   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.23](https://github.com/swagger-api/swagger-codegen/tree/v2.4.23)
+[2.4.22](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.22) | 2021-09-30   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.22](https://github.com/swagger-api/swagger-codegen/tree/v2.4.22)
+[2.4.21](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.21) | 2021-06-28   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.21](https://github.com/swagger-api/swagger-codegen/tree/v2.4.21)
+[2.4.20](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.20) | 2021-05-28   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.20](https://github.com/swagger-api/swagger-codegen/tree/v2.4.20)
+[2.4.19](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.19) | 2021-03-04   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.19](https://github.com/swagger-api/swagger-codegen/tree/v2.4.19)
+[2.4.18](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.18) | 2020-12-29   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.18](https://github.com/swagger-api/swagger-codegen/tree/v2.4.18)
+[2.4.17](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.17) | 2020-11-02   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.17](https://github.com/swagger-api/swagger-codegen/tree/v2.4.17)
+[2.4.16](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.16) | 2020-10-05   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.16](https://github.com/swagger-api/swagger-codegen/tree/v2.4.16)
+[2.4.15](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.15) | 2020-07-28   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.15](https://github.com/swagger-api/swagger-codegen/tree/v2.4.15)
 [2.4.14](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.14) | 2020-05-18   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.14](https://github.com/swagger-api/swagger-codegen/tree/v2.4.14)
 [2.4.13](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.13) | 2020-04-02   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.13](https://github.com/swagger-api/swagger-codegen/tree/v2.4.13)
 [2.4.12](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.12) | 2020-01-15   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.12](https://github.com/swagger-api/swagger-codegen/tree/v2.4.12)
@@ -186,17 +211,17 @@ If you're looking for the latest stable version, you can grab it directly from M
 
 ```sh
 # Download current stable 2.x.x branch (Swagger and OpenAPI version 2)
-wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.15/swagger-codegen-cli-2.4.15.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.28/swagger-codegen-cli-2.4.28.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 
 # Download current stable 3.x.x branch (OpenAPI version 3)
-wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.21/swagger-codegen-cli-3.0.21.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar --help
 ```
 
-For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.15/swagger-codegen-cli-2.4.15.jar`
+For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.28/swagger-codegen-cli-2.4.28.jar`
 
 On a mac, it's even easier with `brew`:
 ```sh
@@ -344,7 +369,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i https://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.15/swagger-codegen-cli-2.4.15.jar)
+You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.28/swagger-codegen-cli-2.4.28.jar)
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar help generate` (for version 3.x check [3.0.0 branch](https://github.com/swagger-api/swagger-codegen/tree/3.0.0))
 
@@ -472,7 +497,7 @@ See also [standalone generator development](https://github.com/swagger-api/swagg
 ### Where is Javascript???
 See our [javascript library](http://github.com/swagger-api/swagger-js)--it's completely dynamic and doesn't require
 static code generation.
-There is a third-party component called [swagger-js-codegen](https://github.com/wcandillon/swagger-js-codegen) that can generate angularjs or nodejs source code from a OpenAPI Specification.
+There is a third-party component called [swagger-js-codegen](https://github.com/wcandillon/swagger-js-codegen) that can generate angularjs or nodejs source code from an OpenAPI Specification.
 
 :exclamation: On Dec 7th 2015, a Javascript API client generator has been added by @jfiala.
 
@@ -640,10 +665,10 @@ Your config file for Java can look like
 
 ```json
 {
-  "groupId":"com.my.company",
-  "artifactId":"MyClient",
-  "artifactVersion":"1.2.0",
-  "library":"feign"
+  "groupId": "com.my.company",
+  "artifactId": "MyClient",
+  "artifactVersion": "1.2.0",
+  "library": "feign"
 }
 ```
 
@@ -779,10 +804,10 @@ curl -X POST -H "content-type:application/json" -d '{"swaggerUrl":"https://petst
 ```
 Then you will receive a JSON response with the URL to download the zipped code.
 
-To customize the SDK, you can `POST` to `https://generator.swagger.io/gen/clients/{language}` with the following HTTP body:
+To customize the SDK, you can `POST` to `https://generator.swagger.io/api/gen/clients/{language}` with the following HTTP body:
 ```json
 {
-  "options": {},
+  "options":  {},
   "swaggerUrl": "https://petstore.swagger.io/v2/swagger.json"
 }
 ```
@@ -791,23 +816,23 @@ in which the `options` for a language can be obtained by submitting a `GET` requ
 For example, `curl https://generator.swagger.io/api/gen/clients/python` returns
 ```json
 {
-  "packageName":{
-    "opt":"packageName",
-    "description":"python package name (convention: snake_case).",
-    "type":"string",
-    "default":"swagger_client"
+  "packageName": {
+    "opt": "packageName",
+    "description": "python package name (convention: snake_case).",
+    "type": "string",
+    "default": "swagger_client"
   },
-  "packageVersion":{
-    "opt":"packageVersion",
-    "description":"python package version.",
-    "type":"string",
-    "default":"1.0.0"
+  "packageVersion": {
+    "opt": "packageVersion",
+    "description": "python package version.",
+    "type": "string",
+    "default": "1.0.0"
   },
-  "sortParamsByRequiredFlag":{
-    "opt":"sortParamsByRequiredFlag",
-    "description":"Sort method arguments to place required parameters before optional parameters.",
-    "type":"boolean",
-    "default":"true"
+  "sortParamsByRequiredFlag": {
+    "opt": "sortParamsByRequiredFlag",
+    "description": "Sort method arguments to place required parameters before optional parameters.",
+    "type": "boolean",
+    "default": "true"
   }
 }
 ```
@@ -936,6 +961,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Norwegian Air Shuttle](https://www.norwegian.com/)
 - [NTT DATA](http://www.nttdata.com/)
 - [nViso](http://www.nviso.ch/)
+- [NHSD](https://digital.nhs.uk/)
 - [Okiok](https://www.okiok.com)
 - [Onedata](http://onedata.org)
 - [Open International Systems](https://openintl.com/)

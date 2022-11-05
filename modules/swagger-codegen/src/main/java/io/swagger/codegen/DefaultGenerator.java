@@ -261,6 +261,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         if (info.getTermsOfService() != null) {
             config.additionalProperties().put("termsOfService", config.escapeText(info.getTermsOfService()));
         }
+        if (info.getVendorExtensions() != null && !info.getVendorExtensions().isEmpty()) {
+            config.additionalProperties().put("info-extensions", info.getVendorExtensions());
+        }
     }
 
     protected void generateModelTests(List<File> files, Map<String, Object> models, String modelName) throws IOException {
@@ -764,10 +767,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         configureGeneratorProperties();
         configureSwaggerInfo();
-
-        // resolve inline models
-        InlineModelResolver inlineModelResolver = new InlineModelResolver();
-        inlineModelResolver.flatten(swagger);
 
         List<File> files = new ArrayList<File>();
         // models

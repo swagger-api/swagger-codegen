@@ -29,6 +29,8 @@ public class TypeScriptInversifyClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setModelPropertyNaming(TypeScriptInversifyClientOptionsProvider.MODEL_PROPERTY_NAMING_VALUE);
             times = 1;
+            clientCodegen.setEnumPropertyNaming(TypeScriptInversifyClientOptionsProvider.ENUM_PROPERTY_NAMING_VALUE);
+            times = 1;
             clientCodegen.setSupportsES6(Boolean.valueOf(TypeScriptInversifyClientOptionsProvider.SUPPORTS_ES6_VALUE));
             times = 1;
         }};

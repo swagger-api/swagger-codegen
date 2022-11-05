@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.4.16-SNAPSHOT</version>
+        <version>2.4.29-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
@@ -271,6 +271,23 @@
             <artifactId>jetty-deploy</artifactId>
             <version>${jetty-version}</version>
         </dependency>
+
+        <dependency>
+           <groupId>javax.xml.bind</groupId>
+           <artifactId>jaxb-api</artifactId>
+           <version>2.3.0</version>
+         </dependency>
+         <dependency>
+           <groupId>com.sun.xml.bind</groupId>
+           <artifactId>jaxb-core</artifactId>
+           <version>2.3.0</version>
+         </dependency>
+         <dependency>
+           <groupId>com.sun.xml.bind</groupId>
+           <artifactId>jaxb-impl</artifactId>
+           <version>2.3.0</version>
+         </dependency>
+
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-runner</artifactId>
@@ -299,11 +316,11 @@
     </dependencies>
     <properties>
         <servlet-api-version>2.5</servlet-api-version>
-        <logback-version>1.0.1</logback-version>
+        <logback-version>1.2.10</logback-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
-        <zip-version>1.3.2</zip-version>
-        <jetty-version>9.4.20.v20190813</jetty-version>
-        <jersey2-version>2.29.1</jersey2-version>
+        <zip-version>1.3.3</zip-version>
+        <jetty-version>9.4.44.v20210927</jetty-version>
+        <jersey2-version>2.35</jersey2-version>
     </properties>
 </project>

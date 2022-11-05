@@ -16,6 +16,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class EnumTest   {
   /**
    * Gets or Sets enumString

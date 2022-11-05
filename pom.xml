@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.4.16-SNAPSHOT</version>
+    <version>2.4.29-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -257,6 +257,28 @@
     </build>
     <profiles>
         <profile>
+            <id>security</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>6.5.3</version>
+                        <configuration>
+                            <skipSystemScope>true</skipSystemScope>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>release-profile</id>
             <properties>
                 <skipTests>true</skipTests>
@@ -406,18 +428,6 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/java/jersey2</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>java-client-jersey2-java6</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/java/jersey2-java6</module>
             </modules>
         </profile>
         <profile>
@@ -847,16 +857,15 @@
                 <module>samples/client/petstore/python</module>
                 <!--<module>samples/client/petstore/python-tornado</module>-->
                 <module>samples/client/petstore/python-asyncio</module>
+                <!--
                 <module>samples/client/petstore/typescript-fetch/builds/default</module>
                 <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
-                <!--
-                    comment out due to error experienced since Sept 6th 2020 due to removed support
-                    for ts 2.x in DefinitivelyTyped. see https://github.com/swagger-api/swagger-codegen/issues/10454
 
                 <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
                 <module>samples/client/petstore/typescript-fetch/tests/default</module>
                 -->
-                <module>samples/client/petstore/typescript-node/npm</module>
+
+<!--                <module>samples/client/petstore/typescript-node/npm</module>-->
                 <!-- comment out due to github rate limit error
                 <module>samples/client/petstore/typescript-angularjs</module>-->
                 <!-- comment out due to error `npm run build`
@@ -943,23 +952,23 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.51</swagger-parser-version>
+        <swagger-parser-version>1.0.61</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.6.1</swagger-core-version>
-        <commons-io-version>2.4</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.8.1</junit-version>
-        <jackson-version>2.10.1</jackson-version>
+        <swagger-core-version>1.6.6</swagger-core-version>
+        <commons-io-version>2.11.0</commons-io-version>
+        <commons-cli-version>1.5.0</commons-cli-version>
+        <junit-version>4.13.1</junit-version>
+        <jackson-version>2.13.2</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.4</commons-lang-version>
-        <slf4j-version>1.7.12</slf4j-version>
+        <commons-lang-version>3.12.0</commons-lang-version>
+        <slf4j-version>1.7.35</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.12</jmustache-version>
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.19.1</surefire-version>
         <jmockit-version>1.25</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
-        <snakeyaml-version>1.24</snakeyaml-version>
+        <snakeyaml-version>1.33</snakeyaml-version>
     </properties>
 </project>

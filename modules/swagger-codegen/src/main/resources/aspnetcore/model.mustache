@@ -28,7 +28,12 @@ namespace {{packageName}}.Models
         {{/description}}
         {{#required}}
         [Required]
-        {{/required}}
+        {{/required}}{{#pattern}}
+        [RegularExpression("{{{pattern}}}")]{{/pattern}}{{#minLength}}{{#maxLength}}
+        [StringLength({{maxLength}}, MinimumLength={{minLength}})]{{/maxLength}}{{/minLength}}{{#minLength}}{{^maxLength}}
+        [MinLength({{minLength}})]{{/maxLength}}{{/minLength}}{{^minLength}}{{#maxLength}}
+        [MaxLength({{maxLength}})]{{/maxLength}}{{/minLength}}{{#minimum}}{{#maximum}}
+        [Range({{minimum}}, {{maximum}})]{{/maximum}}{{/minimum}}
         [DataMember(Name="{{baseName}}")]
         {{#isEnum}}
         public {{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{name}} { get; set; }

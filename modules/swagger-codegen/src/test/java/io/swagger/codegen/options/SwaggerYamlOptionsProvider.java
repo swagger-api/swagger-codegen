@@ -12,6 +12,7 @@ public class SwaggerYamlOptionsProvider implements OptionsProvider {
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     public static final String OUTPUT_NAME = "swagger.yaml";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String MINIMIZE_QUOTES = "true";
 
     @Override
     public String getLanguage() {
@@ -25,6 +26,7 @@ public class SwaggerYamlOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.ENSURE_UNIQUE_PARAMS, ENSURE_UNIQUE_PARAMS_VALUE)
                 .put(SwaggerYamlGenerator.OUTPUT_NAME, OUTPUT_NAME)
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(SwaggerYamlGenerator.MINMIZE_QUOTES, MINIMIZE_QUOTES)
                 .build();
     }
 
