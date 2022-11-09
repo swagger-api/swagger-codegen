@@ -57,12 +57,20 @@ public class JsonUtil {
   public static Type getListTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
     
+    if ("Amount".equalsIgnoreCase(className)) {
+      return new TypeToken<List<Amount>>(){}.getType();
+    }
+    
     if ("ApiResponse".equalsIgnoreCase(className)) {
       return new TypeToken<List<ApiResponse>>(){}.getType();
     }
     
     if ("Category".equalsIgnoreCase(className)) {
       return new TypeToken<List<Category>>(){}.getType();
+    }
+    
+    if ("Currency".equalsIgnoreCase(className)) {
+      return new TypeToken<List<Currency>>(){}.getType();
     }
     
     if ("Order".equalsIgnoreCase(className)) {
@@ -87,12 +95,20 @@ public class JsonUtil {
   public static Type getTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
     
+    if ("Amount".equalsIgnoreCase(className)) {
+      return new TypeToken<Amount>(){}.getType();
+    }
+    
     if ("ApiResponse".equalsIgnoreCase(className)) {
       return new TypeToken<ApiResponse>(){}.getType();
     }
     
     if ("Category".equalsIgnoreCase(className)) {
       return new TypeToken<Category>(){}.getType();
+    }
+    
+    if ("Currency".equalsIgnoreCase(className)) {
+      return new TypeToken<Currency>(){}.getType();
     }
     
     if ("Order".equalsIgnoreCase(className)) {

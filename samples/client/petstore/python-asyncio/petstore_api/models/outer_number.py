@@ -61,6 +61,9 @@ class OuterNumber(object):
                 ))
             else:
                 result[attr] = value
+        if issubclass(OuterNumber, dict):
+            for key, value in self.items():
+                result[key] = value
 
         return result
 

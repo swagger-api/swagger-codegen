@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -46,9 +47,9 @@ public enum EnumClass {
   }
 
   @JsonCreator
-  public static EnumClass fromValue(String text) {
+  public static EnumClass fromValue(String value) {
     for (EnumClass b : EnumClass.values()) {
-      if (String.valueOf(b.value).equals(text)) {
+      if (b.value.equals(value)) {
         return b;
       }
     }

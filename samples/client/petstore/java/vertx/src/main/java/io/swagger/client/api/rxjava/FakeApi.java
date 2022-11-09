@@ -5,6 +5,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.*;
 
@@ -110,6 +111,29 @@ public class FakeApi {
         }));
     }
     /**
+     * 
+     * 
+     * @param body  (required)
+     * @param query  (required)
+     * @param resultHandler Asynchronous result handler
+     */
+    public void testBodyWithQueryParams(User body, String query, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.testBodyWithQueryParams(body, query, resultHandler);
+    }
+
+    /**
+     * 
+     * 
+     * @param body  (required)
+     * @param query  (required)
+     * @return Asynchronous result handler (RxJava Single)
+     */
+    public Single<Void> rxTestBodyWithQueryParams(User body, String query) {
+        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
+            delegate.testBodyWithQueryParams(body, query, fut);
+        }));
+    }
+    /**
      * To test \&quot;client\&quot; model
      * To test \&quot;client\&quot; model
      * @param body client model (required)
@@ -210,6 +234,27 @@ public class FakeApi {
     public Single<Void> rxTestEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) {
         return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
             delegate.testEnumParameters(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble, fut);
+        }));
+    }
+    /**
+     * test inline additionalProperties
+     * 
+     * @param param request body (required)
+     * @param resultHandler Asynchronous result handler
+     */
+    public void testInlineAdditionalProperties(Object param, Handler<AsyncResult<Void>> resultHandler) {
+        delegate.testInlineAdditionalProperties(param, resultHandler);
+    }
+
+    /**
+     * test inline additionalProperties
+     * 
+     * @param param request body (required)
+     * @return Asynchronous result handler (RxJava Single)
+     */
+    public Single<Void> rxTestInlineAdditionalProperties(Object param) {
+        return Single.create(new io.vertx.rx.java.SingleOnSubscribeAdapter<>(fut -> {
+            delegate.testInlineAdditionalProperties(param, fut);
         }));
     }
     /**

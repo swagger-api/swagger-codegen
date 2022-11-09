@@ -286,7 +286,7 @@ export class UserApi {
     /**
      * 
      * @summary Get user by user name
-     * @param username The name that needs to be fetched. Use user1 for testing. 
+     * @param username The name that needs to be fetched. Use user1 for testing.
      */
     public getUserByName(username: string, extraJQueryAjaxSettings?: JQueryAjaxSettings): JQueryPromise<{ response: JQueryXHR; body: models.User;  }> {
         let localVarPath = this.basePath + '/user/{username}'.replace('{' + 'username' + '}', encodeURIComponent(String(username)));

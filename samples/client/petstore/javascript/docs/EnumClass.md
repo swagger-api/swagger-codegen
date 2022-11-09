@@ -3,10 +3,10 @@
 ## Enum
 
 
-* `_abc` (value: `"_abc"`)
+* `abc` (value: `"_abc"`)
 
-* `-efg` (value: `"-efg"`)
+* `efg` (value: `"-efg"`)
 
-* `(xyz)` (value: `"(xyz)"`)
+* `xyz` (value: `"(xyz)"`)
 
 

@@ -1,0 +1,24 @@
+{{#testExample}}{{{testExample}}}{{/testExample}}{{!
+}}{{^testExample}}{{!
+}}{{#example}}{{{example}}}{{/example}}{{!
+}}{{^example}}{{!
+}}{{#isListContainer}}[{{#items}}{{>api-test-param}}{{/items}}]{{/isListContainer}}{{!
+}}{{#isMapContainer}}{key: {{#items}}{{>api-test-param}}{{/items}}}{{/isMapContainer}}{{!
+}}{{#isString}}""{{/isString}}{{!
+}}{{#isInteger}}0{{/isInteger}}{{!
+}}{{#isLong}}"0"{{/isLong}}{{!
+}}{{#isFloat}}0.0{{/isFloat}}{{!
+}}{{#isDouble}}0.0{{/isDouble}}{{!
+}}{{#isByteArray}}undefined{{/isByteArray}}{{!
+}}{{#isBinary}}undefined{{/isBinary}}{{!
+}}{{#isBoolean}}false{{/isBoolean}}{{!
+}}{{#isDate}}new Date(){{/isDate}}{{!
+}}{{#isDateTime}}new Date(){{/isDateTime}}{{!
+}}{{#isUuid}}"00000000-0000-0000-0000-000000000000"{{/isUuid}}{{!
+}}{{#isFile}}undefined{{/isFile}}{{!
+}}{{#isEnum}}{{vendorExtensions.x-first-enum-value}}{{/isEnum}}{{!
+}}{{#isConstEnumParam}}{{/isConstEnumParam}}{{!
+}}{{#complexType}}new {{moduleName}}.{{className}}();{{/complexType}}{{!
+}}{{/example}}{{!
+}}{{/testExample}}{{!
+}}{{^isPrimitiveType}};{{>api-test-param-complex}}{{/isPrimitiveType}}

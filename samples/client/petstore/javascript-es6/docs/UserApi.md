@@ -24,7 +24,7 @@ This can only be done by the logged in user.
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
@@ -69,7 +69,7 @@ Creates list of users with given input array
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
@@ -114,7 +114,7 @@ Creates list of users with given input array
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
@@ -159,7 +159,7 @@ This can only be done by the logged in user.
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
@@ -204,11 +204,11 @@ Get user by user name
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
-let username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
+let username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing.
 
 
 apiInstance.getUserByName(username, (error, data, response) => {
@@ -224,7 +224,7 @@ apiInstance.getUserByName(username, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **String**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 
@@ -241,7 +241,7 @@ No authorization required
 
 <a name="loginUser"></a>
 # **loginUser**
-> &#39;String&#39; loginUser(username, password)
+> 'String' loginUser(username, password)
 
 Logs user into the system
 
@@ -249,7 +249,7 @@ Logs user into the system
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
@@ -276,7 +276,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**&#39;String&#39;**
+**'String'**
 
 ### Authorization
 
@@ -297,7 +297,7 @@ Logs out current logged in user session
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 
@@ -336,7 +336,7 @@ This can only be done by the logged in user.
 
 ### Example
 ```javascript
-import SwaggerPetstore from 'swagger_petstore';
+import {SwaggerPetstore} from 'swagger_petstore';
 
 let apiInstance = new SwaggerPetstore.UserApi();
 

@@ -31,33 +31,33 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="OuterComposite" /> class.
         /// </summary>
-        /// <param name="MyNumber">MyNumber.</param>
-        /// <param name="MyString">MyString.</param>
-        /// <param name="MyBoolean">MyBoolean.</param>
-        public OuterComposite(OuterNumber MyNumber = default(OuterNumber), OuterString MyString = default(OuterString), OuterBoolean MyBoolean = default(OuterBoolean))
+        /// <param name="myNumber">myNumber.</param>
+        /// <param name="myString">myString.</param>
+        /// <param name="myBoolean">myBoolean.</param>
+        public OuterComposite(decimal? myNumber = default(decimal?), string myString = default(string), bool? myBoolean = default(bool?))
         {
-            this.MyNumber = MyNumber;
-            this.MyString = MyString;
-            this.MyBoolean = MyBoolean;
+            this.MyNumber = myNumber;
+            this.MyString = myString;
+            this.MyBoolean = myBoolean;
         }
         
         /// <summary>
         /// Gets or Sets MyNumber
         /// </summary>
         [DataMember(Name="my_number", EmitDefaultValue=false)]
-        public OuterNumber MyNumber { get; set; }
+        public decimal? MyNumber { get; set; }
 
         /// <summary>
         /// Gets or Sets MyString
         /// </summary>
         [DataMember(Name="my_string", EmitDefaultValue=false)]
-        public OuterString MyString { get; set; }
+        public string MyString { get; set; }
 
         /// <summary>
         /// Gets or Sets MyBoolean
         /// </summary>
         [DataMember(Name="my_boolean", EmitDefaultValue=false)]
-        public OuterBoolean MyBoolean { get; set; }
+        public bool? MyBoolean { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -78,7 +78,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

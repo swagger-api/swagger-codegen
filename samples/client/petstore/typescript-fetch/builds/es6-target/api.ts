@@ -17,7 +17,7 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "http://petstore.swagger.io/v2".replace(/\/+$/, "");
+const BASE_PATH = "https://petstore.swagger.io/v2".replace(/\/+$/, "");
 
 /**
  *
@@ -40,7 +40,7 @@ export interface FetchAPI {
 }
 
 /**
- *  
+ *
  * @export
  * @interface FetchArgs
  */
@@ -50,7 +50,7 @@ export interface FetchArgs {
 }
 
 /**
- * 
+ *
  * @export
  * @class BaseAPI
  */
@@ -66,7 +66,7 @@ export class BaseAPI {
 };
 
 /**
- * 
+ *
  * @export
  * @class RequiredError
  * @extends {Error}
@@ -76,6 +76,26 @@ export class RequiredError extends Error {
     constructor(public field: string, msg?: string) {
         super(msg);
     }
+}
+
+/**
+ * some description 
+ * @export
+ * @interface Amount
+ */
+export interface Amount {
+    /**
+     * some description 
+     * @type {number}
+     * @memberof Amount
+     */
+    value: number;
+    /**
+     * 
+     * @type {Currency}
+     * @memberof Amount
+     */
+    currency: Currency;
 }
 
 /**
@@ -122,6 +142,14 @@ export interface Category {
      * @memberof Category
      */
     name?: string;
+}
+
+/**
+ * some description 
+ * @export
+ * @interface Currency
+ */
+export interface Currency {
 }
 
 /**

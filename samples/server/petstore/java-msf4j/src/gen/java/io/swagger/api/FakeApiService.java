@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -28,6 +29,9 @@ public abstract class FakeApiService {
     public abstract Response fakeOuterNumberSerialize(BigDecimal body
  ) throws NotFoundException;
     public abstract Response fakeOuterStringSerialize(String body
+ ) throws NotFoundException;
+    public abstract Response testBodyWithQueryParams(User body
+ ,String query
  ) throws NotFoundException;
     public abstract Response testClientModel(Client body
  ) throws NotFoundException;

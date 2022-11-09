@@ -1,7 +1,11 @@
+mod amount;
+pub use self::amount::Amount;
 mod api_response;
 pub use self::api_response::ApiResponse;
 mod category;
 pub use self::category::Category;
+mod currency;
+pub use self::currency::Currency;
 mod order;
 pub use self::order::Order;
 mod pet;

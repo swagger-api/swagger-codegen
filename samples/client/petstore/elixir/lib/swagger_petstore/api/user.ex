@@ -121,7 +121,7 @@ defmodule SwaggerPetstore.Api.User do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - username (String.t): The name that needs to be fetched. Use user1 for testing. 
+  - username (String.t): The name that needs to be fetched. Use user1 for testing.
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns

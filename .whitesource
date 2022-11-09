@@ -1,0 +1,6 @@
+{
+  "settingsInheritedFrom": "swagger-api/whitesource-config@main",
+  "scanSettings": {
+    "baseBranches": ["master", "3.0.0"]
+  }
+}

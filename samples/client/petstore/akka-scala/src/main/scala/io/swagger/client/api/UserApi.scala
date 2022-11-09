@@ -73,7 +73,7 @@ object UserApi {
    *   code 400 :  (Invalid username supplied)
    *   code 404 :  (User not found)
    * 
-   * @param username The name that needs to be fetched. Use user1 for testing. 
+   * @param username The name that needs to be fetched. Use user1 for testing.
    */
   def getUserByName(username: String): ApiRequest[User] =
     ApiRequest[User](ApiMethods.GET, "http://petstore.swagger.io/v2", "/user/{username}", "application/json")

@@ -14,6 +14,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +64,21 @@ public interface FakeApi {
   @POST("fake/outer/string")
   Observable<String> fakeOuterStringSerialize(
     @retrofit2.http.Body String body
+  );
+
+  /**
+   * 
+   * 
+   * @param body  (required)
+   * @param query  (required)
+   * @return Observable&lt;Void&gt;
+   */
+  @Headers({
+    "Content-Type:application/json"
+  })
+  @PUT("fake/body-with-query-params")
+  Observable<Void> testBodyWithQueryParams(
+    @retrofit2.http.Body User body, @retrofit2.http.Query("query") String query
   );
 
   /**

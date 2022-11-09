@@ -31,10 +31,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="SpecialModelName" /> class.
         /// </summary>
-        /// <param name="SpecialPropertyName">SpecialPropertyName.</param>
-        public SpecialModelName(long? SpecialPropertyName = default(long?))
+        /// <param name="specialPropertyName">specialPropertyName.</param>
+        public SpecialModelName(long? specialPropertyName = default(long?))
         {
-            this.SpecialPropertyName = SpecialPropertyName;
+            this.SpecialPropertyName = specialPropertyName;
         }
         
         /// <summary>
@@ -60,7 +60,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

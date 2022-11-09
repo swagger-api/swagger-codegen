@@ -15,7 +15,7 @@ import play.api.libs.json._
 
 case class ApiResponse (
                   code: Option[Int],
-                  _type: Option[String],
+                  `type`: Option[String],
                   message: Option[String]
 )
 

@@ -3,7 +3,7 @@
 # execute the script and check the result (exit code) to see if
 # there's any error
 
-echo "IMPORTANT: this script should be run by the CI (e.g. Shippable) only. There's no need to run this script to update Petstore samples for all generators."
+echo "IMPORTANT: this script should be run by the CI (e.g. Jenkins) only. There's no need to run this script to update Petstore samples for all generators."
 echo "Please press CTRL+C to stop or the script will continue in 10 seconds."
 
 sleep 10

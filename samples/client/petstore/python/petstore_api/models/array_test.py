@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from petstore_api.models.read_only_first import ReadOnlyFirst  # noqa: F401,E501
+from petstore_api.configuration import Configuration
 
 
 class ArrayTest(object):
@@ -44,8 +44,11 @@ class ArrayTest(object):
         'array_array_of_model': 'array_array_of_model'
     }
 
-    def __init__(self, array_of_string=None, array_array_of_integer=None, array_array_of_model=None):  # noqa: E501
+    def __init__(self, array_of_string=None, array_array_of_integer=None, array_array_of_model=None, _configuration=None):  # noqa: E501
         """ArrayTest - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration = _configuration
 
         self._array_of_string = None
         self._array_array_of_integer = None
@@ -162,8 +165,11 @@ class ArrayTest(object):
         if not isinstance(other, ArrayTest):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, ArrayTest):
+            return True
+
+        return self.to_dict() != other.to_dict()

@@ -196,7 +196,7 @@ Get user by user name
 //import io.swagger.client.api.UserApi;
 
 UserApi apiInstance = new UserApi();
-String username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
+String username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing.
 try {
     User result = apiInstance.getUserByName(username);
     System.out.println(result);
@@ -210,7 +210,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be fetched. Use user1 for testing.  |
+ **username** | **String**| The name that needs to be fetched. Use user1 for testing. |
 
 ### Return type
 

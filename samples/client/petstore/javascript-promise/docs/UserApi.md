@@ -200,7 +200,7 @@ var SwaggerPetstore = require('swagger_petstore');
 
 var apiInstance = new SwaggerPetstore.UserApi();
 
-var username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing. 
+var username = "username_example"; // String | The name that needs to be fetched. Use user1 for testing.
 
 apiInstance.getUserByName(username).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
@@ -214,7 +214,7 @@ apiInstance.getUserByName(username).then(function(data) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **String**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 
@@ -231,7 +231,7 @@ No authorization required
 
 <a name="loginUser"></a>
 # **loginUser**
-> &#39;String&#39; loginUser(username, password)
+> 'String' loginUser(username, password)
 
 Logs user into the system
 
@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**&#39;String&#39;**
+**'String'**
 
 ### Authorization
 

@@ -31,12 +31,12 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdditionalPropertiesClass" /> class.
         /// </summary>
-        /// <param name="MapProperty">MapProperty.</param>
-        /// <param name="MapOfMapProperty">MapOfMapProperty.</param>
-        public AdditionalPropertiesClass(Dictionary<string, string> MapProperty = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>> MapOfMapProperty = default(Dictionary<string, Dictionary<string, string>>))
+        /// <param name="mapProperty">mapProperty.</param>
+        /// <param name="mapOfMapProperty">mapOfMapProperty.</param>
+        public AdditionalPropertiesClass(Dictionary<string, string> mapProperty = default(Dictionary<string, string>), Dictionary<string, Dictionary<string, string>> mapOfMapProperty = default(Dictionary<string, Dictionary<string, string>>))
         {
-            this.MapProperty = MapProperty;
-            this.MapOfMapProperty = MapOfMapProperty;
+            this.MapProperty = mapProperty;
+            this.MapOfMapProperty = mapOfMapProperty;
         }
         
         /// <summary>
@@ -69,7 +69,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

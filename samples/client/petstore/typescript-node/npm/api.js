@@ -122,6 +122,28 @@ var ObjectSerializer = (function () {
     };
     return ObjectSerializer;
 }());
+var Amount = (function () {
+    function Amount() {
+    }
+    Amount.getAttributeTypeMap = function () {
+        return Amount.attributeTypeMap;
+    };
+    Amount.discriminator = undefined;
+    Amount.attributeTypeMap = [
+        {
+            "name": "value",
+            "baseName": "value",
+            "type": "number"
+        },
+        {
+            "name": "currency",
+            "baseName": "currency",
+            "type": "Currency"
+        }
+    ];
+    return Amount;
+}());
+exports.Amount = Amount;
 var ApiResponse = (function () {
     function ApiResponse() {
     }
@@ -171,6 +193,17 @@ var Category = (function () {
     return Category;
 }());
 exports.Category = Category;
+var Currency = (function () {
+    function Currency() {
+    }
+    Currency.getAttributeTypeMap = function () {
+        return Currency.attributeTypeMap;
+    };
+    Currency.discriminator = undefined;
+    Currency.attributeTypeMap = [];
+    return Currency;
+}());
+exports.Currency = Currency;
 var Order = (function () {
     function Order() {
     }
@@ -352,8 +385,10 @@ var enumsMap = {
     "Pet.StatusEnum": Pet.StatusEnum,
 };
 var typeMap = {
+    "Amount": Amount,
     "ApiResponse": ApiResponse,
     "Category": Category,
+    "Currency": Currency,
     "Order": Order,
     "Pet": Pet,
     "Tag": Tag,
@@ -466,7 +501,8 @@ var PetApi = (function () {
         enumerable: true,
         configurable: true
     });
-    PetApi.prototype.addPet = function (body) {
+    PetApi.prototype.addPet = function (body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -474,6 +510,7 @@ var PetApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addPet.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'POST',
@@ -510,7 +547,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.deletePet = function (petId, apiKey) {
+    PetApi.prototype.deletePet = function (petId, apiKey, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet/{petId}'
             .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
         var localVarQueryParameters = {};
@@ -520,6 +558,7 @@ var PetApi = (function () {
             throw new Error('Required parameter petId was null or undefined when calling deletePet.');
         }
         localVarHeaderParams['api_key'] = ObjectSerializer.serialize(apiKey, "string");
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'DELETE',
@@ -555,7 +594,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.findPetsByStatus = function (status) {
+    PetApi.prototype.findPetsByStatus = function (status, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet/findByStatus';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -566,6 +606,7 @@ var PetApi = (function () {
         if (status !== undefined) {
             localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<'available' | 'pending' | 'sold'>");
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -602,7 +643,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.findPetsByTags = function (tags) {
+    PetApi.prototype.findPetsByTags = function (tags, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet/findByTags';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -613,6 +655,7 @@ var PetApi = (function () {
         if (tags !== undefined) {
             localVarQueryParameters['tags'] = ObjectSerializer.serialize(tags, "Array<string>");
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -649,7 +692,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.getPetById = function (petId) {
+    PetApi.prototype.getPetById = function (petId, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet/{petId}'
             .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
         var localVarQueryParameters = {};
@@ -658,6 +702,7 @@ var PetApi = (function () {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling getPetById.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -694,7 +739,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.updatePet = function (body) {
+    PetApi.prototype.updatePet = function (body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -702,6 +748,7 @@ var PetApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updatePet.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'PUT',
@@ -738,7 +785,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.updatePetWithForm = function (petId, name, status) {
+    PetApi.prototype.updatePetWithForm = function (petId, name, status, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet/{petId}'
             .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
         var localVarQueryParameters = {};
@@ -747,6 +795,7 @@ var PetApi = (function () {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling updatePetWithForm.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         if (name !== undefined) {
             localVarFormParams['name'] = ObjectSerializer.serialize(name, "string");
@@ -788,7 +837,8 @@ var PetApi = (function () {
             });
         });
     };
-    PetApi.prototype.uploadFile = function (petId, additionalMetadata, file) {
+    PetApi.prototype.uploadFile = function (petId, additionalMetadata, file, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/pet/{petId}/uploadImage'
             .replace('{' + 'petId' + '}', encodeURIComponent(String(petId)));
         var localVarQueryParameters = {};
@@ -797,6 +847,7 @@ var PetApi = (function () {
         if (petId === null || petId === undefined) {
             throw new Error('Required parameter petId was null or undefined when calling uploadFile.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         if (additionalMetadata !== undefined) {
             localVarFormParams['additionalMetadata'] = ObjectSerializer.serialize(additionalMetadata, "string");
@@ -898,7 +949,8 @@ var StoreApi = (function () {
         enumerable: true,
         configurable: true
     });
-    StoreApi.prototype.deleteOrder = function (orderId) {
+    StoreApi.prototype.deleteOrder = function (orderId, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/store/order/{orderId}'
             .replace('{' + 'orderId' + '}', encodeURIComponent(String(orderId)));
         var localVarQueryParameters = {};
@@ -907,6 +959,7 @@ var StoreApi = (function () {
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'DELETE',
@@ -941,11 +994,13 @@ var StoreApi = (function () {
             });
         });
     };
-    StoreApi.prototype.getInventory = function () {
+    StoreApi.prototype.getInventory = function (options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/store/inventory';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         var localVarFormParams = {};
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -982,7 +1037,8 @@ var StoreApi = (function () {
             });
         });
     };
-    StoreApi.prototype.getOrderById = function (orderId) {
+    StoreApi.prototype.getOrderById = function (orderId, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/store/order/{orderId}'
             .replace('{' + 'orderId' + '}', encodeURIComponent(String(orderId)));
         var localVarQueryParameters = {};
@@ -991,6 +1047,7 @@ var StoreApi = (function () {
         if (orderId === null || orderId === undefined) {
             throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -1026,7 +1083,8 @@ var StoreApi = (function () {
             });
         });
     };
-    StoreApi.prototype.placeOrder = function (body) {
+    StoreApi.prototype.placeOrder = function (body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/store/order';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -1034,6 +1092,7 @@ var StoreApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling placeOrder.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'POST',
@@ -1128,7 +1187,8 @@ var UserApi = (function () {
         enumerable: true,
         configurable: true
     });
-    UserApi.prototype.createUser = function (body) {
+    UserApi.prototype.createUser = function (body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -1136,6 +1196,7 @@ var UserApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUser.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'POST',
@@ -1171,7 +1232,8 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.createUsersWithArrayInput = function (body) {
+    UserApi.prototype.createUsersWithArrayInput = function (body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/createWithArray';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -1179,6 +1241,7 @@ var UserApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'POST',
@@ -1214,7 +1277,8 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.createUsersWithListInput = function (body) {
+    UserApi.prototype.createUsersWithListInput = function (body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/createWithList';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -1222,6 +1286,7 @@ var UserApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'POST',
@@ -1257,7 +1322,8 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.deleteUser = function (username) {
+    UserApi.prototype.deleteUser = function (username, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/{username}'
             .replace('{' + 'username' + '}', encodeURIComponent(String(username)));
         var localVarQueryParameters = {};
@@ -1266,6 +1332,7 @@ var UserApi = (function () {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling deleteUser.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'DELETE',
@@ -1300,7 +1367,8 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.getUserByName = function (username) {
+    UserApi.prototype.getUserByName = function (username, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/{username}'
             .replace('{' + 'username' + '}', encodeURIComponent(String(username)));
         var localVarQueryParameters = {};
@@ -1309,6 +1377,7 @@ var UserApi = (function () {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling getUserByName.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -1344,7 +1413,8 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.loginUser = function (username, password) {
+    UserApi.prototype.loginUser = function (username, password, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/login';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
@@ -1361,6 +1431,7 @@ var UserApi = (function () {
         if (password !== undefined) {
             localVarQueryParameters['password'] = ObjectSerializer.serialize(password, "string");
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -1396,11 +1467,13 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.logoutUser = function () {
+    UserApi.prototype.logoutUser = function (options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/logout';
         var localVarQueryParameters = {};
         var localVarHeaderParams = Object.assign({}, this.defaultHeaders);
         var localVarFormParams = {};
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'GET',
@@ -1435,7 +1508,8 @@ var UserApi = (function () {
             });
         });
     };
-    UserApi.prototype.updateUser = function (username, body) {
+    UserApi.prototype.updateUser = function (username, body, options) {
+        if (options === void 0) { options = {}; }
         var localVarPath = this.basePath + '/user/{username}'
             .replace('{' + 'username' + '}', encodeURIComponent(String(username)));
         var localVarQueryParameters = {};
@@ -1447,6 +1521,7 @@ var UserApi = (function () {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateUser.');
         }
+        Object.assign(localVarHeaderParams, options.headers);
         var localVarUseFormData = false;
         var localVarRequestOptions = {
             method: 'PUT',

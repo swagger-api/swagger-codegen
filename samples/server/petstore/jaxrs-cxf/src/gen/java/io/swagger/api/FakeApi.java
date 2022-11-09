@@ -5,6 +5,7 @@ import io.swagger.model.Client;
 import java.util.Date;
 import org.joda.time.LocalDate;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -60,6 +61,14 @@ public interface FakeApi  {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Output string", response = String.class) })
     public String fakeOuterStringSerialize(@Valid String body);
+
+    @PUT
+    @Path("/fake/body-with-query-params")
+    @Consumes({ "application/json" })
+    @ApiOperation(value = "", tags={ "fake",  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success") })
+    public void testBodyWithQueryParams(@Valid User body, @QueryParam("query") @NotNull String query);
 
     /**
      * To test \&quot;client\&quot; model

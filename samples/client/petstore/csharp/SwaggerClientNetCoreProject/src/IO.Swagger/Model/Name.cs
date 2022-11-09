@@ -36,20 +36,20 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Name" /> class.
         /// </summary>
-        /// <param name="_Name">_Name (required).</param>
-        /// <param name="Property">Property.</param>
-        public Name(int? _Name = default(int?), string Property = default(string))
+        /// <param name="name">name (required).</param>
+        /// <param name="property">property.</param>
+        public Name(int? name = default(int?), string property = default(string))
         {
-            // to ensure "_Name" is required (not null)
-            if (_Name == null)
+            // to ensure "name" is required (not null)
+            if (name == null)
             {
-                throw new InvalidDataException("_Name is a required property for Name and cannot be null");
+                throw new InvalidDataException("name is a required property for Name and cannot be null");
             }
             else
             {
-                this._Name = _Name;
+                this._Name = name;
             }
-            this.Property = Property;
+            this.Property = property;
         }
         
         /// <summary>
@@ -96,7 +96,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

@@ -97,7 +97,8 @@ Class | Method | HTTP request | Description
 *SwaggerPetstore.FakeApi* | [**fakeOuterCompositeSerialize**](docs/FakeApi.md#fakeOuterCompositeSerialize) | **POST** /fake/outer/composite | 
 *SwaggerPetstore.FakeApi* | [**fakeOuterNumberSerialize**](docs/FakeApi.md#fakeOuterNumberSerialize) | **POST** /fake/outer/number | 
 *SwaggerPetstore.FakeApi* | [**fakeOuterStringSerialize**](docs/FakeApi.md#fakeOuterStringSerialize) | **POST** /fake/outer/string | 
-*SwaggerPetstore.FakeApi* | [**testClientModel**](docs/FakeApi.md#testClientModel) | **PATCH** /fake | To test \&quot;client\&quot; model
+*SwaggerPetstore.FakeApi* | [**testBodyWithQueryParams**](docs/FakeApi.md#testBodyWithQueryParams) | **PUT** /fake/body-with-query-params | 
+*SwaggerPetstore.FakeApi* | [**testClientModel**](docs/FakeApi.md#testClientModel) | **PATCH** /fake | To test \"client\" model
 *SwaggerPetstore.FakeApi* | [**testEndpointParameters**](docs/FakeApi.md#testEndpointParameters) | **POST** /fake | Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
 *SwaggerPetstore.FakeApi* | [**testEnumParameters**](docs/FakeApi.md#testEnumParameters) | **GET** /fake | To test enum parameters
 *SwaggerPetstore.FakeApi* | [**testInlineAdditionalProperties**](docs/FakeApi.md#testInlineAdditionalProperties) | **POST** /fake/inline-additionalProperties | test inline additionalProperties
@@ -135,21 +136,26 @@ Class | Method | HTTP request | Description
  - [SwaggerPetstore.ArrayOfNumberOnly](docs/ArrayOfNumberOnly.md)
  - [SwaggerPetstore.ArrayTest](docs/ArrayTest.md)
  - [SwaggerPetstore.Capitalization](docs/Capitalization.md)
+ - [SwaggerPetstore.Cat](docs/Cat.md)
  - [SwaggerPetstore.Category](docs/Category.md)
  - [SwaggerPetstore.ClassModel](docs/ClassModel.md)
  - [SwaggerPetstore.Client](docs/Client.md)
+ - [SwaggerPetstore.Dog](docs/Dog.md)
  - [SwaggerPetstore.EnumArrays](docs/EnumArrays.md)
  - [SwaggerPetstore.EnumClass](docs/EnumClass.md)
  - [SwaggerPetstore.EnumTest](docs/EnumTest.md)
  - [SwaggerPetstore.FormatTest](docs/FormatTest.md)
  - [SwaggerPetstore.HasOnlyReadOnly](docs/HasOnlyReadOnly.md)
+ - [SwaggerPetstore.Ints](docs/Ints.md)
  - [SwaggerPetstore.List](docs/List.md)
  - [SwaggerPetstore.MapTest](docs/MapTest.md)
  - [SwaggerPetstore.MixedPropertiesAndAdditionalPropertiesClass](docs/MixedPropertiesAndAdditionalPropertiesClass.md)
  - [SwaggerPetstore.Model200Response](docs/Model200Response.md)
+ - [SwaggerPetstore.ModelBoolean](docs/ModelBoolean.md)
  - [SwaggerPetstore.ModelReturn](docs/ModelReturn.md)
  - [SwaggerPetstore.Name](docs/Name.md)
  - [SwaggerPetstore.NumberOnly](docs/NumberOnly.md)
+ - [SwaggerPetstore.Numbers](docs/Numbers.md)
  - [SwaggerPetstore.Order](docs/Order.md)
  - [SwaggerPetstore.OuterBoolean](docs/OuterBoolean.md)
  - [SwaggerPetstore.OuterComposite](docs/OuterComposite.md)
@@ -161,8 +167,6 @@ Class | Method | HTTP request | Description
  - [SwaggerPetstore.SpecialModelName](docs/SpecialModelName.md)
  - [SwaggerPetstore.Tag](docs/Tag.md)
  - [SwaggerPetstore.User](docs/User.md)
- - [SwaggerPetstore.Cat](docs/Cat.md)
- - [SwaggerPetstore.Dog](docs/Dog.md)
 
 
 ## Documentation for Authorization

@@ -182,7 +182,7 @@ instance Produces DeleteUser MimeJSON
 -- 
 getUserByName 
   :: Accept accept -- ^ request accept ('MimeType')
-  -> Username -- ^ "username" -  The name that needs to be fetched. Use user1 for testing. 
+  -> Username -- ^ "username" -  The name that needs to be fetched. Use user1 for testing.
   -> SwaggerPetstoreRequest GetUserByName MimeNoContent User accept
 getUserByName  _ (Username username) =
   _mkRequest "GET" ["/user/",toPath username]

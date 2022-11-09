@@ -13,6 +13,7 @@ defmodule SwaggerPetstore.Api.FakeClassnameTags123 do
 
   @doc """
   To test class name in snake case
+  To test class name in snake case
 
   ## Parameters
 

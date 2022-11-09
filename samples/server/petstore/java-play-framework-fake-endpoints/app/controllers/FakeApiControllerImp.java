@@ -5,6 +5,7 @@ import apimodels.Client;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import apimodels.OuterComposite;
+import apimodels.User;
 
 import play.mvc.Http;
 import java.util.List;
@@ -36,6 +37,11 @@ public class FakeApiControllerImp implements FakeApiControllerImpInterface {
     public String fakeOuterStringSerialize(String body) throws Exception {
         //Do your magic!!!
         return new String();
+    }
+
+    @Override
+    public void testBodyWithQueryParams(User body,  @NotNull String query) throws Exception {
+        //Do your magic!!!
     }
 
     @Override

@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  */
 
-
 package io.swagger.server.api
 
 import io.swagger.server.model.Order
@@ -37,57 +36,43 @@ class StoreApi(implicit val swagger: Swagger) extends ScalatraServlet
     contentType = formats("json")
     response.headers += ("Access-Control-Allow-Origin" -> "*")
   }
-  
 
   val deleteOrderOperation = (apiOperation[Unit]("deleteOrder")
-      summary "Delete purchase order by ID"
-      parameters(pathParam[String]("orderId").description(""))
-  )
+    summary "Delete purchase order by ID"
+    parameters (pathParam[String]("orderId").description("")))
 
-  delete("/store/order/:orderId",operation(deleteOrderOperation)) {
-    
-    
-      val orderId = params.getOrElse("orderId", halt(400))
-    
+  delete("/store/order/:orderId", operation(deleteOrderOperation)) {
+
+    val orderId = params.getOrElse("orderId", halt(400))
+
     println("orderId: " + orderId)
   }
-
-  
 
   val getInventoryOperation = (apiOperation[Map[String, Int]]("getInventory")
-      summary "Returns pet inventories by status"
-      parameters()
-  )
+    summary "Returns pet inventories by status"
+    parameters ())
 
-  get("/store/inventory",operation(getInventoryOperation)) {
+  get("/store/inventory", operation(getInventoryOperation)) {
   }
 
-  
-
   val getOrderByIdOperation = (apiOperation[Order]("getOrderById")
-      summary "Find purchase order by ID"
-      parameters(pathParam[Long]("orderId").description(""))
-  )
+    summary "Find purchase order by ID"
+    parameters (pathParam[Long]("orderId").description("")))
 
-  get("/store/order/:orderId",operation(getOrderByIdOperation)) {
-    
-    
-      val orderId = params.getOrElse("orderId", halt(400))
-    
+  get("/store/order/:orderId", operation(getOrderByIdOperation)) {
+
+    val orderId = params.getOrElse("orderId", halt(400))
+
     println("orderId: " + orderId)
   }
 
-  
-
   val placeOrderOperation = (apiOperation[Order]("placeOrder")
-      summary "Place an order for a pet"
-      parameters(bodyParam[Order]("body").description(""))
-  )
+    summary "Place an order for a pet"
+    parameters (bodyParam[Order]("body").description("")))
 
-  post("/store/order",operation(placeOrderOperation)) {
-    
-    
-          val body = parsedBody.extract[Order]
+  post("/store/order", operation(placeOrderOperation)) {
+
+    val body = parsedBody.extract[Order]
 
     println("body: " + body)
   }

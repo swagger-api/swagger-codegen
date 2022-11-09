@@ -282,7 +282,7 @@ namespace Example
         {
             
             var apiInstance = new UserApi();
-            var username = username_example;  // string | The name that needs to be fetched. Use user1 for testing. 
+            var username = username_example;  // string | The name that needs to be fetched. Use user1 for testing.
 
             try
             {
@@ -303,7 +303,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The name that needs to be fetched. Use user1 for testing.  | 
+ **username** | **string**| The name that needs to be fetched. Use user1 for testing. | 
 
 ### Return type
 

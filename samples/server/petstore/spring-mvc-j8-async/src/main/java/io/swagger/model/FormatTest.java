@@ -18,6 +18,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;

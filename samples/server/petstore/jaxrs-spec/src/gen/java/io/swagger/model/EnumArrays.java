@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
@@ -31,10 +33,12 @@ public enum JustSymbolEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static JustSymbolEnum fromValue(String v) {
         for (JustSymbolEnum b : JustSymbolEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {
@@ -63,10 +67,12 @@ public enum ArrayEnumEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static ArrayEnumEnum fromValue(String v) {
         for (ArrayEnumEnum b : ArrayEnumEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {

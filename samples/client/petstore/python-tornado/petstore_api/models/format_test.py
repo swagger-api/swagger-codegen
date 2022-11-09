@@ -35,12 +35,12 @@ class FormatTest(object):
         'int32': 'int',
         'int64': 'int',
         'number': 'float',
-        'float': 'float',
+        '_float': 'float',
         'double': 'float',
         'string': 'str',
         'byte': 'str',
         'binary': 'str',
-        'date': 'date',
+        '_date': 'date',
         'date_time': 'datetime',
         'uuid': 'str',
         'password': 'str'
@@ -51,30 +51,30 @@ class FormatTest(object):
         'int32': 'int32',
         'int64': 'int64',
         'number': 'number',
-        'float': 'float',
+        '_float': 'float',
         'double': 'double',
         'string': 'string',
         'byte': 'byte',
         'binary': 'binary',
-        'date': 'date',
+        '_date': 'date',
         'date_time': 'dateTime',
         'uuid': 'uuid',
         'password': 'password'
     }
 
-    def __init__(self, integer=None, int32=None, int64=None, number=None, float=None, double=None, string=None, byte=None, binary=None, date=None, date_time=None, uuid=None, password=None):  # noqa: E501
+    def __init__(self, integer=None, int32=None, int64=None, number=None, _float=None, double=None, string=None, byte=None, binary=None, _date=None, date_time=None, uuid=None, password=None):  # noqa: E501
         """FormatTest - a model defined in Swagger"""  # noqa: E501
 
         self._integer = None
         self._int32 = None
         self._int64 = None
         self._number = None
-        self._float = None
+        self.__float = None
         self._double = None
         self._string = None
         self._byte = None
         self._binary = None
-        self._date = None
+        self.__date = None
         self._date_time = None
         self._uuid = None
         self._password = None
@@ -87,8 +87,8 @@ class FormatTest(object):
         if int64 is not None:
             self.int64 = int64
         self.number = number
-        if float is not None:
-            self.float = float
+        if _float is not None:
+            self._float = _float
         if double is not None:
             self.double = double
         if string is not None:
@@ -96,7 +96,7 @@ class FormatTest(object):
         self.byte = byte
         if binary is not None:
             self.binary = binary
-        self.date = date
+        self._date = _date
         if date_time is not None:
             self.date_time = date_time
         if uuid is not None:
@@ -202,29 +202,29 @@ class FormatTest(object):
         self._number = number
 
     @property
-    def float(self):
-        """Gets the float of this FormatTest.  # noqa: E501
+    def _float(self):
+        """Gets the _float of this FormatTest.  # noqa: E501
 
 
-        :return: The float of this FormatTest.  # noqa: E501
+        :return: The _float of this FormatTest.  # noqa: E501
         :rtype: float
         """
-        return self._float
+        return self.__float
 
-    @float.setter
-    def float(self, float):
-        """Sets the float of this FormatTest.
+    @_float.setter
+    def _float(self, _float):
+        """Sets the _float of this FormatTest.
 
 
-        :param float: The float of this FormatTest.  # noqa: E501
+        :param _float: The _float of this FormatTest.  # noqa: E501
         :type: float
         """
-        if float is not None and float > 987.6:  # noqa: E501
-            raise ValueError("Invalid value for `float`, must be a value less than or equal to `987.6`")  # noqa: E501
-        if float is not None and float < 54.3:  # noqa: E501
-            raise ValueError("Invalid value for `float`, must be a value greater than or equal to `54.3`")  # noqa: E501
+        if _float is not None and _float > 987.6:  # noqa: E501
+            raise ValueError("Invalid value for `_float`, must be a value less than or equal to `987.6`")  # noqa: E501
+        if _float is not None and _float < 54.3:  # noqa: E501
+            raise ValueError("Invalid value for `_float`, must be a value greater than or equal to `54.3`")  # noqa: E501
 
-        self._float = float
+        self.__float = _float
 
     @property
     def double(self):
@@ -269,8 +269,8 @@ class FormatTest(object):
         :param string: The string of this FormatTest.  # noqa: E501
         :type: str
         """
-        if string is not None and not re.search('[a-z]', string, flags=re.IGNORECASE):  # noqa: E501
-            raise ValueError("Invalid value for `string`, must be a follow pattern or equal to `/[a-z]/i`")  # noqa: E501
+        if string is not None and not re.search(r'[a-z]', string, flags=re.IGNORECASE):  # noqa: E501
+            raise ValueError(r"Invalid value for `string`, must be a follow pattern or equal to `/[a-z]/i`")  # noqa: E501
 
         self._string = string
 
@@ -294,8 +294,8 @@ class FormatTest(object):
         """
         if byte is None:
             raise ValueError("Invalid value for `byte`, must not be `None`")  # noqa: E501
-        if byte is not None and not re.search('^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte):  # noqa: E501
-            raise ValueError("Invalid value for `byte`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`")  # noqa: E501
+        if byte is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte):  # noqa: E501
+            raise ValueError(r"Invalid value for `byte`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`")  # noqa: E501
 
         self._byte = byte
 
@@ -321,27 +321,27 @@ class FormatTest(object):
         self._binary = binary
 
     @property
-    def date(self):
-        """Gets the date of this FormatTest.  # noqa: E501
+    def _date(self):
+        """Gets the _date of this FormatTest.  # noqa: E501
 
 
-        :return: The date of this FormatTest.  # noqa: E501
+        :return: The _date of this FormatTest.  # noqa: E501
         :rtype: date
         """
-        return self._date
+        return self.__date
 
-    @date.setter
-    def date(self, date):
-        """Sets the date of this FormatTest.
+    @_date.setter
+    def _date(self, _date):
+        """Sets the _date of this FormatTest.
 
 
-        :param date: The date of this FormatTest.  # noqa: E501
+        :param _date: The _date of this FormatTest.  # noqa: E501
         :type: date
         """
-        if date is None:
-            raise ValueError("Invalid value for `date`, must not be `None`")  # noqa: E501
+        if _date is None:
+            raise ValueError("Invalid value for `_date`, must not be `None`")  # noqa: E501
 
-        self._date = date
+        self.__date = _date
 
     @property
     def date_time(self):
@@ -433,6 +433,9 @@ class FormatTest(object):
                 ))
             else:
                 result[attr] = value
+        if issubclass(FormatTest, dict):
+            for key, value in self.items():
+                result[key] = value
 
         return result
 

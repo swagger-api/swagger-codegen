@@ -52,7 +52,7 @@ class StoreApi {
 
         invokeApi(onSuccess, onFailure, basePath, versionPath, resourcePath, queryParams, headerParams,
                     "GET", "map",
-                    Map.class )
+                    Integer.class )
                     
     }
     def getOrderById ( Long orderId, Closure onSuccess, Closure onFailure)  {

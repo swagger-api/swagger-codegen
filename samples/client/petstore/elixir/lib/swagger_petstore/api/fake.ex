@@ -124,6 +124,32 @@ defmodule SwaggerPetstore.Api.Fake do
   end
 
   @doc """
+
+  ## Parameters
+
+  - connection (SwaggerPetstore.Connection): Connection to server
+  - body (User): 
+  - query (String.t): 
+  - opts (KeywordList): [optional] Optional parameters
+
+  ## Returns
+
+  {:ok, %{}} on success
+  {:error, info} on failure
+  """
+  @spec test_body_with_query_params(Tesla.Env.client, SwaggerPetstore.Model.User.t, String.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  def test_body_with_query_params(connection, body, query, _opts \\ []) do
+    %{}
+    |> method(:put)
+    |> url("/fake/body-with-query-params")
+    |> add_param(:body, :"body", body)
+    |> add_param(:query, :"query", query)
+    |> Enum.into([])
+    |> (&Connection.request(connection, &1)).()
+    |> decode(false)
+  end
+
+  @doc """
   To test \&quot;client\&quot; model
   To test \&quot;client\&quot; model
 

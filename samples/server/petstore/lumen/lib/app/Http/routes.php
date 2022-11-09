@@ -50,6 +50,13 @@ $app->post('/v2/fake', 'FakeApi@testEndpointParameters');
  */
 $app->get('/v2/fake', 'FakeApi@testEnumParameters');
 /**
+ * put testBodyWithQueryParams
+ * Summary: 
+ * Notes: 
+
+ */
+$app->put('/v2/fake/body-with-query-params', 'FakeApi@testBodyWithQueryParams');
+/**
  * post testInlineAdditionalProperties
  * Summary: test inline additionalProperties
  * Notes: 
@@ -94,7 +101,7 @@ $app->post('/v2/fake/outer/string', 'FakeApi@fakeOuterStringSerialize');
 /**
  * patch testClassname
  * Summary: To test class name in snake case
- * Notes: 
+ * Notes: To test class name in snake case
  * Output-Formats: [application/json]
  */
 $app->patch('/v2/fake_classname_test', 'FakeClassnameTags123Api@testClassname');

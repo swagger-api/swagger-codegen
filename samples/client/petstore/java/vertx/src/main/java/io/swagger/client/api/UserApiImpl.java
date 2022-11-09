@@ -176,7 +176,7 @@ public class UserApiImpl implements UserApi {
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing.  (required)
+     * @param username The name that needs to be fetched. Use user1 for testing. (required)
      * @param resultHandler Asynchronous result handler
      */
     public void getUserByName(String username, Handler<AsyncResult<User>> resultHandler) {

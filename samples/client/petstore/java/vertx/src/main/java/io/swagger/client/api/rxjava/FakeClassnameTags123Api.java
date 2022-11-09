@@ -23,7 +23,7 @@ public class FakeClassnameTags123Api {
 
     /**
      * To test class name in snake case
-     * 
+     * To test class name in snake case
      * @param body client model (required)
      * @param resultHandler Asynchronous result handler
      */
@@ -33,7 +33,7 @@ public class FakeClassnameTags123Api {
 
     /**
      * To test class name in snake case
-     * 
+     * To test class name in snake case
      * @param body client model (required)
      * @return Asynchronous result handler (RxJava Single)
      */

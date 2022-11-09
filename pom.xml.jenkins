@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>2.4.29-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -83,9 +83,9 @@
                     </execution>
                 </executions> -->
                 <configuration>
-                    <compilerSource>1.7</compilerSource>
-                    <compilerCompliance>1.7</compilerCompliance>
-                    <compilerTargetPlatform>1.7</compilerTargetPlatform>
+                    <compilerSource>1.8</compilerSource>
+                    <compilerCompliance>1.8</compilerCompliance>
+                    <compilerTargetPlatform>1.8</compilerTargetPlatform>
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
@@ -159,8 +159,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -195,7 +195,7 @@
                 <version>2.10.4</version>
                 <configuration>
                     <aggregate>true</aggregate>
-                    <source>1.7</source>
+                    <source>1.8</source>
                     <encoding>UTF-8</encoding>
                     <maxmemory>1g</maxmemory>
                     <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
@@ -406,18 +406,6 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/java/jersey2</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>java-client-jersey2-java6</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/java/jersey2-java6</module>
             </modules>
         </profile>
         <profile>
@@ -863,10 +851,12 @@
             <modules>
                 <!-- clients -->
                 <!-- test java-related projects -->
+<!--                <module>samples/client/petstore/elixir</module>-->
+<!--                <module>samples/client/petstore/haskell-http-client</module>-->
                 <module>samples/client/petstore/akka-scala</module>
-                <module>samples/client/petstore/scala</module>
+                <!--<module>samples/client/petstore/scala</module>-->
                 <!--<module>samples/client/petstore/scalaz</module>-->
-                <module>samples/client/petstore/clojure</module>
+                <!--<module>samples/client/petstore/clojure</module>-->
                 <module>samples/client/petstore/java/feign</module>
                 <module>samples/client/petstore/java/jersey1</module>
                 <module>samples/client/petstore/java/jersey2</module>
@@ -880,12 +870,12 @@
                 <module>samples/client/petstore/java/vertx</module>
                 <module>samples/client/petstore/java/resteasy</module>
                 <module>samples/client/petstore/java/google-api-client</module>
-                <module>samples/client/petstore/java/rest-assured</module>
+                <!--module>samples/client/petstore/java/rest-assured</module removed until errors found on #10120 be fixed -->
                 <module>samples/client/petstore/kotlin/</module>
                 <module>samples/client/petstore/kotlin-threetenbp/</module>
                 <module>samples/client/petstore/kotlin-string/</module>
                 <!-- test non-java projects -->
-                <module>samples/client/petstore/go</module>
+                <!-- module>samples/client/petstore/go</module removed until errors found on #10120 be fixed -->
                 <!-- servers -->
                 <module>samples/server/petstore/java-vertx/rx</module>
                 <module>samples/server/petstore/java-vertx/async</module>
@@ -897,7 +887,7 @@
                 <module>samples/server/petstore/java-play-framework-no-interface</module>
                 <module>samples/server/petstore/java-play-framework-no-exception-handling</module>
                 <module>samples/server/petstore/java-play-framework-no-bean-validation</module>
-                <module>samples/server/petstore/java-play-framework-fake-endpoints</module>
+                <!-- <module>samples/server/petstore/java-play-framework-fake-endpointmsf4js</module> -->
                 <module>samples/server/petstore/java-play-framework-controller-only</module>
                 <module>samples/server/petstore/java-play-framework-api-package-override</module>
                 <module>samples/server/petstore/undertow</module>
@@ -922,7 +912,7 @@
                 <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
                 <module>samples/server/petstore/jaxrs-cxf-cdi</module>
                 <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
-                <module>samples/server/petstore/java-msf4j</module>
+<!--                <module>samples/server/petstore/java-msf4j</module>-->
                 <module>samples/server/petstore/jaxrs-spec-interface</module>
                 <module>samples/server/petstore/scala-lagom-server</module>
                 <module>samples/server/petstore/scalatra</module>
@@ -968,6 +958,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit-version}</version>
@@ -997,22 +992,23 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.36</swagger-parser-version>
+        <swagger-parser-version>1.0.61</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.5.20</swagger-core-version>
-        <commons-io-version>2.4</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.8.1</junit-version>
-        <jackson-version>2.8.9</jackson-version>
+        <swagger-core-version>1.6.6</swagger-core-version>
+        <commons-io-version>2.11.0</commons-io-version>
+        <commons-cli-version>1.5.0</commons-cli-version>
+        <junit-version>4.13.1</junit-version>
+        <jackson-version>2.13.2</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.4</commons-lang-version>
-        <slf4j-version>1.7.12</slf4j-version>
+        <commons-lang-version>3.12.0</commons-lang-version>
+        <slf4j-version>1.7.35</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.12</jmustache-version>
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.19.1</surefire-version>
         <jmockit-version>1.25</jmockit-version>
-        <reflections-version>0.9.10</reflections-version>
+        <reflections-version>0.9.11</reflections-version>
+        <snakeyaml-version>1.30</snakeyaml-version>
     </properties>
 </project>

@@ -51,7 +51,7 @@ public class FakeClassnameTags123Api {
     public Client testClassname(Client body) throws IOException {
         HttpResponse response = testClassnameForHttpResponse(body);
         TypeReference typeRef = new TypeReference<Client>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Client)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
   /**
@@ -66,7 +66,7 @@ public class FakeClassnameTags123Api {
     public Client testClassname(Client body, Map<String, Object> params) throws IOException {
         HttpResponse response = testClassnameForHttpResponse(body, params);
         TypeReference typeRef = new TypeReference<Client>() {};
-        return apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
+        return (Client)apiClient.getObjectMapper().readValue(response.getContent(), typeRef);
     }
 
     public HttpResponse testClassnameForHttpResponse(Client body) throws IOException {
@@ -75,6 +75,7 @@ public class FakeClassnameTags123Api {
             throw new IllegalArgumentException("Missing the required parameter 'body' when calling testClassname");
         }
         UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake_classname_test");
+
 
         String url = uriBuilder.build().toString();
         GenericUrl genericUrl = new GenericUrl(url);
@@ -89,6 +90,7 @@ public class FakeClassnameTags123Api {
               throw new IllegalArgumentException("Missing the required parameter 'body' when calling testClassname");
               }
               UriBuilder uriBuilder = UriBuilder.fromUri(apiClient.getBasePath() + "/fake_classname_test");
+
 
               String url = uriBuilder.build().toString();
               GenericUrl genericUrl = new GenericUrl(url);

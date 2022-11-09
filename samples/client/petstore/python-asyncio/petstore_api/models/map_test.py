@@ -122,6 +122,9 @@ class MapTest(object):
                 ))
             else:
                 result[attr] = value
+        if issubclass(MapTest, dict):
+            for key, value in self.items():
+                result[key] = value
 
         return result
 

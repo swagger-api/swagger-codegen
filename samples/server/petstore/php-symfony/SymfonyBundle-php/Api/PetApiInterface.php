@@ -105,6 +105,7 @@ interface PetApiInterface
     public function findPetsByStatus(array $status, &$responseCode, array &$responseHeaders);
 
     /**
+     * @deprecated
      * Operation findPetsByTags
      *
      * Finds Pets by tags

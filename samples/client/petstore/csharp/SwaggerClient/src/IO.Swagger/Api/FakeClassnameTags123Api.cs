@@ -28,7 +28,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -39,7 +39,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -51,7 +51,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -62,7 +62,7 @@ namespace IO.Swagger.Api
         /// To test class name in snake case
         /// </summary>
         /// <remarks>
-        /// 
+        /// To test class name in snake case
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -169,7 +169,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -181,7 +181,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -248,7 +248,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>
@@ -261,7 +261,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// To test class name in snake case 
+        /// To test class name in snake case To test class name in snake case
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">client model</param>

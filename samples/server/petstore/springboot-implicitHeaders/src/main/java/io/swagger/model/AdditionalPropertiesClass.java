@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class AdditionalPropertiesClass   {
   @JsonProperty("map_property")
   @Valid

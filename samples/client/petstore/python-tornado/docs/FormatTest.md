@@ -7,12 +7,12 @@ Name | Type | Description | Notes
 **int32** | **int** |  | [optional] 
 **int64** | **int** |  | [optional] 
 **number** | **float** |  | 
-**float** | **float** |  | [optional] 
+**_float** | **float** |  | [optional] 
 **double** | **float** |  | [optional] 
 **string** | **str** |  | [optional] 
 **byte** | **str** |  | 
 **binary** | **str** |  | [optional] 
-**date** | **date** |  | 
+**_date** | **date** |  | 
 **date_time** | **datetime** |  | [optional] 
 **uuid** | **str** |  | [optional] 
 **password** | **str** |  | 

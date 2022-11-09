@@ -99,7 +99,7 @@ MyApp.add_route('GET', '/v2/user/{username}', {
   "parameters" => [
     {
       "name" => "username",
-      "description" => "The name that needs to be fetched. Use user1 for testing. ",
+      "description" => "The name that needs to be fetched. Use user1 for testing.",
       "dataType" => "string",
       "paramType" => "path",
     },

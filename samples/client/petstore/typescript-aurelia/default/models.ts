@@ -11,6 +11,17 @@
  */
 
 /**
+ * some description 
+ */
+export interface Amount {
+  /**
+   * some description 
+   */
+  value: number;
+  currency: Currency;
+}
+
+/**
  * Describes the result of uploading an image resource
  */
 export interface ApiResponse {
@@ -25,6 +36,12 @@ export interface ApiResponse {
 export interface Category {
   id?: number;
   name?: string;
+}
+
+/**
+ * some description 
+ */
+export interface Currency {
 }
 
 /**

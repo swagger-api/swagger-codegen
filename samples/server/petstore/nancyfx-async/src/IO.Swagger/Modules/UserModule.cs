@@ -139,7 +139,7 @@ namespace IO.Swagger.v2.Modules
         /// 
         /// </summary>
         /// <param name="context">Context of request</param>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>User</returns>
         Task<User> GetUserByName(NancyContext context, string username);
 

@@ -31,10 +31,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ArrayOfNumberOnly" /> class.
         /// </summary>
-        /// <param name="ArrayNumber">ArrayNumber.</param>
-        public ArrayOfNumberOnly(List<decimal?> ArrayNumber = default(List<decimal?>))
+        /// <param name="arrayNumber">arrayNumber.</param>
+        public ArrayOfNumberOnly(List<decimal?> arrayNumber = default(List<decimal?>))
         {
-            this.ArrayNumber = ArrayNumber;
+            this.ArrayNumber = arrayNumber;
         }
         
         /// <summary>
@@ -60,7 +60,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

@@ -8,6 +8,6 @@ public class ImplementationVersion {
             return compiledVersion;
         }
 
-        return "unset";
+        return System.getProperty("swagger.implementation.version", "unset");
     }
 }

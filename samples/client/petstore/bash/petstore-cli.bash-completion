@@ -73,6 +73,7 @@ _petstore-cli()
     operations["fakeOuterCompositeSerialize"]=1
     operations["fakeOuterNumberSerialize"]=1
     operations["fakeOuterStringSerialize"]=1
+    operations["testBodyWithQueryParams"]=1
     operations["testClientModel"]=1
     operations["testEndpointParameters"]=1
     operations["testEnumParameters"]=1
@@ -108,6 +109,7 @@ _petstore-cli()
     operation_parameters["fakeOuterCompositeSerialize"]=""
     operation_parameters["fakeOuterNumberSerialize"]=""
     operation_parameters["fakeOuterStringSerialize"]=""
+    operation_parameters["testBodyWithQueryParams"]="query= "
     operation_parameters["testClientModel"]=""
     operation_parameters["testEndpointParameters"]=""
     operation_parameters["testEnumParameters"]="enum_query_string_array= enum_query_string= enum_query_integer= enum_header_string_array: enum_header_string: "

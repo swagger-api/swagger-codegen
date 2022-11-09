@@ -5,6 +5,7 @@ import io.swagger.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,10 @@ public class FakeApiController implements FakeApi {
 
     public ResponseEntity<String> fakeOuterStringSerialize(@ApiParam(value = "Input string as post body"  )  @Valid @RequestBody String body) {
         return delegate.fakeOuterStringSerialize(body);
+    }
+
+    public ResponseEntity<Void> testBodyWithQueryParams(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "query", required = true) String query) {
+        return delegate.testBodyWithQueryParams(body, query);
     }
 
     public ResponseEntity<Client> testClientModel(@ApiParam(value = "client model" ,required=true )  @Valid @RequestBody Client body) {

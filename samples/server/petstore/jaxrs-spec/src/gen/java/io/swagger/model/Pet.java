@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
@@ -38,10 +40,12 @@ public enum StatusEnum {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         return String.valueOf(value);
     }
 
+    @JsonCreator
     public static StatusEnum fromValue(String v) {
         for (StatusEnum b : StatusEnum.values()) {
             if (String.valueOf(b.value).equals(v)) {

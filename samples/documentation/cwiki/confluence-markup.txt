@@ -811,7 +811,7 @@ Order
     h4. Parameters
         h5. Path Parameters
         ||Name||Description||Required||Default||Pattern||
-        |username |The name that needs to be fetched. Use user1 for testing.  |(/) | |  |
+        |username |The name that needs to be fetched. Use user1 for testing. |(/) | |  |
 
 
 
@@ -904,9 +904,6 @@ String
         {code:title=Response Schema |collapse=true}
 {
   "description" : "successful operation",
-  "schema" : {
-    "type" : "string"
-  },
   "headers" : {
     "X-Rate-Limit" : {
       "type" : "integer",
@@ -918,6 +915,9 @@ String
       "format" : "date-time",
       "description" : "date in UTC when toekn expires"
     }
+  },
+  "schema" : {
+    "type" : "string"
   }
 }
         {code}
@@ -1029,6 +1029,10 @@ String
 
 h2. Models
 
+        h3. Amount
+        ||Field Name||Required||Type||Description||
+         |value | |Double |some description  |
+ |currency | |Currency | |
         h3. ApiResponse
         ||Field Name||Required||Type||Description||
          |code | |Integer | |
@@ -1038,7 +1042,9 @@ h2. Models
         ||Field Name||Required||Type||Description||
          |id | |Long | |
  |name | |String | |
-        h3. Order
+        h3. Currency
+        ||Field Name||Required||Type||Description||
+                h3. Order
         ||Field Name||Required||Type||Description||
          |id | |Long | |
  |petId | |Long | |

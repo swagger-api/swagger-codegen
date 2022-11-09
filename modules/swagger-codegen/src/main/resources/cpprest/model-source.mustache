@@ -140,7 +140,11 @@ void {{classname}}::fromJson(web::json::value& val)
     {{^required}}
     if(val.has_field(utility::conversions::to_string_t("{{baseName}}")))
     {
-        {{setter}}(ModelBase::{{baseType}}FromJson(val[utility::conversions::to_string_t("{{baseName}}")]));
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("{{baseName}}")];
+        if(!fieldValue.is_null())
+        {
+            {{setter}}(ModelBase::{{baseType}}FromJson(fieldValue));
+        }
     }
     {{/required}}
     {{#required}}
@@ -242,22 +246,23 @@ void {{classname}}::fromJson(web::json::value& val)
     {{^required}}
     if(val.has_field(utility::conversions::to_string_t("{{baseName}}")))
     {
-        {{#isString}}
-        {{setter}}(ModelBase::stringFromJson(val[utility::conversions::to_string_t("{{baseName}}")]));
-        {{/isString}}
-        {{^isString}}
-        {{#isDateTime}}
-        {{setter}}(ModelBase::dateFromJson(val[utility::conversions::to_string_t("{{baseName}}")]));
-        {{/isDateTime}}
-        {{^isDateTime}}
-        if(!val[utility::conversions::to_string_t("{{baseName}}")].is_null())
+        web::json::value& fieldValue = val[utility::conversions::to_string_t("{{baseName}}")];
+        if(!fieldValue.is_null())
         {
+            {{#isString}}
+            {{setter}}(ModelBase::stringFromJson(fieldValue));
+            {{/isString}}
+            {{^isString}}
+            {{#isDateTime}}
+            {{setter}}(ModelBase::dateFromJson(fieldValue));
+            {{/isDateTime}}
+            {{^isDateTime}}
             {{{datatype}}} newItem({{{defaultValue}}});
-            newItem->fromJson(val[utility::conversions::to_string_t("{{baseName}}")]);
+            newItem->fromJson(fieldValue);
             {{setter}}( newItem );
+            {{/isDateTime}}
+            {{/isString}}
         }
-        {{/isDateTime}}
-        {{/isString}}
     }
     {{/required}}
     {{#required}}

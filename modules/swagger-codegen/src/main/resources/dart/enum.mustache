@@ -1,36 +1,30 @@
-@Entity()
 class {{classname}} {
   /// The underlying value of this enum member.
-  final {{dataType}} value;
+  {{dataType}} value;
 
-  const {{classname}}._internal(this.value);
+  {{classname}}._internal(this.value);
 
   {{#allowableValues}}
     {{#enumVars}}
       {{#description}}
   /// {{description}}
       {{/description}}
-  static const {{classname}} {{name}} = const {{classname}}._internal({{value}});
+  static {{classname}} {{name}} = {{classname}}._internal({{{value}}});
     {{/enumVars}}
   {{/allowableValues}}
-}
 
-class {{classname}}TypeTransformer extends TypeTransformer<{{classname}}> {
-
-  @override
-  dynamic encode({{classname}} data) {
-    return data.value;
+  {{classname}}.fromJson(dynamic data) {
+    switch (data) {
+    {{#allowableValues}}
+      {{#enumVars}}
+          case {{{value}}}: value = data; break;
+      {{/enumVars}}
+    {{/allowableValues}}
+    default: throw('Unknown enum value to decode: $data');
+    }
   }
 
-  @override
-  {{classname}} decode(dynamic data) {
-    switch (data) {
-      {{#allowableValues}}
-        {{#enumVars}}
-      case {{value}}: return {{classname}}.{{name}};
-        {{/enumVars}}
-      {{/allowableValues}}
-      default: throw('Unknown enum value to decode: $data');
-    }
+  static dynamic encode({{classname}} data) {
+    return data.value;
   }
 }

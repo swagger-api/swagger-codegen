@@ -11,9 +11,7 @@ type {{{classname}}} {{^format}}{{dataType}}{{/format}}{{#format}}{{{format}}}{{
 const (
 	{{#allowableValues}}
 	{{#enumVars}}
-	{{^-first}}
-	{{/-first}}
-	{{name}} {{{classname}}} = "{{{value}}}"
+	{{name}} {{{classname}}} = {{{value}}}
 	{{/enumVars}}
 	{{/allowableValues}}
 ){{/isEnum}}{{^isEnum}}{{#description}}

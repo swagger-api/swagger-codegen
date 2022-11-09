@@ -38,7 +38,7 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Get user by user name 
         /// </summary>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
         /// <returns>User</returns>
         User GetUserByName (string username);
         /// <summary>
@@ -266,7 +266,7 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Get user by user name 
         /// </summary>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param> 
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param> 
         /// <returns>User</returns>            
         public User GetUserByName (string username)
         {

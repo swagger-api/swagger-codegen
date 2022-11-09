@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -41,6 +42,13 @@ public class FakeApiServiceImpl extends FakeApiService {
     }
     @Override
     public Response fakeOuterStringSerialize(String body
+ ) throws NotFoundException {
+        // do some magic!
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
+    public Response testBodyWithQueryParams(User body
+, String query
  ) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();

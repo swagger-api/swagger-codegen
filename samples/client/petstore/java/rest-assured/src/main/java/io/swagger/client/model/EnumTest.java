@@ -13,15 +13,17 @@
 
 package io.swagger.client.model;
 
+import java.util.Objects;
+import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import io.swagger.client.model.OuterEnum;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * EnumTest
@@ -173,7 +175,7 @@ public class EnumTest {
 
       @Override
       public EnumIntegerEnum read(final JsonReader jsonReader) throws IOException {
-        Integer value = jsonReader.nextInt();
+        int value = jsonReader.nextInt();
         return EnumIntegerEnum.fromValue(String.valueOf(value));
       }
     }
@@ -223,7 +225,7 @@ public class EnumTest {
 
       @Override
       public EnumNumberEnum read(final JsonReader jsonReader) throws IOException {
-        Double value = jsonReader.nextDouble();
+        String value = jsonReader.nextString();
         return EnumNumberEnum.fromValue(String.valueOf(value));
       }
     }

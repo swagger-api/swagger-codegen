@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -80,6 +81,19 @@ public class FakeApi  {
 )
     throws NotFoundException {
         return delegate.fakeOuterStringSerialize(body);
+    }
+    @PUT
+    @Path("/body-with-query-params")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "", notes = "", response = Void.class, tags={ "fake", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Success", response = Void.class) })
+    public Response testBodyWithQueryParams(@ApiParam(value = "" ,required=true) User body
+,@ApiParam(value = "",required=true) @QueryParam("query") String query
+)
+    throws NotFoundException {
+        return delegate.testBodyWithQueryParams(body,query);
     }
     @PATCH
     

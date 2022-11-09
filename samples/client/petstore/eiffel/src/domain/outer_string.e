@@ -12,7 +12,6 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS:"Eiffel swagger codegen", "src=https://github.com/swagger-api/swagger-codegen.git", "protocol=uri"
-
 class OUTER_STRING 
 
 inherit
@@ -38,3 +37,5 @@ feature -- Change Element
         Result.append("%Nclass OUTER_STRING%N")
       end
 end
+
+

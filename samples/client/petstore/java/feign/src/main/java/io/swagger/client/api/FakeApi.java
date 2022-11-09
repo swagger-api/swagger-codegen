@@ -8,6 +8,7 @@ import io.swagger.client.model.Client;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import io.swagger.client.model.OuterComposite;
+import io.swagger.client.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,52 @@ public interface FakeApi extends ApiClient.Api {
     "Accept: application/json",
   })
   String fakeOuterStringSerialize(String body);
+
+  /**
+   * 
+   * 
+    * @param body  (required)
+    * @param query  (required)
+   */
+  @RequestLine("PUT /fake/body-with-query-params?query={query}")
+  @Headers({
+    "Content-Type: application/json",
+    "Accept: application/json",
+  })
+  void testBodyWithQueryParams(User body, @Param("query") String query);
+
+  /**
+   * 
+   * 
+   * Note, this is equivalent to the other <code>testBodyWithQueryParams</code> method,
+   * but with the query parameters collected into a single Map parameter. This
+   * is convenient for services with optional query parameters, especially when
+   * used with the {@link TestBodyWithQueryParamsQueryParams} class that allows for
+   * building up this map in a fluent style.
+   * @param body  (required)
+   * @param queryParams Map of query parameters as name-value pairs
+   *   <p>The following elements may be specified in the query map:</p>
+   *   <ul>
+   *   <li>query -  (required)</li>
+   *   </ul>
+   */
+  @RequestLine("PUT /fake/body-with-query-params?query={query}")
+  @Headers({
+  "Content-Type: application/json",
+  "Accept: application/json",
+  })
+  void testBodyWithQueryParams(User body, @QueryMap(encoded=true) Map<String, Object> queryParams);
+
+  /**
+   * A convenience class for generating query parameters for the
+   * <code>testBodyWithQueryParams</code> method in a fluent style.
+   */
+  public static class TestBodyWithQueryParamsQueryParams extends HashMap<String, Object> {
+    public TestBodyWithQueryParamsQueryParams query(final String value) {
+      put("query", EncodingUtils.encode(value));
+      return this;
+    }
+  }
 
   /**
    * To test \&quot;client\&quot; model

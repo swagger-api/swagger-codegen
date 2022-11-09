@@ -22,7 +22,6 @@ public class UserApiTest {
         api = new ApiClient().createService(UserApi.class);
     }
 
-    
     /**
      * Create user
      *
@@ -31,11 +30,10 @@ public class UserApiTest {
     @Test
     public void createUserTest() {
         User body = null;
-        // Void response = api.createUser(body);
+        // api.createUser(body);
 
         // TODO: test validations
     }
-    
     /**
      * Creates list of users with given input array
      *
@@ -44,11 +42,10 @@ public class UserApiTest {
     @Test
     public void createUsersWithArrayInputTest() {
         List<User> body = null;
-        // Void response = api.createUsersWithArrayInput(body);
+        // api.createUsersWithArrayInput(body);
 
         // TODO: test validations
     }
-    
     /**
      * Creates list of users with given input array
      *
@@ -57,11 +54,10 @@ public class UserApiTest {
     @Test
     public void createUsersWithListInputTest() {
         List<User> body = null;
-        // Void response = api.createUsersWithListInput(body);
+        // api.createUsersWithListInput(body);
 
         // TODO: test validations
     }
-    
     /**
      * Delete user
      *
@@ -70,11 +66,10 @@ public class UserApiTest {
     @Test
     public void deleteUserTest() {
         String username = null;
-        // Void response = api.deleteUser(username);
+        // api.deleteUser(username);
 
         // TODO: test validations
     }
-    
     /**
      * Get user by user name
      *
@@ -87,7 +82,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Logs user into the system
      *
@@ -101,7 +95,6 @@ public class UserApiTest {
 
         // TODO: test validations
     }
-    
     /**
      * Logs out current logged in user session
      *
@@ -109,11 +102,10 @@ public class UserApiTest {
      */
     @Test
     public void logoutUserTest() {
-        // Void response = api.logoutUser();
+        // api.logoutUser();
 
         // TODO: test validations
     }
-    
     /**
      * Updated user
      *
@@ -123,9 +115,8 @@ public class UserApiTest {
     public void updateUserTest() {
         String username = null;
         User body = null;
-        // Void response = api.updateUser(username, body);
+        // api.updateUser(username, body);
 
         // TODO: test validations
     }
-    
 }

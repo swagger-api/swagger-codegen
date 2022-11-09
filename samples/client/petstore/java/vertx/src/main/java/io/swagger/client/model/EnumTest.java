@@ -14,6 +14,7 @@
 package io.swagger.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -53,9 +54,9 @@ public class EnumTest {
     }
 
     @JsonCreator
-    public static EnumStringEnum fromValue(String text) {
+    public static EnumStringEnum fromValue(String value) {
       for (EnumStringEnum b : EnumStringEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(value)) {
           return b;
         }
       }
@@ -65,6 +66,46 @@ public class EnumTest {
 
   @JsonProperty("enum_string")
   private EnumStringEnum enumString = null;
+
+  /**
+   * Gets or Sets enumStringRequired
+   */
+  public enum EnumStringRequiredEnum {
+    UPPER("UPPER"),
+    
+    LOWER("lower"),
+    
+    EMPTY("");
+
+    private String value;
+
+    EnumStringRequiredEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static EnumStringRequiredEnum fromValue(String value) {
+      for (EnumStringRequiredEnum b : EnumStringRequiredEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
+
+  @JsonProperty("enum_string_required")
+  private EnumStringRequiredEnum enumStringRequired = null;
 
   /**
    * Gets or Sets enumInteger
@@ -91,9 +132,9 @@ public class EnumTest {
     }
 
     @JsonCreator
-    public static EnumIntegerEnum fromValue(String text) {
+    public static EnumIntegerEnum fromValue(Integer value) {
       for (EnumIntegerEnum b : EnumIntegerEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(value)) {
           return b;
         }
       }
@@ -129,9 +170,9 @@ public class EnumTest {
     }
 
     @JsonCreator
-    public static EnumNumberEnum fromValue(String text) {
+    public static EnumNumberEnum fromValue(Double value) {
       for (EnumNumberEnum b : EnumNumberEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(value)) {
           return b;
         }
       }
@@ -161,6 +202,24 @@ public class EnumTest {
 
   public void setEnumString(EnumStringEnum enumString) {
     this.enumString = enumString;
+  }
+
+  public EnumTest enumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    this.enumStringRequired = enumStringRequired;
+    return this;
+  }
+
+   /**
+   * Get enumStringRequired
+   * @return enumStringRequired
+  **/
+  @ApiModelProperty(required = true, value = "")
+  public EnumStringRequiredEnum getEnumStringRequired() {
+    return enumStringRequired;
+  }
+
+  public void setEnumStringRequired(EnumStringRequiredEnum enumStringRequired) {
+    this.enumStringRequired = enumStringRequired;
   }
 
   public EnumTest enumInteger(EnumIntegerEnum enumInteger) {
@@ -228,6 +287,7 @@ public class EnumTest {
     }
     EnumTest enumTest = (EnumTest) o;
     return Objects.equals(this.enumString, enumTest.enumString) &&
+        Objects.equals(this.enumStringRequired, enumTest.enumStringRequired) &&
         Objects.equals(this.enumInteger, enumTest.enumInteger) &&
         Objects.equals(this.enumNumber, enumTest.enumNumber) &&
         Objects.equals(this.outerEnum, enumTest.outerEnum);
@@ -235,7 +295,7 @@ public class EnumTest {
 
   @Override
   public int hashCode() {
-    return Objects.hash(enumString, enumInteger, enumNumber, outerEnum);
+    return Objects.hash(enumString, enumStringRequired, enumInteger, enumNumber, outerEnum);
   }
 
 
@@ -245,6 +305,7 @@ public class EnumTest {
     sb.append("class EnumTest {\n");
     
     sb.append("    enumString: ").append(toIndentedString(enumString)).append("\n");
+    sb.append("    enumStringRequired: ").append(toIndentedString(enumStringRequired)).append("\n");
     sb.append("    enumInteger: ").append(toIndentedString(enumInteger)).append("\n");
     sb.append("    enumNumber: ").append(toIndentedString(enumNumber)).append("\n");
     sb.append("    outerEnum: ").append(toIndentedString(outerEnum)).append("\n");

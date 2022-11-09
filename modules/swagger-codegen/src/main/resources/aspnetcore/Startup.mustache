@@ -11,6 +11,9 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using {{packageName}}.Filters;
+using {{packageName}}.Security;
+
+using Microsoft.AspNetCore.Authentication;
 
 namespace {{packageName}}
 {
@@ -49,7 +52,26 @@ namespace {{packageName}}
                     opts.SerializerSettings.Converters.Add(new StringEnumConverter {
                         CamelCaseText = true
                     });
-                });
+                })
+                .AddXmlSerializerFormatters();
+
+            {{#authMethods}}
+            {{#isBasic}}
+            services.AddAuthentication(BasicAuthenticationHandler.SchemeName)
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationHandler.SchemeName, null);
+
+            {{/isBasic}}
+            {{#isBearer}}
+            services.AddAuthentication(BearerAuthenticationHandler.SchemeName)
+                .AddScheme<AuthenticationSchemeOptions, BearerAuthenticationHandler>(BearerAuthenticationHandler.SchemeName, null);
+
+            {{/isBearer}}
+            {{#isApiKey}}
+            services.AddAuthentication(ApiKeyAuthenticationHandler.SchemeName)
+                .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationHandler.SchemeName, null);
+
+            {{/isApiKey}}
+            {{/authMethods}}
 
             services
                 .AddSwaggerGen(c =>

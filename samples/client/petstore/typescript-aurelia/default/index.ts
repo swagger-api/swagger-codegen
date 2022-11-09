@@ -16,8 +16,10 @@ export { PetApi } from './PetApi';
 export { StoreApi } from './StoreApi';
 export { UserApi } from './UserApi';
 export {
+  Amount,
   ApiResponse,
   Category,
+  Currency,
   Order,
   Pet,
   Tag,

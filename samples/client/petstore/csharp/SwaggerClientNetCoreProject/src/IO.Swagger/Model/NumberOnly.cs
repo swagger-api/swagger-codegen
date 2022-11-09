@@ -31,10 +31,10 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberOnly" /> class.
         /// </summary>
-        /// <param name="JustNumber">JustNumber.</param>
-        public NumberOnly(decimal? JustNumber = default(decimal?))
+        /// <param name="justNumber">justNumber.</param>
+        public NumberOnly(decimal? justNumber = default(decimal?))
         {
-            this.JustNumber = JustNumber;
+            this.JustNumber = justNumber;
         }
         
         /// <summary>
@@ -60,7 +60,7 @@ namespace IO.Swagger.Model
         /// Returns the JSON string presentation of the object
         /// </summary>
         /// <returns>JSON string presentation of the object</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented);
         }

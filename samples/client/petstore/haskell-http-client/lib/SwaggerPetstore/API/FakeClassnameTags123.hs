@@ -64,6 +64,8 @@ import qualified Prelude as P
 -- 
 -- To test class name in snake case
 -- 
+-- To test class name in snake case
+-- 
 -- AuthMethod: 'AuthApiKeyApiKeyQuery'
 -- 
 testClassname 

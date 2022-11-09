@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import io.swagger.model.Client;
 import java.util.Date;
 import io.swagger.model.OuterComposite;
+import io.swagger.model.User;
 
 
 public class FakeController  {
@@ -43,6 +44,12 @@ public class FakeController  {
 
   /*
     public ResponseContext fakeOuterStringSerialize(RequestContext request , String body) {
+        return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
+    }
+  */
+
+  /*
+    public ResponseContext testBodyWithQueryParams(RequestContext request , User body, String query) {
         return new ResponseContext().status(Status.INTERNAL_SERVER_ERROR).entity( "Not implemented" );
     }
   */
