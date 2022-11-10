@@ -1,13 +1,4 @@
         for {
-{{#queryParams}}
-    {{vendorExtensions.x-debug}}
-    {{#isListContainer}}
-            {{paramName}} <- request.queryManyValues("{{paramName}}", {{required}})
-    {{/isListContainer}}
-    {{^isListContainer}}
-            {{paramName}} <- request.querySingleValue("{{paramName}}", {{required}})
-    {{/isListContainer}}
-{{/queryParams}}
 {{#pathParams}}
             {{vendorExtensions.x-debug}}
     {{#isString}}

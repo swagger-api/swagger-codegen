@@ -203,6 +203,7 @@ public class ScalaCaskCodegen extends AbstractScalaCodegen implements CodegenCon
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
+        supportingFiles.add(new SupportingFile(".scalafmt.conf.mustache", "", ".scalafmt.conf"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
         supportingFiles.add(new SupportingFile("appPackage.mustache", sourceFolder, "package.scala"));
         supportingFiles.add(new SupportingFile("apiPackage.mustache", apiPath, "package.scala"));

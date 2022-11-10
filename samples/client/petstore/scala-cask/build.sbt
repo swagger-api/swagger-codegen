@@ -1,4 +1,4 @@
-name := "{{artifactId}}"
+name := "caskgen"
 version := "0.0.1-SNAPSHOT"
 scalaVersion := "3.2.0"
 scalafmtOnCompile := true
