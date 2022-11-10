@@ -144,7 +144,7 @@ public class ScalaCaskCodegen extends AbstractScalaCodegen implements CodegenCon
         apiTemplateFiles.put("apiRoutes.mustache", ".scala");
         apiTemplateFiles.put(ApiServiceTemplate, "Service.scala");
 
-        embeddedTemplateDir = templateDir = "cask";
+        embeddedTemplateDir = templateDir = "scala-cask";
         apiPackage = basePackage + ".server.api";
         modelPackage = basePackage + ".server.model";
 
@@ -261,7 +261,7 @@ public class ScalaCaskCodegen extends AbstractScalaCodegen implements CodegenCon
 
     @Override
     public String getName() {
-        return "cask";
+        return "scala-cask";
     }
 
     @Override

@@ -1,0 +1,25 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CaskCodeGen" type="Application" factoryName="Application">
+    <envs>
+      <env name="PACKAGE" value="test.demo" />
+      <env name="DEBUG" value="false" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="io.swagger.codegen.SwaggerCodegen" />
+    <module name="swagger-codegen-cli" />
+    <option name="PROGRAM_PARAMETERS" value="generate -l scala-cask -o target/cask-expected -i $PROJECT_DIR$/modules/swagger-generator/src/test/resources/petstore.json " />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="io.swagger.codegen.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
