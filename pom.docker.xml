@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.36-SNAPSHOT</version>
+    <version>3.0.36</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -902,6 +902,11 @@
             <!-- swagger-core v2 -->
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-jaxrs2</artifactId>
+                <version>${swagger-core-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-core</artifactId>
                 <version>${swagger-core-version}</version>
             </dependency>
@@ -1069,25 +1074,21 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.36-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.2</swagger-core-version>
-        <swagger-core-version-v1>1.6.6</swagger-core-version-v1>
-        <swagger-parser-version>2.1.2</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.61</swagger-parser-version-v1>
-        <jackson-version>2.13.2</jackson-version>
-        <!--
-          jackson-databind 2.13.2 is still affected by CVE-2020-36518.
-          This version pin for jackson-databind can be removed when bumping jackson to 2.14
-          -->
-        <jackson-databind-version>2.13.2.2</jackson-databind-version>
+        <swagger-codegen-generators-version>1.0.36</swagger-codegen-generators-version>
+        <swagger-core-version>2.2.6</swagger-core-version>
+        <swagger-core-version-v1>1.6.8</swagger-core-version-v1>
+        <swagger-parser-version>2.1.8</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.63</swagger-parser-version-v1>
+        <jackson-version>2.14.0</jackson-version>
+        <jackson-databind-version>2.14.0</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.11.0</commons-io-version>
         <commons-cli-version>1.5.0</commons-cli-version>
-        <junit-version>4.13.1</junit-version>
+        <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.12.0</commons-lang-version>
-        <slf4j-version>1.7.35</slf4j-version>
+        <slf4j-version>1.7.36</slf4j-version>
         <logback-version>1.2.10</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.15</jmustache-version>
@@ -1096,7 +1097,7 @@
         <jmockit-version>1.42</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
-        <snakeyaml-version>1.30</snakeyaml-version>
+        <snakeyaml-version>1.33</snakeyaml-version>
         <handlebars-version>4.3.0</handlebars-version>
     </properties>
 </project>
