@@ -30,6 +30,10 @@
       "description": "EGHL Reconciliation"
     },
     {
+      "name": "external-api-error-code-mapping-resource",
+      "description": "External API Error Code Mapping Resource"
+    },
+    {
       "name": "health-check-resource",
       "description": "Health Check Resource"
     },
@@ -44,6 +48,10 @@
     {
       "name": "payments-resource",
       "description": "Payments Resource"
+    },
+    {
+      "name": "psp-auth-support-resource",
+      "description": "Psp Auth Support Resource"
     },
     {
       "name": "psp-performance-resource",
@@ -87,6 +95,220 @@
     }
   ],
   "paths": {
+    "/external/errorcode/mapping": {
+      "get": {
+        "tags": [
+          "external-api-error-code-mapping-resource"
+        ],
+        "summary": "getMapping",
+        "operationId": "getMappingUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SHELL"
+            ]
+          },
+          {
+            "name": "useCase",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "CARD_REGISTRATION",
+              "FUELING",
+              "NON"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ExternalAPIErrorCodeMappingDto"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "external-api-error-code-mapping-resource"
+        ],
+        "summary": "create",
+        "operationId": "createUsingPOST_1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "errorMapping",
+            "description": "errorMapping",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExternalAPIErrorCodeMapping"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SingleResponse«ExternalAPIErrorCodeMappingResponse»"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/external/errorcode/mapping/bulk": {
+      "post": {
+        "tags": [
+          "external-api-error-code-mapping-resource"
+        ],
+        "summary": "bulkCreate",
+        "operationId": "bulkCreateUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "errorMappingList",
+            "description": "errorMappingList",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ExternalAPIErrorCodeMapping"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
     "/hi": {
       "post": {
         "tags": [
@@ -231,74 +453,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/MobileResponseBody«PumpReserve»"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "security": [
-          {
-            "X-CAP-API-AUTH-ORG-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-API-AUTH-ENTITY-ID": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-CODE": [
-              "global"
-            ]
-          },
-          {
-            "X-CAP-ENTITY-ID": [
-              "global"
-            ]
-          }
-        ]
-      }
-    },
-    "/orchestrator/payments/app/register-paymentIdV1": {
-      "post": {
-        "tags": [
-          "mobile-card-registration-resource"
-        ],
-        "summary": "registerPaymentId",
-        "operationId": "registerPaymentIdUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "cardRegisterRO",
-            "description": "cardRegisterRO",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CardRegisterRO"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/MobileResponseBody«CardRegisterRO»"
             }
           },
           "201": {
@@ -510,6 +664,82 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/AppTransactionStatusResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "X-CAP-API-AUTH-ORG-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-API-AUTH-ENTITY-ID": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-CODE": [
+              "global"
+            ]
+          },
+          {
+            "X-CAP-ENTITY-ID": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/orchestrator/payments/app/v1/hash/{paymentId}": {
+      "get": {
+        "tags": [
+          "psp-auth-support-resource"
+        ],
+        "summary": "hashing",
+        "operationId": "hashingUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "paymentId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pspName",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "2C2P",
+              "EGHL"
+            ]
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/HashingSupportResponse"
             }
           },
           "401": {
@@ -2360,6 +2590,12 @@
         "actionName": {
           "type": "string"
         },
+        "brand": {
+          "type": "string",
+          "enum": [
+            "SHELL"
+          ]
+        },
         "customerId": {
           "type": "integer",
           "format": "int64"
@@ -2367,12 +2603,22 @@
         "customerInfo": {
           "$ref": "#/definitions/CustomerInfo"
         },
+        "entityCode": {
+          "type": "string"
+        },
         "entityId": {
           "type": "integer",
           "format": "int64"
         },
         "input": {
           "type": "object"
+        },
+        "merchantIDStrategy": {
+          "type": "string",
+          "enum": [
+            "ORG_LEVEL",
+            "PER_STORE"
+          ]
         },
         "orgId": {
           "type": "integer",
@@ -2383,6 +2629,17 @@
         },
         "resetStepOnFailure": {
           "type": "boolean"
+        },
+        "rollbackOnFailure": {
+          "type": "boolean"
+        },
+        "useCase": {
+          "type": "string",
+          "enum": [
+            "CARD_REGISTRATION",
+            "FUELING",
+            "NON"
+          ]
         },
         "version": {
           "type": "string"
@@ -2411,6 +2668,12 @@
         },
         "digitalCard": {
           "type": "string"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StatusCode"
+          }
         },
         "maskedCard": {
           "type": "string"
@@ -2454,6 +2717,7 @@
             "BILLING_IN_PROGRESS",
             "BILL_GENERATED",
             "CARD_REGISTERED",
+            "CARD_REGISTER_IN_PROGRESS",
             "FUELING_CANCELLED_BY_CUSTOMER",
             "FUELING_CANCELLED_BY_STATION",
             "IN_PROGRESS",
@@ -2477,7 +2741,7 @@
     "ApplicableVoucher": {
       "type": "object",
       "properties": {
-        "additionVoucherInfo": {
+        "additionalVoucherInfo": {
           "type": "string"
         },
         "expiryDate": {
@@ -2544,7 +2808,7 @@
     "ApplicableVoucherRes": {
       "type": "object",
       "properties": {
-        "additionVoucherInfo": {
+        "additionalVoucherInfo": {
           "type": "string"
         },
         "expiryDate": {
@@ -2622,6 +2886,9 @@
     "CancelRequest": {
       "type": "object",
       "properties": {
+        "customerID": {
+          "type": "string"
+        },
         "paymentID": {
           "type": "string"
         }
@@ -2651,27 +2918,6 @@
         }
       },
       "title": "CancelResponse"
-    },
-    "CardRegisterRO": {
-      "type": "object",
-      "properties": {
-        "currencyCode": {
-          "type": "string"
-        },
-        "customerInfo": {
-          "$ref": "#/definitions/CustomerInfo"
-        },
-        "merchantIdentifier": {
-          "type": "string"
-        },
-        "paymentId": {
-          "type": "string"
-        },
-        "registrationAmount": {
-          "type": "string"
-        }
-      },
-      "title": "CardRegisterRO"
     },
     "CardValue": {
       "type": "object",
@@ -2762,6 +3008,109 @@
       },
       "title": "CustomerInfo"
     },
+    "ExternalAPIErrorCodeMapping": {
+      "type": "object",
+      "properties": {
+        "apiName": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string",
+          "enum": [
+            "SHELL"
+          ]
+        },
+        "errorNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "otaErrorNumber": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "useCase": {
+          "type": "string",
+          "enum": [
+            "CARD_REGISTRATION",
+            "FUELING",
+            "NON"
+          ]
+        }
+      },
+      "title": "ExternalAPIErrorCodeMapping"
+    },
+    "ExternalAPIErrorCodeMappingDto": {
+      "type": "object",
+      "properties": {
+        "apiName": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string",
+          "enum": [
+            "SHELL"
+          ]
+        },
+        "errorNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "otaErrorNumber": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "useCase": {
+          "type": "string",
+          "enum": [
+            "CARD_REGISTRATION",
+            "FUELING",
+            "NON"
+          ]
+        }
+      },
+      "title": "ExternalAPIErrorCodeMappingDto"
+    },
+    "ExternalAPIErrorCodeMappingResponse": {
+      "type": "object",
+      "properties": {
+        "apiName": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string",
+          "enum": [
+            "SHELL"
+          ]
+        },
+        "errorCode": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "otaErrorNumber": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "useCase": {
+          "type": "string",
+          "enum": [
+            "CARD_REGISTRATION",
+            "FUELING",
+            "NON"
+          ]
+        }
+      },
+      "title": "ExternalAPIErrorCodeMappingResponse"
+    },
     "GetEntityResponse": {
       "type": "object",
       "properties": {
@@ -2791,6 +3140,36 @@
         }
       },
       "title": "GetEntityResponse"
+    },
+    "HashingSupportResponse": {
+      "type": "object",
+      "properties": {
+        "hash": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "HashingSupportResponse"
+    },
+    "IntermediateCatchEvent": {
+      "type": "object",
+      "properties": {
+        "intermediateCatchEventType": {
+          "type": "string",
+          "enum": [
+            "DELAYED_TIMER"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "IntermediateCatchEvent"
     },
     "LoyaltyDetails": {
       "type": "object",
@@ -2898,39 +3277,6 @@
       },
       "title": "MobilePaymentData"
     },
-    "MobileResponseBody«CardRegisterRO»": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/CardRegisterRO"
-        },
-        "errors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/StatusCode"
-          }
-        },
-        "processInstanceId": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "violations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Violation"
-          }
-        },
-        "warnings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/StatusCode"
-          }
-        }
-      },
-      "title": "MobileResponseBody«CardRegisterRO»"
-    },
     "MobileResponseBody«PreAuthorizeStep»": {
       "type": "object",
       "properties": {
@@ -3033,9 +3379,6 @@
     "OfferEvaluation": {
       "type": "object",
       "properties": {
-        "PredictedTender": {
-          "$ref": "#/definitions/PredictedTender"
-        },
         "applicableVouchers": {
           "type": "array",
           "items": {
@@ -3053,6 +3396,9 @@
         },
         "posData": {
           "$ref": "#/definitions/PosData"
+        },
+        "predictedTender": {
+          "$ref": "#/definitions/PredictedTender"
         },
         "receipt": {
           "$ref": "#/definitions/Receipt"
@@ -3096,9 +3442,6 @@
     "OfferEvaluationReq": {
       "type": "object",
       "properties": {
-        "PredictedTender": {
-          "$ref": "#/definitions/PredictedTender"
-        },
         "applicableVouchers": {
           "type": "array",
           "items": {
@@ -3116,6 +3459,9 @@
         },
         "posData": {
           "$ref": "#/definitions/PosDataReq"
+        },
+        "predictedTender": {
+          "$ref": "#/definitions/PredictedTender"
         },
         "receipt": {
           "$ref": "#/definitions/Receipt"
@@ -3159,9 +3505,6 @@
     "OfferEvaluationRes": {
       "type": "object",
       "properties": {
-        "PredictedTender": {
-          "$ref": "#/definitions/PredictedTender"
-        },
         "applicableVouchers": {
           "type": "array",
           "items": {
@@ -3179,6 +3522,9 @@
         },
         "posData": {
           "$ref": "#/definitions/PosDataRes"
+        },
+        "predictedTender": {
+          "$ref": "#/definitions/PredictedTender"
         },
         "receipt": {
           "$ref": "#/definitions/Receipt"
@@ -3253,6 +3599,13 @@
         "isDefault": {
           "type": "boolean"
         },
+        "merchantIdStrategy": {
+          "type": "string",
+          "enum": [
+            "ORG_LEVEL",
+            "PER_STORE"
+          ]
+        },
         "orgId": {
           "type": "integer",
           "format": "int64"
@@ -3264,10 +3617,10 @@
           "type": "string",
           "format": "date-time"
         },
-        "versionName": {
+        "useCase": {
           "type": "string"
         },
-        "vertical": {
+        "versionName": {
           "type": "string"
         },
         "workflowJson": {
@@ -3603,6 +3956,12 @@
     "PumpReserve": {
       "type": "object",
       "properties": {
+        "additionalFields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
         "cardIdentifier": {
           "type": "string"
         },
@@ -3623,6 +3982,13 @@
         },
         "preAuthAmount": {
           "type": "string"
+        },
+        "pspIdentifier": {
+          "type": "string",
+          "enum": [
+            "2C2P",
+            "EGHL"
+          ]
         },
         "pumpNumber": {
           "type": "string"
@@ -4034,8 +4400,7 @@
           "type": "string"
         },
         "extraDiscountAmount": {
-          "type": "number",
-          "format": "double"
+          "type": "number"
         },
         "loyaltyPointAmount": {
           "type": "integer",
@@ -4045,8 +4410,7 @@
           "type": "string"
         },
         "netAmount": {
-          "type": "number",
-          "format": "double"
+          "type": "number"
         },
         "siteAddress": {
           "type": "string"
@@ -4064,16 +4428,13 @@
           "type": "string"
         },
         "totalAmount": {
-          "type": "number",
-          "format": "double"
+          "type": "number"
         },
         "totalDiscountAmount": {
-          "type": "number",
-          "format": "double"
+          "type": "number"
         },
         "totalTaxAmount": {
-          "type": "number",
-          "format": "double"
+          "type": "number"
         },
         "transactionNumber": {
           "type": "string"
@@ -4092,6 +4453,36 @@
         }
       },
       "title": "ShellTransactionResponse"
+    },
+    "SingleResponse«ExternalAPIErrorCodeMappingResponse»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ExternalAPIErrorCodeMappingResponse"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StatusCode"
+          }
+        },
+        "processId": {
+          "type": "string"
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Violation"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StatusCode"
+          }
+        }
+      },
+      "title": "SingleResponse«ExternalAPIErrorCodeMappingResponse»"
     },
     "SingleResponse«List«UserTransactionBo»»": {
       "type": "object",
@@ -4297,9 +4688,6 @@
         },
         "message": {
           "type": "string"
-        },
-        "resetStep": {
-          "type": "boolean"
         }
       },
       "title": "StatusCode"
@@ -4342,8 +4730,7 @@
           "type": "string"
         },
         "methodOfPaymentID": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "netTenderAmount": {
           "type": "number"
@@ -4422,8 +4809,7 @@
           "type": "string"
         },
         "methodOfPaymentID": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "netTenderAmount": {
           "type": "number"
@@ -4465,6 +4851,12 @@
     "TokenizeRO": {
       "type": "object",
       "properties": {
+        "additionalFields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
         "currencyCode": {
           "type": "string"
         },
@@ -4476,6 +4868,13 @@
         },
         "paymentId": {
           "type": "string"
+        },
+        "pspIdentifier": {
+          "type": "string",
+          "enum": [
+            "2C2P",
+            "EGHL"
+          ]
         },
         "registrationAmount": {
           "type": "string"
@@ -4582,6 +4981,9 @@
     "TxnStatusBo": {
       "type": "object",
       "properties": {
+        "cardType": {
+          "type": "string"
+        },
         "currencyCode": {
           "type": "string"
         },
@@ -4892,15 +5294,16 @@
     "WorkFlowPromote": {
       "type": "object",
       "properties": {
-        "version": {
-          "type": "string"
-        },
-        "vertical": {
+        "usecase": {
           "type": "string",
           "enum": [
-            "FUELLING",
+            "CARD_REGISTRATION",
+            "FUELING",
             "NON"
           ]
+        },
+        "version": {
+          "type": "string"
         },
         "workFlowName": {
           "type": "string"
@@ -4919,6 +5322,9 @@
             "XOR"
           ]
         },
+        "connectBoundaryEvent": {
+          "type": "boolean"
+        },
         "delayTimeInRetrial": {
           "type": "integer",
           "format": "int32"
@@ -4928,6 +5334,9 @@
         },
         "httpCallInputPropertiesRollback": {
           "$ref": "#/definitions/ActionInput"
+        },
+        "intermediateCatchEvent": {
+          "$ref": "#/definitions/IntermediateCatchEvent"
         },
         "isAsync": {
           "type": "boolean"
@@ -4948,17 +5357,25 @@
             "CCCaptureAction",
             "addTransactionAction",
             "authorizePaymentWithPsp",
+            "cardRegistrationTimedOutAction",
             "confirmAuthWithPSPAction",
-            "eghlCapturePaymentAction",
-            "eghlTokenizationAction",
+            "customerLockAction",
+            "dummyAction",
+            "eghlHashGenerationAction",
             "emptyAction",
             "generatePaymentIdAction",
-            "ifredeemPointsAction",
             "invalid",
             "oAuthHttpAction",
             "offerEvaluationAction",
-            "redeemPointsAction",
-            "saveCCardAction"
+            "publishNotificationAction",
+            "pumpAuthNotificationAction",
+            "pumpAuthReversalNotificationAction",
+            "pumpReserveTimedOutAction",
+            "releaseCustomerLockAction",
+            "saveCCardAction",
+            "tokenizationReversalWithPSPAction",
+            "txnAddNotificationAction",
+            "verifyAuthWithPSPAction"
           ]
         },
         "serialNumber": {
@@ -4971,17 +5388,25 @@
             "CCCaptureAction",
             "addTransactionAction",
             "authorizePaymentWithPsp",
+            "cardRegistrationTimedOutAction",
             "confirmAuthWithPSPAction",
-            "eghlCapturePaymentAction",
-            "eghlTokenizationAction",
+            "customerLockAction",
+            "dummyAction",
+            "eghlHashGenerationAction",
             "emptyAction",
             "generatePaymentIdAction",
-            "ifredeemPointsAction",
             "invalid",
             "oAuthHttpAction",
             "offerEvaluationAction",
-            "redeemPointsAction",
-            "saveCCardAction"
+            "publishNotificationAction",
+            "pumpAuthNotificationAction",
+            "pumpAuthReversalNotificationAction",
+            "pumpReserveTimedOutAction",
+            "releaseCustomerLockAction",
+            "saveCCardAction",
+            "tokenizationReversalWithPSPAction",
+            "txnAddNotificationAction",
+            "verifyAuthWithPSPAction"
           ]
         }
       },
@@ -4990,8 +5415,24 @@
     "WorkflowProcess": {
       "type": "object",
       "properties": {
+        "brand": {
+          "type": "string",
+          "enum": [
+            "SHELL"
+          ]
+        },
+        "countryCode": {
+          "type": "string"
+        },
         "isAsync": {
           "type": "boolean"
+        },
+        "merchantIDStrategy": {
+          "type": "string",
+          "enum": [
+            "ORG_LEVEL",
+            "PER_STORE"
+          ]
         },
         "name": {
           "type": "string"
@@ -5002,10 +5443,11 @@
             "$ref": "#/definitions/WorkflowStep"
           }
         },
-        "vertical": {
+        "useCase": {
           "type": "string",
           "enum": [
-            "FUELLING",
+            "CARD_REGISTRATION",
+            "FUELING",
             "NON"
           ]
         }
@@ -5021,6 +5463,16 @@
             "$ref": "#/definitions/WorkflowInputAction"
           }
         },
+        "boundaryEventType": {
+          "type": "string",
+          "enum": [
+            "DELAYED_TIMER"
+          ]
+        },
+        "delayedTimeInMillis": {
+          "type": "integer",
+          "format": "int64"
+        },
         "maxWaitTimeInMillis": {
           "type": "integer",
           "format": "int32"
@@ -5031,6 +5483,12 @@
         "serialNumber": {
           "type": "integer",
           "format": "int32"
+        },
+        "startBoundaryEventActionList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkflowInputAction"
+          }
         },
         "startUserStep": {
           "type": "boolean"
