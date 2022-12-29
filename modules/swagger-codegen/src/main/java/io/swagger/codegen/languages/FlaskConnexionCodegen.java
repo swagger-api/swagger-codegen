@@ -10,6 +10,8 @@ import io.swagger.models.HttpMethod;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import io.swagger.models.auth.AbstractSecuritySchemeDefinition;
+import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.properties.*;
 import io.swagger.util.Yaml;
@@ -175,11 +177,13 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         supportingFiles.add(new SupportingFile("__main__.mustache", packageName, "__main__.py"));
         supportingFiles.add(new SupportingFile("encoder.mustache", packageName, "encoder.py"));
         supportingFiles.add(new SupportingFile("util.mustache", packageName, "util.py"));
+        supportingFiles.add(new SupportingFile("type_util.mustache", packageName, "type_util.py"));
         supportingFiles.add(new SupportingFile("__init__.mustache", packageName + File.separatorChar + controllerPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("__init__model.mustache", packageName + File.separatorChar + modelPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("base_model_.mustache", packageName + File.separatorChar + modelPackage, "base_model_.py"));
         supportingFiles.add(new SupportingFile("__init__test.mustache", packageName + File.separatorChar + testPackage, "__init__.py"));
         supportingFiles.add(new SupportingFile("swagger.mustache", packageName + File.separatorChar + "swagger", "swagger.yaml"));
+        supportingFiles.add(new SupportingFile("authorization_controller.mustache", packageName + File.separatorChar + controllerPackage, "authorization_controller.py"));
 
         modelPackage = packageName + "." + modelPackage;
         controllerPackage = packageName + "." + controllerPackage;
@@ -340,6 +344,7 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
                 }
             }
         }
+        addSecurityExtensions(swagger.getSecurityDefinitions());
     }
 
     @SuppressWarnings("unchecked")
@@ -679,6 +684,27 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         postProcessPattern(parameter.pattern, parameter.vendorExtensions);
     }
 
+    protected void addSecurityExtensions(Map<String, SecuritySchemeDefinition> securitySchemes) {
+        if (securitySchemes == null || securitySchemes.isEmpty()) {
+            return;
+        }
+        for (String securityName : securitySchemes.keySet()) {
+            final AbstractSecuritySchemeDefinition securityScheme = (AbstractSecuritySchemeDefinition) securitySchemes.get(securityName);
+            final String functionName = controllerPackage + ".authorization_controller.check_" + securityName;
+
+            if ("oauth2".equalsIgnoreCase(securityScheme.getType())) {
+                securityScheme.getVendorExtensions().put("x-tokenInfoFunc", functionName);
+                securityScheme.getVendorExtensions().put("x-scopeValidateFunc", controllerPackage + ".authorization_controller.validate_scope_" + securityName);
+            } else if ("basic".equalsIgnoreCase(securityScheme.getType())) {
+                securityScheme.getVendorExtensions().put("x-basicInfoFunc", functionName);
+            } else if ("apiKey".equalsIgnoreCase(securityScheme.getType())) {
+                securityScheme.getVendorExtensions().put("x-apikeyInfoFunc", functionName);
+            } else {
+                LOGGER.warn("Security type " + securityScheme.getType().toString() + " is not supported.");
+            }
+        }
+    }
+
     /*
      * The swagger pattern spec follows the Perl convention and style of modifiers. Python
      * does not support this in as natural a way so it needs to convert it. See
@@ -690,8 +716,8 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
 
             //Must follow Perl /pattern/modifiers convention
             if(pattern.charAt(0) != '/' || i < 2) {
-                throw new IllegalArgumentException("Pattern must follow the Perl "
-                        + "/pattern/modifiers convention. "+pattern+" is not valid.");
+                pattern = String.format("/%s/", pattern);;
+                i = pattern.lastIndexOf('/');
             }
 
             String regex = pattern.substring(1, i).replace("'", "\\'");

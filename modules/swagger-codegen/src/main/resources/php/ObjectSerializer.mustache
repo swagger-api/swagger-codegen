@@ -49,6 +49,11 @@ class ObjectSerializer
                 $data[$property] = self::sanitizeForSerialization($value);
             }
             return $data;
+        } elseif ($data instanceof \stdClass) {
+            foreach ($data as $property => $value) {
+                $data->$property = self::sanitizeForSerialization($value);
+            }
+            return $data;
         } elseif (is_object($data)) {
             $values = [];
             $formats = $data::swaggerFormats();

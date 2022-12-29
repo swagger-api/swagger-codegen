@@ -240,7 +240,7 @@
             <dependency>
                 <groupId>com.github.joschi.jackson</groupId>
                 <artifactId>jackson-datatype-threetenbp</artifactId>
-                <version>${jackson-version}</version>
+                <version>${threetenbp-version}</version>
             </dependency>
 
         <!-- test dependencies -->
@@ -261,8 +261,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vertx-version>3.4.2</vertx-version>
-        <swagger-core-version>1.5.18</swagger-core-version>
-        <jackson-version>2.6.4</jackson-version>
-        <junit-version>4.12</junit-version>
+        <swagger-core-version>1.5.24</swagger-core-version>
+        <threetenbp-version>2.6.4</threetenbp-version>
+        <jackson-version>2.11.4</jackson-version>
+        <junit-version>4.13.1</junit-version>
     </properties>
 </project>

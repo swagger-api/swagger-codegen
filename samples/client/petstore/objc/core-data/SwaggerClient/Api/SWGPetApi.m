@@ -181,7 +181,7 @@ NSInteger kSWGPetApiMissingParamErrorCode = 234513;
 ///
 /// Finds Pets by status
 /// Multiple status values can be provided with comma separated strings
-///  @param status Status values that need to be considered for filter (optional, default to available)
+///  @param status Status values that need to be considered for filter (optional)
 ///
 ///  @returns NSArray<SWGPet>*
 ///

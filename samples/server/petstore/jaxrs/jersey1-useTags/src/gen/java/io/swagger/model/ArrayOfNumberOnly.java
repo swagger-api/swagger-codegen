@@ -22,11 +22,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * ArrayOfNumberOnly
  */
-
 public class ArrayOfNumberOnly   {
   @JsonProperty("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;
@@ -50,6 +50,7 @@ public class ArrayOfNumberOnly   {
    **/
   @JsonProperty("ArrayNumber")
   @ApiModelProperty(value = "")
+  @Valid
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
   }

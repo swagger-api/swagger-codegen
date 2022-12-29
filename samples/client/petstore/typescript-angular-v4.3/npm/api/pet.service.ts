@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class PetService {
 
-    protected basePath = 'http://petstore.swagger.io/v2';
+    protected basePath = 'https://petstore.swagger.io/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -300,7 +300,7 @@ export class PetService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
+        if (this.configuration.apiKeys && this.configuration.apiKeys["api_key"]) {
             headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
         }
 
@@ -432,7 +432,7 @@ export class PetService {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {
@@ -505,7 +505,7 @@ export class PetService {
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         // use FormData to transmit files using content-type "multipart/form-data"

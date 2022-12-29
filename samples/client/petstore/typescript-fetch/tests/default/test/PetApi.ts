@@ -11,7 +11,9 @@ describe('PetApi', () => {
             const fixture: Pet = createTestFixture();
 
             beforeEach(() => {
-                api = new PetApi();
+                api = new PetApi({
+                    basePath:'https://petstore.swagger.io/v2'
+                });
             });
 
             it('should add and delete Pet', () => {

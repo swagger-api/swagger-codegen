@@ -16,9 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from petstore_api.models.outer_boolean import OuterBoolean  # noqa: F401,E501
-from petstore_api.models.outer_number import OuterNumber  # noqa: F401,E501
-from petstore_api.models.outer_string import OuterString  # noqa: F401,E501
+from petstore_api.configuration import Configuration
 
 
 class OuterComposite(object):
@@ -46,8 +44,11 @@ class OuterComposite(object):
         'my_boolean': 'my_boolean'
     }
 
-    def __init__(self, my_number=None, my_string=None, my_boolean=None):  # noqa: E501
+    def __init__(self, my_number=None, my_string=None, my_boolean=None, _configuration=None):  # noqa: E501
         """OuterComposite - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration = _configuration
 
         self._my_number = None
         self._my_string = None
@@ -164,8 +165,11 @@ class OuterComposite(object):
         if not isinstance(other, OuterComposite):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, OuterComposite):
+            return True
+
+        return self.to_dict() != other.to_dict()

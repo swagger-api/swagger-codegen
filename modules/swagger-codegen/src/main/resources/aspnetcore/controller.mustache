@@ -21,7 +21,7 @@ namespace {{packageName}}.Controllers
     /// {{description}}
     /// </summary>{{#description}}
     [Description("{{description}}")]{{/description}}
-    public class {{classname}}Controller : Controller
+    public class {{classname}}Controller : Controller{{#interfaceController}}, I{{classname}}Controller{{/interfaceController}}
     { {{#operation}}
         /// <summary>
         /// {{#summary}}{{summary}}{{/summary}}

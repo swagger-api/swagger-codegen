@@ -26,7 +26,7 @@ public class ApiClient {
   public interface Api {}
 
   protected ObjectMapper objectMapper;
-  private String basePath = "http://petstore.swagger.io:80/v2";
+  private String basePath = "https://petstore.swagger.io/v2";
   private Map<String, RequestInterceptor> apiAuthorizations;
   private Feign.Builder feignBuilder;
 
@@ -42,7 +42,7 @@ public class ApiClient {
   public ApiClient(String[] authNames) {
     this();
     for(String authName : authNames) {
-      RequestInterceptor auth;
+      RequestInterceptor auth = null;
       if ("api_key".equals(authName)) {
         auth = new ApiKeyAuth("header", "api_key");
       } else if ("api_key_query".equals(authName)) {

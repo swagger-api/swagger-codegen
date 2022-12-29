@@ -231,7 +231,7 @@ No authorization required
 
 <a name="loginUser"></a>
 # **loginUser**
-> &#39;String&#39; loginUser(username, password)
+> 'String' loginUser(username, password)
 
 Logs user into the system
 
@@ -264,7 +264,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**&#39;String&#39;**
+**'String'**
 
 ### Authorization
 

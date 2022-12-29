@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from petstore_api.models.animal import Animal  # noqa: F401,E501
+from petstore_api.configuration import Configuration
 
 
 class MixedPropertiesAndAdditionalPropertiesClass(object):
@@ -44,8 +44,11 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         'map': 'map'
     }
 
-    def __init__(self, uuid=None, date_time=None, map=None):  # noqa: E501
+    def __init__(self, uuid=None, date_time=None, map=None, _configuration=None):  # noqa: E501
         """MixedPropertiesAndAdditionalPropertiesClass - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration = _configuration
 
         self._uuid = None
         self._date_time = None
@@ -162,8 +165,11 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         if not isinstance(other, MixedPropertiesAndAdditionalPropertiesClass):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, MixedPropertiesAndAdditionalPropertiesClass):
+            return True
+
+        return self.to_dict() != other.to_dict()

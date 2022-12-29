@@ -14,6 +14,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class Category   {
   @JsonProperty("id")
   private Long id = null;

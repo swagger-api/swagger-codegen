@@ -149,6 +149,10 @@ public class Generate implements Runnable {
             description = CodegenConstants.GIT_REPO_ID_DESC)
     private String gitRepoId;
 
+    @Option(name = {"--git-repo-base-url"}, title = "git repo base url",
+            description = CodegenConstants.GIT_REPO_BASE_URL_DESC)
+    private String gitRepoBaseURL;
+
     @Option(name = {"--release-note"}, title = "release note",
             description = CodegenConstants.RELEASE_NOTE_DESC)
     private String releaseNote;
@@ -171,6 +175,12 @@ public class Generate implements Runnable {
     @Option(name = {"--remove-operation-id-prefix"}, title = "remove prefix of the operationId",
             description = CodegenConstants.REMOVE_OPERATION_ID_PREFIX_DESC)
     private Boolean removeOperationIdPrefix;
+
+    @Option(name = {"--skip-alias-generation"}, title = "skip alias generation.", description = "skip code generation for models identified as alias.")
+    private Boolean skipAliasGeneration;
+
+    @Option(name = {"--ignore-import-mapping"}, title = "ignore import mapping", description = "allow generate model classes using names previously listed on import mappings.")
+    private String ignoreImportMappings;
 
     @Override
     public void run() {
@@ -257,6 +267,10 @@ public class Generate implements Runnable {
             configurator.setGitRepoId(gitRepoId);
         }
 
+        if (isNotEmpty(gitRepoBaseURL)) {
+            configurator.setGitRepoBaseURL(gitRepoBaseURL);
+        }
+
         if (isNotEmpty(releaseNote)) {
             configurator.setReleaseNote(releaseNote);
         }
@@ -271,6 +285,14 @@ public class Generate implements Runnable {
 
         if (removeOperationIdPrefix != null) {
             configurator.setRemoveOperationIdPrefix(removeOperationIdPrefix);
+        }
+
+        if (skipAliasGeneration != null) {
+            configurator.setSkipAliasGeneration(skipAliasGeneration);
+        }
+
+        if (ignoreImportMappings != null) {
+            additionalProperties.add(String.format("%s=%s", CodegenConstants.IGNORE_IMPORT_MAPPING_OPTION, Boolean.parseBoolean(ignoreImportMappings)));
         }
 
         applySystemPropertiesKvpList(systemProperties, configurator);
