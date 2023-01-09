@@ -1,0 +1,171 @@
+name: Test Framework V2 Python Asyncio
+
+on:
+  # execute on demand
+  workflow_dispatch:
+    branches: ["master"]
+
+jobs:
+
+  # builds codegen cli and uploads its artifact
+  build-codegen:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 8 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: build codegen
+        run: |
+          mkdir codegen-cli
+          echo "BUILDING latest"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          ls modules/swagger-codegen-cli/target/
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+
+          mkdir python-v2-sample-test-config-files
+          cp samples/client/petstore/python/tests -r python-v2-sample-test-config-files
+          cp samples/client/petstore/python/Makefile python-v2-sample-test-config-files
+          cp samples/client/petstore/python/pom.xml python-v2-sample-test-config-files
+          cp samples/client/petstore/python/setup.cfg python-v2-sample-test-config-files
+          cp samples/client/petstore/python/setup.cfg python-v2-sample-test-config-files
+          cp samples/client/petstore/python/test_python2.sh python-v2-sample-test-config-files
+          cp samples/client/petstore/python/test_python2_and_3.sh python-v2-sample-test-config-files
+      - name: upload codegen cli
+        uses: actions/upload-artifact@v2
+        with:
+          name: codegen-cli
+          path: codegen-cli
+      - name: upload python test cfg files
+        uses: actions/upload-artifact@v2
+        with:
+          name: python-v2-sample-test-config-files
+          path: python-v2-sample-test-config-files
+
+  generate:
+
+    needs: build-codegen
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 8 ]
+
+
+    outputs:
+      generate_outcome: ${{ steps.outcome.outputs.generate_outcome }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Download codegen cli
+        uses: actions/download-artifact@v2
+        with:
+          name: codegen-cli
+      - name: generate
+        id: generate
+        continue-on-error: true
+        uses: ./.github/actions/generate
+        with:
+          language: python
+          job-name: ${{ env.JOB_NAME }}
+          spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
+          options: -DpackageName=petstore_api --library asyncio
+      - id: outcome
+        run: |
+          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
+      - name: upload generate outcome
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_outcome
+          path: generate_outcome_${{ env.JOB_NAME }}
+      - name: upload generate logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_logs
+          path: ${{ steps.generate.outputs.logs }}
+      - name: upload generated code
+        if: contains(steps.generate.outcome, 'success')
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generated
+          path: ${{ steps.generate.outputs.path }}
+    env:
+      JOB_NAME: "python-asyncio-v2-sample"
+
+  build:
+
+    needs: generate
+    if: contains(needs.generate.outputs.generate_outcome, 'success')
+    runs-on: ubuntu-latest
+
+    strategy:
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      matrix:
+        python-version: [3.x]
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generated
+          path: generated/${{ env.JOB_NAME }}
+      - name: Download logs
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_logs
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Download Python V2 test cfg files
+        uses: actions/download-artifact@v2
+        with:
+          name: python-v2-sample-test-config-files
+          path: generated/${{ env.JOB_NAME }}
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
+      - name: build
+        id: build
+        uses: ./.github/actions/build
+        continue-on-error: true
+        with:
+          path: generated/${{ env.JOB_NAME }}
+          job-name: ${{ env.JOB_NAME }}
+          build-commands: make test-all
+      - id: outcome
+        run: |
+          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
+      - name: upload build outcome
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}build_outcome
+          path: ${{ env.JOB_NAME }}build_outcome
+      - name: upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}logs
+          path: ${{ steps.build.outputs.logs }}
+    env:
+      JOB_NAME: "python-asyncio-v2-sample"
