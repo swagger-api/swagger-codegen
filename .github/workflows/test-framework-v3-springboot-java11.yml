@@ -1,0 +1,175 @@
+name: Test Framework V3 Springboot Java11
+
+on:
+  # execute on demand
+  workflow_dispatch:
+    branches: ["3.0.0"]
+
+jobs:
+
+  # builds codegen cli and uploads its artifact
+  build-codegen:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 8 ]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 3.0.0
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: build codegen
+        run: |
+          mkdir codegen-cli
+          echo "BUILDING 3.0.0"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+      - name: upload codegen cli
+        uses: actions/upload-artifact@v2
+        with:
+          name: codegen-cli
+          path: codegen-cli
+      - name: upload test files
+        uses: actions/upload-artifact@v2
+        with:
+          name: spring-custom-test-files
+          path: samples/custom-tests/spring/v3/springboot
+
+  generate:
+
+    needs: build-codegen
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 8 ]
+
+
+    outputs:
+      generate_outcome: ${{ steps.outcome.outputs.generate_outcome }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Download codegen cli
+        uses: actions/download-artifact@v2
+        with:
+          name: codegen-cli
+      - name: generate
+        id: generate
+        continue-on-error: true
+        uses: ./.github/actions/generate
+        with:
+          language: spring
+          job-name: ${{ env.JOB_NAME }}
+          spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/3.0.0/modules/swagger-codegen/src/test/resources/3_0_0/petstore-with-issue-cases.yaml
+          options: -Djava11=true
+      - id: outcome
+        run: |
+          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
+      - name: upload generate outcome
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_outcome
+          path: generate_outcome_${{ env.JOB_NAME }}
+      - name: upload generate logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_logs
+          path: ${{ steps.generate.outputs.logs }}
+      - name: upload generated code
+        if: contains(steps.generate.outcome, 'success')
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generated
+          path: ${{ steps.generate.outputs.path }}
+    env:
+      JOB_NAME: "springboot-v3-sample"
+
+  build:
+
+    needs: generate
+    if: contains(needs.generate.outputs.generate_outcome, 'success')
+    runs-on: ubuntu-latest
+
+    strategy:
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      matrix:
+        java-version: [11]
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generated
+          path: generated/${{ env.JOB_NAME }}
+      - name: Download logs
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_logs
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java-version }}
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
+      - name: Download Java Test Files
+        uses: actions/download-artifact@v2
+        with:
+          name: spring-custom-test-files
+          path: spring-custom-test-files
+      - name: setup test files
+        id: test-files
+        run: |
+          echo "adding test directories path"
+
+          mkdir -p generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/api
+
+          echo "copying custom test files"
+          cp spring-custom-test-files/PetApiTest.java generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/api/
+          cp spring-custom-test-files/StoreApiTest.java generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/api/
+          cp spring-custom-test-files/UserApiTest.java generated/${{ env.JOB_NAME }}/src/test/java/io/swagger/api/
+
+      - name: build
+        id: build
+        uses: ./.github/actions/build
+        continue-on-error: true
+        with:
+          path: generated/${{ env.JOB_NAME }}
+          job-name: ${{ env.JOB_NAME }}
+          build-commands: "mvn clean package -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3"
+      - id: outcome
+        run: |
+          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
+      - name: upload build outcome
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}build_outcome
+          path: ${{ env.JOB_NAME }}build_outcome
+      - name: upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}logs
+          path: ${{ steps.build.outputs.logs }}
+    env:
+      JOB_NAME: "springboot-v3-sample"
