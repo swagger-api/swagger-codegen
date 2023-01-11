@@ -1,0 +1,3108 @@
+openapi: 3.0.0
+info:
+  version: '2019-10-09'
+  x-release: v4
+  title: Amazon AppConfig
+  description: '<fullname>AWS AppConfig</fullname> <p>Use AWS AppConfig, a capability of AWS Systems Manager, to create, manage, and quickly deploy application configurations. AppConfig supports controlled deployments to applications of any size and includes built-in validation checks and monitoring. You can use AppConfig with applications hosted on Amazon EC2 instances, AWS Lambda, containers, mobile applications, or IoT devices.</p> <p>To prevent errors when deploying application configurations, especially for production systems where a simple typo could cause an unexpected outage, AppConfig includes validators. A validator provides a syntactic or semantic check to ensure that the configuration you want to deploy works as intended. To validate your application configuration data, you provide a schema or a Lambda function that runs against the configuration. The configuration deployment or update can only proceed when the configuration data is valid.</p> <p>During a configuration deployment, AppConfig monitors the application to ensure that the deployment is successful. If the system encounters an error, AppConfig rolls back the change to minimize impact for your application users. You can configure a deployment strategy for each application or environment that includes deployment criteria, including velocity, bake time, and alarms to monitor. Similar to error monitoring, if a deployment triggers an alarm, AppConfig automatically rolls back to the previous version. </p> <p>AppConfig supports multiple use cases. Here are some examples.</p> <ul> <li> <p> <b>Application tuning</b>: Use AppConfig to carefully introduce changes to your application that can only be tested with production traffic.</p> </li> <li> <p> <b>Feature toggle</b>: Use AppConfig to turn on new features that require a timely deployment, such as a product launch or announcement. </p> </li> <li> <p> <b>Allow list</b>: Use AppConfig to allow premium subscribers to access paid content. </p> </li> <li> <p> <b>Operational issues</b>: Use AppConfig to reduce stress on your application when a dependency or other external factor impacts the system.</p> </li> </ul> <p>This reference is intended to be used with the <a href="http://docs.aws.amazon.com/systems-manager/latest/userguide/appconfig.html">AWS AppConfig User Guide</a>.</p>'
+  x-logo:
+    url: 'https://twitter.com/awscloud/profile_image?size=original'
+    backgroundColor: '#FFFFFF'
+  termsOfService: 'https://aws.amazon.com/service-terms/'
+  contact:
+    name: Mike Ralphson
+    email: mike.ralphson@gmail.com
+    url: 'https://github.com/mermade/aws2openapi'
+    x-twitter: PermittedSoc
+  license:
+    name: Apache 2.0 License
+    url: 'http://www.apache.org/licenses/'
+  x-providerName: amazonaws.com
+  x-serviceName: appconfig
+  x-aws-signingName: appconfig
+  x-origin:
+    - contentType: application/json
+      url: 'https://raw.githubusercontent.com/aws/aws-sdk-js/master/apis/appconfig-2019-10-09.normal.json'
+      converter:
+        url: 'https://github.com/mermade/aws2openapi'
+        version: 1.0.0
+      x-apisguru-driver: external
+  x-apiClientRegistration:
+    url: 'https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct'
+  x-apisguru-categories:
+    - cloud
+  x-preferred: true
+externalDocs:
+  description: Amazon Web Services documentation
+  url: 'https://docs.aws.amazon.com/appconfig/'
+servers:
+  - url: 'http://appconfig.{region}.amazonaws.com'
+    variables:
+      region:
+        description: The AWS region
+        enum:
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+          - us-gov-west-1
+          - us-gov-east-1
+          - ca-central-1
+          - eu-north-1
+          - eu-west-1
+          - eu-west-2
+          - eu-west-3
+          - eu-central-1
+          - eu-south-1
+          - af-south-1
+          - ap-northeast-1
+          - ap-northeast-2
+          - ap-northeast-3
+          - ap-southeast-1
+          - ap-southeast-2
+          - ap-east-1
+          - ap-south-1
+          - sa-east-1
+          - me-south-1
+        default: us-east-1
+    description: The AppConfig multi-region endpoint
+  - url: 'https://appconfig.{region}.amazonaws.com'
+    variables:
+      region:
+        description: The AWS region
+        enum:
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+          - us-gov-west-1
+          - us-gov-east-1
+          - ca-central-1
+          - eu-north-1
+          - eu-west-1
+          - eu-west-2
+          - eu-west-3
+          - eu-central-1
+          - eu-south-1
+          - af-south-1
+          - ap-northeast-1
+          - ap-northeast-2
+          - ap-northeast-3
+          - ap-southeast-1
+          - ap-southeast-2
+          - ap-east-1
+          - ap-south-1
+          - sa-east-1
+          - me-south-1
+        default: us-east-1
+    description: The AppConfig multi-region endpoint
+  - url: 'http://appconfig.{region}.amazonaws.com.cn'
+    variables:
+      region:
+        description: The AWS region
+        enum:
+          - cn-north-1
+          - cn-northwest-1
+        default: cn-north-1
+    description: The AppConfig endpoint for China (Beijing) and China (Ningxia)
+  - url: 'https://appconfig.{region}.amazonaws.com.cn'
+    variables:
+      region:
+        description: The AWS region
+        enum:
+          - cn-north-1
+          - cn-northwest-1
+        default: cn-north-1
+    description: The AppConfig endpoint for China (Beijing) and China (Ningxia)
+x-hasEquivalentPaths: true
+paths:
+  /applications:
+    post:
+      operationId: CreateApplication
+      description: 'An application in AppConfig is a logical unit of code that provides capabilities for your customers. For example, an application can be a microservice that runs on Amazon EC2 instances, a mobile application installed by your users, a serverless application using Amazon API Gateway and AWS Lambda, or any system you run on behalf of others.'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Name
+              properties:
+                Name:
+                  description: A name for the application.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the application.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                Tags:
+                  description: 'Metadata to assign to the application. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+                  type: object
+                  minProperties: 0
+                  maxProperties: 50
+                  additionalProperties:
+                    $ref: '#/components/schemas/TagValue'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: ListApplications
+      description: List all applications in your AWS account.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applications'
+        '480':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '481':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: max_results
+          in: query
+          required: false
+          description: The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - name: next_token
+          in: query
+          required: false
+          description: A token to start the list. Use this token to get the next set of results.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
+        - name: MaxResults
+          in: query
+          schema:
+            type: string
+          description: Pagination limit
+          required: false
+        - name: NextToken
+          in: query
+          schema:
+            type: string
+          description: Pagination token
+          required: false
+  '/applications/{ApplicationId}/configurationprofiles':
+    post:
+      operationId: CreateConfigurationProfile
+      description: '<p>Information that enables AppConfig to access the configuration source. Valid configuration sources include Systems Manager (SSM) documents, SSM Parameter Store parameters, and Amazon S3 objects. A configuration profile includes the following information.</p> <ul> <li> <p>The Uri location of the configuration data.</p> </li> <li> <p>The AWS Identity and Access Management (IAM) role that provides access to the configuration data.</p> </li> <li> <p>A validator for the configuration data. Available validators include either a JSON Schema or an AWS Lambda function.</p> </li> </ul> <p>For more information, see <a href="http://docs.aws.amazon.com/systems-manager/latest/userguide/appconfig-creating-configuration-and-profile.html">Create a Configuration and a Configuration Profile</a> in the <i>AWS AppConfig User Guide</i>.</p>'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationProfile'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Name
+                - LocationUri
+              properties:
+                Name:
+                  description: A name for the configuration profile.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the configuration profile.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                LocationUri:
+                  description: 'A URI to locate the configuration. You can specify a Systems Manager (SSM) document, an SSM Parameter Store parameter, or an Amazon S3 object. For an SSM document, specify either the document name in the format <code>ssm-document://&lt;Document_name&gt;</code> or the Amazon Resource Name (ARN). For a parameter, specify either the parameter name in the format <code>ssm-parameter://&lt;Parameter_name&gt;</code> or the ARN. For an Amazon S3 object, specify the URI in the following format: <code>s3://&lt;bucket&gt;/&lt;objectKey&gt; </code>. Here is an example: s3://my-bucket/my-app/us-east-1/my-config.json'
+                  type: string
+                  minLength: 1
+                  maxLength: 2048
+                RetrievalRoleArn:
+                  description: The ARN of an IAM role with permission to access the configuration at the specified LocationUri.
+                  type: string
+                  pattern: '^((arn):(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov):(iam)::\d{12}:role[/].*)$'
+                  minLength: 20
+                  maxLength: 2048
+                Validators:
+                  description: A list of methods for validating the configuration.
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Validator'
+                  minItems: 0
+                  maxItems: 2
+                Tags:
+                  description: 'Metadata to assign to the configuration profile. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+                  type: object
+                  minProperties: 0
+                  maxProperties: 50
+                  additionalProperties:
+                    $ref: '#/components/schemas/TagValue'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: ListConfigurationProfiles
+      description: Lists the configuration profiles for an application.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationProfiles'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: max_results
+          in: query
+          required: false
+          description: The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - name: next_token
+          in: query
+          required: false
+          description: A token to start the list. Use this token to get the next set of results.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
+        - name: MaxResults
+          in: query
+          schema:
+            type: string
+          description: Pagination limit
+          required: false
+        - name: NextToken
+          in: query
+          schema:
+            type: string
+          description: Pagination token
+          required: false
+  /deploymentstrategies:
+    post:
+      operationId: CreateDeploymentStrategy
+      description: 'A deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes: the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time.'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStrategy'
+        '480':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '481':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Name
+                - DeploymentDurationInMinutes
+                - GrowthFactor
+                - ReplicateTo
+              properties:
+                Name:
+                  description: A name for the deployment strategy.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the deployment strategy.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                DeploymentDurationInMinutes:
+                  description: Total amount of time for a deployment to last.
+                  type: integer
+                  minimum: 0
+                  maximum: 1440
+                FinalBakeTimeInMinutes:
+                  description: The amount of time AppConfig monitors for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+                  type: integer
+                  minimum: 0
+                  maximum: 1440
+                GrowthFactor:
+                  description: The percentage of targets to receive a deployed configuration during each interval.
+                  type: number
+                  format: float
+                  minimum: 1
+                  maximum: 100
+                GrowthType:
+                  description: '<p>The algorithm used to define how percentage grows over time. AWS AppConfig supports the following growth types:</p> <p> <b>Linear</b>: For this type, AppConfig processes the deployment by dividing the total number of targets by the value specified for <code>Step percentage</code>. For example, a linear deployment that uses a <code>Step percentage</code> of 10 deploys the configuration to 10 percent of the hosts. After those deployments are complete, the system deploys the configuration to the next 10 percent. This continues until 100% of the targets have successfully received the configuration.</p> <p> <b>Exponential</b>: For this type, AppConfig processes the deployment exponentially using the following formula: <code>G*(2^N)</code>. In this formula, <code>G</code> is the growth factor specified by the user and <code>N</code> is the number of steps until the configuration is deployed to all targets. For example, if you specify a growth factor of 2, then the system rolls out the configuration as follows:</p> <p> <code>2*(2^0)</code> </p> <p> <code>2*(2^1)</code> </p> <p> <code>2*(2^2)</code> </p> <p>Expressed numerically, the deployment rolls out as follows: 2% of the targets, 4% of the targets, 8% of the targets, and continues until the configuration has been deployed to all targets.</p>'
+                  type: string
+                  enum:
+                    - LINEAR
+                    - EXPONENTIAL
+                ReplicateTo:
+                  description: Save the deployment strategy to a Systems Manager (SSM) document.
+                  type: string
+                  enum:
+                    - NONE
+                    - SSM_DOCUMENT
+                Tags:
+                  description: 'Metadata to assign to the deployment strategy. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+                  type: object
+                  minProperties: 0
+                  maxProperties: 50
+                  additionalProperties:
+                    $ref: '#/components/schemas/TagValue'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: ListDeploymentStrategies
+      description: List deployment strategies.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStrategies'
+        '480':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '481':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: max_results
+          in: query
+          required: false
+          description: The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - name: next_token
+          in: query
+          required: false
+          description: A token to start the list. Use this token to get the next set of results.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
+        - name: MaxResults
+          in: query
+          schema:
+            type: string
+          description: Pagination limit
+          required: false
+        - name: NextToken
+          in: query
+          schema:
+            type: string
+          description: Pagination token
+          required: false
+  '/applications/{ApplicationId}/environments':
+    post:
+      operationId: CreateEnvironment
+      description: 'For each application, you define one or more environments. An environment is a logical deployment group of AppConfig targets, such as applications in a <code>Beta</code> or <code>Production</code> environment. You can also define environments for application subcomponents such as the <code>Web</code>, <code>Mobile</code> and <code>Back-end</code> components for your application. You can configure Amazon CloudWatch alarms for each environment. The system monitors alarms during a configuration deployment. If an alarm is triggered, the system rolls back the configuration.'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '480':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Name
+              properties:
+                Name:
+                  description: A name for the environment.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the environment.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                Monitors:
+                  description: Amazon CloudWatch alarms to monitor during the deployment process.
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Monitor'
+                  minItems: 0
+                  maxItems: 5
+                Tags:
+                  description: 'Metadata to assign to the environment. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+                  type: object
+                  minProperties: 0
+                  maxProperties: 50
+                  additionalProperties:
+                    $ref: '#/components/schemas/TagValue'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: ListEnvironments
+      description: List the environments for an application.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environments'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: max_results
+          in: query
+          required: false
+          description: The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - name: next_token
+          in: query
+          required: false
+          description: A token to start the list. Use this token to get the next set of results.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
+        - name: MaxResults
+          in: query
+          schema:
+            type: string
+          description: Pagination limit
+          required: false
+        - name: NextToken
+          in: query
+          schema:
+            type: string
+          description: Pagination token
+          required: false
+  '/applications/{ApplicationId}/configurationprofiles/{ConfigurationProfileId}/hostedconfigurationversions#Content-Type':
+    post:
+      operationId: CreateHostedConfigurationVersion
+      description: Create a new configuration in the AppConfig configuration store.
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedConfigurationVersion'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ServiceQuotaExceededException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceQuotaExceededException'
+        '482':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '483':
+          description: ConflictException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictException'
+        '484':
+          description: PayloadTooLargeException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeException'
+        '485':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The configuration profile ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: Description
+          in: header
+          required: false
+          description: A description of the configuration.
+          schema:
+            type: string
+            minLength: 0
+            maxLength: 1024
+        - name: Content-Type
+          in: header
+          required: true
+          description: 'A standard MIME type describing the format of the configuration content. For more information, see <a href="https://docs.aws.amazon.com/https:/www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17">Content-Type</a>.'
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 255
+        - name: Latest-Version-Number
+          in: header
+          required: false
+          description: 'An optional locking token used to prevent race conditions from overwriting configuration updates when creating a new version. To ensure your data is not overwritten when creating multiple hosted configuration versions in rapid succession, specify the version of the latest hosted configuration version.'
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Content
+              properties:
+                Content:
+                  description: The content of the configuration or the configuration data.
+                  type: string
+                  format: password
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+  '/applications/{ApplicationId}':
+    delete:
+      operationId: DeleteApplication
+      description: Delete an application. Deleting an application does not delete a configuration from a host.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The ID of the application to delete.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: GetApplication
+      description: Retrieve information about an application.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The ID of the application you want to get.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+    patch:
+      operationId: UpdateApplication
+      description: Updates an application.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  description: The name of the application.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the application.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+  '/applications/{ApplicationId}/configurationprofiles/{ConfigurationProfileId}':
+    delete:
+      operationId: DeleteConfigurationProfile
+      description: Delete a configuration profile. Deleting a configuration profile does not delete a configuration from a host.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: ConflictException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '483':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID that includes the configuration profile you want to delete.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The ID of the configuration profile you want to delete.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: GetConfigurationProfile
+      description: Retrieve information about a configuration profile.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationProfile'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The ID of the application that includes the configuration profile you want to get.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The ID of the configuration profile you want to get.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+    patch:
+      operationId: UpdateConfigurationProfile
+      description: Updates a configuration profile.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationProfile'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The ID of the configuration profile.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  description: The name of the configuration profile.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the configuration profile.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                RetrievalRoleArn:
+                  description: The ARN of an IAM role with permission to access the configuration at the specified LocationUri.
+                  type: string
+                  pattern: '^((arn):(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov):(iam)::\d{12}:role[/].*)$'
+                  minLength: 20
+                  maxLength: 2048
+                Validators:
+                  description: A list of methods for validating the configuration.
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Validator'
+                  minItems: 0
+                  maxItems: 2
+  '/deployementstrategies/{DeploymentStrategyId}':
+    delete:
+      operationId: DeleteDeploymentStrategy
+      description: Delete a deployment strategy. Deleting a deployment strategy does not delete a configuration from a host.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: DeploymentStrategyId
+          in: path
+          required: true
+          description: The ID of the deployment strategy you want to delete.
+          schema:
+            type: string
+            pattern: '(^[a-z0-9]{4,7}$|^AppConfig\.[A-Za-z0-9]{9,40}$)'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+  '/applications/{ApplicationId}/environments/{EnvironmentId}':
+    delete:
+      operationId: DeleteEnvironment
+      description: Delete an environment. Deleting an environment does not delete a configuration from a host.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: ConflictException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '483':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID that includes the environment you want to delete.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: The ID of the environment you want to delete.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: GetEnvironment
+      description: 'Retrieve information about an environment. An environment is a logical deployment group of AppConfig applications, such as applications in a <code>Production</code> environment or in an <code>EU_Region</code> environment. Each configuration deployment targets an environment. You can enable one or more Amazon CloudWatch alarms for an environment. If an alarm is triggered during a deployment, AppConfig roles back the configuration.'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The ID of the application that includes the environment you want to get.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: The ID of the environment you wnat to get.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+    patch:
+      operationId: UpdateEnvironment
+      description: Updates an environment.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: The environment ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  description: The name of the environment.
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                Description:
+                  description: A description of the environment.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                Monitors:
+                  description: Amazon CloudWatch alarms to monitor during the deployment process.
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Monitor'
+                  minItems: 0
+                  maxItems: 5
+  '/applications/{ApplicationId}/configurationprofiles/{ConfigurationProfileId}/hostedconfigurationversions/{VersionNumber}':
+    delete:
+      operationId: DeleteHostedConfigurationVersion
+      description: Delete a version of a configuration from the AppConfig configuration store.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The configuration profile ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: VersionNumber
+          in: path
+          required: true
+          description: The versions number to delete.
+          schema:
+            type: integer
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    get:
+      operationId: GetHostedConfigurationVersion
+      description: Get information about a specific configuration version.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedConfigurationVersion'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The configuration profile ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: VersionNumber
+          in: path
+          required: true
+          description: The version.
+          schema:
+            type: integer
+  '/applications/{Application}/environments/{Environment}/configurations/{Configuration}#client_id':
+    get:
+      operationId: GetConfiguration
+      description: '<p>Receive information about a configuration.</p> <important> <p>AWS AppConfig uses the value of the <code>ClientConfigurationVersion</code> parameter to identify the configuration version on your clients. If you don’t send <code>ClientConfigurationVersion</code> with each call to <code>GetConfiguration</code>, your clients receive the current configuration. You are charged each time your clients receive a configuration.</p> <p>To avoid excess charges, we recommend that you include the <code>ClientConfigurationVersion</code> value with every call to <code>GetConfiguration</code>. This value must be saved on your client. Subsequent calls to <code>GetConfiguration</code> must pass this value by using the <code>ClientConfigurationVersion</code> parameter. </p> </important>'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: Application
+          in: path
+          required: true
+          description: The application to get. Specify either the application name or the application ID.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 64
+        - name: Environment
+          in: path
+          required: true
+          description: The environment to get. Specify either the environment name or the environment ID.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 64
+        - name: Configuration
+          in: path
+          required: true
+          description: The configuration to get. Specify either the configuration name or the configuration ID.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 64
+        - name: client_id
+          in: query
+          required: true
+          description: 'A unique ID to identify the client for the configuration. This ID enables AppConfig to deploy the configuration in intervals, as defined in the deployment strategy.'
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 64
+        - name: client_configuration_version
+          in: query
+          required: false
+          description: '<p>The configuration version returned in the most recent <code>GetConfiguration</code> response.</p> <important> <p>AWS AppConfig uses the value of the <code>ClientConfigurationVersion</code> parameter to identify the configuration version on your clients. If you don’t send <code>ClientConfigurationVersion</code> with each call to <code>GetConfiguration</code>, your clients receive the current configuration. You are charged each time your clients receive a configuration.</p> <p>To avoid excess charges, we recommend that you include the <code>ClientConfigurationVersion</code> value with every call to <code>GetConfiguration</code>. This value must be saved on your client. Subsequent calls to <code>GetConfiguration</code> must pass this value by using the <code>ClientConfigurationVersion</code> parameter. </p> </important> <p>For more information about working with configurations, see <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/appconfig-retrieving-the-configuration.html">Retrieving the Configuration</a> in the <i>AWS AppConfig User Guide</i>.</p>'
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 1024
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+  '/applications/{ApplicationId}/environments/{EnvironmentId}/deployments/{DeploymentNumber}':
+    get:
+      operationId: GetDeployment
+      description: Retrieve information about a configuration deployment.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: 'The ID of the application that includes the deployment you want to get. '
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: 'The ID of the environment that includes the deployment you want to get. '
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: DeploymentNumber
+          in: path
+          required: true
+          description: The sequence number of the deployment.
+          schema:
+            type: integer
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    delete:
+      operationId: StopDeployment
+      description: Stops a deployment. This API action works only on deployments that have a status of <code>DEPLOYING</code>. This action moves the deployment to a status of <code>ROLLED_BACK</code>.
+      responses:
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: The environment ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: DeploymentNumber
+          in: path
+          required: true
+          description: The sequence number of the deployment.
+          schema:
+            type: integer
+  '/deploymentstrategies/{DeploymentStrategyId}':
+    get:
+      operationId: GetDeploymentStrategy
+      description: 'Retrieve information about a deployment strategy. A deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes: the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time.'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStrategy'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: DeploymentStrategyId
+          in: path
+          required: true
+          description: The ID of the deployment strategy to get.
+          schema:
+            type: string
+            pattern: '(^[a-z0-9]{4,7}$|^AppConfig\.[A-Za-z0-9]{9,40}$)'
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    patch:
+      operationId: UpdateDeploymentStrategy
+      description: Updates a deployment strategy.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStrategy'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: DeploymentStrategyId
+          in: path
+          required: true
+          description: The deployment strategy ID.
+          schema:
+            type: string
+            pattern: '(^[a-z0-9]{4,7}$|^AppConfig\.[A-Za-z0-9]{9,40}$)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Description:
+                  description: A description of the deployment strategy.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                DeploymentDurationInMinutes:
+                  description: Total amount of time for a deployment to last.
+                  type: integer
+                  minimum: 0
+                  maximum: 1440
+                FinalBakeTimeInMinutes:
+                  description: The amount of time AppConfig monitors for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+                  type: integer
+                  minimum: 0
+                  maximum: 1440
+                GrowthFactor:
+                  description: The percentage of targets to receive a deployed configuration during each interval.
+                  type: number
+                  format: float
+                  minimum: 1
+                  maximum: 100
+                GrowthType:
+                  description: '<p>The algorithm used to define how percentage grows over time. AWS AppConfig supports the following growth types:</p> <p> <b>Linear</b>: For this type, AppConfig processes the deployment by increments of the growth factor evenly distributed over the deployment time. For example, a linear deployment that uses a growth factor of 20 initially makes the configuration available to 20 percent of the targets. After 1/5th of the deployment time has passed, the system updates the percentage to 40 percent. This continues until 100% of the targets are set to receive the deployed configuration.</p> <p> <b>Exponential</b>: For this type, AppConfig processes the deployment exponentially using the following formula: <code>G*(2^N)</code>. In this formula, <code>G</code> is the growth factor specified by the user and <code>N</code> is the number of steps until the configuration is deployed to all targets. For example, if you specify a growth factor of 2, then the system rolls out the configuration as follows:</p> <p> <code>2*(2^0)</code> </p> <p> <code>2*(2^1)</code> </p> <p> <code>2*(2^2)</code> </p> <p>Expressed numerically, the deployment rolls out as follows: 2% of the targets, 4% of the targets, 8% of the targets, and continues until the configuration has been deployed to all targets.</p>'
+                  type: string
+                  enum:
+                    - LINEAR
+                    - EXPONENTIAL
+  '/applications/{ApplicationId}/environments/{EnvironmentId}/deployments':
+    get:
+      operationId: ListDeployments
+      description: Lists the deployments for an environment.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployments'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+        '482':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: The environment ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: max_results
+          in: query
+          required: false
+          description: The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - name: next_token
+          in: query
+          required: false
+          description: A token to start the list. Use this token to get the next set of results.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
+        - name: MaxResults
+          in: query
+          schema:
+            type: string
+          description: Pagination limit
+          required: false
+        - name: NextToken
+          in: query
+          schema:
+            type: string
+          description: Pagination token
+          required: false
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    post:
+      operationId: StartDeployment
+      description: Starts a deployment.
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: ConflictException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictException'
+        '483':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: EnvironmentId
+          in: path
+          required: true
+          description: The environment ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - DeploymentStrategyId
+                - ConfigurationProfileId
+                - ConfigurationVersion
+              properties:
+                DeploymentStrategyId:
+                  description: The deployment strategy ID.
+                  type: string
+                  pattern: '(^[a-z0-9]{4,7}$|^AppConfig\.[A-Za-z0-9]{9,40}$)'
+                ConfigurationProfileId:
+                  description: The configuration profile ID.
+                  type: string
+                  pattern: '[a-z0-9]{4,7}'
+                ConfigurationVersion:
+                  description: The configuration version to deploy.
+                  type: string
+                  minLength: 1
+                  maxLength: 1024
+                Description:
+                  description: A description of the deployment.
+                  type: string
+                  minLength: 0
+                  maxLength: 1024
+                Tags:
+                  description: 'Metadata to assign to the deployment. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+                  type: object
+                  minProperties: 0
+                  maxProperties: 50
+                  additionalProperties:
+                    $ref: '#/components/schemas/TagValue'
+  '/applications/{ApplicationId}/configurationprofiles/{ConfigurationProfileId}/hostedconfigurationversions':
+    get:
+      operationId: ListHostedConfigurationVersions
+      description: View a list of configurations stored in the AppConfig configuration store by version.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedConfigurationVersions'
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The configuration profile ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: max_results
+          in: query
+          required: false
+          description: The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+        - name: next_token
+          in: query
+          required: false
+          description: 'A token to start the list. Use this token to get the next set of results. '
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 2048
+        - name: MaxResults
+          in: query
+          schema:
+            type: string
+          description: Pagination limit
+          required: false
+        - name: NextToken
+          in: query
+          schema:
+            type: string
+          description: Pagination token
+          required: false
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+  '/tags/{ResourceArn}':
+    get:
+      operationId: ListTagsForResource
+      description: Retrieves the list of key-value tags assigned to the resource.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceTags'
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ResourceArn
+          in: path
+          required: true
+          description: The resource ARN.
+          schema:
+            type: string
+            pattern: 'arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\d{1})?:(\d{12})?:[a-zA-Z0-9-_/:.]+'
+            minLength: 20
+            maxLength: 2048
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+    post:
+      operationId: TagResource
+      description: 'Metadata to assign to an AppConfig resource. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define. You can specify a maximum of 50 tags for a resource.'
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ResourceArn
+          in: path
+          required: true
+          description: The ARN of the resource for which to retrieve tags.
+          schema:
+            type: string
+            pattern: 'arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\d{1})?:(\d{12})?:[a-zA-Z0-9-_/:.]+'
+            minLength: 20
+            maxLength: 2048
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Tags
+              properties:
+                Tags:
+                  description: 'The key-value string map. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.'
+                  type: object
+                  minProperties: 0
+                  maxProperties: 50
+                  additionalProperties:
+                    $ref: '#/components/schemas/TagValue'
+  '/tags/{ResourceArn}#tagKeys':
+    delete:
+      operationId: UntagResource
+      description: Deletes a tag key and value from an AppConfig resource.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '481':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ResourceArn
+          in: path
+          required: true
+          description: The ARN of the resource for which to remove tags.
+          schema:
+            type: string
+            pattern: 'arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\d{1})?:(\d{12})?:[a-zA-Z0-9-_/:.]+'
+            minLength: 20
+            maxLength: 2048
+        - name: tagKeys
+          in: query
+          required: true
+          description: The tag keys to delete.
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/TagKey'
+            minItems: 0
+            maxItems: 50
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+  '/applications/{ApplicationId}/configurationprofiles/{ConfigurationProfileId}/validators#configuration_version':
+    post:
+      operationId: ValidateConfiguration
+      description: Uses the validators in a configuration profile to validate a configuration.
+      responses:
+        '204':
+          description: Success
+        '480':
+          description: BadRequestException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        '481':
+          description: ResourceNotFoundException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotFoundException'
+        '482':
+          description: InternalServerException
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
+      parameters:
+        - name: ApplicationId
+          in: path
+          required: true
+          description: The application ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: ConfigurationProfileId
+          in: path
+          required: true
+          description: The configuration profile ID.
+          schema:
+            type: string
+            pattern: '[a-z0-9]{4,7}'
+        - name: configuration_version
+          in: query
+          required: true
+          description: The version of the configuration to validate.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 1024
+    parameters:
+      - $ref: '#/components/parameters/X-Amz-Content-Sha256'
+      - $ref: '#/components/parameters/X-Amz-Date'
+      - $ref: '#/components/parameters/X-Amz-Algorithm'
+      - $ref: '#/components/parameters/X-Amz-Credential'
+      - $ref: '#/components/parameters/X-Amz-Security-Token'
+      - $ref: '#/components/parameters/X-Amz-Signature'
+      - $ref: '#/components/parameters/X-Amz-SignedHeaders'
+components:
+  parameters:
+    X-Amz-Content-Sha256:
+      name: X-Amz-Content-Sha256
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Date:
+      name: X-Amz-Date
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Algorithm:
+      name: X-Amz-Algorithm
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Credential:
+      name: X-Amz-Credential
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Security-Token:
+      name: X-Amz-Security-Token
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Signature:
+      name: X-Amz-Signature
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-SignedHeaders:
+      name: X-Amz-SignedHeaders
+      in: header
+      schema:
+        type: string
+      required: false
+  securitySchemes:
+    hmac:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: Amazon Signature authorization v4
+      x-amazon-apigateway-authtype: awsSigv4
+  schemas:
+    Application:
+      type: object
+      properties:
+        Id:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The application ID.
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The application name.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: The description of the application.
+    TagValue:
+      type: string
+      maxLength: 256
+    BadRequestException: {}
+    InternalServerException: {}
+    ConfigurationProfile:
+      type: object
+      properties:
+        ApplicationId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The application ID.
+        Id:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The configuration profile ID.
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the configuration profile.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: The configuration profile description.
+        LocationUri:
+          allOf:
+            - $ref: '#/components/schemas/Uri'
+            - description: The URI location of the configuration.
+        RetrievalRoleArn:
+          allOf:
+            - $ref: '#/components/schemas/RoleArn'
+            - description: The ARN of an IAM role with permission to access the configuration at the specified LocationUri.
+        Validators:
+          allOf:
+            - $ref: '#/components/schemas/ValidatorList'
+            - description: A list of methods for validating the configuration.
+    Validator:
+      type: object
+      required:
+        - Type
+        - Content
+      properties:
+        Type:
+          allOf:
+            - $ref: '#/components/schemas/ValidatorType'
+            - description: 'AppConfig supports validators of type <code>JSON_SCHEMA</code> and <code>LAMBDA</code> '
+        Content:
+          allOf:
+            - $ref: '#/components/schemas/StringWithLengthBetween0And32768'
+            - description: Either the JSON Schema content or the Amazon Resource Name (ARN) of an AWS Lambda function.
+      description: 'A validator provides a syntactic or semantic check to ensure the configuration you want to deploy functions as intended. To validate your application configuration data, you provide a schema or a Lambda function that runs against the configuration. The configuration deployment or update can only proceed when the configuration data is valid.'
+    ResourceNotFoundException: {}
+    DeploymentStrategy:
+      type: object
+      properties:
+        Id:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The deployment strategy ID.
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the deployment strategy.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: The description of the deployment strategy.
+        DeploymentDurationInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: Total amount of time the deployment lasted.
+        GrowthType:
+          allOf:
+            - $ref: '#/components/schemas/GrowthType'
+            - description: The algorithm used to define how percentage grew over time.
+        GrowthFactor:
+          allOf:
+            - $ref: '#/components/schemas/Percentage'
+            - description: The percentage of targets that received a deployed configuration during each interval.
+        FinalBakeTimeInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: The amount of time AppConfig monitored for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+        ReplicateTo:
+          allOf:
+            - $ref: '#/components/schemas/ReplicateTo'
+            - description: Save the deployment strategy to a Systems Manager (SSM) document.
+    Environment:
+      type: object
+      properties:
+        ApplicationId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The application ID.
+        Id:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The environment ID.
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the environment.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: The description of the environment.
+        State:
+          allOf:
+            - $ref: '#/components/schemas/EnvironmentState'
+            - description: 'The state of the environment. An environment can be in one of the following states: <code>READY_FOR_DEPLOYMENT</code>, <code>DEPLOYING</code>, <code>ROLLING_BACK</code>, or <code>ROLLED_BACK</code> '
+        Monitors:
+          allOf:
+            - $ref: '#/components/schemas/MonitorList'
+            - description: Amazon CloudWatch alarms monitored during the deployment.
+    Monitor:
+      type: object
+      properties:
+        AlarmArn:
+          allOf:
+            - $ref: '#/components/schemas/Arn'
+            - description: ARN of the Amazon CloudWatch alarm.
+        AlarmRoleArn:
+          allOf:
+            - $ref: '#/components/schemas/RoleArn'
+            - description: ARN of an IAM role for AppConfig to monitor <code>AlarmArn</code>.
+      description: Amazon CloudWatch alarms to monitor during the deployment process.
+    HostedConfigurationVersion:
+      type: object
+      properties:
+        Content:
+          allOf:
+            - $ref: '#/components/schemas/Blob'
+            - description: The content of the configuration or the configuration data.
+    ServiceQuotaExceededException: {}
+    ConflictException: {}
+    PayloadTooLargeException: {}
+    Configuration:
+      type: object
+      properties:
+        Content:
+          allOf:
+            - $ref: '#/components/schemas/Blob'
+            - description: The content of the configuration or the configuration data.
+    Deployment:
+      type: object
+      properties:
+        ApplicationId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The ID of the application that was deployed.
+        EnvironmentId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The ID of the environment that was deployed.
+        DeploymentStrategyId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The ID of the deployment strategy that was deployed.
+        ConfigurationProfileId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The ID of the configuration profile that was deployed.
+        DeploymentNumber:
+          allOf:
+            - $ref: '#/components/schemas/Integer'
+            - description: The sequence number of the deployment.
+        ConfigurationName:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the configuration.
+        ConfigurationLocationUri:
+          allOf:
+            - $ref: '#/components/schemas/Uri'
+            - description: Information about the source location of the configuration.
+        ConfigurationVersion:
+          allOf:
+            - $ref: '#/components/schemas/Version'
+            - description: The configuration version that was deployed.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: The description of the deployment.
+        DeploymentDurationInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: Total amount of time the deployment lasted.
+        GrowthType:
+          allOf:
+            - $ref: '#/components/schemas/GrowthType'
+            - description: The algorithm used to define how percentage grew over time.
+        GrowthFactor:
+          allOf:
+            - $ref: '#/components/schemas/Percentage'
+            - description: The percentage of targets to receive a deployed configuration during each interval.
+        FinalBakeTimeInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: The amount of time AppConfig monitored for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+        State:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentState'
+            - description: The state of the deployment.
+        EventLog:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentEvents'
+            - description: A list containing all events related to a deployment. The most recent events are displayed first.
+        PercentageComplete:
+          allOf:
+            - $ref: '#/components/schemas/Percentage'
+            - description: The percentage of targets for which the deployment is available.
+        StartedAt:
+          allOf:
+            - $ref: '#/components/schemas/Iso8601DateTime'
+            - description: The time the deployment started.
+        CompletedAt:
+          allOf:
+            - $ref: '#/components/schemas/Iso8601DateTime'
+            - description: 'The time the deployment completed. '
+    Applications:
+      type: object
+      properties:
+        Items:
+          allOf:
+            - $ref: '#/components/schemas/ApplicationList'
+            - description: The elements from this collection.
+        NextToken:
+          allOf:
+            - $ref: '#/components/schemas/NextToken'
+            - description: The token for the next set of items to return. Use this token to get the next set of results.
+    ConfigurationProfiles:
+      type: object
+      properties:
+        Items:
+          allOf:
+            - $ref: '#/components/schemas/ConfigurationProfileSummaryList'
+            - description: The elements from this collection.
+        NextToken:
+          allOf:
+            - $ref: '#/components/schemas/NextToken'
+            - description: The token for the next set of items to return. Use this token to get the next set of results.
+    DeploymentStrategies:
+      type: object
+      properties:
+        Items:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentStrategyList'
+            - description: The elements from this collection.
+        NextToken:
+          allOf:
+            - $ref: '#/components/schemas/NextToken'
+            - description: The token for the next set of items to return. Use this token to get the next set of results.
+    Deployments:
+      type: object
+      properties:
+        Items:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentList'
+            - description: The elements from this collection.
+        NextToken:
+          allOf:
+            - $ref: '#/components/schemas/NextToken'
+            - description: The token for the next set of items to return. Use this token to get the next set of results.
+    Environments:
+      type: object
+      properties:
+        Items:
+          allOf:
+            - $ref: '#/components/schemas/EnvironmentList'
+            - description: The elements from this collection.
+        NextToken:
+          allOf:
+            - $ref: '#/components/schemas/NextToken'
+            - description: The token for the next set of items to return. Use this token to get the next set of results.
+    HostedConfigurationVersions:
+      type: object
+      properties:
+        Items:
+          allOf:
+            - $ref: '#/components/schemas/HostedConfigurationVersionSummaryList'
+            - description: The elements from this collection.
+        NextToken:
+          allOf:
+            - $ref: '#/components/schemas/NextToken'
+            - description: The token for the next set of items to return. Use this token to get the next set of results.
+    ResourceTags:
+      type: object
+      properties:
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'Metadata to assign to AppConfig resources. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+    TagKey:
+      type: string
+      minLength: 1
+      maxLength: 128
+    Id:
+      type: string
+      pattern: '[a-z0-9]{4,7}'
+    Name:
+      type: string
+      minLength: 1
+      maxLength: 64
+    Description:
+      type: string
+      minLength: 0
+      maxLength: 1024
+    ApplicationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Application'
+    NextToken:
+      type: string
+      minLength: 1
+      maxLength: 2048
+    Arn:
+      type: string
+      pattern: 'arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\d{1})?:(\d{12})?:[a-zA-Z0-9-_/:.]+'
+      minLength: 20
+      maxLength: 2048
+    Blob:
+      type: string
+      format: password
+    Version:
+      type: string
+      minLength: 1
+      maxLength: 1024
+    String:
+      type: string
+    Uri:
+      type: string
+      minLength: 1
+      maxLength: 2048
+    RoleArn:
+      type: string
+      pattern: '^((arn):(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov):(iam)::\d{12}:role[/].*)$'
+      minLength: 20
+      maxLength: 2048
+    ValidatorList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Validator'
+      minItems: 0
+      maxItems: 2
+    ValidatorTypeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ValidatorType'
+      minItems: 0
+      maxItems: 2
+    ConfigurationProfileSummary:
+      type: object
+      properties:
+        ApplicationId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The application ID.
+        Id:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The ID of the configuration profile.
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the configuration profile.
+        LocationUri:
+          allOf:
+            - $ref: '#/components/schemas/Uri'
+            - description: The URI location of the configuration.
+        ValidatorTypes:
+          allOf:
+            - $ref: '#/components/schemas/ValidatorTypeList'
+            - description: The types of validators in the configuration profile.
+      description: A summary of a configuration profile.
+    ConfigurationProfileSummaryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ConfigurationProfileSummary'
+    TagMap:
+      type: object
+      minProperties: 0
+      maxProperties: 50
+      additionalProperties:
+        $ref: '#/components/schemas/TagValue'
+    CreateApplicationRequest:
+      type: object
+      required:
+        - Name
+      title: CreateApplicationRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: A name for the application.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the application.
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'Metadata to assign to the application. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+    CreateConfigurationProfileRequest:
+      type: object
+      required:
+        - Name
+        - LocationUri
+      title: CreateConfigurationProfileRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: A name for the configuration profile.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the configuration profile.
+        LocationUri:
+          allOf:
+            - $ref: '#/components/schemas/Uri'
+            - description: 'A URI to locate the configuration. You can specify a Systems Manager (SSM) document, an SSM Parameter Store parameter, or an Amazon S3 object. For an SSM document, specify either the document name in the format <code>ssm-document://&lt;Document_name&gt;</code> or the Amazon Resource Name (ARN). For a parameter, specify either the parameter name in the format <code>ssm-parameter://&lt;Parameter_name&gt;</code> or the ARN. For an Amazon S3 object, specify the URI in the following format: <code>s3://&lt;bucket&gt;/&lt;objectKey&gt; </code>. Here is an example: s3://my-bucket/my-app/us-east-1/my-config.json'
+        RetrievalRoleArn:
+          allOf:
+            - $ref: '#/components/schemas/RoleArn'
+            - description: The ARN of an IAM role with permission to access the configuration at the specified LocationUri.
+        Validators:
+          allOf:
+            - $ref: '#/components/schemas/ValidatorList'
+            - description: A list of methods for validating the configuration.
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'Metadata to assign to the configuration profile. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+    MinutesBetween0And24Hours:
+      type: integer
+      minimum: 0
+      maximum: 1440
+    GrowthFactor:
+      type: number
+      format: float
+      minimum: 1
+      maximum: 100
+    GrowthType:
+      type: string
+      enum:
+        - LINEAR
+        - EXPONENTIAL
+    ReplicateTo:
+      type: string
+      enum:
+        - NONE
+        - SSM_DOCUMENT
+    CreateDeploymentStrategyRequest:
+      type: object
+      required:
+        - Name
+        - DeploymentDurationInMinutes
+        - GrowthFactor
+        - ReplicateTo
+      title: CreateDeploymentStrategyRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: A name for the deployment strategy.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the deployment strategy.
+        DeploymentDurationInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: Total amount of time for a deployment to last.
+        FinalBakeTimeInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: The amount of time AppConfig monitors for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+        GrowthFactor:
+          allOf:
+            - $ref: '#/components/schemas/GrowthFactor'
+            - description: The percentage of targets to receive a deployed configuration during each interval.
+        GrowthType:
+          allOf:
+            - $ref: '#/components/schemas/GrowthType'
+            - description: '<p>The algorithm used to define how percentage grows over time. AWS AppConfig supports the following growth types:</p> <p> <b>Linear</b>: For this type, AppConfig processes the deployment by dividing the total number of targets by the value specified for <code>Step percentage</code>. For example, a linear deployment that uses a <code>Step percentage</code> of 10 deploys the configuration to 10 percent of the hosts. After those deployments are complete, the system deploys the configuration to the next 10 percent. This continues until 100% of the targets have successfully received the configuration.</p> <p> <b>Exponential</b>: For this type, AppConfig processes the deployment exponentially using the following formula: <code>G*(2^N)</code>. In this formula, <code>G</code> is the growth factor specified by the user and <code>N</code> is the number of steps until the configuration is deployed to all targets. For example, if you specify a growth factor of 2, then the system rolls out the configuration as follows:</p> <p> <code>2*(2^0)</code> </p> <p> <code>2*(2^1)</code> </p> <p> <code>2*(2^2)</code> </p> <p>Expressed numerically, the deployment rolls out as follows: 2% of the targets, 4% of the targets, 8% of the targets, and continues until the configuration has been deployed to all targets.</p>'
+        ReplicateTo:
+          allOf:
+            - $ref: '#/components/schemas/ReplicateTo'
+            - description: Save the deployment strategy to a Systems Manager (SSM) document.
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'Metadata to assign to the deployment strategy. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+    MonitorList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Monitor'
+      minItems: 0
+      maxItems: 5
+    CreateEnvironmentRequest:
+      type: object
+      required:
+        - Name
+      title: CreateEnvironmentRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: A name for the environment.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the environment.
+        Monitors:
+          allOf:
+            - $ref: '#/components/schemas/MonitorList'
+            - description: Amazon CloudWatch alarms to monitor during the deployment process.
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'Metadata to assign to the environment. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+    StringWithLengthBetween1And255:
+      type: string
+      minLength: 1
+      maxLength: 255
+    Integer:
+      type: integer
+    CreateHostedConfigurationVersionRequest:
+      type: object
+      required:
+        - Content
+      title: CreateHostedConfigurationVersionRequest
+      properties:
+        Content:
+          allOf:
+            - $ref: '#/components/schemas/Blob'
+            - description: The content of the configuration or the configuration data.
+    DeleteApplicationRequest:
+      type: object
+      title: DeleteApplicationRequest
+      properties: {}
+    DeleteConfigurationProfileRequest:
+      type: object
+      title: DeleteConfigurationProfileRequest
+      properties: {}
+    DeploymentStrategyId:
+      type: string
+      pattern: '(^[a-z0-9]{4,7}$|^AppConfig\.[A-Za-z0-9]{9,40}$)'
+    DeleteDeploymentStrategyRequest:
+      type: object
+      title: DeleteDeploymentStrategyRequest
+      properties: {}
+    DeleteEnvironmentRequest:
+      type: object
+      title: DeleteEnvironmentRequest
+      properties: {}
+    DeleteHostedConfigurationVersionRequest:
+      type: object
+      title: DeleteHostedConfigurationVersionRequest
+      properties: {}
+    Percentage:
+      type: number
+      format: float
+      minimum: 1
+      maximum: 100
+    DeploymentState:
+      type: string
+      enum:
+        - BAKING
+        - VALIDATING
+        - DEPLOYING
+        - COMPLETE
+        - ROLLING_BACK
+        - ROLLED_BACK
+    DeploymentEvents:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeploymentEvent'
+    Iso8601DateTime:
+      type: string
+      format: date-time
+    DeploymentEventType:
+      type: string
+      enum:
+        - PERCENTAGE_UPDATED
+        - ROLLBACK_STARTED
+        - ROLLBACK_COMPLETED
+        - BAKE_TIME_STARTED
+        - DEPLOYMENT_STARTED
+        - DEPLOYMENT_COMPLETED
+    TriggeredBy:
+      type: string
+      enum:
+        - USER
+        - APPCONFIG
+        - CLOUDWATCH_ALARM
+        - INTERNAL_ERROR
+    DeploymentEvent:
+      type: object
+      properties:
+        EventType:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentEventType'
+            - description: 'The type of deployment event. Deployment event types include the start, stop, or completion of a deployment; a percentage update; the start or stop of a bake period; the start or completion of a rollback.'
+        TriggeredBy:
+          allOf:
+            - $ref: '#/components/schemas/TriggeredBy'
+            - description: 'The entity that triggered the deployment event. Events can be triggered by a user, AWS AppConfig, an Amazon CloudWatch alarm, or an internal error.'
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: 'A description of the deployment event. Descriptions include, but are not limited to, the user account or the CloudWatch alarm ARN that initiated a rollback, the percentage of hosts that received the deployment, or in the case of an internal error, a recommendation to attempt a new deployment.'
+        OccurredAt:
+          allOf:
+            - $ref: '#/components/schemas/Iso8601DateTime'
+            - description: The date and time the event occurred.
+      description: An object that describes a deployment event.
+    DeploymentSummary:
+      type: object
+      properties:
+        DeploymentNumber:
+          allOf:
+            - $ref: '#/components/schemas/Integer'
+            - description: The sequence number of the deployment.
+        ConfigurationName:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the configuration.
+        ConfigurationVersion:
+          allOf:
+            - $ref: '#/components/schemas/Version'
+            - description: The version of the configuration.
+        DeploymentDurationInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: Total amount of time the deployment lasted.
+        GrowthType:
+          allOf:
+            - $ref: '#/components/schemas/GrowthType'
+            - description: The algorithm used to define how percentage grows over time.
+        GrowthFactor:
+          allOf:
+            - $ref: '#/components/schemas/Percentage'
+            - description: The percentage of targets to receive a deployed configuration during each interval.
+        FinalBakeTimeInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: The amount of time AppConfig monitors for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+        State:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentState'
+            - description: The state of the deployment.
+        PercentageComplete:
+          allOf:
+            - $ref: '#/components/schemas/Percentage'
+            - description: The percentage of targets for which the deployment is available.
+        StartedAt:
+          allOf:
+            - $ref: '#/components/schemas/Iso8601DateTime'
+            - description: Time the deployment started.
+        CompletedAt:
+          allOf:
+            - $ref: '#/components/schemas/Iso8601DateTime'
+            - description: Time the deployment completed.
+      description: Information about the deployment.
+    DeploymentList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeploymentSummary'
+    DeploymentStrategyList:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeploymentStrategy'
+    EnvironmentState:
+      type: string
+      enum:
+        - READY_FOR_DEPLOYMENT
+        - DEPLOYING
+        - ROLLING_BACK
+        - ROLLED_BACK
+    EnvironmentList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Environment'
+    GetApplicationRequest:
+      type: object
+      title: GetApplicationRequest
+      properties: {}
+    GetConfigurationProfileRequest:
+      type: object
+      title: GetConfigurationProfileRequest
+      properties: {}
+    StringWithLengthBetween1And64:
+      type: string
+      minLength: 1
+      maxLength: 64
+    GetConfigurationRequest:
+      type: object
+      title: GetConfigurationRequest
+      properties: {}
+    GetDeploymentRequest:
+      type: object
+      title: GetDeploymentRequest
+      properties: {}
+    GetDeploymentStrategyRequest:
+      type: object
+      title: GetDeploymentStrategyRequest
+      properties: {}
+    GetEnvironmentRequest:
+      type: object
+      title: GetEnvironmentRequest
+      properties: {}
+    GetHostedConfigurationVersionRequest:
+      type: object
+      title: GetHostedConfigurationVersionRequest
+      properties: {}
+    HostedConfigurationVersionSummary:
+      type: object
+      properties:
+        ApplicationId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The application ID.
+        ConfigurationProfileId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The configuration profile ID.
+        VersionNumber:
+          allOf:
+            - $ref: '#/components/schemas/Integer'
+            - description: The configuration version.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the configuration.
+        ContentType:
+          allOf:
+            - $ref: '#/components/schemas/StringWithLengthBetween1And255'
+            - description: 'A standard MIME type describing the format of the configuration content. For more information, see <a href="https://docs.aws.amazon.com/https:/www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17">Content-Type</a>.'
+      description: Information about the configuration.
+    HostedConfigurationVersionSummaryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/HostedConfigurationVersionSummary'
+    MaxResults:
+      type: integer
+      minimum: 1
+      maximum: 50
+    ListApplicationsRequest:
+      type: object
+      title: ListApplicationsRequest
+      properties: {}
+    ListConfigurationProfilesRequest:
+      type: object
+      title: ListConfigurationProfilesRequest
+      properties: {}
+    ListDeploymentStrategiesRequest:
+      type: object
+      title: ListDeploymentStrategiesRequest
+      properties: {}
+    ListDeploymentsRequest:
+      type: object
+      title: ListDeploymentsRequest
+      properties: {}
+    ListEnvironmentsRequest:
+      type: object
+      title: ListEnvironmentsRequest
+      properties: {}
+    ListHostedConfigurationVersionsRequest:
+      type: object
+      title: ListHostedConfigurationVersionsRequest
+      properties: {}
+    ListTagsForResourceRequest:
+      type: object
+      title: ListTagsForResourceRequest
+      properties: {}
+    StartDeploymentRequest:
+      type: object
+      required:
+        - DeploymentStrategyId
+        - ConfigurationProfileId
+        - ConfigurationVersion
+      title: StartDeploymentRequest
+      properties:
+        DeploymentStrategyId:
+          allOf:
+            - $ref: '#/components/schemas/DeploymentStrategyId'
+            - description: The deployment strategy ID.
+        ConfigurationProfileId:
+          allOf:
+            - $ref: '#/components/schemas/Id'
+            - description: The configuration profile ID.
+        ConfigurationVersion:
+          allOf:
+            - $ref: '#/components/schemas/Version'
+            - description: The configuration version to deploy.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the deployment.
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'Metadata to assign to the deployment. Tags help organize and categorize your AppConfig resources. Each tag consists of a key and an optional value, both of which you define.'
+    StopDeploymentRequest:
+      type: object
+      title: StopDeploymentRequest
+      properties: {}
+    StringWithLengthBetween0And32768:
+      type: string
+      minLength: 0
+      maxLength: 32768
+      format: password
+    TagKeyList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TagKey'
+      minItems: 0
+      maxItems: 50
+    TagResourceRequest:
+      type: object
+      required:
+        - Tags
+      title: TagResourceRequest
+      properties:
+        Tags:
+          allOf:
+            - $ref: '#/components/schemas/TagMap'
+            - description: 'The key-value string map. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.'
+    UntagResourceRequest:
+      type: object
+      title: UntagResourceRequest
+      properties: {}
+    UpdateApplicationRequest:
+      type: object
+      title: UpdateApplicationRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the application.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the application.
+    UpdateConfigurationProfileRequest:
+      type: object
+      title: UpdateConfigurationProfileRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the configuration profile.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the configuration profile.
+        RetrievalRoleArn:
+          allOf:
+            - $ref: '#/components/schemas/RoleArn'
+            - description: The ARN of an IAM role with permission to access the configuration at the specified LocationUri.
+        Validators:
+          allOf:
+            - $ref: '#/components/schemas/ValidatorList'
+            - description: A list of methods for validating the configuration.
+    UpdateDeploymentStrategyRequest:
+      type: object
+      title: UpdateDeploymentStrategyRequest
+      properties:
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the deployment strategy.
+        DeploymentDurationInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: Total amount of time for a deployment to last.
+        FinalBakeTimeInMinutes:
+          allOf:
+            - $ref: '#/components/schemas/MinutesBetween0And24Hours'
+            - description: The amount of time AppConfig monitors for alarms before considering the deployment to be complete and no longer eligible for automatic roll back.
+        GrowthFactor:
+          allOf:
+            - $ref: '#/components/schemas/GrowthFactor'
+            - description: The percentage of targets to receive a deployed configuration during each interval.
+        GrowthType:
+          allOf:
+            - $ref: '#/components/schemas/GrowthType'
+            - description: '<p>The algorithm used to define how percentage grows over time. AWS AppConfig supports the following growth types:</p> <p> <b>Linear</b>: For this type, AppConfig processes the deployment by increments of the growth factor evenly distributed over the deployment time. For example, a linear deployment that uses a growth factor of 20 initially makes the configuration available to 20 percent of the targets. After 1/5th of the deployment time has passed, the system updates the percentage to 40 percent. This continues until 100% of the targets are set to receive the deployed configuration.</p> <p> <b>Exponential</b>: For this type, AppConfig processes the deployment exponentially using the following formula: <code>G*(2^N)</code>. In this formula, <code>G</code> is the growth factor specified by the user and <code>N</code> is the number of steps until the configuration is deployed to all targets. For example, if you specify a growth factor of 2, then the system rolls out the configuration as follows:</p> <p> <code>2*(2^0)</code> </p> <p> <code>2*(2^1)</code> </p> <p> <code>2*(2^2)</code> </p> <p>Expressed numerically, the deployment rolls out as follows: 2% of the targets, 4% of the targets, 8% of the targets, and continues until the configuration has been deployed to all targets.</p>'
+    UpdateEnvironmentRequest:
+      type: object
+      title: UpdateEnvironmentRequest
+      properties:
+        Name:
+          allOf:
+            - $ref: '#/components/schemas/Name'
+            - description: The name of the environment.
+        Description:
+          allOf:
+            - $ref: '#/components/schemas/Description'
+            - description: A description of the environment.
+        Monitors:
+          allOf:
+            - $ref: '#/components/schemas/MonitorList'
+            - description: Amazon CloudWatch alarms to monitor during the deployment process.
+    ValidateConfigurationRequest:
+      type: object
+      title: ValidateConfigurationRequest
+      properties: {}
+    ValidatorType:
+      type: string
+      enum:
+        - JSON_SCHEMA
+        - LAMBDA
+security:
+  - hmac: []
