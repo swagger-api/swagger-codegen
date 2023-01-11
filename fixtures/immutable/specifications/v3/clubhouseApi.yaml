@@ -1,0 +1,1398 @@
+openapi: 3.0.0
+servers:
+  - url: https://www.clubhouseapi.com/api/
+info:
+  description: Clubhouse API
+  title: Clubhouse API
+  version: "1"
+  x-apisguru-categories:
+    - social
+  x-origin:
+    - format: openapi
+      url: https://raw.githubusercontent.com/zhuowei/ClubhouseAPI/main/doc/openapi.yaml
+      version: "3.0"
+  x-providerName: clubhouseapi.com
+paths:
+  /call_phone_number_auth:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value: {}
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                jsonObject: {}
+          description: success
+      summary: Call phone number auth.
+  /check_for_update:
+    get:
+      parameters:
+        - example: 1
+          in: query
+          name: is_testflight
+          schema:
+            type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                hasUpdate:
+                  value:
+                    app_build: 262
+                    app_url: https://apps.apple.com/us/app/id1503133294
+                    app_version: 0.1.24
+                    has_update: true
+                    is_mandatory: true
+                    success: true
+                noUpdate:
+                  value:
+                    has_update: false
+                    success: true
+          description: successful response
+      summary: Clubhouse uses this to check for updates when app is not installed from
+        App Store (eg TestFlight)
+  /check_waitlist_status:
+    post:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                waitlisted:
+                  value:
+                    is_onboarding: true
+                    is_waitlisted: true
+                    success: true
+          description: got waitlist status
+        "401":
+          content:
+            application/json:
+              examples:
+                error:
+                  value:
+                    detail: Authentication credentials were not provided.
+          description: authorization not provided
+      summary: checks waitlist status.
+  /complete_phone_number_auth:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  phone_number: "+1234567890"
+                  verification_code: "1234"
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    access_token: <jwt>
+                    auth_token: <auth_token>
+                    is_onboarding: true
+                    is_verified: true
+                    is_waitlisted: true
+                    refresh_token: <jwt>
+                    success: true
+                    user_profile:
+                      name:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      photo_url:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      user_id: 1234
+                      username:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+          description: success
+      summary: Call phone number auth.
+  /create_channel:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              openNoTopic:
+                value:
+                  club_id:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  event_id:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  is_private: false
+                  is_social_mode: false
+                  topic:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  user_ids: []
+              socialWithTopic:
+                value:
+                  club_id:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  event_id:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  is_private: false
+                  is_social_mode: true
+                  topic: topic
+                  user_ids: []
+            schema:
+              type: object
+      responses:
+        "400":
+          content:
+            application/json:
+              examples:
+                waitlisted:
+                  value:
+                    error_message: Your account is waitlisted. Please contact us if this is in
+                      error.
+                    success: false
+          description: waitlisted
+      summary: creates a channel
+  /follow:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  user_id: 1234
+            schema:
+              type: object
+      responses:
+        "401":
+          content:
+            application/json:
+              examples:
+                waitlisted:
+                  value:
+                    error_message: Your account is waitlisted. Please contact us if this is in
+                      error.
+                    success: false
+          description: waitlisted
+      summary: follows a user
+  /get_actionable_notifications:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                empty:
+                  value:
+                    count: 0
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    notifications: []
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+          description: Returns a list of actionable notifications.
+      summary: get actionable notifications (the bell again)
+  /get_all_topics:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                latest:
+                  value:
+                    topics:
+                      - abbreviated_title: Example
+                        id: 1
+                        title: Example
+                        topics:
+                          - abbreviated_title: The Future
+                            id: 140
+                            title: ⏳ The Future
+          description: a list of topics
+      summary: gets all topics.
+  /get_channels:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                channels:
+                  value:
+                    channels:
+                      - channel: abcdefgh
+                        channel_id: 123456
+                        club:
+                          club_id: 12345
+                          description: Club description
+                          enable_private: true
+                          is_community: false
+                          is_follow_allowed: true
+                          is_membership_private: false
+                          name: Club name
+                          num_followers: 456
+                          num_members: 123
+                          num_online: 0
+                          photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<guid>_thumbnail_250x250
+                          rules:
+                            - desc: Description
+                              title: Rule
+                        club_id: 12345
+                        club_name: Club name
+                        creator_user_profile_id: 1234
+                        has_blocked_speakers: false
+                        is_explore_channel: false
+                        is_private: false
+                        is_social_mode: false
+                        num_all: 1234
+                        num_other: 0
+                        num_speakers: 123
+                        topic: Example Topic
+                        url: https://www.joinclubhouse.com/room/abcdefgh
+                        users:
+                          - is_followed_by_speaker: true
+                            is_invited_as_speaker: false
+                            is_moderator: true
+                            is_speaker: true
+                            name: John Example
+                            photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>_thumbnail_250x250
+                            time_joined_as_speaker: 2021-01-20T00:00:00.000000+00:00
+                            user_id: 1234
+                        welcome_for_user_profile:
+                          $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                            les/value/email"
+                    events: []
+                    success: true
+          description: list of channels
+      summary: get all channels
+  /get_club:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  club_id: 1234
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                club:
+                  value:
+                    added_by_user_profile:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    club:
+                      club_id: 123
+                      description: Example
+                      is_follower: false
+                      is_member: false
+                      name: Example Club
+                      num_followers: 456
+                      num_members: 123
+                      photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<guid>_thumbnail_250x250
+                    invite_link:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    is_admin: false
+                    is_follower: false
+                    is_member: false
+                    is_pending_accept: false
+                    is_pending_approval: false
+                    member_user_ids: []
+                    num_invites: 0
+                    success: true
+                    topics:
+                      - abbreviated_title: Topic Example
+                        id: 140
+                        title: Topic Example
+          description: returns club object
+      summary: gets club by id
+  /get_clubs_for_topic:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  topic_id: 140
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                clubs:
+                  value:
+                    clubs:
+                      - club_id: 123
+                        description: Example
+                        is_follower: false
+                        is_member: false
+                        name: Example Club
+                        num_followers: 456
+                        num_members: 123
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<guid>_thumbnail_250x250
+                    count: 1
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+          description: returns list of clubs with pagination
+      summary: looks up clubs by topic.
+  /get_create_channel_targets:
+    post:
+      requestBody:
+        content:
+          application/json:
+            example: {}
+            schema:
+              type: object
+      responses:
+        "400":
+          content:
+            application/json:
+              examples:
+                waitlisted:
+                  value:
+                    error_message: Your account is waitlisted. Please contact us if this is in
+                      error.
+                    success: false
+          description: waitlisted
+      summary: is fetched when you tap Create Room
+  /get_events:
+    get:
+      parameters:
+        - example: true
+          in: query
+          name: is_filtered
+          schema:
+            type: boolean
+        - example: 25
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - example: 1
+          in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                emptyEventsList:
+                  value:
+                    count: 0
+                    events: []
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+          description: a list of events
+      summary: the Upcoming for You page
+  /get_following:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  user_id: 1234
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    clubs:
+                      - club_id: 123
+                        description: Example
+                        is_follower: false
+                        is_member: false
+                        name: Example Club
+                        num_followers: 456
+                        num_members: 123
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<guid>_thumbnail_250x250
+                    count: 2
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+                    users:
+                      - bio: Bio
+                        name: John Smith
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<uuid>_thumbnail_250x250
+                        twitter:
+                          $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                            les/value/email"
+                        user_id: 12345
+                        username: johnsmith
+          description: returns list of users and clubs
+      summary: get a list of the users and clubs that this user is following. Returned
+        users have bios truncated to ~80 characters.
+  /get_notifications:
+    get:
+      parameters:
+        - example: 20
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - example: 1
+          in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                empty:
+                  value:
+                    count: 0
+                    disabled: false
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    notifications: []
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+          description: Returns a list of notifications.
+      summary: get notifications (the bell icon)
+  /get_online_friends:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              emptyRequest:
+                value: {}
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                emptyOnlineFriends:
+                  value:
+                    clubs: []
+                    users: []
+          description: a list of online clubs and users.
+      summary: gets online friends on the app homepage.
+  /get_profile:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  user_id: 4075733
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                user_profile:
+                  value:
+                    success: true
+                    user_profile:
+                      bio: 🌸 Creating INEVITABLE™ Services
+                      can_edit_displayname: true
+                      can_edit_name: true
+                      can_edit_username: true
+                      clubs:
+                        - club_id: 12345
+                          description: Club description
+                          enable_private: true
+                          is_community: false
+                          is_follow_allowed: true
+                          is_membership_private: false
+                          name: Club name
+                          num_followers: 456
+                          num_members: 123
+                          num_online: 0
+                          photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<guid>_thumbnail_250x250
+                          rules:
+                            - desc: Description
+                              title: Rule
+                      displayname:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      follows_me: false
+                      has_verified_email: true
+                      instagram: _junhoyeo
+                      invited_by_user_profile:
+                        name: Example Norminator
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>_thumbnail_250x250
+                        user_id: 1234
+                        username: myexamplenorminator
+                      is_blocked_by_network: false
+                      mutual_follows: []
+                      mutual_follows_count: 0
+                      name: Junho Yeo
+                      notification_type:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      num_followers: 103
+                      num_following: 98
+                      photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>
+                      time_created: 2021-01-28T12:30:25.625451+00:00
+                      topics:
+                        - abbreviated_title: Startups
+                          id: 107
+                          title: 🦄 Startups
+                      twitter:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      user_id: 4075733
+                      username: junhoyeo
+          description: returns user profile info
+      summary: looks up user profile by ID.
+  /get_release_notes:
+    post:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                latest:
+                  value:
+                    action: See What's New
+                    should_display: true
+                    title: 🕹 You are now using the latest update of Clubhouse!
+                    url: https://whatsnew.joinclubhouse.com
+          description: the response
+      summary: gets release notes.
+  /get_settings:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                defaultSettings:
+                  value:
+                    notifications_enable_trending: true
+                    notifications_frequency: 3
+                    notifications_is_paused: false
+                    success: true
+          description: notification settings
+      summary: get notification settings
+  /get_suggested_club_invites:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  contacts:
+                    - name: aaa
+                      phone_number: "+11234567890"
+                  upload_contacts: true
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                empty:
+                  value:
+                    success: true
+                    suggested_invites: []
+          description: returns list of suggested invites.
+      summary: find users to invite to clubs based on phone number
+  /get_suggested_follows_all:
+    get:
+      parameters:
+        - example: true
+          in: query
+          name: in_onboarding
+          schema:
+            type: boolean
+        - example: 50
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - example: 1
+          in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                usersFromOnboard:
+                  value:
+                    count: 59
+                    next: 2
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+                    users:
+                      - bio: Example bio
+                        name: John Smith
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>_thumbnail_250x250
+                        twitter: johnsmith
+                        user_id: 1234
+                        username: rohan
+          description: a list of users to follow. bios truncated to 80 chars.
+      summary: gets suggested follows during signup
+  /get_suggested_follows_friends_only:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              noContacts:
+                value:
+                  club_id:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  contacts: []
+                  upload_contacts: true
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                noContacts:
+                  value:
+                    success: true
+                    users: []
+          description: returns list of users and clubs
+      summary: find people to follow by uploading contacts during signup
+  /get_suggested_follows_similar:
+    post:
+      requestBody:
+        content:
+          application/json:
+            example:
+              user_id: 4
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                successful:
+                  value:
+                    success: true
+                    users:
+                      - bio: ""
+                        name: John Smith
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<uuid>_thumbnail_250x250
+                        twitter:
+                          $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                            les/value/email"
+                        user_id: "1234"
+                        username: johnsmith
+          description: Returns a list of users. Bios truncated to 80 chars.
+      summary: find similar users. (The Sparkles button on Clubhouse's profile page)
+  /get_suggested_invites:
+    post:
+      description: (also see
+        https://zerforschung.org/posts/clubhouse-telefonnummern-en/ for
+        @zerforschung's analysis of the privacy implications of this API)
+      requestBody:
+        content:
+          application/json:
+            examples:
+              hasContact:
+                value:
+                  club_id:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  contacts:
+                    - phone_number: "+11234567890"
+                  upload_contacts: false
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                validUsers:
+                  value:
+                    num_invites: 0
+                    success: true
+                    suggested_invites:
+                      - in_app: false
+                        is_invited: false
+                        num_friends: 0
+                        phone_number: "+11234567890"
+          description: returns list of users that can be invited.
+      summary: find users to invite based on phone number.
+  /get_suggested_speakers:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              startingPrivateRoom:
+                value:
+                  channel:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                empty:
+                  value:
+                    clubs: []
+                    count: 0
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+                    users: []
+          description: Returns a list of actionable notifications.
+      summary: gets suggested users when you start a private room
+  /get_topic:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  topic_id: 140
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                topic:
+                  value:
+                    success: true
+                    topic:
+                      abbreviated_title: The Future
+                      id: 140
+                      title: ⏳ The Future
+          description: returns topic info
+      summary: looks up topic by ID.
+  /get_users_for_topic:
+    get:
+      parameters:
+        - example: 140
+          in: query
+          name: topic_id
+          schema:
+            type: integer
+        - example: 25
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - example: 1
+          in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                users:
+                  value:
+                    count: 1
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+                    users:
+                      - bio: John Example is an exemplary user object
+                        name: John Example
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>_thumbnail_250x250
+                        twitter: john_example
+                        user_id: 1234
+                        username: john_example
+          description: returns list of users with pagination. Bios truncated to 80 chars.
+      summary: looks up users by topic.
+  /get_welcome_channel:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                defaultSettings:
+                  value:
+                    is_empty: true
+                    success: true
+          description: empty???
+      summary: called during signup
+  /invite_from_waitlist:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  user_id: 1234
+            schema:
+              type: object
+      responses:
+        "400":
+          content:
+            application/json:
+              examples:
+                someOtherError:
+                  value:
+                    error_message: ""
+                    success: false
+                waitlisted:
+                  value:
+                    error_message: Your account is waitlisted. Please contact us if this is in
+                      error.
+                    success: false
+          description: your own account is waitlisted, or some other error occurred
+      summary: wave to another user on the waitlist to give them access
+  /invite_to_app:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  message:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  name: John Smith
+                  phone_number: "+11234567890"
+            schema:
+              type: object
+      responses:
+        "400":
+          content:
+            application/json:
+              examples:
+                waitlisted:
+                  value:
+                    error_message: Your account is waitlisted. Please contact us if this is in
+                      error.
+                    success: false
+          description: your own account doesn't have an invite either
+      summary: invite a user to the app, using one of your invites
+  /join_channel:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              joinFromAppHomeScreen:
+                value:
+                  attribution_details: eyJpc19leHBsb3JlIjpmYWxzZSwicmFuayI6MX0=
+                  attribution_source: feed
+                  channel: abcdefgh
+              justChannelIsEnough:
+                value:
+                  channel: abcdefgh
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                channel:
+                  value:
+                    agora_native_mute: true
+                    channel: abcdefgh
+                    channel_id: 123456
+                    club:
+                      club_id: 1234
+                      description: Club description
+                      enable_private: true
+                      is_community: false
+                      is_follow_allowed: true
+                      is_membership_private: false
+                      name: Club name
+                      num_followers: 567
+                      num_members: 123
+                      num_online: 0
+                      photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<guid>_thumbnail_250x250
+                      rules: []
+                    club_id: 45
+                    club_name: Startup Club
+                    creator_user_profile_id: 1234
+                    handraise_permission: 1
+                    is_club_admin: false
+                    is_club_member: false
+                    is_empty: false
+                    is_handraise_enabled: true
+                    is_private: false
+                    is_social_mode: false
+                    pubnub_enable: true
+                    pubnub_heartbeat_interval: 29
+                    pubnub_heartbeat_value: 60
+                    pubnub_origin:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    pubnub_token: <pubnub_token>
+                    rtm_token: <rtm_token>
+                    success: true
+                    token: <token>
+                    topic: Channel topic
+                    url: https://www.joinclubhouse.com/room/abcdefgh
+                    users:
+                      - first_name: John
+                        is_followed_by_speaker: true
+                        is_invited_as_speaker: true
+                        is_moderator: true
+                        is_new: true
+                        is_speaker: true
+                        name: John Example
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>_thumbnail_250x250
+                        skintone: 3
+                        time_joined_as_speaker: 2021-01-31T00:00:00.000000+00:00
+                        user_id: 123456
+                        username: john_example
+                      - first_name: Current
+                        is_followed_by_speaker: false
+                        is_invited_as_speaker: false
+                        is_moderator: false
+                        is_new: false
+                        is_speaker: false
+                        name: The currently joining user
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<guid>_thumbnail_250x250
+                        skintone: 3
+                        time_joined_as_speaker:
+                          $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                            les/value/email"
+                        user_id: 1234
+                        username: currentuser
+                    welcome_for_user_profile:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+          description: stuff needed to actually join a channel
+        "400":
+          content:
+            application/json:
+              examples:
+                appTooOld:
+                  value:
+                    error_message: Please upgrade the app to join rooms!
+                    success: false
+                roomNotAvailable:
+                  value:
+                    error_message: |-
+                      That room is no longer available 👋🏼
+                      Try starting a new one instead?
+                    success: false
+          description: cannot join
+      summary: join a channel.
+  /leave_channel:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  channel: abcdefgh
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                channel:
+                  value:
+                    success: true
+          description: left the channel
+      summary: leave a channel.
+  /me:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              clubhouseApp:
+                value:
+                  return_blocked_ids: true
+                  return_following_ids: true
+                  timezone_identifier: America/Los_Angeles
+              emptyAlsoWorks:
+                value: {}
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                examples:
+                  value:
+                    access_token: <jwt>
+                    actionable_notifications_count: 0
+                    auth_token: <auth_token>
+                    blocked_ids:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    email: null
+                    feature_flags:
+                      - ""
+                    following_ids:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    has_unread_notifications: false
+                    is_admin: false
+                    notifications_enabled: false
+                    num_invites: 0
+                    refresh_token: <jwt>
+                    success: true
+                    user_profile:
+                      name:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      photo_url:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+                      user_id: 1234
+                      username:
+                        $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                          les/value/email"
+          description: the response
+        "403":
+          content:
+            application/json:
+              examples:
+                examples:
+                  value:
+                    detail: You do not have permission to perform this action.
+          description: error response - happens if account is banned (is_blocked)
+      summary: gets user
+  /record_action_trails:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              appOpened:
+                value:
+                  action_trails:
+                    - blob_data: {}
+                      client_time_created: 1612971962
+                      trail_type: app_opened
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    success: true
+          description: always empty
+      summary: analytics
+  /refresh_token:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  refresh: <refresh_token>
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                validToken:
+                  value:
+                    access: <access_token>
+                    refresh: <refresh_token>
+          description: returns new access and refresh token
+        "401":
+          content:
+            application/json:
+              examples:
+                invalidToken:
+                  value:
+                    code: token_not_valid
+                    detail: Token is invalid or expired
+          description: invalid refresh token
+      summary: gets an access_token from a refresh_token.
+  /resend_phone_number_auth:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value: {}
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                jsonObject: {}
+          description: success
+      summary: Resend phone number auth.
+  /search_clubs:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              normalSearch:
+                value:
+                  cofollows_only: false
+                  followers_only: false
+                  following_only: false
+                  query: rohan
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                successful:
+                  value:
+                    clubs:
+                      - club_id: "1234"
+                        description: Example club
+                        is_follower: false
+                        is_member: false
+                        name: Example club
+                        num_followers: 1234
+                        num_members: 5678
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/club_<club_id>_<uuid>_thumbnail_250x250
+                    count: 1
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+          description: Returns a list of clubs.
+      summary: search clubs.
+  /search_users:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              normalSearch:
+                value:
+                  cofollows_only: false
+                  followers_only: false
+                  following_only: false
+                  query: johnsmith
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                successful:
+                  value:
+                    count: 1
+                    next:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    previous:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+                    users:
+                      - bio: Bio!
+                        name: John Smith
+                        photo_url: https://clubhouseprod.s3.amazonaws.com:443/<user_id>_<uuid>_thumbnail_250x250
+                        user_id: "1234"
+                        username: johnsmith
+          description: Returns a list of users.
+      summary: search for users
+  /start_phone_number_auth:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  phone_number: "+11234567890"
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                beingThrottled:
+                  value:
+                    is_blocked: false
+                    number_of_attempts_remaining: 3
+                    success: true
+                failure:
+                  value:
+                    error_message: ""
+                    is_blocked: false
+                    success: false
+                phoneBlocked:
+                  value:
+                    is_blocked: true
+                    success: true
+                success:
+                  value:
+                    error_message:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    is_blocked: false
+                    success: true
+                throttled:
+                  value:
+                    error_message: Our systems have detected high usage of this feature from your
+                      account. Please try again later.
+                    success: false
+          description: success
+      summary: Starts phone number auth.
+  /update_notifications:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              onboardingSetting:
+                value:
+                  apn_token:
+                    $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                      les/value/email"
+                  enable_trending: -1
+                  frequency: -1
+                  is_sandbox: false
+                  pause_till: -1
+                  system_enabled: 2
+            schema:
+              type: object
+      responses:
+        "400":
+          content:
+            application/json:
+              examples:
+                waitlisted:
+                  value:
+                    error_message: Your account is waitlisted. Please contact us if this is in
+                      error.
+                    success: false
+          description: waitlisted
+      summary: updates notification during signup.
+  /update_username:
+    post:
+      requestBody:
+        content:
+          application/json:
+            examples:
+              jsonObject:
+                value:
+                  username: hipsterhouse
+            schema:
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                success:
+                  value:
+                    error_message:
+                      $ref: "#/paths/~1me/post/responses/200/content/application~1json/examples/examp\
+                        les/value/email"
+                    success: true
+          description: username successfully set
+        "400":
+          content:
+            application/json:
+              examples:
+                emptyString:
+                  value:
+                    error_message: This username is not allowed. Please try another one.
+                    success: false
+                taken:
+                  value:
+                    error_message: This username has already been taken by a different user.
+                    success: false
+          description: invalid/taken username (eg empty string)
+      summary: edits username.
