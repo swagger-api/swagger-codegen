@@ -455,6 +455,30 @@
             </modules>
         </profile>
         <profile>
+            <id>java-client-okhttp4-gson</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp4-gson</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-okhttp4-gson-parcelable</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp4-gson/parcelableModel</module>
+            </modules>
+        </profile>
+        <profile>
             <id>java-client-retrofit</id>
             <activation>
                 <property>
