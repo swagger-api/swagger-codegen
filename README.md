@@ -347,7 +347,7 @@ To generate code with this image, you'll need to mount a local location as a vol
 Example:
 
 ```sh
-docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
+docker run --rm -v ${PWD}:/local:Z swaggerapi/swagger-codegen-cli generate \
     -i https://petstore.swagger.io/v2/swagger.json \
     -l go \
     -o /local/out/go
