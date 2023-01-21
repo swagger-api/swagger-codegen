@@ -70,7 +70,7 @@ jobs:
           options: " -DhideGenerationTimestamp=true -DapiTests=false,useOptional=true"
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -137,7 +137,7 @@ jobs:
           build-commands: "mvn clean package -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3"
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2

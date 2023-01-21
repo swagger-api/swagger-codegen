@@ -73,7 +73,7 @@ jobs:
           options: " -DnpmName=@swagger/angular2-typescript-petstore,npmVersion=0.0.1,npmRepository=https://skimdb.npmjs.com/registry,snapshot=false,ngVersion=5"
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -141,7 +141,7 @@ jobs:
           build-commands: "npm install -g @angular/cli__&&__npm install -g ng-packagr__&&__npm i__&&__npm run build"
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2
