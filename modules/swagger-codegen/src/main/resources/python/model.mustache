@@ -55,7 +55,11 @@ class {{classname}}({{#parent}}{{.}}{{/parent}}{{^parent}}object{{/parent}}):
 {{/discriminator}}
 
     def __init__(self{{#allVars}}, {{name}}={{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{/allVars}}, _configuration=None):  # noqa: E501
-        """{{classname}} - a model defined in Swagger"""  # noqa: E501
+        """{{classname}} - a model defined in Swagger"""  # noqa: E501   
+{{#parent}}
+        super().__init__({{#parentModel.vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentModel.vars}})  # noqa: E501
+
+{{/parent}}
         if _configuration is None:
             _configuration = Configuration()
         self._configuration = _configuration
@@ -75,10 +79,6 @@ class {{classname}}({{#parent}}{{.}}{{/parent}}{{^parent}}object{{/parent}}):
 {{/required}}
 {{/vars}}
 
-{{#parent}}
-        super().__init__({{#parentModel.vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/parentModel.vars}})  # noqa: E501
-
-{{/parent}}
 {{#vars}}
     @property
     def {{name}}(self):
