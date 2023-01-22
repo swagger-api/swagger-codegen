@@ -120,7 +120,7 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <swagger-codegen-version>3.0.37</swagger-codegen-version>
+        <swagger-codegen-version>3.0.38</swagger-codegen-version>
         <swagger-codegen-generators-version>1.0.37</swagger-codegen-generators-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.13.1</junit-version>
