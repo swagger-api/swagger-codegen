@@ -1153,6 +1153,46 @@
                 <version>${jmockit-version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20220924</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-common</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-server</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet-core</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-jaxb</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
@@ -1178,7 +1218,7 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.38-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.37</swagger-codegen-generators-version>
         <swagger-core-version>2.2.8</swagger-core-version>
         <swagger-core-version-v1>1.6.9</swagger-core-version-v1>
         <swagger-parser-version>2.1.11</swagger-parser-version>
@@ -1203,5 +1243,6 @@
         <jmockit-version>1.42</jmockit-version>
         <snakeyaml-version>1.33</snakeyaml-version>
         <handlebars-version>4.3.0</handlebars-version>
+        <jersey-version>2.35</jersey-version>
     </properties>
 </project>
