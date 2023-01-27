@@ -7,6 +7,7 @@ Enables webapplication deployment from the webapps directory.
 webapp
 
 [lib]
+lib/classpathfilter.jar
 lib/jetty-deploy-${jetty.version}.jar
 
 [files]
