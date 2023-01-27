@@ -1242,7 +1242,7 @@
         <reflections-version>0.9.11</reflections-version>
         <jmockit-version>1.42</jmockit-version>
         <snakeyaml-version>1.33</snakeyaml-version>
-        <handlebars-version>4.3.0</handlebars-version>
+        <handlebars-version>4.3.1</handlebars-version>
         <jersey-version>2.35</jersey-version>
     </properties>
 </project>
