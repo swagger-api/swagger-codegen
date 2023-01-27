@@ -13,7 +13,7 @@
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
   <Set name="contextPath">/</Set>
   <Set name="war"><Property name="jetty.webapps" default="."/>/ROOT.war</Set>
-  <New id="jarFilter" class="sun.misc.JarFilter">
+  <New id="jarFilter" class="io.swagger.v3.generator.filter.JarFilter">
   </New>
   <New id="classpathDirFile" class="java.io.File">
     <Arg>/jetty_home/lib/shared</Arg>
