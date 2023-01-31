@@ -1,4 +1,4 @@
-name: Build Test PR 3.0
+name: Build Test Push 3.0
 
 on:
   push:
