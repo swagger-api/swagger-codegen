@@ -76,6 +76,6 @@ jobs:
           echo "tagging $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
           docker tag $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
           echo "pushing $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
-          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:$${{ env.TAG }}-root
+          docker -D -l debug push $DOCKER_GENERATOR_FULL_IMAGE_NAME:$${{ env.TAG }}-root
     env:
       TAG: ${{ github.event.inputs.tag }}
