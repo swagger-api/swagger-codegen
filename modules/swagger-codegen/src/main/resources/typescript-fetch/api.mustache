@@ -263,11 +263,21 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
+            const producesMediaTypes: string[] = [
+            {{#produces}}
+                '{{{mediaType}}}'{{#hasMore}},{{/hasMore}}
+            {{/produces}}
+            ];
+
+            const producesPlainText = producesMediaTypes.indexOf("text/plain") !== -1;
+
             const localVarFetchArgs = {{classname}}FetchParamCreator(configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
+
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response{{#returnType}}.json(){{/returnType}};
+                        {{^returnType}}return response;{{/returnType}}
+                        {{#returnType}}return producesPlainText ? response.text() : response.json();{{/returnType}}
                     } else {
                         throw response;
                     }
