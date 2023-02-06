@@ -70,7 +70,7 @@ jobs:
           options: " --additional-properties packageGuid={3C799344-F285-4669-8FD5-7ED9B795D5C5} --additional-properties interface-controller=true --additional-properties aspnetCoreVersion=2.2"
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -137,7 +137,7 @@ jobs:
           build-commands: "sh ./build.sh"
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2
