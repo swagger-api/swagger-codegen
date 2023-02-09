@@ -28,10 +28,10 @@ class StoreApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def delete_order(self, order_id, **kwargs):  # noqa: E501
         """Delete purchase order by ID  # noqa: E501
@@ -138,7 +138,7 @@ class StoreApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: dict(str, int)
+        :return: typing.Dict[str, int]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -159,7 +159,7 @@ class StoreApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: dict(str, int)
+        :return: typing.Dict[str, int]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -207,7 +207,7 @@ class StoreApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='dict(str, int)',  # noqa: E501
+            response_type='typing.Dict[str, int]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),

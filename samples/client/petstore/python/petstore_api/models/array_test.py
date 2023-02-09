@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -33,9 +39,9 @@ class ArrayTest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'array_of_string': 'list[str]',
-        'array_array_of_integer': 'list[list[int]]',
-        'array_array_of_model': 'list[list[ReadOnlyFirst]]'
+        'array_of_string': 'typing.List[str]',
+        'array_array_of_integer': 'typing.List[typing.List[int]]',
+        'array_array_of_model': 'typing.List[typing.List[ReadOnlyFirst]]'
     }
 
     attribute_map = {
@@ -44,16 +50,16 @@ class ArrayTest(object):
         'array_array_of_model': 'array_array_of_model'
     }
 
-    def __init__(self, array_of_string=None, array_array_of_integer=None, array_array_of_model=None, _configuration=None):  # noqa: E501
+    def __init__(self, array_of_string: "typing.Optional[typing.List[str]]"=None, array_array_of_integer: "typing.Optional[typing.List[typing.List[int]]]"=None, array_array_of_model: "typing.Optional[typing.List[typing.List[ReadOnlyFirst]]]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """ArrayTest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._array_of_string = None
-        self._array_array_of_integer = None
-        self._array_array_of_model = None
-        self.discriminator = None
+        self._array_of_string: "typing.List[str]" = None
+        self._array_array_of_integer: "typing.List[typing.List[int]]" = None
+        self._array_array_of_model: "typing.List[typing.List[ReadOnlyFirst]]" = None
+        self.discriminator: None = None
 
         if array_of_string is not None:
             self.array_of_string = array_of_string
@@ -63,69 +69,69 @@ class ArrayTest(object):
             self.array_array_of_model = array_array_of_model
 
     @property
-    def array_of_string(self):
+    def array_of_string(self) -> "typing.List[str]":
         """Gets the array_of_string of this ArrayTest.  # noqa: E501
 
 
         :return: The array_of_string of this ArrayTest.  # noqa: E501
-        :rtype: list[str]
+        :rtype: typing.List[str]
         """
         return self._array_of_string
 
     @array_of_string.setter
-    def array_of_string(self, array_of_string):
+    def array_of_string(self, array_of_string: "typing.List[str]") -> None:
         """Sets the array_of_string of this ArrayTest.
 
 
         :param array_of_string: The array_of_string of this ArrayTest.  # noqa: E501
-        :type: list[str]
+        :type: typing.List[str]
         """
 
         self._array_of_string = array_of_string
 
     @property
-    def array_array_of_integer(self):
+    def array_array_of_integer(self) -> "typing.List[typing.List[int]]":
         """Gets the array_array_of_integer of this ArrayTest.  # noqa: E501
 
 
         :return: The array_array_of_integer of this ArrayTest.  # noqa: E501
-        :rtype: list[list[int]]
+        :rtype: typing.List[typing.List[int]]
         """
         return self._array_array_of_integer
 
     @array_array_of_integer.setter
-    def array_array_of_integer(self, array_array_of_integer):
+    def array_array_of_integer(self, array_array_of_integer: "typing.List[typing.List[int]]") -> None:
         """Sets the array_array_of_integer of this ArrayTest.
 
 
         :param array_array_of_integer: The array_array_of_integer of this ArrayTest.  # noqa: E501
-        :type: list[list[int]]
+        :type: typing.List[typing.List[int]]
         """
 
         self._array_array_of_integer = array_array_of_integer
 
     @property
-    def array_array_of_model(self):
+    def array_array_of_model(self) -> "typing.List[typing.List[ReadOnlyFirst]]":
         """Gets the array_array_of_model of this ArrayTest.  # noqa: E501
 
 
         :return: The array_array_of_model of this ArrayTest.  # noqa: E501
-        :rtype: list[list[ReadOnlyFirst]]
+        :rtype: typing.List[typing.List[ReadOnlyFirst]]
         """
         return self._array_array_of_model
 
     @array_array_of_model.setter
-    def array_array_of_model(self, array_array_of_model):
+    def array_array_of_model(self, array_array_of_model: "typing.List[typing.List[ReadOnlyFirst]]") -> None:
         """Sets the array_array_of_model of this ArrayTest.
 
 
         :param array_array_of_model: The array_array_of_model of this ArrayTest.  # noqa: E501
-        :type: list[list[ReadOnlyFirst]]
+        :type: typing.List[typing.List[ReadOnlyFirst]]
         """
 
         self._array_array_of_model = array_array_of_model
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -152,22 +158,22 @@ class ArrayTest(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, ArrayTest):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, ArrayTest):
             return True

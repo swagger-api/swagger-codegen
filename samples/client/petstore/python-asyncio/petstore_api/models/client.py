@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class Client(object):
@@ -38,17 +46,20 @@ class Client(object):
         'client': 'client'
     }
 
-    def __init__(self, client=None):  # noqa: E501
+    def __init__(self, client: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Client - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._client = None
-        self.discriminator = None
+        self._client: "str" = None
+        self.discriminator: None = None
 
         if client is not None:
             self.client = client
 
     @property
-    def client(self):
+    def client(self) -> "str":
         """Gets the client of this Client.  # noqa: E501
 
 
@@ -58,7 +69,7 @@ class Client(object):
         return self._client
 
     @client.setter
-    def client(self, client):
+    def client(self, client: "str") -> None:
         """Sets the client of this Client.
 
 
@@ -68,7 +79,7 @@ class Client(object):
 
         self._client = client
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -95,21 +106,24 @@ class Client(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Client):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, Client):
+            return True
+
+        return self.to_dict() != other.to_dict()

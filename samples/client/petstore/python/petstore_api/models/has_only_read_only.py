@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -42,15 +48,15 @@ class HasOnlyReadOnly(object):
         'foo': 'foo'
     }
 
-    def __init__(self, bar=None, foo=None, _configuration=None):  # noqa: E501
+    def __init__(self, bar: "typing.Optional[str]"=None, foo: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """HasOnlyReadOnly - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._bar = None
-        self._foo = None
-        self.discriminator = None
+        self._bar: "str" = None
+        self._foo: "str" = None
+        self.discriminator: None = None
 
         if bar is not None:
             self.bar = bar
@@ -58,7 +64,7 @@ class HasOnlyReadOnly(object):
             self.foo = foo
 
     @property
-    def bar(self):
+    def bar(self) -> "str":
         """Gets the bar of this HasOnlyReadOnly.  # noqa: E501
 
 
@@ -68,7 +74,7 @@ class HasOnlyReadOnly(object):
         return self._bar
 
     @bar.setter
-    def bar(self, bar):
+    def bar(self, bar: "str") -> None:
         """Sets the bar of this HasOnlyReadOnly.
 
 
@@ -79,7 +85,7 @@ class HasOnlyReadOnly(object):
         self._bar = bar
 
     @property
-    def foo(self):
+    def foo(self) -> "str":
         """Gets the foo of this HasOnlyReadOnly.  # noqa: E501
 
 
@@ -89,7 +95,7 @@ class HasOnlyReadOnly(object):
         return self._foo
 
     @foo.setter
-    def foo(self, foo):
+    def foo(self, foo: "str") -> None:
         """Sets the foo of this HasOnlyReadOnly.
 
 
@@ -99,7 +105,7 @@ class HasOnlyReadOnly(object):
 
         self._foo = foo
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -126,22 +132,22 @@ class HasOnlyReadOnly(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, HasOnlyReadOnly):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, HasOnlyReadOnly):
             return True

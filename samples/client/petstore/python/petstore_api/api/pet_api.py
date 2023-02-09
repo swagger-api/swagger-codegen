@@ -28,10 +28,10 @@ class PetApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def add_pet(self, body, **kwargs):  # noqa: E501
         """Add a new pet to the store  # noqa: E501
@@ -241,8 +241,8 @@ class PetApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] status: Status values that need to be considered for filter (required)
-        :return: list[Pet]
+        :param typing.List[str] status: Status values that need to be considered for filter (required)
+        :return: typing.List[Pet]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -263,8 +263,8 @@ class PetApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] status: Status values that need to be considered for filter (required)
-        :return: list[Pet]
+        :param typing.List[str] status: Status values that need to be considered for filter (required)
+        :return: typing.List[Pet]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -319,7 +319,7 @@ class PetApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[Pet]',  # noqa: E501
+            response_type='typing.List[Pet]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -337,8 +337,8 @@ class PetApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] tags: Tags to filter by (required)
-        :return: list[Pet]
+        :param typing.List[str] tags: Tags to filter by (required)
+        :return: typing.List[Pet]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -359,8 +359,8 @@ class PetApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] tags: Tags to filter by (required)
-        :return: list[Pet]
+        :param typing.List[str] tags: Tags to filter by (required)
+        :return: typing.List[Pet]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -415,7 +415,7 @@ class PetApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[Pet]',  # noqa: E501
+            response_type='typing.List[Pet]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),

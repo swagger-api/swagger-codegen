@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class ArrayOfArrayOfNumberOnly(object):
@@ -31,44 +39,47 @@ class ArrayOfArrayOfNumberOnly(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'array_array_number': 'list[list[float]]'
+        'array_array_number': 'typing.List[typing.List[float]]'
     }
 
     attribute_map = {
         'array_array_number': 'ArrayArrayNumber'
     }
 
-    def __init__(self, array_array_number=None):  # noqa: E501
+    def __init__(self, array_array_number: "typing.Optional[typing.List[typing.List[float]]]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """ArrayOfArrayOfNumberOnly - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._array_array_number = None
-        self.discriminator = None
+        self._array_array_number: "typing.List[typing.List[float]]" = None
+        self.discriminator: None = None
 
         if array_array_number is not None:
             self.array_array_number = array_array_number
 
     @property
-    def array_array_number(self):
+    def array_array_number(self) -> "typing.List[typing.List[float]]":
         """Gets the array_array_number of this ArrayOfArrayOfNumberOnly.  # noqa: E501
 
 
         :return: The array_array_number of this ArrayOfArrayOfNumberOnly.  # noqa: E501
-        :rtype: list[list[float]]
+        :rtype: typing.List[typing.List[float]]
         """
         return self._array_array_number
 
     @array_array_number.setter
-    def array_array_number(self, array_array_number):
+    def array_array_number(self, array_array_number: "typing.List[typing.List[float]]") -> None:
         """Sets the array_array_number of this ArrayOfArrayOfNumberOnly.
 
 
         :param array_array_number: The array_array_number of this ArrayOfArrayOfNumberOnly.  # noqa: E501
-        :type: list[list[float]]
+        :type: typing.List[typing.List[float]]
         """
 
         self._array_array_number = array_array_number
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -95,21 +106,24 @@ class ArrayOfArrayOfNumberOnly(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, ArrayOfArrayOfNumberOnly):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, ArrayOfArrayOfNumberOnly):
+            return True
+
+        return self.to_dict() != other.to_dict()

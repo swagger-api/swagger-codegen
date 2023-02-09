@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class ApiResponse(object):
@@ -42,13 +50,16 @@ class ApiResponse(object):
         'message': 'message'
     }
 
-    def __init__(self, code=None, type=None, message=None):  # noqa: E501
+    def __init__(self, code: "typing.Optional[int]"=None, type: "typing.Optional[str]"=None, message: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """ApiResponse - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._code = None
-        self._type = None
-        self._message = None
-        self.discriminator = None
+        self._code: "int" = None
+        self._type: "str" = None
+        self._message: "str" = None
+        self.discriminator: None = None
 
         if code is not None:
             self.code = code
@@ -58,7 +69,7 @@ class ApiResponse(object):
             self.message = message
 
     @property
-    def code(self):
+    def code(self) -> "int":
         """Gets the code of this ApiResponse.  # noqa: E501
 
 
@@ -68,7 +79,7 @@ class ApiResponse(object):
         return self._code
 
     @code.setter
-    def code(self, code):
+    def code(self, code: "int") -> None:
         """Sets the code of this ApiResponse.
 
 
@@ -79,7 +90,7 @@ class ApiResponse(object):
         self._code = code
 
     @property
-    def type(self):
+    def type(self) -> "str":
         """Gets the type of this ApiResponse.  # noqa: E501
 
 
@@ -89,7 +100,7 @@ class ApiResponse(object):
         return self._type
 
     @type.setter
-    def type(self, type):
+    def type(self, type: "str") -> None:
         """Sets the type of this ApiResponse.
 
 
@@ -100,7 +111,7 @@ class ApiResponse(object):
         self._type = type
 
     @property
-    def message(self):
+    def message(self) -> "str":
         """Gets the message of this ApiResponse.  # noqa: E501
 
 
@@ -110,7 +121,7 @@ class ApiResponse(object):
         return self._message
 
     @message.setter
-    def message(self, message):
+    def message(self, message: "str") -> None:
         """Sets the message of this ApiResponse.
 
 
@@ -120,7 +131,7 @@ class ApiResponse(object):
 
         self._message = message
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -147,21 +158,24 @@ class ApiResponse(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, ApiResponse):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, ApiResponse):
+            return True
+
+        return self.to_dict() != other.to_dict()

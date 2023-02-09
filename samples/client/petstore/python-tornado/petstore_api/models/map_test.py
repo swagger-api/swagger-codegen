@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class MapTest(object):
@@ -31,8 +39,8 @@ class MapTest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'map_map_of_string': 'dict(str, dict(str, str))',
-        'map_of_enum_string': 'dict(str, str)'
+        'map_map_of_string': 'typing.Dict[str, typing.Dict[str, str]]',
+        'map_of_enum_string': 'typing.Dict[str, str]'
     }
 
     attribute_map = {
@@ -40,12 +48,15 @@ class MapTest(object):
         'map_of_enum_string': 'map_of_enum_string'
     }
 
-    def __init__(self, map_map_of_string=None, map_of_enum_string=None):  # noqa: E501
+    def __init__(self, map_map_of_string: "typing.Optional[typing.Dict[str, typing.Dict[str, str]]]"=None, map_of_enum_string: "typing.Optional[typing.Dict[str, str]]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """MapTest - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._map_map_of_string = None
-        self._map_of_enum_string = None
-        self.discriminator = None
+        self._map_map_of_string: "typing.Dict[str, typing.Dict[str, str]]" = None
+        self._map_of_enum_string: "typing.Dict[str, str]" = None
+        self.discriminator: None = None
 
         if map_map_of_string is not None:
             self.map_map_of_string = map_map_of_string
@@ -53,46 +64,47 @@ class MapTest(object):
             self.map_of_enum_string = map_of_enum_string
 
     @property
-    def map_map_of_string(self):
+    def map_map_of_string(self) -> "typing.Dict[str, typing.Dict[str, str]]":
         """Gets the map_map_of_string of this MapTest.  # noqa: E501
 
 
         :return: The map_map_of_string of this MapTest.  # noqa: E501
-        :rtype: dict(str, dict(str, str))
+        :rtype: typing.Dict[str, typing.Dict[str, str]]
         """
         return self._map_map_of_string
 
     @map_map_of_string.setter
-    def map_map_of_string(self, map_map_of_string):
+    def map_map_of_string(self, map_map_of_string: "typing.Dict[str, typing.Dict[str, str]]") -> None:
         """Sets the map_map_of_string of this MapTest.
 
 
         :param map_map_of_string: The map_map_of_string of this MapTest.  # noqa: E501
-        :type: dict(str, dict(str, str))
+        :type: typing.Dict[str, typing.Dict[str, str]]
         """
 
         self._map_map_of_string = map_map_of_string
 
     @property
-    def map_of_enum_string(self):
+    def map_of_enum_string(self) -> "typing.Dict[str, str]":
         """Gets the map_of_enum_string of this MapTest.  # noqa: E501
 
 
         :return: The map_of_enum_string of this MapTest.  # noqa: E501
-        :rtype: dict(str, str)
+        :rtype: typing.Dict[str, str]
         """
         return self._map_of_enum_string
 
     @map_of_enum_string.setter
-    def map_of_enum_string(self, map_of_enum_string):
+    def map_of_enum_string(self, map_of_enum_string: "typing.Dict[str, str]") -> None:
         """Sets the map_of_enum_string of this MapTest.
 
 
         :param map_of_enum_string: The map_of_enum_string of this MapTest.  # noqa: E501
-        :type: dict(str, str)
+        :type: typing.Dict[str, str]
         """
         allowed_values = ["UPPER", "lower"]  # noqa: E501
-        if not set(map_of_enum_string.keys()).issubset(set(allowed_values)):
+        if (self._configuration.client_side_validation and
+                not set(map_of_enum_string.keys()).issubset(set(allowed_values))):  # noqa: E501
             raise ValueError(
                 "Invalid keys in `map_of_enum_string` [{0}], must be a subset of [{1}]"  # noqa: E501
                 .format(", ".join(map(str, set(map_of_enum_string.keys()) - set(allowed_values))),  # noqa: E501
@@ -101,7 +113,7 @@ class MapTest(object):
 
         self._map_of_enum_string = map_of_enum_string
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -128,21 +140,24 @@ class MapTest(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, MapTest):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, MapTest):
+            return True
+
+        return self.to_dict() != other.to_dict()

@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -40,20 +46,20 @@ class Cat(object):
         'declawed': 'declawed'
     }
 
-    def __init__(self, declawed=None, _configuration=None):  # noqa: E501
+    def __init__(self, declawed: "typing.Optional[bool]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Cat - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._declawed = None
-        self.discriminator = None
+        self._declawed: "bool" = None
+        self.discriminator: None = None
 
         if declawed is not None:
             self.declawed = declawed
 
     @property
-    def declawed(self):
+    def declawed(self) -> "bool":
         """Gets the declawed of this Cat.  # noqa: E501
 
 
@@ -63,7 +69,7 @@ class Cat(object):
         return self._declawed
 
     @declawed.setter
-    def declawed(self, declawed):
+    def declawed(self, declawed: "bool") -> None:
         """Sets the declawed of this Cat.
 
 
@@ -73,7 +79,7 @@ class Cat(object):
 
         self._declawed = declawed
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -100,22 +106,22 @@ class Cat(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Cat):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, Cat):
             return True

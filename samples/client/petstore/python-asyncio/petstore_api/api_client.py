@@ -22,6 +22,11 @@ import tempfile
 # python 2 and python 3 compatibility library
 import six
 from six.moves.urllib.parse import quote
+from typing import TYPE_CHECKING, overload
+
+if TYPE_CHECKING:
+    import typing
+    from .rest import RESTResponse
 
 from petstore_api.configuration import Configuration
 import petstore_api.models
@@ -60,21 +65,22 @@ class ApiClient(object):
         'object': object,
     }
 
-    def __init__(self, configuration=None, header_name=None, header_value=None,
-                 cookie=None):
+    def __init__(self, configuration: "typing.Optional[Configuration]"=None, header_name=None, header_value=None,
+                 cookie: "typing.Optional[str]"=None):
         if configuration is None:
             configuration = Configuration()
-        self.configuration = configuration
+        self.configuration: "Configuration" = configuration
 
         # Use the pool property to lazily initialize the ThreadPool.
         self._pool = None
         self.rest_client = rest.RESTClientObject(configuration)
-        self.default_headers = {}
+        self.default_headers: "typing.Dict[str, str]" = {}
         if header_name is not None:
             self.default_headers[header_name] = header_value
-        self.cookie = cookie
+        self.cookie: "typing.Optional[str]" = cookie
         # Set default User-Agent.
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
+        self.client_side_validation = configuration.client_side_validation
 
     def __del__(self):
         if self._pool is not None:
@@ -82,21 +88,21 @@ class ApiClient(object):
             self._pool.join()
 
     @property
-    def pool(self):
+    def pool(self) -> ThreadPool:
         if self._pool is None:
             self._pool = ThreadPool()
         return self._pool
 
     @property
-    def user_agent(self):
+    def user_agent(self) -> str:
         """User agent for this API client"""
         return self.default_headers['User-Agent']
 
     @user_agent.setter
-    def user_agent(self, value):
+    def user_agent(self, value: str):
         self.default_headers['User-Agent'] = value
 
-    def set_default_header(self, header_name, header_value):
+    def set_default_header(self, header_name: str, header_value: str) -> None:
         self.default_headers[header_name] = header_value
 
     async def __call_api(
@@ -218,7 +224,7 @@ class ApiClient(object):
         return {key: self.sanitize_for_serialization(val)
                 for key, val in six.iteritems(obj_dict)}
 
-    def deserialize(self, response, response_type):
+    def deserialize(self, response: "RESTResponse", response_type):
         """Deserializes response into an object.
 
         :param response: RESTResponse object to be deserialized.
@@ -240,7 +246,7 @@ class ApiClient(object):
 
         return self.__deserialize(data, response_type)
 
-    def __deserialize(self, data, klass):
+    def __deserialize(self, data: "typing.Union[str, typing.Dict, typing.List]", klass):
         """Deserializes dict, list, str into an object.
 
         :param data: dict, list or str.
@@ -514,7 +520,7 @@ class ApiClient(object):
                         'Authentication token must be in `query` or `header`'
                     )
 
-    def __deserialize_file(self, response):
+    def __deserialize_file(self, response: "RESTResponse") -> str:
         """Deserializes body to file
 
         Saves response body into a file in a temporary folder,
@@ -533,7 +539,7 @@ class ApiClient(object):
                                  content_disposition).group(1)
             path = os.path.join(os.path.dirname(path), filename)
 
-        with open(path, "wb") as f:
+        with open(path, "w") as f:
             f.write(response.data)
 
         return path

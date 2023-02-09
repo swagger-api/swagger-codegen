@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -44,16 +50,16 @@ class OuterComposite(object):
         'my_boolean': 'my_boolean'
     }
 
-    def __init__(self, my_number=None, my_string=None, my_boolean=None, _configuration=None):  # noqa: E501
+    def __init__(self, my_number: "typing.Optional[OuterNumber]"=None, my_string: "typing.Optional[OuterString]"=None, my_boolean: "typing.Optional[OuterBoolean]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """OuterComposite - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._my_number = None
-        self._my_string = None
-        self._my_boolean = None
-        self.discriminator = None
+        self._my_number: "OuterNumber" = None
+        self._my_string: "OuterString" = None
+        self._my_boolean: "OuterBoolean" = None
+        self.discriminator: None = None
 
         if my_number is not None:
             self.my_number = my_number
@@ -63,7 +69,7 @@ class OuterComposite(object):
             self.my_boolean = my_boolean
 
     @property
-    def my_number(self):
+    def my_number(self) -> "OuterNumber":
         """Gets the my_number of this OuterComposite.  # noqa: E501
 
 
@@ -73,7 +79,7 @@ class OuterComposite(object):
         return self._my_number
 
     @my_number.setter
-    def my_number(self, my_number):
+    def my_number(self, my_number: "OuterNumber") -> None:
         """Sets the my_number of this OuterComposite.
 
 
@@ -84,7 +90,7 @@ class OuterComposite(object):
         self._my_number = my_number
 
     @property
-    def my_string(self):
+    def my_string(self) -> "OuterString":
         """Gets the my_string of this OuterComposite.  # noqa: E501
 
 
@@ -94,7 +100,7 @@ class OuterComposite(object):
         return self._my_string
 
     @my_string.setter
-    def my_string(self, my_string):
+    def my_string(self, my_string: "OuterString") -> None:
         """Sets the my_string of this OuterComposite.
 
 
@@ -105,7 +111,7 @@ class OuterComposite(object):
         self._my_string = my_string
 
     @property
-    def my_boolean(self):
+    def my_boolean(self) -> "OuterBoolean":
         """Gets the my_boolean of this OuterComposite.  # noqa: E501
 
 
@@ -115,7 +121,7 @@ class OuterComposite(object):
         return self._my_boolean
 
     @my_boolean.setter
-    def my_boolean(self, my_boolean):
+    def my_boolean(self, my_boolean: "OuterBoolean") -> None:
         """Sets the my_boolean of this OuterComposite.
 
 
@@ -125,7 +131,7 @@ class OuterComposite(object):
 
         self._my_boolean = my_boolean
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -152,22 +158,22 @@ class OuterComposite(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, OuterComposite):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, OuterComposite):
             return True

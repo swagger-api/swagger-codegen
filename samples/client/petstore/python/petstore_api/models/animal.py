@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -47,22 +53,22 @@ class Animal(object):
         'Cat': 'Cat'
     }
 
-    def __init__(self, class_name=None, color='red', _configuration=None):  # noqa: E501
+    def __init__(self, class_name: "typing.Optional[str]"=None, color: "str"='red', _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Animal - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._class_name = None
-        self._color = None
-        self.discriminator = 'className'
+        self._class_name: "str" = None
+        self._color: "str" = None
+        self.discriminator: str = 'className'
 
-        self.class_name = class_name
+        self.class_name: "str" = class_name
         if color is not None:
             self.color = color
 
     @property
-    def class_name(self):
+    def class_name(self) -> "str":
         """Gets the class_name of this Animal.  # noqa: E501
 
 
@@ -72,7 +78,7 @@ class Animal(object):
         return self._class_name
 
     @class_name.setter
-    def class_name(self, class_name):
+    def class_name(self, class_name: "str") -> None:
         """Sets the class_name of this Animal.
 
 
@@ -85,7 +91,7 @@ class Animal(object):
         self._class_name = class_name
 
     @property
-    def color(self):
+    def color(self) -> "str":
         """Gets the color of this Animal.  # noqa: E501
 
 
@@ -95,7 +101,7 @@ class Animal(object):
         return self._color
 
     @color.setter
-    def color(self, color):
+    def color(self, color: "str") -> None:
         """Sets the color of this Animal.
 
 
@@ -110,7 +116,7 @@ class Animal(object):
         discriminator_value = data[self.discriminator].lower()
         return self.discriminator_value_class_map.get(discriminator_value)
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -137,22 +143,22 @@ class Animal(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Animal):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, Animal):
             return True

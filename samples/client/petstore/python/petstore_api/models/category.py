@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -42,15 +48,15 @@ class Category(object):
         'name': 'name'
     }
 
-    def __init__(self, id=None, name=None, _configuration=None):  # noqa: E501
+    def __init__(self, id: "typing.Optional[int]"=None, name: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Category - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._id = None
-        self._name = None
-        self.discriminator = None
+        self._id: "int" = None
+        self._name: "str" = None
+        self.discriminator: None = None
 
         if id is not None:
             self.id = id
@@ -58,7 +64,7 @@ class Category(object):
             self.name = name
 
     @property
-    def id(self):
+    def id(self) -> "int":
         """Gets the id of this Category.  # noqa: E501
 
 
@@ -68,7 +74,7 @@ class Category(object):
         return self._id
 
     @id.setter
-    def id(self, id):
+    def id(self, id: "int") -> None:
         """Sets the id of this Category.
 
 
@@ -79,7 +85,7 @@ class Category(object):
         self._id = id
 
     @property
-    def name(self):
+    def name(self) -> "str":
         """Gets the name of this Category.  # noqa: E501
 
 
@@ -89,7 +95,7 @@ class Category(object):
         return self._name
 
     @name.setter
-    def name(self, name):
+    def name(self, name: "str") -> None:
         """Sets the name of this Category.
 
 
@@ -99,7 +105,7 @@ class Category(object):
 
         self._name = name
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -126,22 +132,22 @@ class Category(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Category):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, Category):
             return True

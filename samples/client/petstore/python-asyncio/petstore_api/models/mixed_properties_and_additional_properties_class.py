@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class MixedPropertiesAndAdditionalPropertiesClass(object):
@@ -32,8 +40,8 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
     """
     swagger_types = {
         'uuid': 'str',
-        'date_time': 'datetime',
-        'map': 'dict(str, Animal)'
+        'date_time': 'datetime.datetime',
+        'map': 'typing.Dict[str, Animal]'
     }
 
     attribute_map = {
@@ -42,13 +50,16 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         'map': 'map'
     }
 
-    def __init__(self, uuid=None, date_time=None, map=None):  # noqa: E501
+    def __init__(self, uuid: "typing.Optional[str]"=None, date_time: "typing.Optional[datetime.datetime]"=None, map: "typing.Optional[typing.Dict[str, Animal]]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """MixedPropertiesAndAdditionalPropertiesClass - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._uuid = None
-        self._date_time = None
-        self._map = None
-        self.discriminator = None
+        self._uuid: "str" = None
+        self._date_time: "datetime.datetime" = None
+        self._map: "typing.Dict[str, Animal]" = None
+        self.discriminator: None = None
 
         if uuid is not None:
             self.uuid = uuid
@@ -58,7 +69,7 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
             self.map = map
 
     @property
-    def uuid(self):
+    def uuid(self) -> "str":
         """Gets the uuid of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
 
 
@@ -68,7 +79,7 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         return self._uuid
 
     @uuid.setter
-    def uuid(self, uuid):
+    def uuid(self, uuid: "str") -> None:
         """Sets the uuid of this MixedPropertiesAndAdditionalPropertiesClass.
 
 
@@ -79,48 +90,48 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
         self._uuid = uuid
 
     @property
-    def date_time(self):
+    def date_time(self) -> "datetime.datetime":
         """Gets the date_time of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
 
 
         :return: The date_time of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
-        :rtype: datetime
+        :rtype: datetime.datetime
         """
         return self._date_time
 
     @date_time.setter
-    def date_time(self, date_time):
+    def date_time(self, date_time: "datetime.datetime") -> None:
         """Sets the date_time of this MixedPropertiesAndAdditionalPropertiesClass.
 
 
         :param date_time: The date_time of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
-        :type: datetime
+        :type: datetime.datetime
         """
 
         self._date_time = date_time
 
     @property
-    def map(self):
+    def map(self) -> "typing.Dict[str, Animal]":
         """Gets the map of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
 
 
         :return: The map of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
-        :rtype: dict(str, Animal)
+        :rtype: typing.Dict[str, Animal]
         """
         return self._map
 
     @map.setter
-    def map(self, map):
+    def map(self, map: "typing.Dict[str, Animal]") -> None:
         """Sets the map of this MixedPropertiesAndAdditionalPropertiesClass.
 
 
         :param map: The map of this MixedPropertiesAndAdditionalPropertiesClass.  # noqa: E501
-        :type: dict(str, Animal)
+        :type: typing.Dict[str, Animal]
         """
 
         self._map = map
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -147,21 +158,24 @@ class MixedPropertiesAndAdditionalPropertiesClass(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, MixedPropertiesAndAdditionalPropertiesClass):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, MixedPropertiesAndAdditionalPropertiesClass):
+            return True
+
+        return self.to_dict() != other.to_dict()

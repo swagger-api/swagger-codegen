@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class EnumArrays(object):
@@ -32,7 +40,7 @@ class EnumArrays(object):
     """
     swagger_types = {
         'just_symbol': 'str',
-        'array_enum': 'list[str]'
+        'array_enum': 'typing.List[str]'
     }
 
     attribute_map = {
@@ -40,12 +48,15 @@ class EnumArrays(object):
         'array_enum': 'array_enum'
     }
 
-    def __init__(self, just_symbol=None, array_enum=None):  # noqa: E501
+    def __init__(self, just_symbol: "typing.Optional[str]"=None, array_enum: "typing.Optional[typing.List[str]]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """EnumArrays - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._just_symbol = None
-        self._array_enum = None
-        self.discriminator = None
+        self._just_symbol: "str" = None
+        self._array_enum: "typing.List[str]" = None
+        self.discriminator: None = None
 
         if just_symbol is not None:
             self.just_symbol = just_symbol
@@ -53,7 +64,7 @@ class EnumArrays(object):
             self.array_enum = array_enum
 
     @property
-    def just_symbol(self):
+    def just_symbol(self) -> "str":
         """Gets the just_symbol of this EnumArrays.  # noqa: E501
 
 
@@ -63,7 +74,7 @@ class EnumArrays(object):
         return self._just_symbol
 
     @just_symbol.setter
-    def just_symbol(self, just_symbol):
+    def just_symbol(self, just_symbol: "str") -> None:
         """Sets the just_symbol of this EnumArrays.
 
 
@@ -71,7 +82,8 @@ class EnumArrays(object):
         :type: str
         """
         allowed_values = [">=", "$"]  # noqa: E501
-        if just_symbol not in allowed_values:
+        if (self._configuration.client_side_validation and
+                just_symbol not in allowed_values):
             raise ValueError(
                 "Invalid value for `just_symbol` ({0}), must be one of {1}"  # noqa: E501
                 .format(just_symbol, allowed_values)
@@ -80,25 +92,26 @@ class EnumArrays(object):
         self._just_symbol = just_symbol
 
     @property
-    def array_enum(self):
+    def array_enum(self) -> "typing.List[str]":
         """Gets the array_enum of this EnumArrays.  # noqa: E501
 
 
         :return: The array_enum of this EnumArrays.  # noqa: E501
-        :rtype: list[str]
+        :rtype: typing.List[str]
         """
         return self._array_enum
 
     @array_enum.setter
-    def array_enum(self, array_enum):
+    def array_enum(self, array_enum: "typing.List[str]") -> None:
         """Sets the array_enum of this EnumArrays.
 
 
         :param array_enum: The array_enum of this EnumArrays.  # noqa: E501
-        :type: list[str]
+        :type: typing.List[str]
         """
         allowed_values = ["fish", "crab"]  # noqa: E501
-        if not set(array_enum).issubset(set(allowed_values)):
+        if (self._configuration.client_side_validation and
+                not set(array_enum).issubset(set(allowed_values))):  # noqa: E501
             raise ValueError(
                 "Invalid values for `array_enum` [{0}], must be a subset of [{1}]"  # noqa: E501
                 .format(", ".join(map(str, set(array_enum) - set(allowed_values))),  # noqa: E501
@@ -107,7 +120,7 @@ class EnumArrays(object):
 
         self._array_enum = array_enum
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -134,21 +147,24 @@ class EnumArrays(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, EnumArrays):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, EnumArrays):
+            return True
+
+        return self.to_dict() != other.to_dict()
