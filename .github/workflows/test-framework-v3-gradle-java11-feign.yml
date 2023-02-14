@@ -75,7 +75,7 @@ jobs:
           options: " --library feign --additional-properties java11=true,wiremock=true"
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -160,7 +160,7 @@ jobs:
           build-commands: "gradle build"
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2
