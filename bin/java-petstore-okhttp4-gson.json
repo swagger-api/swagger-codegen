@@ -1,0 +1,4 @@
+{
+    "library": "okhttp4-gson",
+    "artifactId": "swagger-petstore-okhttp4-gson"
+}
