@@ -1,4 +1,4 @@
-name: Test Framework V2 Java 11 OkHttp-Gson
+name: Test Framework V2 Java 11 OkHttp4-Gson
 
 on:
   # execute on demand
@@ -70,7 +70,7 @@ jobs:
           language: "java"
           job-name: ${{ env.JOB_NAME }}
           spec-url: "https://petstore.swagger.io/v2/swagger.json"
-          options: " --library okhttp-gson --additional-properties java11=true,wiremock=true"
+          options: " --library okhttp4-gson --additional-properties java11=true,wiremock=true"
       - id: outcome
         run: |
           echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
@@ -92,7 +92,7 @@ jobs:
           name: ${{ env.JOB_NAME }}generated
           path: ${{ steps.generate.outputs.path }}
     env:
-      JOB_NAME: "java11-okhttp-gson-v2-sample"
+      JOB_NAME: "java11-okhttp4-gson-v2-sample"
 
   build:
 
@@ -130,7 +130,7 @@ jobs:
     ###############################################
     ##### END DYNAMIC: Dependent on build environment
     ###############################################
-      - name: Download Java Feign Test Files
+      - name: Download Test Files
         uses: actions/download-artifact@v2
         with:
           name: java-custom-test-files
@@ -171,4 +171,4 @@ jobs:
           name: ${{ env.JOB_NAME }}logs
           path: ${{ steps.build.outputs.logs }}
     env:
-      JOB_NAME: "java11-okhttp-gson-v2-sample"
+      JOB_NAME: "java11-okhttp4-gson-v2-sample"
