@@ -2965,7 +2965,8 @@ public class DefaultCodegen {
                 sec.isApiKey = true;
                 sec.keyParamName = apiKeyDefinition.getName();
                 sec.isKeyInHeader = apiKeyDefinition.getIn() == In.HEADER;
-                sec.isKeyInQuery = !sec.isKeyInHeader;
+                sec.isKeyInCookie = apiKeyDefinition.getIn() == In.COOKIE;
+                sec.isKeyInQuery = !sec.isKeyInHeader && !sec.isKeyInCookie;
             } else if(schemeDefinition instanceof BasicAuthDefinition) {
                 sec.isKeyInHeader = sec.isKeyInQuery = sec.isApiKey = sec.isOAuth = false;
                 sec.isBasic = true;

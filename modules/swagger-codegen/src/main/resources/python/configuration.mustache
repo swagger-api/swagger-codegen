@@ -231,7 +231,7 @@ class Configuration(object):
             '{{name}}':
                 {
                     'type': 'api_key',
-                    'in': {{#isKeyInHeader}}'header'{{/isKeyInHeader}}{{#isKeyInQuery}}'query'{{/isKeyInQuery}},
+                    'in': {{#isKeyInHeader}}'header'{{/isKeyInHeader}}{{#isKeyInQuery}}'query'{{/isKeyInQuery}}{{#isKeyInCookie}}'cookie'{{/isKeyInCookie}},
                     'key': '{{keyParamName}}',
                     'value': self.get_api_key_with_prefix('{{keyParamName}}')
                 },
