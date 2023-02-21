@@ -465,9 +465,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     }
 
     private void generateApis(List<File> files, List<Object> allOperations, List<Object> allModels) {
-        if (!generateApis) {
-            return;
-        }
         boolean hasModel = true;
         if (allModels == null || allModels.isEmpty()) {
             hasModel = false;
@@ -536,6 +533,12 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                         oo.put("hasMore", "true");
                     }
                 }
+
+		// Some target languages refer to API operations in
+		// their supporting files and so we always process the
+		// API operations above, even when we need to skip the
+		// actual API generation.
+		if (!generateApis) continue;
 
                 for (String templateName : config.apiTemplateFiles().keySet()) {
                     String filename = config.apiFilename(templateName, tag);
