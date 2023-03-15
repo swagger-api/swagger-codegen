@@ -25,9 +25,9 @@ import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 {{/threetenbp}}
 
-{{#models.0}}
+{{#models}}
 import {{modelPackage}}.*;
-{{/models.0}}
+{{/models}}
 import okio.ByteString;
 
 import java.io.IOException;
@@ -63,6 +63,7 @@ public class JSON {
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
         {{#parent}}
+        {{#discriminator}}
           .registerTypeSelector({{classname}}.class, new TypeSelector() {
             @Override
             public Class getClassForElement(JsonElement readElement) {
@@ -76,6 +77,7 @@ public class JSON {
                                            getDiscriminatorValue(readElement, "{{discriminator}}"));
             }
           })
+        {{/discriminator}}
         {{/parent}}
         ;
         GsonBuilder builder = fireBuilder.createGsonBuilder();

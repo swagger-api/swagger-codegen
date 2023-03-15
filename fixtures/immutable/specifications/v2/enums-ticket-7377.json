@@ -1,0 +1,42 @@
+{
+    "swagger" : "2.0",
+    "info" : {
+        "description" : "This are definitions auto generated from Controller classes using maven plugin.",
+        "version" : "v1",
+        "title" : "API generated using Swagger Maven Plugin",
+        "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
+        "license" : {
+            "name" : "Apache 2.0",
+            "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host" : "localhost:8080",
+    "basePath" : "/",
+    "paths" : {},
+    "schemes" : [ "http" ],
+    "definitions" : {
+        "ContactStrategy" : {
+            "type" : "object",
+            "properties" : {
+                "preferredChannels" : {
+                    "type" : "array",
+                    "items" : {
+                        "type" : "array",
+                        "items" : {
+                            "type" : "string",
+                            "enum" : [ "ON_SITE" ]
+                        }
+                    }
+                },
+                "onSiteDisplayType" : {
+                    "type" : "string",
+                    "enum" : [ "TOAST", "FULL_SCREEN" ]
+                },
+                "saveMessageIfOffline" : {
+                    "type" : "boolean",
+                    "default" : false
+                }
+            }
+        }
+    }
+}

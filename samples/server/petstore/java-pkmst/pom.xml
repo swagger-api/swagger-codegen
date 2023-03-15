@@ -15,7 +15,7 @@
       <cucumber-junit.version>1.2.5</cucumber-junit.version>
       <cucumber-java.version>1.2.5</cucumber-java.version>
       <cucumber-reporting.version>3.10.0</cucumber-reporting.version>
-      <springfox-swagger2>2.6.1-SNAPSHOT</springfox-swagger2>
+      <springfox-swagger2>2.6.1</springfox-swagger2>
       <springfox-swagger-ui>2.6.0</springfox-swagger-ui>
       <slf4j-api>1.7.25</slf4j-api>
       <logstash-logback-encoder>4.11</logstash-logback-encoder>

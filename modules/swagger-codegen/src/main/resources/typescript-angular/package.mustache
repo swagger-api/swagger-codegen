@@ -21,16 +21,6 @@
     "postinstall": "npm run build"
   },
   {{/useNgPackagr}}
-  "peerDependencies": {
-    "@angular/core": "^{{ngVersion}}",
-    {{^skipHttpImport}}
-    "@angular/http": "^{{ngVersion}}",
-    {{/skipHttpImport}}
-    "@angular/common": "^{{ngVersion}}",
-    "@angular/compiler": "^{{ngVersion}}",
-    "rxjs": "^{{rxjsVersion}}",
-    "zone.js": "^{{zonejsVersion}}"
-  },
   "devDependencies": {
     "@angular/compiler-cli": "^{{ngVersion}}",
     "@angular/core": "^{{ngVersion}}",
