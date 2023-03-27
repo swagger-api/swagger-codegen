@@ -335,7 +335,7 @@ components:
           type: integer
           format: int64
         category:
-          $ref: '#/components/schemas/Category'
+          type: string
         name:
           type: string
           example: doggie
