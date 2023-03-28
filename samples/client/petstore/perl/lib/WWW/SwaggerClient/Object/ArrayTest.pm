@@ -149,21 +149,21 @@ __PACKAGE__->method_documentation({
     	base_name => 'array_of_string',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'array_array_of_integer' => {
     	datatype => 'ARRAY[ARRAY[int]]',
     	base_name => 'array_array_of_integer',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'array_array_of_model' => {
     	datatype => 'ARRAY[ARRAY[ReadOnlyFirst]]',
     	base_name => 'array_array_of_model',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

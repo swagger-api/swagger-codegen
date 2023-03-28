@@ -148,7 +148,7 @@ __PACKAGE__->method_documentation({
     	base_name => 'return',
     	description => 'property description  */ &#39; \&quot; &#x3D;_end -- \\r\\n \\n \\r',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

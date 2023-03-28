@@ -148,14 +148,14 @@ __PACKAGE__->method_documentation({
     	base_name => 'map_property',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'map_of_map_property' => {
     	datatype => 'HASH[string,HASH[string,string]]',
     	base_name => 'map_of_map_property',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

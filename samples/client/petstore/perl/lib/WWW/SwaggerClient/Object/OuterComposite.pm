@@ -151,21 +151,21 @@ __PACKAGE__->method_documentation({
     	base_name => 'my_number',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'my_string' => {
     	datatype => 'OuterString',
     	base_name => 'my_string',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'my_boolean' => {
     	datatype => 'OuterBoolean',
     	base_name => 'my_boolean',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

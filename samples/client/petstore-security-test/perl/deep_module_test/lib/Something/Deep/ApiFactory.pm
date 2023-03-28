@@ -66,11 +66,11 @@ my %_apis = map { $_ =~ /^Something::Deep::(.*)$/; $1 => $_ }
 	
 	create a new Something::Deep::ApiFactory instance with the given Something::Deep::ApiClient instance.
 
-=head1 new(%paramters)
+=head1 new(%parameters)
 
 	Any parameters are optional, and are passed to and stored on the api_client object.
 	
-	See L<Something::Deep::ApiClient> and L<Something::Deep::Configuration> for valid paramters
+	See L<Something::Deep::ApiClient> and L<Something::Deep::Configuration> for valid parameters
 
 =cut	
 

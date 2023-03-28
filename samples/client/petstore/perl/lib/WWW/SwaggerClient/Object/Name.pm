@@ -148,28 +148,28 @@ __PACKAGE__->method_documentation({
     	base_name => 'name',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'snake_case' => {
     	datatype => 'int',
     	base_name => 'snake_case',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'true',
     		},
     'property' => {
     	datatype => 'string',
     	base_name => 'property',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     '_123_number' => {
     	datatype => 'int',
     	base_name => '123Number',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'true',
     		},
 });
 

@@ -80,9 +80,9 @@ extern NSInteger kSWGPetApiMissingParamErrorCode;
 ///
 /// @param petId ID of pet that needs to be fetched
 /// 
+///  code:404 message:"Pet not found",
 ///  code:200 message:"successful operation",
-///  code:400 message:"Invalid ID supplied",
-///  code:404 message:"Pet not found"
+///  code:400 message:"Invalid ID supplied"
 ///
 /// @return SWGPet*
 -(NSURLSessionTask*) getPetByIdWithPetId: (NSNumber*) petId
@@ -94,9 +94,9 @@ extern NSInteger kSWGPetApiMissingParamErrorCode;
 ///
 /// @param body Pet object that needs to be added to the store (optional)
 /// 
-///  code:400 message:"Invalid ID supplied",
+///  code:405 message:"Validation exception",
 ///  code:404 message:"Pet not found",
-///  code:405 message:"Validation exception"
+///  code:400 message:"Invalid ID supplied"
 ///
 /// @return void
 -(NSURLSessionTask*) updatePetWithBody: (SWGPet*) body

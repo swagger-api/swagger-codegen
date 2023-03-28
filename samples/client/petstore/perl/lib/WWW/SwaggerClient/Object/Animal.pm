@@ -148,14 +148,14 @@ __PACKAGE__->method_documentation({
     	base_name => 'className',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'color' => {
     	datatype => 'string',
     	base_name => 'color',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

@@ -149,7 +149,7 @@ __PACKAGE__->method_documentation({
     	base_name => 'JustNumber',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

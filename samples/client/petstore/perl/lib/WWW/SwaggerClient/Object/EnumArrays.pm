@@ -148,14 +148,14 @@ __PACKAGE__->method_documentation({
     	base_name => 'just_symbol',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'array_enum' => {
     	datatype => 'ARRAY[string]',
     	base_name => 'array_enum',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

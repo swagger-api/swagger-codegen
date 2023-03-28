@@ -28,8 +28,8 @@ extern NSInteger kSWGStoreApiMissingParamErrorCode;
 ///
 /// @param orderId ID of the order that needs to be deleted
 /// 
-///  code:400 message:"Invalid ID supplied",
-///  code:404 message:"Order not found"
+///  code:404 message:"Order not found",
+///  code:400 message:"Invalid ID supplied"
 ///
 /// @return void
 -(NSURLSessionTask*) deleteOrderWithOrderId: (NSString*) orderId
@@ -52,9 +52,9 @@ extern NSInteger kSWGStoreApiMissingParamErrorCode;
 ///
 /// @param orderId ID of pet that needs to be fetched
 /// 
+///  code:404 message:"Order not found",
 ///  code:200 message:"successful operation",
-///  code:400 message:"Invalid ID supplied",
-///  code:404 message:"Order not found"
+///  code:400 message:"Invalid ID supplied"
 ///
 /// @return SWGOrder*
 -(NSURLSessionTask*) getOrderByIdWithOrderId: (NSString*) orderId

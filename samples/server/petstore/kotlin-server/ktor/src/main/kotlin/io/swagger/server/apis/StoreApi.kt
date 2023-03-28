@@ -57,9 +57,7 @@ fun Route.StoreApi() {
             call.respond(HttpStatusCode.Unauthorized)
         } else {
             val exampleContentType = "application/json"
-            val exampleContentString = """{
-              "key" : 0
-            }"""
+            val exampleContentString = """{"empty": false}"""
             
             when(exampleContentType) {
                 "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

@@ -450,6 +450,43 @@ mkCapitalization =
   , capitalizationAttName = Nothing
   }
 
+-- ** Cat
+-- | Cat
+data Cat = Cat
+  { catClassName :: !(Text) -- ^ /Required/ "className"
+  , catColor :: !(Maybe Text) -- ^ "color"
+  , catDeclawed :: !(Maybe Bool) -- ^ "declawed"
+  } deriving (P.Show, P.Eq, P.Typeable)
+
+-- | FromJSON Cat
+instance A.FromJSON Cat where
+  parseJSON = A.withObject "Cat" $ \o ->
+    Cat
+      <$> (o .:  "className")
+      <*> (o .:? "color")
+      <*> (o .:? "declawed")
+
+-- | ToJSON Cat
+instance A.ToJSON Cat where
+  toJSON Cat {..} =
+   _omitNulls
+      [ "className" .= catClassName
+      , "color" .= catColor
+      , "declawed" .= catDeclawed
+      ]
+
+
+-- | Construct a value of type 'Cat' (by applying it's required fields, if any)
+mkCat
+  :: Text -- ^ 'catClassName' 
+  -> Cat
+mkCat catClassName =
+  Cat
+  { catClassName
+  , catColor = Nothing
+  , catDeclawed = Nothing
+  }
+
 -- ** Category
 -- | Category
 data Category = Category
@@ -537,6 +574,43 @@ mkClient
 mkClient =
   Client
   { clientClient = Nothing
+  }
+
+-- ** Dog
+-- | Dog
+data Dog = Dog
+  { dogClassName :: !(Text) -- ^ /Required/ "className"
+  , dogColor :: !(Maybe Text) -- ^ "color"
+  , dogBreed :: !(Maybe Text) -- ^ "breed"
+  } deriving (P.Show, P.Eq, P.Typeable)
+
+-- | FromJSON Dog
+instance A.FromJSON Dog where
+  parseJSON = A.withObject "Dog" $ \o ->
+    Dog
+      <$> (o .:  "className")
+      <*> (o .:? "color")
+      <*> (o .:? "breed")
+
+-- | ToJSON Dog
+instance A.ToJSON Dog where
+  toJSON Dog {..} =
+   _omitNulls
+      [ "className" .= dogClassName
+      , "color" .= dogColor
+      , "breed" .= dogBreed
+      ]
+
+
+-- | Construct a value of type 'Dog' (by applying it's required fields, if any)
+mkDog
+  :: Text -- ^ 'dogClassName' 
+  -> Dog
+mkDog dogClassName =
+  Dog
+  { dogClassName
+  , dogColor = Nothing
+  , dogBreed = Nothing
   }
 
 -- ** EnumArrays
@@ -699,8 +773,8 @@ mkFormatTest formatTestNumber formatTestByte formatTestDate formatTestPassword =
 -- ** HasOnlyReadOnly
 -- | HasOnlyReadOnly
 data HasOnlyReadOnly = HasOnlyReadOnly
-  { hasOnlyReadOnlyBar :: !(Maybe Text) -- ^ "bar"
-  , hasOnlyReadOnlyFoo :: !(Maybe Text) -- ^ "foo"
+  { hasOnlyReadOnlyBar :: !(Maybe Text) -- ^ /ReadOnly/ "bar"
+  , hasOnlyReadOnlyFoo :: !(Maybe Text) -- ^ /ReadOnly/ "foo"
   } deriving (P.Show, P.Eq, P.Typeable)
 
 -- | FromJSON HasOnlyReadOnly
@@ -891,9 +965,9 @@ mkModelReturn =
 -- Model for testing model name same as property name
 data Name = Name
   { nameName :: !(Int) -- ^ /Required/ "name"
-  , nameSnakeCase :: !(Maybe Int) -- ^ "snake_case"
+  , nameSnakeCase :: !(Maybe Int) -- ^ /ReadOnly/ "snake_case"
   , nameProperty :: !(Maybe Text) -- ^ "property"
-  , name123Number :: !(Maybe Int) -- ^ "123Number"
+  , name123Number :: !(Maybe Int) -- ^ /ReadOnly/ "123Number"
   } deriving (P.Show, P.Eq, P.Typeable)
 
 -- | FromJSON Name
@@ -1114,7 +1188,7 @@ mkPet petName petPhotoUrls =
 -- ** ReadOnlyFirst
 -- | ReadOnlyFirst
 data ReadOnlyFirst = ReadOnlyFirst
-  { readOnlyFirstBar :: !(Maybe Text) -- ^ "bar"
+  { readOnlyFirstBar :: !(Maybe Text) -- ^ /ReadOnly/ "bar"
   , readOnlyFirstBaz :: !(Maybe Text) -- ^ "baz"
   } deriving (P.Show, P.Eq, P.Typeable)
 
@@ -1259,82 +1333,37 @@ mkUser =
   , userUserStatus = Nothing
   }
 
--- ** Cat
--- | Cat
-data Cat = Cat
-  { catClassName :: !(Text) -- ^ /Required/ "className"
-  , catColor :: !(Maybe Text) -- ^ "color"
-  , catDeclawed :: !(Maybe Bool) -- ^ "declawed"
-  } deriving (P.Show, P.Eq, P.Typeable)
-
--- | FromJSON Cat
-instance A.FromJSON Cat where
-  parseJSON = A.withObject "Cat" $ \o ->
-    Cat
-      <$> (o .:  "className")
-      <*> (o .:? "color")
-      <*> (o .:? "declawed")
-
--- | ToJSON Cat
-instance A.ToJSON Cat where
-  toJSON Cat {..} =
-   _omitNulls
-      [ "className" .= catClassName
-      , "color" .= catColor
-      , "declawed" .= catDeclawed
-      ]
-
-
--- | Construct a value of type 'Cat' (by applying it's required fields, if any)
-mkCat
-  :: Text -- ^ 'catClassName' 
-  -> Cat
-mkCat catClassName =
-  Cat
-  { catClassName
-  , catColor = Nothing
-  , catDeclawed = Nothing
-  }
-
--- ** Dog
--- | Dog
-data Dog = Dog
-  { dogClassName :: !(Text) -- ^ /Required/ "className"
-  , dogColor :: !(Maybe Text) -- ^ "color"
-  , dogBreed :: !(Maybe Text) -- ^ "breed"
-  } deriving (P.Show, P.Eq, P.Typeable)
-
--- | FromJSON Dog
-instance A.FromJSON Dog where
-  parseJSON = A.withObject "Dog" $ \o ->
-    Dog
-      <$> (o .:  "className")
-      <*> (o .:? "color")
-      <*> (o .:? "breed")
-
--- | ToJSON Dog
-instance A.ToJSON Dog where
-  toJSON Dog {..} =
-   _omitNulls
-      [ "className" .= dogClassName
-      , "color" .= dogColor
-      , "breed" .= dogBreed
-      ]
-
-
--- | Construct a value of type 'Dog' (by applying it's required fields, if any)
-mkDog
-  :: Text -- ^ 'dogClassName' 
-  -> Dog
-mkDog dogClassName =
-  Dog
-  { dogClassName
-  , dogColor = Nothing
-  , dogBreed = Nothing
-  }
-
 
 -- * Enums
+
+
+-- ** Boolean
+
+-- | Enum of 'Bool' . 
+-- True or False indicator
+data Boolean
+  = Boolean'True -- ^ @"true"@
+  | Boolean'False -- ^ @"false"@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON Boolean where toJSON = A.toJSON . fromBoolean
+instance A.FromJSON Boolean where parseJSON o = P.either P.fail (pure . P.id) . toBoolean =<< A.parseJSON o
+instance WH.ToHttpApiData Boolean where toQueryParam = WH.toQueryParam . fromBoolean
+instance WH.FromHttpApiData Boolean where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toBoolean
+instance MimeRender MimeMultipartFormData Boolean where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'Boolean' enum
+fromBoolean :: Boolean -> Bool
+fromBoolean = \case
+  Boolean'True -> "true"
+  Boolean'False -> "false"
+
+-- | parse 'Boolean' enum
+toBoolean :: Bool -> P.Either String Boolean
+toBoolean = \case
+  "true" -> P.Right Boolean'True
+  "false" -> P.Right Boolean'False
+  s -> P.Left $ "toBoolean: enum parse failure: " P.++ P.show s
 
 
 -- ** E'ArrayEnum
@@ -1688,6 +1717,85 @@ toEnumClass = \case
   "-efg" -> P.Right EnumClass'_efg
   "(xyz)" -> P.Right EnumClass'_xyz
   s -> P.Left $ "toEnumClass: enum parse failure: " P.++ P.show s
+
+
+-- ** Ints
+
+-- | Enum of 'Int' . 
+-- True or False indicator
+data Ints
+  = Ints'Num0 -- ^ @0@
+  | Ints'Num1 -- ^ @1@
+  | Ints'Num2 -- ^ @2@
+  | Ints'Num3 -- ^ @3@
+  | Ints'Num4 -- ^ @4@
+  | Ints'Num5 -- ^ @5@
+  | Ints'Num6 -- ^ @6@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON Ints where toJSON = A.toJSON . fromInts
+instance A.FromJSON Ints where parseJSON o = P.either P.fail (pure . P.id) . toInts =<< A.parseJSON o
+instance WH.ToHttpApiData Ints where toQueryParam = WH.toQueryParam . fromInts
+instance WH.FromHttpApiData Ints where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toInts
+instance MimeRender MimeMultipartFormData Ints where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'Ints' enum
+fromInts :: Ints -> Int
+fromInts = \case
+  Ints'Num0 -> 0
+  Ints'Num1 -> 1
+  Ints'Num2 -> 2
+  Ints'Num3 -> 3
+  Ints'Num4 -> 4
+  Ints'Num5 -> 5
+  Ints'Num6 -> 6
+
+-- | parse 'Ints' enum
+toInts :: Int -> P.Either String Ints
+toInts = \case
+  0 -> P.Right Ints'Num0
+  1 -> P.Right Ints'Num1
+  2 -> P.Right Ints'Num2
+  3 -> P.Right Ints'Num3
+  4 -> P.Right Ints'Num4
+  5 -> P.Right Ints'Num5
+  6 -> P.Right Ints'Num6
+  s -> P.Left $ "toInts: enum parse failure: " P.++ P.show s
+
+
+-- ** Numbers
+
+-- | Enum of 'Double' . 
+-- some number
+data Numbers
+  = Numbers'Num7 -- ^ @7@
+  | Numbers'Num8 -- ^ @8@
+  | Numbers'Num9 -- ^ @9@
+  | Numbers'Num10 -- ^ @10@
+  deriving (P.Show, P.Eq, P.Typeable, P.Ord, P.Bounded, P.Enum)
+
+instance A.ToJSON Numbers where toJSON = A.toJSON . fromNumbers
+instance A.FromJSON Numbers where parseJSON o = P.either P.fail (pure . P.id) . toNumbers =<< A.parseJSON o
+instance WH.ToHttpApiData Numbers where toQueryParam = WH.toQueryParam . fromNumbers
+instance WH.FromHttpApiData Numbers where parseQueryParam o = WH.parseQueryParam o >>= P.left T.pack . toNumbers
+instance MimeRender MimeMultipartFormData Numbers where mimeRender _ = mimeRenderDefaultMultipartFormData
+
+-- | unwrap 'Numbers' enum
+fromNumbers :: Numbers -> Double
+fromNumbers = \case
+  Numbers'Num7 -> 7
+  Numbers'Num8 -> 8
+  Numbers'Num9 -> 9
+  Numbers'Num10 -> 10
+
+-- | parse 'Numbers' enum
+toNumbers :: Double -> P.Either String Numbers
+toNumbers = \case
+  7 -> P.Right Numbers'Num7
+  8 -> P.Right Numbers'Num8
+  9 -> P.Right Numbers'Num9
+  10 -> P.Right Numbers'Num10
+  s -> P.Left $ "toNumbers: enum parse failure: " P.++ P.show s
 
 
 -- ** OuterEnum

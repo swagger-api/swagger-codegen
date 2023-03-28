@@ -148,21 +148,21 @@ __PACKAGE__->method_documentation({
     	base_name => 'code',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'type' => {
     	datatype => 'string',
     	base_name => 'type',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
     'message' => {
     	datatype => 'string',
     	base_name => 'message',
     	description => '',
     	format => '',
-    	read_only => '',
+    	read_only => 'false',
     		},
 });
 

@@ -32,7 +32,7 @@ use constant VERSION => '1.0.0';
 
         Something::Deep::Configuration - holds the configuration for all Something::Deep Modules
 
-=head1 new(%paramters)
+=head1 new(%parameters)
 
 =over 4
 

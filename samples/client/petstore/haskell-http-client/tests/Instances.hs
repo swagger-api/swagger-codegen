@@ -140,6 +140,13 @@ instance Arbitrary Capitalization where
       <*> arbitrary -- capitalizationScaEthFlowPoints :: Maybe Text
       <*> arbitrary -- capitalizationAttName :: Maybe Text
     
+instance Arbitrary Cat where
+  arbitrary =
+    Cat
+      <$> arbitrary -- catClassName :: Text
+      <*> arbitrary -- catColor :: Maybe Text
+      <*> arbitrary -- catDeclawed :: Maybe Bool
+    
 instance Arbitrary Category where
   arbitrary =
     Category
@@ -155,6 +162,13 @@ instance Arbitrary Client where
   arbitrary =
     Client
       <$> arbitrary -- clientClient :: Maybe Text
+    
+instance Arbitrary Dog where
+  arbitrary =
+    Dog
+      <$> arbitrary -- dogClassName :: Text
+      <*> arbitrary -- dogColor :: Maybe Text
+      <*> arbitrary -- dogBreed :: Maybe Text
     
 instance Arbitrary EnumArrays where
   arbitrary =
@@ -301,22 +315,11 @@ instance Arbitrary User where
       <*> arbitrary -- userPhone :: Maybe Text
       <*> arbitrary -- userUserStatus :: Maybe Int
     
-instance Arbitrary Cat where
-  arbitrary =
-    Cat
-      <$> arbitrary -- catClassName :: Text
-      <*> arbitrary -- catColor :: Maybe Text
-      <*> arbitrary -- catDeclawed :: Maybe Bool
-    
-instance Arbitrary Dog where
-  arbitrary =
-    Dog
-      <$> arbitrary -- dogClassName :: Text
-      <*> arbitrary -- dogColor :: Maybe Text
-      <*> arbitrary -- dogBreed :: Maybe Text
-    
 
 
+
+instance Arbitrary Boolean where
+  arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary E'ArrayEnum where
   arbitrary = arbitraryBoundedEnum
@@ -352,6 +355,12 @@ instance Arbitrary E'Status2 where
   arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary EnumClass where
+  arbitrary = arbitraryBoundedEnum
+
+instance Arbitrary Ints where
+  arbitrary = arbitraryBoundedEnum
+
+instance Arbitrary Numbers where
   arbitrary = arbitraryBoundedEnum
 
 instance Arbitrary OuterEnum where
