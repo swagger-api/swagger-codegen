@@ -38,6 +38,8 @@ public class KotlinClientCodegenOptionsTest extends AbstractOptionsTest {
             times = 1;
             codegen.setEnumPropertyNaming(KotlinClientCodegenOptionsProvider.ENUM_PROPERTY_NAMING);
             times = 1;
+            codegen.setSerializationEngine(KotlinClientCodegenOptionsProvider.SERIALIZATION_ENGINE);
+            times = 1;
             codegen.setDateLibrary(KotlinClientCodegenOptionsProvider.DATE_LIBRARY);
         }};
     }

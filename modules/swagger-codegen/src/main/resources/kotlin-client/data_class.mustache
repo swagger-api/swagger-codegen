@@ -1,5 +1,10 @@
 {{#hasEnums}}
+{{#gson}}
+import com.google.gson.annotations.SerializedName
+{{/gson}}
+{{#moshi}}
 import com.squareup.moshi.Json
+{{/moshi}}
 {{/hasEnums}}
 /**
  * {{{description}}}
@@ -13,16 +18,23 @@ data class {{classname}} (
 {{/-last}}{{/requiredVars}}{{#hasRequired}}{{#hasOptional}},
 {{/hasOptional}}{{/hasRequired}}{{#optionalVars}}{{>data_class_opt_var}}{{^-last}},
 {{/-last}}{{/optionalVars}}
-) {
+)
 {{#hasEnums}}{{#vars}}{{#isEnum}}
-    /**
+{
+   /**
     * {{{description}}}
     * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
     */
     enum class {{nameInCamelCase}}(val value: {{datatype}}){
     {{#allowableValues}}{{#enumVars}}
+    {{#moshi}}
         @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+    {{/moshi}}
+    {{#gson}}
+        @SerializedName(value={{{value}}})  {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+    {{/gson}}
     {{/enumVars}}{{/allowableValues}}
     }
-{{/isEnum}}{{/vars}}{{/hasEnums}}
 }
+{{/isEnum}}{{/vars}}{{/hasEnums}}
+

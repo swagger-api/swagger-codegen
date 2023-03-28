@@ -1,4 +1,5 @@
 {{#description}}
     /* {{{description}}} */
 {{/description}}
+    {{#gson}}@SerializedName("{{name}}"){{/gson}}
     val {{{name}}}: {{#isEnum}}{{classname}}.{{nameInCamelCase}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}
