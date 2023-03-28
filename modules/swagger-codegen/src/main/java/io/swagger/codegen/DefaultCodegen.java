@@ -114,6 +114,8 @@ public class DefaultCodegen {
     protected Map<String, String> specialCharReplacements = new HashMap<String, String>();
     // When a model is an alias for a simple type
     protected Map<String, String> typeAliases = null;
+    // a map of all Swagger models from the spec
+    protected Map<String, Model> allDefinitions = null;
 
     protected String ignoreFilePathOverride;
 
@@ -1374,6 +1376,7 @@ public class DefaultCodegen {
      * @return Codegen Model object
      */
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        this.allDefinitions = allDefinitions;
         if (typeAliases == null) {
             // Only do this once during first call
             typeAliases = getAllAliases(allDefinitions);
@@ -1681,15 +1684,16 @@ public class DefaultCodegen {
      * Convert Swagger Property object to Codegen Property object
      *
      * @param name name of the property
-     * @param p Swagger property object
+     * @param maybeRefProp Swagger property object, which may be a $ref
      * @param itemsDepth the depth in nested containers or null
      * @return Codegen Property object
      */
-    private CodegenProperty fromProperty(String name, Property p, Integer itemsDepth) {
-        if (p == null) {
+    private CodegenProperty fromProperty(String name, Property maybeRefProp, Integer itemsDepth) {
+        if (maybeRefProp == null) {
             LOGGER.error("unexpected missing property for name " + name);
             return null;
         }
+        Property p = resolveRef(maybeRefProp);
 
         CodegenProperty property = CodegenModelFactory.newInstance(CodegenModelType.PROPERTY);
         property.itemsDepth = itemsDepth;
@@ -1707,7 +1711,7 @@ public class DefaultCodegen {
         }
         property.defaultValue = toDefaultValue(p);
         property.defaultValueWithParam = toDefaultValueWithParam(name, p);
-        property.jsonSchema = Json.pretty(p);
+        property.jsonSchema = Json.pretty(maybeRefProp);
         if (p.getReadOnly() != null) {
             property.isReadOnly = p.getReadOnly();
         }
@@ -1977,6 +1981,53 @@ public class DefaultCodegen {
             setNonArrayMapProperty(property, type);
         }
         return property;
+    }
+
+    private void putProperty(Map<PropertyBuilder.PropertyId, Object> args, PropertyId propertyId, Object value) {
+        if (value != null) {
+            args.put(propertyId, value);
+        }
+    }
+
+    private Property resolveRef(Property prop) {
+        if (prop == null || allDefinitions == null || !(prop instanceof RefProperty)) {
+            return prop;
+        }
+        RefProperty refProperty = (RefProperty) prop;
+        Model model =  allDefinitions.get(refProperty.getSimpleRef());
+        if (!(model instanceof ModelImpl)) {
+            return prop;
+        }
+        ModelImpl modelImpl = (ModelImpl) model;
+        if (modelImpl.getType() == null || modelImpl.getType().equals("object") || modelImpl.getEnum() != null) {
+            return prop;
+        }
+        Map<PropertyBuilder.PropertyId, Object> args = new HashMap<PropertyBuilder.PropertyId, Object>();
+        putProperty(args, PropertyId.TITLE, modelImpl.getTitle());
+        putProperty(args, PropertyId.DESCRIPTION, modelImpl.getDescription());
+        putProperty(args, PropertyId.DEFAULT, modelImpl.getDefaultValue());
+        putProperty(args, PropertyId.PATTERN, modelImpl.getPattern());
+        putProperty(args, PropertyId.FORMAT, modelImpl.getFormat());
+        putProperty(args, PropertyId.MIN_LENGTH, modelImpl.getMinLength());
+        putProperty(args, PropertyId.MAX_LENGTH, modelImpl.getMaxLength());
+        putProperty(args, PropertyId.MINIMUM, modelImpl.getMinimum());
+        putProperty(args, PropertyId.MAXIMUM, modelImpl.getMaximum());
+        putProperty(args, PropertyId.EXCLUSIVE_MINIMUM, modelImpl.getExclusiveMinimum());
+        putProperty(args, PropertyId.EXCLUSIVE_MAXIMUM, modelImpl.getExclusiveMaximum());
+        putProperty(args, PropertyId.EXAMPLE, modelImpl.getExample());
+        putProperty(args, PropertyId.REQUIRED, modelImpl.getRequired());
+        putProperty(args, PropertyId.VENDOR_EXTENSIONS, modelImpl.getVendorExtensions());
+        putProperty(args, PropertyId.ALLOW_EMPTY_VALUE, modelImpl.getAllowEmptyValue());
+        putProperty(args, PropertyId.MULTIPLE_OF, modelImpl.getMultipleOf());
+
+        // FIXME: according to the spec these shouldn't be parsed, kept for compat:
+        putProperty(args, PropertyId.DESCRIPTION, refProperty.getDescription());
+        putProperty(args, PropertyId.TITLE, refProperty.getTitle());
+        putProperty(args, PropertyId.READ_ONLY, refProperty.getReadOnly());
+
+        Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), args);
+        p.setXml(refProperty.getXml());
+        return p;
     }
 
     /**
@@ -3317,17 +3368,6 @@ public class DefaultCodegen {
                     m.hasEnums = true;
                 }
 
-                if (allDefinitions != null && prop instanceof RefProperty) {
-                    RefProperty refProperty = (RefProperty) prop;
-                    Model model =  allDefinitions.get(refProperty.getSimpleRef());
-                    if (model instanceof ModelImpl) {
-                        ModelImpl modelImpl = (ModelImpl) model;
-                        cp.pattern = modelImpl.getPattern();
-                        cp.minLength = modelImpl.getMinLength();
-                        cp.maxLength = modelImpl.getMaxLength();
-                    }
-                }
-
                 // set model's hasOnlyReadOnly to false if the property is read-only
                 if (!Boolean.TRUE.equals(cp.isReadOnly)) {
                     m.hasOnlyReadOnly = false;
@@ -3381,7 +3421,7 @@ public class DefaultCodegen {
      * @param allDefinitions The complete set of model definitions.
      * @return A mapping from model name to type alias
      */
-    private static Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
+    private Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
         Map<String, String> aliases = new HashMap<>();
         if (allDefinitions != null) {
             for (Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
@@ -3392,7 +3432,9 @@ public class DefaultCodegen {
                     if (impl.getType() != null &&
                             !impl.getType().equals("object") &&
                             impl.getEnum() == null) {
-                        aliases.put(swaggerName, impl.getType());
+                        Property p = PropertyBuilder.build(impl.getType(), impl.getFormat(), null);
+                        String swaggerType = getSwaggerType(p);
+                        aliases.put(swaggerName, swaggerType);
                     }
                 }
             }

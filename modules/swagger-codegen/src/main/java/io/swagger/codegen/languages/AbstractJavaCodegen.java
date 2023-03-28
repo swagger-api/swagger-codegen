@@ -935,7 +935,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
 
-        swaggerType = getAlias(swaggerType);
+        // don't apply renaming on simple types
+        if (typeAliases != null && typeAliases.containsKey(swaggerType)) {
+          return typeAliases.get(swaggerType);
+        }
 
         // don't apply renaming on types from the typeMapping
         if (typeMapping.containsKey(swaggerType)) {

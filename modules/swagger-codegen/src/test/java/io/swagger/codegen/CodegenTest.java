@@ -1,5 +1,7 @@
 package io.swagger.codegen;
 
+import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.models.ArrayModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.Operation;
@@ -503,10 +505,91 @@ public class CodegenTest {
         final CodegenModel codegenModel = codegen.fromModel("Amount", amount, swagger.getDefinitions());
         for (CodegenProperty codegenProperty : codegenModel.vars) {
             if ("currency".equalsIgnoreCase(codegenProperty.name)) {
-                Assert.assertEquals(codegenProperty.pattern, "^[A-Z]{3,3}$");
+                Assert.assertEquals(codegenProperty.pattern, "/^[A-Z]{3,3}$/");
                 break;
             }
         }
+    }
 
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638, regression")
+    public void testRefKeepsComplexType() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("ComplexPropTest");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("ComplexPropTest", test, swagger.getDefinitions());
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            Assert.assertTrue(codegenProperty.complexType.startsWith("ComplexType"));
+        }
+    }
+
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
+    public void testRefKeepsFormat() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("Test");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("Test", test, swagger.getDefinitions());
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            if (codegenProperty.isContainer) {
+                Assert.assertTrue(codegenProperty.items.isDateTime);
+            } else {
+                Assert.assertTrue(codegenProperty.isDateTime);
+            }
+        }
+    }
+
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
+    public void testRefKeepsFormatInParentArray() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ArrayModel test = (ArrayModel) swagger.getDefinitions().get("DateTimeRefArr");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("DateTimeRefArr", test, swagger.getDefinitions());
+        Assert.assertNotNull(codegenModel.parentContainer);
+        Assert.assertNotNull(codegenModel.parentContainer.items);
+        Assert.assertTrue(codegenModel.parentContainer.items.isDateTime);
+    }
+
+    @Test(description = "https://github.com/swagger-api/swagger-codegen/issues/9638")
+    public void testRefKeepsFormatInParentMap() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("DateTimeRefMap");
+        Assert.assertNotNull(test);
+
+        final DefaultCodegen codegen = new DefaultCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("DateTimeRefMap", test, swagger.getDefinitions());
+        Assert.assertNotNull(codegenModel.parentContainer);
+        Assert.assertNotNull(codegenModel.parentContainer.items);
+        Assert.assertTrue(codegenModel.parentContainer.items.isDateTime);
+    }
+
+    @Test(description = "extension of https://github.com/swagger-api/swagger-codegen/issues/9638, datatype should be kept for arrays")
+    public void testRefKeepsFormatJavaList() {
+        final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/issue-9638.yaml");
+        ModelImpl test = (ModelImpl) swagger.getDefinitions().get("Test");
+        ModelImpl dateTime = (ModelImpl) swagger.getDefinitions().get("CustomDateTime");
+        Assert.assertNotNull(test);
+
+        final JavaClientCodegen codegen = new JavaClientCodegen();
+
+        final CodegenModel codegenModel = codegen.fromModel("Test", test, swagger.getDefinitions());
+        final CodegenModel dateTimeModel = codegen.fromModel("CustomDateTime", dateTime, swagger.getDefinitions());
+        final String dateDataType = dateTimeModel.dataType;
+        Assert.assertNotEquals(dateDataType, "String");
+        for (CodegenProperty codegenProperty : codegenModel.vars) {
+            if (codegenProperty.isContainer) {
+                Assert.assertTrue(codegenProperty.datatype.contains(dateDataType));
+            } else {
+                Assert.assertEquals(codegenProperty.datatype, dateDataType);
+            }
+        }
     }
 }

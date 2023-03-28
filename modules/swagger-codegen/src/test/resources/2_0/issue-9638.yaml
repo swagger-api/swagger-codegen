@@ -1,0 +1,68 @@
+swagger: "2.0"
+info:
+  title: "Test"
+  version: "2"
+paths:
+  /test:
+    get:
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/Test"
+definitions:
+  ComplexType:
+    type: object
+    properties:
+      id:
+        type: string
+  ComplexTypeWithoutType:
+    properties:
+      id:
+        type: string
+  ComplexPropTest:
+    type: object
+    properties:
+      complexProp:
+        $ref: '#/definitions/ComplexType'
+      complexPropWithoutType:
+        $ref: '#/definitions/ComplexTypeWithoutType'
+  CustomDateTime:
+    type: "string"
+    format: "date-time"
+  DateTimeRefArr:
+    type: "array"
+    items:
+      $ref: '#/definitions/CustomDateTime'
+  DateTimeRefMap:
+    type: "object"
+    additionalProperties:
+      $ref: '#/definitions/CustomDateTime'
+  Test:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+        format: "date-time"
+      dateRef:
+        $ref: '#/definitions/CustomDateTime'
+      dateArr:
+        type: array
+        items:
+          type: "string"
+          format: "date-time"
+      dateRefArr:
+        type: array
+        items:
+          $ref: '#/definitions/CustomDateTime'
+      dateMap:
+        type: object
+        additionalProperties:
+          type: "string"
+          format: "date-time"
+      dateRefMap:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/CustomDateTime'
