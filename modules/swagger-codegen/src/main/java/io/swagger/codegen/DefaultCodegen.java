@@ -3311,21 +3311,32 @@ public class DefaultCodegen {
                 cp.required = mandatory.contains(key) ? true : false;
                 m.hasRequired = m.hasRequired || cp.required;
                 m.hasOptional = m.hasOptional || !cp.required;
-                if (cp.isEnum) {
-                    // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
-                    // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
-                    m.hasEnums = true;
-                }
 
                 if (allDefinitions != null && prop instanceof RefProperty) {
                     RefProperty refProperty = (RefProperty) prop;
                     Model model =  allDefinitions.get(refProperty.getSimpleRef());
                     if (model instanceof ModelImpl) {
                         ModelImpl modelImpl = (ModelImpl) model;
+
+                        if(modelImpl.getEnum() != null && modelImpl.getEnum().size() > 0) {
+                            cp.isEnum = true;
+
+                            if (modelImpl.getType() != null) {
+                                Property p = PropertyBuilder.build(modelImpl.getType(), modelImpl.getFormat(), null);
+                                cp.datatype = getSwaggerType(p);
+                            }
+                        }
+
                         cp.pattern = modelImpl.getPattern();
                         cp.minLength = modelImpl.getMinLength();
                         cp.maxLength = modelImpl.getMaxLength();
                     }
+                }
+
+                if (cp.isEnum) {
+                    // FIXME: if supporting inheritance, when called a second time for allProperties it is possible for
+                    // m.hasEnums to be set incorrectly if allProperties has enumerations but properties does not.
+                    m.hasEnums = true;
                 }
 
                 // set model's hasOnlyReadOnly to false if the property is read-only
