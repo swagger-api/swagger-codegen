@@ -30,6 +30,8 @@ public class ScalaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setApiPackage(ScalaClientOptionsProvider.API_PACKAGE_VALUE);
             times = 1;
+            clientCodegen.setInvokerPackage(ScalaClientOptionsProvider.INVOKER_PACKAGE_VALUE);
+            times = 1;
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(ScalaClientOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
             clientCodegen.setModelPropertyNaming(ScalaClientOptionsProvider.MODEL_PROPERTY_NAMING);

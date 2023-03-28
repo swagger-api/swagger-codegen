@@ -1,5 +1,6 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenProperty;
 import org.mockito.Mockito;
 import org.testng.Assert;
@@ -42,5 +43,15 @@ public class ScalaCodegenTest {
         verify(scalaClientCodegenSpy, times(1)).stripPackageName(anyString());
         verify(scalaClientCodegenSpy, times(1)).formatIdentifier(anyString(), anyBoolean());
         Assert.assertEquals("WebsiteBodyModel", result);
+    }
+
+    @Test
+    public void testSetterForInvokerPackage() throws Exception {
+        scalaClientCodegen = new ScalaClientCodegen();
+        scalaClientCodegen.setInvokerPackage("xyz.yyyyy.zzzzzzz.invoker");
+        scalaClientCodegen.processOpts();
+
+        Assert.assertEquals(scalaClientCodegen.invokerPackage, "xyz.yyyyy.zzzzzzz.invoker");
+        Assert.assertEquals(scalaClientCodegen.additionalProperties().get(CodegenConstants.INVOKER_PACKAGE), "xyz.yyyyy.zzzzzzz.invoker");
     }
 }
