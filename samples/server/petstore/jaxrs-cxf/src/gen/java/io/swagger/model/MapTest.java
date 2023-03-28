@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -101,6 +102,25 @@ public enum InnerEnum {
   public MapTest putMapOfEnumStringItem(String key, InnerEnum mapOfEnumStringItem) {
     this.mapOfEnumString.put(key, mapOfEnumStringItem);
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MapTest mapTest = (MapTest) o;
+    return Objects.equals(mapMapOfString, mapTest.mapMapOfString) &&
+        Objects.equals(mapOfEnumString, mapTest.mapOfEnumString);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(mapMapOfString, mapOfEnumString);
   }
 
 

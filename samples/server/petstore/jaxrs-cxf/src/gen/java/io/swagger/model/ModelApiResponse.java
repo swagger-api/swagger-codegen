@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -75,6 +76,26 @@ public class ModelApiResponse  {
   public ModelApiResponse message(String message) {
     this.message = message;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ModelApiResponse _apiResponse = (ModelApiResponse) o;
+    return Objects.equals(code, _apiResponse.code) &&
+        Objects.equals(type, _apiResponse.type) &&
+        Objects.equals(message, _apiResponse.message);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(code, type, message);
   }
 
 

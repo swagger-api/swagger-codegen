@@ -6,6 +6,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -57,6 +58,25 @@ public class Animal  {
   public Animal color(String color) {
     this.color = color;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Animal animal = (Animal) o;
+    return Objects.equals(className, animal.className) &&
+        Objects.equals(color, animal.color);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(className, color);
   }
 
 

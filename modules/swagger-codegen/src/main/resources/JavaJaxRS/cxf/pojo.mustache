@@ -1,4 +1,5 @@
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -104,6 +105,26 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
   {{/isReadOnly}}
 
   {{/vars}}
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    {{classname}} {{classVarName}} = ({{classname}}) o;{{#hasVars}}
+    return {{#vars}}Objects.equals({{name}}, {{classVarName}}.{{name}}){{#hasMore}} &&
+        {{/hasMore}}{{^hasMore}};{{/hasMore}}{{/vars}}{{/hasVars}}{{^hasVars}}
+    return true;{{/hasVars}}
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash({{#vars}}{{name}}{{#hasMore}}, {{/hasMore}}{{/vars}});
+  }
+
 
   @Override
   public String toString() {

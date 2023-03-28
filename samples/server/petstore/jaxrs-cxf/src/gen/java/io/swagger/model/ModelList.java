@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -33,6 +34,24 @@ public class ModelList  {
   public ModelList _123List(String _123List) {
     this._123List = _123List;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ModelList _list = (ModelList) o;
+    return Objects.equals(_123List, _list._123List);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(_123List);
   }
 
 

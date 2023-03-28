@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -38,6 +39,24 @@ public class ClassModel  {
   public ClassModel propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ClassModel classModel = (ClassModel) o;
+    return Objects.equals(propertyClass, classModel.propertyClass);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(propertyClass);
   }
 
 

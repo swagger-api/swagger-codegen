@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -77,6 +78,26 @@ public class OuterComposite  {
   public OuterComposite myBoolean(Boolean myBoolean) {
     this.myBoolean = myBoolean;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    OuterComposite outerComposite = (OuterComposite) o;
+    return Objects.equals(myNumber, outerComposite.myNumber) &&
+        Objects.equals(myString, outerComposite.myString) &&
+        Objects.equals(myBoolean, outerComposite.myBoolean);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(myNumber, myString, myBoolean);
   }
 
 

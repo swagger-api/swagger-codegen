@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -68,6 +69,25 @@ public class AdditionalPropertiesClass  {
   public AdditionalPropertiesClass putMapOfMapPropertyItem(String key, Map<String, String> mapOfMapPropertyItem) {
     this.mapOfMapProperty.put(key, mapOfMapPropertyItem);
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AdditionalPropertiesClass additionalPropertiesClass = (AdditionalPropertiesClass) o;
+    return Objects.equals(mapProperty, additionalPropertiesClass.mapProperty) &&
+        Objects.equals(mapOfMapProperty, additionalPropertiesClass.mapOfMapProperty);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(mapProperty, mapOfMapProperty);
   }
 
 

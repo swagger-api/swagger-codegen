@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -195,6 +196,29 @@ public enum StatusEnum {
   public Pet status(StatusEnum status) {
     this.status = status;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Pet pet = (Pet) o;
+    return Objects.equals(id, pet.id) &&
+        Objects.equals(category, pet.category) &&
+        Objects.equals(name, pet.name) &&
+        Objects.equals(photoUrls, pet.photoUrls) &&
+        Objects.equals(tags, pet.tags) &&
+        Objects.equals(status, pet.status);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, category, name, photoUrls, tags, status);
   }
 
 

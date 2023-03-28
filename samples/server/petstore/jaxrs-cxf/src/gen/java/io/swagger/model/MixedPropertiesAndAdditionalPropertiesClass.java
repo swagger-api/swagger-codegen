@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -87,6 +88,26 @@ public class MixedPropertiesAndAdditionalPropertiesClass  {
   public MixedPropertiesAndAdditionalPropertiesClass putMapItem(String key, Animal mapItem) {
     this.map.put(key, mapItem);
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MixedPropertiesAndAdditionalPropertiesClass mixedPropertiesAndAdditionalPropertiesClass = (MixedPropertiesAndAdditionalPropertiesClass) o;
+    return Objects.equals(uuid, mixedPropertiesAndAdditionalPropertiesClass.uuid) &&
+        Objects.equals(dateTime, mixedPropertiesAndAdditionalPropertiesClass.dateTime) &&
+        Objects.equals(map, mixedPropertiesAndAdditionalPropertiesClass.map);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(uuid, dateTime, map);
   }
 
 

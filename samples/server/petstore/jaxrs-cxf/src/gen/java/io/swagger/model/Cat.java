@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -34,6 +35,24 @@ public class Cat extends Animal {
   public Cat declawed(Boolean declawed) {
     this.declawed = declawed;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Cat cat = (Cat) o;
+    return Objects.equals(declawed, cat.declawed);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(declawed);
   }
 
 

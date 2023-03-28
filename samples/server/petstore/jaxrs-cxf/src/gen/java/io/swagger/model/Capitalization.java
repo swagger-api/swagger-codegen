@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -141,6 +142,29 @@ public class Capitalization  {
   public Capitalization ATT_NAME(String ATT_NAME) {
     this.ATT_NAME = ATT_NAME;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Capitalization capitalization = (Capitalization) o;
+    return Objects.equals(smallCamel, capitalization.smallCamel) &&
+        Objects.equals(capitalCamel, capitalization.capitalCamel) &&
+        Objects.equals(smallSnake, capitalization.smallSnake) &&
+        Objects.equals(capitalSnake, capitalization.capitalSnake) &&
+        Objects.equals(scAETHFlowPoints, capitalization.scAETHFlowPoints) &&
+        Objects.equals(ATT_NAME, capitalization.ATT_NAME);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(smallCamel, capitalCamel, smallSnake, capitalSnake, scAETHFlowPoints, ATT_NAME);
   }
 
 

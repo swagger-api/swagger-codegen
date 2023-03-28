@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 
 import io.swagger.annotations.ApiModelProperty;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -264,6 +265,28 @@ public enum EnumNumberEnum {
   public EnumTest outerEnum(OuterEnum outerEnum) {
     this.outerEnum = outerEnum;
     return this;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    EnumTest enumTest = (EnumTest) o;
+    return Objects.equals(enumString, enumTest.enumString) &&
+        Objects.equals(enumStringRequired, enumTest.enumStringRequired) &&
+        Objects.equals(enumInteger, enumTest.enumInteger) &&
+        Objects.equals(enumNumber, enumTest.enumNumber) &&
+        Objects.equals(outerEnum, enumTest.outerEnum);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(enumString, enumStringRequired, enumInteger, enumNumber, outerEnum);
   }
 
 
