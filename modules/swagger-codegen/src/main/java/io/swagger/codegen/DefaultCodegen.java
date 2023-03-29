@@ -2,7 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -10,6 +12,8 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -174,6 +178,13 @@ public class DefaultCodegen {
         } else {
             setIgnoreImportMapping(defaultIgnoreImportMappingOption());
         }
+
+        additionalProperties.put("toLowerCase", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                writer.write(fragment.execute().toLowerCase());
+            }
+        });
     }
 
     // override with any special post-processing for all models
