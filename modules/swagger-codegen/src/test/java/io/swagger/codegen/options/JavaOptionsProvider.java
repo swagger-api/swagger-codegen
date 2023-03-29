@@ -87,10 +87,14 @@ public class JavaOptionsProvider implements OptionsProvider {
      * Use the default options, but override the ones found in additionalOptions.
      */
     public JavaOptionsProvider(Map<String, String> additionalOptions) {
-         options = new ImmutableMap.Builder<String, String>()
-                .putAll(options)
-                .putAll(additionalOptions)
-                .build();
+
+        ImmutableMap.Builder b = new ImmutableMap.Builder<String, String>();
+        if (options != null) {
+            b = b.putAll(options);
+        }
+        options = b
+            .putAll(additionalOptions)
+            .build();
     }
 
     @Override
