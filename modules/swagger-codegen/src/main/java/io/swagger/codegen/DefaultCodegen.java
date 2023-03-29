@@ -3183,7 +3183,7 @@ public class DefaultCodegen {
         co.baseName = tag;
     }
 
-    private void addParentContainer(CodegenModel m, String name, Property property) {
+    protected void addParentContainer(CodegenModel m, String name, Property property) {
         m.parentContainer = fromProperty(name, property);
         addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
@@ -3381,7 +3381,7 @@ public class DefaultCodegen {
      * @param allDefinitions The complete set of model definitions.
      * @return A mapping from model name to type alias
      */
-    private static Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
+    protected Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
         Map<String, String> aliases = new HashMap<>();
         if (allDefinitions != null) {
             for (Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
