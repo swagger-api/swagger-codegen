@@ -52,17 +52,17 @@
             <extension>
                 <groupId>org.jvnet.wagon-svn</groupId>
                 <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
+                <version>1.12</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-alpha-6</version>
+                <version>3.5.2</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-1</version>
+                <version>1.0-beta-2</version>
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
@@ -83,9 +83,6 @@
                     </execution>
                 </executions> -->
                 <configuration>
-                    <compilerSource>1.8</compilerSource>
-                    <compilerCompliance>1.8</compilerCompliance>
-                    <compilerTargetPlatform>1.8</compilerTargetPlatform>
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
@@ -125,7 +122,7 @@
                 <version>${surefire-version}</version>
                 <configuration>
                     <testNGArtifactName>none:none</testNGArtifactName>
-                    <argLine>-XX:+StartAttachListener</argLine>
+                    <argLine>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar --add-opens java.base/java.lang=ALL-UNNAMED -Djdk.attach.allowAttachSelf</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -157,16 +154,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <version>3.10.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -181,7 +174,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.12.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -192,7 +185,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.5.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <source>1.8</source>
@@ -213,7 +206,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -227,7 +220,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.4.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -301,6 +294,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.3.0</version>
                         <executions>
                             <execution>
                                 <id>add-source</id>
@@ -332,6 +326,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -920,7 +915,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.3.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -928,7 +923,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.4.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -964,6 +959,12 @@
                 <version>${jmockit-version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
@@ -976,23 +977,25 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.64</swagger-parser-version>
+        <maven.compiler.release>8</maven.compiler.release>
+        <swagger-parser-version>1.0.65</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.6.9</swagger-core-version>
+        <swagger-core-version>1.6.10</swagger-core-version>
         <commons-io-version>2.11.0</commons-io-version>
         <commons-cli-version>1.5.0</commons-cli-version>
-        <junit-version>4.13.1</junit-version>
-        <jackson-version>2.14.0</jackson-version>
+        <junit-version>4.13.2</junit-version>
+        <jackson-version>2.14.2</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.12.0</commons-lang-version>
-        <slf4j-version>1.7.35</slf4j-version>
+        <slf4j-version>1.7.36</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
-        <jmustache-version>1.12</jmustache-version>
-        <testng-version>6.9.6</testng-version>
-        <surefire-version>2.19.1</surefire-version>
-        <jmockit-version>1.25</jmockit-version>
-        <reflections-version>0.9.11</reflections-version>
-        <snakeyaml-version>1.33</snakeyaml-version>
+        <jmustache-version>1.15</jmustache-version>
+        <testng-version>7.7.1</testng-version>
+        <surefire-version>3.0.0</surefire-version>
+        <jmockit-version>1.49</jmockit-version>
+        <mockito-version>5.2.0</mockito-version>
+        <reflections-version>0.10.2</reflections-version>
+        <snakeyaml-version>2.0</snakeyaml-version>
     </properties>
 </project>
