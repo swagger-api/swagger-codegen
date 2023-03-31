@@ -238,16 +238,16 @@ brew install swagger-codegen
 
 To build from source, you need the following installed and available in your `$PATH:`
 
-* [Java 8+](http://java.oracle.com)
+* [Java 11+](http://java.oracle.com)
 
-* [Apache maven 3.3.3 or greater](http://maven.apache.org/)
+* [Apache maven 3.6.2 or greater](http://maven.apache.org/)
 
 #### OS X Users
-Don't forget to install Java 8+.
+Don't forget to install Java 11+.
 
 Export `JAVA_HOME` in order to use the supported Java version:
 ```sh
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export JAVA_HOME=`/usr/libexec/java_home -v 11`
 export PATH=${JAVA_HOME}/bin:$PATH
 ```
 
