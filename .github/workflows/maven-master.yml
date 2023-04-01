@@ -51,10 +51,8 @@ jobs:
           then
             ./mvnw clean deploy -U  --settings $HOME/.m2/settings.xml
             docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:unstable ./modules/swagger-generator
-            docker tag $DOCKER_GENERATOR_IMAGE_NAME:unstable
             docker push $DOCKER_GENERATOR_IMAGE_NAME:unstable
             docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable ./modules/swagger-codegen-cli
-            docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable
             docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable          
           else
             echo "not deploying release nor building and pushing release docker image: " ${MY_POM_VERSION}
