@@ -43,6 +43,8 @@ jobs:
       - name: Deploy Maven Snapshot
         if: ${{ matrix.java == 11 }}
         run: |
+          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator
+          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli          
           export MY_POM_VERSION=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
           echo "POM VERSION" ${MY_POM_VERSION}
           if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
