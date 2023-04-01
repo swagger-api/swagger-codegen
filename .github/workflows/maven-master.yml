@@ -1,4 +1,4 @@
-name: PR build - master
+name: Build - master
 
 on:
   push:
@@ -38,12 +38,6 @@ jobs:
                 "username": "${{ secrets.OSSRH_USERNAME }}",
                 "password": "${{ secrets.OSSRH_TOKEN }}"
             }]
-      - name: Build with Maven
-        run: |
-          export MY_POM_VERSION=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-          echo "POM VERSION" ${MY_POM_VERSION}
-          if [[ ! $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
-          then
       - name: Build with Maven
         run: mvn -B -U verify --file pom.xml
       - name: Deploy Maven Snapshot
