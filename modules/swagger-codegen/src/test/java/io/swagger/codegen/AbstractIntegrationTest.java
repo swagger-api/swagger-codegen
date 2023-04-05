@@ -36,7 +36,7 @@ public abstract class AbstractIntegrationTest {
 
         IntegrationTestPathsConfig integrationTestPathsConfig = getIntegrationTestPathsConfig();
 
-        String specContent = Files.readFile(integrationTestPathsConfig.getSpecPath().toFile());
+        String specContent = Files.readFile(java.nio.file.Files.newInputStream(integrationTestPathsConfig.getSpecPath()));
         Swagger swagger = new SwaggerParser().parse(specContent);
 
         CodegenConfig codegenConfig = getCodegenConfig();

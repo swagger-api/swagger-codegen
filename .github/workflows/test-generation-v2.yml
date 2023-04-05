@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
 
     outputs:
@@ -80,7 +80,7 @@ jobs:
           options: -DgemName=petstore,moduleName=Petstore,gemVersion=1.0.0
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -114,7 +114,7 @@ jobs:
       ###############################################
       matrix:
         ruby: ['2.2']
-        java: [ 8 ]
+        java: [ 11 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -157,7 +157,7 @@ jobs:
           build-commands: mvn verify
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2
@@ -183,7 +183,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
 
     outputs:
@@ -209,7 +209,7 @@ jobs:
           options: -DappName=PetstoreClient --additional-properties useES6=false
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -243,7 +243,7 @@ jobs:
       ###############################################
       matrix:
         node-version: [12.x]
-        java: [ 8 ]
+        java: [ 11 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -283,7 +283,7 @@ jobs:
           build-commands: mvn verify
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2
@@ -309,7 +309,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
 
     outputs:
@@ -335,7 +335,7 @@ jobs:
           options: " --additional-properties composerVendorName=swagger,composerProjectName=swagger_codegen"
       - id: outcome
         run: |
-          echo "::set-output name=generate_outcome::${{ steps.generate.outcome }}"
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate outcome
         uses: actions/upload-artifact@v2
@@ -369,7 +369,7 @@ jobs:
       ###############################################
       matrix:
         node-version: [12.x]
-        java: [ 8 ]
+        java: [ 11 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -417,7 +417,7 @@ jobs:
           build-commands: "composer install__&&__./vendor/bin/phpunit test"
       - id: outcome
         run: |
-          echo "::set-output name=build_outcome::${{ steps.build.outcome }}"
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
           echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
       - name: upload build outcome
         uses: actions/upload-artifact@v2
