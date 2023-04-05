@@ -72,7 +72,7 @@ jobs:
                 echo "generators version not found"
                 rm -f maven-metadata.json
                 curl -o maven-metadata.json -s --max-time 60 --retry 15 --connect-timeout 30  -H "accept: application/json" https://oss.sonatype.org/service/local/repositories/snapshots/content/io/swagger/codegen/v3/swagger-codegen-generators/
-                LAST_SNAP=`jq '.data | sort_by(.lastModified) | reverse | .[0].text' maven-metadata.json`
+                LAST_SNAP=`jq '[.data | sort_by(.lastModified) | reverse | .[] | select( .text | contains("1."))]| .[0].text' maven-metadata.json`
                 export LAST_SNAP=${LAST_SNAP:1:${#LAST_SNAP}-2}
                 echo "LAST_SNAP $LAST_SNAP"
                 export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
@@ -105,7 +105,7 @@ jobs:
                 echo "generators version not found"
                 rm -f maven-metadata.json
                 curl -o maven-metadata.json -s --max-time 60 --retry 15 --connect-timeout 30  -H "accept: application/json" https://oss.sonatype.org/service/local/repositories/snapshots/content/io/swagger/codegen/v3/swagger-codegen-generators/
-                LAST_SNAP=`jq '.data | sort_by(.lastModified) | reverse | .[0].text' maven-metadata.json`
+                LAST_SNAP='[.data | sort_by(.lastModified) | reverse | .[] | select( .text | contains("1."))]| .[0].text' maven-metadata.json`
                 export LAST_SNAP=${LAST_SNAP:1:${#LAST_SNAP}-2}
                 echo "LAST_SNAP $LAST_SNAP"
                 export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
@@ -115,8 +115,8 @@ jobs:
           echo "GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
           echo "GENERATORS_VERSION_PROPERTY=${GENERATORS_VERSION_PROPERTY}" >> $GITHUB_ENV          
           cp -a pom.java8.xml pom.xml
-          echo "Test samples - GENERATORS_VERSION_PROPERTY ${{ env.GENERATORS_VERSION_PROPERTY }}"
-          mvn -q verify -U -Psamples -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Dproject.build.sourceEncoding=UTF8 -Dfile.encoding=UTF8 ${{ env.GENERATORS_VERSION_PROPERTY }}
+          echo "Test samples - GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}
+          mvn -q verify -U -Psamples -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Dproject.build.sourceEncoding=UTF8 -Dfile.encoding=UTF8 ${GENERATORS_VERSION_PROPERTY}
           cp -a pom.java11.xml pom.xml
       - name: docker cli and minimal build and push
         if: ${{ matrix.java == 17 }}
