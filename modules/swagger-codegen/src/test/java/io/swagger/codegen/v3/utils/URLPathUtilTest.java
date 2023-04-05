@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class URLPathUtilTest {
@@ -47,8 +47,8 @@ public class URLPathUtilTest {
         verify(openAPI).getServers();
         verify(servers).isEmpty();
 
-        verifyZeroInteractions(server);
-        verifyZeroInteractions(config);
+        verifyNoMoreInteractions(server);
+        verifyNoMoreInteractions(config);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class URLPathUtilTest {
 
         verify(openAPI).getServers();
         verify(servers).isEmpty();
-        verifyZeroInteractions(config);
+        verifyNoMoreInteractions(config);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class URLPathUtilTest {
 
         verify(openAPI).getServers();
         verify(servers).isEmpty();
-        verifyZeroInteractions(config);
+        verifyNoMoreInteractions(config);
     }
 
     @Test (description = "verify a relative url when input url is not present.")

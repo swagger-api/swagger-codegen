@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:17-jdk-alpine
 
 RUN set -x \
  && apk update && apk upgrade \
