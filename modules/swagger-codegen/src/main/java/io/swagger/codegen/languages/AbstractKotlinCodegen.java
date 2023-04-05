@@ -466,7 +466,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         String modifiedName = name.replaceAll("\\.", "");
         modifiedName = sanitizeKotlinSpecificNames(modifiedName);
 
-        modifiedName = titleCase(modifiedName);
+        modifiedName = camelize(modifiedName);
 
         if (modifiedName.equalsIgnoreCase("Companion")) {
             modifiedName = "_" + modifiedName;
