@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -70,7 +70,7 @@ jobs:
           language: "java"
           job-name: ${{ env.JOB_NAME }}
           spec-url: "https://petstore.swagger.io/v2/swagger.json"
-          options: " --additional-properties java11=true,wiremock=true"
+          options: " --library okhttp-gson --additional-properties java11=true,wiremock=true"
       - id: outcome
         run: |
           echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
