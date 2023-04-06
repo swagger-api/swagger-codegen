@@ -115,7 +115,7 @@ jobs:
           echo "GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
           echo "GENERATORS_VERSION_PROPERTY=${GENERATORS_VERSION_PROPERTY}" >> $GITHUB_ENV          
           cp -a pom.java8.xml pom.xml
-          echo "Test samples - GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}
+          echo "Test samples - GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
           mvn -q verify -U -Psamples -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Dproject.build.sourceEncoding=UTF8 -Dfile.encoding=UTF8 ${GENERATORS_VERSION_PROPERTY}
           cp -a pom.java11.xml pom.xml
       - name: docker cli and minimal build and push
