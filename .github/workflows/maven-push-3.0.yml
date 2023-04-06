@@ -105,7 +105,7 @@ jobs:
                 echo "generators version not found"
                 rm -f maven-metadata.json
                 curl -o maven-metadata.json -s --max-time 60 --retry 15 --connect-timeout 30  -H "accept: application/json" https://oss.sonatype.org/service/local/repositories/snapshots/content/io/swagger/codegen/v3/swagger-codegen-generators/
-                LAST_SNAP='[.data | sort_by(.lastModified) | reverse | .[] | select( .text | contains("1."))]| .[0].text' maven-metadata.json`
+                LAST_SNAP=`jq '[.data | sort_by(.lastModified) | reverse | .[] | select( .text | contains("1."))]| .[0].text' maven-metadata.json`
                 export LAST_SNAP=${LAST_SNAP:1:${#LAST_SNAP}-2}
                 echo "LAST_SNAP $LAST_SNAP"
                 export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
