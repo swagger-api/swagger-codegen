@@ -195,7 +195,7 @@
                 <dependency>
                     <groupId>com.sun.xml.ws</groupId>
                     <artifactId>jaxws-rt</artifactId>
-                    <version>2.3.3</version>
+                    <version>{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}</version>
                     <type>pom</type>
                 </dependency>
             </dependencies>
@@ -246,9 +246,9 @@
         {{#useBeanValidation}}
             <!-- Bean Validation API support -->
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>1.1.0.Final</version>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>{{#jakarta}}3.0.2{{/jakarta}}{{^jakarta}}2.0.2{{/jakarta}}</version>
                 <scope>provided</scope>
             </dependency>
         {{/useBeanValidation}}
@@ -273,13 +273,22 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>5.4.1.Final</version>
+                <version>{{#jakarta}}8.0.0.Final{{/jakarta}}{{^jakarta}}5.4.1.Final{{/jakarta}}</version>
             </dependency>
+        {{#jakarta}}
+            <dependency>
+                <groupId>jakarta.el</groupId>
+                <artifactId>jakarta.el-api</artifactId>
+                <version>5.0.1</version>
+            </dependency>
+        {{/jakarta}}
+        {{^jakarta}}
             <dependency>
                 <groupId>javax.el</groupId>
                 <artifactId>el-api</artifactId>
                 <version>2.2</version>
             </dependency>
+        {{/jakarta}}
         {{/performBeanValidation}}
         {{#parcelableModel}}
             <!-- Needed for Parcelable support-->

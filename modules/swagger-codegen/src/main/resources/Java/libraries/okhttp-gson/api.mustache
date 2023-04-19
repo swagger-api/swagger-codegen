@@ -19,13 +19,26 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 {{#useBeanValidation}}
+{{#jakarta}}
+import jakarta.validation.constraints.*;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.constraints.*;
+{{/jakarta}}
 {{/useBeanValidation}}
 {{#performBeanValidation}}
+{{#jakarta}}
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.executable.ExecutableValidator;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.validation.executable.ExecutableValidator;
+{{/jakarta}}
 import java.util.Set;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
