@@ -33,20 +33,6 @@ jobs:
           /bin/bash ./bin/utils/detect_merge_conflict.sh
           # fail if generators contain tab '\t'
           /bin/bash ./bin/utils/detect_tab_in_java_class.sh
-      - uses: s4u/maven-settings-action@v2.8.0
-        name: setup maven settings.xml
-        with:
-          servers: |
-            [{
-                "id": "sonatype-nexus-staging",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            },
-            {
-                "id": "sonatype-nexus-snapshots",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            }]
       - name: Build with Maven
         if: ${{ matrix.java != 8 }}
         run: |
