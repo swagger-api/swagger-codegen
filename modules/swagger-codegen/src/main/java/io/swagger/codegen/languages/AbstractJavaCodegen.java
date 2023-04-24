@@ -215,8 +215,6 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(CliOption.newBoolean(CHECK_DUPLICATED_MODEL_NAME, "Check if there are duplicated model names (ignoring case)"));
         cliOptions.add(CliOption.newString(ADDITIONAL_MODEL_TYPE_ANNOTATIONS, "Additional annotations for model type(class level annotations)"));
 
-        cliOptions.add(CliOption.newBoolean(JAKARTA, "Use Jakarta EE (package jakarta.*) instead of Java EE (javax.*)"));
-
         CliOption jeeSpec = CliOption.newBoolean(JAKARTA, "Use Jakarta EE (package jakarta.*) instead of Java EE (javax.*)");
         Map<String, String> jeeSpecModeOptions = new HashMap<String, String>();
         jeeSpecModeOptions.put("true", "Use Jakarta EE (package jakarta.*)");
