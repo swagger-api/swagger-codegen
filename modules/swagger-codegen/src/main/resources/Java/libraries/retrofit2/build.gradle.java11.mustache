@@ -73,7 +73,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
     {{/usePlayWS}}
-    implementation "com.sun.xml.ws:jaxws-rt:2.3.3"
+    implementation "com.sun.xml.ws:jaxws-rt:{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}"
     {{#wiremock}}
     testImplementation "com.github.tomakehurst:wiremock:2.27.2"
     {{/wiremock}}

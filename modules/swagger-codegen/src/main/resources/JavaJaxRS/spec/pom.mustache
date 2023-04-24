@@ -65,7 +65,7 @@
         <dependency>
           <groupId>com.sun.xml.ws</groupId>
           <artifactId>jaxws-rt</artifactId>
-          <version>2.3.3</version>
+            <version>{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}</version>
           <type>pom</type>
         </dependency>
       </dependencies>
@@ -73,12 +73,22 @@
   </profiles>
   {{/java11}}
   <dependencies>
+    {{#jakarta}}
+    <dependency>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>jakarta.ws.rs-api</artifactId>
+        <version>3.1.0</version>
+        <scope>provided</scope>
+    </dependency>
+    {{/jakarta}}
+    {{^jakarta}}
     <dependency>
       <groupId>javax.ws.rs</groupId>
       <artifactId>javax.ws.rs-api</artifactId>
       <version>2.1.1</version>
       <scope>provided</scope>
     </dependency>
+    {{/jakarta}}
     {{#jackson}}
     <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -125,12 +135,22 @@
     </dependency>{{/interfaceOnly}}
     {{#useBeanValidation}}
     <!-- Bean Validation API support -->
+    {{#jakarta}}
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.0.2</version>
+        <scope>provided</scope>
+    </dependency>
+    {{/jakarta}}
+    {{^jakarta}}
     <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>1.1.0.Final</version>
         <scope>provided</scope>
     </dependency>
+    {{/jakarta}}
 {{/useBeanValidation}}
   </dependencies>
   <properties>
