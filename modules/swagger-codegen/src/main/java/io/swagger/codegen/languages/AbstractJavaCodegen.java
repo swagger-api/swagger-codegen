@@ -66,6 +66,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String ERROR_ON_UNKNOWN_ENUM = "errorOnUnknownEnum";
     public static final String CHECK_DUPLICATED_MODEL_NAME = "checkDuplicatedModelName";
     public static final String ADDITIONAL_MODEL_TYPE_ANNOTATIONS = "additionalModelTypeAnnotations";
+    public static final String JAKARTA = "jakarta";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -100,6 +101,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
     protected boolean disableHtmlEscaping = false;
+    protected boolean jakarta = false;
     private NotNullAnnotationFeatures notNullOption;
     private IgnoreUnknownJacksonFeatures ignoreUnknown;
     protected List<String> additionalModelTypeAnnotations = new LinkedList<>();
@@ -212,6 +214,13 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(CliOption.newBoolean(DISABLE_HTML_ESCAPING, "Disable HTML escaping of JSON strings when using gson (needed to avoid problems with byte[] fields)"));
         cliOptions.add(CliOption.newBoolean(CHECK_DUPLICATED_MODEL_NAME, "Check if there are duplicated model names (ignoring case)"));
         cliOptions.add(CliOption.newString(ADDITIONAL_MODEL_TYPE_ANNOTATIONS, "Additional annotations for model type(class level annotations)"));
+
+        CliOption jeeSpec = CliOption.newBoolean(JAKARTA, "Use Jakarta EE (package jakarta.*) instead of Java EE (javax.*)");
+        Map<String, String> jeeSpecModeOptions = new HashMap<String, String>();
+        jeeSpecModeOptions.put("true", "Use Jakarta EE (package jakarta.*)");
+        jeeSpecModeOptions.put("false", "Use Java EE (javax.*)");
+        jeeSpec.setEnum(jeeSpecModeOptions);
+        cliOptions.add(jeeSpec);
     }
 
     @Override
@@ -521,6 +530,11 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
         } else if (dateLibrary.equals("legacy")) {
             additionalProperties.put("legacyDates", true);
+        }
+
+        if (additionalProperties.containsKey(JAKARTA)) {
+            setJakarta(Boolean.parseBoolean(String.valueOf(additionalProperties.get(JAKARTA))));
+            additionalProperties.put(JAKARTA, jakarta);
         }
 
         if (this.skipAliasGeneration == null) {
@@ -1494,6 +1508,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public String escapeQuotationMark(String input) {
         // remove " to avoid code injection
         return input.replace("\"", "");
+    }
+
+    public void setJakarta(boolean jakarta) {
+        this.jakarta = jakarta;
     }
 
     @Override
