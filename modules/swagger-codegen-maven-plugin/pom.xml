@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.36-SNAPSHOT</version>
+        <version>3.0.43-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -18,28 +18,29 @@
     </prerequisites>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.version>3.2.5</maven.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>3.2.5</version>
+            <version>${maven.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-artifact</artifactId>
-            <version>3.2.5</version>
+            <version>${maven.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-compat</artifactId>
-            <version>3.2.5</version>
+            <version>${maven.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>3.2.5</version>
+            <version>${maven.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
@@ -59,7 +60,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-<!--             <version>4.12</version> -->
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -69,7 +69,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.5.1</version>
+                    <version>3.6.0</version>
                     <configuration>
                         <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                     </configuration>
