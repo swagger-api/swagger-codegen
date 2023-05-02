@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.parser.OpenAPIV3Parser;
+import io.swagger.v3.parser.core.models.ParseOptions;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.Argument;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -21,10 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +44,25 @@ public class SwaggerCodegen {
             LOGGER.error("Could not load resource file.");
             return;
         }
-        final OpenAPI openAPI = new OpenAPIV3Parser().readContents(oas3, null, null).getOpenAPI();
+
+        ParseOptions parseOptions = null;
+
+        if (System.getenv("SAFELY_RESOLVE_URL").equals("true")) {
+            List<String> allowList = Optional.ofNullable(System.getenv("REMOTE_REF_ALLOW_LIST"))
+                    .map(str -> Arrays.asList(str.split(",")))
+                    .orElseGet(Collections::emptyList);
+
+            List<String> blockList = Optional.ofNullable(System.getenv("REMOTE_REF_BLOCK_LIST"))
+                    .map(str -> Arrays.asList(str.split(",")))
+                    .orElseGet(Collections::emptyList);
+
+            parseOptions = new ParseOptions();
+            parseOptions.setSafelyResolveURL(true);
+            parseOptions.setRemoteRefAllowList(allowList);
+            parseOptions.setRemoteRefBlockList(blockList);
+        }
+
+        final OpenAPI openAPI = new OpenAPIV3Parser().readContents(oas3, null, parseOptions).getOpenAPI();
         final Map<String, Schema> schemaMap = openAPI.getComponents().getSchemas();
         final Set<String> schemaNames = schemaMap.keySet();
 
