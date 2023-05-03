@@ -276,7 +276,7 @@
         <dependency>
            <groupId>javax.xml.bind</groupId>
            <artifactId>jaxb-api</artifactId>
-           <version>2.3.0</version>
+           <version>${jaxb-api.version}</version>
          </dependency>
          <dependency>
            <groupId>com.sun.xml.bind</groupId>
@@ -333,6 +333,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
         <zip-version>2.11.5</zip-version>
+        <jaxb-api.version>2.3.0</jaxb-api.version>
         <jetty-version>9.4.51.v20230217</jetty-version>
         <jersey2-version>2.39.1</jersey2-version>
     </properties>
