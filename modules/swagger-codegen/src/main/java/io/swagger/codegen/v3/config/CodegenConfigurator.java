@@ -34,10 +34,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -674,6 +678,21 @@ public class CodegenConfigurator implements Serializable {
         options.setFlatten(true);
         options.setFlattenComposedSchemas(flattenInlineSchema);
         options.setSkipMatches(this.skipInlineModelMatches);
+
+        if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
+            List<String> allowList = Optional.ofNullable(System.getenv("REMOTE_REF_ALLOW_LIST"))
+                    .map(str -> Arrays.asList(str.split(",")))
+                    .orElseGet(Collections::emptyList);
+
+            List<String> blockList = Optional.ofNullable(System.getenv("REMOTE_REF_BLOCK_LIST"))
+                    .map(str -> Arrays.asList(str.split(",")))
+                    .orElseGet(Collections::emptyList);
+
+            options.setSafelyResolveURL(true);
+            options.setRemoteRefAllowList(allowList);
+            options.setRemoteRefBlockList(blockList);
+        }
+
         return options;
     }
 
