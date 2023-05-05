@@ -3333,7 +3333,7 @@ public class DefaultCodegen {
                     Model model =  allDefinitions.get(refProperty.getSimpleRef());
                     if (model instanceof ModelImpl) {
                         ModelImpl modelImpl = (ModelImpl) model;
-                        cp.pattern = modelImpl.getPattern();
+                        cp.pattern = toRegularExpression(modelImpl.getPattern());
                         cp.minLength = modelImpl.getMinLength();
                         cp.maxLength = modelImpl.getMaxLength();
                     }
