@@ -54,7 +54,7 @@ if(hasProperty('target') && target == 'android') {
         }
 
         dependencies {
-            provided 'javax.annotation:jsr250-api:1.0'
+            provided 'jakarta.annotation:jakarta.annotation-api:{{#jakarta}}2.1.1{{/jakarta}}{{^jakarta}}1.3.5{{/jakarta}}'
         }
     }
 
@@ -113,7 +113,7 @@ ext {
     commons_lang3_version=3.6
     {{/supportJava6}}
     {{^supportJava6}}
-    jersey_version = "2.29.1"
+    jersey_version = "{{#jakarta}}3.1.0{{/jakarta}}{{^jakarta}}2.26{{/jakarta}}"
     {{/supportJava6}}
     junit_version = "4.12"
 }
