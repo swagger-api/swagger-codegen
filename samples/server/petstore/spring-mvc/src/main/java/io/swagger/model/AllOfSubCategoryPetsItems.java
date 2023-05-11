@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class AllOfSubCategoryPetsItems extends Pet  {
 
   @Override
