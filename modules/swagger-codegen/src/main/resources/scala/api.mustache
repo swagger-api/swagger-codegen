@@ -10,7 +10,12 @@ import {{invokerPackage}}.{ApiInvoker, ApiException}
 import com.sun.jersey.multipart.FormDataMultiPart
 import com.sun.jersey.multipart.file.FileDataBodyPart
 
+{{#jakarta}}
+import jakarta.ws.rs.core.MediaType
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.core.MediaType
+{{/jakarta}}
 
 import java.io.File
 import java.util.Date

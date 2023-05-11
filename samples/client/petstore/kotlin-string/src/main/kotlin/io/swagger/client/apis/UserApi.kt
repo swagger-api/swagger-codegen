@@ -25,19 +25,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     */
     fun createUser(body: User) : Unit {
         val localVariableBody: kotlin.Any? = body
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.POST,
             "/user",
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,
@@ -62,19 +54,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     */
     fun createUsersWithArrayInput(body: kotlin.Array<User>) : Unit {
         val localVariableBody: kotlin.Any? = body
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.POST,
             "/user/createWithArray",
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,
@@ -99,19 +83,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     */
     fun createUsersWithListInput(body: kotlin.Array<User>) : Unit {
         val localVariableBody: kotlin.Any? = body
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.POST,
             "/user/createWithList",
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,
@@ -136,19 +112,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     */
     fun deleteUser(username: kotlin.String) : Unit {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.DELETE,
             "/user/{username}".replace("{"+"username"+"}", "$username"),
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,
@@ -174,19 +142,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     @Suppress("UNCHECKED_CAST")
     fun getUserByName(username: kotlin.String) : User {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/user/{username}".replace("{"+"username"+"}", "$username"),
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<User>(
             localVariableConfig,
@@ -213,19 +173,16 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     @Suppress("UNCHECKED_CAST")
     fun loginUser(username: kotlin.String, password: kotlin.String) : kotlin.String {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf("username" to listOf("$username"), "password" to listOf("$password"))
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>().apply {
+            put("username", listOf(username.toString()))
+            put("password", listOf(password.toString()))
+        }
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/user/login",
             query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<kotlin.String>(
             localVariableConfig,
@@ -249,19 +206,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     */
     fun logoutUser() : Unit {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/user/logout",
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,
@@ -287,19 +236,11 @@ class UserApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiCl
     */
     fun updateUser(username: kotlin.String, body: User) : Unit {
         val localVariableBody: kotlin.Any? = body
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.PUT,
             "/user/{username}".replace("{"+"username"+"}", "$username"),
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,

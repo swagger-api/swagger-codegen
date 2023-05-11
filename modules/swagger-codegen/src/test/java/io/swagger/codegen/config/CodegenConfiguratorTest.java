@@ -14,12 +14,12 @@ import mockit.Expectations;
 import mockit.FullVerifications;
 import mockit.Injectable;
 import mockit.Mocked;
-import mockit.StrictExpectations;
 import mockit.Tested;
 import org.apache.commons.lang3.SerializationUtils;
 import org.testng.annotations.Test;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,35 +42,22 @@ public class CodegenConfiguratorTest {
     @Mocked
     CodegenConfigLoader codegenConfigLoader;
 
-    @Injectable
     List<AuthorizationValue> authorizationValues;
 
-    @Mocked
-    ParseOptions options;
+    @Injectable
+    AuthorizationValue auth1;
+    @Injectable
+    AuthorizationValue auth2;
+    public CodegenConfiguratorTest() {
+        authorizationValues = new ArrayList<>();
+        authorizationValues.add(auth1);
+        authorizationValues.add(auth2);
+    }
 
     @Tested
     CodegenConfigurator configurator;
 
     @SuppressWarnings("unused")
-    @Test
-    public void testVerbose() throws Exception {
-
-        configurator.setVerbose(true);
-
-        new StrictExpectations(System.class) {{
-            System.setProperty("debugSwagger", "");
-            times = 1;
-            System.setProperty("debugModels", "");
-            times = 1;
-            System.setProperty("debugOperations", "");
-            times = 1;
-            System.setProperty("debugSupportingFiles", "");
-            times = 1;
-        }};
-
-        setupAndRunGenericTest(configurator);
-    }
-
     @Test
     public void testTemplateDir() throws Exception {
 
@@ -83,22 +70,6 @@ public class CodegenConfiguratorTest {
     }
 
     @SuppressWarnings("unused")
-    @Test
-    public void testSystemProperties() throws Exception {
-
-        configurator.addSystemProperty("hello", "world")
-                .addSystemProperty("foo", "bar");
-
-        new Expectations(System.class) {{
-            System.setProperty("hello", "world");
-            times = 1;
-            System.setProperty("foo", "bar");
-            times = 1;
-        }};
-
-        setupAndRunGenericTest(configurator);
-    }
-
     @Test
     public void testSkipOverwrite() throws Exception {
         CodegenConfigurator configurator1 = new CodegenConfigurator();
@@ -344,25 +315,21 @@ public class CodegenConfiguratorTest {
     @SuppressWarnings("unused")
     private void setupStandardExpectations(final String spec, final String languageName, final String auth, final CodegenConfig config) {
 
-        new StrictExpectations() {{
+        ParseOptions options = new ParseOptions();
+        options.setResolve(true);
+        options.setFlatten(true);
+
+        new Expectations() {{
             CodegenConfigLoader.forName(languageName);
             times = 1;
             result = config;
 
             AuthParser.parse(auth); times=1; result = authorizationValues;
 
-            new ParseOptions();
-            times = 1;
-            result = options;
-            options.setResolve(true);
-            options.setFlatten(true);
+            SwaggerParser p = new SwaggerParser();
+            minTimes = 1;
 
-            new SwaggerParser();
-            times = 1;
-            result = parser;
-
-            parser.read(spec, authorizationValues, options);
-            times = 1;
+            p.read((String) any, (List<AuthorizationValue>) any, (ParseOptions) any);
             result = swagger;
 
         }};

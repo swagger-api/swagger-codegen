@@ -27,23 +27,35 @@ data class Order (
     val quantity: kotlin.Int? = null,
     val shipDate: java.time.LocalDateTime? = null,
     /* Order Status */
-    val status: Order.Status? = null,
-    val complete: kotlin.Boolean? = null
+    val status: Status? = null,
+    val complete: kotlin.Boolean? = null,
 ) {
+
+
+
+
+
+
+
+
+
 
     /**
     * Order Status
-    * Values: placed,approved,delivered
+    * Values: PLACED,APPROVED,DELIVERED
     */
-    enum class Status(val value: kotlin.Any){
+    enum class Status(val value: kotlin.String){
     
-        placed("placed"),
+        PLACED("placed"),
     
-        approved("approved"),
+        APPROVED("approved"),
     
-        delivered("delivered");
+        DELIVERED("delivered");
     
     }
+
+
+
 
 }
 

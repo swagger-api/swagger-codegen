@@ -41,7 +41,7 @@ public class CSharpClientOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.INTERFACE_PREFIX, "X")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
                 .put(CodegenConstants.NETCORE_PROJECT_FILE, "false")
-                .put(CodegenConstants.MODEL_PROPERTY_NAMING, MODEL_PROPERTY_NAMING)
+                .put(CodegenConstants.MODEL_PROPERTY_NAMING, "original")
                 .put(CodegenConstants.VALIDATABLE, "true")
                 .build();
     }
