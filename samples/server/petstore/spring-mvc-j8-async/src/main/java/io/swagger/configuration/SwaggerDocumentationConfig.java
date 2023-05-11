@@ -10,6 +10,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 
+
 @Configuration
 public class SwaggerDocumentationConfig {
 
