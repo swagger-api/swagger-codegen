@@ -13,6 +13,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems>  {
 
   @Override

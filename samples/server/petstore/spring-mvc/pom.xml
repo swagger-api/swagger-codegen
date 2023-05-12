@@ -170,6 +170,6 @@
         <springfox-version>2.9.2</springfox-version>
         <jackson-version>2.9.10</jackson-version>
         <jackson-threetenbp-version>2.9.10</jackson-threetenbp-version>
-        <spring-version>5.0.18.RELEASE</spring-version>
+        <spring-version>5.3.27</spring-version>
     </properties>
 </project>
