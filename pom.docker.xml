@@ -1116,7 +1116,7 @@
         <swagger-codegen-generators-version>1.0.40-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.2.9</swagger-core-version>
         <swagger-core-version-v1>1.6.10</swagger-core-version-v1>
-        <swagger-parser-version>2.1.13</swagger-parser-version>
+        <swagger-parser-version>2.1.14-SNAPSHOT</swagger-parser-version>
         <swagger-parser-version-v1>1.0.65</swagger-parser-version-v1>
         <jackson-version>2.14.2</jackson-version>
         <jackson-databind-version>2.14.2</jackson-databind-version>
