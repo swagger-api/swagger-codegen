@@ -582,8 +582,7 @@ public class CodegenConfigurator implements Serializable {
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
             if (config.needsUnflattenedSpec()) {
-                ParseOptions optionsUnflattened = new ParseOptions();
-                optionsUnflattened.setResolve(true);
+                ParseOptions optionsUnflattened = buildUnflattenedParseOptions();
                 SwaggerParseResult resultUnflattened = new OpenAPIParser().readContents(inputSpec, authorizationValues, optionsUnflattened);
                 OpenAPI openAPIUnflattened = resultUnflattened.getOpenAPI();
                 config.setUnflattenedOpenAPI(openAPIUnflattened);
@@ -680,20 +679,35 @@ public class CodegenConfigurator implements Serializable {
         options.setSkipMatches(this.skipInlineModelMatches);
 
         if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
-            List<String> allowList = Optional.ofNullable(System.getenv("REMOTE_REF_ALLOW_LIST"))
-                    .map(str -> Arrays.asList(str.split(",")))
-                    .orElseGet(Collections::emptyList);
-
-            List<String> blockList = Optional.ofNullable(System.getenv("REMOTE_REF_BLOCK_LIST"))
-                    .map(str -> Arrays.asList(str.split(",")))
-                    .orElseGet(Collections::emptyList);
-
-            options.setSafelyResolveURL(true);
-            options.setRemoteRefAllowList(allowList);
-            options.setRemoteRefBlockList(blockList);
+            setSafelyResolveURLParseOptions(options);
         }
 
         return options;
+    }
+
+    private ParseOptions buildUnflattenedParseOptions() {
+        ParseOptions options = new ParseOptions();
+        options.setResolve(true);
+
+        if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
+            setSafelyResolveURLParseOptions(options);
+        }
+
+        return options;
+    }
+
+    private void setSafelyResolveURLParseOptions(ParseOptions options) {
+        List<String> allowList = Optional.ofNullable(System.getenv("REMOTE_REF_ALLOW_LIST"))
+                .map(str -> Arrays.asList(str.split(",")))
+                .orElseGet(Collections::emptyList);
+
+        List<String> blockList = Optional.ofNullable(System.getenv("REMOTE_REF_BLOCK_LIST"))
+                .map(str -> Arrays.asList(str.split(",")))
+                .orElseGet(Collections::emptyList);
+
+        options.setSafelyResolveURL(true);
+        options.setRemoteRefAllowList(allowList);
+        options.setRemoteRefBlockList(blockList);
     }
 
     @JsonAnySetter
