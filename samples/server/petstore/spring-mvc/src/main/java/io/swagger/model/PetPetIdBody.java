@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class PetPetIdBody   {
   @JsonProperty("name")
   private String name = null;
