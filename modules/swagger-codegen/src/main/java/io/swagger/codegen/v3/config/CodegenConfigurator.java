@@ -620,8 +620,7 @@ public class CodegenConfigurator implements Serializable {
                     .openAPI(openAPI);
 
             if (config.needsUnflattenedSpec()) {
-                ParseOptions optionsUnflattened = new ParseOptions();
-                optionsUnflattened.setResolve(true);
+                ParseOptions optionsUnflattened = buildUnflattenedParseOptions();
                 SwaggerParseResult resultUnflattened = new OpenAPIParser().readLocation(sanitizedSpecificationUrl, authorizationValues, optionsUnflattened);
                 OpenAPI openAPIUnflattened = resultUnflattened.getOpenAPI();
                 config.setUnflattenedOpenAPI(openAPIUnflattened);
