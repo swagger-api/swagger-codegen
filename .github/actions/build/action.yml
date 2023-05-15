@@ -24,12 +24,12 @@ runs:
       name: build
       run: |
         buildlogfile=${{ inputs.job-name }}-build.log
-        echo "::set-output name=path::$(echo generated/${{ inputs.job-name }})"
+        echo "path=$(echo generated/${{ inputs.job-name }})" >> $GITHUB_OUTPUT
         curdir=$(pwd)
         echo -e "\n****** BUILD ******\n" >> $curdir/$buildlogfile
         cd ${{ inputs.path }}
         echo -e "${{ inputs.build-commands }}" > $curdir/buildcommands.log
-        echo "::set-output name=logs::$(echo $curdir/$buildlogfile)"
+        echo "logs=$(echo $curdir/$buildlogfile)" >> $GITHUB_OUTPUT
         buildcommands=$(cat $curdir/buildcommands.log)
 
         while [ "$buildcommands" ] ;do
@@ -42,5 +42,5 @@ runs:
                 buildcommands="${buildcommands#*__&&__}"
         done
         cd ${curdir}
-        echo "::set-output name=logs::$(echo $curdir/$buildlogfile)"
+        echo "logs=$(echo $curdir/$buildlogfile)" >> $GITHUB_OUTPUT
       shell: bash
