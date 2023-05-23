@@ -1138,5 +1138,6 @@
         <snakeyaml-version>2.0</snakeyaml-version>
         <handlebars-version>4.3.1</handlebars-version>
         <jersey-version>2.39.1</jersey-version>
+        <mockito-version>5.2.0</mockito-version>
     </properties>
 </project>
