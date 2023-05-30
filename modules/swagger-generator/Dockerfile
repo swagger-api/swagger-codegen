@@ -13,6 +13,8 @@ WORKDIR /jetty_home
 COPY docker/jetty /jetty_home/
 COPY target/lib/jetty* /jetty_home/lib/
 RUN mkdir /jetty_home/lib/shared
+RUN chgrp -R 0 /jetty_home/lib/shared && \
+    chmod -R g=u /jetty_home/lib/shared
 RUN rm /jetty_home/lib/jetty-runner*
 COPY target/lib/javax.servlet-api* /jetty_home/lib/servlet-api-3.1.jar
 COPY target/lib/start.jar /jetty_home/
