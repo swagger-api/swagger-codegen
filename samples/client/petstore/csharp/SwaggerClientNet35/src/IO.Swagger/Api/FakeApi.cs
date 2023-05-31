@@ -137,7 +137,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns></returns>
-        void TestEndpointParameters (Body2 body);
+        void TestEndpointParameters (FakeBody body);
 
         /// <summary>
         /// Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -148,7 +148,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> TestEndpointParametersWithHttpInfo (Body2 body);
+        ApiResponse<Object> TestEndpointParametersWithHttpInfo (FakeBody body);
         /// <summary>
         /// To test enum parameters
         /// </summary>
@@ -187,7 +187,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns></returns>
-        void TestEnumRequestBody (Body4 body = null);
+        void TestEnumRequestBody (EnumFormBody body = null);
 
         /// <summary>
         /// To test enum parameters
@@ -198,7 +198,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> TestEnumRequestBodyWithHttpInfo (Body4 body = null);
+        ApiResponse<Object> TestEnumRequestBodyWithHttpInfo (EnumFormBody body = null);
         /// <summary>
         /// test inline additionalProperties
         /// </summary>
@@ -229,7 +229,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns></returns>
-        void TestJsonFormData (Body5 body);
+        void TestJsonFormData (FakeJsonFormDataBody body);
 
         /// <summary>
         /// test json serialization of form data
@@ -240,7 +240,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> TestJsonFormDataWithHttpInfo (Body5 body);
+        ApiResponse<Object> TestJsonFormDataWithHttpInfo (FakeJsonFormDataBody body);
         #endregion Synchronous Operations
     }
 
@@ -711,7 +711,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns></returns>
-        public void TestEndpointParameters (Body2 body)
+        public void TestEndpointParameters (FakeBody body)
         {
              TestEndpointParametersWithHttpInfo(body);
         }
@@ -722,7 +722,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> TestEndpointParametersWithHttpInfo (Body2 body)
+        public ApiResponse<Object> TestEndpointParametersWithHttpInfo (FakeBody body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -861,7 +861,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns></returns>
-        public void TestEnumRequestBody (Body4 body = null)
+        public void TestEnumRequestBody (EnumFormBody body = null)
         {
              TestEnumRequestBodyWithHttpInfo(body);
         }
@@ -872,7 +872,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> TestEnumRequestBodyWithHttpInfo (Body4 body = null)
+        public ApiResponse<Object> TestEnumRequestBodyWithHttpInfo (EnumFormBody body = null)
         {
 
             var localVarPath = "/fake/enum/form";
@@ -1000,7 +1000,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns></returns>
-        public void TestJsonFormData (Body5 body)
+        public void TestJsonFormData (FakeJsonFormDataBody body)
         {
              TestJsonFormDataWithHttpInfo(body);
         }
@@ -1011,7 +1011,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> TestJsonFormDataWithHttpInfo (Body5 body)
+        public ApiResponse<Object> TestJsonFormDataWithHttpInfo (FakeJsonFormDataBody body)
         {
             // verify the required parameter 'body' is set
             if (body == null)

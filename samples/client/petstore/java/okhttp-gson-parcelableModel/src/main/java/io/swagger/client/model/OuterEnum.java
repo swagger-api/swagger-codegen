@@ -47,9 +47,9 @@ public enum OuterEnum {
     return String.valueOf(value);
   }
 
-  public static OuterEnum fromValue(String text) {
+  public static OuterEnum fromValue(String input) {
     for (OuterEnum b : OuterEnum.values()) {
-      if (String.valueOf(b.value).equals(text)) {
+      if (b.value.equals(input)) {
         return b;
       }
     }
@@ -59,13 +59,13 @@ public enum OuterEnum {
   public static class Adapter extends TypeAdapter<OuterEnum> {
     @Override
     public void write(final JsonWriter jsonWriter, final OuterEnum enumeration) throws IOException {
-      jsonWriter.value(enumeration.getValue());
+      jsonWriter.value(String.valueOf(enumeration.getValue()));
     }
 
     @Override
     public OuterEnum read(final JsonReader jsonReader) throws IOException {
       Object value = jsonReader.nextString();
-      return OuterEnum.fromValue(String.valueOf(value));
+      return OuterEnum.fromValue((String)(value));
     }
   }
 }

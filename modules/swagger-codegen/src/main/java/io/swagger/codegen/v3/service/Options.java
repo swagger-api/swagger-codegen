@@ -39,6 +39,8 @@ public class Options {
     private String outputDir = "";
     private Boolean resolveFully;
 
+    private Boolean usingFlattenSpecForV2;
+
     private Map<String, String> codegenArguments = new LinkedHashMap<>();
 
     private boolean flattenInlineComposedSchemas = false;
@@ -502,6 +504,23 @@ public class Options {
 
     public Options flattenInlineComposedSchemas(boolean flattenInlineComposedSchemas) {
         this.flattenInlineComposedSchemas = flattenInlineComposedSchemas;
+        return this;
+    }
+
+    public Boolean isUsingFlattenSpecForV2() {
+        return usingFlattenSpecForV2;
+    }
+
+    public Boolean getUsingFlattenSpecForV2() {
+        return usingFlattenSpecForV2;
+    }
+
+    public void setUsingFlattenSpecForV2(Boolean usingFlattenSpecForV2) {
+        this.usingFlattenSpecForV2 = usingFlattenSpecForV2;
+    }
+
+    public Options usingFlattenSpecForV2(Boolean usingFlattenSpecForV2) {
+        this.usingFlattenSpecForV2 = usingFlattenSpecForV2;
         return this;
     }
 }

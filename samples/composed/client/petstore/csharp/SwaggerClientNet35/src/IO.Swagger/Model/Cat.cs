@@ -34,7 +34,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="hunts">hunts.</param>
         /// <param name="age">age.</param>
-        public Cat(bool? hunts = default(bool?), int? age = default(int?), long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<> part = default(List<>)) : base(id, name, status, part)
+        public Cat(bool? hunts = default(bool?), int? age = default(int?), long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>)) : base(id, name, status, part)
         {
             this.Hunts = hunts;
             this.Age = age;

@@ -34,10 +34,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -578,8 +582,7 @@ public class CodegenConfigurator implements Serializable {
             SwaggerParseResult result = new OpenAPIParser().readContents(inputSpec, authorizationValues, options);
             OpenAPI openAPI = result.getOpenAPI();
             if (config.needsUnflattenedSpec()) {
-                ParseOptions optionsUnflattened = new ParseOptions();
-                optionsUnflattened.setResolve(true);
+                ParseOptions optionsUnflattened = buildUnflattenedParseOptions();
                 SwaggerParseResult resultUnflattened = new OpenAPIParser().readContents(inputSpec, authorizationValues, optionsUnflattened);
                 OpenAPI openAPIUnflattened = resultUnflattened.getOpenAPI();
                 config.setUnflattenedOpenAPI(openAPIUnflattened);
@@ -617,8 +620,7 @@ public class CodegenConfigurator implements Serializable {
                     .openAPI(openAPI);
 
             if (config.needsUnflattenedSpec()) {
-                ParseOptions optionsUnflattened = new ParseOptions();
-                optionsUnflattened.setResolve(true);
+                ParseOptions optionsUnflattened = buildUnflattenedParseOptions();
                 SwaggerParseResult resultUnflattened = new OpenAPIParser().readLocation(sanitizedSpecificationUrl, authorizationValues, optionsUnflattened);
                 OpenAPI openAPIUnflattened = resultUnflattened.getOpenAPI();
                 config.setUnflattenedOpenAPI(openAPIUnflattened);
@@ -674,7 +676,37 @@ public class CodegenConfigurator implements Serializable {
         options.setFlatten(true);
         options.setFlattenComposedSchemas(flattenInlineSchema);
         options.setSkipMatches(this.skipInlineModelMatches);
+
+        if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
+            setSafelyResolveURLParseOptions(options);
+        }
+
         return options;
+    }
+
+    private ParseOptions buildUnflattenedParseOptions() {
+        ParseOptions options = new ParseOptions();
+        options.setResolve(true);
+
+        if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
+            setSafelyResolveURLParseOptions(options);
+        }
+
+        return options;
+    }
+
+    private void setSafelyResolveURLParseOptions(ParseOptions options) {
+        List<String> allowList = Optional.ofNullable(System.getenv("REMOTE_REF_ALLOW_LIST"))
+                .map(str -> Arrays.asList(str.split(",")))
+                .orElseGet(Collections::emptyList);
+
+        List<String> blockList = Optional.ofNullable(System.getenv("REMOTE_REF_BLOCK_LIST"))
+                .map(str -> Arrays.asList(str.split(",")))
+                .orElseGet(Collections::emptyList);
+
+        options.setSafelyResolveURL(true);
+        options.setRemoteRefAllowList(allowList);
+        options.setRemoteRefBlockList(blockList);
     }
 
     @JsonAnySetter

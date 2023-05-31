@@ -50,9 +50,9 @@ public class EnumFormBody {
     public String toString() {
       return String.valueOf(value);
     }
-    public static EnumFormStringArrayEnum fromValue(String text) {
+    public static EnumFormStringArrayEnum fromValue(String input) {
       for (EnumFormStringArrayEnum b : EnumFormStringArrayEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -61,13 +61,13 @@ public class EnumFormBody {
     public static class Adapter extends TypeAdapter<EnumFormStringArrayEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumFormStringArrayEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public EnumFormStringArrayEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return EnumFormStringArrayEnum.fromValue(String.valueOf(value));
+        return EnumFormStringArrayEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("enum_form_string_array")
@@ -95,9 +95,9 @@ public class EnumFormBody {
     public String toString() {
       return String.valueOf(value);
     }
-    public static EnumFormStringEnum fromValue(String text) {
+    public static EnumFormStringEnum fromValue(String input) {
       for (EnumFormStringEnum b : EnumFormStringEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -106,13 +106,13 @@ public class EnumFormBody {
     public static class Adapter extends TypeAdapter<EnumFormStringEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumFormStringEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public EnumFormStringEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return EnumFormStringEnum.fromValue(String.valueOf(value));
+        return EnumFormStringEnum.fromValue((String)(value));
       }
     }
   }  @SerializedName("enum_form_string")
@@ -139,9 +139,9 @@ public class EnumFormBody {
     public String toString() {
       return String.valueOf(value);
     }
-    public static EnumQueryDoubleEnum fromValue(String text) {
+    public static EnumQueryDoubleEnum fromValue(Double input) {
       for (EnumQueryDoubleEnum b : EnumQueryDoubleEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }
@@ -150,13 +150,13 @@ public class EnumFormBody {
     public static class Adapter extends TypeAdapter<EnumQueryDoubleEnum> {
       @Override
       public void write(final JsonWriter jsonWriter, final EnumQueryDoubleEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
+        jsonWriter.value(String.valueOf(enumeration.getValue()));
       }
 
       @Override
       public EnumQueryDoubleEnum read(final JsonReader jsonReader) throws IOException {
         Object value = jsonReader.nextString();
-        return EnumQueryDoubleEnum.fromValue(String.valueOf(value));
+        return EnumQueryDoubleEnum.fromValue((Double)(value));
       }
     }
   }  @SerializedName("enum_query_double")

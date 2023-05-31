@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets OtherIdPart
         /// </summary>
+
         [DataMember(Name="otherIdPart")]
         public string OtherIdPart { get; set; }
 

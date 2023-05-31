@@ -21,6 +21,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @Component("io.swagger.client.api.DefaultApi")
 public class DefaultApi {
@@ -51,6 +52,17 @@ public class DefaultApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public List<String> testMethod() throws RestClientException {
+        return testMethodWithHttpInfo().getBody();
+    }
+
+    /**
+     * 
+     * 
+     * <p><b>200</b> - peticion realizada con exito
+     * @return ResponseEntity&lt;List&lt;String&gt;&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<List<String>> testMethodWithHttpInfo() throws RestClientException {
         Object postBody = null;
         String path = UriComponentsBuilder.fromPath("/test").build().toUriString();
         

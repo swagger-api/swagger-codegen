@@ -27,7 +27,7 @@ public interface FakeClassnameTags123Api {
   })
   @PATCH("fake_classname_test")
   Observable<Client> testClassname(
-                    @retrofit2.http.Body Client body    
+    @retrofit2.http.Body Client body
   );
 
 }

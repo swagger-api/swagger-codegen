@@ -20,6 +20,7 @@ dependencies {
     compile         'org.apache.httpcomponents:httpclient:4.5.10'
     providedCompile 'javax.validation:validation-api:1.1.0.Final'
     compile         'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'
+    compile         'com.fasterxml.jackson.core:jackson-databind:2.10.1'
     //TODO: swaggerFeature
     compile 'io.swagger.core.v3:swagger-jaxrs2:2.0.9'
     

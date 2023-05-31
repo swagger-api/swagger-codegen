@@ -30,6 +30,7 @@ namespace IO.Swagger.Models
         /// A test description
         /// </summary>
         /// <value>A test description</value>
+
         [DataMember(Name="name")]
         public string Name { get; set; }
 

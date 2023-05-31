@@ -53,7 +53,7 @@ public class ApiClient {
     public ApiClient(String[] authNames) {
         this();
         for(String authName : authNames) {
-            Interceptor auth;
+            Interceptor auth = null;
             if ("api_key".equals(authName)) {
                 auth = new ApiKeyAuth("header", "api_key");
             } else if ("api_key_query".equals(authName)) {

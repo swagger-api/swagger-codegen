@@ -12,6 +12,7 @@ import io.swagger.codegen.v3.service.exception.BadRequestException;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.UrlMatcher;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import io.swagger.v3.core.util.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -108,15 +109,26 @@ public class GeneratorUtil {
         }
         LOGGER.debug("getClientOptInputV2 - processed auth");
 
+        CodegenConfig codegenConfig=null;
+        try {
+            codegenConfig = CodegenConfigLoader.forName(lang);
+        } catch(RuntimeException e) {
+            throw new BadRequestException("Unsupported target " + lang + " supplied");
+        }
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        if (codegenConfig.isUsingFlattenSpec() && !Boolean.FALSE.equals(generationRequest.getOptions().isUsingFlattenSpecForV2())) {
+            parseOptions.setFlatten(true);
+        }
         Swagger swagger;
         if (StringUtils.isBlank(inputSpec)) {
             if (inputSpecURL != null) {
                 if (!authorizationValues.isEmpty()) {
                     swagger =
                             new SwaggerParser().read(inputSpecURL, authorizationValues,
-                                    true);
+                                    parseOptions);
                 } else {
-                    swagger = new SwaggerParser().read(inputSpecURL);
+                    swagger = new SwaggerParser().read(inputSpecURL, null, parseOptions);
                 }
             } else {
                 throw new BadRequestException("No swagger specification was supplied");
@@ -126,9 +138,9 @@ public class GeneratorUtil {
             try {
                 JsonNode node = io.swagger.util.Json.mapper().readTree(inputSpec);
                 if (!authorizationValues.isEmpty()) {
-                    swagger = new SwaggerParser().read(node, authorizationValues, true);
+                    swagger = new SwaggerParser().read(node, authorizationValues, parseOptions);
                 } else {
-                    swagger = new SwaggerParser().read(node, true);
+                    swagger = new SwaggerParser().read(node, null,parseOptions);
                 }
             } catch (Exception e) {
                 LOGGER.error("Exception parsing input spec", e);
@@ -144,12 +156,6 @@ public class GeneratorUtil {
         io.swagger.codegen.ClientOptInput clientOptInput = new io.swagger.codegen.ClientOptInput();
         ClientOpts clientOpts = new ClientOpts();
 
-        CodegenConfig codegenConfig=null;
-        try {
-            codegenConfig = CodegenConfigLoader.forName(lang);
-        } catch(RuntimeException e) {
-            throw new BadRequestException("Unsupported target " + lang + " supplied");
-        }
         codegenConfig.setOutputDir(generationRequest.getOptions().getOutputDir());
         codegenConfig.setInputSpec(inputSpec);
         if (isNotEmpty(options.getApiPackage())) {
