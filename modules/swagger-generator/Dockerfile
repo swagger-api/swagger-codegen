@@ -3,6 +3,7 @@ RUN microdnf -y install shadow-utils
 RUN microdnf -y install which
 RUN microdnf -y install glibc-langpack-en
 RUN microdnf -y install tar
+RUN microdnf -y install gzip
 ENV disableOas31Resolve=False
 ENV JAVA_HOME=/opt/java/openjdk
 COPY --from=eclipse-temurin:17-jre $JAVA_HOME $JAVA_HOME
