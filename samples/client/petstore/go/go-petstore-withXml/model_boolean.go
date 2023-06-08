@@ -9,12 +9,11 @@
  */
 
 package petstore
+// Boolean : True or False indicator
+type Boolean bool
 
-type OuterEnum string
-
-// List of OuterEnum
+// List of Boolean
 const (
-	PLACED OuterEnum = "placed"
-	APPROVED OuterEnum = "approved"
-	DELIVERED OuterEnum = "delivered"
+	TRUE Boolean = true
+	FALSE Boolean = false
 )

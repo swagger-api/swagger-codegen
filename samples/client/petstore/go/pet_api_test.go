@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	sw "./go-petstore"
+	sw "petstore/go-petstore"
 	"golang.org/x/net/context"
 
 	"github.com/antihax/optional"
@@ -14,7 +14,7 @@ import (
 
 var client *sw.APIClient
 
-const testHost = "testhost"
+const testHost = "petstore.swagger.io"
 
 func TestMain(m *testing.M) {
 	cfg := sw.NewConfiguration()

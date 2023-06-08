@@ -9,12 +9,16 @@
  */
 
 package petstore
+// Ints : True or False indicator
+type Ints int32
 
-type OuterEnum string
-
-// List of OuterEnum
+// List of Ints
 const (
-	PLACED OuterEnum = "placed"
-	APPROVED OuterEnum = "approved"
-	DELIVERED OuterEnum = "delivered"
+	_0 Ints = 0
+	_1 Ints = 1
+	_2 Ints = 2
+	_3 Ints = 3
+	_4 Ints = 4
+	_5 Ints = 5
+	_6 Ints = 6
 )

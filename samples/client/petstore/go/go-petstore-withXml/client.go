@@ -336,7 +336,18 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 				return err
 			}
 			return nil
-		}
+		} else if reflect.Indirect(reflect.ValueOf(v)).Elem().Type() == reflect.TypeOf(os.File{}) {
+            file, err := os.CreateTemp("/tmp", "nsd-content")
+            if err != nil {
+                return err
+            }
+            _, err = file.Write(b)
+            if err != nil {
+                return err
+            }
+            v = &file
+            return nil
+        }
 	return errors.New("undefined response type")
 }
 

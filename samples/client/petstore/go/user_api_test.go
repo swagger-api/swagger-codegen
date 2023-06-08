@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	sw "./go-petstore"
+	sw "petstore/go-petstore"
 	"golang.org/x/net/context"
 
 	"github.com/stretchr/testify/assert"
