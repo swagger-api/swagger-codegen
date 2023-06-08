@@ -1,21 +1,30 @@
 package io.swagger.codegen.languages;
 
-import io.swagger.codegen.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.DefaultCodegen;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.parameters.Parameter;
-import io.swagger.models.Swagger;
 import io.swagger.util.Yaml;
-
-import java.util.*;
-
 import org.apache.commons.lang3.StringUtils;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 public abstract class AbstractGoCodegen extends DefaultCodegen implements CodegenConfig {
 
@@ -78,7 +87,6 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         typeMapping.put("binary", "string");
         typeMapping.put("ByteArray", "string");
         typeMapping.put("object", "interface{}");
-        typeMapping.put("UUID", "string");
 
         importMapping = new HashMap<String, String>();
 
@@ -399,18 +407,20 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 }
             }
         }
+
         // recursively add import for mapping one type to multiple imports
         List<Map<String, String>> recursiveImports = (List<Map<String, String>>) objs.get("imports");
-        if (recursiveImports == null)
-            return objs;
+        if (recursiveImports != null) {
+            objs.put("hasImport", !recursiveImports.isEmpty());
 
-        ListIterator<Map<String, String>> listIterator = imports.listIterator();
-        while (listIterator.hasNext()) {
-            String _import = listIterator.next().get("import");
-            // if the import package happens to be found in the importMapping (key)
-            // add the corresponding import package to the list
-            if (importMapping.containsKey(_import)) {
-                listIterator.add(createMapping("import", importMapping.get(_import)));
+            ListIterator<Map<String, String>> listIterator = imports.listIterator();
+            while (listIterator.hasNext()) {
+                String _import = listIterator.next().get("import");
+                // if the import package happens to be found in the importMapping (key)
+                // add the corresponding import package to the list
+                if (importMapping.containsKey(_import)) {
+                    listIterator.add(createMapping("import", importMapping.get(_import)));
+                }
             }
         }
 
