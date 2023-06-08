@@ -9,12 +9,13 @@
  */
 
 package petstore
+// Numbers : some number
+type Numbers float32
 
-type OuterEnum string
-
-// List of OuterEnum
+// List of Numbers
 const (
-	PLACED OuterEnum = "placed"
-	APPROVED OuterEnum = "approved"
-	DELIVERED OuterEnum = "delivered"
+	_7 Numbers = 7
+	_8 Numbers = 8
+	_9 Numbers = 9
+	_10 Numbers = 10
 )
