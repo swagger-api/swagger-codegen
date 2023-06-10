@@ -35,16 +35,15 @@ public class OnlineGeneratorOptionsTest {
         return new Object[][] {
                 {new AkkaScalaClientOptionsProvider()},
                 {new AndroidClientOptionsProvider()},
-                {new AsyncScalaClientOptionsProvider()},
                 {new CSharpClientOptionsProvider()},
                 {new CsharpDotNet2ClientOptionsProvider()},
                 {new DartClientOptionsProvider()},
                 {new FlashClienOptionsProvider()},
                 {new JavaInflectorServerOptionsProvider()},
                 {
-                        new JavaOptionsProvider(),
+                        new JavaOptionsProvider()},{
                         new JavaOptionsProvider(ImmutableMap.of(CodegenConstants.LIBRARY,
-                                JavaClientCodegen.RETROFIT_2)),
+                                JavaClientCodegen.RETROFIT_2))},{
                         new JavaOptionsProvider(
                                 ImmutableMap.of(CodegenConstants.LIBRARY,
                                         JavaClientCodegen.RETROFIT_2,

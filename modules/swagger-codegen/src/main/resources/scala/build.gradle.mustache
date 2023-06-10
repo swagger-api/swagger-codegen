@@ -48,7 +48,12 @@ if(hasProperty('target') && target == 'android') {
         }
 
         dependencies {
+            {{#jakarta}}
+            provided 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+            {{/jakarta}}
+            {{^jakarta}}
             provided 'javax.annotation:jsr250-api:1.0'
+            {{/jakarta}}
         }
     }
 
