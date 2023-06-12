@@ -13,9 +13,16 @@ import {{package}}.NotFoundException;
 
 import java.io.InputStream;
 
+{{#jakarta}}
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
+{{/jakarta}}
+{{^jakarta}}
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+{{/jakarta}}
 
 @RequestScoped
 {{>generatedAnnotation}}

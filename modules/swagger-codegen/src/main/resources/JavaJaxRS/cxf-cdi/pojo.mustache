@@ -1,7 +1,12 @@
 import io.swagger.annotations.*;
 import java.util.Objects;
 
+{{#jakarta}}
+import jakarta.xml.bind.annotation.*;
+{{/jakarta}}
+{{^jakarta}}
 import javax.xml.bind.annotation.*;
+{{/jakarta}}
 
 {{#description}}@ApiModel(description = "{{{description}}}"){{/description}}
 
