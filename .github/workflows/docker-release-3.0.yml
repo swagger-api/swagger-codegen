@@ -23,6 +23,8 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: maven
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: preliminary checks
         run: |
           docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
@@ -35,6 +37,7 @@ jobs:
           /bin/bash ./bin/utils/detect_tab_in_java_class.sh
       - uses: s4u/maven-settings-action@v2.8.0
         name: setup maven settings.xml
+        if: false
         with:
           servers: |
             [{
@@ -49,34 +52,57 @@ jobs:
             }]
       - name: Build with Maven
         run: |
-          # mvn clean install -U -Pdocker -Plinux -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089
+          mvn -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 clean install -Pdocker --settings $HOME/.m2/settings.xml
       - name: docker build and push
         run: |
+          export TAG=${{ env.TAG }}
+          export DOCKER_PLATFORMS=linux/amd64,linux/arm64
+          export DOCKER_OUTPUT=type=image
+
           export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3-minimal
           export DOCKER_GENERATOR_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3
           export DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3-root
           export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
-          mvn -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 clean install -Pdocker -Prelease --settings $HOME/.m2/settings.xml
-          docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} -f ./modules/swagger-generator/Dockerfile_minimal ./modules/swagger-generator
-          docker tag $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_IMAGE_NAME:latest
-          docker push $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }}
-          docker push $DOCKER_GENERATOR_IMAGE_NAME:latest
-          docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} ./modules/swagger-codegen-cli
-          docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
-          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }}
-          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
-          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}
-          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:latest
+
+          echo Building $DOCKER_GENERATOR_FULL_IMAGE_NAME
+          docker buildx build \
+              -t $DOCKER_GENERATOR_FULL_IMAGE_NAME:$TAG \
+              -t $DOCKER_GENERATOR_FULL_IMAGE_NAME:latest \
+              --output $DOCKER_OUTPUT \
+              --platform $DOCKER_PLATFORMS \
+              -f ./modules/swagger-generator/Dockerfile ./modules/swagger-generator
+
+          echo
+          echo Building $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME
+          docker buildx build \
+              -t $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:$TAG \
+              -t $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest \
+              --output $DOCKER_OUTPUT \
+              --platform $DOCKER_PLATFORMS \
+              -f ./modules/swagger-generator/Dockerfile_root ./modules/swagger-generator
+
+          echo
+          echo Building $DOCKER_GENERATOR_IMAGE_NAME
+          docker buildx build \
+              -t $DOCKER_GENERATOR_IMAGE_NAME:$TAG \
+              -t $DOCKER_GENERATOR_IMAGE_NAME:latest \
+              --output $DOCKER_OUTPUT \
+              --platform $DOCKER_PLATFORMS \
+              -f ./modules/swagger-generator/Dockerfile_minimal ./modules/swagger-generator
+
+          echo
+          echo Building $DOCKER_CODEGEN_CLI_IMAGE
+          docker buildx build \
+              -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:$TAG \
+              -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest \
+              --output $DOCKER_OUTPUT \
+              --platform $DOCKER_PLATFORMS \
+              ./modules/swagger-codegen-cli
+
+          echo
           echo "docker images:"
           docker images | grep -i generator
-          echo "pushing $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}"
-          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}
-          echo "pushing $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest"
-          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest
-          echo "tagging $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
-          docker tag $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
-          echo "pushing $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
-          docker -D -l debug push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
+
       - name: deploy
         run: |
           echo "${{ env.TAG }}"
