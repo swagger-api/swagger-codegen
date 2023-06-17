@@ -16,7 +16,7 @@ jobs:
       DOCKER_PLATFORMS: |
         linux/amd64
         linux/arm64
-      DOCKER_PUSH: false
+      DOCKER_PUSH: true
       TAG: ${{ github.event.inputs.tag }}
 
     steps:
@@ -44,7 +44,6 @@ jobs:
           /bin/bash ./bin/utils/detect_tab_in_java_class.sh
       - uses: s4u/maven-settings-action@v2.8.0
         name: setup maven settings.xml
-        if: false
         with:
           servers: |
             [{
