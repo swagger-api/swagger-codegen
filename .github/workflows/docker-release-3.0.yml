@@ -12,6 +12,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      DOCKER_PLATFORMS: |
+        linux/amd64
+        linux/arm64
+      DOCKER_PUSH: false
+      TAG: ${{ github.event.inputs.tag }}
+
     steps:
       - uses: actions/checkout@v3
         name: git checkout 3.0.0
@@ -53,55 +60,49 @@ jobs:
       - name: Build with Maven
         run: |
           mvn -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 clean install -Pdocker --settings $HOME/.m2/settings.xml
-      - name: docker build and push
-        run: |
-          export TAG=${{ env.TAG }}
-          export DOCKER_PLATFORMS=linux/amd64,linux/arm64
-          export DOCKER_OUTPUT=type=image
 
-          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3-minimal
-          export DOCKER_GENERATOR_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3
-          export DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3-root
-          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
+      - name: Docker build and push (full)
+        uses: docker/build-push-action@v4
+        with:
+          context: modules/swagger-generator
+          file: modules/swagger-generator/Dockerfile
+          platforms: ${{ env.DOCKER_PLATFORMS }}
+          push: ${{ env.DOCKER_PUSH }}
+          tags: |
+            swaggerapi/swagger-generator-v3:latest
+            swaggerapi/swagger-generator-v3:${{ env.TAG }}
 
-          echo Building $DOCKER_GENERATOR_FULL_IMAGE_NAME
-          docker buildx build \
-              -t $DOCKER_GENERATOR_FULL_IMAGE_NAME:$TAG \
-              -t $DOCKER_GENERATOR_FULL_IMAGE_NAME:latest \
-              --output $DOCKER_OUTPUT \
-              --platform $DOCKER_PLATFORMS \
-              -f ./modules/swagger-generator/Dockerfile ./modules/swagger-generator
+      - name: Docker build and push (root)
+        uses: docker/build-push-action@v4
+        with:
+          context: modules/swagger-generator
+          file: modules/swagger-generator/Dockerfile_root
+          platforms: ${{ env.DOCKER_PLATFORMS }}
+          push: ${{ env.DOCKER_PUSH }}
+          tags: |
+            swaggerapi/swagger-generator-v3-root:latest
+            swaggerapi/swagger-generator-v3-root:${{ env.TAG }}
 
-          echo
-          echo Building $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME
-          docker buildx build \
-              -t $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:$TAG \
-              -t $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest \
-              --output $DOCKER_OUTPUT \
-              --platform $DOCKER_PLATFORMS \
-              -f ./modules/swagger-generator/Dockerfile_root ./modules/swagger-generator
+      - name: Docker build and push (minimal)
+        uses: docker/build-push-action@v4
+        with:
+          context: modules/swagger-generator
+          file: modules/swagger-generator/Dockerfile_minimal
+          platforms: ${{ env.DOCKER_PLATFORMS }}
+          push: ${{ env.DOCKER_PUSH }}
+          tags: |
+            swaggerapi/swagger-generator-v3-minimal:latest
+            swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
 
-          echo
-          echo Building $DOCKER_GENERATOR_IMAGE_NAME
-          docker buildx build \
-              -t $DOCKER_GENERATOR_IMAGE_NAME:$TAG \
-              -t $DOCKER_GENERATOR_IMAGE_NAME:latest \
-              --output $DOCKER_OUTPUT \
-              --platform $DOCKER_PLATFORMS \
-              -f ./modules/swagger-generator/Dockerfile_minimal ./modules/swagger-generator
-
-          echo
-          echo Building $DOCKER_CODEGEN_CLI_IMAGE
-          docker buildx build \
-              -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:$TAG \
-              -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest \
-              --output $DOCKER_OUTPUT \
-              --platform $DOCKER_PLATFORMS \
-              ./modules/swagger-codegen-cli
-
-          echo
-          echo "docker images:"
-          docker images | grep -i generator
+      - name: Docker build and push (CLI)
+        uses: docker/build-push-action@v4
+        with:
+          context: ./modules/swagger-codegen-cli
+          platforms: ${{ env.DOCKER_PLATFORMS }}
+          push: ${{ env.DOCKER_PUSH }}
+          tags: |
+            swaggerapi/swagger-codegen-cli-v3:latest
+            swaggerapi/swagger-codegen-cli-v3:${{ env.TAG }}
 
       - name: deploy
         run: |
@@ -217,5 +218,4 @@ jobs:
           fi
           echo "Exiting Build..."
           exit 0
-    env:
-      TAG: ${{ github.event.inputs.tag }}
+
