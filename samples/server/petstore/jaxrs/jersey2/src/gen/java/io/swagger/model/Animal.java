@@ -26,7 +26,6 @@ import javax.validation.Valid;
 /**
  * Animal
  */
-
 public class Animal   {
   @JsonProperty("className")
   private String className = null;

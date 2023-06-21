@@ -26,7 +26,6 @@ import javax.validation.Valid;
 /**
  * Cat
  */
-
 public class Cat extends Animal implements Serializable {
   @JsonProperty("declawed")
   private Boolean declawed = null;

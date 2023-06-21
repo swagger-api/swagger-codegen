@@ -27,7 +27,6 @@ import javax.validation.Valid;
 /**
  * Animal
  */
-
 public class Animal  implements Serializable {
   @JsonProperty("className")
   private String className = null;

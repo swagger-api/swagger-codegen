@@ -2,7 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -10,6 +12,8 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -103,7 +107,7 @@ public class DefaultCodegen {
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
     protected Boolean allowUnicodeIdentifiers = false;
-    protected String gitUserId, gitRepoId, releaseNote, gitRepoBaseURL /*= "github"*/;
+    protected String gitUserId, gitRepoId, releaseNote, gitRepoBaseURL;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
     protected Boolean skipAliasGeneration;
@@ -174,6 +178,13 @@ public class DefaultCodegen {
         } else {
             setIgnoreImportMapping(defaultIgnoreImportMappingOption());
         }
+
+        additionalProperties.put("toLowerCase", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                writer.write(fragment.execute().toLowerCase());
+            }
+        });
     }
 
     // override with any special post-processing for all models
@@ -3183,7 +3194,7 @@ public class DefaultCodegen {
         co.baseName = tag;
     }
 
-    private void addParentContainer(CodegenModel m, String name, Property property) {
+    protected void addParentContainer(CodegenModel m, String name, Property property) {
         m.parentContainer = fromProperty(name, property);
         addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
@@ -3207,7 +3218,7 @@ public class DefaultCodegen {
      * @return The underscored version of the word
      */
     public static String underscore(String word) {
-        String firstPattern = "([A-Z]+)([A-Z][a-z])";
+        String firstPattern = "([A-Z]+)([A-Z][a-z][a-z]+)";
         String secondPattern = "([a-z\\d])([A-Z])";
         String replacementPattern = "$1_$2";
         // Replace package separator with slash.
@@ -3322,7 +3333,7 @@ public class DefaultCodegen {
                     Model model =  allDefinitions.get(refProperty.getSimpleRef());
                     if (model instanceof ModelImpl) {
                         ModelImpl modelImpl = (ModelImpl) model;
-                        cp.pattern = modelImpl.getPattern();
+                        cp.pattern = toRegularExpression(modelImpl.getPattern());
                         cp.minLength = modelImpl.getMinLength();
                         cp.maxLength = modelImpl.getMaxLength();
                     }
@@ -3381,7 +3392,7 @@ public class DefaultCodegen {
      * @param allDefinitions The complete set of model definitions.
      * @return A mapping from model name to type alias
      */
-    private static Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
+    protected Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
         Map<String, String> aliases = new HashMap<>();
         if (allDefinitions != null) {
             for (Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
@@ -4109,5 +4120,9 @@ public class DefaultCodegen {
             return true;
         }
         return false;
+    }
+
+    public boolean isUsingFlattenSpec() {
+        return true;
     }
 }

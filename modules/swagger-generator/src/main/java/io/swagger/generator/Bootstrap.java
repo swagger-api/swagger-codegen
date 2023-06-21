@@ -14,13 +14,15 @@
 
 package io.swagger.generator;
 
-import org.apache.commons.io.IOUtils;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class Bootstrap extends HttpServlet {
     private static final long serialVersionUID = 1400930071893332856L;
@@ -28,7 +30,26 @@ public class Bootstrap extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         DynamicSwaggerConfig bc = new DynamicSwaggerConfig();
-        bc.setBasePath("/api");
+        String hostString = System.getenv("GENERATOR_HOST");
+        if (!StringUtils.isBlank(hostString)) {
+            try {
+                URI hostURI = new URI(hostString);
+                String scheme = hostURI.getScheme();
+                if (scheme != null) {
+                    bc.setSchemes(new String[] { scheme });
+                }
+                String authority = hostURI.getAuthority();
+                if (authority != null) {
+                    // In Swagger host refers to host _and_ port, a.k.a. the URI authority
+                    bc.setHost(authority);
+                }
+                bc.setBasePath(hostURI.getPath() + "/api");
+            } catch(URISyntaxException e) {
+                System.out.println("Could not parse configured GENERATOR_HOST as URL: " + e.getMessage());
+            }
+        } else {
+            bc.setBasePath("/api");
+        }
         bc.setTitle("Swagger Generator");
         bc.setDescription("This is an online swagger codegen server.  You can find out more "
                 + "at https://github.com/swagger-api/swagger-codegen or on [irc.freenode.net, #swagger](http://swagger.io/irc/).");

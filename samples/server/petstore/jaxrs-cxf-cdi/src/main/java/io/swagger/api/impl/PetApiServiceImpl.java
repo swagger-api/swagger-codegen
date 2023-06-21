@@ -6,6 +6,7 @@ import io.swagger.model.*;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 
 import java.io.File;
+import java.io.InputStream;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 
