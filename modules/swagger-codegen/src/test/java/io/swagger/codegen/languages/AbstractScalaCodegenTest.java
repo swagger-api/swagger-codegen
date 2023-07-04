@@ -71,11 +71,4 @@ public class AbstractScalaCodegenTest {
 
         Assert.assertEquals(result, "WebsiteBodyModel");
     }
-
-    private class FakeScalaCodeGen extends AbstractScalaCodegen {
-        public FakeScalaCodeGen() {
-            super();
-            this.reservedWords.add("reservedword");
-        }
-    }
 }

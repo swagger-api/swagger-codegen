@@ -32,7 +32,7 @@ data class User (
     val password: kotlin.String? = null,
     val phone: kotlin.String? = null,
     /* User Status */
-    val userStatus: kotlin.Int? = null
+    val userStatus: kotlin.Int? = null,
 ) {
 
 }

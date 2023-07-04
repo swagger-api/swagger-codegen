@@ -18,7 +18,12 @@ import java.io.IOException;
 {{/isJava8or11}}
 
 {{#isJava8or11}}
+{{#jakarta}}
+import jakarta.servlet.http.HttpServletRequest;
+{{/jakarta}}
+{{^jakarta}}
 import javax.servlet.http.HttpServletRequest;
+{{/jakarta}}
 {{/isJava8or11}}
 import java.util.List;
 {{#isJava8or11}}

@@ -84,6 +84,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.11.4. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.11.4");
         supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.29.1. JSON processing: Jackson 2.11.4");
+        supportedLibraries.put("jersey3", "HTTP client: Jersey client 3.0.10. JSON processing: Jackson 2.10.2");
         supportedLibraries.put("okhttp-gson", "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.8.1. Enable Parcelable models on Android using '-DparcelableModel=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put("okhttp4-gson", "HTTP client: OkHttp 4.10.0. JSON processing: Gson 2.8.1. Enable Parcelable models on Android using '-DparcelableModel=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put(RETROFIT_1, "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.3.1 (Retrofit 1.9.0). IMPORTANT NOTE: retrofit1.x is no longer actively maintained so please upgrade to 'retrofit2' instead.");
@@ -122,6 +123,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public void processOpts() {
         if (RETROFIT_1.equalsIgnoreCase(library)) {
             dateLibrary = "joda";
+        }
+        if ("jersey3".equalsIgnoreCase(library)) {
+            dateLibrary = "java8";
+            additionalProperties.put(JAKARTA, true);
         }
 
         super.processOpts();
@@ -252,7 +257,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             if ("retrofit2".equals(getLibrary()) && !usePlayWS) {
                 supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             }
-        } else if ("jersey2".equals(getLibrary())) {
+        } else if ("jersey3".equals(getLibrary()) || "jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));
             additionalProperties.put("jackson", "true");
