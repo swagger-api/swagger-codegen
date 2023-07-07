@@ -1228,7 +1228,7 @@
         <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.12.0</commons-lang-version>
-        <slf4j-version>1.7.36</slf4j-version>
+        <slf4j-version>2.0.7</slf4j-version>
         <logback-version>1.4.6</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.15</jmustache-version>
