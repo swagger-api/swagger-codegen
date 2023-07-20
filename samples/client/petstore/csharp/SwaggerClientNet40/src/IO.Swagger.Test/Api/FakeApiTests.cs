@@ -71,9 +71,9 @@ namespace IO.Swagger.Test
         public void FakeOuterBooleanSerializeTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //OuterBoolean body = null;
+            //bool? body = null;
             //var response = instance.FakeOuterBooleanSerialize(body);
-            //Assert.IsInstanceOf<OuterBoolean> (response, "response is OuterBoolean");
+            //Assert.IsInstanceOf<bool?> (response, "response is bool?");
         }
         
         /// <summary>
@@ -95,9 +95,9 @@ namespace IO.Swagger.Test
         public void FakeOuterNumberSerializeTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //OuterNumber body = null;
+            //decimal? body = null;
             //var response = instance.FakeOuterNumberSerialize(body);
-            //Assert.IsInstanceOf<OuterNumber> (response, "response is OuterNumber");
+            //Assert.IsInstanceOf<decimal?> (response, "response is decimal?");
         }
         
         /// <summary>
@@ -107,9 +107,22 @@ namespace IO.Swagger.Test
         public void FakeOuterStringSerializeTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //OuterString body = null;
+            //string body = null;
             //var response = instance.FakeOuterStringSerialize(body);
-            //Assert.IsInstanceOf<OuterString> (response, "response is OuterString");
+            //Assert.IsInstanceOf<string> (response, "response is string");
+        }
+        
+        /// <summary>
+        /// Test TestBodyWithQueryParams
+        /// </summary>
+        [Test]
+        public void TestBodyWithQueryParamsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //User body = null;
+            //string query = null;
+            //instance.TestBodyWithQueryParams(body, query);
+            
         }
         
         /// <summary>

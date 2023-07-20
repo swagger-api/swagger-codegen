@@ -20,11 +20,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Capitalization
  */
-
 public class Capitalization  implements Serializable {
   @JsonProperty("smallCamel")
   private String smallCamel = null;

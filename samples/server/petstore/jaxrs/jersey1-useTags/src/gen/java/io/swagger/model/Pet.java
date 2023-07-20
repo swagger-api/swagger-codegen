@@ -24,11 +24,11 @@ import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * Pet
  */
-
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;
@@ -111,6 +111,7 @@ public class Pet   {
    **/
   @JsonProperty("category")
   @ApiModelProperty(value = "")
+  @Valid
   public Category getCategory() {
     return category;
   }
@@ -183,6 +184,7 @@ public class Pet   {
    **/
   @JsonProperty("tags")
   @ApiModelProperty(value = "")
+  @Valid
   public List<Tag> getTags() {
     return tags;
   }

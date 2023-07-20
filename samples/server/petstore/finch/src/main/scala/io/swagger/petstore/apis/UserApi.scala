@@ -17,6 +17,7 @@ import com.twitter.util.Future
 import com.twitter.io.Buf
 import io.finch._, items._
 import java.io.File
+import java.nio.file.Files
 
 object UserApi {
     /**
@@ -34,11 +35,11 @@ object UserApi {
             updateUser(da)
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def createUser(da: DataAccessor): Endpoint[Unit] =
-        post("user"  :: jsonBody[User]) { (body: User) => 
+        post("user"  :: jsonBody[User]) { (body: User) =>
                 da.User_createUser(body)
                 NoContent[Unit]
         } handle {
@@ -46,11 +47,11 @@ object UserApi {
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def createUsersWithArrayInput(da: DataAccessor): Endpoint[Unit] =
-        post("user" :: "createWithArray"  :: jsonBody[Seq[User]]) { (body: Seq[User]) => 
+        post("user" :: "createWithArray"  :: jsonBody[Seq[User]]) { (body: Seq[User]) =>
                 da.User_createUsersWithArrayInput(body)
                 NoContent[Unit]
         } handle {
@@ -58,11 +59,11 @@ object UserApi {
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def createUsersWithListInput(da: DataAccessor): Endpoint[Unit] =
-        post("user" :: "createWithList"  :: jsonBody[Seq[User]]) { (body: Seq[User]) => 
+        post("user" :: "createWithList"  :: jsonBody[Seq[User]]) { (body: Seq[User]) =>
                 da.User_createUsersWithListInput(body)
                 NoContent[Unit]
         } handle {
@@ -70,11 +71,11 @@ object UserApi {
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def deleteUser(da: DataAccessor): Endpoint[Unit] =
-        delete("user" :: string ) { (username: String) => 
+        delete("user" :: string ) { (username: String) =>
                 da.User_deleteUser(username)
                 NoContent[Unit]
         } handle {
@@ -82,33 +83,33 @@ object UserApi {
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a User
         */
         private def getUserByName(da: DataAccessor): Endpoint[User] =
-        get("user" :: string ) { (username: String) => 
+        get("user" :: string ) { (username: String) =>
                 Ok(da.User_getUserByName(username))
         } handle {
           case e: Exception => BadRequest(e)
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a String
         */
         private def loginUser(da: DataAccessor): Endpoint[String] =
-        get("user" :: "login"  :: string :: string) { (username: String, password: String) => 
+        get("user" :: "login"  :: string :: string) { (username: String, password: String) =>
                 Ok(da.User_loginUser(username, password))
         } handle {
           case e: Exception => BadRequest(e)
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def logoutUser(da: DataAccessor): Endpoint[Unit] =
-        get("user" :: "logout" ) { 
+        get("user" :: "logout" ) {
                 da.User_logoutUser()
                 NoContent[Unit]
         } handle {
@@ -116,11 +117,11 @@ object UserApi {
         }
 
         /**
-        * 
+        *
         * @return And endpoint representing a Unit
         */
         private def updateUser(da: DataAccessor): Endpoint[Unit] =
-        put("user" :: string  :: jsonBody[User]) { (username: String, body: User) => 
+        put("user" :: string  :: jsonBody[User]) { (username: String, body: User) =>
                 da.User_updateUser(username, body)
                 NoContent[Unit]
         } handle {
@@ -139,7 +140,7 @@ object UserApi {
     }
 
     private def bytesToFile(input: Array[Byte]): java.io.File = {
-        val file = File.createTempFile("tmpUserApi", null)
+        val file = Files.createTempFile("tmpUserApi", null).toFile()
         val output = new FileOutputStream(file)
         output.write(input)
         file

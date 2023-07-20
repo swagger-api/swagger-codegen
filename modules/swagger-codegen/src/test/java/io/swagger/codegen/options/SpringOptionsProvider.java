@@ -24,6 +24,10 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
     public static final String USE_OPTIONAL = "false";
     public static final String TARGET_OPENFEIGN = "false";
     public static final String DEFAULT_INTERFACES = "true";
+    public static final String NOT_NULL_JACKSON_ANNOTATION = "false";
+    public static final String IGNORE_UNKNOWN_JACKSON_ANNOTATION = "false";
+    public static final String DATE_PATTERN_VALUE = "yyyy-MM-dd";
+    public static final String DATE_TIME_PATTERN_VALUE = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
     @Override
     public String getLanguage() {
@@ -40,7 +44,6 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
         options.put(SpringCodegen.INTERFACE_ONLY, INTERFACE_ONLY);
         options.put(SpringCodegen.DELEGATE_PATTERN, DELEGATE_PATTERN);
         options.put(SpringCodegen.SINGLE_CONTENT_TYPES, SINGLE_CONTENT_TYPES);
-        options.put(SpringCodegen.JAVA_8, JAVA_8);
         options.put(SpringCodegen.ASYNC, ASYNC);
         options.put(SpringCodegen.RESPONSE_WRAPPER, RESPONSE_WRAPPER);
         options.put(SpringCodegen.USE_TAGS, USE_TAGS);
@@ -50,6 +53,10 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
         options.put(SpringCodegen.USE_OPTIONAL, USE_OPTIONAL);
         options.put(SpringCodegen.TARGET_OPENFEIGN, TARGET_OPENFEIGN);
         options.put(SpringCodegen.DEFAULT_INTERFACES, DEFAULT_INTERFACES);
+        options.put(SpringCodegen.NOT_NULL_JACKSON_ANNOTATION,NOT_NULL_JACKSON_ANNOTATION);
+        options.put(SpringCodegen.IGNORE_UNKNOWN_JACKSON_ANNOTATION, IGNORE_UNKNOWN_JACKSON_ANNOTATION);
+        options.put(SpringCodegen.DATE_PATTERN, DATE_PATTERN_VALUE);
+        options.put(SpringCodegen.DATE_TIME_PATTERN, DATE_TIME_PATTERN_VALUE);
 
         return options;
     }

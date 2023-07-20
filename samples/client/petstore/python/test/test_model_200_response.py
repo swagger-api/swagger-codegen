@@ -16,7 +16,7 @@ from __future__ import absolute_import
 import unittest
 
 import petstore_api
-from petstore_api.models.model_200_response import Model200Response  # noqa: E501
+from petstore_api.models.model200_response import Model200Response  # noqa: E501
 from petstore_api.rest import ApiException
 
 

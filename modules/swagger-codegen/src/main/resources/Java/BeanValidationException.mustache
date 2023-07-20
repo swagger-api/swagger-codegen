@@ -1,9 +1,14 @@
 package {{invokerPackage}};
 
 import java.util.Set;
-
+{{#jakarta}}
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ValidationException;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.ConstraintViolation;
 import javax.validation.ValidationException;
+{{/jakarta}}
 
 public class BeanValidationException extends ValidationException {
     /**

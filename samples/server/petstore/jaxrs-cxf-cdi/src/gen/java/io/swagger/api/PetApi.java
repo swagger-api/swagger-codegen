@@ -1,6 +1,7 @@
 package io.swagger.api;
 
 import java.io.File;
+import java.io.InputStream;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.model.Pet;
 import io.swagger.api.PetApiService;

@@ -13,11 +13,13 @@ package io.swagger.server
 
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.ktor.locations.*
-import io.ktor.pipeline.PipelineContext
+import io.ktor.locations.handle
+import io.ktor.locations.location
+import io.ktor.locations.Location
+import io.ktor.util.pipeline.PipelineContext
 import io.ktor.routing.Route
 import io.ktor.routing.method
-import io.swagger.server.models.*
+
 
 
 // NOTE: ktor-location@0.9.0 is missing extension for Route.delete. This includes it.
@@ -31,80 +33,103 @@ inline fun <reified T : Any> Route.delete(noinline body: suspend PipelineContext
 
 object Paths {
     /**
+     * Add a new pet to the store
+     * 
+     */
+    @Location("/pet") class addPet()
+    /**
      * Deletes a pet
      * 
-     * @param petId Pet id to delete 
-     * @param apiKey  (optional)
      */
-    @Location("/pet/{petId}") class deletePet(val petId: kotlin.Long, val apiKey: kotlin.String)
-
+    @Location("/pet/{petId}") class deletePet()
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
-     * @param status Status values that need to be considered for filter 
      */
-    @Location("/pet/findByStatus") class findPetsByStatus(val status: kotlin.Array<kotlin.String>)
-
+    @Location("/pet/findByStatus") class findPetsByStatus()
     /**
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-     * @param tags Tags to filter by 
      */
-    @Location("/pet/findByTags") class findPetsByTags(val tags: kotlin.Array<kotlin.String>)
-
+    @Location("/pet/findByTags") class findPetsByTags()
     /**
      * Find pet by ID
      * Returns a single pet
-     * @param petId ID of pet to return 
      */
-    @Location("/pet/{petId}") class getPetById(val petId: kotlin.Long)
-
+    @Location("/pet/{petId}") class getPetById()
+    /**
+     * Update an existing pet
+     * 
+     */
+    @Location("/pet") class updatePet()
+    /**
+     * Updates a pet in the store with form data
+     * 
+     */
+    @Location("/pet/{petId}") class updatePetWithForm()
+    /**
+     * uploads an image
+     * 
+     */
+    @Location("/pet/{petId}/uploadImage") class uploadFile()
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-     * @param orderId ID of the order that needs to be deleted 
      */
-    @Location("/store/order/{orderId}") class deleteOrder(val orderId: kotlin.String)
-
+    @Location("/store/order/{orderId}") class deleteOrder()
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
      */
     @Location("/store/inventory") class getInventory()
-
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-     * @param orderId ID of pet that needs to be fetched 
      */
-    @Location("/store/order/{orderId}") class getOrderById(val orderId: kotlin.Long)
-
+    @Location("/store/order/{orderId}") class getOrderById()
+    /**
+     * Place an order for a pet
+     * 
+     */
+    @Location("/store/order") class placeOrder()
+    /**
+     * Create user
+     * This can only be done by the logged in user.
+     */
+    @Location("/user") class createUser()
+    /**
+     * Creates list of users with given input array
+     * 
+     */
+    @Location("/user/createWithArray") class createUsersWithArrayInput()
+    /**
+     * Creates list of users with given input array
+     * 
+     */
+    @Location("/user/createWithList") class createUsersWithListInput()
     /**
      * Delete user
      * This can only be done by the logged in user.
-     * @param username The name that needs to be deleted 
      */
-    @Location("/user/{username}") class deleteUser(val username: kotlin.String)
-
+    @Location("/user/{username}") class deleteUser()
     /**
      * Get user by user name
      * 
-     * @param username The name that needs to be fetched. Use user1 for testing. 
      */
-    @Location("/user/{username}") class getUserByName(val username: kotlin.String)
-
+    @Location("/user/{username}") class getUserByName()
     /**
      * Logs user into the system
      * 
-     * @param username The user name for login 
-     * @param password The password for login in clear text 
      */
-    @Location("/user/login") class loginUser(val username: kotlin.String, val password: kotlin.String)
-
+    @Location("/user/login") class loginUser()
     /**
      * Logs out current logged in user session
      * 
      */
     @Location("/user/logout") class logoutUser()
-
+    /**
+     * Updated user
+     * This can only be done by the logged in user.
+     */
+    @Location("/user/{username}") class updateUser()
 }

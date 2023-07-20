@@ -577,7 +577,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
             varName = varName.replaceAll("\\.", "_DOT_");
-            return varName;
+            return "N" + varName;
         }
 
         // string

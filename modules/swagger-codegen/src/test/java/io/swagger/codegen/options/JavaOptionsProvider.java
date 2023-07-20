@@ -31,10 +31,13 @@ public class JavaOptionsProvider implements OptionsProvider {
     public static final String FULL_JAVA_UTIL_VALUE = "true";
     public static final String WITH_XML_VALUE = "false";
     public static final String JAVA8_MODE_VALUE = "true";
+    public static final String JAVA11_MODE_VALUE = "true";
     public static final String ENSURE_UNIQUE_PARAMS_VALUE = "true";
     //public static final String SUPPORT_JAVA6 = "true";
     public static final String USE_BEANVALIDATION = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String ADDITIONAL_MODEL_TYPE_ANNOTATIONS = "@TestAnnotation";
+    public static final String JAKARTA_VALUE = "false";
 
 
     private ImmutableMap<String, String> options;
@@ -69,12 +72,16 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(JavaClientCodegen.FULL_JAVA_UTIL, FULL_JAVA_UTIL_VALUE)
                 .put(JavaClientCodegen.WITH_XML, WITH_XML_VALUE)
                 .put(JavaClientCodegen.JAVA8_MODE, JAVA8_MODE_VALUE)
+                .put(JavaClientCodegen.JAVA11_MODE, JAVA11_MODE_VALUE)
                 .put(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING, "true")
                 .put(JavaClientCodegen.DATE_LIBRARY, "joda")
                 .put(JavaClientCodegen.DISABLE_HTML_ESCAPING, "false")
                 .put("hideGenerationTimestamp", "true")
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false")
                         //.put("supportJava6", "true")
+                .put(JavaClientCodegen.ADDITIONAL_MODEL_TYPE_ANNOTATIONS, ADDITIONAL_MODEL_TYPE_ANNOTATIONS)
+                .put(JavaClientCodegen.JAKARTA, JAKARTA_VALUE)
                 .build();
     }
 
@@ -82,10 +89,14 @@ public class JavaOptionsProvider implements OptionsProvider {
      * Use the default options, but override the ones found in additionalOptions.
      */
     public JavaOptionsProvider(Map<String, String> additionalOptions) {
-         options = new ImmutableMap.Builder<String, String>()
-                .putAll(options)
-                .putAll(additionalOptions)
-                .build();
+
+        ImmutableMap.Builder b = new ImmutableMap.Builder<String, String>();
+        if (options != null) {
+            b = b.putAll(options);
+        }
+        options = b
+            .putAll(additionalOptions)
+            .build();
     }
 
     @Override

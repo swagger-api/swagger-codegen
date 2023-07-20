@@ -14,11 +14,13 @@
                 }}{{^loadTestDataFromFile}}{{>api-test-property}}{{/loadTestDataFromFile}});
       {{/isPrimitiveType}}
       {{^isPrimitiveType}}
-        {{#vendorExtensions.x-indent}}
-          {{#vendorExtensions.x-indent}}
+        {{^vendorExtensions.x-is-recursive-model}}
+            {{#vendorExtensions.x-indent}}
+              {{#vendorExtensions.x-indent}}
 {{>api-test-response-complex}}{{!
-          }}{{/vendorExtensions.x-indent}}{{!
-        }}{{/vendorExtensions.x-indent}}{{!
+              }}{{/vendorExtensions.x-indent}}{{!
+            }}{{/vendorExtensions.x-indent}}
+        {{/vendorExtensions.x-is-recursive-model}}{{!
       }}{{/isPrimitiveType}}{{!
 }}              }
     {{/items}}

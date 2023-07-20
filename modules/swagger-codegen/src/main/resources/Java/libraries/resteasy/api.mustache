@@ -5,7 +5,12 @@ import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.Configuration;
 import {{invokerPackage}}.Pair;
 
+{{#jakarta}}
+import jakarta.ws.rs.core.GenericType;
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.core.GenericType;
+{{/jakarta}}
 
 {{#imports}}import {{import}};
 {{/imports}}

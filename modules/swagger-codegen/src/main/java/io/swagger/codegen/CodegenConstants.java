@@ -178,6 +178,9 @@ public class CodegenConstants {
     public static final String GIT_REPO_ID = "gitRepoId";
     public static final String GIT_REPO_ID_DESC = "Git repo ID, e.g. swagger-codegen.";
 
+    public static final String GIT_REPO_BASE_URL = "gitRepoBaseURL";
+    public static final String GIT_REPO_BASE_URL_DESC = "Git repo base URL, e.g. https://github.com.";
+
     public static final String RELEASE_NOTE = "releaseNote";
     public static final String RELEASE_NOTE_DESC = "Release note, default to 'Minor update'.";
 
@@ -234,4 +237,6 @@ public class CodegenConstants {
     public static final String ASP_NET_CORE_VERSION = "aspnetCoreVersion";
     public static final String INTERFACE_ONLY = "interface-only";
     public static final String INTERFACE_CONTROLLER = "interface-controller";
+
+    public static final String IGNORE_IMPORT_MAPPING_OPTION = "ignoreImportMappings";
 }

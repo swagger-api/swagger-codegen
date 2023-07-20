@@ -3,10 +3,19 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenConstants.ENUM_PROPERTY_NAMING_TYPE;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.utils.EnumPropertyNamingUtils;
+import io.swagger.models.ArrayModel;
+import io.swagger.models.BooleanValueModel;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,6 +161,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         typeMapping.put("binary", "kotlin.Array<kotlin.Byte>");
         typeMapping.put("Date", "java.time.LocalDateTime");
         typeMapping.put("DateTime", "java.time.LocalDateTime");
+        typeMapping.put("ByteArray", "kotlin.ByteArray");
 
         instantiationTypes.put("array", "arrayOf");
         instantiationTypes.put("list", "arrayOf");
@@ -218,15 +228,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
      * @param enumPropertyNamingType The string representation of the naming convention, as defined by {@link CodegenConstants.ENUM_PROPERTY_NAMING_TYPE}
      */
     public void setEnumPropertyNaming(final String enumPropertyNamingType) {
-        try {
-            this.enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.valueOf(enumPropertyNamingType);
-        } catch (IllegalArgumentException ex) {
-            StringBuilder sb = new StringBuilder(enumPropertyNamingType + " is an invalid enum property naming option. Please choose from:");
-            for (CodegenConstants.ENUM_PROPERTY_NAMING_TYPE t : CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.values()) {
-                sb.append("\n  ").append(t.name());
-            }
-            throw new RuntimeException(sb.toString());
-        }
+        this.enumPropertyNaming = EnumPropertyNamingUtils.parseEnumPropertyNaming(enumPropertyNamingType);
     }
 
     /**
@@ -359,6 +361,16 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         this.sourceFolder = sourceFolder;
     }
 
+    @Override
+    public String toVarName(String name) {
+        return super.toVarName(sanitizeKotlinSpecificNames(name));
+    }
+
+    @Override
+    public String toEnumName(CodegenProperty property) {
+        return StringUtils.capitalize(property.name);
+    }
+
     /**
      * Return the sanitized variable name for enum
      *
@@ -376,34 +388,35 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
             modified = sanitizeKotlinSpecificNames(modified);
         }
 
-        switch (getEnumPropertyNaming()) {
-            case original:
-                // NOTE: This is provided as a last-case allowance, but will still result in reserved words being escaped.
-                modified = value;
-                break;
-            case camelCase:
-                // NOTE: Removes hyphens and underscores
-                modified = camelize(modified, true);
-                break;
-            case PascalCase:
-                // NOTE: Removes hyphens and underscores
-                String result = camelize(modified);
-                modified = titleCase(result);
-                break;
-            case snake_case:
-                // NOTE: Removes hyphens
-                modified = underscore(modified);
-                break;
-            case UPPERCASE:
-                modified = modified.toUpperCase();
-                break;
-        }
+        modified = modified.toUpperCase();
 
-        if (reservedWords.contains(modified)) {
+        if (isReservedWord(modified)) {
             return escapeReservedWord(modified);
         }
 
         return modified;
+    }
+
+    @Override
+    public String toEnumValue(String value, String datatype) {
+        if (isPrimivite(datatype)) {
+            return value;
+        }
+        if ("java.math.BigDecimal".equalsIgnoreCase(datatype)) {
+            return "java.math.BigDecimal(\"" + value + "\")";
+        }
+        return super.toEnumValue(value, datatype);
+    }
+
+    @Override
+    public boolean isPrimivite(String datatype) {
+        return "kotlin.Byte".equalsIgnoreCase(datatype)
+                || "kotlin.Short".equalsIgnoreCase(datatype)
+                || "kotlin.Int".equalsIgnoreCase(datatype)
+                || "kotlin.Long".equalsIgnoreCase(datatype)
+                || "kotlin.Float".equalsIgnoreCase(datatype)
+                || "kotlin.Double".equalsIgnoreCase(datatype)
+                || "kotlin.Boolean".equalsIgnoreCase(datatype);
     }
 
     @Override
@@ -439,7 +452,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
      * @return capitalized model name
      */
     @Override
-    public String toModelName(final String name) {
+   public String toModelName(final String name) {
         // Allow for explicitly configured kotlin.* and java.* types
         if (name.startsWith("kotlin.") || name.startsWith("java.")) {
             return name;
@@ -453,14 +466,19 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         String modifiedName = name.replaceAll("\\.", "");
         modifiedName = sanitizeKotlinSpecificNames(modifiedName);
 
-        // Camelize name of nested properties
         modifiedName = camelize(modifiedName);
 
-        if (reservedWords.contains(modifiedName)) {
-            modifiedName = escapeReservedWord(modifiedName);
+        if (modifiedName.equalsIgnoreCase("Companion")) {
+            modifiedName = "_" + modifiedName;
         }
 
-        return titleCase(modifiedName);
+        if (modifiedName.matches("^\\d.*")) {
+            final String modelName = "Model" + modifiedName; // e.g. 200Response => Model200Response (after camelize)
+            LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + modelName);
+            return modelName;
+        }
+
+        return modifiedName;
     }
 
     @Override
@@ -494,7 +512,8 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
      * @return sanitized string
      */
     private String sanitizeKotlinSpecificNames(final String name) {
-        String word = name;
+        String word = removeNonNameElementToCamelCase(name);
+
         for (Map.Entry<String, String> specialCharacters : specialCharReplacements.entrySet()) {
             // Underscore is the only special character we'll allow
             if (!specialCharacters.getKey().equals("_")) {
@@ -516,10 +535,6 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         return word;
     }
 
-    private String titleCase(final String input) {
-        return input.substring(0, 1).toUpperCase() + input.substring(1);
-    }
-
     @Override
     protected boolean isReservedWord(String word) {
         // We want case-sensitive escaping, to avoid unnecessary backtick-escaping.
@@ -537,5 +552,45 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         // provides extra protection against improperly trying to import language primitives and java types
         boolean imports = !type.startsWith("kotlin.") && !type.startsWith("java.") && !defaultIncludes.contains(type) && !languageSpecificPrimitives.contains(type);
         return imports;
+    }
+
+    @Override
+    protected Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
+        Map<String, String> aliases = new HashMap<>();
+        if (allDefinitions != null) {
+            for (Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
+                String swaggerName = entry.getKey();
+                Model m = entry.getValue();
+                if (m instanceof ModelImpl) {
+                    ModelImpl impl = (ModelImpl) m;
+                    if (impl.getType() != null &&
+                            !impl.getType().equals("object") &&
+                            (impl.getEnum() == null)) {
+                        aliases.put(swaggerName, impl.getType());
+                    }
+                }
+                if (m instanceof ArrayModel) {
+                    ArrayModel impl = (ArrayModel) m;
+                    aliases.put(swaggerName, impl.getType());
+                }
+            }
+        }
+        return aliases;
+    }
+
+    @Override
+    protected void addParentContainer(CodegenModel m, String name, Property property) {
+        m.parentContainer = fromProperty(name, property);
+        addImport(m, m.parentContainer.complexType);
+        m.parent = toInstantiationType(property);
+        final String containerType = m.parentContainer.containerType;
+        final String instantiationType = instantiationTypes.get(containerType);
+        if (instantiationType != null && !m.isArrayModel) {
+            addImport(m, instantiationType);
+        }
+        final String mappedType = typeMapping.get(containerType);
+        if (mappedType != null) {
+            addImport(m, mappedType);
+        }
     }
 }

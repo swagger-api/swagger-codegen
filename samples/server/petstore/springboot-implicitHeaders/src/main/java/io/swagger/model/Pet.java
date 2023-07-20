@@ -19,6 +19,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class Pet   {
   @JsonProperty("id")
   private Long id = null;

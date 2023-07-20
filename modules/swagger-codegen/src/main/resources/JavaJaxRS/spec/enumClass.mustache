@@ -11,7 +11,7 @@ public enum {{datatypeWithEnum}} {
         value = v;
     }
 
-    public String value() {
+    public {{datatype}} value() {
         return value;
     }
 
@@ -28,6 +28,6 @@ public enum {{datatypeWithEnum}} {
                 return b;
             }
         }
-        return null;
+        {{^errorOnUnknownEnum}}return null;{{/errorOnUnknownEnum}}{{#errorOnUnknownEnum}}throw new IllegalArgumentException("Unexpected value '" + text + "' for '{{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}' enum.");{{/errorOnUnknownEnum}}
     }
 }
