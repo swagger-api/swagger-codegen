@@ -3,11 +3,13 @@ package {{packageName}}
 
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.ktor.locations.*
-import io.ktor.pipeline.PipelineContext
+import io.ktor.locations.handle
+import io.ktor.locations.location
+import io.ktor.locations.Location
+import io.ktor.util.pipeline.PipelineContext
 import io.ktor.routing.Route
 import io.ktor.routing.method
-import {{modelPackage}}.*
+{{#hasModel}}import {{modelPackage}}.*;{{/hasModel}}
 
 {{#imports}}
 import {{import}}
@@ -27,15 +29,12 @@ object Paths {
 {{#apis}}
 {{#operations}}
     {{#operation}}
-    {{^bodyAllowed}}
     /**
      * {{summary}}
      * {{#unescapedNotes}}{{.}}{{/unescapedNotes}}
-     {{#allParams}}* @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-     {{/allParams}}*/
-    @Location("{{path}}") class {{operationId}}({{#allParams}}val {{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
-
-    {{/bodyAllowed}}
+     {{#parameters}}* @param {{paramName}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     {{/parameters}}*/
+    @Location("{{path}}") class {{operationId}}({{#parameters}}val {{paramName}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/parameters}})
     {{/operation}}
 {{/operations}}
 {{/apis}}

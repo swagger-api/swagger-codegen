@@ -1,18 +1,20 @@
 group '{{groupId}}'
 version '{{artifactVersion}}'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3'
+wrapper {
+    gradleVersion = '7.5'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
 buildscript {
-    ext.kotlin_version = '1.2.10'
-    ext.ktor_version = '0.9.1-alpha-9'
-    ext.shadow_version = '2.0.2'
+    ext.kotlin_version = '1.8.0'
+    ext.ktor_version = "1.5.4"
+    ext.shadow_version = "6.1.0"
 
     repositories {
-        mavenCentral()
+        maven {
+            url "https://repo1.maven.org/maven2"
+        }
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -29,8 +31,6 @@ apply plugin: 'application'
 
 mainClassName = "io.ktor.server.netty.DevelopmentEngine"
 
-// Initialization order with shadow 2.0.1 and Gradle 4.3 is weird.
-// See https://github.com/johnrengelman/shadow/issues/336#issuecomment-355402508
 apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
@@ -41,12 +41,6 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
 }
 
 shadowJar {
@@ -62,13 +56,13 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "io.ktor:ktor-metrics:$ktor_version"
-    compile "io.ktor:ktor-locations:$ktor_version"
-    compile "io.ktor:ktor-gson:$ktor_version"
-    compile "io.ktor:ktor-client-core:$ktor_version"
-    compile "io.ktor:ktor-client-apache:$ktor_version"
-    compile "ch.qos.logback:logback-classic:1.2.9"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "io.ktor:ktor-server-netty:$ktor_version"
+    implementation "io.ktor:ktor-metrics:$ktor_version"
+    implementation "io.ktor:ktor-locations:$ktor_version"
+    implementation "io.ktor:ktor-gson:$ktor_version"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-apache:$ktor_version"
+    implementation "ch.qos.logback:logback-classic:1.2.9"
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
