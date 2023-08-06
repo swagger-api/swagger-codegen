@@ -14,11 +14,11 @@ type Ints int32
 
 // List of Ints
 const (
-	_0 Ints = 0
-	_1 Ints = 1
-	_2 Ints = 2
-	_3 Ints = 3
-	_4 Ints = 4
-	_5 Ints = 5
-	_6 Ints = 6
+	NUMBER_0_Ints Ints = 0
+	NUMBER_1_Ints Ints = 1
+	NUMBER_2_Ints Ints = 2
+	NUMBER_3_Ints Ints = 3
+	NUMBER_4_Ints Ints = 4
+	NUMBER_5_Ints Ints = 5
+	NUMBER_6_Ints Ints = 6
 )
