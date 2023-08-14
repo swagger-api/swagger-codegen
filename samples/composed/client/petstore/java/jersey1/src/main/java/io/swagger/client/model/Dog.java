@@ -53,9 +53,9 @@ public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfPetPartI
       return String.valueOf(value);
     }
     @JsonCreator
-    public static BreedEnum fromValue(String text) {
+    public static BreedEnum fromValue(String input) {
       for (BreedEnum b : BreedEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }

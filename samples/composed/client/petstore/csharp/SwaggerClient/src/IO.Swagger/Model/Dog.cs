@@ -65,7 +65,7 @@ namespace IO.Swagger.Model
         /// </summary>
         /// <param name="bark">bark.</param>
         /// <param name="breed">breed.</param>
-        public Dog(bool? bark = default(bool?), BreedEnum? breed = default(BreedEnum?), long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<> part = default(List<>)) : base(id, name, status, part)
+        public Dog(bool? bark = default(bool?), BreedEnum? breed = default(BreedEnum?), long? id = default(long?), string name = default(string), StatusEnum? status = default(StatusEnum?), List<OneOfPetPartItems> part = default(List<OneOfPetPartItems>)) : base(id, name, status, part)
         {
             this.Bark = bark;
             this.Breed = breed;
@@ -159,7 +159,6 @@ namespace IO.Swagger.Model
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            foreach(var x in BaseValidate(validationContext)) yield return x;
             yield break;
         }
     }

@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class SinglePetResponse   {
   @JsonProperty("pet")
   private OneOfSinglePetResponsePet pet = null;

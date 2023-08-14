@@ -96,8 +96,8 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "default" : "available",
-              "enum" : [ "available", "pending", "sold" ]
+              "enum" : [ "available", "pending", "sold" ],
+              "default" : "available"
             }
           }
         } ],
@@ -251,7 +251,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body"
+                "$ref" : "#/components/schemas/pet_petId_body"
               }
             }
           }
@@ -426,6 +426,33 @@
         "security" : [ {
           "petstore_auth" : [ "write:pets", "read:pets" ]
         } ]
+      }
+    },
+    "/pet/category" : {
+      "post" : {
+        "tags" : [ "pet" ],
+        "operationId" : "doCategoryStuff",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SubCategory"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/store/inventory" : {
@@ -836,7 +863,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_1"
+                "$ref" : "#/components/schemas/parrot_body"
               }
             }
           }
@@ -865,7 +892,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_2"
+                "$ref" : "#/components/schemas/parrot_body_1"
               }
             }
           }
@@ -1068,7 +1095,8 @@
         }
       },
       "Test" : {
-        "type" : "string"
+        "type" : "string",
+        "example" : ""
       },
       "PartOne" : {
         "properties" : {
@@ -1308,7 +1336,54 @@
           "prefix" : "val"
         }
       },
-      "body" : {
+      "NullableEnumModel" : {
+        "type" : "object",
+        "properties" : {
+          "enumProp" : {
+            "type" : "string",
+            "nullable" : true,
+            "enum" : [ "a", "b", null ]
+          }
+        }
+      },
+      "SubCategory" : {
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Category"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "foo" : {
+                  "type" : "boolean"
+                },
+                "bar" : {
+                  "type" : "integer"
+                },
+                "beer" : {
+                  "type" : "string"
+                },
+                "drunk" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            } ]
+          },
+          "category2" : {
+            "$ref" : "#/components/schemas/Category"
+          },
+          "pets" : {
+            "type" : "array",
+            "items" : {
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/Pet"
+              } ]
+            }
+          }
+        }
+      },
+      "pet_petId_body" : {
         "type" : "object",
         "properties" : {
           "name" : {
@@ -1321,7 +1396,7 @@
           }
         }
       },
-      "body_1" : {
+      "parrot_body" : {
         "type" : "object",
         "properties" : {
           "parrots" : {
@@ -1354,7 +1429,7 @@
           "parrots" : [ "", "" ]
         }
       },
-      "body_2" : {
+      "parrot_body_1" : {
         "anyOf" : [ {
           "$ref" : "#/components/schemas/Macaw"
         }, {

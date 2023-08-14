@@ -1,11 +1,21 @@
-FROM ubuntu:22.04
+FROM redhat/ubi9-minimal:9.1
+RUN microdnf -y install shadow-utils
+RUN microdnf -y install which
+RUN microdnf -y install glibc-langpack-en
+RUN microdnf -y install tar
+RUN microdnf -y install gzip
+ENV disableOas31Resolve=False
 ENV JAVA_HOME=/opt/java/openjdk
-COPY --from=eclipse-temurin:8u322-b06-jre $JAVA_HOME $JAVA_HOME
+COPY --from=eclipse-temurin:17-jre $JAVA_HOME $JAVA_HOME
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
+COPY docker/environment /etc/environment
 
 WORKDIR /jetty_home
 COPY docker/jetty /jetty_home/
 COPY target/lib/jetty* /jetty_home/lib/
+RUN mkdir /jetty_home/lib/shared
+RUN chgrp -R 0 /jetty_home/lib/shared && \
+    chmod -R g=u /jetty_home/lib/shared
 RUN rm /jetty_home/lib/jetty-runner*
 COPY target/lib/javax.servlet-api* /jetty_home/lib/servlet-api-3.1.jar
 COPY target/lib/start.jar /jetty_home/
@@ -23,10 +33,11 @@ ARG HTTP_PORT
 ENV HTTP_PORT ${HTTP_PORT}
 ARG JAVA_MEM
 ENV JAVA_MEM ${JAVA_MEM}
+ENV EXIT_ON_OUTOFMEMORYERROR ""
 WORKDIR $JETTY_BASE
 
-RUN addgroup --gid 2000 codegengroup
-RUN adduser --home "/generator" --ingroup codegengroup --disabled-password --gecos '' --shell "/bin/bash" --uid "1000" codegenuser
+RUN groupadd --gid 2000 codegengroup
+RUN useradd --home "/generator" --gid codegengroup --shell "/bin/bash" --uid "1000" codegenuser
 RUN chown -R codegenuser /generator
 RUN chown -R codegenuser /jetty_home
 

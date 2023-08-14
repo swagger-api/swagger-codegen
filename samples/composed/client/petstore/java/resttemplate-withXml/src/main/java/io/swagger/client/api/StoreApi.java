@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @Component("io.swagger.client.api.StoreApi")
 public class StoreApi {
@@ -49,10 +50,23 @@ public class StoreApi {
      * For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Order not found
-     * @param orderId ID of the order that needs to be deleted
+     * @param orderId ID of the order that needs to be deleted (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public void deleteOrder(Long orderId) throws RestClientException {
+        deleteOrderWithHttpInfo(orderId);
+    }
+
+    /**
+     * Delete purchase order by ID
+     * For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
+     * <p><b>400</b> - Invalid ID supplied
+     * <p><b>404</b> - Order not found
+     * @param orderId ID of the order that needs to be deleted (required)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> deleteOrderWithHttpInfo(Long orderId) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'orderId' is set
         if (orderId == null) {
@@ -75,7 +89,7 @@ public class StoreApi {
         String[] authNames = new String[] {  };
 
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
-        apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
+        return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
     /**
      * Returns pet inventories by status
@@ -85,6 +99,17 @@ public class StoreApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public Map<String, Integer> getInventory() throws RestClientException {
+        return getInventoryWithHttpInfo().getBody();
+    }
+
+    /**
+     * Returns pet inventories by status
+     * Returns a map of status codes to quantities
+     * <p><b>200</b> - successful operation
+     * @return ResponseEntity&lt;Map&lt;String, Integer&gt;&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Map<String, Integer>> getInventoryWithHttpInfo() throws RestClientException {
         Object postBody = null;
         String path = UriComponentsBuilder.fromPath("/store/inventory").build().toUriString();
         
@@ -110,11 +135,25 @@ public class StoreApi {
      * <p><b>200</b> - successful operation
      * <p><b>400</b> - Invalid ID supplied
      * <p><b>404</b> - Order not found
-     * @param orderId ID of pet that needs to be fetched
+     * @param orderId ID of pet that needs to be fetched (required)
      * @return Order
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public Order getOrderById(Long orderId) throws RestClientException {
+        return getOrderByIdWithHttpInfo(orderId).getBody();
+    }
+
+    /**
+     * Find purchase order by ID
+     * For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10.\\ \\ Other values will generated exceptions
+     * <p><b>200</b> - successful operation
+     * <p><b>400</b> - Invalid ID supplied
+     * <p><b>404</b> - Order not found
+     * @param orderId ID of pet that needs to be fetched (required)
+     * @return ResponseEntity&lt;Order&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Order> getOrderByIdWithHttpInfo(Long orderId) throws RestClientException {
         Object postBody = null;
         // verify the required parameter 'orderId' is set
         if (orderId == null) {
@@ -146,11 +185,24 @@ public class StoreApi {
      * 
      * <p><b>200</b> - successful operation
      * <p><b>400</b> - Invalid Order
-     * @param body order placed for purchasing the pet
+     * @param body order placed for purchasing the pet (required)
      * @return Order
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public Order placeOrder(Order body) throws RestClientException {
+        return placeOrderWithHttpInfo(body).getBody();
+    }
+
+    /**
+     * Place an order for a pet
+     * 
+     * <p><b>200</b> - successful operation
+     * <p><b>400</b> - Invalid Order
+     * @param body order placed for purchasing the pet (required)
+     * @return ResponseEntity&lt;Order&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Order> placeOrderWithHttpInfo(Order body) throws RestClientException {
         Object postBody = body;
         // verify the required parameter 'body' is set
         if (body == null) {

@@ -62,7 +62,6 @@ public class DefaultApi {
 
 
     
-    
     final String[] localVarAccepts = {
       "application/json"
     };

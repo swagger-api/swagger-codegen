@@ -19,7 +19,7 @@ namespace IO.Swagger.Client
     /// <summary>
     /// Represents a set of configuration settings
     /// </summary>
-        public class Configuration : IReadableConfiguration
+    public class Configuration : IReadableConfiguration
     {
         #region Constants
 

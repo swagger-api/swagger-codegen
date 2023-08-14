@@ -17,6 +17,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class AllOfSubCategoryCategory extends Category  {
   @JsonProperty("foo")
   private Boolean foo = null;

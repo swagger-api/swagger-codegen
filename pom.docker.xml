@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.35-SNAPSHOT</version>
+    <version>3.0.46</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -127,6 +127,11 @@
                 <configuration>
                     <testNGArtifactName>none:none</testNGArtifactName>
                     <argLine>-XX:+StartAttachListener</argLine>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar
+                        -XX:+IgnoreUnrecognizedVMOptions
+                        --add-opens=java.base/java.util=ALL-UNNAMED
+                    </argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -158,16 +163,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <version>3.10.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -182,7 +183,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.12.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -193,15 +194,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.5.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <source>1.8</source>
                     <encoding>UTF-8</encoding>
                     <maxmemory>1g</maxmemory>
-                    <links>
-                        <link>http://docs.oracle.com/javase/8/docs/api</link>
-                    </links>
                     <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
                     <additionalOptions>
                         <additionalOption>-Xdoclint:none</additionalOption>
@@ -220,7 +218,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -234,7 +232,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.4.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -878,7 +876,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.3.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -886,7 +884,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.4.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -900,6 +898,11 @@
     <dependencyManagement>
         <dependencies>
             <!-- swagger-core v2 -->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-jaxrs2</artifactId>
+                <version>${swagger-core-version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-core</artifactId>
@@ -1044,6 +1047,46 @@
                 <version>${jmockit-version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20230227</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-common</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-server</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet-core</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-jaxb</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${jersey-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
@@ -1069,34 +1112,31 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-codegen-generators-version>1.0.35-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.1.13</swagger-core-version>
-        <swagger-core-version-v1>1.6.6</swagger-core-version-v1>
-        <swagger-parser-version>2.0.30</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.59</swagger-parser-version-v1>
-        <jackson-version>2.13.2</jackson-version>
-        <!--
-          jackson-databind 2.13.2 is still affected by CVE-2020-36518.
-          This version pin for jackson-databind can be removed when bumping jackson to 2.14
-          -->
-        <jackson-databind-version>2.13.2.2</jackson-databind-version>
+        <maven.compiler.release>8</maven.compiler.release>
+        <swagger-codegen-generators-version>1.0.42</swagger-codegen-generators-version>
+        <swagger-core-version>2.2.11</swagger-core-version>
+        <swagger-core-version-v1>1.6.11</swagger-core-version-v1>
+        <swagger-parser-version>2.1.14</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.66</swagger-parser-version-v1>
+        <jackson-version>2.15.1</jackson-version>
+        <jackson-databind-version>2.15.1</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
         <commons-io-version>2.11.0</commons-io-version>
         <commons-cli-version>1.5.0</commons-cli-version>
-        <junit-version>4.13.1</junit-version>
+        <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.12.0</commons-lang-version>
-        <slf4j-version>1.7.35</slf4j-version>
-        <logback-version>1.2.10</logback-version>
+        <slf4j-version>1.7.36</slf4j-version>
+        <logback-version>1.4.6</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.15</jmustache-version>
-        <testng-version>6.9.6</testng-version>
-        <surefire-version>2.22.0</surefire-version>
-        <jmockit-version>1.42</jmockit-version>
-        <reflections-version>0.9.11</reflections-version>
-        <jmockit-version>1.42</jmockit-version>
-        <snakeyaml-version>1.30</snakeyaml-version>
-        <handlebars-version>4.3.0</handlebars-version>
+        <testng-version>7.7.1</testng-version>
+        <surefire-version>3.0.0</surefire-version>
+        <jmockit-version>1.49</jmockit-version>
+        <reflections-version>0.10.2</reflections-version>
+        <snakeyaml-version>2.0</snakeyaml-version>
+        <handlebars-version>4.3.1</handlebars-version>
+        <jersey-version>2.39.1</jersey-version>
     </properties>
 </project>

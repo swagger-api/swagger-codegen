@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**addParrot**](PetApi.md#addParrot) | **POST** /parrot | Add a new parrow to the store
 [**addPet**](PetApi.md#addPet) | **POST** /pet | Add a new pet to the store
 [**deletePet**](PetApi.md#deletePet) | **DELETE** /pet/{petId} | Deletes a pet
+[**doCategoryStuff**](PetApi.md#doCategoryStuff) | **POST** /pet/category | 
 [**feedPet**](PetApi.md#feedPet) | **POST** /pet/feed/{petId} | Find pet by ID
 [**findPetsByStatus**](PetApi.md#findPetsByStatus) | **GET** /pet/findByStatus | Finds Pets by status
 [**findPetsByTags**](PetApi.md#findPetsByTags) | **GET** /pet/findByTags | Finds Pets by tags
@@ -31,7 +32,7 @@ Add a new parrow to the store
 
 
 PetApi apiInstance = new PetApi();
-Body2 body = new Body2(); // Body2 | 
+ParrotBody1 body = new ParrotBody1(); // ParrotBody1 | 
 try {
     InlineResponse2001 result = apiInstance.addParrot(body);
     System.out.println(result);
@@ -45,7 +46,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body2**](Body2.md)|  | [optional]
+ **body** | [**ParrotBody1**](ParrotBody1.md)|  | [optional]
 
 ### Return type
 
@@ -161,6 +162,49 @@ null (empty response body)
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+<a name="doCategoryStuff"></a>
+# **doCategoryStuff**
+> ModelApiResponse doCategoryStuff(body)
+
+
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiException;
+//import io.swagger.client.api.PetApi;
+
+
+PetApi apiInstance = new PetApi();
+SubCategory body = new SubCategory(); // SubCategory | 
+try {
+    ModelApiResponse result = apiInstance.doCategoryStuff(body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling PetApi#doCategoryStuff");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional]
+
+### Return type
+
+[**ModelApiResponse**](ModelApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="feedPet"></a>
 # **feedPet**
@@ -430,7 +474,7 @@ update parrots
 
 
 PetApi apiInstance = new PetApi();
-Body1 body = new Body1(); // Body1 | 
+ParrotBody body = new ParrotBody(); // ParrotBody | 
 try {
     InlineResponse200 result = apiInstance.updateParrots(body);
     System.out.println(result);
@@ -444,7 +488,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body1**](Body1.md)|  | [optional]
+ **body** | [**ParrotBody**](ParrotBody.md)|  | [optional]
 
 ### Return type
 
