@@ -38,7 +38,7 @@ jobs:
       steps:
         - name: Trigger LaceWork Scanning using a different method
           run: |
-            docker run -e LW_ACCOUNT_NAME=$LW_ACCOUNT_NAME -e LW_ACCESS_TOKEN=$LW_ACCESS_TOKEN -e LW_SCANNER_DISABLE_UPDATES=false -v /var/run/docker.sock:/var/run/docker.sock lacework/lacework-inline-scanner:latest image evaluate swaggerapi/swagger-codegen-cli latest --docker-server index.docker.io --docker-username $docker_user --docker-password $docker_password  > /dev/null 2>&1
+            docker run -e LW_ACCOUNT_NAME=$LW_ACCOUNT_NAME -e LW_ACCESS_TOKEN=$LW_ACCESS_TOKEN -e LW_SCANNER_SAVE_RESULTS=true -e LW_SCANNER_DISABLE_UPDATES=false -v /var/run/docker.sock:/var/run/docker.sock lacework/lacework-inline-scanner:latest image evaluate swaggerapi/swagger-codegen-cli latest --docker-server index.docker.io --docker-username $docker_user --docker-password $docker_password  > /dev/null 2>&1
           env:
             LW_ACCOUNT_NAME: ${{ secrets.LW_ACCOUNT_NAME }}
             LW_ACCESS_TOKEN: ${{ secrets.LW_ACCESS_TOKEN }}
