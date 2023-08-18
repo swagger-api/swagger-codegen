@@ -1214,7 +1214,7 @@
     </repositories>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <swagger-codegen-generators-version>1.0.42</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.43-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.2.11</swagger-core-version>
         <swagger-core-version-v1>1.6.11</swagger-core-version-v1>
         <swagger-parser-version>2.1.14</swagger-parser-version>
