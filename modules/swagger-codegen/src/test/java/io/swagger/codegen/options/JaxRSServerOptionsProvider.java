@@ -43,6 +43,7 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
     public static final String WITH_XML_VALUE = "false";
     public static final String USE_TAGS = "useTags";
     public static final String ADDITIONAL_MODEL_TYPE_ANNOTATIONS = "@TestAnnotation";
+    public static final String JAKARTA_VALUE = "false";
 
 
     @Override
@@ -96,7 +97,8 @@ public class JaxRSServerOptionsProvider implements OptionsProvider {
             .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
             .put(JavaJerseyServerCodegen.USE_TAGS, USE_TAGS)
             .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false")
-            .put(JavaClientCodegen.ADDITIONAL_MODEL_TYPE_ANNOTATIONS, ADDITIONAL_MODEL_TYPE_ANNOTATIONS);
+            .put(JavaClientCodegen.ADDITIONAL_MODEL_TYPE_ANNOTATIONS, ADDITIONAL_MODEL_TYPE_ANNOTATIONS)
+            .put(JavaClientCodegen.JAKARTA, JAKARTA_VALUE);
 
         return builder.build();
     }

@@ -13,7 +13,7 @@ public class SilexServerOptionsProvider implements OptionsProvider {
 
     @Override
     public String getLanguage() {
-        return "silex-PHP";
+        return "php-silex";
     }
 
     @Override

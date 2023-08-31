@@ -25,19 +25,11 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     */
     fun deleteOrder(orderId: kotlin.String) : Unit {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.DELETE,
             "/store/order/{orderId}".replace("{"+"orderId"+"}", "$orderId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Unit>(
             localVariableConfig,
@@ -62,19 +54,11 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     @Suppress("UNCHECKED_CAST")
     fun getInventory() : kotlin.collections.Map<kotlin.String, kotlin.Int> {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/store/inventory",
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<kotlin.collections.Map<kotlin.String, kotlin.Int>>(
             localVariableConfig,
@@ -100,19 +84,11 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     @Suppress("UNCHECKED_CAST")
     fun getOrderById(orderId: kotlin.Long) : Order {
         val localVariableBody: kotlin.Any? = null
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.GET,
             "/store/order/{orderId}".replace("{"+"orderId"+"}", "$orderId"),
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Order>(
             localVariableConfig,
@@ -138,19 +114,11 @@ class StoreApi(basePath: kotlin.String = "http://petstore.swagger.io/v2") : ApiC
     @Suppress("UNCHECKED_CAST")
     fun placeOrder(body: Order) : Order {
         val localVariableBody: kotlin.Any? = body
-        val localVariableQuery: MultiValueMap = mapOf()
         
-        val contentHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf()
-        val acceptsHeaders: kotlin.collections.Map<kotlin.String,kotlin.String> = mapOf("Accept" to "application/xml, application/json")
-        val localVariableHeaders: kotlin.collections.MutableMap<kotlin.String,kotlin.String> = mutableMapOf()
-        localVariableHeaders.putAll(contentHeaders)
-        localVariableHeaders.putAll(acceptsHeaders)
-        
+
         val localVariableConfig = RequestConfig(
             RequestMethod.POST,
             "/store/order",
-            query = localVariableQuery,
-            headers = localVariableHeaders
         )
         val response = request<Order>(
             localVariableConfig,
