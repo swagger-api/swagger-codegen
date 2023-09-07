@@ -16,6 +16,7 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
     private static final String NMP_VERSION = "1.0.0";
     private static final String NPM_REPOSITORY = "https://registry.npmjs.org";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
+    public static final String API_CONFIG_CLASS_NAME = "ApiConfiguration";
 
 
     @Override
@@ -37,6 +38,7 @@ public class TypeScriptFetchClientOptionsProvider implements OptionsProvider {
                 .put(TypeScriptFetchClientCodegen.SNAPSHOT, Boolean.FALSE.toString())
                 .put(TypeScriptFetchClientCodegen.WITH_INTERFACES, Boolean.FALSE.toString())
                 .put(CodegenConstants.ALLOW_UNICODE_IDENTIFIERS, ALLOW_UNICODE_IDENTIFIERS_VALUE)
+                .put(TypeScriptFetchClientCodegen.API_CONFIG_CLASS_NAME, API_CONFIG_CLASS_NAME)
                 .build();
     }
 

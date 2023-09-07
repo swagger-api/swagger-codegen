@@ -1,11 +1,16 @@
 package io.swagger.codegen.languages;
 
+import com.google.common.collect.ImmutableMap;
+import com.samskivert.mustache.Mustache;
+
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.*;
+
+import io.swagger.codegen.mustache.*;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -19,10 +24,12 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
     public static final String WITH_INTERFACES = "withInterfaces";
+    public static final String API_CONFIG_CLASS_NAME = "apiConfigClassName";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
     protected String npmRepository = null;
+    protected String apiConfigClassName = null;
 
     public TypeScriptFetchClientCodegen() {
         super();
@@ -39,6 +46,7 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         this.cliOptions.add(new CliOption(NPM_REPOSITORY, "Use this property to set an url your private npmRepo in the package.json"));
         this.cliOptions.add(new CliOption(SNAPSHOT, "When setting this property to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(WITH_INTERFACES, "Setting this property to true will generate interfaces next to the default class implementations.", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
+        this.cliOptions.add(new CliOption(API_CONFIG_CLASS_NAME, "Use this property to change the default class name used to configure the API setup parameters from 'Configuration' to a custom name."));
     }
 
     @Override
@@ -60,6 +68,14 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
         }
+
+        if (additionalProperties.containsKey(API_CONFIG_CLASS_NAME)) {
+            setApiConfigClassName(additionalProperties.get(API_CONFIG_CLASS_NAME).toString());
+        } else {
+            additionalProperties.put(API_CONFIG_CLASS_NAME, "Configuration");
+        }
+
+        addMustacheLambdas(additionalProperties);
     }
 
     @Override
@@ -77,6 +93,30 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
             return "any";
         } else {
             return super.getTypeDeclaration(p);
+        }
+    }
+
+    private void addMustacheLambdas(Map<String, Object> objs) {
+
+        Map<String, Mustache.Lambda> lambdas = new ImmutableMap.Builder<String, Mustache.Lambda>()
+                .put("lowercase", new LowercaseLambda().generator(this))
+                .put("uppercase", new UppercaseLambda())
+                .put("titlecase", new TitlecaseLambda())
+                .put("camelcase", new CamelCaseLambda().generator(this))
+                .put("camelcase_param", new CamelCaseLambda().generator(this).escapeAsParamName(true))
+                .put("indented", new IndentedLambda())
+                .put("indented_8", new IndentedLambda(8, " "))
+                .put("indented_12", new IndentedLambda(12, " "))
+                .put("indented_16", new IndentedLambda(16, " "))
+                .build();
+
+        if (objs.containsKey("lambda")) {
+            LOGGER.warn("An property named 'lambda' already exists. Mustache lambdas renamed from 'lambda' to '_lambda'. " +
+                    "You'll likely need to use a custom template, " +
+                    "see https://github.com/swagger-api/swagger-codegen#modifying-the-client-library-format. ");
+            objs.put("_lambda", lambdas);
+        } else {
+            objs.put("lambda", lambdas);
         }
     }
 
@@ -136,6 +176,14 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
 
     public void setNpmRepository(String npmRepository) {
         this.npmRepository = npmRepository;
+    }
+
+    public String getApiConfigClassName() {
+        return apiConfigClassName;
+    }
+
+    public void setApiConfigClassName(String apiConfigClassName) {
+        this.apiConfigClassName = apiConfigClassName;
     }
 
 }
