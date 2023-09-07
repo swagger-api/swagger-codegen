@@ -4,4 +4,4 @@ ADD target/swagger-codegen-cli.jar /opt/swagger-codegen-cli/swagger-codegen-cli.
 
 ENTRYPOINT ["java", "-jar", "/opt/swagger-codegen-cli/swagger-codegen-cli.jar"]
 
-CMD ["help"]
+CMD ["--help"]
