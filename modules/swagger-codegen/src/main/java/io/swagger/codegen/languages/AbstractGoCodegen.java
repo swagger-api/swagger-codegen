@@ -486,13 +486,10 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         if ("int".equals(datatype) || "int32".equals(datatype) || "int64".equals(datatype)
                 || "uint".equals(datatype) || "uint32".equals(datatype) || "uint64".equals(datatype)
                 || "float".equals(datatype) || "float32".equals(datatype) || "float64".equals(datatype)) {
-            String varName = name;
+            String varName = "NUMBER_" + name;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
             varName = varName.replaceAll("\\.", "_DOT_");
-            if (varName.matches("\\d.*")) {
-                return "_" + varName;
-            }
             return varName;
         }
 
@@ -506,7 +503,13 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         enumName = enumName.replaceFirst("^_", "");
         enumName = enumName.replaceFirst("_$", "");
 
-        if (isReservedWord(enumName) || enumName.matches("\\d.*")) { // reserved word or starts with number
+        // starts with a number
+        if (enumName.matches("\\d.*")) {
+            enumName = "_" + enumName;
+        }
+
+        // reserved word
+        if (isReservedWord(enumName)) {
             return escapeReservedWord(enumName);
         } else {
             return enumName;
