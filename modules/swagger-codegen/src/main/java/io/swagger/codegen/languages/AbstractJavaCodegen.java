@@ -1579,9 +1579,4 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         }
         return tag;
     }
-
-    public boolean defaultIgnoreImportMappingOption() {
-        return true;
-    }
-
 }

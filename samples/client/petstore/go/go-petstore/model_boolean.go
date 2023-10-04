@@ -14,6 +14,6 @@ type Boolean bool
 
 // List of Boolean
 const (
-	TRUE Boolean = true
-	FALSE Boolean = false
+	TRUE_Boolean Boolean = true
+	FALSE_Boolean Boolean = false
 )
