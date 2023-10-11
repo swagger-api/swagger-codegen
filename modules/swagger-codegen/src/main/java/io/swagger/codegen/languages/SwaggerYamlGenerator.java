@@ -32,6 +32,8 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
 
     public static final String OUTPUT_NAME = "outputFile";
 
+    public static final String MINMIZE_QUOTES = "minimizeQuotes";
+
     public static final String SWAGGER_FILENAME_DEFAULT_YAML = "swagger.yaml";
 
     protected String outputFile = SWAGGER_FILENAME_DEFAULT_YAML;
@@ -45,6 +47,10 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
         cliOptions.add(new CliOption(OUTPUT_NAME,
                 "output filename")
                 .defaultValue(SWAGGER_FILENAME_DEFAULT_YAML));
+
+        cliOptions.add(new CliOption(MINMIZE_QUOTES,
+                "minimize quotes")
+                .defaultValue(Boolean.TRUE.toString()));
 
         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
     }
@@ -80,10 +86,21 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
     @Override
     public void processSwagger(Swagger swagger) {
         try {
-            final ObjectMapper mapper = new ObjectMapper(new YAMLFactory()
-                    .configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true)
+            boolean minimizeQuotes = !additionalProperties.containsKey(MINMIZE_QUOTES) ||
+                    (additionalProperties.containsKey(MINMIZE_QUOTES) &&
+                            additionalProperties.get(MINMIZE_QUOTES) instanceof Boolean ?
+                                (Boolean)additionalProperties.get(MINMIZE_QUOTES) :
+                                Boolean.valueOf((String)additionalProperties.get(MINMIZE_QUOTES)
+                    )
+            );
+            YAMLFactory yamlFactory = new YAMLFactory()
                     .configure(YAMLGenerator.Feature.SPLIT_LINES, false)
-                    .configure(YAMLGenerator.Feature.ALWAYS_QUOTE_NUMBERS_AS_STRINGS, true));
+                    .configure(YAMLGenerator.Feature.ALWAYS_QUOTE_NUMBERS_AS_STRINGS, true);
+
+            yamlFactory.configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, minimizeQuotes);
+
+            final ObjectMapper mapper = new ObjectMapper(yamlFactory);
+
             configureMapper(mapper);
             String swaggerString = mapper.writeValueAsString(swagger);
             String outputFile = outputFolder + File.separator + this.outputFile;

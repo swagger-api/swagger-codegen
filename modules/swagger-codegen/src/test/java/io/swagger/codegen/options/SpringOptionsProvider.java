@@ -44,7 +44,6 @@ public class SpringOptionsProvider extends JavaOptionsProvider {
         options.put(SpringCodegen.INTERFACE_ONLY, INTERFACE_ONLY);
         options.put(SpringCodegen.DELEGATE_PATTERN, DELEGATE_PATTERN);
         options.put(SpringCodegen.SINGLE_CONTENT_TYPES, SINGLE_CONTENT_TYPES);
-        options.put(SpringCodegen.JAVA_8, JAVA_8);
         options.put(SpringCodegen.ASYNC, ASYNC);
         options.put(SpringCodegen.RESPONSE_WRAPPER, RESPONSE_WRAPPER);
         options.put(SpringCodegen.USE_TAGS, USE_TAGS);

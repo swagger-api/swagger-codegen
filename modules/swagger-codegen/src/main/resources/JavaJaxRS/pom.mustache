@@ -176,9 +176,9 @@
 {{#useBeanValidation}}
     <!-- Bean Validation API support -->
     <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.1.0.Final</version>
+        <groupId>{{#jakarta}}jakarta.validation{{/jakarta}}{{^jakarta}}javax.validation{{/jakarta}}</groupId>
+        <artifactId>{{#jakarta}}jakarta.validation-api{{/jakarta}}{{^jakarta}}validation-api{{/jakarta}}</artifactId>
+        <version>{{#jakarta}}3.0.2{{/jakarta}}{{^jakarta}}1.1.0.Final{{/jakarta}}</version>
     </dependency>
 {{/useBeanValidation}}
 
