@@ -16,10 +16,21 @@ import java.io.InputStream;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
+{{#jakarta}}
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+{{/jakarta}}
 {{#useBeanValidation}}
+{{#jakarta}}
+import jakarta.validation.constraints.*;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.constraints.*;
+{{/jakarta}}
 {{/useBeanValidation}}
 {{>generatedAnnotation}}
 {{#operations}}

@@ -1,0 +1,59 @@
+/*
+* okhttp
+*/
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    compile 'io.swagger:swagger-annotations:1.6.9'
+    compile 'com.squareup.okhttp:okhttp:4.10.0'
+    compile 'com.squareup.okhttp:logging-interceptor:4.10.0'
+    compile 'com.google.code.gson:gson:2.10.1'
+    compile 'io.gsonfire:gson-fire:1.8.5'
+    {{#joda}}
+        compile 'joda-time:joda-time:2.12.1'
+    {{/joda}}
+    {{#threetenbp}}
+        compile 'org.threeten:threetenbp:1.6.5'
+    {{/threetenbp}}
+    testCompile 'junit:junit:4.13.2'
+}
+
+group = '{{groupId}}'
+version = '{{artifactVersion}}'
+description = '{{artifactDescription}}'
+
+java.sourceCompatibility = 11
+java.targetCompatibility = 11
+
+tasks.register('testsJar', Jar) {
+    archiveClassifier = 'tests'
+    from(sourceSets.test.output)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            artifact(testsJar)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

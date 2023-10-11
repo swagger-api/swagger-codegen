@@ -1,0 +1,78 @@
+---
+openapi: 3.0.2
+info:
+  description: "Description"
+  title: Title
+  version: v2
+paths:
+  "/validation":
+    post:
+      tags:
+        - Validation Data
+      summary: Validation Data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/mtg_Message"
+      responses:
+        '200':
+          description: responses description
+          content:
+            application/xml:
+              schema:
+                "$ref": "#/components/schemas/mtg_Message"
+components:
+  schemas:
+    val_Member:
+      additionalProperties: false
+      description: valMember
+      properties:
+        val_unique_reference:
+          description: val unique reference
+          "$ref": "#/components/schemas/val_TypeCode"
+        val_country:
+          description: val country
+          "$ref": "#/components/schemas/val_Country"
+        val_products:
+          description: Products
+          "$ref": "#/components/schemas/val_Products"
+      oneOf:
+        - required:
+            - val_products
+        - required:
+            - val_country
+      xml:
+        prefix: val
+        name: member
+      type: object
+    val_MemberProduct:
+      additionalProperties: false
+      description: Member Product Description
+      properties:
+        val_property_1:
+          description: property 1
+          "$ref": "#/components/schemas/val_Property_1"
+        val_property_2:
+          description: property 2
+          "$ref": "#/components/schemas/val_Property_2"
+        val_property_3:
+          description: property 3
+          "$ref": "#/components/schemas/val_Property_3"
+        val_property_4:
+          description: property 4
+          "$ref": "#/components/schemas/val_Property_4"
+      oneOf:
+        - required:
+            - val_property_1
+        - required:
+            - val_property_2
+        - required:
+            - val_property_3
+        - required:
+            - val_property_4
+      xml:
+        prefix: val
+        name: product
+      type: object

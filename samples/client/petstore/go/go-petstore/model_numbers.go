@@ -14,8 +14,8 @@ type Numbers float32
 
 // List of Numbers
 const (
-	_7 Numbers = 7
-	_8 Numbers = 8
-	_9 Numbers = 9
-	_10 Numbers = 10
+	NUMBER_7_Numbers Numbers = 7
+	NUMBER_8_Numbers Numbers = 8
+	NUMBER_9_Numbers Numbers = 9
+	NUMBER_10_Numbers Numbers = 10
 )

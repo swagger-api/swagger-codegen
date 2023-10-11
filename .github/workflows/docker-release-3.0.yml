@@ -1,0 +1,75 @@
+name: Build And Push Docker Release 3.0
+
+on:
+  workflow_dispatch:
+    branches: [ "3.0.0" ]
+    inputs:
+      tag:
+        description: tag/version to release
+        required: true
+jobs:
+  build_push_docker_release_30:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: git checkout 3.0.0
+        with:
+          ref: 3.0.0
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+      - name: preliminary checks
+        run: |
+          docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
+          set -e
+          # fail if templates/generators contain carriage return '\r'
+          /bin/bash ./bin/utils/detect_carriage_return.sh
+          # fail if generators contain merge conflicts
+          /bin/bash ./bin/utils/detect_merge_conflict.sh
+          # fail if generators contain tab '\t'
+          /bin/bash ./bin/utils/detect_tab_in_java_class.sh
+      - uses: s4u/maven-settings-action@v2.8.0
+        name: setup maven settings.xml
+        with:
+          servers: |
+            [{
+                "id": "sonatype-nexus-staging",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+            },
+            {
+                "id": "sonatype-nexus-snapshots",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+            }]
+      - name: Build with Maven
+        run: |
+          # mvn clean install -U -Pdocker -Plinux -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089
+      - name: docker build and push
+        run: |
+          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3-minimal
+          export DOCKER_GENERATOR_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3
+          export DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3-root
+          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
+          mvn -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 clean install -Pdocker -Prelease --settings $HOME/.m2/settings.xml
+          docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} -f ./modules/swagger-generator/Dockerfile_minimal ./modules/swagger-generator
+          docker tag $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_IMAGE_NAME:latest
+          docker push $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_GENERATOR_IMAGE_NAME:latest
+          docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} ./modules/swagger-codegen-cli
+          docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
+          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
+          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:latest
+          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest
+          docker tag $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
+          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:$${{ env.TAG }}-root
+    env:
+      TAG: ${{ github.event.inputs.tag }}

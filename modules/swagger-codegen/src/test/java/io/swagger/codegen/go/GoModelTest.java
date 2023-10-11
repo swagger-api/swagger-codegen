@@ -4,20 +4,22 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.languages.GoClientCodegen;
+import io.swagger.codegen.languages.JavaClientCodegen;
+import io.swagger.codegen.languages.PhpClientCodegen;
 import io.swagger.models.ArrayModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
+import io.swagger.models.Swagger;
+import io.swagger.models.properties.*;
 
 import com.google.common.collect.Sets;
+import io.swagger.parser.SwaggerParser;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 @SuppressWarnings("static-method")
 public class GoModelTest {
@@ -242,6 +244,28 @@ public class GoModelTest {
         Assert.assertEquals(cm.imports.size(), 1);
         Assert.assertEquals(Sets.intersection(cm.imports, Sets.newHashSet("Children")).size(), 1);
     }
+
+    @Test(description = "convert a go model with an enum")
+    public void enumMdoelValueTest() {
+        final StringProperty enumProperty = new StringProperty();
+        enumProperty.setEnum(Arrays.asList("VALUE1", "VALUE2", "VALUE3"));
+        final ModelImpl model = new ModelImpl().property("name", enumProperty);
+
+        final DefaultCodegen codegen = new GoClientCodegen();
+        final CodegenModel cm = codegen.fromModel("sample", model);
+
+        Assert.assertEquals(cm.vars.size(), 1);
+
+        final CodegenProperty enumVar = cm.vars.get(0);
+        Assert.assertEquals(enumVar.baseName, "name");
+        Assert.assertEquals(enumVar.datatype, "string");
+        Assert.assertEquals(enumVar.datatypeWithEnum, "NAME");
+        Assert.assertEquals(enumVar.name, "Name");
+        Assert.assertEquals(enumVar.defaultValue, "null");
+        Assert.assertEquals(enumVar.baseType, "string");
+        Assert.assertTrue(enumVar.isEnum);
+    }
+
 
     @DataProvider(name = "modelNames")
     public static Object[][] primeNumbers() {
