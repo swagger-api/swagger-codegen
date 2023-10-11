@@ -1,0 +1,807 @@
+openapi: 3.0.2
+info:
+  title: COVID-19 data API
+  version: 1.2.6
+  x-apisguru-categories:
+    - open_data
+  x-origin:
+    - format: openapi
+      url: https://covid19-api.com/docs.json
+      version: "3.0"
+    - format: openapi
+      url: https://covid19-api.com/docs.json
+      version: "3.0"
+  x-providerName: covid19-api.com
+paths:
+  /country:
+    get:
+      description: Get latest data for specific country. Country name and format are
+        in parametars.
+      operationId: getLatestCountryDataByName
+      parameters:
+        - description: Name of the country
+          in: query
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: Format of the response
+          in: query
+          name: format
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    country:
+                      type: string
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    country:
+                      type: string
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+          description: Latest data about COVID-19 for selected country
+      summary: getLatestCountryDataByName
+      tags:
+        - Country
+  /country/all:
+    get:
+      description: Get latest data from all countries.
+      operationId: getLatestAllCountries
+      parameters:
+        - description: Format of the response
+          in: query
+          name: format
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    country:
+                      type: string
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    country:
+                      type: string
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+          description: Returns all countries with latest data about COVID-19
+      summary: getLatestAllCountries
+      tags:
+        - Country
+  /country/code:
+    get:
+      description: Get latest data for specific country. Country code and format are
+        in parametars. Country code is in ISO 3166-1 standard. It can be 2 chars
+        (Alpha-2) or 3 chars (Alpha-3) type.
+      operationId: getLatestCountryDataByCode
+      parameters:
+        - description: Country code
+          in: query
+          name: code
+          required: true
+          schema:
+            type: string
+        - description: Format of the response
+          in: query
+          name: format
+          required: false
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    country:
+                      type: string
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    country:
+                      type: string
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+          description: Latest data about COVID-19 for selected country
+      summary: getLatestCountryDataByCode
+      tags:
+        - Country
+  /help/countries:
+    get:
+      description: Get name name, alpha-2, alpha-3 code, latitude and longitude for
+        every country.
+      operationId: getListOfCountries
+      parameters:
+        - description: Format of the response
+          in: query
+          name: format
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    alpha-2-code:
+                      type: string
+                    alpha-3-code:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    name:
+                      type: string
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    alpha-2-code:
+                      type: string
+                    alpha-3-code:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    name:
+                      type: string
+                  type: object
+                type: array
+          description: Get name name, alpha-2, alpha-3 code, latitude and longitude for
+            every country
+      summary: getListOfCountries
+      tags:
+        - Help
+  /report/country/all:
+    get:
+      description: Get daily report for all countries. Date is mandatory parametar.
+        Date format is by ISO 8601 standard, but you can provide different
+        format with date-format parameter.
+      operationId: getDailyReportAllCountries
+      parameters:
+        - description: Date of the report.
+          in: query
+          name: date
+          required: true
+          schema:
+            type: string
+        - description: Date format. If you dont want to use ISO 8601 standard
+            (YYYY-MM-DD), you can provide different format.
+          in: query
+          name: date-format
+          required: false
+          schema:
+            default: YYYY-MM-DD
+            enum:
+              - YYYY-MM-DD
+              - YYYY-DD-MM
+              - DD-MM-YYYY
+              - MM-DD-YYYY
+            type: string
+        - description: Format of the response
+          in: query
+          name: format
+          required: false
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    country:
+                      type: string
+                    date:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    province:
+                      items:
+                        properties:
+                          active:
+                            type: integer
+                          confirmed:
+                            type: integer
+                          deaths:
+                            type: integer
+                          recovered:
+                            type: integer
+                        type: object
+                      type: array
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    country:
+                      type: string
+                    date:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    province:
+                      items:
+                        properties:
+                          active:
+                            type: integer
+                          confirmed:
+                            type: integer
+                          deaths:
+                            type: integer
+                          recovered:
+                            type: integer
+                        type: object
+                      type: array
+                  type: object
+                type: array
+          description: Daily report for COVID-19 for selected country.
+      summary: getDailyReportAllCountries
+      tags:
+        - Country
+  /report/country/code:
+    get:
+      description: Get daily report for specific country. Country code and date are
+        mandatory in parametars. Country code is in ISO 3166-1 standard. It can
+        be 2 chars (Alpha-2) or 3 chars (Alpha-3) type. Date format is by ISO
+        8601 standard, but you can provide different format with date-format
+        parameter
+      operationId: getDailyReportByCountryCode
+      parameters:
+        - description: Country code. Country code is by ISO 3166-1 standard. It can be 2
+            chars (Alpha-2) or 3 chars (Alpha-3) type.
+          in: query
+          name: code
+          required: true
+          schema:
+            type: string
+        - description: Date of the report.
+          in: query
+          name: date
+          required: true
+          schema:
+            type: string
+        - description: Date format. If you dont want to use ISO 8601 standard
+            (YYYY-MM-DD), you can provide different format.
+          in: query
+          name: date-format
+          required: false
+          schema:
+            default: YYYY-MM-DD
+            enum:
+              - YYYY-MM-DD
+              - YYYY-DD-MM
+              - DD-MM-YYYY
+              - MM-DD-YYYY
+            type: string
+        - description: Format of the response
+          in: query
+          name: format
+          required: false
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    country:
+                      type: string
+                    date:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    province:
+                      items:
+                        properties:
+                          active:
+                            type: integer
+                          confirmed:
+                            type: integer
+                          deaths:
+                            type: integer
+                          recovered:
+                            type: integer
+                        type: object
+                      type: array
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    country:
+                      type: string
+                    date:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    province:
+                      items:
+                        properties:
+                          active:
+                            type: integer
+                          confirmed:
+                            type: integer
+                          deaths:
+                            type: integer
+                          recovered:
+                            type: integer
+                        type: object
+                      type: array
+                  type: object
+                type: array
+          description: Daily report for COVID-19 for selected country.
+      summary: getDailyReportByCountryCode
+      tags:
+        - Country
+  /report/country/name:
+    get:
+      description: Get daily report for specific country. Country name and date are
+        mandatory in parametars. Date format is by ISO 8601 standard, but you
+        can provide different format with date-format parameter
+      operationId: getDailyReportByCountryName
+      parameters:
+        - description: Country name.
+          in: query
+          name: name
+          required: true
+          schema:
+            type: string
+        - description: Date of the report.
+          in: query
+          name: date
+          required: true
+          schema:
+            type: string
+        - description: Date format. If you dont want to use ISO 8601 standard
+            (YYYY-MM-DD), you can provide different format.
+          in: query
+          name: date-format
+          required: false
+          schema:
+            default: YYYY-MM-DD
+            enum:
+              - YYYY-MM-DD
+              - YYYY-DD-MM
+              - DD-MM-YYYY
+              - MM-DD-YYYY
+            type: string
+        - description: Format of the response
+          in: query
+          name: format
+          required: false
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    country:
+                      type: string
+                    date:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    province:
+                      items:
+                        properties:
+                          active:
+                            type: integer
+                          confirmed:
+                            type: integer
+                          deaths:
+                            type: integer
+                          recovered:
+                            type: integer
+                        type: object
+                      type: array
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    country:
+                      type: string
+                    date:
+                      type: string
+                    latitude:
+                      format: float
+                      type: number
+                    longitude:
+                      format: float
+                      type: number
+                    province:
+                      items:
+                        properties:
+                          active:
+                            type: integer
+                          confirmed:
+                            type: integer
+                          deaths:
+                            type: integer
+                          recovered:
+                            type: integer
+                        type: object
+                      type: array
+                  type: object
+                type: array
+          description: Daily report for COVID-19 for selected country.
+      summary: getDailyReportByCountryName
+      tags:
+        - Country
+  /report/totals:
+    get:
+      description: Get daily report data for whole world.
+      operationId: getDailyReportTotals
+      parameters:
+        - description: Date of the report. If you don't put this field all dates will be
+            returned.
+          in: query
+          name: date
+          required: false
+          schema:
+            type: string
+        - description: Date format. If you dont want to use ISO 8601 standard
+            (YYYY-MM-DD), you can provide different format.
+          in: query
+          name: date-format
+          required: false
+          schema:
+            default: YYYY-MM-DD
+            enum:
+              - YYYY-MM-DD
+              - YYYY-DD-MM
+              - DD-MM-YYYY
+              - MM-DD-YYYY
+            type: string
+        - description: Format of the response. If you don't put this field JSON will be
+            response format.
+          in: query
+          name: format
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    active:
+                      type: integer
+                    confirmed:
+                      type: integer
+                    critical:
+                      type: integer
+                    date:
+                      type: string
+                    deaths:
+                      type: integer
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    active:
+                      type: integer
+                    confirmed:
+                      type: integer
+                    critical:
+                      type: integer
+                    date:
+                      type: string
+                    deaths:
+                      type: integer
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+          description: Data about COVID-19 for whole world
+      summary: getDailyReportTotals
+      tags:
+        - Totals
+  /totals:
+    get:
+      description: Get latest data for whole world.
+      operationId: getLatestTotals
+      parameters:
+        - description: Format of the response
+          in: query
+          name: format
+          schema:
+            default: json
+            enum:
+              - json
+              - xml
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+            application/xml:
+              schema:
+                items:
+                  properties:
+                    confirmed:
+                      type: integer
+                    critical:
+                      type: integer
+                    deaths:
+                      type: integer
+                    lastChange:
+                      format: date-time
+                      type: string
+                    lastUpdate:
+                      format: date-time
+                      type: string
+                    recovered:
+                      type: integer
+                  type: object
+                type: array
+          description: Latest data about COVID-19 for whole world
+      summary: getLatestTotals
+      tags:
+        - Totals
+components:
+  schemas:
+    Country-read:
+      description: ""
+      properties:
+        confirmed:
+          type: integer
+        critical:
+          type: integer
+        deaths:
+          type: integer
+        lastChange:
+          format: date-time
+          type: string
+        lastUpdate:
+          format: date-time
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        name:
+          type: string
+        recovered:
+          type: integer
+      type: object
+    DailyReport-read:
+      description: ""
+      type: object

@@ -503,7 +503,7 @@ public class CodegenTest {
         final CodegenModel codegenModel = codegen.fromModel("Amount", amount, swagger.getDefinitions());
         for (CodegenProperty codegenProperty : codegenModel.vars) {
             if ("currency".equalsIgnoreCase(codegenProperty.name)) {
-                Assert.assertEquals(codegenProperty.pattern, "^[A-Z]{3,3}$");
+                Assert.assertEquals(codegenProperty.pattern, "/^[A-Z]{3,3}$/");
                 break;
             }
         }

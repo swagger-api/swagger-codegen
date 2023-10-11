@@ -50,6 +50,15 @@ public class JavaJAXRSCXFCDIServerCodegen extends JavaJAXRSSpecServerCodegen imp
     public void processOpts() {
         super.processOpts();
 
+        if (additionalProperties.containsKey(JAKARTA)) {
+            setJakarta(convertPropertyToBoolean(JAKARTA));
+        }
+        if (jakarta) {
+            importMapping.put("Valid", "jakarta.validation.Valid");
+        } else {
+            importMapping.put("Valid", "javax.validation.Valid");
+        }
+
         if (additionalProperties.containsKey(USE_BEANVALIDATION)) {
             this.setUseBeanValidation(convertPropertyToBoolean(USE_BEANVALIDATION));
         }

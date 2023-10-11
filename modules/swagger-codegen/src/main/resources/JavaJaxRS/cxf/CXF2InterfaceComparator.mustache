@@ -5,8 +5,28 @@ import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+{{#jakarta}}
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.HEAD;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.OPTIONS;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+{{/jakarta}}
+{{^jakarta}}
+import javax.ws.rs.DELETE;
+import javax.ws.rs.HEAD;
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Path;
+import javax.ws.rs.Path;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+{{/jakarta}}
 
 import org.apache.cxf.jaxrs.ext.ResourceComparator;
 import org.apache.cxf.jaxrs.model.ClassResourceInfo;

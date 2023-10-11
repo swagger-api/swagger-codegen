@@ -1,0 +1,17 @@
+---
+  ProductRef:
+    description: This is a reference to the Product
+    $ref: "#/Product"
+  Product:
+    type: object
+    properties:
+      name:
+        type: object
+        additionalProperties:
+          type: string
+      active:
+        type: boolean
+        example: true
+      foo:
+        type: object
+        additionalProperties: true

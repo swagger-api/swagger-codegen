@@ -38,9 +38,10 @@ public class Bootstrap extends HttpServlet {
                 if (scheme != null) {
                     bc.setSchemes(new String[] { scheme });
                 }
-                String host = hostURI.getHost();
-                if (host != null) {
-                    bc.setHost(host);
+                String authority = hostURI.getAuthority();
+                if (authority != null) {
+                    // In Swagger host refers to host _and_ port, a.k.a. the URI authority
+                    bc.setHost(authority);
                 }
                 bc.setBasePath(hostURI.getPath() + "/api");
             } catch(URISyntaxException e) {

@@ -78,7 +78,7 @@
 {{/useGzipFeature}}      
         </cxf:features>
         <cxf:properties>
-            <entry key="javax.ws.rs.ext.ExceptionMapper" value-ref="exceptionMapper"/>
+            <entry key="{{#jakarta}}jakarta{{/jakarta}}{{^jakarta}}javax{{/jakarta}}.ws.rs.ext.ExceptionMapper" value-ref="exceptionMapper"/>
         </cxf:properties>
     </cxf:bus>
     
