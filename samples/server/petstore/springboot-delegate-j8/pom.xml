@@ -7,6 +7,7 @@
     <version>1.0.0</version>
     <properties>
         <java.version>1.8</java.version>
+        <jaxb-api.version>2.3.0</jaxb-api.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <springfox-version>2.7.0</springfox-version>
@@ -62,6 +63,11 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
