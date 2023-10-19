@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.47</version>
+        <version>3.0.48-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
@@ -430,8 +430,8 @@
         <dockerfile.tag.skip>true</dockerfile.tag.skip>
         <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <jetty-version>9.4.51.v20230217</jetty-version>
-        <inflector-version>2.0.9</inflector-version>
+        <jetty-version>9.4.53.v20231009</jetty-version>
+        <inflector-version>2.0.10</inflector-version>
         <junit-version>4.13.2</junit-version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <JETTY_TEST_HTTP_PORT>8080</JETTY_TEST_HTTP_PORT>
