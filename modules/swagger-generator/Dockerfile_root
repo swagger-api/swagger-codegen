@@ -1,4 +1,4 @@
-FROM redhat/ubi9-minimal:9.1
+FROM redhat/ubi9-minimal:9.2
 RUN microdnf -y install which
 RUN microdnf -y install glibc-langpack-en
 RUN microdnf -y install tar
