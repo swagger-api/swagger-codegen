@@ -18,7 +18,7 @@
     </prerequisites>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.version>3.2.5</maven.version>
+        <maven.version>3.9.5</maven.version>
     </properties>
     <dependencies>
         <dependency>
