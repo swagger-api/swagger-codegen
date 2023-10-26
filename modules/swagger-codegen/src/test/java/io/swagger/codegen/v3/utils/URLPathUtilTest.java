@@ -150,6 +150,6 @@ public class URLPathUtilTest {
         // No default for port, resulting URL is invalid.
         URL url = URLPathUtil.getServerURL(openAPI, config);
 
-        Assert.assertNull(url);
+        Assert.assertEquals(new URL("http://myhost:8080/mypath"), url);
     }
 }

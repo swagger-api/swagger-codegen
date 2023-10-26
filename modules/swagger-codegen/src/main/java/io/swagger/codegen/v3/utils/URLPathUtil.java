@@ -19,6 +19,7 @@ public class URLPathUtil {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(URLPathUtil.class);
     public static String DEFAULT_PATH = "/";
+    public static String DEFAULT_PORT = "8080";
     public static final String LOCAL_HOST = "http://localhost:8080";
 
     public static URL getServerURL(OpenAPI openAPI) {
@@ -107,7 +108,7 @@ public class URLPathUtil {
                 .stream()
                 .collect(Collectors.toMap(
                     Map.Entry::getKey,
-                    e -> e.getValue().getDefault()));
+                    e -> e.getValue().getDefault() != null ? e.getValue().getDefault() : DEFAULT_PORT));
             return StrSubstitutor.replace(url, defaultValues, "{", "}");
         }
         return url;
