@@ -54,7 +54,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>2.4.35</version>
+    <version>2.4.36</version>
 </dependency>
 ```
 
@@ -163,9 +163,10 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 [3.0.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.2)| 2018-10-19   | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
 [3.0.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.1)| 2018-10-05   | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
 [3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)| 2018-09-06   | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
-2.4.36-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.36-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
-[2.4.35](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.35) (**current stable**) | 2023-10-26   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.35](https://github.com/swagger-api/swagger-codegen/tree/v2.4.35)
-[2.4.34](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.34) (**current stable**) | 2023-10-19   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.34](https://github.com/swagger-api/swagger-codegen/tree/v2.4.34)
+2.4.37-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.36-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
+[2.4.36](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.36) (**current stable**) | 2023-10-26   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.36](https://github.com/swagger-api/swagger-codegen/tree/v2.4.36)
+[2.4.35](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.35) | 2023-10-26   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.35](https://github.com/swagger-api/swagger-codegen/tree/v2.4.35)
+[2.4.34](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.34) | 2023-10-19   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.34](https://github.com/swagger-api/swagger-codegen/tree/v2.4.34)
 [2.4.33](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.33) | 2023-10-02   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.33](https://github.com/swagger-api/swagger-codegen/tree/v2.4.33)
 [2.4.32](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.32) | 2023-05-17   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.32](https://github.com/swagger-api/swagger-codegen/tree/v2.4.32)
 [2.4.31](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.31) | 2023-04-02   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.31](https://github.com/swagger-api/swagger-codegen/tree/v2.4.31)
