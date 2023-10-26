@@ -936,7 +936,7 @@
 
 
                 <!-- <module>samples/server/petstore/erlang-server</module> note: make sample compilation work -->
-				<!-- clients -->
+                <!-- clients -->
                 <!--<module>samples/client/petstore/php/SwaggerClient-php</module>-->
                 <!--<module>samples/client/petstore/ruby</module>-->
                 <!--<module>samples/client/petstore/scala</module>-->
@@ -1149,11 +1149,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>20230227</version>
-            </dependency>
-            <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-common</artifactId>
                 <version>${jersey-version}</version>
@@ -1187,6 +1182,16 @@
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -1239,6 +1244,8 @@
         <mockito-version>5.2.0</mockito-version>
         <snakeyaml-version>2.2</snakeyaml-version>
         <handlebars-version>4.3.1</handlebars-version>
+        <httpclient-version>4.5.14</httpclient-version>
         <jersey-version>2.40</jersey-version>
+        <json-version>20231013</json-version>
     </properties>
 </project>
