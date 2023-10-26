@@ -3,18 +3,23 @@ package io.swagger.codegen.v3.utils;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
+import io.swagger.v3.oas.models.servers.ServerVariables;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class URLPathUtil {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(URLPathUtil.class);
     public static String DEFAULT_PATH = "/";
+    public static String DEFAULT_PORT = "8080";
     public static final String LOCAL_HOST = "http://localhost:8080";
 
     public static URL getServerURL(OpenAPI openAPI) {
@@ -30,7 +35,8 @@ public class URLPathUtil {
             url = LOCAL_HOST + url;
         }
         try {
-            return new URL(url);
+            String varReplacedUrl = replaceServerVarsWthDefaultValues(url, server.getVariables());
+            return new URL(varReplacedUrl);
         } catch (MalformedURLException e) {
             LOGGER.warn("Not valid URL: " + server.getUrl(), e);
             return null;
@@ -67,7 +73,8 @@ public class URLPathUtil {
                 serverUrl = inputURL;
                 break;
             }
-            return new URL(serverUrl);
+            String varReplacedUrl = replaceServerVarsWthDefaultValues(serverUrl, server.getVariables());
+            return new URL(varReplacedUrl);
         } catch (Exception e) {
             LOGGER.warn("Not valid URL: " + server.getUrl(), e);
             return null;
@@ -93,5 +100,17 @@ public class URLPathUtil {
             return openAPI.getServers().get(0).getUrl();
         }
         return LOCAL_HOST;
+    }
+
+    private static String replaceServerVarsWthDefaultValues(String url, ServerVariables vars) {
+        if (vars != null && vars.size() > 0) {
+            Map<String, Object> defaultValues = vars.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                    Map.Entry::getKey,
+                    e -> e.getValue().getDefault() != null ? e.getValue().getDefault() : DEFAULT_PORT));
+            return StrSubstitutor.replace(url, defaultValues, "{", "}");
+        }
+        return url;
     }
 }
