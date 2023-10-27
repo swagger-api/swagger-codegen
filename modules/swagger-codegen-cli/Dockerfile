@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 ADD target/swagger-codegen-cli.jar /opt/swagger-codegen-cli/swagger-codegen-cli.jar
 
