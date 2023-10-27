@@ -1,0 +1,1445 @@
+openapi: 3.0.3
+servers:
+  - url: http://apigee.local
+info:
+  description: The Registry service allows teams to manage descriptions of APIs.
+  title: Registry
+  version: 0.0.1
+  x-apisguru-categories:
+    - developer_tools
+  x-origin:
+    - format: openapi
+      url: https://raw.githubusercontent.com/apigee/registry/main/openapi.yaml
+      version: "3.0"
+  x-providerName: apigee.local
+  x-serviceName: registry
+paths:
+  /v1/projects:
+    get:
+      operationId: Registry_ListProjects
+      parameters:
+        - description: The maximum number of projects to return. The service may return
+            fewer than this value. If unspecified, at most 50 values will be
+            returned. The maximum is 1000; values above 1000 will be coerced to
+            1000.
+          in: query
+          name: page_size
+          schema:
+            type: string
+        - description: A page token, received from a previous `ListProjects` call. Provide
+            this to retrieve the subsequent page. When paginating, all other
+            parameters provided to `ListProjects` must match the call that
+            provided the page token.
+          in: query
+          name: page_token
+          schema:
+            type: string
+        - description: An expression that can be used to filter the list. Filters use the
+            Common Expression Language and can refer to all message fields.
+          in: query
+          name: filter
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListProjectsResponse"
+          description: OK
+      summary: ListProjects returns matching projects.
+    post:
+      operationId: Registry_CreateProject
+      parameters:
+        - description: The ID to use for the project, which will become the final
+            component of the project's resource name. This value should be 4-63
+            characters, and valid characters are /[a-z][0-9]-/.
+          in: query
+          name: project_id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+          description: OK
+      summary: CreateProject creates a specified project.
+  "/v1/projects/{project}":
+    delete:
+      operationId: Registry_DeleteProject
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+          description: OK
+      summary: DeleteProject removes a specified project and all of the resources that
+        it owns.
+    get:
+      operationId: Registry_GetProject
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+          description: OK
+      summary: GetProject returns a specified project.
+    patch:
+      operationId: Registry_UpdateProject
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The list of fields to be updated. If omitted, all fields are
+            updated that are set in the request message (fields set to default
+            values are ignored). If a "*" is specified, all fields are updated,
+            including fields that are unspecified/default in the request.
+          in: query
+          name: update_mask
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+          description: OK
+      summary: UpdateProject can be used to modify a specified project.
+  "/v1/projects/{project}/apis":
+    get:
+      operationId: Registry_ListApis
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The maximum number of APIs to return. The service may return fewer
+            than this value. If unspecified, at most 50 values will be returned.
+            The maximum is 1000; values above 1000 will be coerced to 1000.
+          in: query
+          name: page_size
+          schema:
+            type: string
+        - description: A page token, received from a previous `ListApis` call. Provide
+            this to retrieve the subsequent page. When paginating, all other
+            parameters provided to `ListApis` must match the call that provided
+            the page token.
+          in: query
+          name: page_token
+          schema:
+            type: string
+        - description: An expression that can be used to filter the list. Filters use the
+            Common Expression Language and can refer to all message fields that
+            are included in the BASIC view.
+          in: query
+          name: filter
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListApisResponse"
+          description: OK
+      summary: ListApis returns matching APIs.
+    post:
+      operationId: Registry_CreateApi
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The ID to use for the api, which will become the final component of
+            the api's resource name. This value should be 4-63 characters, and
+            valid characters are /[a-z][0-9]-/.
+          in: query
+          name: api_id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Api"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Api"
+          description: OK
+      summary: CreateApi creates a specified API.
+  "/v1/projects/{project}/apis/{api}":
+    delete:
+      operationId: Registry_DeleteApi
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+          description: OK
+      summary: DeleteApi removes a specified API and all of the resources that it owns.
+    get:
+      operationId: Registry_GetApi
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Api"
+          description: OK
+      summary: GetApi returns a specified API.
+    patch:
+      operationId: Registry_UpdateApi
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The list of fields to be updated. If omitted, all fields are
+            updated that are set in the request message (fields set to default
+            values are ignored). If a "*" is specified, all fields are updated,
+            including fields that are unspecified/default in the request.
+          in: query
+          name: update_mask
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Api"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Api"
+          description: OK
+      summary: UpdateApi can be used to modify a specified API.
+  "/v1/projects/{project}/apis/{api}/versions":
+    get:
+      operationId: Registry_ListApiVersions
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The maximum number of versions to return. The service may return
+            fewer than this value. If unspecified, at most 50 values will be
+            returned. The maximum is 1000; values above 1000 will be coerced to
+            1000.
+          in: query
+          name: page_size
+          schema:
+            type: string
+        - description: A page token, received from a previous `ListApiVersions` call.
+            Provide this to retrieve the subsequent page. When paginating, all
+            other parameters provided to `ListApiVersions` must match the call
+            that provided the page token.
+          in: query
+          name: page_token
+          schema:
+            type: string
+        - description: An expression that can be used to filter the list. Filters use the
+            Common Expression Language and can refer to all message fields that
+            are included in the BASIC view.
+          in: query
+          name: filter
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListApiVersionsResponse"
+          description: OK
+      summary: ListApiVersions returns matching versions.
+    post:
+      operationId: Registry_CreateApiVersion
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The ID to use for the version, which will become the final
+            component of the version's resource name. This value should be 4-63
+            characters, and valid characters are /[a-z][0-9]-/.
+          in: query
+          name: api_version_id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiVersion"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiVersion"
+          description: OK
+      summary: CreateApiVersion creates a specified version.
+  "/v1/projects/{project}/apis/{api}/versions/{version}":
+    delete:
+      operationId: Registry_DeleteApiVersion
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+          description: OK
+      summary: DeleteApiVersion removes a specified version and all of the resources
+        that it owns.
+    get:
+      operationId: Registry_GetApiVersion
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiVersion"
+          description: OK
+      summary: GetApiVersion returns a specified version.
+    patch:
+      operationId: Registry_UpdateApiVersion
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The list of fields to be updated. If omitted, all fields are
+            updated that are set in the request message (fields set to default
+            values are ignored). If a "*" is specified, all fields are updated,
+            including fields that are unspecified/default in the request.
+          in: query
+          name: update_mask
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiVersion"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiVersion"
+          description: OK
+      summary: UpdateApiVersion can be used to modify a specified version.
+  "/v1/projects/{project}/apis/{api}/versions/{version}/specs":
+    get:
+      operationId: Registry_ListApiSpecs
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The maximum number of specs to return. The service may return fewer
+            than this value. If unspecified, at most 50 values will be returned.
+            The maximum is 1000; values above 1000 will be coerced to 1000.
+          in: query
+          name: page_size
+          schema:
+            type: string
+        - description: A page token, received from a previous `ListApiSpecs` call. Provide
+            this to retrieve the subsequent page. When paginating, all other
+            parameters provided to `ListApiSpecs` must match the call that
+            provided the page token.
+          in: query
+          name: page_token
+          schema:
+            type: string
+        - description: An expression that can be used to filter the list. Filters use the
+            Common Expression Language and can refer to all message fields that
+            are included in the BASIC view.
+          in: query
+          name: filter
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListApiSpecsResponse"
+          description: OK
+      summary: ListApiSpecs returns matching specs.
+    post:
+      operationId: Registry_CreateApiSpec
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The ID to use for the spec, which will become the final component
+            of the spec's resource name. This value should be 4-63 characters,
+            and valid characters are /[a-z][0-9]-/.
+          in: query
+          name: api_spec_id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiSpec"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSpec"
+          description: OK
+      summary: CreateApiSpec creates a specified spec.
+  "/v1/projects/{project}/apis/{api}/versions/{version}/specs/{spec}":
+    delete:
+      operationId: Registry_DeleteApiSpec
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+          description: OK
+      summary: DeleteApiSpec removes a specified spec, all revisions, and all child
+        resources (e.g. artifacts).
+    get:
+      operationId: Registry_GetApiSpec
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSpec"
+          description: OK
+      summary: GetApiSpec returns a specified spec.
+    patch:
+      operationId: Registry_UpdateApiSpec
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+        - description: The list of fields to be updated. If omitted, all fields are
+            updated that are set in the request message (fields set to default
+            values are ignored). If a "*" is specified, all fields are updated,
+            including fields that are unspecified/default in the request.
+          in: query
+          name: update_mask
+          schema:
+            type: string
+        - description: If set to true, and the spec is not found, a new spec will be
+            created. In this situation, `update_mask` is ignored.
+          in: query
+          name: allow_missing
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiSpec"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSpec"
+          description: OK
+      summary: UpdateApiSpec can be used to modify a specified spec.
+  "/v1/projects/{project}/apis/{api}/versions/{version}/specs/{spec}:deleteRevision":
+    delete:
+      operationId: Registry_DeleteApiSpecRevision
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+          description: OK
+      summary: DeleteApiSpecRevision deletes a revision of a spec.
+  "/v1/projects/{project}/apis/{api}/versions/{version}/specs/{spec}:listRevisions":
+    get:
+      operationId: Registry_ListApiSpecRevisions
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+        - description: The maximum number of revisions to return per page.
+          in: query
+          name: page_size
+          schema:
+            type: string
+        - description: The page token, received from a previous ListApiSpecRevisions call.
+            Provide this to retrieve the subsequent page.
+          in: query
+          name: page_token
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListApiSpecRevisionsResponse"
+          description: OK
+      summary: ListApiSpecRevisions lists all revisions of a spec. Revisions are
+        returned in descending order of revision creation time.
+  "/v1/projects/{project}/apis/{api}/versions/{version}/specs/{spec}:rollback":
+    post:
+      operationId: Registry_RollbackApiSpec
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RollbackApiSpecRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSpec"
+          description: OK
+      summary: RollbackApiSpec sets the current revision to a specified prior
+        revision. Note that this creates a new revision with a new revision ID.
+  "/v1/projects/{project}/apis/{api}/versions/{version}/specs/{spec}:tagRevision":
+    post:
+      operationId: Registry_TagApiSpecRevision
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The api id.
+          in: path
+          name: api
+          required: true
+          schema:
+            type: string
+        - description: The version id.
+          in: path
+          name: version
+          required: true
+          schema:
+            type: string
+        - description: The spec id.
+          in: path
+          name: spec
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TagApiSpecRevisionRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiSpec"
+          description: OK
+      summary: TagApiSpecRevision adds a tag to a specified revision of a spec.
+  "/v1/projects/{project}/artifacts":
+    get:
+      operationId: Registry_ListArtifacts
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The maximum number of artifacts to return. The service may return
+            fewer than this value. If unspecified, at most 50 values will be
+            returned. The maximum is 1000; values above 1000 will be coerced to
+            1000.
+          in: query
+          name: page_size
+          schema:
+            type: string
+        - description: A page token, received from a previous `ListArtifacts` call.
+            Provide this to retrieve the subsequent page. When paginating, all
+            other parameters provided to `ListArtifacts` must match the call
+            that provided the page token.
+          in: query
+          name: page_token
+          schema:
+            type: string
+        - description: An expression that can be used to filter the list. Filters use the
+            Common Expression Language and can refer to all message fields that
+            are included in the BASIC view.
+          in: query
+          name: filter
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListArtifactsResponse"
+          description: OK
+      summary: ListArtifacts returns matching artifacts.
+    post:
+      operationId: Registry_CreateArtifact
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The ID to use for the artifact, which will become the final
+            component of the artifact's resource name. This value should be 4-63
+            characters, and valid characters are /[a-z][0-9]-/.
+          in: query
+          name: artifact_id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Artifact"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artifact"
+          description: OK
+      summary: CreateArtifact creates a specified artifact.
+  "/v1/projects/{project}/artifacts/{artifact}":
+    delete:
+      operationId: Registry_DeleteArtifact
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The artifact id.
+          in: path
+          name: artifact
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+          description: OK
+      summary: DeleteArtifact removes a specified artifact.
+    get:
+      operationId: Registry_GetArtifact
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The artifact id.
+          in: path
+          name: artifact
+          required: true
+          schema:
+            type: string
+        - description: The level of detail to return (defaults to BASIC).
+          in: query
+          name: view
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artifact"
+          description: OK
+      summary: GetArtifact returns a specified artifact.
+    put:
+      operationId: Registry_ReplaceArtifact
+      parameters:
+        - description: The project id.
+          in: path
+          name: project
+          required: true
+          schema:
+            type: string
+        - description: The artifact id.
+          in: path
+          name: artifact
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Artifact"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Artifact"
+          description: OK
+      summary: ReplaceArtifact can be used to replace a specified artifact.
+  /v1/status:
+    get:
+      operationId: Registry_GetStatus
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+          description: OK
+      summary: GetStatus returns the status of the service. GetStatus is for verifying
+        open source deployments only and is not included in hosted versions of
+        the API.
+components:
+  schemas:
+    Api:
+      description: An Api is a top-level description of an API. Apis are produced by
+        producers and are commitments to provide services.
+      properties:
+        annotations:
+          description: Annotations attach non-identifying metadata to resources.
+            Annotation keys and values are less restricted than those of labels,
+            but should be generally used for small values of broad interest.
+            Larger, topic- specific metadata should be stored in Artifacts.
+            Annotations are returned only when the FULL view is requested.
+          type: object
+        availability:
+          description: 'A user-definable description of the availability of this service.
+            Format: free-form, but we expect single words that describe
+            availability, e.g. "NONE", "TESTING", "PREVIEW", "GENERAL",
+            "DEPRECATED", "SHUTDOWN".'
+          type: string
+        create_time:
+          description: Creation timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+        description:
+          description: A detailed description.
+          type: string
+        display_name:
+          description: Human-meaningful name.
+          type: string
+        labels:
+          description: Labels attach identifying metadata to resources. Identifying
+            metadata can be used to filter list operations. Label keys and
+            values can be no longer than 64 characters (Unicode codepoints), can
+            only contain lowercase letters, numeric characters, underscores and
+            dashes. International characters are allowed. No more than 64 user
+            labels can be associated with one resource (System labels are
+            excluded). See https://goo.gl/xmQnxf for more information and
+            examples of labels. System reserved label keys are prefixed with
+            "registry.googleapis.com/" and cannot be changed.
+          type: object
+        name:
+          description: Resource name.
+          type: string
+        recommended_version:
+          description: "The recommended version of the API. Format:
+            apis/{api}/versions/{version}"
+          type: string
+        update_time:
+          description: Last update timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+    ApiSpec:
+      description: An ApiSpec describes a version of an API in a structured way.
+        ApiSpecs provide formal descriptions that consumers can use to use a
+        version. ApiSpec resources are intended to be fully-resolved
+        descriptions of an ApiVersion. When specs consist of multiple files,
+        these should be bundled together (e.g. in a zip archive) and stored as a
+        unit. Multiple specs can exist to provide representations in different
+        API description formats. Synchronization of these representations would
+        be provided by tooling and background services.
+      properties:
+        annotations:
+          description: Annotations attach non-identifying metadata to resources.
+            Annotation keys and values are less restricted than those of labels,
+            but should be generally used for small values of broad interest.
+            Larger, topic- specific metadata should be stored in Artifacts.
+            Annotations are returned only when the FULL view is requested.
+          type: object
+        contents:
+          description: The contents of the spec. Returned only when the FULL view is
+            requested.
+          format: bytes
+          type: string
+        create_time:
+          description: Creation timestamp; when the spec resource was created.
+          format: RFC3339
+          readOnly: true
+          type: string
+        description:
+          description: A detailed description.
+          type: string
+        filename:
+          description: A possibly-hierarchical name used to refer to the spec from other
+            specs.
+          type: string
+        hash:
+          description: A SHA-256 hash of the spec's contents
+          readOnly: true
+          type: string
+        labels:
+          description: Labels attach identifying metadata to resources. Identifying
+            metadata can be used to filter list operations. Label keys and
+            values can be no longer than 64 characters (Unicode codepoints), can
+            only contain lowercase letters, numeric characters, underscores and
+            dashes. International characters are allowed. No more than 64 user
+            labels can be associated with one resource (System labels are
+            excluded). See https://goo.gl/xmQnxf for more information and
+            examples of labels. System reserved label keys are prefixed with
+            "registry.googleapis.com/" and cannot be changed.
+          type: object
+        mime_type:
+          description: A style (format) descriptor for this spec that is specified as a
+            Media Type (https://en.wikipedia.org/wiki/Media_type). Possible
+            values include "application/vnd.apigee.proto",
+            "application/vnd.apigee.openapi", and
+            "application/vnd.apigee.graphql", with possible suffixes
+            representing compression types. These hypothetical names are defined
+            in the vendor tree defined in RFC6838
+            (https://tools.ietf.org/html/rfc6838) and are not final.
+          type: string
+        name:
+          description: Resource name.
+          type: string
+        revision_create_time:
+          description: Revision creation timestamp; when the represented revision was
+            created.
+          format: RFC3339
+          readOnly: true
+          type: string
+        revision_id:
+          description: The revision ID of the spec. A new revision is committed whenever
+            the spec contents are changed. The format is an 8-character
+            hexadecimal string.
+          readOnly: true
+          type: string
+        revision_tags:
+          description: The revision tags associated with this revision.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        revision_update_time:
+          description: "Last update timestamp: when the represented revision was last
+            modified."
+          format: RFC3339
+          readOnly: true
+          type: string
+        size_bytes:
+          description: The size of the spec file in bytes.
+          format: int32
+          readOnly: true
+          type: integer
+        source_uri:
+          description: The original source URI of the spec (if one exists). This is an
+            external location that can be used for reference purposes but which
+            may not be authoritative since this external resource may change
+            after the spec is retrieved.
+          type: string
+    ApiVersion:
+      description: An ApiVersion describes a particular version of an API. ApiVersions
+        are what consumers actually use.
+      properties:
+        annotations:
+          description: Annotations attach non-identifying metadata to resources.
+            Annotation keys and values are less restricted than those of labels,
+            but should be generally used for small values of broad interest.
+            Larger, topic- specific metadata should be stored in Artifacts.
+            Annotations are returned only when the FULL view is requested.
+          type: object
+        create_time:
+          description: Creation timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+        description:
+          description: A detailed description.
+          type: string
+        display_name:
+          description: Human-meaningful name.
+          type: string
+        labels:
+          description: Labels attach identifying metadata to resources. Identifying
+            metadata can be used to filter list operations. Label keys and
+            values can be no longer than 64 characters (Unicode codepoints), can
+            only contain lowercase letters, numeric characters, underscores and
+            dashes. International characters are allowed. No more than 64 user
+            labels can be associated with one resource (System labels are
+            excluded). See https://goo.gl/xmQnxf for more information and
+            examples of labels. System reserved label keys are prefixed with
+            "registry.googleapis.com/" and cannot be changed.
+          type: object
+        name:
+          description: Resource name.
+          type: string
+        state:
+          description: 'A user-definable description of the lifecycle phase of this API
+            version. Format: free-form, but we expect single words that describe
+            API maturity, e.g. "CONCEPT", "DESIGN", "DEVELOPMENT", "STAGING",
+            "PRODUCTION", "DEPRECATED", "RETIRED".'
+          type: string
+        update_time:
+          description: Last update timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+    Artifact:
+      description: Artifacts of resources. Artifacts are unique (single-value) per
+        resource and are used to store metadata that is too large or numerous to
+        be stored directly on the resource. Since artifacts are stored
+        separately from parent resources, they should generally be used for
+        metadata that is needed infrequently, i.e. not for display in primary
+        views of the resource but perhaps displayed or downloaded upon request.
+        The view field of the ListArtifactsRequest message allows artifacts to
+        be quickly enumerated and checked for presence without downloading their
+        (potentially-large) contents.
+      properties:
+        contents:
+          description: The contents of the artifact. Returned only when the FULL view is
+            requested.
+          format: bytes
+          type: string
+        create_time:
+          description: Creation timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+        hash:
+          description: A SHA-256 hash of the artifact's contents
+          readOnly: true
+          type: string
+        mime_type:
+          description: A content type specifier for the artifact. Content type specifiers
+            are Media Types (https://en.wikipedia.org/wiki/Media_type) with a
+            possible "schema" parameter that specifies a schema for the stored
+            information.
+          type: string
+        name:
+          description: Resource name.
+          type: string
+        size_bytes:
+          description: The size of the artifact in bytes.
+          format: int32
+          readOnly: true
+          type: integer
+        update_time:
+          description: Last update timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+    Empty:
+      description: "A generic empty message that you can re-use to avoid defining
+        duplicated empty messages in your APIs. A typical example is to use it
+        as the request or the response type of an API method. For
+        instance:     service Foo {       rpc Bar(google.protobuf.Empty) returns
+        (google.protobuf.Empty);     } The JSON representation for `Empty` is
+        empty JSON object `{}`."
+      properties: {}
+    ListApiSpecRevisionsResponse:
+      description: Response message for ListApiSpecRevisionsResponse.
+      properties:
+        api_specs:
+          description: The revisions of the spec.
+          items:
+            $ref: "#/components/schemas/ApiSpec"
+          type: array
+        next_page_token:
+          description: A token that can be sent as `page_token` to retrieve the next page.
+            If this field is omitted, there are no subsequent pages.
+          type: string
+    ListApiSpecsResponse:
+      description: Response message for ListApiSpecs.
+      properties:
+        api_specs:
+          description: The specs from the specified publisher.
+          items:
+            $ref: "#/components/schemas/ApiSpec"
+          type: array
+        next_page_token:
+          description: A token, which can be sent as `page_token` to retrieve the next
+            page. If this field is omitted, there are no subsequent pages.
+          type: string
+    ListApiVersionsResponse:
+      description: Response message for ListApiVersions.
+      properties:
+        api_versions:
+          description: The versions from the specified publisher.
+          items:
+            $ref: "#/components/schemas/ApiVersion"
+          type: array
+        next_page_token:
+          description: A token, which can be sent as `page_token` to retrieve the next
+            page. If this field is omitted, there are no subsequent pages.
+          type: string
+    ListApisResponse:
+      description: Response message for ListApis.
+      properties:
+        apis:
+          description: The APIs from the specified publisher.
+          items:
+            $ref: "#/components/schemas/Api"
+          type: array
+        next_page_token:
+          description: A token, which can be sent as `page_token` to retrieve the next
+            page. If this field is omitted, there are no subsequent pages.
+          type: string
+    ListArtifactsResponse:
+      description: Response message for ListArtifacts.
+      properties:
+        artifacts:
+          description: The artifacts from the specified publisher.
+          items:
+            $ref: "#/components/schemas/Artifact"
+          type: array
+        next_page_token:
+          description: A token, which can be sent as `page_token` to retrieve the next
+            page. If this field is omitted, there are no subsequent pages.
+          type: string
+    ListProjectsResponse:
+      description: Response message for ListProjects.
+      properties:
+        next_page_token:
+          description: A token, which can be sent as `page_token` to retrieve the next
+            page. If this field is omitted, there are no subsequent pages.
+          type: string
+        projects:
+          description: The projects from the specified publisher.
+          items:
+            $ref: "#/components/schemas/Project"
+          type: array
+    Project:
+      description: "A Project is a top-level description of a collection of APIs.
+        Typically there would be one project for an entire organization. Note:
+        in a Google Cloud deployment, this resource and associated methods will
+        be omitted and its children will instead be associated with Google Cloud
+        projects."
+      properties:
+        create_time:
+          description: Creation timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+        description:
+          description: A detailed description.
+          type: string
+        display_name:
+          description: Human-meaningful name.
+          type: string
+        name:
+          description: Resource name.
+          type: string
+        update_time:
+          description: Last update timestamp.
+          format: RFC3339
+          readOnly: true
+          type: string
+    RollbackApiSpecRequest:
+      description: Request message for RollbackApiSpec.
+      properties:
+        name:
+          description: The spec being rolled back.
+          type: string
+        revision_id:
+          description: "The revision ID to roll back to. It must be a revision of the same
+            spec.   Example: c7cfa2a8"
+          type: string
+    Status:
+      description: Response message for GetStatus. GetStatus is not included in hosted
+        versions of the API.
+      properties:
+        message:
+          description: A string describing the status.
+          type: string
+    TagApiSpecRevisionRequest:
+      description: Request message for TagApiSpecRevision.
+      properties:
+        name:
+          description: The name of the spec to be tagged, including the revision ID.
+          type: string
+        tag:
+          description: The tag to apply. The tag should be at most 40 characters, and
+            match `[a-z][a-z0-9-]{3,39}`.
+          type: string

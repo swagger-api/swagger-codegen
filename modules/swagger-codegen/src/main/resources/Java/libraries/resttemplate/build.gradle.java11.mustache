@@ -1,0 +1,79 @@
+/*
+* resttemplate
+*/
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+ext {
+    swagger_annotations_version = "1.5.24"
+    jackson_version = "2.11.4"
+    spring_web_version = "4.3.9.RELEASE"
+    jodatime_version = "2.10.5"
+    junit_version = "4.12"
+    {{#threetenbp}}
+    jackson_threeten_version = "2.6.4"
+    {{/threetenbp}}
+}
+
+dependencies {
+    implementation "io.swagger:swagger-annotations:$swagger_annotations_version"
+    implementation "org.springframework:spring-web:$spring_web_version"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    implementation "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jackson_version"
+    {{#joda}}
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
+    implementation "joda-time:joda-time:$jodatime_version"
+    {{/joda}}
+    {{#threetenbp}}
+    implementation "com.github.joschi.jackson:jackson-datatype-threetenbp:$jackson_threeten_version"
+    {{/threetenbp}}
+    {{#withXml}}
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jackson_version"
+    {{/withXml}}
+    implementation "com.sun.xml.ws:jaxws-rt:{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}"
+    testImplementation "junit:junit:$junit_version"
+    {{#wiremock}}
+    testImplementation "com.github.tomakehurst:wiremock:2.27.2"
+    {{/wiremock}}
+}
+
+group = '{{groupId}}'
+version = '{{artifactVersion}}'
+description = '{{artifactDescription}}'
+
+java.sourceCompatibility = 11
+java.targetCompatibility = 11
+
+tasks.register('testsJar', Jar) {
+    archiveClassifier = 'tests'
+    from(sourceSets.test.output)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            artifact(testsJar)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

@@ -13,7 +13,10 @@ VERSION = "{{packageVersion}}"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["connexion"]
+REQUIRES = [
+    "connexion",
+    "swagger-ui-bundle>=0.0.2"
+]
 
 setup(
     name=NAME,

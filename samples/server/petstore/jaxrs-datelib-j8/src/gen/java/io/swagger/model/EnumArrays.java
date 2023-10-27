@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumArrays
  */
-
 public class EnumArrays  implements Serializable {
   /**
    * Gets or Sets justSymbol

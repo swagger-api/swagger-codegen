@@ -112,6 +112,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.joschi.jackson</groupId>
+            <artifactId>jackson-datatype-threetenbp</artifactId>
+            <version>${jackson-threetenbp-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -167,7 +172,7 @@
         <junit-version>4.13.1</junit-version>
         <servlet-api-version>2.5</servlet-api-version>
         <springfox-version>2.7.0</springfox-version>
-        <jackson-version>2.10.1</jackson-version>
+        <jackson-version>2.11.4</jackson-version>
         <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
         <spring-version>4.3.9.RELEASE</spring-version>
     </properties>

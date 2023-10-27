@@ -51,6 +51,7 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
                 "complex64",
                 "complex128",
                 "rune",
+                "interface{}",
                 "byte")
             );
 
@@ -458,8 +459,13 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
+        if ("int".equals(datatype) || "int32".equals(datatype) || "int64".equals(datatype)
+                || "uint".equals(datatype) || "uint32".equals(datatype) || "uint64".equals(datatype)
+                || "float".equals(datatype) || "float32".equals(datatype) || "float64".equals(datatype)
+                || "boolean".equals(datatype) || "double".equals(datatype)) {
             return value;
+        } else if ("string".equals(datatype)) {
+            return String.format("\"%s\"", value);
         } else {
             return escapeText(value);
         }
@@ -477,8 +483,10 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         }
 
         // number
-        if ("int".equals(datatype) || "double".equals(datatype) || "float".equals(datatype)) {
-            String varName = name;
+        if ("int".equals(datatype) || "int32".equals(datatype) || "int64".equals(datatype)
+                || "uint".equals(datatype) || "uint32".equals(datatype) || "uint64".equals(datatype)
+                || "float".equals(datatype) || "float32".equals(datatype) || "float64".equals(datatype)) {
+            String varName = "NUMBER_" + name;
             varName = varName.replaceAll("-", "MINUS_");
             varName = varName.replaceAll("\\+", "PLUS_");
             varName = varName.replaceAll("\\.", "_DOT_");
@@ -495,7 +503,13 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
         enumName = enumName.replaceFirst("^_", "");
         enumName = enumName.replaceFirst("_$", "");
 
-        if (isReservedWord(enumName) || enumName.matches("\\d.*")) { // reserved word or starts with number
+        // starts with a number
+        if (enumName.matches("\\d.*")) {
+            enumName = "_" + enumName;
+        }
+
+        // reserved word
+        if (isReservedWord(enumName)) {
             return escapeReservedWord(enumName);
         } else {
             return enumName;

@@ -1,0 +1,66 @@
+/*
+* retrofit
+*/
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+ext {
+    okhttp_version = "2.7.5"
+    oltu_version = "1.0.1"
+    retrofit_version = "1.9.0"
+    swagger_annotations_version = "1.5.24"
+    junit_version = "4.13.1"
+    jodatime_version = "2.10.5"
+}
+
+dependencies {
+    implementation "com.squareup.okhttp:okhttp:$okhttp_version"
+    implementation "com.squareup.retrofit:retrofit:$retrofit_version"
+    implementation "io.swagger:swagger-annotations:$swagger_annotations_version"
+    implementation "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+    implementation "joda-time:joda-time:$jodatime_version"
+    implementation "com.sun.xml.ws:jaxws-rt:{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}"
+    testImplementation "junit:junit:$junit_version"
+    {{#wiremock}}
+    testImplementation "com.github.tomakehurst:wiremock:2.27.2"
+    {{/wiremock}}
+}
+
+group = '{{groupId}}'
+version = '{{artifactVersion}}'
+description = '{{artifactDescription}}'
+
+java.sourceCompatibility = 11
+java.targetCompatibility = 11
+
+tasks.register('testsJar', Jar) {
+    archiveClassifier = 'tests'
+    from(sourceSets.test.output)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            artifact(testsJar)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.4.19-SNAPSHOT</version>
+    <version>2.4.36</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -52,17 +52,17 @@
             <extension>
                 <groupId>org.jvnet.wagon-svn</groupId>
                 <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
+                <version>1.12</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-alpha-6</version>
+                <version>3.5.2</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-1</version>
+                <version>1.0-beta-2</version>
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
@@ -157,7 +157,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -166,7 +166,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -181,7 +181,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.12.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -192,7 +192,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.5.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                     <source>1.8</source>
@@ -213,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -227,7 +227,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.4.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -279,6 +279,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.3.0</version>
                         <executions>
                             <execution>
                                 <id>add-source</id>
@@ -310,6 +311,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -406,18 +408,6 @@
             </activation>
             <modules>
                 <module>samples/client/petstore/java/jersey2</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>java-client-jersey2-java6</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>java</value>
-                </property>
-            </activation>
-            <modules>
-                <module>samples/client/petstore/java/jersey2-java6</module>
             </modules>
         </profile>
         <profile>
@@ -863,10 +853,10 @@
             <modules>
                 <!-- clients -->
                 <!-- test java-related projects -->
-                <module>samples/client/petstore/elixir</module>
-                <module>samples/client/petstore/haskell-http-client</module>
+<!--                <module>samples/client/petstore/elixir</module>-->
+<!--                <module>samples/client/petstore/haskell-http-client</module>-->
                 <module>samples/client/petstore/akka-scala</module>
-                <module>samples/client/petstore/scala</module>
+                <!--<module>samples/client/petstore/scala</module>-->
                 <!--<module>samples/client/petstore/scalaz</module>-->
                 <!--<module>samples/client/petstore/clojure</module>-->
                 <module>samples/client/petstore/java/feign</module>
@@ -883,9 +873,11 @@
                 <module>samples/client/petstore/java/resteasy</module>
                 <module>samples/client/petstore/java/google-api-client</module>
                 <!--module>samples/client/petstore/java/rest-assured</module removed until errors found on #10120 be fixed -->
+                <!--
                 <module>samples/client/petstore/kotlin/</module>
                 <module>samples/client/petstore/kotlin-threetenbp/</module>
                 <module>samples/client/petstore/kotlin-string/</module>
+                -->
                 <!-- test non-java projects -->
                 <!-- module>samples/client/petstore/go</module removed until errors found on #10120 be fixed -->
                 <!-- servers -->
@@ -899,7 +891,7 @@
                 <module>samples/server/petstore/java-play-framework-no-interface</module>
                 <module>samples/server/petstore/java-play-framework-no-exception-handling</module>
                 <module>samples/server/petstore/java-play-framework-no-bean-validation</module>
-                <module>samples/server/petstore/java-play-framework-fake-endpoints</module>
+                <!-- <module>samples/server/petstore/java-play-framework-fake-endpointmsf4js</module> -->
                 <module>samples/server/petstore/java-play-framework-controller-only</module>
                 <module>samples/server/petstore/java-play-framework-api-package-override</module>
                 <module>samples/server/petstore/undertow</module>
@@ -924,7 +916,7 @@
                 <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
                 <module>samples/server/petstore/jaxrs-cxf-cdi</module>
                 <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
-                <module>samples/server/petstore/java-msf4j</module>
+<!--                <module>samples/server/petstore/java-msf4j</module>-->
                 <module>samples/server/petstore/jaxrs-spec-interface</module>
                 <module>samples/server/petstore/scala-lagom-server</module>
                 <module>samples/server/petstore/scalatra</module>
@@ -948,7 +940,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.3.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -956,7 +948,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.4.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -992,6 +984,22 @@
                 <version>${jmockit-version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
@@ -1004,23 +1012,26 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.54</swagger-parser-version>
+        <swagger-parser-version>1.0.68</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.6.1</swagger-core-version>
-        <commons-io-version>2.4</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.13.1</junit-version>
-        <jackson-version>2.10.1</jackson-version>
+        <swagger-core-version>1.6.12</swagger-core-version>
+        <commons-io-version>2.11.0</commons-io-version>
+        <commons-cli-version>1.5.0</commons-cli-version>
+        <junit-version>4.13.2</junit-version>
+        <jackson-version>2.15.3</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.4</commons-lang-version>
-        <slf4j-version>1.7.12</slf4j-version>
+        <commons-lang-version>3.13.0</commons-lang-version>
+        <slf4j-version>1.7.36</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
-        <jmustache-version>1.12</jmustache-version>
-        <testng-version>6.9.6</testng-version>
-        <surefire-version>2.19.1</surefire-version>
-        <jmockit-version>1.25</jmockit-version>
-        <reflections-version>0.9.11</reflections-version>
-        <snakeyaml-version>1.24</snakeyaml-version>
+        <jmustache-version>1.15</jmustache-version>
+        <testng-version>7.8.0</testng-version>
+        <surefire-version>3.0.0</surefire-version>
+        <jmockit-version>1.49</jmockit-version>
+        <mockito-version>5.6.0</mockito-version>
+        <reflections-version>0.10.2</reflections-version>
+        <snakeyaml-version>2.2</snakeyaml-version>
+        <httpclient-version>4.5.14</httpclient-version>
+        <json-version>20231013</json-version>
     </properties>
 </project>

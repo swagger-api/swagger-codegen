@@ -1,0 +1,85 @@
+/*
+* feign
+*/
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+ext {
+    swagger_annotations_version = "1.5.24"
+    jackson_version = "2.11.4"
+    {{#threetenbp}}
+    threepane_version = "2.6.4"
+    {{/threetenbp}}
+    feign_version = "11.6"
+    feign_form_version = "3.8.0"
+    junit_version = "4.13.1"
+    oltu_version = "1.0.1"
+}
+
+dependencies {
+    implementation "io.swagger:swagger-annotations:$swagger_annotations_version"
+    implementation "io.github.openfeign:feign-core:$feign_version"
+    implementation "io.github.openfeign:feign-jackson:$feign_version"
+    implementation "io.github.openfeign:feign-slf4j:$feign_version"
+    implementation "io.github.openfeign.form:feign-form:$feign_form_version"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    {{#joda}}
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
+    {{/joda}}
+    {{#java8}}
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
+    {{/java8}}
+    {{#threetenbp}}
+    implementation "com.github.joschi.jackson:jackson-datatype-threetenbp:$threepane_version"
+    {{/threetenbp}}
+    implementation "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+    implementation "com.brsanthu:migbase64:2.2"
+    implementation "com.sun.xml.ws:jaxws-rt:{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:3.6.0"
+    testImplementation "org.assertj:assertj-core:1.7.1"
+    {{#wiremock}}
+    testImplementation "com.github.tomakehurst:wiremock:2.27.2"
+    {{/wiremock}}
+}
+
+group = '{{groupId}}'
+version = '{{artifactVersion}}'
+description = '{{artifactDescription}}'
+
+java.sourceCompatibility = 11
+java.targetCompatibility = 11
+
+tasks.register('testsJar', Jar) {
+    archiveClassifier = 'tests'
+    from(sourceSets.test.output)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            artifact(testsJar)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

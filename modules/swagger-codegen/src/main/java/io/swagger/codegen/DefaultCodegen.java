@@ -2,7 +2,9 @@ package io.swagger.codegen;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -10,8 +12,9 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 import io.swagger.models.properties.UntypedProperty;
-import io.swagger.util.Yaml;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -104,7 +107,7 @@ public class DefaultCodegen {
     protected Boolean sortParamsByRequiredFlag = true;
     protected Boolean ensureUniqueParams = true;
     protected Boolean allowUnicodeIdentifiers = false;
-    protected String gitUserId, gitRepoId, releaseNote;
+    protected String gitUserId, gitRepoId, releaseNote, gitRepoBaseURL;
     protected String httpUserAgent;
     protected Boolean hideGenerationTimestamp = true;
     protected Boolean skipAliasGeneration;
@@ -117,6 +120,7 @@ public class DefaultCodegen {
     protected Map<String, String> typeAliases = null;
 
     protected String ignoreFilePathOverride;
+
 
     public List<CliOption> cliOptions() {
         return cliOptions;
@@ -174,6 +178,13 @@ public class DefaultCodegen {
         } else {
             setIgnoreImportMapping(defaultIgnoreImportMappingOption());
         }
+
+        additionalProperties.put("toLowerCase", new Mustache.Lambda() {
+            @Override
+            public void execute(Template.Fragment fragment, Writer writer) throws IOException {
+                writer.write(fragment.execute().toLowerCase());
+            }
+        });
     }
 
     // override with any special post-processing for all models
@@ -401,6 +412,15 @@ public class DefaultCodegen {
 
     // override to post-process any model properties
     @SuppressWarnings("unused")
+    public void postProcessModelProperties(CodegenModel model){
+        if (model.vars == null || model.vars.isEmpty()) {
+            return;
+        }
+        for(CodegenProperty codegenProperty : model.vars) {
+            postProcessModelProperty(model, codegenProperty);
+        }
+    }
+
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property){
     }
 
@@ -1235,6 +1255,14 @@ public class DefaultCodegen {
     }
 
     /**
+     * Capitalise first character of string
+     */
+    @SuppressWarnings("static-method")
+    public static String titleCase(final String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    /**
      * Capitalize the string
      *
      * @param name string to be capitalized
@@ -1373,7 +1401,13 @@ public class DefaultCodegen {
         m.classname = toModelName(name);
         m.classVarName = toVarName(name);
         m.classFilename = toModelFilename(name);
-        m.modelJson = Json.pretty(model);
+        // NOTE: not using Json.pretty() to write out model, as it
+        // can raise memory consumption (see comment in ExampleGenerator)
+        try {
+            m.modelJson = Json.mapper().writeValueAsString(model);
+        } catch (Exception e) {
+            m.modelJson = "{}";
+        }
         m.externalDocs = model.getExternalDocs();
         m.vendorExtensions = model.getVendorExtensions();
         m.isAlias = typeAliases.containsKey(name);
@@ -1546,11 +1580,7 @@ public class DefaultCodegen {
             addVars(m, impl.getProperties(), impl.getRequired(), allDefinitions);
         }
 
-        if (m.vars != null) {
-            for(CodegenProperty prop : m.vars) {
-                postProcessModelProperty(m, prop);
-            }
-        }
+        postProcessModelProperties(m);
         return m;
     }
 
@@ -1932,6 +1962,7 @@ public class DefaultCodegen {
             ArrayProperty ap = (ArrayProperty) p;
             property.maxItems = ap.getMaxItems();
             property.minItems = ap.getMinItems();
+            property.uniqueItems = ap.getUniqueItems() == null ? false : ap.getUniqueItems();
             String itemName = (String) p.getVendorExtensions().get("x-item-name");
             if (itemName == null) {
                 itemName = property.name;
@@ -2783,26 +2814,7 @@ public class DefaultCodegen {
             } else {
                 Model sub = bp.getSchema();
                 if (sub instanceof RefModel) {
-                    String name = ((RefModel) sub).getSimpleRef();
-                    try {
-                        name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
-                    } catch (UnsupportedEncodingException e) {
-                        LOGGER.error("Could not decoded string: " + name, e);
-                    }
-                    name = getAlias(name);
-                    if (typeMapping.containsKey(name)) {
-                        name = typeMapping.get(name);
-                        p.baseType = name;
-                    } else {
-                        name = toModelName(name);
-                        p.baseType = name;
-                        if (defaultIncludes.contains(name)) {
-                            imports.add(name);
-                        }
-                        imports.add(name);
-                        name = getTypeDeclaration(name);
-                    }
-                    p.dataType = name;
+                    readRefModelParameter((RefModel) model, p, imports);
                 } else {
                     if (sub instanceof ComposedModel) {
                         p.dataType = "object";
@@ -2910,6 +2922,29 @@ public class DefaultCodegen {
         } else {
             return false;
         }
+    }
+
+    protected void readRefModelParameter(RefModel refModel, CodegenParameter codegenParameter, Set<String> imports) {
+        String name = refModel.getSimpleRef();
+        try {
+            name = URLDecoder.decode(name, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Could not decoded string: " + name, e);
+        }
+        name = getAlias(name);
+        if (typeMapping.containsKey(name)) {
+            name = typeMapping.get(name);
+            codegenParameter.baseType = name;
+        } else {
+            name = toModelName(name);
+            codegenParameter.baseType = name;
+            if (defaultIncludes.contains(name)) {
+                imports.add(name);
+            }
+            imports.add(name);
+            name = getTypeDeclaration(name);
+        }
+        codegenParameter.dataType = name;
     }
 
     /**
@@ -3159,7 +3194,7 @@ public class DefaultCodegen {
         co.baseName = tag;
     }
 
-    private void addParentContainer(CodegenModel m, String name, Property property) {
+    protected void addParentContainer(CodegenModel m, String name, Property property) {
         m.parentContainer = fromProperty(name, property);
         addImport(m, m.parentContainer.complexType);
         m.parent = toInstantiationType(property);
@@ -3183,7 +3218,7 @@ public class DefaultCodegen {
      * @return The underscored version of the word
      */
     public static String underscore(String word) {
-        String firstPattern = "([A-Z]+)([A-Z][a-z])";
+        String firstPattern = "([A-Z]+)([A-Z][a-z][a-z]+)";
         String secondPattern = "([a-z\\d])([A-Z])";
         String replacementPattern = "$1_$2";
         // Replace package separator with slash.
@@ -3298,7 +3333,7 @@ public class DefaultCodegen {
                     Model model =  allDefinitions.get(refProperty.getSimpleRef());
                     if (model instanceof ModelImpl) {
                         ModelImpl modelImpl = (ModelImpl) model;
-                        cp.pattern = modelImpl.getPattern();
+                        cp.pattern = toRegularExpression(modelImpl.getPattern());
                         cp.minLength = modelImpl.getMinLength();
                         cp.maxLength = modelImpl.getMaxLength();
                     }
@@ -3357,7 +3392,7 @@ public class DefaultCodegen {
      * @param allDefinitions The complete set of model definitions.
      * @return A mapping from model name to type alias
      */
-    private static Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
+    protected Map<String, String> getAllAliases(Map<String, Model> allDefinitions) {
         Map<String, String> aliases = new HashMap<>();
         if (allDefinitions != null) {
             for (Map.Entry<String, Model> entry : allDefinitions.entrySet()) {
@@ -3634,6 +3669,24 @@ public class DefaultCodegen {
      */
     public String getGitRepoId() {
         return gitRepoId;
+    }
+
+    /**
+     * Set Git repo Base URL.
+     *
+     * @param gitRepoBaseURL Git repo ID
+     */
+    public void setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+    }
+
+    /**
+     * Git repo Base URL
+     *
+     * @return Git Base URL
+     */
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
     }
 
     /**
@@ -4067,5 +4120,9 @@ public class DefaultCodegen {
             return true;
         }
         return false;
+    }
+
+    public boolean isUsingFlattenSpec() {
+        return true;
     }
 }

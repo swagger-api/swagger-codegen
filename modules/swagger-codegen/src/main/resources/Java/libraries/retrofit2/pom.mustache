@@ -137,7 +137,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -185,6 +185,22 @@
                 </plugins>
             </build>
         </profile>
+        {{#java11}}
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}</version>
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+        </profile>
+        {{/java11}}
     </profiles>
 
     <dependencies>
@@ -324,21 +340,29 @@
             <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
+        {{#wiremock}}
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
+        {{/wiremock}}
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
+        <java.version>{{#java11}}11{{/java11}}{{^java11}}{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}{{/java11}}</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <gson-fire-version>1.8.3</gson-fire-version>
         <swagger-core-version>1.5.24</swagger-core-version>
         {{#usePlayWS}}
             {{#play24}}
-                <jackson-version>2.10.1</jackson-version>
+                <jackson-version>2.11.4</jackson-version>
                 <play-version>2.4.11</play-version>
             {{/play24}}
             {{#play25}}
-                <jackson-version>2.10.1</jackson-version>
+                <jackson-version>2.11.4</jackson-version>
                 <play-version>2.5.15</play-version>
             {{/play25}}
         {{/usePlayWS}}

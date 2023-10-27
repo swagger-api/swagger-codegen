@@ -137,7 +137,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -185,6 +185,22 @@
                 </plugins>
             </build>
         </profile>
+        {{#java11}}
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}</version>
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+        </profile>
+        {{/java11}}
     </profiles>
 
     <dependencies>
@@ -229,32 +245,60 @@
         {{/threetenbp}}
         {{#useBeanValidation}}
             <!-- Bean Validation API support -->
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>1.1.0.Final</version>
-                <scope>provided</scope>
-            </dependency>
+        {{#jakarta}}
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        {{/jakarta}}
+        {{^jakarta}}
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        {{/jakarta}}
         {{/useBeanValidation}}
         {{#notNullJacksonAnnotation}}
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.10.1</version>
+                <version>2.11.4</version>
             </dependency>
+        {{/notNullJacksonAnnotation}}
+        {{^notNullJacksonAnnotation}}
+        {{#ignoreUnknownJacksonAnnotation}}
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.11.4</version>
+            </dependency>
+        {{/ignoreUnknownJacksonAnnotation}}
         {{/notNullJacksonAnnotation}}
         {{#performBeanValidation}}
             <!-- Bean Validation Impl. used to perform BeanValidation -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>5.4.1.Final</version>
+                <version>{{#jakarta}}8.0.0.Final{{/jakarta}}{{^jakarta}}5.4.1.Final{{/jakarta}}</version>
             </dependency>
+        {{#jakarta}}
+            <dependency>
+                <groupId>jakarta.el</groupId>
+                <artifactId>jakarta.el-api</artifactId>
+                <version>5.0.1</version>
+            </dependency>
+        {{/jakarta}}
+        {{^jakarta}}
             <dependency>
                 <groupId>javax.el</groupId>
                 <artifactId>el-api</artifactId>
                 <version>2.2</version>
             </dependency>
+        {{/jakarta}}
         {{/performBeanValidation}}
         {{#parcelableModel}}
             <!-- Needed for Parcelable support-->
@@ -272,9 +316,17 @@
             <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
+        {{#wiremock}}
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
+        {{/wiremock}}
     </dependencies>
     <properties>
-        <java.version>{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}</java.version>
+        <java.version>{{#java11}}11{{/java11}}{{^java11}}{{#java8}}1.8{{/java8}}{{^java8}}1.7{{/java8}}{{/java11}}</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <gson-fire-version>1.8.3</gson-fire-version>
@@ -282,10 +334,10 @@
         <okhttp-version>2.7.5</okhttp-version>
         <gson-version>2.8.1</gson-version>
         {{#joda}}
-            <jodatime-version>2.10.5</jodatime-version>
+        <jodatime-version>2.10.5</jodatime-version>
         {{/joda}}
         {{#threetenbp}}
-            <threetenbp-version>1.4.1</threetenbp-version>
+        <threetenbp-version>1.4.1</threetenbp-version>
         {{/threetenbp}}
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.13.1</junit-version>

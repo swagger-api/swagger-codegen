@@ -137,11 +137,15 @@
         </repository>
     </repositories>
     <properties>
+        {{#java11}}
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        {{/java11}}
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <swagger-inflector-version>1.0.14</swagger-inflector-version>
         <jetty-version>9.2.9.v20150224</jetty-version>
-        <logback-version>1.0.1</logback-version>
+        <logback-version>1.2.9</logback-version>
         <junit-version>4.8.2</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
     </properties>
