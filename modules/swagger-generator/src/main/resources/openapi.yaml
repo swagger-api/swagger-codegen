@@ -292,6 +292,9 @@ components:
         type:
           type: string
           description: Authorization type
+          enum:
+          - query
+          - header
     Options:
       x-swagger-router-model: io.swagger.codegen.v3.service.Options
       properties:
