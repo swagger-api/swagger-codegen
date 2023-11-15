@@ -251,7 +251,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20230227</version>
+            <version>${json-version}</version>
         </dependency>
 
         <dependency>
