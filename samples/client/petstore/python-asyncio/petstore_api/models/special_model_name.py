@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class SpecialModelName(object):
@@ -38,17 +46,20 @@ class SpecialModelName(object):
         'special_property_name': '$special[property.name]'
     }
 
-    def __init__(self, special_property_name=None):  # noqa: E501
+    def __init__(self, special_property_name: "typing.Optional[int]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """SpecialModelName - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._special_property_name = None
-        self.discriminator = None
+        self._special_property_name: "int" = None
+        self.discriminator: None = None
 
         if special_property_name is not None:
             self.special_property_name = special_property_name
 
     @property
-    def special_property_name(self):
+    def special_property_name(self) -> "int":
         """Gets the special_property_name of this SpecialModelName.  # noqa: E501
 
 
@@ -58,7 +69,7 @@ class SpecialModelName(object):
         return self._special_property_name
 
     @special_property_name.setter
-    def special_property_name(self, special_property_name):
+    def special_property_name(self, special_property_name: "int") -> None:
         """Sets the special_property_name of this SpecialModelName.
 
 
@@ -68,7 +79,7 @@ class SpecialModelName(object):
 
         self._special_property_name = special_property_name
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -95,21 +106,24 @@ class SpecialModelName(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, SpecialModelName):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, SpecialModelName):
+            return True
+
+        return self.to_dict() != other.to_dict()

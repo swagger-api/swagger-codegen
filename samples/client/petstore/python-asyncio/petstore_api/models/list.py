@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class List(object):
@@ -38,17 +46,20 @@ class List(object):
         '_123_list': '123-list'
     }
 
-    def __init__(self, _123_list=None):  # noqa: E501
+    def __init__(self, _123_list: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """List - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self.__123_list = None
-        self.discriminator = None
+        self.__123_list: "str" = None
+        self.discriminator: None = None
 
         if _123_list is not None:
             self._123_list = _123_list
 
     @property
-    def _123_list(self):
+    def _123_list(self) -> "str":
         """Gets the _123_list of this List.  # noqa: E501
 
 
@@ -58,7 +69,7 @@ class List(object):
         return self.__123_list
 
     @_123_list.setter
-    def _123_list(self, _123_list):
+    def _123_list(self, _123_list: "str") -> None:
         """Sets the _123_list of this List.
 
 
@@ -68,7 +79,7 @@ class List(object):
 
         self.__123_list = _123_list
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -95,21 +106,24 @@ class List(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, List):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, List):
+            return True
+
+        return self.to_dict() != other.to_dict()

@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class FormatTest(object):
@@ -41,7 +49,7 @@ class FormatTest(object):
         'byte': 'str',
         'binary': 'str',
         '_date': 'date',
-        'date_time': 'datetime',
+        'date_time': 'datetime.datetime',
         'uuid': 'str',
         'password': 'str'
     }
@@ -62,23 +70,26 @@ class FormatTest(object):
         'password': 'password'
     }
 
-    def __init__(self, integer=None, int32=None, int64=None, number=None, _float=None, double=None, string=None, byte=None, binary=None, _date=None, date_time=None, uuid=None, password=None):  # noqa: E501
+    def __init__(self, integer: "typing.Optional[int]"=None, int32: "typing.Optional[int]"=None, int64: "typing.Optional[int]"=None, number: "typing.Optional[float]"=None, _float: "typing.Optional[float]"=None, double: "typing.Optional[float]"=None, string: "typing.Optional[str]"=None, byte: "typing.Optional[str]"=None, binary: "typing.Optional[str]"=None, _date: "typing.Optional[date]"=None, date_time: "typing.Optional[datetime.datetime]"=None, uuid: "typing.Optional[str]"=None, password: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """FormatTest - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._integer = None
-        self._int32 = None
-        self._int64 = None
-        self._number = None
-        self.__float = None
-        self._double = None
-        self._string = None
-        self._byte = None
-        self._binary = None
-        self.__date = None
-        self._date_time = None
-        self._uuid = None
-        self._password = None
-        self.discriminator = None
+        self._integer: "int" = None
+        self._int32: "int" = None
+        self._int64: "int" = None
+        self._number: "float" = None
+        self.__float: "float" = None
+        self._double: "float" = None
+        self._string: "str" = None
+        self._byte: "str" = None
+        self._binary: "str" = None
+        self.__date: "date" = None
+        self._date_time: "datetime.datetime" = None
+        self._uuid: "str" = None
+        self._password: "str" = None
+        self.discriminator: None = None
 
         if integer is not None:
             self.integer = integer
@@ -86,25 +97,25 @@ class FormatTest(object):
             self.int32 = int32
         if int64 is not None:
             self.int64 = int64
-        self.number = number
+        self.number: "float" = number
         if _float is not None:
             self._float = _float
         if double is not None:
             self.double = double
         if string is not None:
             self.string = string
-        self.byte = byte
+        self.byte: "str" = byte
         if binary is not None:
             self.binary = binary
-        self._date = _date
+        self._date: "date" = _date
         if date_time is not None:
             self.date_time = date_time
         if uuid is not None:
             self.uuid = uuid
-        self.password = password
+        self.password: "str" = password
 
     @property
-    def integer(self):
+    def integer(self) -> "int":
         """Gets the integer of this FormatTest.  # noqa: E501
 
 
@@ -114,22 +125,24 @@ class FormatTest(object):
         return self._integer
 
     @integer.setter
-    def integer(self, integer):
+    def integer(self, integer: "int") -> None:
         """Sets the integer of this FormatTest.
 
 
         :param integer: The integer of this FormatTest.  # noqa: E501
         :type: int
         """
-        if integer is not None and integer > 100:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                integer is not None and integer > 100):  # noqa: E501
             raise ValueError("Invalid value for `integer`, must be a value less than or equal to `100`")  # noqa: E501
-        if integer is not None and integer < 10:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                integer is not None and integer < 10):  # noqa: E501
             raise ValueError("Invalid value for `integer`, must be a value greater than or equal to `10`")  # noqa: E501
 
         self._integer = integer
 
     @property
-    def int32(self):
+    def int32(self) -> "int":
         """Gets the int32 of this FormatTest.  # noqa: E501
 
 
@@ -139,22 +152,24 @@ class FormatTest(object):
         return self._int32
 
     @int32.setter
-    def int32(self, int32):
+    def int32(self, int32: "int") -> None:
         """Sets the int32 of this FormatTest.
 
 
         :param int32: The int32 of this FormatTest.  # noqa: E501
         :type: int
         """
-        if int32 is not None and int32 > 200:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                int32 is not None and int32 > 200):  # noqa: E501
             raise ValueError("Invalid value for `int32`, must be a value less than or equal to `200`")  # noqa: E501
-        if int32 is not None and int32 < 20:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                int32 is not None and int32 < 20):  # noqa: E501
             raise ValueError("Invalid value for `int32`, must be a value greater than or equal to `20`")  # noqa: E501
 
         self._int32 = int32
 
     @property
-    def int64(self):
+    def int64(self) -> "int":
         """Gets the int64 of this FormatTest.  # noqa: E501
 
 
@@ -164,7 +179,7 @@ class FormatTest(object):
         return self._int64
 
     @int64.setter
-    def int64(self, int64):
+    def int64(self, int64: "int") -> None:
         """Sets the int64 of this FormatTest.
 
 
@@ -175,7 +190,7 @@ class FormatTest(object):
         self._int64 = int64
 
     @property
-    def number(self):
+    def number(self) -> "float":
         """Gets the number of this FormatTest.  # noqa: E501
 
 
@@ -185,24 +200,26 @@ class FormatTest(object):
         return self._number
 
     @number.setter
-    def number(self, number):
+    def number(self, number: "float") -> None:
         """Sets the number of this FormatTest.
 
 
         :param number: The number of this FormatTest.  # noqa: E501
         :type: float
         """
-        if number is None:
+        if self._configuration.client_side_validation and number is None:
             raise ValueError("Invalid value for `number`, must not be `None`")  # noqa: E501
-        if number is not None and number > 543.2:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                number is not None and number > 543.2):  # noqa: E501
             raise ValueError("Invalid value for `number`, must be a value less than or equal to `543.2`")  # noqa: E501
-        if number is not None and number < 32.1:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                number is not None and number < 32.1):  # noqa: E501
             raise ValueError("Invalid value for `number`, must be a value greater than or equal to `32.1`")  # noqa: E501
 
         self._number = number
 
     @property
-    def _float(self):
+    def _float(self) -> "float":
         """Gets the _float of this FormatTest.  # noqa: E501
 
 
@@ -212,22 +229,24 @@ class FormatTest(object):
         return self.__float
 
     @_float.setter
-    def _float(self, _float):
+    def _float(self, _float: "float") -> None:
         """Sets the _float of this FormatTest.
 
 
         :param _float: The _float of this FormatTest.  # noqa: E501
         :type: float
         """
-        if _float is not None and _float > 987.6:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                _float is not None and _float > 987.6):  # noqa: E501
             raise ValueError("Invalid value for `_float`, must be a value less than or equal to `987.6`")  # noqa: E501
-        if _float is not None and _float < 54.3:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                _float is not None and _float < 54.3):  # noqa: E501
             raise ValueError("Invalid value for `_float`, must be a value greater than or equal to `54.3`")  # noqa: E501
 
         self.__float = _float
 
     @property
-    def double(self):
+    def double(self) -> "float":
         """Gets the double of this FormatTest.  # noqa: E501
 
 
@@ -237,22 +256,24 @@ class FormatTest(object):
         return self._double
 
     @double.setter
-    def double(self, double):
+    def double(self, double: "float") -> None:
         """Sets the double of this FormatTest.
 
 
         :param double: The double of this FormatTest.  # noqa: E501
         :type: float
         """
-        if double is not None and double > 123.4:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                double is not None and double > 123.4):  # noqa: E501
             raise ValueError("Invalid value for `double`, must be a value less than or equal to `123.4`")  # noqa: E501
-        if double is not None and double < 67.8:  # noqa: E501
+        if (self._configuration.client_side_validation and
+                double is not None and double < 67.8):  # noqa: E501
             raise ValueError("Invalid value for `double`, must be a value greater than or equal to `67.8`")  # noqa: E501
 
         self._double = double
 
     @property
-    def string(self):
+    def string(self) -> "str":
         """Gets the string of this FormatTest.  # noqa: E501
 
 
@@ -262,20 +283,21 @@ class FormatTest(object):
         return self._string
 
     @string.setter
-    def string(self, string):
+    def string(self, string: "str") -> None:
         """Sets the string of this FormatTest.
 
 
         :param string: The string of this FormatTest.  # noqa: E501
         :type: str
         """
-        if string is not None and not re.search(r'[a-z]', string, flags=re.IGNORECASE):  # noqa: E501
+        if (self._configuration.client_side_validation and
+                string is not None and not re.search(r'[a-z]', string, flags=re.IGNORECASE)):  # noqa: E501
             raise ValueError(r"Invalid value for `string`, must be a follow pattern or equal to `/[a-z]/i`")  # noqa: E501
 
         self._string = string
 
     @property
-    def byte(self):
+    def byte(self) -> "str":
         """Gets the byte of this FormatTest.  # noqa: E501
 
 
@@ -285,22 +307,23 @@ class FormatTest(object):
         return self._byte
 
     @byte.setter
-    def byte(self, byte):
+    def byte(self, byte: "str") -> None:
         """Sets the byte of this FormatTest.
 
 
         :param byte: The byte of this FormatTest.  # noqa: E501
         :type: str
         """
-        if byte is None:
+        if self._configuration.client_side_validation and byte is None:
             raise ValueError("Invalid value for `byte`, must not be `None`")  # noqa: E501
-        if byte is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte):  # noqa: E501
+        if (self._configuration.client_side_validation and
+                byte is not None and not re.search(r'^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$', byte)):  # noqa: E501
             raise ValueError(r"Invalid value for `byte`, must be a follow pattern or equal to `/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/`")  # noqa: E501
 
         self._byte = byte
 
     @property
-    def binary(self):
+    def binary(self) -> "str":
         """Gets the binary of this FormatTest.  # noqa: E501
 
 
@@ -310,7 +333,7 @@ class FormatTest(object):
         return self._binary
 
     @binary.setter
-    def binary(self, binary):
+    def binary(self, binary: "str") -> None:
         """Sets the binary of this FormatTest.
 
 
@@ -321,7 +344,7 @@ class FormatTest(object):
         self._binary = binary
 
     @property
-    def _date(self):
+    def _date(self) -> "date":
         """Gets the _date of this FormatTest.  # noqa: E501
 
 
@@ -331,41 +354,41 @@ class FormatTest(object):
         return self.__date
 
     @_date.setter
-    def _date(self, _date):
+    def _date(self, _date: "date") -> None:
         """Sets the _date of this FormatTest.
 
 
         :param _date: The _date of this FormatTest.  # noqa: E501
         :type: date
         """
-        if _date is None:
+        if self._configuration.client_side_validation and _date is None:
             raise ValueError("Invalid value for `_date`, must not be `None`")  # noqa: E501
 
         self.__date = _date
 
     @property
-    def date_time(self):
+    def date_time(self) -> "datetime.datetime":
         """Gets the date_time of this FormatTest.  # noqa: E501
 
 
         :return: The date_time of this FormatTest.  # noqa: E501
-        :rtype: datetime
+        :rtype: datetime.datetime
         """
         return self._date_time
 
     @date_time.setter
-    def date_time(self, date_time):
+    def date_time(self, date_time: "datetime.datetime") -> None:
         """Sets the date_time of this FormatTest.
 
 
         :param date_time: The date_time of this FormatTest.  # noqa: E501
-        :type: datetime
+        :type: datetime.datetime
         """
 
         self._date_time = date_time
 
     @property
-    def uuid(self):
+    def uuid(self) -> "str":
         """Gets the uuid of this FormatTest.  # noqa: E501
 
 
@@ -375,7 +398,7 @@ class FormatTest(object):
         return self._uuid
 
     @uuid.setter
-    def uuid(self, uuid):
+    def uuid(self, uuid: "str") -> None:
         """Sets the uuid of this FormatTest.
 
 
@@ -386,7 +409,7 @@ class FormatTest(object):
         self._uuid = uuid
 
     @property
-    def password(self):
+    def password(self) -> "str":
         """Gets the password of this FormatTest.  # noqa: E501
 
 
@@ -396,23 +419,25 @@ class FormatTest(object):
         return self._password
 
     @password.setter
-    def password(self, password):
+    def password(self, password: "str") -> None:
         """Sets the password of this FormatTest.
 
 
         :param password: The password of this FormatTest.  # noqa: E501
         :type: str
         """
-        if password is None:
+        if self._configuration.client_side_validation and password is None:
             raise ValueError("Invalid value for `password`, must not be `None`")  # noqa: E501
-        if password is not None and len(password) > 64:
+        if (self._configuration.client_side_validation and
+                password is not None and len(password) > 64):
             raise ValueError("Invalid value for `password`, length must be less than or equal to `64`")  # noqa: E501
-        if password is not None and len(password) < 10:
+        if (self._configuration.client_side_validation and
+                password is not None and len(password) < 10):
             raise ValueError("Invalid value for `password`, length must be greater than or equal to `10`")  # noqa: E501
 
         self._password = password
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -439,21 +464,24 @@ class FormatTest(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, FormatTest):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, FormatTest):
+            return True
+
+        return self.to_dict() != other.to_dict()

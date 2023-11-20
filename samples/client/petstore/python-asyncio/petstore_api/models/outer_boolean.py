@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class OuterBoolean(object):
@@ -36,11 +44,14 @@ class OuterBoolean(object):
     attribute_map = {
     }
 
-    def __init__(self):  # noqa: E501
+    def __init__(self, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """OuterBoolean - a model defined in Swagger"""  # noqa: E501
-        self.discriminator = None
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
+        self.discriminator: None = None
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -67,21 +78,24 @@ class OuterBoolean(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, OuterBoolean):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, OuterBoolean):
+            return True
+
+        return self.to_dict() != other.to_dict()

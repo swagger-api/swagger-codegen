@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -46,19 +52,19 @@ class Name(object):
         '_123_number': '123Number'
     }
 
-    def __init__(self, name=None, snake_case=None, _property=None, _123_number=None, _configuration=None):  # noqa: E501
+    def __init__(self, name: "typing.Optional[int]"=None, snake_case: "typing.Optional[int]"=None, _property: "typing.Optional[str]"=None, _123_number: "typing.Optional[int]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Name - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._name = None
-        self._snake_case = None
-        self.__property = None
-        self.__123_number = None
-        self.discriminator = None
+        self._name: "int" = None
+        self._snake_case: "int" = None
+        self.__property: "str" = None
+        self.__123_number: "int" = None
+        self.discriminator: None = None
 
-        self.name = name
+        self.name: "int" = name
         if snake_case is not None:
             self.snake_case = snake_case
         if _property is not None:
@@ -67,7 +73,7 @@ class Name(object):
             self._123_number = _123_number
 
     @property
-    def name(self):
+    def name(self) -> "int":
         """Gets the name of this Name.  # noqa: E501
 
 
@@ -77,7 +83,7 @@ class Name(object):
         return self._name
 
     @name.setter
-    def name(self, name):
+    def name(self, name: "int") -> None:
         """Sets the name of this Name.
 
 
@@ -90,7 +96,7 @@ class Name(object):
         self._name = name
 
     @property
-    def snake_case(self):
+    def snake_case(self) -> "int":
         """Gets the snake_case of this Name.  # noqa: E501
 
 
@@ -100,7 +106,7 @@ class Name(object):
         return self._snake_case
 
     @snake_case.setter
-    def snake_case(self, snake_case):
+    def snake_case(self, snake_case: "int") -> None:
         """Sets the snake_case of this Name.
 
 
@@ -111,7 +117,7 @@ class Name(object):
         self._snake_case = snake_case
 
     @property
-    def _property(self):
+    def _property(self) -> "str":
         """Gets the _property of this Name.  # noqa: E501
 
 
@@ -121,7 +127,7 @@ class Name(object):
         return self.__property
 
     @_property.setter
-    def _property(self, _property):
+    def _property(self, _property: "str") -> None:
         """Sets the _property of this Name.
 
 
@@ -132,7 +138,7 @@ class Name(object):
         self.__property = _property
 
     @property
-    def _123_number(self):
+    def _123_number(self) -> "int":
         """Gets the _123_number of this Name.  # noqa: E501
 
 
@@ -142,7 +148,7 @@ class Name(object):
         return self.__123_number
 
     @_123_number.setter
-    def _123_number(self, _123_number):
+    def _123_number(self, _123_number: "int") -> None:
         """Sets the _123_number of this Name.
 
 
@@ -152,7 +158,7 @@ class Name(object):
 
         self.__123_number = _123_number
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -179,22 +185,22 @@ class Name(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Name):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, Name):
             return True

@@ -28,10 +28,10 @@ class UserApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def create_user(self, body, **kwargs):  # noqa: E501
         """Create user  # noqa: E501
@@ -138,7 +138,7 @@ class UserApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[User] body: List of user object (required)
+        :param typing.List[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -160,7 +160,7 @@ class UserApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[User] body: List of user object (required)
+        :param typing.List[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -233,7 +233,7 @@ class UserApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[User] body: List of user object (required)
+        :param typing.List[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -255,7 +255,7 @@ class UserApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[User] body: List of user object (required)
+        :param typing.List[User] body: List of user object (required)
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.

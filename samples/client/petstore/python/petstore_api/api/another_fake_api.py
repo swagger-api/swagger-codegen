@@ -28,10 +28,10 @@ class AnotherFakeApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def test_special_tags(self, body, **kwargs):  # noqa: E501
         """To test special tags  # noqa: E501

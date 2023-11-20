@@ -28,10 +28,10 @@ class FakeApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def fake_outer_boolean_serialize(self, **kwargs):  # noqa: E501
         """fake_outer_boolean_serialize  # noqa: E501
@@ -602,7 +602,7 @@ class FakeApi(object):
         :param str string: None
         :param str binary: None
         :param date _date: None
-        :param datetime date_time: None
+        :param datetime.datetime date_time: None
         :param str password: None
         :param str param_callback: None
         :return: None
@@ -637,7 +637,7 @@ class FakeApi(object):
         :param str string: None
         :param str binary: None
         :param date _date: None
-        :param datetime date_time: None
+        :param datetime.datetime date_time: None
         :param str password: None
         :param str param_callback: None
         :return: None
@@ -782,11 +782,11 @@ class FakeApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] enum_form_string_array: Form parameter enum test (string array)
+        :param typing.List[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
-        :param list[str] enum_header_string_array: Header parameter enum test (string array)
+        :param typing.List[str] enum_header_string_array: Header parameter enum test (string array)
         :param str enum_header_string: Header parameter enum test (string)
-        :param list[str] enum_query_string_array: Query parameter enum test (string array)
+        :param typing.List[str] enum_query_string_array: Query parameter enum test (string array)
         :param str enum_query_string: Query parameter enum test (string)
         :param int enum_query_integer: Query parameter enum test (double)
         :param float enum_query_double: Query parameter enum test (double)
@@ -811,11 +811,11 @@ class FakeApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] enum_form_string_array: Form parameter enum test (string array)
+        :param typing.List[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
-        :param list[str] enum_header_string_array: Header parameter enum test (string array)
+        :param typing.List[str] enum_header_string_array: Header parameter enum test (string array)
         :param str enum_header_string: Header parameter enum test (string)
-        :param list[str] enum_query_string_array: Query parameter enum test (string array)
+        :param typing.List[str] enum_query_string_array: Query parameter enum test (string array)
         :param str enum_query_string: Query parameter enum test (string)
         :param int enum_query_integer: Query parameter enum test (double)
         :param float enum_query_double: Query parameter enum test (double)

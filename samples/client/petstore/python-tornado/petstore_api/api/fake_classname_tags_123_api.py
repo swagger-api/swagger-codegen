@@ -28,10 +28,10 @@ class FakeClassnameTags123Api(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def test_classname(self, body, **kwargs):  # noqa: E501
         """To test class name in snake case  # noqa: E501
@@ -87,8 +87,8 @@ class FakeClassnameTags123Api(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in params or
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `test_classname`")  # noqa: E501
 
         collection_formats = {}

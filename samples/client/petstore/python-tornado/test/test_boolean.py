@@ -16,12 +16,12 @@ from __future__ import absolute_import
 import unittest
 
 import petstore_api
-from petstore_api.models.model_200_response import Model200Response  # noqa: E501
+from petstore_api.models.boolean import Boolean  # noqa: E501
 from petstore_api.rest import ApiException
 
 
-class TestModel200Response(unittest.TestCase):
-    """Model200Response unit test stubs"""
+class TestBoolean(unittest.TestCase):
+    """Boolean unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,10 +29,10 @@ class TestModel200Response(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testModel200Response(self):
-        """Test Model200Response"""
+    def testBoolean(self):
+        """Test Boolean"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = petstore_api.models.model_200_response.Model200Response()  # noqa: E501
+        # model = petstore_api.models.boolean.Boolean()  # noqa: E501
         pass
 
 

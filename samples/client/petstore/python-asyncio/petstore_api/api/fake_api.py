@@ -28,10 +28,10 @@ class FakeApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def fake_outer_boolean_serialize(self, **kwargs):  # noqa: E501
         """fake_outer_boolean_serialize  # noqa: E501
@@ -435,12 +435,12 @@ class FakeApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in params or
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `test_body_with_query_params`")  # noqa: E501
         # verify the required parameter 'query' is set
-        if ('query' not in params or
-                params['query'] is None):
+        if self.api_client.client_side_validation and ('query' not in params or
+                                                       params['query'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `query` when calling `test_body_with_query_params`")  # noqa: E501
 
         collection_formats = {}
@@ -536,8 +536,8 @@ class FakeApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in params or
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `test_client_model`")  # noqa: E501
 
         collection_formats = {}
@@ -602,7 +602,7 @@ class FakeApi(object):
         :param str string: None
         :param str binary: None
         :param date _date: None
-        :param datetime date_time: None
+        :param datetime.datetime date_time: None
         :param str password: None
         :param str param_callback: None
         :return: None
@@ -637,7 +637,7 @@ class FakeApi(object):
         :param str string: None
         :param str binary: None
         :param date _date: None
-        :param datetime date_time: None
+        :param datetime.datetime date_time: None
         :param str password: None
         :param str param_callback: None
         :return: None
@@ -661,49 +661,49 @@ class FakeApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'number' is set
-        if ('number' not in params or
-                params['number'] is None):
+        if self.api_client.client_side_validation and ('number' not in params or
+                                                       params['number'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `number` when calling `test_endpoint_parameters`")  # noqa: E501
         # verify the required parameter 'double' is set
-        if ('double' not in params or
-                params['double'] is None):
+        if self.api_client.client_side_validation and ('double' not in params or
+                                                       params['double'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `double` when calling `test_endpoint_parameters`")  # noqa: E501
         # verify the required parameter 'pattern_without_delimiter' is set
-        if ('pattern_without_delimiter' not in params or
-                params['pattern_without_delimiter'] is None):
+        if self.api_client.client_side_validation and ('pattern_without_delimiter' not in params or
+                                                       params['pattern_without_delimiter'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `pattern_without_delimiter` when calling `test_endpoint_parameters`")  # noqa: E501
         # verify the required parameter 'byte' is set
-        if ('byte' not in params or
-                params['byte'] is None):
+        if self.api_client.client_side_validation and ('byte' not in params or
+                                                       params['byte'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `byte` when calling `test_endpoint_parameters`")  # noqa: E501
 
-        if 'number' in params and params['number'] > 543.2:  # noqa: E501
+        if self.api_client.client_side_validation and ('number' in params and params['number'] > 543.2):  # noqa: E501
             raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value less than or equal to `543.2`")  # noqa: E501
-        if 'number' in params and params['number'] < 32.1:  # noqa: E501
+        if self.api_client.client_side_validation and ('number' in params and params['number'] < 32.1):  # noqa: E501
             raise ValueError("Invalid value for parameter `number` when calling `test_endpoint_parameters`, must be a value greater than or equal to `32.1`")  # noqa: E501
-        if 'double' in params and params['double'] > 123.4:  # noqa: E501
+        if self.api_client.client_side_validation and ('double' in params and params['double'] > 123.4):  # noqa: E501
             raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value less than or equal to `123.4`")  # noqa: E501
-        if 'double' in params and params['double'] < 67.8:  # noqa: E501
+        if self.api_client.client_side_validation and ('double' in params and params['double'] < 67.8):  # noqa: E501
             raise ValueError("Invalid value for parameter `double` when calling `test_endpoint_parameters`, must be a value greater than or equal to `67.8`")  # noqa: E501
-        if 'pattern_without_delimiter' in params and not re.search(r'^[A-Z].*', params['pattern_without_delimiter']):  # noqa: E501
+        if self.api_client.client_side_validation and ('pattern_without_delimiter' in params and not re.search(r'^[A-Z].*', params['pattern_without_delimiter'])):  # noqa: E501
             raise ValueError("Invalid value for parameter `pattern_without_delimiter` when calling `test_endpoint_parameters`, must conform to the pattern `/^[A-Z].*/`")  # noqa: E501
-        if 'integer' in params and params['integer'] > 100:  # noqa: E501
+        if self.api_client.client_side_validation and ('integer' in params and params['integer'] > 100):  # noqa: E501
             raise ValueError("Invalid value for parameter `integer` when calling `test_endpoint_parameters`, must be a value less than or equal to `100`")  # noqa: E501
-        if 'integer' in params and params['integer'] < 10:  # noqa: E501
+        if self.api_client.client_side_validation and ('integer' in params and params['integer'] < 10):  # noqa: E501
             raise ValueError("Invalid value for parameter `integer` when calling `test_endpoint_parameters`, must be a value greater than or equal to `10`")  # noqa: E501
-        if 'int32' in params and params['int32'] > 200:  # noqa: E501
+        if self.api_client.client_side_validation and ('int32' in params and params['int32'] > 200):  # noqa: E501
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value less than or equal to `200`")  # noqa: E501
-        if 'int32' in params and params['int32'] < 20:  # noqa: E501
+        if self.api_client.client_side_validation and ('int32' in params and params['int32'] < 20):  # noqa: E501
             raise ValueError("Invalid value for parameter `int32` when calling `test_endpoint_parameters`, must be a value greater than or equal to `20`")  # noqa: E501
-        if '_float' in params and params['_float'] > 987.6:  # noqa: E501
+        if self.api_client.client_side_validation and ('_float' in params and params['_float'] > 987.6):  # noqa: E501
             raise ValueError("Invalid value for parameter `_float` when calling `test_endpoint_parameters`, must be a value less than or equal to `987.6`")  # noqa: E501
-        if 'string' in params and not re.search(r'[a-z]', params['string'], flags=re.IGNORECASE):  # noqa: E501
+        if self.api_client.client_side_validation and ('string' in params and not re.search(r'[a-z]', params['string'], flags=re.IGNORECASE)):  # noqa: E501
             raise ValueError("Invalid value for parameter `string` when calling `test_endpoint_parameters`, must conform to the pattern `/[a-z]/i`")  # noqa: E501
-        if ('password' in params and
-                len(params['password']) > 64):
+        if self.api_client.client_side_validation and ('password' in params and
+                                                       len(params['password']) > 64):
             raise ValueError("Invalid value for parameter `password` when calling `test_endpoint_parameters`, length must be less than or equal to `64`")  # noqa: E501
-        if ('password' in params and
-                len(params['password']) < 10):
+        if self.api_client.client_side_validation and ('password' in params and
+                                                       len(params['password']) < 10):
             raise ValueError("Invalid value for parameter `password` when calling `test_endpoint_parameters`, length must be greater than or equal to `10`")  # noqa: E501
         collection_formats = {}
 
@@ -782,11 +782,11 @@ class FakeApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] enum_form_string_array: Form parameter enum test (string array)
+        :param typing.List[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
-        :param list[str] enum_header_string_array: Header parameter enum test (string array)
+        :param typing.List[str] enum_header_string_array: Header parameter enum test (string array)
         :param str enum_header_string: Header parameter enum test (string)
-        :param list[str] enum_query_string_array: Query parameter enum test (string array)
+        :param typing.List[str] enum_query_string_array: Query parameter enum test (string array)
         :param str enum_query_string: Query parameter enum test (string)
         :param int enum_query_integer: Query parameter enum test (double)
         :param float enum_query_double: Query parameter enum test (double)
@@ -811,11 +811,11 @@ class FakeApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param list[str] enum_form_string_array: Form parameter enum test (string array)
+        :param typing.List[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
-        :param list[str] enum_header_string_array: Header parameter enum test (string array)
+        :param typing.List[str] enum_header_string_array: Header parameter enum test (string array)
         :param str enum_header_string: Header parameter enum test (string)
-        :param list[str] enum_query_string_array: Query parameter enum test (string array)
+        :param typing.List[str] enum_query_string_array: Query parameter enum test (string array)
         :param str enum_query_string: Query parameter enum test (string)
         :param int enum_query_integer: Query parameter enum test (double)
         :param float enum_query_double: Query parameter enum test (double)
@@ -952,8 +952,8 @@ class FakeApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'param' is set
-        if ('param' not in params or
-                params['param'] is None):
+        if self.api_client.client_side_validation and ('param' not in params or
+                                                       params['param'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `param` when calling `test_inline_additional_properties`")  # noqa: E501
 
         collection_formats = {}
@@ -1049,12 +1049,12 @@ class FakeApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'param' is set
-        if ('param' not in params or
-                params['param'] is None):
+        if self.api_client.client_side_validation and ('param' not in params or
+                                                       params['param'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `param` when calling `test_json_form_data`")  # noqa: E501
         # verify the required parameter 'param2' is set
-        if ('param2' not in params or
-                params['param2'] is None):
+        if self.api_client.client_side_validation and ('param2' not in params or
+                                                       params['param2'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `param2` when calling `test_json_form_data`")  # noqa: E501
 
         collection_formats = {}

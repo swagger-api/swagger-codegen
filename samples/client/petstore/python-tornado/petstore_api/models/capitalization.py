@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class Capitalization(object):
@@ -48,16 +56,19 @@ class Capitalization(object):
         'att_name': 'ATT_NAME'
     }
 
-    def __init__(self, small_camel=None, capital_camel=None, small_snake=None, capital_snake=None, sca_eth_flow_points=None, att_name=None):  # noqa: E501
+    def __init__(self, small_camel: "typing.Optional[str]"=None, capital_camel: "typing.Optional[str]"=None, small_snake: "typing.Optional[str]"=None, capital_snake: "typing.Optional[str]"=None, sca_eth_flow_points: "typing.Optional[str]"=None, att_name: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Capitalization - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._small_camel = None
-        self._capital_camel = None
-        self._small_snake = None
-        self._capital_snake = None
-        self._sca_eth_flow_points = None
-        self._att_name = None
-        self.discriminator = None
+        self._small_camel: "str" = None
+        self._capital_camel: "str" = None
+        self._small_snake: "str" = None
+        self._capital_snake: "str" = None
+        self._sca_eth_flow_points: "str" = None
+        self._att_name: "str" = None
+        self.discriminator: None = None
 
         if small_camel is not None:
             self.small_camel = small_camel
@@ -73,7 +84,7 @@ class Capitalization(object):
             self.att_name = att_name
 
     @property
-    def small_camel(self):
+    def small_camel(self) -> "str":
         """Gets the small_camel of this Capitalization.  # noqa: E501
 
 
@@ -83,7 +94,7 @@ class Capitalization(object):
         return self._small_camel
 
     @small_camel.setter
-    def small_camel(self, small_camel):
+    def small_camel(self, small_camel: "str") -> None:
         """Sets the small_camel of this Capitalization.
 
 
@@ -94,7 +105,7 @@ class Capitalization(object):
         self._small_camel = small_camel
 
     @property
-    def capital_camel(self):
+    def capital_camel(self) -> "str":
         """Gets the capital_camel of this Capitalization.  # noqa: E501
 
 
@@ -104,7 +115,7 @@ class Capitalization(object):
         return self._capital_camel
 
     @capital_camel.setter
-    def capital_camel(self, capital_camel):
+    def capital_camel(self, capital_camel: "str") -> None:
         """Sets the capital_camel of this Capitalization.
 
 
@@ -115,7 +126,7 @@ class Capitalization(object):
         self._capital_camel = capital_camel
 
     @property
-    def small_snake(self):
+    def small_snake(self) -> "str":
         """Gets the small_snake of this Capitalization.  # noqa: E501
 
 
@@ -125,7 +136,7 @@ class Capitalization(object):
         return self._small_snake
 
     @small_snake.setter
-    def small_snake(self, small_snake):
+    def small_snake(self, small_snake: "str") -> None:
         """Sets the small_snake of this Capitalization.
 
 
@@ -136,7 +147,7 @@ class Capitalization(object):
         self._small_snake = small_snake
 
     @property
-    def capital_snake(self):
+    def capital_snake(self) -> "str":
         """Gets the capital_snake of this Capitalization.  # noqa: E501
 
 
@@ -146,7 +157,7 @@ class Capitalization(object):
         return self._capital_snake
 
     @capital_snake.setter
-    def capital_snake(self, capital_snake):
+    def capital_snake(self, capital_snake: "str") -> None:
         """Sets the capital_snake of this Capitalization.
 
 
@@ -157,7 +168,7 @@ class Capitalization(object):
         self._capital_snake = capital_snake
 
     @property
-    def sca_eth_flow_points(self):
+    def sca_eth_flow_points(self) -> "str":
         """Gets the sca_eth_flow_points of this Capitalization.  # noqa: E501
 
 
@@ -167,7 +178,7 @@ class Capitalization(object):
         return self._sca_eth_flow_points
 
     @sca_eth_flow_points.setter
-    def sca_eth_flow_points(self, sca_eth_flow_points):
+    def sca_eth_flow_points(self, sca_eth_flow_points: "str") -> None:
         """Sets the sca_eth_flow_points of this Capitalization.
 
 
@@ -178,7 +189,7 @@ class Capitalization(object):
         self._sca_eth_flow_points = sca_eth_flow_points
 
     @property
-    def att_name(self):
+    def att_name(self) -> "str":
         """Gets the att_name of this Capitalization.  # noqa: E501
 
         Name of the pet   # noqa: E501
@@ -189,7 +200,7 @@ class Capitalization(object):
         return self._att_name
 
     @att_name.setter
-    def att_name(self, att_name):
+    def att_name(self, att_name: "str") -> None:
         """Sets the att_name of this Capitalization.
 
         Name of the pet   # noqa: E501
@@ -200,7 +211,7 @@ class Capitalization(object):
 
         self._att_name = att_name
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -227,21 +238,24 @@ class Capitalization(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Capitalization):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, Capitalization):
+            return True
+
+        return self.to_dict() != other.to_dict()

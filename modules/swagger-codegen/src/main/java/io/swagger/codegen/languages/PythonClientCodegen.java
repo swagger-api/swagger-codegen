@@ -397,7 +397,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
 
-            return getSwaggerType(p) + "(str, " + getTypeDeclaration(inner) + ")";
+            return getSwaggerType(p) + "[str, " + getTypeDeclaration(inner) + "]";
         }
         return super.getTypeDeclaration(p);
     }
@@ -406,7 +406,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
         String type = null;
-        if (typeMapping.containsKey(swaggerType)) {
+        if (swaggerType == "array") {
+                return "typing.List";
+        } else if (swaggerType == "map") {
+            return "typing.Dict";
+        } else if (swaggerType == "DateTime") {
+            return "datetime.datetime";
+        } else if (swaggerType == "Date") {
+            return "datetime.date";
+        } else if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type)) {
                 return type;

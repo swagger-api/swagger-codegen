@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -48,22 +54,22 @@ class EnumTest(object):
         'outer_enum': 'outerEnum'
     }
 
-    def __init__(self, enum_string=None, enum_string_required=None, enum_integer=None, enum_number=None, outer_enum=None, _configuration=None):  # noqa: E501
+    def __init__(self, enum_string: "typing.Optional[str]"=None, enum_string_required: "typing.Optional[str]"=None, enum_integer: "typing.Optional[int]"=None, enum_number: "typing.Optional[float]"=None, outer_enum: "typing.Optional[OuterEnum]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """EnumTest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._enum_string = None
-        self._enum_string_required = None
-        self._enum_integer = None
-        self._enum_number = None
-        self._outer_enum = None
-        self.discriminator = None
+        self._enum_string: "str" = None
+        self._enum_string_required: "str" = None
+        self._enum_integer: "int" = None
+        self._enum_number: "float" = None
+        self._outer_enum: "OuterEnum" = None
+        self.discriminator: None = None
 
         if enum_string is not None:
             self.enum_string = enum_string
-        self.enum_string_required = enum_string_required
+        self.enum_string_required: "str" = enum_string_required
         if enum_integer is not None:
             self.enum_integer = enum_integer
         if enum_number is not None:
@@ -72,7 +78,7 @@ class EnumTest(object):
             self.outer_enum = outer_enum
 
     @property
-    def enum_string(self):
+    def enum_string(self) -> "str":
         """Gets the enum_string of this EnumTest.  # noqa: E501
 
 
@@ -82,7 +88,7 @@ class EnumTest(object):
         return self._enum_string
 
     @enum_string.setter
-    def enum_string(self, enum_string):
+    def enum_string(self, enum_string: "str") -> None:
         """Sets the enum_string of this EnumTest.
 
 
@@ -100,7 +106,7 @@ class EnumTest(object):
         self._enum_string = enum_string
 
     @property
-    def enum_string_required(self):
+    def enum_string_required(self) -> "str":
         """Gets the enum_string_required of this EnumTest.  # noqa: E501
 
 
@@ -110,7 +116,7 @@ class EnumTest(object):
         return self._enum_string_required
 
     @enum_string_required.setter
-    def enum_string_required(self, enum_string_required):
+    def enum_string_required(self, enum_string_required: "str") -> None:
         """Sets the enum_string_required of this EnumTest.
 
 
@@ -130,7 +136,7 @@ class EnumTest(object):
         self._enum_string_required = enum_string_required
 
     @property
-    def enum_integer(self):
+    def enum_integer(self) -> "int":
         """Gets the enum_integer of this EnumTest.  # noqa: E501
 
 
@@ -140,7 +146,7 @@ class EnumTest(object):
         return self._enum_integer
 
     @enum_integer.setter
-    def enum_integer(self, enum_integer):
+    def enum_integer(self, enum_integer: "int") -> None:
         """Sets the enum_integer of this EnumTest.
 
 
@@ -158,7 +164,7 @@ class EnumTest(object):
         self._enum_integer = enum_integer
 
     @property
-    def enum_number(self):
+    def enum_number(self) -> "float":
         """Gets the enum_number of this EnumTest.  # noqa: E501
 
 
@@ -168,7 +174,7 @@ class EnumTest(object):
         return self._enum_number
 
     @enum_number.setter
-    def enum_number(self, enum_number):
+    def enum_number(self, enum_number: "float") -> None:
         """Sets the enum_number of this EnumTest.
 
 
@@ -186,7 +192,7 @@ class EnumTest(object):
         self._enum_number = enum_number
 
     @property
-    def outer_enum(self):
+    def outer_enum(self) -> "OuterEnum":
         """Gets the outer_enum of this EnumTest.  # noqa: E501
 
 
@@ -196,7 +202,7 @@ class EnumTest(object):
         return self._outer_enum
 
     @outer_enum.setter
-    def outer_enum(self, outer_enum):
+    def outer_enum(self, outer_enum: "OuterEnum") -> None:
         """Sets the outer_enum of this EnumTest.
 
 
@@ -206,7 +212,7 @@ class EnumTest(object):
 
         self._outer_enum = outer_enum
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -233,22 +239,22 @@ class EnumTest(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, EnumTest):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, EnumTest):
             return True

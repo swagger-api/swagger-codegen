@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **byte** | **str** |  | 
 **binary** | **str** |  | [optional] 
 **_date** | **date** |  | 
-**date_time** | **datetime** |  | [optional] 
+**date_time** | [**datetime.datetime**](datetime.datetime.md) |  | [optional] 
 **uuid** | **str** |  | [optional] 
 **password** | **str** |  | 
 

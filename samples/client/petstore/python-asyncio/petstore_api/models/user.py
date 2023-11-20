@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class User(object):
@@ -52,18 +60,21 @@ class User(object):
         'user_status': 'userStatus'
     }
 
-    def __init__(self, id=None, username=None, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=None):  # noqa: E501
+    def __init__(self, id: "typing.Optional[int]"=None, username: "typing.Optional[str]"=None, first_name: "typing.Optional[str]"=None, last_name: "typing.Optional[str]"=None, email: "typing.Optional[str]"=None, password: "typing.Optional[str]"=None, phone: "typing.Optional[str]"=None, user_status: "typing.Optional[int]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """User - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._id = None
-        self._username = None
-        self._first_name = None
-        self._last_name = None
-        self._email = None
-        self._password = None
-        self._phone = None
-        self._user_status = None
-        self.discriminator = None
+        self._id: "int" = None
+        self._username: "str" = None
+        self._first_name: "str" = None
+        self._last_name: "str" = None
+        self._email: "str" = None
+        self._password: "str" = None
+        self._phone: "str" = None
+        self._user_status: "int" = None
+        self.discriminator: None = None
 
         if id is not None:
             self.id = id
@@ -83,7 +94,7 @@ class User(object):
             self.user_status = user_status
 
     @property
-    def id(self):
+    def id(self) -> "int":
         """Gets the id of this User.  # noqa: E501
 
 
@@ -93,7 +104,7 @@ class User(object):
         return self._id
 
     @id.setter
-    def id(self, id):
+    def id(self, id: "int") -> None:
         """Sets the id of this User.
 
 
@@ -104,7 +115,7 @@ class User(object):
         self._id = id
 
     @property
-    def username(self):
+    def username(self) -> "str":
         """Gets the username of this User.  # noqa: E501
 
 
@@ -114,7 +125,7 @@ class User(object):
         return self._username
 
     @username.setter
-    def username(self, username):
+    def username(self, username: "str") -> None:
         """Sets the username of this User.
 
 
@@ -125,7 +136,7 @@ class User(object):
         self._username = username
 
     @property
-    def first_name(self):
+    def first_name(self) -> "str":
         """Gets the first_name of this User.  # noqa: E501
 
 
@@ -135,7 +146,7 @@ class User(object):
         return self._first_name
 
     @first_name.setter
-    def first_name(self, first_name):
+    def first_name(self, first_name: "str") -> None:
         """Sets the first_name of this User.
 
 
@@ -146,7 +157,7 @@ class User(object):
         self._first_name = first_name
 
     @property
-    def last_name(self):
+    def last_name(self) -> "str":
         """Gets the last_name of this User.  # noqa: E501
 
 
@@ -156,7 +167,7 @@ class User(object):
         return self._last_name
 
     @last_name.setter
-    def last_name(self, last_name):
+    def last_name(self, last_name: "str") -> None:
         """Sets the last_name of this User.
 
 
@@ -167,7 +178,7 @@ class User(object):
         self._last_name = last_name
 
     @property
-    def email(self):
+    def email(self) -> "str":
         """Gets the email of this User.  # noqa: E501
 
 
@@ -177,7 +188,7 @@ class User(object):
         return self._email
 
     @email.setter
-    def email(self, email):
+    def email(self, email: "str") -> None:
         """Sets the email of this User.
 
 
@@ -188,7 +199,7 @@ class User(object):
         self._email = email
 
     @property
-    def password(self):
+    def password(self) -> "str":
         """Gets the password of this User.  # noqa: E501
 
 
@@ -198,7 +209,7 @@ class User(object):
         return self._password
 
     @password.setter
-    def password(self, password):
+    def password(self, password: "str") -> None:
         """Sets the password of this User.
 
 
@@ -209,7 +220,7 @@ class User(object):
         self._password = password
 
     @property
-    def phone(self):
+    def phone(self) -> "str":
         """Gets the phone of this User.  # noqa: E501
 
 
@@ -219,7 +230,7 @@ class User(object):
         return self._phone
 
     @phone.setter
-    def phone(self, phone):
+    def phone(self, phone: "str") -> None:
         """Sets the phone of this User.
 
 
@@ -230,7 +241,7 @@ class User(object):
         self._phone = phone
 
     @property
-    def user_status(self):
+    def user_status(self) -> "int":
         """Gets the user_status of this User.  # noqa: E501
 
         User Status  # noqa: E501
@@ -241,7 +252,7 @@ class User(object):
         return self._user_status
 
     @user_status.setter
-    def user_status(self, user_status):
+    def user_status(self, user_status: "int") -> None:
         """Sets the user_status of this User.
 
         User Status  # noqa: E501
@@ -252,7 +263,7 @@ class User(object):
 
         self._user_status = user_status
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -279,21 +290,24 @@ class User(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, User):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, User):
+            return True
+
+        return self.to_dict() != other.to_dict()

@@ -28,10 +28,10 @@ class StoreApi(object):
     Ref: https://github.com/swagger-api/swagger-codegen
     """
 
-    def __init__(self, api_client=None):
+    def __init__(self, api_client: ApiClient=None) -> None:
         if api_client is None:
             api_client = ApiClient()
-        self.api_client = api_client
+        self.api_client: ApiClient = api_client
 
     def delete_order(self, order_id, **kwargs):  # noqa: E501
         """Delete purchase order by ID  # noqa: E501
@@ -87,8 +87,8 @@ class StoreApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'order_id' is set
-        if ('order_id' not in params or
-                params['order_id'] is None):
+        if self.api_client.client_side_validation and ('order_id' not in params or
+                                                       params['order_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `order_id` when calling `delete_order`")  # noqa: E501
 
         collection_formats = {}
@@ -138,7 +138,7 @@ class StoreApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: dict(str, int)
+        :return: typing.Dict[str, int]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -159,7 +159,7 @@ class StoreApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: dict(str, int)
+        :return: typing.Dict[str, int]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -207,7 +207,7 @@ class StoreApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='dict(str, int)',  # noqa: E501
+            response_type='typing.Dict[str, int]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -269,13 +269,13 @@ class StoreApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'order_id' is set
-        if ('order_id' not in params or
-                params['order_id'] is None):
+        if self.api_client.client_side_validation and ('order_id' not in params or
+                                                       params['order_id'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `order_id` when calling `get_order_by_id`")  # noqa: E501
 
-        if 'order_id' in params and params['order_id'] > 5:  # noqa: E501
+        if self.api_client.client_side_validation and ('order_id' in params and params['order_id'] > 5):  # noqa: E501
             raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value less than or equal to `5`")  # noqa: E501
-        if 'order_id' in params and params['order_id'] < 1:  # noqa: E501
+        if self.api_client.client_side_validation and ('order_id' in params and params['order_id'] < 1):  # noqa: E501
             raise ValueError("Invalid value for parameter `order_id` when calling `get_order_by_id`, must be a value greater than or equal to `1`")  # noqa: E501
         collection_formats = {}
 
@@ -368,8 +368,8 @@ class StoreApi(object):
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
+        if self.api_client.client_side_validation and ('body' not in params or
+                                                       params['body'] is None):  # noqa: E501
             raise ValueError("Missing the required parameter `body` when calling `place_order`")  # noqa: E501
 
         collection_formats = {}

@@ -13,6 +13,12 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
 
@@ -36,8 +42,8 @@ class Pet(object):
         'id': 'int',
         'category': 'Category',
         'name': 'str',
-        'photo_urls': 'list[str]',
-        'tags': 'list[Tag]',
+        'photo_urls': 'typing.List[str]',
+        'tags': 'typing.List[Tag]',
         'status': 'str'
     }
 
@@ -50,33 +56,33 @@ class Pet(object):
         'status': 'status'
     }
 
-    def __init__(self, id=None, category=None, name=None, photo_urls=None, tags=None, status=None, _configuration=None):  # noqa: E501
+    def __init__(self, id: "typing.Optional[int]"=None, category: "typing.Optional[Category]"=None, name: "typing.Optional[str]"=None, photo_urls: "typing.Optional[typing.List[str]]"=None, tags: "typing.Optional[typing.List[Tag]]"=None, status: "typing.Optional[str]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Pet - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
-        self._configuration = _configuration
+        self._configuration: Configuration = _configuration
 
-        self._id = None
-        self._category = None
-        self._name = None
-        self._photo_urls = None
-        self._tags = None
-        self._status = None
-        self.discriminator = None
+        self._id: "int" = None
+        self._category: "Category" = None
+        self._name: "str" = None
+        self._photo_urls: "typing.List[str]" = None
+        self._tags: "typing.List[Tag]" = None
+        self._status: "str" = None
+        self.discriminator: None = None
 
         if id is not None:
             self.id = id
         if category is not None:
             self.category = category
-        self.name = name
-        self.photo_urls = photo_urls
+        self.name: "str" = name
+        self.photo_urls: "typing.List[str]" = photo_urls
         if tags is not None:
             self.tags = tags
         if status is not None:
             self.status = status
 
     @property
-    def id(self):
+    def id(self) -> "int":
         """Gets the id of this Pet.  # noqa: E501
 
 
@@ -86,7 +92,7 @@ class Pet(object):
         return self._id
 
     @id.setter
-    def id(self, id):
+    def id(self, id: "int") -> None:
         """Sets the id of this Pet.
 
 
@@ -97,7 +103,7 @@ class Pet(object):
         self._id = id
 
     @property
-    def category(self):
+    def category(self) -> "Category":
         """Gets the category of this Pet.  # noqa: E501
 
 
@@ -107,7 +113,7 @@ class Pet(object):
         return self._category
 
     @category.setter
-    def category(self, category):
+    def category(self, category: "Category") -> None:
         """Sets the category of this Pet.
 
 
@@ -118,7 +124,7 @@ class Pet(object):
         self._category = category
 
     @property
-    def name(self):
+    def name(self) -> "str":
         """Gets the name of this Pet.  # noqa: E501
 
 
@@ -128,7 +134,7 @@ class Pet(object):
         return self._name
 
     @name.setter
-    def name(self, name):
+    def name(self, name: "str") -> None:
         """Sets the name of this Pet.
 
 
@@ -141,22 +147,22 @@ class Pet(object):
         self._name = name
 
     @property
-    def photo_urls(self):
+    def photo_urls(self) -> "typing.List[str]":
         """Gets the photo_urls of this Pet.  # noqa: E501
 
 
         :return: The photo_urls of this Pet.  # noqa: E501
-        :rtype: list[str]
+        :rtype: typing.List[str]
         """
         return self._photo_urls
 
     @photo_urls.setter
-    def photo_urls(self, photo_urls):
+    def photo_urls(self, photo_urls: "typing.List[str]") -> None:
         """Sets the photo_urls of this Pet.
 
 
         :param photo_urls: The photo_urls of this Pet.  # noqa: E501
-        :type: list[str]
+        :type: typing.List[str]
         """
         if self._configuration.client_side_validation and photo_urls is None:
             raise ValueError("Invalid value for `photo_urls`, must not be `None`")  # noqa: E501
@@ -164,28 +170,28 @@ class Pet(object):
         self._photo_urls = photo_urls
 
     @property
-    def tags(self):
+    def tags(self) -> "typing.List[Tag]":
         """Gets the tags of this Pet.  # noqa: E501
 
 
         :return: The tags of this Pet.  # noqa: E501
-        :rtype: list[Tag]
+        :rtype: typing.List[Tag]
         """
         return self._tags
 
     @tags.setter
-    def tags(self, tags):
+    def tags(self, tags: "typing.List[Tag]") -> None:
         """Sets the tags of this Pet.
 
 
         :param tags: The tags of this Pet.  # noqa: E501
-        :type: list[Tag]
+        :type: typing.List[Tag]
         """
 
         self._tags = tags
 
     @property
-    def status(self):
+    def status(self) -> "str":
         """Gets the status of this Pet.  # noqa: E501
 
         pet status in the store  # noqa: E501
@@ -196,7 +202,7 @@ class Pet(object):
         return self._status
 
     @status.setter
-    def status(self, status):
+    def status(self, status: "str") -> None:
         """Sets the status of this Pet.
 
         pet status in the store  # noqa: E501
@@ -214,7 +220,7 @@ class Pet(object):
 
         self._status = status
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -241,22 +247,22 @@ class Pet(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Pet):
             return False
 
         return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
         if not isinstance(other, Pet):
             return True

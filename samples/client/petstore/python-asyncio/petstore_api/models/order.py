@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class Order(object):
@@ -34,7 +42,7 @@ class Order(object):
         'id': 'int',
         'pet_id': 'int',
         'quantity': 'int',
-        'ship_date': 'datetime',
+        'ship_date': 'datetime.datetime',
         'status': 'str',
         'complete': 'bool'
     }
@@ -48,16 +56,19 @@ class Order(object):
         'complete': 'complete'
     }
 
-    def __init__(self, id=None, pet_id=None, quantity=None, ship_date=None, status=None, complete=False):  # noqa: E501
+    def __init__(self, id: "typing.Optional[int]"=None, pet_id: "typing.Optional[int]"=None, quantity: "typing.Optional[int]"=None, ship_date: "typing.Optional[datetime.datetime]"=None, status: "typing.Optional[str]"=None, complete: "bool"=False, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """Order - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._id = None
-        self._pet_id = None
-        self._quantity = None
-        self._ship_date = None
-        self._status = None
-        self._complete = None
-        self.discriminator = None
+        self._id: "int" = None
+        self._pet_id: "int" = None
+        self._quantity: "int" = None
+        self._ship_date: "datetime.datetime" = None
+        self._status: "str" = None
+        self._complete: "bool" = None
+        self.discriminator: None = None
 
         if id is not None:
             self.id = id
@@ -73,7 +84,7 @@ class Order(object):
             self.complete = complete
 
     @property
-    def id(self):
+    def id(self) -> "int":
         """Gets the id of this Order.  # noqa: E501
 
 
@@ -83,7 +94,7 @@ class Order(object):
         return self._id
 
     @id.setter
-    def id(self, id):
+    def id(self, id: "int") -> None:
         """Sets the id of this Order.
 
 
@@ -94,7 +105,7 @@ class Order(object):
         self._id = id
 
     @property
-    def pet_id(self):
+    def pet_id(self) -> "int":
         """Gets the pet_id of this Order.  # noqa: E501
 
 
@@ -104,7 +115,7 @@ class Order(object):
         return self._pet_id
 
     @pet_id.setter
-    def pet_id(self, pet_id):
+    def pet_id(self, pet_id: "int") -> None:
         """Sets the pet_id of this Order.
 
 
@@ -115,7 +126,7 @@ class Order(object):
         self._pet_id = pet_id
 
     @property
-    def quantity(self):
+    def quantity(self) -> "int":
         """Gets the quantity of this Order.  # noqa: E501
 
 
@@ -125,7 +136,7 @@ class Order(object):
         return self._quantity
 
     @quantity.setter
-    def quantity(self, quantity):
+    def quantity(self, quantity: "int") -> None:
         """Sets the quantity of this Order.
 
 
@@ -136,28 +147,28 @@ class Order(object):
         self._quantity = quantity
 
     @property
-    def ship_date(self):
+    def ship_date(self) -> "datetime.datetime":
         """Gets the ship_date of this Order.  # noqa: E501
 
 
         :return: The ship_date of this Order.  # noqa: E501
-        :rtype: datetime
+        :rtype: datetime.datetime
         """
         return self._ship_date
 
     @ship_date.setter
-    def ship_date(self, ship_date):
+    def ship_date(self, ship_date: "datetime.datetime") -> None:
         """Sets the ship_date of this Order.
 
 
         :param ship_date: The ship_date of this Order.  # noqa: E501
-        :type: datetime
+        :type: datetime.datetime
         """
 
         self._ship_date = ship_date
 
     @property
-    def status(self):
+    def status(self) -> "str":
         """Gets the status of this Order.  # noqa: E501
 
         Order Status  # noqa: E501
@@ -168,7 +179,7 @@ class Order(object):
         return self._status
 
     @status.setter
-    def status(self, status):
+    def status(self, status: "str") -> None:
         """Sets the status of this Order.
 
         Order Status  # noqa: E501
@@ -177,7 +188,8 @@ class Order(object):
         :type: str
         """
         allowed_values = ["placed", "approved", "delivered"]  # noqa: E501
-        if status not in allowed_values:
+        if (self._configuration.client_side_validation and
+                status not in allowed_values):
             raise ValueError(
                 "Invalid value for `status` ({0}), must be one of {1}"  # noqa: E501
                 .format(status, allowed_values)
@@ -186,7 +198,7 @@ class Order(object):
         self._status = status
 
     @property
-    def complete(self):
+    def complete(self) -> "bool":
         """Gets the complete of this Order.  # noqa: E501
 
 
@@ -196,7 +208,7 @@ class Order(object):
         return self._complete
 
     @complete.setter
-    def complete(self, complete):
+    def complete(self, complete: "bool") -> None:
         """Sets the complete of this Order.
 
 
@@ -206,7 +218,7 @@ class Order(object):
 
         self._complete = complete
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -233,21 +245,24 @@ class Order(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, Order):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, Order):
+            return True
+
+        return self.to_dict() != other.to_dict()

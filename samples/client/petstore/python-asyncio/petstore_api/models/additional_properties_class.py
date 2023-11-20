@@ -13,8 +13,16 @@
 
 import pprint
 import re  # noqa: F401
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import typing
+    import datetime  # noqa: F401
+    from petstore_api.models import *
 
 import six
+
+from petstore_api.configuration import Configuration
 
 
 class AdditionalPropertiesClass(object):
@@ -31,8 +39,8 @@ class AdditionalPropertiesClass(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'map_property': 'dict(str, str)',
-        'map_of_map_property': 'dict(str, dict(str, str))'
+        'map_property': 'typing.Dict[str, str]',
+        'map_of_map_property': 'typing.Dict[str, typing.Dict[str, str]]'
     }
 
     attribute_map = {
@@ -40,12 +48,15 @@ class AdditionalPropertiesClass(object):
         'map_of_map_property': 'map_of_map_property'
     }
 
-    def __init__(self, map_property=None, map_of_map_property=None):  # noqa: E501
+    def __init__(self, map_property: "typing.Optional[typing.Dict[str, str]]"=None, map_of_map_property: "typing.Optional[typing.Dict[str, typing.Dict[str, str]]]"=None, _configuration: "typing.Optional[Configuration]"=None) -> None:  # noqa: E501
         """AdditionalPropertiesClass - a model defined in Swagger"""  # noqa: E501
+        if _configuration is None:
+            _configuration = Configuration()
+        self._configuration: Configuration = _configuration
 
-        self._map_property = None
-        self._map_of_map_property = None
-        self.discriminator = None
+        self._map_property: "typing.Dict[str, str]" = None
+        self._map_of_map_property: "typing.Dict[str, typing.Dict[str, str]]" = None
+        self.discriminator: None = None
 
         if map_property is not None:
             self.map_property = map_property
@@ -53,48 +64,48 @@ class AdditionalPropertiesClass(object):
             self.map_of_map_property = map_of_map_property
 
     @property
-    def map_property(self):
+    def map_property(self) -> "typing.Dict[str, str]":
         """Gets the map_property of this AdditionalPropertiesClass.  # noqa: E501
 
 
         :return: The map_property of this AdditionalPropertiesClass.  # noqa: E501
-        :rtype: dict(str, str)
+        :rtype: typing.Dict[str, str]
         """
         return self._map_property
 
     @map_property.setter
-    def map_property(self, map_property):
+    def map_property(self, map_property: "typing.Dict[str, str]") -> None:
         """Sets the map_property of this AdditionalPropertiesClass.
 
 
         :param map_property: The map_property of this AdditionalPropertiesClass.  # noqa: E501
-        :type: dict(str, str)
+        :type: typing.Dict[str, str]
         """
 
         self._map_property = map_property
 
     @property
-    def map_of_map_property(self):
+    def map_of_map_property(self) -> "typing.Dict[str, typing.Dict[str, str]]":
         """Gets the map_of_map_property of this AdditionalPropertiesClass.  # noqa: E501
 
 
         :return: The map_of_map_property of this AdditionalPropertiesClass.  # noqa: E501
-        :rtype: dict(str, dict(str, str))
+        :rtype: typing.Dict[str, typing.Dict[str, str]]
         """
         return self._map_of_map_property
 
     @map_of_map_property.setter
-    def map_of_map_property(self, map_of_map_property):
+    def map_of_map_property(self, map_of_map_property: "typing.Dict[str, typing.Dict[str, str]]") -> None:
         """Sets the map_of_map_property of this AdditionalPropertiesClass.
 
 
         :param map_of_map_property: The map_of_map_property of this AdditionalPropertiesClass.  # noqa: E501
-        :type: dict(str, dict(str, str))
+        :type: typing.Dict[str, typing.Dict[str, str]]
         """
 
         self._map_of_map_property = map_of_map_property
 
-    def to_dict(self):
+    def to_dict(self) -> "typing.Dict[str, typing.Any]":
         """Returns the model properties as a dict"""
         result = {}
 
@@ -121,21 +132,24 @@ class AdditionalPropertiesClass(object):
 
         return result
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model"""
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are equal"""
         if not isinstance(other, AdditionalPropertiesClass):
             return False
 
-        return self.__dict__ == other.__dict__
+        return self.to_dict() == other.to_dict()
 
-    def __ne__(self, other):
+    def __ne__(self, other: "typing.Any") -> bool:
         """Returns true if both objects are not equal"""
-        return not self == other
+        if not isinstance(other, AdditionalPropertiesClass):
+            return True
+
+        return self.to_dict() != other.to_dict()

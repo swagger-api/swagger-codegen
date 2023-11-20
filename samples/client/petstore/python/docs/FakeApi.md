@@ -331,7 +331,7 @@ _float = 3.4 # float | None (optional)
 string = 'string_example' # str | None (optional)
 binary = 'B' # str | None (optional)
 _date = '2013-10-20' # date | None (optional)
-date_time = '2013-10-20T19:20:30+01:00' # datetime | None (optional)
+date_time = petstore_api.datetime.datetime() # datetime.datetime | None (optional)
 password = 'password_example' # str | None (optional)
 param_callback = 'param_callback_example' # str | None (optional)
 
@@ -357,7 +357,7 @@ Name | Type | Description  | Notes
  **string** | **str**| None | [optional] 
  **binary** | **str**| None | [optional] 
  **_date** | **date**| None | [optional] 
- **date_time** | **datetime**| None | [optional] 
+ **date_time** | **datetime.datetime**| None | [optional] 
  **password** | **str**| None | [optional] 
  **param_callback** | **str**| None | [optional] 
 
@@ -393,11 +393,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = petstore_api.FakeApi()
-enum_form_string_array = ['enum_form_string_array_example'] # list[str] | Form parameter enum test (string array) (optional)
+enum_form_string_array = ['enum_form_string_array_example'] # typing.List[str] | Form parameter enum test (string array) (optional)
 enum_form_string = '-efg' # str | Form parameter enum test (string) (optional) (default to -efg)
-enum_header_string_array = ['enum_header_string_array_example'] # list[str] | Header parameter enum test (string array) (optional)
+enum_header_string_array = ['enum_header_string_array_example'] # typing.List[str] | Header parameter enum test (string array) (optional)
 enum_header_string = '-efg' # str | Header parameter enum test (string) (optional) (default to -efg)
-enum_query_string_array = ['enum_query_string_array_example'] # list[str] | Query parameter enum test (string array) (optional)
+enum_query_string_array = ['enum_query_string_array_example'] # typing.List[str] | Query parameter enum test (string array) (optional)
 enum_query_string = '-efg' # str | Query parameter enum test (string) (optional) (default to -efg)
 enum_query_integer = 56 # int | Query parameter enum test (double) (optional)
 enum_query_double = 1.2 # float | Query parameter enum test (double) (optional)
@@ -413,11 +413,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **enum_form_string_array** | [**list[str]**](str.md)| Form parameter enum test (string array) | [optional] 
+ **enum_form_string_array** | [**typing.List[str]**](str.md)| Form parameter enum test (string array) | [optional] 
  **enum_form_string** | **str**| Form parameter enum test (string) | [optional] [default to -efg]
- **enum_header_string_array** | [**list[str]**](str.md)| Header parameter enum test (string array) | [optional] 
+ **enum_header_string_array** | [**typing.List[str]**](str.md)| Header parameter enum test (string array) | [optional] 
  **enum_header_string** | **str**| Header parameter enum test (string) | [optional] [default to -efg]
- **enum_query_string_array** | [**list[str]**](str.md)| Query parameter enum test (string array) | [optional] 
+ **enum_query_string_array** | [**typing.List[str]**](str.md)| Query parameter enum test (string array) | [optional] 
  **enum_query_string** | **str**| Query parameter enum test (string) | [optional] [default to -efg]
  **enum_query_integer** | **int**| Query parameter enum test (double) | [optional] 
  **enum_query_double** | **float**| Query parameter enum test (double) | [optional] 
