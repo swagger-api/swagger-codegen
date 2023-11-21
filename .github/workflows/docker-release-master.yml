@@ -1,0 +1,68 @@
+name: Build And Push Docker Release Master
+
+on:
+  workflow_dispatch:
+    branches: [ "master" ]
+    inputs:
+      tag:
+        description: tag/version to release
+        required: true
+jobs:
+  build_push_docker_release_master:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: git checkout master
+        with:
+          ref: master
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+      - name: preliminary checks
+        run: |
+          docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
+          set -e
+          # fail if templates/generators contain carriage return '\r'
+          /bin/bash ./bin/utils/detect_carriage_return.sh
+          # fail if generators contain merge conflicts
+          /bin/bash ./bin/utils/detect_merge_conflict.sh
+          # fail if generators contain tab '\t'
+          /bin/bash ./bin/utils/detect_tab_in_java_class.sh
+      - uses: s4u/maven-settings-action@v2.8.0
+        name: setup maven settings.xml
+        with:
+          servers: |
+            [{
+                "id": "sonatype-nexus-staging",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+            },
+            {
+                "id": "sonatype-nexus-snapshots",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+            }]
+      - name: Build with Maven
+        run: |
+          # mvn clean install -U
+      - name: docker build and push
+        run: |
+          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator
+          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli          
+          export MY_POM_VERSION=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+          
+          docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} ./modules/swagger-generator
+          docker tag $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_IMAGE_NAME:latest
+          docker push $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_GENERATOR_IMAGE_NAME:latest
+          docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} ./modules/swagger-codegen-cli
+          docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
+          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
+    env:
+      TAG: ${{ github.event.inputs.tag }}
