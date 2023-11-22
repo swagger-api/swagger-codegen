@@ -49,7 +49,7 @@ jobs:
             }]
       - name: Build with Maven
         run: |
-          # mvn clean install -U
+          mvn clean install -U
       - name: docker build and push
         run: |
           export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator
