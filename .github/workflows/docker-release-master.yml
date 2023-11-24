@@ -1,22 +1,22 @@
-name: Build And Push Docker Release 3.0
+name: Build And Push Docker Release Master
 
 on:
   workflow_dispatch:
-    branches: [ "3.0.0" ]
+    branches: [ "master" ]
     inputs:
       tag:
         description: tag/version to release
         required: true
 jobs:
-  build_push_docker_release_30:
+  build_push_docker_release_master:
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-        name: git checkout 3.0.0
+        name: git checkout master
         with:
-          ref: 3.0.0
+          ref: master
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -49,15 +49,14 @@ jobs:
             }]
       - name: Build with Maven
         run: |
-          # mvn clean install -U -Pdocker -Plinux -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089
+          mvn clean install -U
       - name: docker build and push
         run: |
-          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3-minimal
-          export DOCKER_GENERATOR_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3
-          export DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3-root
-          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
-          mvn -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 clean install -Pdocker -Prelease --settings $HOME/.m2/settings.xml
-          docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} -f ./modules/swagger-generator/Dockerfile_minimal ./modules/swagger-generator
+          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator
+          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli          
+          export MY_POM_VERSION=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+          
+          docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} ./modules/swagger-generator
           docker tag $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_IMAGE_NAME:latest
           docker push $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }}
           docker push $DOCKER_GENERATOR_IMAGE_NAME:latest
@@ -65,18 +64,6 @@ jobs:
           docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
           docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }}
           docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
-          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}
-          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:latest
-          echo "docker images:"
-          docker images | grep -i generator
-          echo "pushing $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}"
-          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}
-          echo "pushing $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest"
-          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest
-          echo "tagging $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
-          docker tag $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
-          echo "pushing $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
-          docker -D -l debug push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
       - name: deploy
         run: |
           echo "${{ env.TAG }}"
@@ -86,8 +73,8 @@ jobs:
           CLUSTER_ID="c-n8zp2"
           NAMESPACE_NAME="swagger-oss"
           K8S_OBJECT_TYPE="daemonsets"
-          K8S_OBJECT_NAME="swagger-generator-v3"
-          DEPLOY_IMAGE="swaggerapi/swagger-generator-v3:${{ env.TAG }}"
+          K8S_OBJECT_NAME="swagger-generator"
+          DEPLOY_IMAGE="swaggerapi/swagger-generator:${{ env.TAG }}"
 
           workloadStatus=""
           getStatus() {
