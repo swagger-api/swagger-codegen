@@ -28,8 +28,14 @@ import android.os.Parcelable;
 import android.os.Parcel;
 {{/parcelableModel}}
 {{#useBeanValidation}}
+{{#jakarta}}
+import jakarta.validation.constraints.*;
+import jakarta.validation.Valid;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.constraints.*;
 import javax.validation.Valid;
+{{/jakarta}}
 {{/useBeanValidation}}
 
 {{#models}}

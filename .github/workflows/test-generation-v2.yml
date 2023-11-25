@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
 
     outputs:
@@ -113,8 +113,8 @@ jobs:
       ##### DYNAMIC: Dependent on build environment
       ###############################################
       matrix:
-        ruby: ['2.2']
-        java: [ 8 ]
+        ruby: ['2.3']
+        java: [ 11 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -183,7 +183,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
 
     outputs:
@@ -243,7 +243,7 @@ jobs:
       ###############################################
       matrix:
         node-version: [12.x]
-        java: [ 8 ]
+        java: [ 11 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
@@ -309,7 +309,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 8 ]
+        java: [ 11 ]
 
 
     outputs:
@@ -369,7 +369,7 @@ jobs:
       ###############################################
       matrix:
         node-version: [12.x]
-        java: [ 8 ]
+        java: [ 11 ]
       ###############################################
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
