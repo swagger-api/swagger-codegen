@@ -54,10 +54,8 @@ jobs:
           if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
           then
             ./mvnw clean deploy -U  --settings $HOME/.m2/settings.xml
-            docker buildx build --platform=linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:unstable ./modules/swagger-generator
-            docker push $DOCKER_GENERATOR_IMAGE_NAME:unstable
-            docker build --platform=linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable ./modules/swagger-codegen-cli
-            docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable          
+            docker buildx build --platform=linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --push --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:unstable ./modules/swagger-generator
+            docker build --platform=linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --push --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable ./modules/swagger-codegen-cli
           else
             echo "not deploying release nor building and pushing release docker image: " ${MY_POM_VERSION}
           fi
