@@ -53,12 +53,29 @@ jobs:
           echo "POM VERSION" ${MY_POM_VERSION}
           if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
           then
+            echo "SNAP=true" >> "$GITHUB_ENV"
             ./mvnw clean deploy -U  --settings $HOME/.m2/settings.xml
-            docker buildx build --platform=linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --push --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:unstable ./modules/swagger-generator
-            docker build --platform=linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --push --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable ./modules/swagger-codegen-cli
           else
             echo "not deploying release nor building and pushing release docker image: " ${MY_POM_VERSION}
           fi
+      - name: Build generator image and push
+        uses: docker/build-push-action@v5
+        if: env.SNAP == 'true'
+        with:
+          context: ./modules/swagger-generator
+          push: true
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          provenance: false
+          tags: $DOCKER_GENERATOR_IMAGE_NAME:unstable
+      - name: Build CLI image and push
+        uses: docker/build-push-action@v5
+        if: env.SNAP == 'true'
+        with:
+          context: ./modules/swagger-codegen-cli
+          push: true
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          provenance: false
+          tags: $DOCKER_CODEGEN_CLI_IMAGE_NAME:unstable
   build-java8:
 
     runs-on: ubuntu-latest
