@@ -65,7 +65,6 @@ jobs:
           export GENERATORS_VERSION_PROPERTY=""
           if [[ ! $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
           then
-            echo "SNAP=true" >> "$GITHUB_ENV"
             if [[ ! $GENERATORS_VERSION =~ ^.*SNAPSHOT$ ]];
             then
               # check release version exists
@@ -83,6 +82,8 @@ jobs:
                 export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
               fi
             fi
+          else
+            echo "SNAP=true" >> "$GITHUB_ENV"
           fi
           echo "GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
           echo "GENERATORS_VERSION_PROPERTY=${GENERATORS_VERSION_PROPERTY}" >> $GITHUB_ENV
