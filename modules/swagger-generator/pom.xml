@@ -143,25 +143,7 @@
     </build>
     <profiles>
         <profile>
-            <id>linux</id>
-            <properties>
-                <docker-host-ip>localhost</docker-host-ip>
-            </properties>
-        </profile>
-        <profile>
-            <id>release</id>
-            <properties>
-                <docker-latest-tag>latest</docker-latest-tag>
-                <dockerfile.tag.skip>false</dockerfile.tag.skip>
-            </properties>
-        </profile>
-        <profile>
             <id>docker</id>
-            <properties>
-                <HIDDEN_OPTIONS_DEFAULT_PATH>hiddenOptions.yaml</HIDDEN_OPTIONS_DEFAULT_PATH>
-                <JAVA_MEM>1024m</JAVA_MEM>
-                <HTTP_PORT>8080</HTTP_PORT>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -263,84 +245,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>com.spotify</groupId>
-                        <artifactId>dockerfile-maven-plugin</artifactId>
-                        <version>1.4.13</version>
-                        <executions>
-                            <execution>
-                                <id>build</id>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3</repository>
-                                    <tag>${docker-latest-tag}</tag>
-                                    <buildArgs>
-                                        <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
-                                        <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
-                                        <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
-                                    </buildArgs>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>tag</id>
-                                <goals>
-                                    <goal>tag</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3</repository>
-                                    <tag>${project.version}</tag>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>build-root</id>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
-                                    <tag>${docker-latest-tag}</tag>
-                                    <buildArgs>
-                                        <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
-                                        <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
-                                        <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
-                                    </buildArgs>
-                                    <dockerfile>Dockerfile_root</dockerfile>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>tag-root</id>
-                                <goals>
-                                    <goal>tag</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
-                                    <tag>${project.version}</tag>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>push</id>
-                                <goals>
-                                    <goal>push</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3</repository>
-                                    <tag>${docker-latest-tag}</tag>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>push-root</id>
-                                <goals>
-                                    <goal>push</goal>
-                                </goals>
-                                <configuration>
-                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
-                                    <tag>${docker-latest-tag}</tag>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+
                 </plugins>
             </build>
         </profile>
@@ -427,8 +332,6 @@
     </dependencies>
     <properties>
         <java.security.policy>grantall.policy</java.security.policy>
-        <dockerfile.tag.skip>true</dockerfile.tag.skip>
-        <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <jetty-version>9.4.53.v20231009</jetty-version>
         <inflector-version>2.0.10</inflector-version>
