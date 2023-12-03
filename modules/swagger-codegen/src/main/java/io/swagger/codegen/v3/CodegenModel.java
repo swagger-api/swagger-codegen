@@ -509,4 +509,20 @@ public class CodegenModel extends CodegenObject {
     public void setIsComposedModel(boolean isComposedModel) {
         this.isComposedModel = isComposedModel;
     }
+
+    /**
+     * Get the subtype name from the interface model
+     * @return name : the name assigned to the class by the discriminator mapping or classname if mapping not found
+     */
+    public String getSubtypeName() {
+        if (getInterfaceModels()!=null) {
+            for (CodegenModel interfaceModel : getInterfaceModels()) {
+                if (interfaceModel.getDiscriminator() != null && interfaceModel.getDiscriminator().getMapping() != null) {
+                    String name = interfaceModel.getDiscriminator().getMapping().get(classname);
+                    return name != null ? name : classname;
+                }
+            }
+        }
+        return classname;
+    }
 }
