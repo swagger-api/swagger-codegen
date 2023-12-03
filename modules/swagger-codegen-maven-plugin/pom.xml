@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.46</version>
+        <version>3.0.52-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -18,7 +18,7 @@
     </prerequisites>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.version>3.2.5</maven.version>
+        <maven.version>3.9.5</maven.version>
     </properties>
     <dependencies>
         <dependency>

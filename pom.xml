@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.46</version>
+    <version>3.0.52-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -128,7 +128,7 @@
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit4</artifactId>
-                        <version>3.0.0</version>
+                        <version>${surefire-version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -1149,11 +1149,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>20230227</version>
-            </dependency>
-            <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-common</artifactId>
                 <version>${jersey-version}</version>
@@ -1188,6 +1183,16 @@
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>
@@ -1214,31 +1219,33 @@
     </repositories>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <swagger-codegen-generators-version>1.0.42</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.11</swagger-core-version>
-        <swagger-core-version-v1>1.6.11</swagger-core-version-v1>
-        <swagger-parser-version>2.1.14</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.66</swagger-parser-version-v1>
-        <jackson-version>2.15.1</jackson-version>
-        <jackson-databind-version>2.15.1</jackson-databind-version>
+        <swagger-codegen-generators-version>1.0.46-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.2.19</swagger-core-version>
+        <swagger-core-version-v1>1.6.12</swagger-core-version-v1>
+        <swagger-parser-version>2.1.19</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.68</swagger-parser-version-v1>
+        <jackson-version>2.15.3</jackson-version>
+        <jackson-databind-version>2.15.3</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <commons-io-version>2.11.0</commons-io-version>
-        <commons-cli-version>1.5.0</commons-cli-version>
+        <commons-io-version>2.15.0</commons-io-version>
+        <commons-cli-version>1.6.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.12.0</commons-lang-version>
-        <slf4j-version>2.0.7</slf4j-version>
-        <logback-version>1.4.6</logback-version>
+        <commons-lang-version>3.14.0</commons-lang-version>
+        <slf4j-version>2.0.9</slf4j-version>
+        <logback-version>1.4.11</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.15</jmustache-version>
-        <testng-version>7.7.1</testng-version>
-        <surefire-version>3.0.0</surefire-version>
+        <testng-version>7.8.0</testng-version>
+        <surefire-version>3.1.2</surefire-version>
         <jmockit-version>1.49</jmockit-version>
         <reflections-version>0.10.2</reflections-version>
         <mockito-version>5.2.0</mockito-version>
-        <snakeyaml-version>2.0</snakeyaml-version>
+        <snakeyaml-version>2.2</snakeyaml-version>
         <handlebars-version>4.3.1</handlebars-version>
-        <jersey-version>2.39.1</jersey-version>
+        <httpclient-version>4.5.14</httpclient-version>
+        <jersey-version>2.41</jersey-version>
+        <json-version>20231013</json-version>
     </properties>
 </project>
