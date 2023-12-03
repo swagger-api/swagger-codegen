@@ -1,22 +1,22 @@
-name: Build And Push Docker Release 3.0
+name: Build And Push Docker Release Master
 
 on:
   workflow_dispatch:
-    branches: [ "3.0.0" ]
+    branches: [ "master" ]
     inputs:
       tag:
         description: tag/version to release
         required: true
 jobs:
-  build_push_docker_release_30:
+  build_push_docker_release_master:
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-        name: git checkout 3.0.0
+        name: git checkout master
         with:
-          ref: 3.0.0
+          ref: master
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -53,51 +53,23 @@ jobs:
             }]
       - name: Build with Maven
         run: |
-          mvn clean install -U -Pdocker -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089
-      - name: docker generator build and push
+          mvn clean install -U
+      - name: Build generator image and push
         uses: docker/build-push-action@v5
         with:
           context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile
-          push: true
-          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
-          provenance: false
-          build-args: |
-            HIDDEN_OPTIONS_DEFAULT_PATH=hiddenOptions.yaml
-            JAVA_MEM=1024m
-            HTTP_PORT=8080
-          tags: swaggerapi/swagger-generator-v3:latest,swaggerapi/swagger-generator-v3:${{ env.TAG }}
-      - name: docker generator root build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_root
-          push: true
-          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
-          provenance: false
-          build-args: |
-            HIDDEN_OPTIONS_DEFAULT_PATH=hiddenOptions.yaml
-            JAVA_MEM=1024m
-            HTTP_PORT=8080
-          tags: swaggerapi/swagger-generator-v3-root:latest,swaggerapi/swagger-generator-v3-root:${{ env.TAG }},swaggerapi/swagger-generator-v3:${{ env.TAG }}-root
-      - name: docker cli build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_minimal
           push: true
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
-          tags: swaggerapi/swagger-codegen-cli-v3:latest,swaggerapi/swagger-codegen-cli-v3:${{ env.TAG }}
-      - name: docker minimal build and push
+          tags: swaggerapi/swagger-generator:${{ env.TAG }},swaggerapi/swagger-generator:latest
+      - name: Build CLI image and push
         uses: docker/build-push-action@v5
         with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_minimal
+          context: ./modules/swagger-codegen-cli
           push: true
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
-          tags: swaggerapi/swagger-generator-v3-minimal:latest,swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
+          tags: swaggerapi/swagger-codegen-cli:${{ env.TAG }},swaggerapi/swagger-codegen-cli:latest
       - name: deploy
         run: |
           echo "${{ env.TAG }}"
@@ -107,8 +79,8 @@ jobs:
           CLUSTER_ID="c-n8zp2"
           NAMESPACE_NAME="swagger-oss"
           K8S_OBJECT_TYPE="daemonsets"
-          K8S_OBJECT_NAME="swagger-generator-v3"
-          DEPLOY_IMAGE="swaggerapi/swagger-generator-v3:${{ env.TAG }}"
+          K8S_OBJECT_NAME="swagger-generator"
+          DEPLOY_IMAGE="swaggerapi/swagger-generator:${{ env.TAG }}"
 
           workloadStatus=""
           getStatus() {
