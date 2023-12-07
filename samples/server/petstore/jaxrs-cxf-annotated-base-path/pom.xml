@@ -187,7 +187,7 @@
     <swagger-core-version>1.5.24</swagger-core-version>
     <jetty-version>9.3.27.v20190418</jetty-version>
     <junit-version>4.13.1</junit-version>
-    <logback-version>1.2.9</logback-version>
+    <logback-version>1.4.14</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
     <beanvalidation-version>1.1.0.Final</beanvalidation-version>
     <cxf-version>3.2.1</cxf-version>
