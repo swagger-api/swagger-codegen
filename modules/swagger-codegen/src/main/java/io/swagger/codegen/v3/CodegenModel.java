@@ -4,7 +4,6 @@ import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.media.Discriminator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -518,11 +517,17 @@ public class CodegenModel extends CodegenObject {
         if (getInterfaceModels()!=null) {
             for (CodegenModel interfaceModel : getInterfaceModels()) {
                 if (interfaceModel.getDiscriminator() != null && interfaceModel.getDiscriminator().getMapping() != null) {
-                    String name = interfaceModel.getDiscriminator().getMapping().get(classname);
-                    return name != null ? name : classname;
+                    String subTypeName = interfaceModel.getDiscriminator().getMapping().get(classname);
+                    if (subTypeName!=null) {
+                        return subTypeName;
+                    }
                 }
             }
         }
-        return classname;
+        if (getParentModel()!=null && getParentModel().getDiscriminator()!=null && getParentModel().getDiscriminator().getMapping()!=null) {
+                String subTypeName = getParentModel().getDiscriminator().getMapping().get(classname);
+                return subTypeName!=null?subTypeName:name;
+        }
+        return name;
     }
 }
