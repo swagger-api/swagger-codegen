@@ -22,6 +22,7 @@ import javax.validation.Valid;
 /**
  * SinglePetResponse
  */
+
 public class SinglePetResponse   {
   @JsonProperty("pet")
   private OneOfSinglePetResponsePet pet = null;

@@ -16,6 +16,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public class AnimalApiServiceImpl extends AnimalApiService {
     @Override
     public Response addAnimal(Animal body, SecurityContext securityContext) throws NotFoundException {

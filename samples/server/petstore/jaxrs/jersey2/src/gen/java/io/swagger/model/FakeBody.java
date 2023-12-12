@@ -25,6 +25,7 @@ import javax.validation.Valid;
 /**
  * FakeBody
  */
+
 public class FakeBody   {
   @JsonProperty("integer")
   private Integer integer = null;

@@ -36,6 +36,7 @@ import javax.validation.constraints.*;
 @Path("/dog")
 
 
+
 public class DogApi  {
    private final DogApiService delegate;
 
@@ -68,7 +69,6 @@ public class DogApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response addDog(@Parameter(in = ParameterIn.DEFAULT, description = "Dog object that needs to be added to the store" ,required=true) Dog body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addDog(body,securityContext);
@@ -80,10 +80,8 @@ public class DogApi  {
     @Operation(summary = "Deletes a dog", description = "", tags={ "dog" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid dog value") })
-    public Response deleteDog(@Parameter(in = ParameterIn.PATH, description = "Dog id to delete",required=true) @PathParam("dogId") Long dogId
-,
+    public Response deleteDog(@Parameter(in = ParameterIn.PATH, description = "Dog id to delete",required=true) @PathParam("dogId") Long dogId,
 @Parameter(in = ParameterIn.HEADER, description = "" )@HeaderParam("api_key") String apiKey
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteDog(dogId,apiKey,securityContext);
@@ -99,8 +97,7 @@ public class DogApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Response getDogById(@Parameter(in = ParameterIn.PATH, description = "ID of dog to return",required=true) @PathParam("dogId") Long dogId
-,@Context SecurityContext securityContext)
+    public Response getDogById(@Parameter(in = ParameterIn.PATH, description = "ID of dog to return",required=true) @PathParam("dogId") Long dogId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getDogById(dogId,securityContext);
     }
@@ -116,7 +113,6 @@ public class DogApi  {
         
         @ApiResponse(responseCode = "405", description = "Validation exception") })
     public Response updateDog(@Parameter(in = ParameterIn.DEFAULT, description = "Dog object that needs to be added." ,required=true) Dog body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateDog(body,securityContext);
@@ -128,10 +124,7 @@ public class DogApi  {
     @Operation(summary = "Updates a dog", description = "", tags={ "dog" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updateDogWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of dog that needs to be updated",required=true) @PathParam("dogId") Long dogId
-,@Parameter(description = "")  @FormParam("name")  String name
-,@Parameter(description = "")  @FormParam("status")  String status
-,@Context SecurityContext securityContext)
+    public Response updateDogWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of dog that needs to be updated",required=true) @PathParam("dogId") Long dogId,@Parameter(description = "")  @FormParam("name")  String name,@Parameter(description = "")  @FormParam("status")  String status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateDogWithForm(dogId,name,status,securityContext);
     }

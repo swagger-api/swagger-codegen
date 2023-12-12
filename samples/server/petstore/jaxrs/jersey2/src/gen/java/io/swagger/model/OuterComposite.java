@@ -23,6 +23,7 @@ import javax.validation.Valid;
 /**
  * OuterComposite
  */
+
 public class OuterComposite   {
   @JsonProperty("my_number")
   private BigDecimal myNumber = null;

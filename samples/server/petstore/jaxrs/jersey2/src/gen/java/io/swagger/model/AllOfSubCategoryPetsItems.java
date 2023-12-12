@@ -23,6 +23,7 @@ import javax.validation.Valid;
 /**
  * AllOfSubCategoryPetsItems
  */
+
 public class AllOfSubCategoryPetsItems extends Pet  {
 
   @Override

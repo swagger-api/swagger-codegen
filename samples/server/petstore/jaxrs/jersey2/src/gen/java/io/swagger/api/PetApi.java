@@ -39,6 +39,7 @@ import javax.validation.constraints.*;
 @Path("/pet")
 
 
+
 public class PetApi  {
    private final PetApiService delegate;
 
@@ -74,7 +75,6 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response addPet(@Parameter(in = ParameterIn.DEFAULT, description = "Pet object that needs to be added to the store" ,required=true) Pet body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addPet(body,securityContext);
@@ -89,10 +89,8 @@ public class PetApi  {
 "read:pets"        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid pet value") })
-    public Response deletePet(@Parameter(in = ParameterIn.PATH, description = "Pet id to delete",required=true) @PathParam("petId") Long petId
-,
+    public Response deletePet(@Parameter(in = ParameterIn.PATH, description = "Pet id to delete",required=true) @PathParam("petId") Long petId,
 @Parameter(in = ParameterIn.HEADER, description = "" )@HeaderParam("api_key") String apiKey
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deletePet(petId,apiKey,securityContext);
@@ -105,7 +103,6 @@ public class PetApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
     public Response doCategoryStuff(@Parameter(in = ParameterIn.DEFAULT, description = "" ) SubCategory body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.doCategoryStuff(body,securityContext);
@@ -123,8 +120,7 @@ public class PetApi  {
         
         @ApiResponse(responseCode = "400", description = "Invalid status value") })
     public Response findPetsByStatus(@Parameter(in = ParameterIn.QUERY, description = "Status values that need to be considered for filter",required=true, schema=@Schema(allowableValues={ "available", "pending", "sold" })
-) @QueryParam("status") List<String> status
-,@Context SecurityContext securityContext)
+) @QueryParam("status") List<String> status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByStatus(status,securityContext);
     }
@@ -140,8 +136,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
         
         @ApiResponse(responseCode = "400", description = "Invalid tag value") })
-    public Response findPetsByTags(@Parameter(in = ParameterIn.QUERY, description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags
-,@Context SecurityContext securityContext)
+    public Response findPetsByTags(@Parameter(in = ParameterIn.QUERY, description = "Tags to filter by",required=true) @QueryParam("tags") List<String> tags,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findPetsByTags(tags,securityContext);
     }
@@ -157,8 +152,7 @@ public class PetApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Response getPetById(@Parameter(in = ParameterIn.PATH, description = "ID of pet to return",required=true) @PathParam("petId") Long petId
-,@Context SecurityContext securityContext)
+    public Response getPetById(@Parameter(in = ParameterIn.PATH, description = "ID of pet to return",required=true) @PathParam("petId") Long petId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getPetById(petId,securityContext);
     }
@@ -177,7 +171,6 @@ public class PetApi  {
         
         @ApiResponse(responseCode = "405", description = "Validation exception") })
     public Response updatePet(@Parameter(in = ParameterIn.DEFAULT, description = "Pet object that needs to be added to the store" ,required=true) Pet body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updatePet(body,securityContext);
@@ -192,10 +185,7 @@ public class PetApi  {
 "read:pets"        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updatePetWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Long petId
-,@Parameter(description = "")  @FormParam("name")  String name
-,@Parameter(description = "")  @FormParam("status")  String status
-,@Context SecurityContext securityContext)
+    public Response updatePetWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of pet that needs to be updated",required=true) @PathParam("petId") Long petId,@Parameter(description = "")  @FormParam("name")  String name,@Parameter(description = "")  @FormParam("status")  String status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updatePetWithForm(petId,name,status,securityContext);
     }
@@ -209,12 +199,8 @@ public class PetApi  {
 "read:pets"        })    }, tags={ "pet" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
-    public Response uploadFile(@Parameter(in = ParameterIn.PATH, description = "ID of pet to update",required=true) @PathParam("petId") Long petId
-,@Parameter(description = "")  @FormParam("additionalMetadata")  String additionalMetadata
-,@FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("file") FormDataContentDisposition fileDetail
-,@Context SecurityContext securityContext)
+    public Response uploadFile(@Parameter(in = ParameterIn.PATH, description = "ID of pet to update",required=true) @PathParam("petId") Long petId,@Parameter(description = "")  @FormParam("additionalMetadata")  String additionalMetadata,@FormDataParam("file") InputStream fileInputStream, @FormDataParam("file") FormDataContentDisposition fileDetail,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadFile(petId,additionalMetadata,fileInputStream,fileDetail,securityContext);
+        return delegate.uploadFile(petId,additionalMetadata,fileInputStream, fileDetail,securityContext);
     }
 }

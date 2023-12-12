@@ -25,6 +25,7 @@ import javax.validation.Valid;
 /**
  * EnumFormBody
  */
+
 public class EnumFormBody   {
   /**
    * Gets or Sets enumFormStringArray

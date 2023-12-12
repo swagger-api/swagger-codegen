@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.*;
  * FormatTest
  */
 
+
 @XmlRootElement(name = "FormatTest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "FormatTest")

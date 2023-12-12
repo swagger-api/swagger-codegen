@@ -22,6 +22,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public class FakeApiServiceImpl extends FakeApiService {
     @Override
     public Response fakeOuterBooleanSerialize(Boolean body, SecurityContext securityContext) throws NotFoundException {

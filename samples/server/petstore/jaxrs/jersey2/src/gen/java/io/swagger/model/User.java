@@ -22,6 +22,7 @@ import javax.validation.Valid;
 /**
  * User
  */
+
 public class User   {
   @JsonProperty("id")
   private Long id = null;

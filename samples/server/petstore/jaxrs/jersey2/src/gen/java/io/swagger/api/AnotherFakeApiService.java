@@ -16,6 +16,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public abstract class AnotherFakeApiService {
     public abstract Response testSpecialTags(Client body,SecurityContext securityContext) throws NotFoundException;
 }

@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * FakeJsonFormDataBody
  */
 
+
 @XmlRootElement(name = "FakeJsonFormDataBody")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "FakeJsonFormDataBody")

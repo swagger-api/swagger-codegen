@@ -36,6 +36,7 @@ import javax.validation.constraints.*;
 @Path("/allPets")
 
 
+
 public class AllPetsApi  {
    private final AllPetsApiService delegate;
 

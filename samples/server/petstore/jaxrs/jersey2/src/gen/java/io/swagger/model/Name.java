@@ -23,6 +23,7 @@ import javax.validation.Valid;
  * Model for testing model name same as property name
  */
 @Schema(description = "Model for testing model name same as property name")
+
 public class Name   {
   @JsonProperty("name")
   private Integer name = null;

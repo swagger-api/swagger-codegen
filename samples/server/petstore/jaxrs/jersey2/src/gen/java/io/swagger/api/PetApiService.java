@@ -19,6 +19,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public abstract class PetApiService {
     public abstract Response addPet(Pet body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deletePet(Long petId,String apiKey,SecurityContext securityContext) throws NotFoundException;
@@ -28,5 +29,5 @@ public abstract class PetApiService {
     public abstract Response getPetById(Long petId,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updatePet(Pet body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updatePetWithForm(Long petId,String name,String status,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response uploadFile(Long petId,String additionalMetadata,InputStream fileInputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadFile(Long petId,String additionalMetadata,java.io.InputStream fileInputStream, FormDataContentDisposition fileDetail,SecurityContext securityContext) throws NotFoundException;
 }

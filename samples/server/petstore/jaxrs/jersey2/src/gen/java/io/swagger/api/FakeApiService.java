@@ -22,6 +22,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public abstract class FakeApiService {
     public abstract Response fakeOuterBooleanSerialize(Boolean body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response fakeOuterCompositeSerialize(OuterComposite body,SecurityContext securityContext) throws NotFoundException;

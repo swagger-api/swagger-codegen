@@ -36,6 +36,7 @@ import javax.validation.constraints.*;
 @Path("/fake_classname_test")
 
 
+
 public class FakeClassnameTestApi  {
    private final FakeClassnameTestApiService delegate;
 
@@ -69,7 +70,6 @@ public class FakeClassnameTestApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     public Response testClassname(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.testClassname(body,securityContext);

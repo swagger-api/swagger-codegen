@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.*;
  * AllOfSubCategoryCategory
  */
 
+
 @XmlRootElement(name = "AllOfSubCategoryCategory")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "AllOfSubCategoryCategory")

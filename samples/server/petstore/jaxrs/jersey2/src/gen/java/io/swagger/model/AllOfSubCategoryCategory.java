@@ -24,6 +24,7 @@ import javax.validation.Valid;
 /**
  * AllOfSubCategoryCategory
  */
+
 public class AllOfSubCategoryCategory extends Category  {
   @JsonProperty("foo")
   private Boolean foo = null;

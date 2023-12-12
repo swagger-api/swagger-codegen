@@ -55,6 +55,7 @@ import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
 
+
 @Component("io.swagger.client.ApiClient")
 public class ApiClient {
     public enum CollectionFormat {

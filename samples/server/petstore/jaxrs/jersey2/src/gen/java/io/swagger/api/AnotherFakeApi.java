@@ -36,6 +36,7 @@ import javax.validation.constraints.*;
 @Path("/another-fake")
 
 
+
 public class AnotherFakeApi  {
    private final AnotherFakeApiService delegate;
 
@@ -68,7 +69,6 @@ public class AnotherFakeApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
     public Response testSpecialTags(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.testSpecialTags(body,securityContext);

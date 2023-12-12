@@ -21,6 +21,7 @@ import javax.validation.Valid;
 /**
  * AllPetsResponse
  */
+
 public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems>  {
 
   @Override

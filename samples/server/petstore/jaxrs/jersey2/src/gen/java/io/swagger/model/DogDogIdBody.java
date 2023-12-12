@@ -22,6 +22,7 @@ import javax.validation.Valid;
 /**
  * DogDogIdBody
  */
+
 public class DogDogIdBody   {
   @JsonProperty("name")
   private String name = null;

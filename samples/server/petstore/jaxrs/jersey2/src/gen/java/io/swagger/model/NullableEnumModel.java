@@ -23,6 +23,7 @@ import javax.validation.Valid;
 /**
  * NullableEnumModel
  */
+
 public class NullableEnumModel   {
   /**
    * Gets or Sets enumProp

@@ -16,6 +16,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public class UserApiServiceImpl extends UserApiService {
     @Override
     public Response createUser(User body, SecurityContext securityContext) throws NotFoundException {

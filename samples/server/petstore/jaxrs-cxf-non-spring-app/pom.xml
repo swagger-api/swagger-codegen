@@ -39,9 +39,9 @@
         </configuration>
         <dependencies>
           <dependency>
-              <groupId>javax.validation</groupId>
-              <artifactId>validation-api</artifactId>
-              <version>${beanvalidation-version}</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${beanvalidation-version}</version>
           </dependency>
         </dependencies>
         <executions>
@@ -177,16 +177,16 @@
         <artifactId>jackson-datatype-joda</artifactId>
         <version>${jackson-jaxrs-version}</version>
     </dependency>
-      <dependency>
-          <groupId>javax.xml.bind</groupId>
-          <artifactId>jaxb-api</artifactId>
-          <version>2.2.6</version>
-      </dependency>
-      <dependency>
-          <groupId>javax.activation</groupId>
-          <artifactId>activation</artifactId>
-          <version>1.1.1</version>
-      </dependency>
+    <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.2.6</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.activation</groupId>
+        <artifactId>activation</artifactId>
+        <version>1.1.1</version>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
@@ -204,7 +204,7 @@
     <swagger-core-version>2.0.0</swagger-core-version>
     <jetty-version>9.2.9.v20150224</jetty-version>
     <junit-version>4.13.1</junit-version>
-    <logback-version>1.2.9</logback-version>
+    <logback-version>1.4.14</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
     <beanvalidation-version>1.1.0.Final</beanvalidation-version>
     <cxf-version>3.2.4</cxf-version>

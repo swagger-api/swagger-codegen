@@ -16,6 +16,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
+
 public abstract class DogApiService {
     public abstract Response addDog(Dog body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteDog(Long dogId,String apiKey,SecurityContext securityContext) throws NotFoundException;

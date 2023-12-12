@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * SpecialModelName
  */
 
+
 @XmlRootElement(name = "$special[model.name]")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "$special[model.name]")

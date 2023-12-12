@@ -36,6 +36,7 @@ import javax.validation.constraints.*;
 @Path("/animal")
 
 
+
 public class AnimalApi  {
    private final AnimalApiService delegate;
 
@@ -68,7 +69,6 @@ public class AnimalApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
     public Response addAnimal(@Parameter(in = ParameterIn.DEFAULT, description = "Animal object that needs to be added to the store" ,required=true) Animal body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addAnimal(body,securityContext);
@@ -80,10 +80,8 @@ public class AnimalApi  {
     @Operation(summary = "Deletes a animal", description = "", tags={ "animal" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "400", description = "Invalid animal value") })
-    public Response deleteAnimal(@Parameter(in = ParameterIn.PATH, description = "Animal id to delete",required=true) @PathParam("animalId") Long animalId
-,
+    public Response deleteAnimal(@Parameter(in = ParameterIn.PATH, description = "Animal id to delete",required=true) @PathParam("animalId") Long animalId,
 @Parameter(in = ParameterIn.HEADER, description = "" )@HeaderParam("api_key") String apiKey
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteAnimal(animalId,apiKey,securityContext);
@@ -99,8 +97,7 @@ public class AnimalApi  {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         
         @ApiResponse(responseCode = "404", description = "Pet not found") })
-    public Response getAnimalById(@Parameter(in = ParameterIn.PATH, description = "ID of pet to return",required=true) @PathParam("animalId") Long animalId
-,@Context SecurityContext securityContext)
+    public Response getAnimalById(@Parameter(in = ParameterIn.PATH, description = "ID of pet to return",required=true) @PathParam("animalId") Long animalId,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getAnimalById(animalId,securityContext);
     }
@@ -116,7 +113,6 @@ public class AnimalApi  {
         
         @ApiResponse(responseCode = "405", description = "Validation exception") })
     public Response updateAnimal(@Parameter(in = ParameterIn.DEFAULT, description = "Animal object that needs to be added." ,required=true) Animal body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateAnimal(body,securityContext);
@@ -128,10 +124,7 @@ public class AnimalApi  {
     @Operation(summary = "Updates a animal", description = "", tags={ "animal" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "405", description = "Invalid input") })
-    public Response updateAnimalWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of animal that needs to be updated",required=true) @PathParam("animalId") Long animalId
-,@Parameter(description = "")  @FormParam("name")  String name
-,@Parameter(description = "")  @FormParam("status")  String status
-,@Context SecurityContext securityContext)
+    public Response updateAnimalWithForm(@Parameter(in = ParameterIn.PATH, description = "ID of animal that needs to be updated",required=true) @PathParam("animalId") Long animalId,@Parameter(description = "")  @FormParam("name")  String name,@Parameter(description = "")  @FormParam("status")  String status,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateAnimalWithForm(animalId,name,status,securityContext);
     }

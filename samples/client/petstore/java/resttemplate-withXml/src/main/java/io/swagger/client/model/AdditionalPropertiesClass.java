@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.*;
  * AdditionalPropertiesClass
  */
 
+
 @XmlRootElement(name = "AdditionalPropertiesClass")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "AdditionalPropertiesClass")

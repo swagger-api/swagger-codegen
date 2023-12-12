@@ -23,6 +23,7 @@ import javax.validation.Valid;
  * Model for testing reserved words
  */
 @Schema(description = "Model for testing reserved words")
+
 public class ModelReturn   {
   @JsonProperty("return")
   private Integer _return = null;

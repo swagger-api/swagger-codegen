@@ -231,7 +231,7 @@
     <swagger-annotations-version>2.0.0</swagger-annotations-version>
     <spring-web-version>4.3.9.RELEASE</spring-web-version>
     <jackson-version>2.8.9</jackson-version>
-    <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
+    <jackson-threetenbp-version>2.15.2</jackson-threetenbp-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.13.1</junit-version>
   </properties>

@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.*;
  * NumberOnly
  */
 
+
 @XmlRootElement(name = "NumberOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "NumberOnly")

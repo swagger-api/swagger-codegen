@@ -22,6 +22,7 @@ import javax.validation.Valid;
 /**
  * FakeJsonFormDataBody
  */
+
 public class FakeJsonFormDataBody   {
   @JsonProperty("param")
   private String param = null;

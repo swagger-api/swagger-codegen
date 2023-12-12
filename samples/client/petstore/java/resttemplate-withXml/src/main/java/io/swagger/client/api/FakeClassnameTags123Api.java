@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+
 @Component("io.swagger.client.api.FakeClassnameTags123Api")
 public class FakeClassnameTags123Api {
     private ApiClient apiClient;

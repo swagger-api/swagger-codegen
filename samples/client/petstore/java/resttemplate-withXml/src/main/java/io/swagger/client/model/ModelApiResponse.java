@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * ModelApiResponse
  */
 
+
 @XmlRootElement(name = "ModelApiResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ModelApiResponse")

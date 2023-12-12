@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.MultiValueMap;
 
+
 public class HttpBasicAuth implements Authentication {
     private String username;
     private String password;

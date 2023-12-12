@@ -26,6 +26,7 @@ import javax.validation.Valid;
 /**
  * MapTest
  */
+
 public class MapTest   {
   @JsonProperty("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;

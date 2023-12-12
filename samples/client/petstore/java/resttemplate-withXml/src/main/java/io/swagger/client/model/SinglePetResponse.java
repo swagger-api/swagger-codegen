@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * SinglePetResponse
  */
 
+
 @XmlRootElement(name = "SinglePetResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "SinglePetResponse")

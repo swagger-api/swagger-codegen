@@ -36,6 +36,7 @@ import javax.validation.constraints.*;
 @Path("/user")
 
 
+
 public class UserApi  {
    private final UserApiService delegate;
 
@@ -68,7 +69,6 @@ public class UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response createUser(@Parameter(in = ParameterIn.DEFAULT, description = "Created user object" ,required=true) User body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUser(body,securityContext);
@@ -81,7 +81,6 @@ public class UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response createUsersWithArrayInput(@Parameter(in = ParameterIn.DEFAULT, description = "List of user object" ,required=true) List<User> body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUsersWithArrayInput(body,securityContext);
@@ -94,7 +93,6 @@ public class UserApi  {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response createUsersWithListInput(@Parameter(in = ParameterIn.DEFAULT, description = "List of user object" ,required=true) List<User> body
-
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUsersWithListInput(body,securityContext);
@@ -108,8 +106,7 @@ public class UserApi  {
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public Response deleteUser(@Parameter(in = ParameterIn.PATH, description = "The name that needs to be deleted",required=true) @PathParam("username") String username
-,@Context SecurityContext securityContext)
+    public Response deleteUser(@Parameter(in = ParameterIn.PATH, description = "The name that needs to be deleted",required=true) @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteUser(username,securityContext);
     }
@@ -124,8 +121,7 @@ public class UserApi  {
         @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
         @ApiResponse(responseCode = "404", description = "User not found") })
-    public Response getUserByName(@Parameter(in = ParameterIn.PATH, description = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username
-,@Context SecurityContext securityContext)
+    public Response getUserByName(@Parameter(in = ParameterIn.PATH, description = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getUserByName(username,securityContext);
     }
@@ -138,9 +134,7 @@ public class UserApi  {
         @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = String.class))),
         
         @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
-    public Response loginUser(@Parameter(in = ParameterIn.QUERY, description = "The user name for login",required=true) @QueryParam("username") String username
-,@Parameter(in = ParameterIn.QUERY, description = "The password for login in clear text",required=true) @QueryParam("password") String password
-,@Context SecurityContext securityContext)
+    public Response loginUser(@Parameter(in = ParameterIn.QUERY, description = "The user name for login",required=true) @QueryParam("username") String username,@Parameter(in = ParameterIn.QUERY, description = "The password for login in clear text",required=true) @QueryParam("password") String password,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.loginUser(username,password,securityContext);
     }
@@ -165,9 +159,7 @@ public class UserApi  {
         
         @ApiResponse(responseCode = "404", description = "User not found") })
     public Response updateUser(@Parameter(in = ParameterIn.DEFAULT, description = "Updated user object" ,required=true) User body
-
-,@Parameter(in = ParameterIn.PATH, description = "name that need to be deleted",required=true) @PathParam("username") String username
-,@Context SecurityContext securityContext)
+,@Parameter(in = ParameterIn.PATH, description = "name that need to be deleted",required=true) @PathParam("username") String username,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateUser(body,username,securityContext);
     }

@@ -23,6 +23,7 @@ import javax.validation.Valid;
 /**
  * PetIdUploadImageBody
  */
+
 public class PetIdUploadImageBody   {
   @JsonProperty("additionalMetadata")
   private String additionalMetadata = null;
