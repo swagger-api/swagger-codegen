@@ -4,7 +4,6 @@ import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.media.Discriminator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -508,5 +507,27 @@ public class CodegenModel extends CodegenObject {
 
     public void setIsComposedModel(boolean isComposedModel) {
         this.isComposedModel = isComposedModel;
+    }
+
+    /**
+     * Get the subtype name from the interface model
+     * @return name : the name assigned to the class by the discriminator mapping or classname if mapping not found
+     */
+    public String getSubtypeName() {
+        if (getInterfaceModels()!=null) {
+            for (CodegenModel interfaceModel : getInterfaceModels()) {
+                if (interfaceModel.getDiscriminator() != null && interfaceModel.getDiscriminator().getMapping() != null) {
+                    String subTypeName = interfaceModel.getDiscriminator().getMapping().get(classname);
+                    if (subTypeName!=null) {
+                        return subTypeName;
+                    }
+                }
+            }
+        }
+        if (getParentModel()!=null && getParentModel().getDiscriminator()!=null && getParentModel().getDiscriminator().getMapping()!=null) {
+                String subTypeName = getParentModel().getDiscriminator().getMapping().get(classname);
+                return subTypeName!=null?subTypeName:name;
+        }
+        return name;
     }
 }
