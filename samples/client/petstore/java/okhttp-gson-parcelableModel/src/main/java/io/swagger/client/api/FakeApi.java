@@ -59,6 +59,45 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
+    public static class FakeOuterBooleanSerializeOptionals {
+        public Boolean body() {
+            return this.body;
+        }
+
+        public FakeOuterBooleanSerializeOptionals body(Boolean body) {
+            this.body = body;
+            return this;
+        }
+
+        private Boolean body = null;
+    }
+
+    /**
+     * Build call for fakeOuterBooleanSerialize
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterBooleanSerializeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return fakeOuterBooleanSerializeCall(null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for fakeOuterBooleanSerialize
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterBooleanSerializeOptsCall(FakeOuterBooleanSerializeOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerializeCall(optionals.body(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for fakeOuterBooleanSerialize
      * @param body Input boolean as post body (optional)
@@ -69,7 +108,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call fakeOuterBooleanSerializeCall(Boolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/outer/boolean";
 
@@ -107,17 +146,41 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterBooleanSerializeValidateBeforeCall(Boolean body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * 
+     * Test serialization of outer boolean types
+     * @return Boolean
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public Boolean fakeOuterBooleanSerialize() throws ApiException {
+        return fakeOuterBooleanSerialize(null);
+    }
+
+    /**
+     * 
+     * Test serialization of outer boolean types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return Boolean
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public Boolean fakeOuterBooleanSerializeOpts(FakeOuterBooleanSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerialize(optionals.body());
     }
 
     /**
@@ -135,6 +198,30 @@ public class FakeApi {
     /**
      * 
      * Test serialization of outer boolean types
+     * @return Boolean
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Boolean> fakeOuterBooleanSerializeWithHttpInfo() throws ApiException {
+        return fakeOuterBooleanSerializeWithHttpInfo(null);
+    }
+
+    /**
+     * 
+     * Test serialization of outer boolean types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return Boolean
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Boolean> fakeOuterBooleanSerializeOptsWithHttpInfo(FakeOuterBooleanSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerializeWithHttpInfo(optionals.body());
+    }
+
+    /**
+     * 
+     * Test serialization of outer boolean types
      * @param body Input boolean as post body (optional)
      * @return ApiResponse&lt;Boolean&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -143,6 +230,32 @@ public class FakeApi {
         com.squareup.okhttp.Call call = fakeOuterBooleanSerializeValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<Boolean>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of outer boolean types
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterBooleanSerializeAsync(final ApiCallback<Boolean> callback) throws ApiException {
+        return fakeOuterBooleanSerializeAsync(null, callback);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of outer boolean types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterBooleanSerializeOptsAsync(FakeOuterBooleanSerializeOptionals optionals, final ApiCallback<Boolean> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerializeAsync(optionals.body(), callback);
     }
 
     /**
@@ -179,6 +292,45 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+    public static class FakeOuterCompositeSerializeOptionals {
+        public OuterComposite body() {
+            return this.body;
+        }
+
+        public FakeOuterCompositeSerializeOptionals body(OuterComposite body) {
+            this.body = body;
+            return this;
+        }
+
+        private OuterComposite body = null;
+    }
+
+    /**
+     * Build call for fakeOuterCompositeSerialize
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterCompositeSerializeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return fakeOuterCompositeSerializeCall(null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for fakeOuterCompositeSerialize
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterCompositeSerializeOptsCall(FakeOuterCompositeSerializeOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerializeCall(optionals.body(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for fakeOuterCompositeSerialize
      * @param body Input composite as post body (optional)
@@ -189,7 +341,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call fakeOuterCompositeSerializeCall(OuterComposite body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/outer/composite";
 
@@ -227,17 +379,41 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterCompositeSerializeValidateBeforeCall(OuterComposite body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+
         com.squareup.okhttp.Call call = fakeOuterCompositeSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * 
+     * Test serialization of object with outer number type
+     * @return OuterComposite
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public OuterComposite fakeOuterCompositeSerialize() throws ApiException {
+        return fakeOuterCompositeSerialize(null);
+    }
+
+    /**
+     * 
+     * Test serialization of object with outer number type
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return OuterComposite
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public OuterComposite fakeOuterCompositeSerializeOpts(FakeOuterCompositeSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerialize(optionals.body());
     }
 
     /**
@@ -255,6 +431,30 @@ public class FakeApi {
     /**
      * 
      * Test serialization of object with outer number type
+     * @return OuterComposite
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<OuterComposite> fakeOuterCompositeSerializeWithHttpInfo() throws ApiException {
+        return fakeOuterCompositeSerializeWithHttpInfo(null);
+    }
+
+    /**
+     * 
+     * Test serialization of object with outer number type
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return OuterComposite
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<OuterComposite> fakeOuterCompositeSerializeOptsWithHttpInfo(FakeOuterCompositeSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerializeWithHttpInfo(optionals.body());
+    }
+
+    /**
+     * 
+     * Test serialization of object with outer number type
      * @param body Input composite as post body (optional)
      * @return ApiResponse&lt;OuterComposite&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -263,6 +463,32 @@ public class FakeApi {
         com.squareup.okhttp.Call call = fakeOuterCompositeSerializeValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<OuterComposite>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of object with outer number type
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterCompositeSerializeAsync(final ApiCallback<OuterComposite> callback) throws ApiException {
+        return fakeOuterCompositeSerializeAsync(null, callback);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of object with outer number type
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterCompositeSerializeOptsAsync(FakeOuterCompositeSerializeOptionals optionals, final ApiCallback<OuterComposite> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerializeAsync(optionals.body(), callback);
     }
 
     /**
@@ -299,6 +525,45 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+    public static class FakeOuterNumberSerializeOptionals {
+        public BigDecimal body() {
+            return this.body;
+        }
+
+        public FakeOuterNumberSerializeOptionals body(BigDecimal body) {
+            this.body = body;
+            return this;
+        }
+
+        private BigDecimal body = null;
+    }
+
+    /**
+     * Build call for fakeOuterNumberSerialize
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterNumberSerializeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return fakeOuterNumberSerializeCall(null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for fakeOuterNumberSerialize
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterNumberSerializeOptsCall(FakeOuterNumberSerializeOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerializeCall(optionals.body(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for fakeOuterNumberSerialize
      * @param body Input number as post body (optional)
@@ -309,7 +574,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call fakeOuterNumberSerializeCall(BigDecimal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/outer/number";
 
@@ -347,17 +612,41 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterNumberSerializeValidateBeforeCall(BigDecimal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * 
+     * Test serialization of outer number types
+     * @return BigDecimal
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public BigDecimal fakeOuterNumberSerialize() throws ApiException {
+        return fakeOuterNumberSerialize(null);
+    }
+
+    /**
+     * 
+     * Test serialization of outer number types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return BigDecimal
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public BigDecimal fakeOuterNumberSerializeOpts(FakeOuterNumberSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerialize(optionals.body());
     }
 
     /**
@@ -375,6 +664,30 @@ public class FakeApi {
     /**
      * 
      * Test serialization of outer number types
+     * @return BigDecimal
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<BigDecimal> fakeOuterNumberSerializeWithHttpInfo() throws ApiException {
+        return fakeOuterNumberSerializeWithHttpInfo(null);
+    }
+
+    /**
+     * 
+     * Test serialization of outer number types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return BigDecimal
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<BigDecimal> fakeOuterNumberSerializeOptsWithHttpInfo(FakeOuterNumberSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerializeWithHttpInfo(optionals.body());
+    }
+
+    /**
+     * 
+     * Test serialization of outer number types
      * @param body Input number as post body (optional)
      * @return ApiResponse&lt;BigDecimal&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -383,6 +696,32 @@ public class FakeApi {
         com.squareup.okhttp.Call call = fakeOuterNumberSerializeValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<BigDecimal>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of outer number types
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterNumberSerializeAsync(final ApiCallback<BigDecimal> callback) throws ApiException {
+        return fakeOuterNumberSerializeAsync(null, callback);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of outer number types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterNumberSerializeOptsAsync(FakeOuterNumberSerializeOptionals optionals, final ApiCallback<BigDecimal> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerializeAsync(optionals.body(), callback);
     }
 
     /**
@@ -419,6 +758,45 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+    public static class FakeOuterStringSerializeOptionals {
+        public String body() {
+            return this.body;
+        }
+
+        public FakeOuterStringSerializeOptionals body(String body) {
+            this.body = body;
+            return this;
+        }
+
+        private String body = null;
+    }
+
+    /**
+     * Build call for fakeOuterStringSerialize
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterStringSerializeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return fakeOuterStringSerializeCall(null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for fakeOuterStringSerialize
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterStringSerializeOptsCall(FakeOuterStringSerializeOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerializeCall(optionals.body(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for fakeOuterStringSerialize
      * @param body Input string as post body (optional)
@@ -429,7 +807,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call fakeOuterStringSerializeCall(String body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/outer/string";
 
@@ -467,17 +845,41 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call fakeOuterStringSerializeValidateBeforeCall(String body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+
         com.squareup.okhttp.Call call = fakeOuterStringSerializeCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * 
+     * Test serialization of outer string types
+     * @return String
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public String fakeOuterStringSerialize() throws ApiException {
+        return fakeOuterStringSerialize(null);
+    }
+
+    /**
+     * 
+     * Test serialization of outer string types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return String
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public String fakeOuterStringSerializeOpts(FakeOuterStringSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerialize(optionals.body());
     }
 
     /**
@@ -495,6 +897,30 @@ public class FakeApi {
     /**
      * 
      * Test serialization of outer string types
+     * @return String
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<String> fakeOuterStringSerializeWithHttpInfo() throws ApiException {
+        return fakeOuterStringSerializeWithHttpInfo(null);
+    }
+
+    /**
+     * 
+     * Test serialization of outer string types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @return String
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<String> fakeOuterStringSerializeOptsWithHttpInfo(FakeOuterStringSerializeOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerializeWithHttpInfo(optionals.body());
+    }
+
+    /**
+     * 
+     * Test serialization of outer string types
      * @param body Input string as post body (optional)
      * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -503,6 +929,32 @@ public class FakeApi {
         com.squareup.okhttp.Call call = fakeOuterStringSerializeValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<String>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of outer string types
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterStringSerializeAsync(final ApiCallback<String> callback) throws ApiException {
+        return fakeOuterStringSerializeAsync(null, callback);
+    }
+
+    /**
+     *  (asynchronously)
+     * Test serialization of outer string types
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call fakeOuterStringSerializeOptsAsync(FakeOuterStringSerializeOptionals optionals, final ApiCallback<String> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerializeAsync(optionals.body(), callback);
     }
 
     /**
@@ -539,6 +991,8 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for testClientModel
      * @param body client model (required)
@@ -549,7 +1003,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testClientModelCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake";
 
@@ -587,22 +1041,23 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testClientModelValidateBeforeCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testClientModel(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = testClientModelCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * To test \&quot;client\&quot; model
@@ -616,6 +1071,7 @@ public class FakeApi {
         return resp.getData();
     }
 
+
     /**
      * To test \&quot;client\&quot; model
      * To test \&quot;client\&quot; model
@@ -628,6 +1084,7 @@ public class FakeApi {
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * To test \&quot;client\&quot; model (asynchronously)
@@ -663,6 +1120,8 @@ public class FakeApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for testEndpointParameters
      * @param body  (required)
@@ -673,7 +1132,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testEndpointParametersCall(FakeBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake";
 
@@ -711,22 +1170,23 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] { "http_basic_test" };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testEndpointParametersValidateBeforeCall(FakeBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testEndpointParameters(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = testEndpointParametersCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -737,6 +1197,7 @@ public class FakeApi {
     public void testEndpointParameters(FakeBody body) throws ApiException {
         testEndpointParametersWithHttpInfo(body);
     }
+
 
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -749,6 +1210,7 @@ public class FakeApi {
         com.squareup.okhttp.Call call = testEndpointParametersValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트  (asynchronously)
@@ -783,6 +1245,85 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    public static class TestEnumParametersOptionals {
+        public List<String> enumHeaderStringArray() {
+            return this.enumHeaderStringArray;
+        }
+
+        public TestEnumParametersOptionals enumHeaderStringArray(List<String> enumHeaderStringArray) {
+            this.enumHeaderStringArray = enumHeaderStringArray;
+            return this;
+        }
+
+        private List<String> enumHeaderStringArray = null;
+        public String enumHeaderString() {
+            return this.enumHeaderString;
+        }
+
+        public TestEnumParametersOptionals enumHeaderString(String enumHeaderString) {
+            this.enumHeaderString = enumHeaderString;
+            return this;
+        }
+
+        private String enumHeaderString = null;
+        public List<String> enumQueryStringArray() {
+            return this.enumQueryStringArray;
+        }
+
+        public TestEnumParametersOptionals enumQueryStringArray(List<String> enumQueryStringArray) {
+            this.enumQueryStringArray = enumQueryStringArray;
+            return this;
+        }
+
+        private List<String> enumQueryStringArray = null;
+        public String enumQueryString() {
+            return this.enumQueryString;
+        }
+
+        public TestEnumParametersOptionals enumQueryString(String enumQueryString) {
+            this.enumQueryString = enumQueryString;
+            return this;
+        }
+
+        private String enumQueryString = null;
+        public Integer enumQueryInteger() {
+            return this.enumQueryInteger;
+        }
+
+        public TestEnumParametersOptionals enumQueryInteger(Integer enumQueryInteger) {
+            this.enumQueryInteger = enumQueryInteger;
+            return this;
+        }
+
+        private Integer enumQueryInteger = null;
+    }
+
+    /**
+     * Build call for testEnumParameters
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call testEnumParametersCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return testEnumParametersCall(null, null, null, null, null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for testEnumParameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call testEnumParametersOptsCall(TestEnumParametersOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        return testEnumParametersCall(optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for testEnumParameters
      * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
@@ -797,7 +1338,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testEnumParametersCall(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/fake";
 
@@ -845,17 +1386,39 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testEnumParametersValidateBeforeCall(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+
         com.squareup.okhttp.Call call = testEnumParametersCall(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void testEnumParameters() throws ApiException {
+        testEnumParameters(null, null, null, null, null);
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void testEnumParametersOpts(TestEnumParametersOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        testEnumParameters(optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger());
     }
 
     /**
@@ -875,6 +1438,28 @@ public class FakeApi {
     /**
      * To test enum parameters
      * To test enum parameters
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> testEnumParametersWithHttpInfo() throws ApiException {
+        return testEnumParametersWithHttpInfo(null, null, null, null, null);
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> testEnumParametersOptsWithHttpInfo(TestEnumParametersOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        return testEnumParametersWithHttpInfo(optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger());
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
      * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
      * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
      * @param enumQueryStringArray Query parameter enum test (string array) (optional)
@@ -886,6 +1471,32 @@ public class FakeApi {
     public ApiResponse<Void> testEnumParametersWithHttpInfo(List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger) throws ApiException {
         com.squareup.okhttp.Call call = testEnumParametersValidateBeforeCall(enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, null, null);
         return apiClient.execute(call);
+    }
+
+    /**
+     * To test enum parameters (asynchronously)
+     * To test enum parameters
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call testEnumParametersAsync(final ApiCallback<Void> callback) throws ApiException {
+        return testEnumParametersAsync(null, null, null, null, null, callback);
+    }
+
+    /**
+     * To test enum parameters (asynchronously)
+     * To test enum parameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call testEnumParametersOptsAsync(TestEnumParametersOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        return testEnumParametersAsync(optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger(), callback);
     }
 
     /**
@@ -925,6 +1536,45 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    public static class TestEnumRequestBodyOptionals {
+        public Body4 body() {
+            return this.body;
+        }
+
+        public TestEnumRequestBodyOptionals body(Body4 body) {
+            this.body = body;
+            return this;
+        }
+
+        private Body4 body = null;
+    }
+
+    /**
+     * Build call for testEnumRequestBody
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call testEnumRequestBodyCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return testEnumRequestBodyCall(null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for testEnumRequestBody
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call testEnumRequestBodyOptsCall(TestEnumRequestBodyOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumRequestBodyOptionals();
+        }
+        return testEnumRequestBodyCall(optionals.body(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for testEnumRequestBody
      * @param body  (optional)
@@ -935,7 +1585,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testEnumRequestBodyCall(EnumFormBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/enum/form";
 
@@ -973,17 +1623,39 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
-    @SuppressWarnings("rawtypes")
+
+    @SuppressWarnings("rawtypes
     private com.squareup.okhttp.Call testEnumRequestBodyValidateBeforeCall(EnumFormBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         com.squareup.okhttp.Call call = testEnumRequestBodyCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void testEnumRequestBody() throws ApiException {
+        testEnumRequestBody(null);
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void testEnumRequestBodyOpts(TestEnumRequestBodyOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumRequestBodyOptionals();
+        }
+        testEnumRequestBody(optionals.body());
     }
 
     /**
@@ -999,6 +1671,28 @@ public class FakeApi {
     /**
      * To test enum parameters
      * To test enum parameters
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> testEnumRequestBodyWithHttpInfo() throws ApiException {
+        return testEnumRequestBodyWithHttpInfo(null);
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> testEnumRequestBodyOptsWithHttpInfo(TestEnumRequestBodyOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumRequestBodyOptionals();
+        }
+        return testEnumRequestBodyWithHttpInfo(optionals.body());
+    }
+
+    /**
+     * To test enum parameters
+     * To test enum parameters
      * @param body  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1006,6 +1700,32 @@ public class FakeApi {
     public ApiResponse<Void> testEnumRequestBodyWithHttpInfo(EnumFormBody body) throws ApiException {
         com.squareup.okhttp.Call call = testEnumRequestBodyValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
+    }
+
+    /**
+     * To test enum parameters (asynchronously)
+     * To test enum parameters
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call testEnumRequestBodyAsync(final ApiCallback<Void> callback) throws ApiException {
+        return testEnumRequestBodyAsync(null, callback);
+    }
+
+    /**
+     * To test enum parameters (asynchronously)
+     * To test enum parameters
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call testEnumRequestBodyOptsAsync(TestEnumRequestBodyOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new TestEnumRequestBodyOptionals();
+        }
+        return testEnumRequestBodyAsync(optionals.body(), callback);
     }
 
     /**
@@ -1041,6 +1761,8 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for testInlineAdditionalProperties
      * @param body request body (required)
@@ -1051,7 +1773,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testInlineAdditionalPropertiesCall(Map<String, String> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/inline-additionalProperties";
 
@@ -1089,22 +1811,23 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testInlineAdditionalPropertiesValidateBeforeCall(Map<String, String> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testInlineAdditionalProperties(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = testInlineAdditionalPropertiesCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * test inline additionalProperties
@@ -1115,6 +1838,7 @@ public class FakeApi {
     public void testInlineAdditionalProperties(Map<String, String> body) throws ApiException {
         testInlineAdditionalPropertiesWithHttpInfo(body);
     }
+
 
     /**
      * test inline additionalProperties
@@ -1127,6 +1851,7 @@ public class FakeApi {
         com.squareup.okhttp.Call call = testInlineAdditionalPropertiesValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * test inline additionalProperties (asynchronously)
@@ -1161,6 +1886,8 @@ public class FakeApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for testJsonFormData
      * @param body  (required)
@@ -1171,7 +1898,7 @@ public class FakeApi {
      */
     public com.squareup.okhttp.Call testJsonFormDataCall(FakeJsonFormDataBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake/jsonFormData";
 
@@ -1209,22 +1936,23 @@ public class FakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testJsonFormDataValidateBeforeCall(FakeJsonFormDataBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testJsonFormData(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = testJsonFormDataCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * test json serialization of form data
@@ -1235,6 +1963,7 @@ public class FakeApi {
     public void testJsonFormData(FakeJsonFormDataBody body) throws ApiException {
         testJsonFormDataWithHttpInfo(body);
     }
+
 
     /**
      * test json serialization of form data
@@ -1247,6 +1976,7 @@ public class FakeApi {
         com.squareup.okhttp.Call call = testJsonFormDataValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * test json serialization of form data (asynchronously)
