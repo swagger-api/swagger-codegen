@@ -40,6 +40,8 @@ public class DartClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setUseEnumExtension(Boolean.valueOf(DartClientOptionsProvider.USE_ENUM_EXTENSION));
             times = 1;
+            clientCodegen.setCamelCaseModelProperties(Boolean.valueOf(DartClientOptionsProvider.CAMEL_CASE_MODEL_PROPERTIES));
+            times = 1;
         }};
     }
 }

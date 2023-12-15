@@ -26,11 +26,13 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public static final String PUB_VERSION = "pubVersion";
     public static final String PUB_DESCRIPTION = "pubDescription";
     public static final String USE_ENUM_EXTENSION = "useEnumExtension";
+    public static final String CAMEL_CASE_MODEL_PROPERTIES = "camelCaseModelProperties";
     protected boolean browserClient = true;
     protected String pubName = "swagger";
     protected String pubVersion = "1.0.0";
     protected String pubDescription = "Swagger API client";
     protected boolean useEnumExtension = false;
+    protected boolean camelCaseModelProperties = true;
     protected String sourceFolder = "";
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
@@ -108,6 +110,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(PUB_DESCRIPTION, "Description in generated pubspec"));
         cliOptions.add(new CliOption(USE_ENUM_EXTENSION, "Allow the 'x-enum-values' extension for enums"));
         cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, "source folder for generated code"));
+        cliOptions.add(new CliOption(CAMEL_CASE_MODEL_PROPERTIES, "Convert model property names to camel case"));
     }
 
     @Override
@@ -162,6 +165,13 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         } else {
             // Not set, use to be passed to template.
             additionalProperties.put(USE_ENUM_EXTENSION, useEnumExtension);
+        }
+
+        if (additionalProperties.containsKey(CAMEL_CASE_MODEL_PROPERTIES)) {
+            this.setCamelCaseModelProperties(convertPropertyToBooleanAndWriteBack(CAMEL_CASE_MODEL_PROPERTIES));
+        } else {
+            // Not set, use to be passed to template.
+            additionalProperties.put(CAMEL_CASE_MODEL_PROPERTIES, camelCaseModelProperties);
         }
 
         if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
@@ -227,7 +237,9 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // camelize (lower first character) the variable name
         // pet_id => petId
-        name = camelize(name, true);
+        if (camelCaseModelProperties) {
+            name = camelize(name, true);
+        }
 
         if (name.matches("^\\d.*")) {
             name = "n" + name;
@@ -450,6 +462,10 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public void setUseEnumExtension(boolean useEnumExtension) {
         this.useEnumExtension = useEnumExtension;
+    }
+
+    public void setCamelCaseModelProperties(boolean camelCaseModelProperties) {
+        this.camelCaseModelProperties = camelCaseModelProperties;
     }
 
     public void setSourceFolder(String sourceFolder) {
