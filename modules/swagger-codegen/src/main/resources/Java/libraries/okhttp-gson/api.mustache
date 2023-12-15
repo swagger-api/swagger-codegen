@@ -123,8 +123,10 @@ public class {{classname}} {
         final String[] {{localVariablePrefix}}localVarContentTypes = {
             {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}}
         };
-        final String {{localVariablePrefix}}localVarContentType = {{localVariablePrefix}}apiClient.selectHeaderContentType({{localVariablePrefix}}localVarContentTypes);
-        {{localVariablePrefix}}localVarHeaderParams.put("Content-Type", {{localVariablePrefix}}localVarContentType);
+        if (!{{localVariablePrefix}}localVarHeaderParams.containsKey("Content-Type")) {
+            final String {{localVariablePrefix}}localVarContentType = {{localVariablePrefix}}apiClient.selectHeaderContentType({{localVariablePrefix}}localVarContentTypes);
+            {{localVariablePrefix}}localVarHeaderParams.put("Content-Type", {{localVariablePrefix}}localVarContentType);
+        }
 
         if(progressListener != null) {
             {{localVariablePrefix}}apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
