@@ -52,6 +52,11 @@ class OuterEnum(object):
         self._configuration = _configuration
         self.discriminator = None
 
+    @staticmethod
+    def get_allowed_values():
+        allowed_values = [OuterEnum.PLACED, OuterEnum.APPROVED, OuterEnum.DELIVERED]  # noqa: E501
+        return allowed_values
+
     def to_dict(self):
         """Returns the model properties as a dict"""
         result = {}
