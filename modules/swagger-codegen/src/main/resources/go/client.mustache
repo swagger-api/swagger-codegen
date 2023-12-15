@@ -190,38 +190,42 @@ func (c *APIClient) prepareRequest(
 			return nil, errors.New("Cannot specify postBody and multipart form at the same time.")
 		}
 		body = &bytes.Buffer{}
-		w := multipart.NewWriter(body)
+        if headerParams["Content-Type"] == "application/x-www-form-urlencoded" {
+            body.Write([]byte(formParams.Encode()))
+        } else {
+            w := multipart.NewWriter(body)
 
-		for k, v := range formParams {
-			for _, iv := range v {
-				if strings.HasPrefix(k, "@") { // file
-					err = addFile(w, k[1:], iv)
-					if err != nil {
-						return nil, err
-					}
-				} else { // form value
-					w.WriteField(k, iv)
-				}
-			}
-		}
-		if len(fileBytes) > 0 && fileName != "" {
-			w.Boundary()
-			//_, fileNm := filepath.Split(fileName)
-			part, err := w.CreateFormFile("file", filepath.Base(fileName))
-			if err != nil {
-				return nil, err
-			}
-			_, err = part.Write(fileBytes)
-			if err != nil {
-				return nil, err
-			}
-			// Set the Boundary in the Content-Type
-			headerParams["Content-Type"] = w.FormDataContentType()
-		}
+            for k, v := range formParams {
+                for _, iv := range v {
+                    if strings.HasPrefix(k, "@") { // file
+                        err = addFile(w, k[1:], iv)
+                        if err != nil {
+                            return nil, err
+                        }
+                    } else { // form value
+                        w.WriteField(k, iv)
+                    }
+                }
+            }
+            if len(fileBytes) > 0 && fileName != "" {
+                w.Boundary()
+                //_, fileNm := filepath.Split(fileName)
+                part, err := w.CreateFormFile("file", filepath.Base(fileName))
+                if err != nil {
+                    return nil, err
+                }
+                _, err = part.Write(fileBytes)
+                if err != nil {
+                    return nil, err
+                }
+            }
 
-		// Set Content-Length
-		headerParams["Content-Length"] = fmt.Sprintf("%d", body.Len())
-		w.Close()
+            // Set the Boundary in the Content-Type
+            headerParams["Content-Type"] = w.FormDataContentType()
+            w.Close()
+        }
+        // Set Content-Length
+        headerParams["Content-Length"] = fmt.Sprintf("%d", body.Len())
 	}
 
 	if strings.HasPrefix(headerParams["Content-Type"], "application/x-www-form-urlencoded") && len(formParams) > 0 {
