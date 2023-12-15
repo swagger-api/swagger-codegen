@@ -36,6 +36,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
      */
     public KotlinClientCodegen() {
         super();
+        supportsInheritance = false;
 
         artifactId = "kotlin-client";
         packageName = "io.swagger.client";
