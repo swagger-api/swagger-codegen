@@ -13,6 +13,7 @@
 
 package io.swagger.client;
 
+import com.google.gson.JsonParseException;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
@@ -714,7 +715,11 @@ public class ApiClient {
             contentType = "application/json";
         }
         if (isJsonMime(contentType)) {
-            return json.deserialize(respBody, returnType);
+            try {
+                return json.deserialize(respBody, returnType);
+            } catch (JsonParseException e) {
+                throw new ApiException(e);
+            }
         } else if (returnType.equals(String.class)) {
             // Expecting string, return the raw response body.
             return (T) respBody;
@@ -880,12 +885,15 @@ public class ApiClient {
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Response response) {
                 T result;
                 try {
                     result = (T) handleResponse(response, returnType);
                 } catch (ApiException e) {
                     callback.onFailure(e, response.code(), response.headers().toMultimap());
+                    return;
+                } catch (Throwable e) {
+                    callback.onFailure(new ApiException(e), 0, null);
                     return;
                 }
                 callback.onSuccess(result, response.code(), response.headers().toMultimap());
