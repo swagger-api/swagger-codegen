@@ -284,6 +284,12 @@ public class CodeGenMojo extends AbstractMojo {
     private Boolean withXml = false;
 
     /**
+     * Sets User-Agent header
+     */
+    @Parameter(name = "httpUserAgent", required = false)
+    private String httpUserAgent;
+
+    /**
      * Skip the execution.
      */
     @Parameter(name = "skip", property = "codegen.skip", required = false, defaultValue = "false")
@@ -407,6 +413,10 @@ public class CodeGenMojo extends AbstractMojo {
 
         if (isNotEmpty(modelNameSuffix)) {
             configurator.setModelNameSuffix(modelNameSuffix);
+        }
+
+        if (isNotEmpty(httpUserAgent)) {
+            configurator.setHttpUserAgent(httpUserAgent);
         }
 
         if (null != templateDirectory) {
