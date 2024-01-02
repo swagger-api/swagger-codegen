@@ -79,6 +79,7 @@ namespace IO.Swagger.Model
             [EnumMember(Value = "sat")]
             Sat = 7
         }
+
         /// <summary>
         /// Gets or Sets Days
         /// </summary>
