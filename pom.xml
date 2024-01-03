@@ -1220,28 +1220,28 @@
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <swagger-codegen-generators-version>1.0.46-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.19</swagger-core-version>
+        <swagger-core-version>2.2.20</swagger-core-version>
         <swagger-core-version-v1>1.6.12</swagger-core-version-v1>
         <swagger-parser-version>2.1.19</swagger-parser-version>
         <swagger-parser-version-v1>1.0.68</swagger-parser-version-v1>
-        <jackson-version>2.15.3</jackson-version>
-        <jackson-databind-version>2.15.3</jackson-databind-version>
+        <jackson-version>2.16.1</jackson-version>
+        <jackson-databind-version>2.16.1</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <commons-io-version>2.15.0</commons-io-version>
+        <commons-io-version>2.15.1</commons-io-version>
         <commons-cli-version>1.6.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.14.0</commons-lang-version>
         <slf4j-version>2.0.9</slf4j-version>
-        <logback-version>1.4.11</logback-version>
+        <logback-version>1.4.14</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.15</jmustache-version>
-        <testng-version>7.8.0</testng-version>
-        <surefire-version>3.1.2</surefire-version>
+        <testng-version>7.9.0</testng-version>
+        <surefire-version>3.2.3</surefire-version>
         <jmockit-version>1.49</jmockit-version>
         <reflections-version>0.10.2</reflections-version>
-        <mockito-version>5.2.0</mockito-version>
+        <mockito-version>5.8.0</mockito-version>
         <snakeyaml-version>2.2</snakeyaml-version>
         <handlebars-version>4.3.1</handlebars-version>
         <httpclient-version>4.5.14</httpclient-version>
