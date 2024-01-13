@@ -19,7 +19,7 @@ package io.swagger.client.models
  */
 data class Tag (
     val id: kotlin.Long? = null,
-    val name: kotlin.String? = null
+    val name: kotlin.String? = null,
 ) {
 
 }

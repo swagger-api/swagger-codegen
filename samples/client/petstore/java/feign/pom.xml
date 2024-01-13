@@ -137,7 +137,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -271,7 +271,7 @@
         <swagger-core-version>1.5.24</swagger-core-version>
         <feign-version>11.6</feign-version>
         <feign-form-version>3.8.0</feign-form-version>
-        <jackson-version>2.11.4</jackson-version>
+        <jackson-version>2.15.2</jackson-version>
             <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
         <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>

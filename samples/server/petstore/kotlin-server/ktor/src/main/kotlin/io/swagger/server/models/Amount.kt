@@ -21,7 +21,7 @@ import io.swagger.server.models.Currency
 data class Amount (
     /* some description  */
     val value: kotlin.Double,
-    val currency: Currency
+    val currency: Currency,
 ) {
 
 }

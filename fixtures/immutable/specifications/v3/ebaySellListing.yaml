@@ -1,0 +1,449 @@
+openapi: 3.0.0
+servers:
+  - description: Production
+    url: https://api.ebay.com{basePath}
+    variables:
+      basePath:
+        default: /sell/listing/v1_beta
+info:
+  contact:
+    name: eBay Inc,
+    x-twitter: ebay
+  description: Enables a seller adding an ad or item on a Partner's site to
+    automatically create an eBay listing draft using the item details from the
+    Partner's site.
+  license:
+    name: eBay API License Agreement
+    url: https://go.developer.ebay.com/api-license-agreement
+  title: Listing API
+  version: v1_beta.3.0
+  x-apisguru-categories:
+    - ecommerce
+  x-logo:
+    backgroundColor: "#FFFFFF"
+    url: https://twitter.com/ebay/profile_image?size=original
+  x-origin:
+    - format: openapi
+      url: https://developer.ebay.com/api-docs/master/sell/listing/openapi/3/sell_listing_v1_beta_oas3.json
+      version: "3.0"
+  x-providerName: ebay.com
+  x-serviceName: sell-listing
+paths:
+  /item_draft/:
+    post:
+      description: This call gives Partners the ability to create an eBay draft of a
+        item for their seller using information from their site. This lets the
+        Partner increase the exposure of items on their site and leverage the
+        eBay user listing experience seamlessly. This experience provides
+        guidance on pricing, aspects, etc. and recommendations that help create
+        a listing that is complete and improves the exposure of the listing in
+        search results. After the listing draft is created, the seller logs into
+        their eBay account and uses the listing experience to finish the listing
+        and publish the item on eBay.
+      operationId: createItemDraft
+      parameters:
+        - description: "Use this header to specify the natural language of the seller. For
+            details, see Content-Language in HTTP request headers. Required: For
+            EBAY_CA in French. (Content-Language = fr-CA)"
+          in: header
+          name: Content-Language
+          required: false
+          schema:
+            type: string
+        - description: Use this header to specify an eBay marketplace ID. For a list of
+            supported sites, see API Restrictions in the Listing API overview.
+          in: header
+          name: X-EBAY-C-MARKETPLACE-ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemDraft"
+        required: false
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemDraftResponse"
+          description: OK
+        "400":
+          description: Bad Request
+          x-response-codes:
+            errors:
+              "155001":
+                category: REQUEST
+                description: "Missing field: {fieldName}. The indicated field is required for
+                  this request. Add the field and resubmit the call."
+                domain: API_LISTING
+              "155002":
+                category: REQUEST
+                description: The X-EBAY-C-MARKETPLACE-ID header is missing. This is a required
+                  header.
+                domain: API_LISTING
+              "155003":
+                category: REQUEST
+                description: The Marketplace {marketplaceId} is not supported. Supported values
+                  are {allowedMarketplaces}.
+                domain: API_LISTING
+              "155004":
+                category: REQUEST
+                description: To create the draft, we need more information about the item.
+                  Please update the title to include unique characteristics of
+                  the item, such as brand, model, color, size, capacity, etc.
+                  For example, Levi's 501 size 10 black jeans.
+                domain: API_LISTING
+              "155005":
+                category: REQUEST
+                description: "Invalid header: {fieldName}. Correct the value and resubmit the
+                  call."
+                domain: API_LISTING
+              "155006":
+                category: REQUEST
+                description: Image URLs must be HTTPS.
+                domain: API_LISTING
+              "155007":
+                category: REQUEST
+                description: "Invalid field: {fieldName}. The indicated field contains an
+                  invalid value. Correct the value and resubmit the call."
+                domain: API_LISTING
+              "155008":
+                category: REQUEST
+                description: The currency {currency} is not supported for {fieldName}. The
+                  supported currency for the {marketplaceId} marketplace is
+                  {supportedCurrencyCode}.
+                domain: API_LISTING
+              "155009":
+                category: REQUEST
+                description: The 'auctionStartPrice' value must be less than
+                  'auctionReservePrice' value.
+                domain: API_LISTING
+              "155010":
+                category: REQUEST
+                description: The 'price' value must be greater than 'auctionReservePrice' value.
+                domain: API_LISTING
+              "155011":
+                category: REQUEST
+                description: The 'auctionReservePrice' value is not supported for FIXED_PRICE
+                  format.
+                domain: API_LISTING
+              "155012":
+                category: REQUEST
+                description: The 'price' value must be greater than 'auctionStartPrice' value.
+                domain: API_LISTING
+              "155013":
+                category: REQUEST
+                description: The 'auctionStartPrice' value is not supported for FIXED_PRICE
+                  format.
+                domain: API_LISTING
+              "155014":
+                category: REQUEST
+                description: The 'price' value format is a maximum of two decimal points.
+                domain: API_LISTING
+              "155015":
+                category: REQUEST
+                description: The 'auctionStartPrice' value format is a maximum of two decimal
+                  points.
+                domain: API_LISTING
+              "155016":
+                category: REQUEST
+                description: The 'auctionReservePrice' value format is a maximum of two decimal
+                  points.
+                domain: API_LISTING
+              "155017":
+                category: REQUEST
+                description: To enable a charity donation, you must submit both 'charityId' and
+                  'donationPercentage'.
+                domain: API_LISTING
+              "155018":
+                category: REQUEST
+                description: The {condition} item condition is restricted. Please select another
+                  item condition. For more details, please refer to the API
+                  documentation.
+                domain: API_LISTING
+        "500":
+          description: Internal Server Error
+          x-response-codes:
+            errors:
+              "155000":
+                category: APPLICATION
+                description: There was a problem with an eBay internal system or process.
+                  Contact eBay developer support for assistance.
+                domain: API_LISTING
+      security:
+        - api_auth:
+            - https://api.ebay.com/oauth/api_scope/sell.item.draft
+      tags:
+        - item_draft
+components:
+  schemas:
+    Amount:
+      description: The type that defines the fields for the currency and a monetary amount.
+      properties:
+        currency:
+          description: "The three-letter ISO 4217 code representing the currency of the
+            amount in the value field. Restriction: Only the currency of the
+            marketplace is supported. For example, on the US marketplace the
+            only currency supported is USD. For implementation help, refer to <a
+            href='https://developer.ebay.com/api-docs/sell/listing/types/bas:Cu\
+            rrencyCodeEnum'>eBay API documentation</a>"
+          type: string
+        value:
+          description: The monetary amount, in the currency specified by the currency field.
+          type: string
+      type: object
+    Aspect:
+      description: The type that defines the fields for the item aspects.
+      properties:
+        name:
+          description: The name of an aspect, such and Brand.
+          type: string
+        values:
+          description: A list of potential values for this aspect.
+          items:
+            type: string
+          type: array
+      type: object
+    Charity:
+      description: This type is used to identify the charitable organization that will
+        receive a percentage of sale proceeds for each sale generated by the
+        listing. This container also includes the donation percentage, which is
+        the percentage of the sale proceeds that the charitable organization
+        will get. In order to receive a percentage of the sales proceeds, the
+        non-profit organization must be registered with the PayPal Giving Fund,
+        which is a partner of eBay for Charity.
+      properties:
+        charityId:
+          description: The eBay-assigned unique identifier of the charitable organization
+            that will receive a percentage of the sales proceeds. The charitable
+            organization must be reqistered with the PayPal Giving Fund in order
+            to receive sales proceeds through eBay listings. This field is
+            conditionally required if a seller is planning on donating a
+            percentage of the sale proceeds to a charitable organization. The
+            eBay-assigned unique identifier of a charitable organization can be
+            found using the GetCharities call of the Trading API. In the
+            GetCharities call response, this unique identifier is shown in the
+            id attribute of the Charity container.
+          type: string
+        donationPercentage:
+          description: "This field sets the percentage of the purchase price that the
+            charitable organization (identified in the charityId field) will
+            receive for each sale that the listing generates. This field is
+            conditionally required if a seller is planning on donating a
+            percentage of the sale proceeds to a charitable organization. This
+            numeric value can range from 10 to 100, and in any 5 (percent)
+            increments in between this range (e.g. 10, 15, 20...95,... 100). The
+            seller would pass in 10 for 10 percent, 15 for 15 percent, 20 for 20
+            percent, and so on, all the way to 100 for 100 percent. Note: For
+            this field, createItemDraft will only validate that a positive
+            integer value is supplied, so the listing draft will still be
+            successfully created (with no error or warning message) if a
+            non-supported value is specified. However, if the seller attempted
+            to publish this listing draft with an unsupported value, the charity
+            information would just be dropped from the listing."
+          type: string
+      type: object
+    Error:
+      description: This type defines the fields that can be returned in an error.
+      properties:
+        category:
+          description: Identifies the type of erro.
+          type: string
+        domain:
+          description: Name for the primary system where the error occurred. This is
+            relevant for application errors.
+          type: string
+        errorId:
+          description: A unique number to identify the error.
+          format: int32
+          type: integer
+        inputRefIds:
+          description: An array of request elements most closely associated to the error.
+          items:
+            type: string
+          type: array
+        longMessage:
+          description: A more detailed explanation of the error.
+          type: string
+        message:
+          description: Information on how to correct the problem, in the end user's terms
+            and language where applicable.
+          type: string
+        outputRefIds:
+          description: An array of request elements most closely associated to the error.
+          items:
+            type: string
+          type: array
+        parameters:
+          description: An array of name/value pairs that describe details the error
+            condition. These are useful when multiple errors are returned.
+          items:
+            $ref: "#/components/schemas/ErrorParameter"
+          type: array
+        subdomain:
+          description: "Further helps indicate which subsystem the error is coming from.
+            System subcategories include: Initialization, Serialization,
+            Security, Monitoring, Rate Limiting, etc."
+          type: string
+      type: object
+    ErrorParameter:
+      properties:
+        name:
+          description: The object of the error.
+          type: string
+        value:
+          description: The value of the object.
+          type: string
+      type: object
+    ItemDraft:
+      description: The type that defines the fields for the listing details.
+      properties:
+        categoryId:
+          description: "The ID of the leaf category associated with this item. A leaf
+            category is the lowest level in that category and has no children.
+            Note: If you submit both a category ID and an EPID, eBay determines
+            the best category based on the EPID and uses that. The category ID
+            will be ignored."
+          type: string
+        charity:
+          $ref: "#/components/schemas/Charity"
+          description: This container is used to identify the charitable organization that
+            will receive a percentage of sale proceeds for each sale generated
+            by the listing. This container consists of the charityId field to
+            identify the charitable organization, and the donationPercentage
+            field that will set the percentage of the sales proceeds that will
+            be donated to the charitable organization.
+        condition:
+          description: "The enumeration value passed in here sets the condition of the
+            item, such as NEW or USED_EXCELLENT. See ConditionEnum for the full
+            list of supported values. Supported item conditions can vary by eBay
+            category. To see which item conditions are supported for a category,
+            you can use the getItemConditionPolicies method of the Metadata API.
+            Note: The 'Manufacturer Refurbished' item condition is no longer a
+            valid item condition in any eBay marketplace, and to reflect this
+            change, the pre-existing MANUFACTURER_REFURBISHED enumeration value
+            has been replaced by the CERTIFIED_REFURBISHED enumeration value.
+            CR-eligible sellers should make a note to start using
+            CERTIFIED_REFURBISHED from this point forward. To list an item as
+            'Certified Refurbished', a seller must be pre-qualified by eBay for
+            this feature. Any seller who is not eligible for this feature will
+            be blocked if they try to create a new listing or revise an existing
+            listing with this item condition. Any seller that is interested in
+            eligibility requirements to list with 'Certified Refurbished' should
+            see the Certified refurbished program page in Seller Center. For
+            implementation help, refer to <a
+            href='https://developer.ebay.com/api-docs/sell/listing/types/api:Co\
+            nditionEnum'>eBay API documentation</a>"
+          type: string
+        format:
+          description: "The format of the listing. Valid Values: FIXED_PRICE and AUCTION
+            For implementation help, refer to <a
+            href='https://developer.ebay.com/api-docs/sell/listing/types/api:Li\
+            stingFormatEnum'>eBay API documentation</a>"
+          type: string
+        pricingSummary:
+          $ref: "#/components/schemas/PricingSummary"
+          description: The container that for the information about the cost of an item,
+            such as the price or auction start price.
+        product:
+          $ref: "#/components/schemas/Product"
+          description: The container for the product details of the item.
+      type: object
+    ItemDraftResponse:
+      description: The type that defines the field for the createItemDraft response.
+      properties:
+        itemDraftId:
+          description: The eBay generated ID of the listing draft.
+          type: string
+        sellFlowNativeUri:
+          description: The URI the Partner uses to send the seller to their listing draft
+            that was created on the eBay site. From there the seller can change,
+            update, and publish the item on eBay. This is returned when the
+            seller is using a mobile app.
+          type: string
+        sellFlowUrl:
+          description: "The web URL the Partner uses to send the seller to the listing
+            draft that was created on the eBay site. From there the seller can
+            change, update, and publish the item on eBay. This is returned when
+            the seller is using mobile web (mweb) or the desktop web. Note: You
+            must construct the URL using the URL returned in this field and a
+            session token. For example: sellFlowUrl?id_token=session_token"
+          type: string
+      type: object
+    PricingSummary:
+      description: The type that defines the fields for the price details for an item.
+      properties:
+        auctionReservePrice:
+          $ref: "#/components/schemas/Amount"
+          description: "The minimum amount the seller is willing to sell the item for. If
+            the reserve price isn't met, the item won't be sold. For details,
+            see How reserve prices work. Restrictions: The value is not
+            supported for FIXED_PRICE format. The value format has a maximum of
+            two decimal points."
+        auctionStartPrice:
+          $ref: "#/components/schemas/Amount"
+          description: "The minimum amount required for the first bid. Note: The
+            auctionStartPrice value must be less than the auctionReservePrice
+            value. Restrictions: The value is not supported for FIXED_PRICE
+            format. The value format has a maximum of two decimal points."
+        price:
+          $ref: "#/components/schemas/Amount"
+          description: The Buy It Now Price for the item.
+      type: object
+    Product:
+      description: The type that defines the fields for the aspects of a product.
+      properties:
+        aspects:
+          description: The list of item aspects that describe the item (such as size,
+            color, capacity, model, brand, etc.)
+          items:
+            $ref: "#/components/schemas/Aspect"
+          type: array
+        brand:
+          description: The name brand of the item, such as Nike, Apple, etc.
+          type: string
+        description:
+          description: "The description of the item that was created by the seller. This
+            field supports plain text or rich content within HTML tags. Note:
+            Active content is not supported. Active content includes animation
+            or video via JavaScript, Flash, plug-ins, or form actions. Max
+            Length: 500,000"
+          type: string
+        epid:
+          description: "An EPID is the eBay product identifier of a product from the eBay
+            product catalog. Note: If you submit both a category ID and an EPID,
+            eBay determines the best category based on the EPID and uses that.
+            The category ID will be ignored."
+          type: string
+        imageUrls:
+          description: "The image URLs of the item. The first URL will be the primary
+            image, which appears on the View Item page in the eBay listing. The
+            URL can be from the following: The eBay Picture Services (images
+            previously uploaded). A server outside of eBay (self-hosted). For
+            more details, see PictureURL and Introduction to Pictures in
+            Listings. Maximum: 12 URLs (for most categories and marketplaces)
+            Restrictions: You cannot mix self-hosted and EPS-hosted URLs in the
+            same listing. All image URLs must be 'https'."
+          items:
+            type: string
+          type: array
+        title:
+          description: "The seller-created title of the item. This should include unique
+            characteristics of the item, such as brand, model, color, size,
+            capacity, etc. For example: Levi's 501 size 10 black jeans"
+          type: string
+      type: object
+  securitySchemes:
+    api_auth:
+      description: The security definitions for this API. Please check individual
+        operations for applicable scopes.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.ebay.com/oauth2/authorize
+          scopes:
+            https://api.ebay.com/oauth/api_scope/sell.item.draft: View and manage your item drafts.
+          tokenUrl: https://api.ebay.com/identity/v1/oauth2/token
+      type: oauth2

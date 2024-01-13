@@ -16,7 +16,7 @@ repositories {
 ext {
     swagger_annotations_version = "1.5.24"
     jackson_version = "2.6.4"
-    jersey_version = "2.29.1"
+    jersey_version = "{{#jakarta}}3.1.0{{/jakarta}}{{^jakarta}}2.29.1{{/jakarta}}"
     junit_version = "4.13.1"
 }
 
