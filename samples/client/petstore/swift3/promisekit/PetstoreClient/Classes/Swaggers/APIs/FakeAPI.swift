@@ -298,7 +298,7 @@ open class FakeAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -460,7 +460,7 @@ open class FakeAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -534,7 +534,7 @@ open class FakeAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise

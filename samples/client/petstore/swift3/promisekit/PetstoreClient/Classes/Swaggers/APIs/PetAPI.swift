@@ -33,7 +33,7 @@ open class PetAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -85,7 +85,7 @@ open class PetAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -531,7 +531,7 @@ open class PetAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise
@@ -585,7 +585,7 @@ open class PetAPI: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill()
+                deferred.fulfill(())
             }
         }
         return deferred.promise

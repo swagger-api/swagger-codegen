@@ -61,7 +61,7 @@ open class {{classname}}: APIBase {
             if let error = error {
                 deferred.reject(error)
             } else {
-                deferred.fulfill({{#returnType}}data!{{/returnType}})
+                deferred.fulfill({{#returnType}}data!{{/returnType}}{{^returnType}}(){{/returnType}})
             }
         }
         return deferred.promise
