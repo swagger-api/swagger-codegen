@@ -3749,8 +3749,8 @@ public class DefaultCodegen {
 
         // better error handling when map/array type is invalid
         if (name == null) {
-            LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
-            return "ERROR_UNKNOWN";
+            LOGGER.error("String to be sanitized is null. Default to " + Object.class.getSimpleName());
+            return Object.class.getSimpleName();
         }
 
         // if the name is just '$', map it to 'value' for the time being.
