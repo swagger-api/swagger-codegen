@@ -15,6 +15,29 @@ tags:
 - name: documentation
 - name: config
 paths:
+  "/model":
+    post:
+      tags:
+        - clients
+        - servers
+        - documentation
+        - config
+      x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
+      operationId: generateBundle
+      summary: Generates the intermediate model ("bundle") and returns it as a JSON.
+        body.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/GenerationRequest"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
   "/generate":
     get:
       tags:

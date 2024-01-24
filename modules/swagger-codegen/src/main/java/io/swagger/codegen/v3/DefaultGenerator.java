@@ -792,9 +792,38 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         // supporting files
         Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
+        Json.prettyPrint(bundle);
         generateSupportingFiles(files, bundle);
         config.processOpenAPI(openAPI);
         return files;
+    }
+
+    @Override
+    public Map<String, Object> generateBundle() {
+
+        if (openAPI == null) {
+            throw new RuntimeException("missing OpenAPI input!");
+        }
+        if (config == null) {
+            throw new RuntimeException("missing configuration input!");
+        }
+        configureGeneratorProperties();
+        configureSwaggerInfo();
+
+        List<File> files = new ArrayList<>();
+        // models
+        List<Object> allModels = new ArrayList<>();
+        generateModels(files, allModels);
+        // apis
+        List<Object> allOperations = new ArrayList<>();
+        generateApis(files, allOperations, allModels);
+
+        // supporting files
+        Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
+        Json.prettyPrint(bundle);
+        generateSupportingFiles(files, bundle);
+        config.processOpenAPI(openAPI);
+        return bundle;
     }
 
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
