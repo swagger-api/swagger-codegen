@@ -32,6 +32,7 @@ import android.os.Parcel;
  */
 
 
+
 public class FakeBody implements Parcelable {
   @SerializedName("integer")
   private Integer integer = null;

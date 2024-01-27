@@ -29,6 +29,7 @@ import android.os.Parcel;
  */
 
 
+
 public class Cat extends Animal implements Parcelable , OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("declawed")
   private Boolean declawed = null;

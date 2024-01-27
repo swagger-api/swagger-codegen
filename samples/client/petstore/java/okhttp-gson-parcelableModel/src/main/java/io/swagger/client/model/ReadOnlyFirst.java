@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 
+
 public class ReadOnlyFirst implements Parcelable {
   @SerializedName("bar")
   private String bar = null;

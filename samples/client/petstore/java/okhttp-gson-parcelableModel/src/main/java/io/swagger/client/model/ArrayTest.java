@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 
+
 public class ArrayTest implements Parcelable {
   @SerializedName("array_of_string")
   private List<String> arrayOfString = null;

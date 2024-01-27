@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 
+
 public class Capitalization implements Parcelable {
   @SerializedName("smallCamel")
   private String smallCamel = null;

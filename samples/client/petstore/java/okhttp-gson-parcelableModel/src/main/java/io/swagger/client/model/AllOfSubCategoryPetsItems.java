@@ -25,6 +25,7 @@ import android.os.Parcel;
  */
 
 
+
 public class AllOfSubCategoryPetsItems extends Pet implements Parcelable {
   public AllOfSubCategoryPetsItems() {
     super();

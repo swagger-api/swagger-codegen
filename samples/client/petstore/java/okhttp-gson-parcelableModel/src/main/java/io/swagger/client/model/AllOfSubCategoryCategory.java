@@ -30,6 +30,7 @@ import android.os.Parcel;
  */
 
 
+
 public class AllOfSubCategoryCategory extends Category implements Parcelable {
   @SerializedName("foo")
   private Boolean foo = null;

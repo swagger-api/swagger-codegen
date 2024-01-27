@@ -28,13 +28,16 @@ import android.os.Parcel;
  */
 
 
+
 public class NullableEnumModel implements Parcelable {
   /**
    * Gets or Sets enumProp
    */
   @JsonAdapter(EnumPropEnum.Adapter.class)
   public enum EnumPropEnum {
+    @SerializedName("a")
     A("a"),
+    @SerializedName("b")
     B("b"),
     NULL(null);
 

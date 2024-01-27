@@ -29,6 +29,7 @@ import android.os.Parcel;
  */
 
 
+
 public class Dog extends Animal implements Parcelable , OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("breed")
   private String breed = null;

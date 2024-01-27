@@ -32,6 +32,7 @@ import android.os.Parcel;
  */
 
 
+
 public class Pet implements Parcelable {
   @SerializedName("id")
   private Long id = null;
@@ -53,8 +54,11 @@ public class Pet implements Parcelable {
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
+    @SerializedName("available")
     AVAILABLE("available"),
+    @SerializedName("pending")
     PENDING("pending"),
+    @SerializedName("sold")
     SOLD("sold");
 
     private String value;

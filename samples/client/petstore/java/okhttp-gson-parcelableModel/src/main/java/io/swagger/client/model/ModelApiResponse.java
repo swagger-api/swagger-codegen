@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 
+
 public class ModelApiResponse implements Parcelable {
   @SerializedName("code")
   private Integer code = null;

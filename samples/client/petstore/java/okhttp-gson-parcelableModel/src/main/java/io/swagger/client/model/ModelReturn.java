@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 @Schema(description = "Model for testing reserved words")
 
+
 public class ModelReturn implements Parcelable {
   @SerializedName("return")
   private Integer _return = null;

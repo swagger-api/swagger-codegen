@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 
+
 public class MapTest implements Parcelable {
   @SerializedName("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
@@ -40,7 +41,9 @@ public class MapTest implements Parcelable {
    */
   @JsonAdapter(InnerEnum.Adapter.class)
   public enum InnerEnum {
+    @SerializedName("UPPER")
     UPPER("UPPER"),
+    @SerializedName("lower")
     LOWER("lower");
 
     private String value;

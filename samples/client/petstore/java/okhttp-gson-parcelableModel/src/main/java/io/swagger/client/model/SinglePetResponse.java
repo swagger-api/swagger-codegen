@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 
+
 public class SinglePetResponse implements Parcelable {
   @SerializedName("pet")
   private OneOfSinglePetResponsePet pet = null;

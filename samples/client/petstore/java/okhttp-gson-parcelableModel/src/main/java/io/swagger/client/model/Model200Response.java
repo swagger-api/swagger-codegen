@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 @Schema(description = "Model for testing model name starting with number")
 
+
 public class Model200Response implements Parcelable {
   @SerializedName("name")
   private Integer name = null;

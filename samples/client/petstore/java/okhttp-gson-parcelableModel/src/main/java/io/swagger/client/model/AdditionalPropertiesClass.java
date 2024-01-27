@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 
+
 public class AdditionalPropertiesClass implements Parcelable {
   @SerializedName("map_property")
   private Map<String, String> mapProperty = null;

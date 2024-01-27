@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 
+
 public class ArrayOfNumberOnly implements Parcelable {
   @SerializedName("ArrayNumber")
   private List<BigDecimal> arrayNumber = null;

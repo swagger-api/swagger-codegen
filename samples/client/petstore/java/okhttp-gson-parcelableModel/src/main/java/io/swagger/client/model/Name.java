@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 @Schema(description = "Model for testing model name same as property name")
 
+
 public class Name implements Parcelable {
   @SerializedName("name")
   private Integer name = null;

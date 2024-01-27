@@ -31,6 +31,7 @@ import android.os.Parcel;
  */
 
 
+
 public class SubCategory implements Parcelable {
   @SerializedName("category")
   private AllOfSubCategoryCategory category = null;

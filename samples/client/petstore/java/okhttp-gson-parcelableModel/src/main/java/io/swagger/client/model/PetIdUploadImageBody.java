@@ -29,6 +29,7 @@ import android.os.Parcel;
  */
 
 
+
 public class PetIdUploadImageBody implements Parcelable {
   @SerializedName("additionalMetadata")
   private String additionalMetadata = null;

@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 
+
 public class Tag implements Parcelable {
   @SerializedName("id")
   private Long id = null;

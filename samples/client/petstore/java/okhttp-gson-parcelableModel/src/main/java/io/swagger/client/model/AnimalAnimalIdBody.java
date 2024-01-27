@@ -28,6 +28,7 @@ import android.os.Parcel;
  */
 
 
+
 public class AnimalAnimalIdBody implements Parcelable {
   @SerializedName("name")
   private String name = null;
