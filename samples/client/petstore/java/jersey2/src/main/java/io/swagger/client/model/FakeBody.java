@@ -27,6 +27,7 @@ import java.time.OffsetDateTime;
  */
 
 
+
 public class FakeBody {
   @JsonProperty("integer")
   private Integer integer = null;

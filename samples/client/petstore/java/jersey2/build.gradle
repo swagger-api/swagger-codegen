@@ -6,7 +6,7 @@ version = '1.0.0'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.+'
@@ -15,7 +15,7 @@ buildscript {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 
@@ -76,13 +76,16 @@ if(hasProperty('target') && target == 'android') {
 } else {
 
     apply plugin: 'java'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
-    install {
-        repositories.mavenInstaller {
-            pom.artifactId = 'swagger-petstore-jersey2'
+    publishing {
+        publications {
+            maven(MavenPublication) {
+               artifactId = 'swagger-petstore-jersey2'
+               from components.java
+            }
         }
     }
 
@@ -100,13 +103,13 @@ ext {
 }
 
 dependencies {
-    compile "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
-    compile "org.glassfish.jersey.core:jersey-client:$jersey_version"
-    compile "org.glassfish.jersey.media:jersey-media-multipart:$jersey_version"
-    compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jersey_version"
-    compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
-    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
-    compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
-    testCompile "junit:junit:$junit_version"
+    implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
+    implementation "org.glassfish.jersey.core:jersey-client:$jersey_version"
+    implementation "org.glassfish.jersey.media:jersey-media-multipart:$jersey_version"
+    implementation "org.glassfish.jersey.media:jersey-media-json-jackson:$jersey_version"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
+    testImplementation "junit:junit:$junit_version"
 }

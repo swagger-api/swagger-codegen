@@ -8,6 +8,7 @@ import java.text.DateFormat;
 
 import javax.ws.rs.ext.ContextResolver;
 
+
 public class JSON implements ContextResolver<ObjectMapper> {
   private ObjectMapper mapper;
 

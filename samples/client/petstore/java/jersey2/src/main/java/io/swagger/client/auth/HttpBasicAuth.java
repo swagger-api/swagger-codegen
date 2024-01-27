@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.List;
 
 
+
 public class HttpBasicAuth implements Authentication {
   private String username;
   private String password;
