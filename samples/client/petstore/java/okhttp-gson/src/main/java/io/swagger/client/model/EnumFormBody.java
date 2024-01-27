@@ -28,13 +28,16 @@ import java.util.List;
  */
 
 
+
 public class EnumFormBody {
   /**
    * Gets or Sets enumFormStringArray
    */
   @JsonAdapter(EnumFormStringArrayEnum.Adapter.class)
   public enum EnumFormStringArrayEnum {
+    @SerializedName(">")
     GREATER_THAN(">"),
+    @SerializedName("$")
     DOLLAR("$");
 
     private String value;
@@ -78,8 +81,11 @@ public class EnumFormBody {
    */
   @JsonAdapter(EnumFormStringEnum.Adapter.class)
   public enum EnumFormStringEnum {
+    @SerializedName("_abc")
     _ABC("_abc"),
+    @SerializedName("-efg")
     _EFG("-efg"),
+    @SerializedName("(xyz)")
     _XYZ_("(xyz)");
 
     private String value;
@@ -123,7 +129,9 @@ public class EnumFormBody {
    */
   @JsonAdapter(EnumQueryDoubleEnum.Adapter.class)
   public enum EnumQueryDoubleEnum {
+    @SerializedName("1.1")
     NUMBER_1_DOT_1(1.1),
+    @SerializedName("-1.2")
     NUMBER_MINUS_1_DOT_2(-1.2);
 
     private Double value;

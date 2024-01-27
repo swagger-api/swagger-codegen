@@ -27,14 +27,18 @@ import java.io.IOException;
  */
 
 
+
 public class EnumTest {
   /**
    * Gets or Sets enumString
    */
   @JsonAdapter(EnumStringEnum.Adapter.class)
   public enum EnumStringEnum {
+    @SerializedName("UPPER")
     UPPER("UPPER"),
+    @SerializedName("lower")
     LOWER("lower"),
+    @SerializedName("")
     EMPTY("");
 
     private String value;
@@ -78,7 +82,9 @@ public class EnumTest {
    */
   @JsonAdapter(EnumIntegerEnum.Adapter.class)
   public enum EnumIntegerEnum {
+    @SerializedName("1")
     NUMBER_1(1),
+    @SerializedName("-1")
     NUMBER_MINUS_1(-1);
 
     private Integer value;
@@ -122,7 +128,9 @@ public class EnumTest {
    */
   @JsonAdapter(EnumNumberEnum.Adapter.class)
   public enum EnumNumberEnum {
+    @SerializedName("1.1")
     NUMBER_1_DOT_1(1.1),
+    @SerializedName("-1.2")
     NUMBER_MINUS_1_DOT_2(-1.2);
 
     private Double value;

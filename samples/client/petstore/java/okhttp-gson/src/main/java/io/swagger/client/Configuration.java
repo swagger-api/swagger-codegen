@@ -12,6 +12,7 @@
 
 package io.swagger.client;
 
+
 public class Configuration {
     private static ApiClient defaultApiClient = new ApiClient();
 

@@ -27,6 +27,7 @@ import java.io.IOException;
  */
 
 
+
 public class Cat extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("declawed")
   private Boolean declawed = null;

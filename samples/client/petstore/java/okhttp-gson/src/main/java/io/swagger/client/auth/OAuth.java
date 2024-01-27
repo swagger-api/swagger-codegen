@@ -17,6 +17,7 @@ import io.swagger.client.Pair;
 import java.util.Map;
 import java.util.List;
 
+
 public class OAuth implements Authentication {
   private String accessToken;
 

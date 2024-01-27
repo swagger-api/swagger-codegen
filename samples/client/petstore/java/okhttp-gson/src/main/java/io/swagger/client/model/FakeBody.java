@@ -30,6 +30,7 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 
+
 public class FakeBody {
   @SerializedName("integer")
   private Integer integer = null;
