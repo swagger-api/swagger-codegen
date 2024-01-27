@@ -24,6 +24,7 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 
+
 public class Order {
   @JsonProperty("id")
   private Long id = null;

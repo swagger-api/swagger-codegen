@@ -12,6 +12,7 @@
 
 package io.swagger.client;
 
+
 public class Pair {
     private String name = "";
     private String value = "";

@@ -27,6 +27,7 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 
+
 public class FakeBody1 {
   @JsonProperty("integer")
   private Integer integer = null;

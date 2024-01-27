@@ -24,6 +24,7 @@ import java.io.File;
  */
 
 
+
 public class PetIdUploadImageBody {
   @JsonProperty("additionalMetadata")
   private String additionalMetadata = null;
