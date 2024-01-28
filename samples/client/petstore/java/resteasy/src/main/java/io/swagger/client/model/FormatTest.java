@@ -28,6 +28,7 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 
+
 public class FormatTest {
   @JsonProperty("integer")
   private Integer integer = null;

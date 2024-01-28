@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class FakeApi {
   private ApiClient apiClient;
 
@@ -214,8 +215,8 @@ public class FakeApi {
     return apiClient.invokeAPI(localVarPath, "PATCH", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
   /**
-   * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
-   * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+   * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
+   * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트
    * @param body  (required)
    * @throws ApiException if fails to make API call
    */

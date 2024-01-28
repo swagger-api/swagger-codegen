@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 
 
+
 public class AllOfSubCategoryCategory extends Category {
   @JsonProperty("foo")
   private Boolean foo = null;
