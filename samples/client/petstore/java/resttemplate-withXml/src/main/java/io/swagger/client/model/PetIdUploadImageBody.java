@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.*;
  * PetIdUploadImageBody
  */
 
+
 @XmlRootElement(name = "PetIdUploadImageBody")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "PetIdUploadImageBody")

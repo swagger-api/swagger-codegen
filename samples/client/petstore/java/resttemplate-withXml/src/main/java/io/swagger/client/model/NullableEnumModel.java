@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * NullableEnumModel
  */
 
+
 @XmlRootElement(name = "NullableEnumModel")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "NullableEnumModel")

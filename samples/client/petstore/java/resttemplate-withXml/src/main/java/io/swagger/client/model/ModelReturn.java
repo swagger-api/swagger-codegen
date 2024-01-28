@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * Model for testing reserved words
  */
 @Schema(description = "Model for testing reserved words")
+
 @XmlRootElement(name = "Return")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Return")

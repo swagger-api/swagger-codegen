@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.*;
  * EnumArrays
  */
 
+
 @XmlRootElement(name = "EnumArrays")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "EnumArrays")

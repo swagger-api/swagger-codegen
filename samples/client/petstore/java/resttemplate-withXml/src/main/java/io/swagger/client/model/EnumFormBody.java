@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.*;
  * EnumFormBody
  */
 
+
 @XmlRootElement(name = "EnumFormBody")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "EnumFormBody")

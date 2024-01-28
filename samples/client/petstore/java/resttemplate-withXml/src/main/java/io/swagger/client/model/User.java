@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * User
  */
 
+
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "User")

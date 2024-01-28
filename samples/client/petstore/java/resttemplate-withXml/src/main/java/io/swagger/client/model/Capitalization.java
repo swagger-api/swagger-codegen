@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * Capitalization
  */
 
+
 @XmlRootElement(name = "Capitalization")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Capitalization")

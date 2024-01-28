@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.*;
  * FakeBody
  */
 
+
 @XmlRootElement(name = "FakeBody")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "FakeBody")

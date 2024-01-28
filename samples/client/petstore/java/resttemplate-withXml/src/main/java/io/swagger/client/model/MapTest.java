@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.*;
  * MapTest
  */
 
+
 @XmlRootElement(name = "MapTest")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "MapTest")

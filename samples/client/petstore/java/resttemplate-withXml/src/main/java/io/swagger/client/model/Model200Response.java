@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * Model for testing model name starting with number
  */
 @Schema(description = "Model for testing model name starting with number")
+
 @XmlRootElement(name = "Name")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Name")

@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.*;
  * Dog
  */
 
+
 @XmlRootElement(name = "Dog")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "Dog")

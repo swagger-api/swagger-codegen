@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * HasOnlyReadOnly
  */
 
+
 @XmlRootElement(name = "HasOnlyReadOnly")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "HasOnlyReadOnly")

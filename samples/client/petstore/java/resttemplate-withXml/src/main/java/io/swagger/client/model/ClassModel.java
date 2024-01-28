@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.*;
  * Model for testing model with \&quot;_class\&quot; property
  */
 @Schema(description = "Model for testing model with \"_class\" property")
+
 @XmlRootElement(name = "ClassModel")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ClassModel")

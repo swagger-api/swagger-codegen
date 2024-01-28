@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.*;
  * MixedPropertiesAndAdditionalPropertiesClass
  */
 
+
 @XmlRootElement(name = "MixedPropertiesAndAdditionalPropertiesClass")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "MixedPropertiesAndAdditionalPropertiesClass")
