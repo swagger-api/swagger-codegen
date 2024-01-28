@@ -29,6 +29,7 @@ import java.util.Map;
  */
 
 
+
 public class AdditionalPropertiesClass {
   @SerializedName("map_property")
   private Map<String, String> mapProperty = null;

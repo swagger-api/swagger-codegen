@@ -27,6 +27,7 @@ import org.joda.time.DateTime;
  */
 
 
+
 public class Order {
   @SerializedName("id")
   private Long id = null;
@@ -45,8 +46,11 @@ public class Order {
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
+    @SerializedName("placed")
     PLACED("placed"),
+    @SerializedName("approved")
     APPROVED("approved"),
+    @SerializedName("delivered")
     DELIVERED("delivered");
 
     private String value;

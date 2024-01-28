@@ -26,6 +26,7 @@ import java.io.IOException;
  */
 
 
+
 public class PetPetIdBody {
   @SerializedName("name")
   private String name = null;

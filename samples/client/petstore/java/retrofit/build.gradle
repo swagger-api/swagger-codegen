@@ -6,7 +6,7 @@ version = '1.0.0'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.+'
@@ -15,7 +15,7 @@ buildscript {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 
@@ -76,14 +76,17 @@ if(hasProperty('target') && target == 'android') {
 } else {
 
     apply plugin: 'java'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
 
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
 
-    install {
-        repositories.mavenInstaller {
-            pom.artifactId = 'swagger-petstore-retrofit'
+    publishing {
+        publications {
+            maven(MavenPublication) {
+               artifactId = 'swagger-petstore-retrofit'
+               from components.java
+            }
         }
     }
 
@@ -103,13 +106,13 @@ ext {
 }
 
 dependencies {
-    compile "com.squareup.okhttp:okhttp:$okhttp_version"
-    compile "com.squareup.retrofit:retrofit:$retrofit_version"
-    compile "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
-    compile ("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version") {
+    implementation "com.squareup.okhttp:okhttp:$okhttp_version"
+    implementation "com.squareup.retrofit:retrofit:$retrofit_version"
+    implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
+    implementation ("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version") {
         exclude group: "org.json", module: "json"
     }
-    compile "org.json:json:20180130"
-    compile "joda-time:joda-time:$jodatime_version"
-    testCompile "junit:junit:$junit_version"
+    implementation "org.json:json:20180130"
+    implementation "joda-time:joda-time:$jodatime_version"
+    testImplementation "junit:junit:$junit_version"
 }

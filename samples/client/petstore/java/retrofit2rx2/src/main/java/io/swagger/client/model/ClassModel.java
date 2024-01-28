@@ -26,6 +26,7 @@ import java.io.IOException;
  */
 @Schema(description = "Model for testing model with \"_class\" property")
 
+
 public class ClassModel {
   @SerializedName("_class")
   private String propertyClass = null;

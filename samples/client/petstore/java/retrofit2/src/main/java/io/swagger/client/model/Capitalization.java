@@ -26,6 +26,7 @@ import java.io.IOException;
  */
 
 
+
 public class Capitalization {
   @SerializedName("smallCamel")
   private String smallCamel = null;

@@ -31,6 +31,7 @@ import org.joda.time.LocalDate;
  */
 
 
+
 public class FormatTest {
   @SerializedName("integer")
   private Integer integer = null;

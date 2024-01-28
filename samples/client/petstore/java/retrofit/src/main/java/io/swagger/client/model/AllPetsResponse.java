@@ -21,6 +21,7 @@ import java.util.List;
  */
 
 
+
 public class AllPetsResponse extends ArrayList<OneOfAllPetsResponseItems> {
 
   @Override

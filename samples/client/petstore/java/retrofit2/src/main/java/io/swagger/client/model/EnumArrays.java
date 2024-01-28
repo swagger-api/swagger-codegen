@@ -28,13 +28,16 @@ import java.util.List;
  */
 
 
+
 public class EnumArrays {
   /**
    * Gets or Sets justSymbol
    */
   @JsonAdapter(JustSymbolEnum.Adapter.class)
   public enum JustSymbolEnum {
+    @SerializedName(">=")
     GREATER_THAN_OR_EQUAL_TO(">="),
+    @SerializedName("$")
     DOLLAR("$");
 
     private String value;
@@ -78,7 +81,9 @@ public class EnumArrays {
    */
   @JsonAdapter(ArrayEnumEnum.Adapter.class)
   public enum ArrayEnumEnum {
+    @SerializedName("fish")
     FISH("fish"),
+    @SerializedName("crab")
     CRAB("crab");
 
     private String value;

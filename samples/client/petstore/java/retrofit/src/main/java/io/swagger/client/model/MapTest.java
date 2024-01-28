@@ -29,6 +29,7 @@ import java.util.Map;
  */
 
 
+
 public class MapTest {
   @SerializedName("map_map_of_string")
   private Map<String, Map<String, String>> mapMapOfString = null;
@@ -38,7 +39,9 @@ public class MapTest {
    */
   @JsonAdapter(InnerEnum.Adapter.class)
   public enum InnerEnum {
+    @SerializedName("UPPER")
     UPPER("UPPER"),
+    @SerializedName("lower")
     LOWER("lower");
 
     private String value;

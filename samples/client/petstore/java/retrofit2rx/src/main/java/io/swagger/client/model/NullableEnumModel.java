@@ -26,13 +26,16 @@ import java.io.IOException;
  */
 
 
+
 public class NullableEnumModel {
   /**
    * Gets or Sets enumProp
    */
   @JsonAdapter(EnumPropEnum.Adapter.class)
   public enum EnumPropEnum {
+    @SerializedName("a")
     A("a"),
+    @SerializedName("b")
     B("b"),
     NULL(null);
 

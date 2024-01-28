@@ -28,6 +28,7 @@ import java.io.IOException;
  */
 
 
+
 public class AllOfSubCategoryCategory extends Category {
   @SerializedName("foo")
   private Boolean foo = null;

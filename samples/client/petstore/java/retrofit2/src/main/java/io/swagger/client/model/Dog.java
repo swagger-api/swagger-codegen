@@ -27,6 +27,7 @@ import java.io.IOException;
  */
 
 
+
 public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @SerializedName("breed")
   private String breed = null;

@@ -30,6 +30,7 @@ import java.util.List;
  */
 
 
+
 public class Pet {
   @SerializedName("id")
   private Long id = null;
@@ -51,8 +52,11 @@ public class Pet {
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
+    @SerializedName("available")
     AVAILABLE("available"),
+    @SerializedName("pending")
     PENDING("pending"),
+    @SerializedName("sold")
     SOLD("sold");
 
     private String value;

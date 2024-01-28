@@ -30,6 +30,7 @@ import org.joda.time.LocalDate;
  */
 
 
+
 public class FakeBody1 {
   @SerializedName("integer")
   private Integer integer = null;

@@ -26,6 +26,7 @@ import java.io.IOException;
  */
 
 
+
 public class SinglePetResponse {
   @SerializedName("pet")
   private OneOfSinglePetResponsePet pet = null;

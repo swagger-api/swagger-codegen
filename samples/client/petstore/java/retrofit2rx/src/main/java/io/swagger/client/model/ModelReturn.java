@@ -26,6 +26,7 @@ import java.io.IOException;
  */
 @Schema(description = "Model for testing reserved words")
 
+
 public class ModelReturn {
   @SerializedName("return")
   private Integer _return = null;

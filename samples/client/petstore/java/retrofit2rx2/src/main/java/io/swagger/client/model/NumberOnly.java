@@ -27,6 +27,7 @@ import java.math.BigDecimal;
  */
 
 
+
 public class NumberOnly {
   @SerializedName("JustNumber")
   private BigDecimal justNumber = null;

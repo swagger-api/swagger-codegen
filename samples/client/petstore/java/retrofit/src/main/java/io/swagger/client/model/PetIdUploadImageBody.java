@@ -27,6 +27,7 @@ import java.io.IOException;
  */
 
 
+
 public class PetIdUploadImageBody {
   @SerializedName("additionalMetadata")
   private String additionalMetadata = null;

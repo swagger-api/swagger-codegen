@@ -26,8 +26,11 @@ import com.google.gson.stream.JsonWriter;
  */
 @JsonAdapter(OuterEnum.Adapter.class)
 public enum OuterEnum {
+  @SerializedName("placed")
   PLACED("placed"),
+  @SerializedName("approved")
   APPROVED("approved"),
+  @SerializedName("delivered")
   DELIVERED("delivered");
 
   private String value;

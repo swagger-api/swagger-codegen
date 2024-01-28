@@ -29,6 +29,7 @@ import java.util.List;
  */
 
 
+
 public class SubCategory {
   @SerializedName("category")
   private AllOfSubCategoryCategory category = null;

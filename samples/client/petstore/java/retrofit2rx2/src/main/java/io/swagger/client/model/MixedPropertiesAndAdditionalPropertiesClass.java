@@ -32,6 +32,7 @@ import org.threeten.bp.OffsetDateTime;
  */
 
 
+
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @SerializedName("uuid")
   private UUID uuid = null;
