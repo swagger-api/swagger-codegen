@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Breed
         /// </summary>
+
         [DataMember(Name="breed")]
         public string Breed { get; set; }
 

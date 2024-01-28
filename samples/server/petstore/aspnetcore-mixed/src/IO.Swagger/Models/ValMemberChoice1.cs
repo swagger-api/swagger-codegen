@@ -19,18 +19,19 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// Business Term: Scheme Member Definition: Information about a Member of the Scheme. Purpose: To have enough information to be able to produce a Statement of Account indicating premium due.
     /// </summary>
     [DataContract]
-    public partial class ValMemberChoice1 : IEquatable<ValMemberChoice1>
+    public partial class ValMemberChoice1 : IEquatable<ValMemberChoice1>, ValMembersValMember 
     { 
         /// <summary>
         /// Business Term: Date Of Birth Definition: The date of birth of the member. Purpose: To be able to uniquely identify a member within a scheme.
         /// </summary>
         /// <value>Business Term: Date Of Birth Definition: The date of birth of the member. Purpose: To be able to uniquely identify a member within a scheme.</value>
         [Required]
+
         [DataMember(Name="val_date_of_birth")]
         public DateTime? ValDateOfBirth { get; set; }
 
@@ -38,6 +39,7 @@ namespace IO.Swagger.Models
         /// Business Term: Leaving Date Definition: The date the member left/is due to leave the scheme. Purpose: To identify those members that have left or are due to leave the scheme. To be able to calculate the benefit insured/premium payable in respect of the member/category.
         /// </summary>
         /// <value>Business Term: Leaving Date Definition: The date the member left/is due to leave the scheme. Purpose: To identify those members that have left or are due to leave the scheme. To be able to calculate the benefit insured/premium payable in respect of the member/category.</value>
+
         [DataMember(Name="val_leaving_date")]
         public DateTime? ValLeavingDate { get; set; }
 

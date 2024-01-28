@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// Model for testing model name same as property name
     /// </summary>
@@ -30,24 +30,28 @@ namespace IO.Swagger.Models
         /// Gets or Sets _Name
         /// </summary>
         [Required]
+
         [DataMember(Name="name")]
         public int? _Name { get; set; }
 
         /// <summary>
         /// Gets or Sets SnakeCase
         /// </summary>
+
         [DataMember(Name="snake_case")]
         public int? SnakeCase { get; private set; }
 
         /// <summary>
         /// Gets or Sets Property
         /// </summary>
+
         [DataMember(Name="property")]
         public string Property { get; set; }
 
         /// <summary>
         /// Gets or Sets _123Number
         /// </summary>
+
         [DataMember(Name="123Number")]
         public int? _123Number { get; private set; }
 

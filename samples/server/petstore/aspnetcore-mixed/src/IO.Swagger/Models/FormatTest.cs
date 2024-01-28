@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,18 +29,23 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Integer
         /// </summary>
+
+        [Range(10, 100)]
         [DataMember(Name="integer")]
         public int? Integer { get; set; }
 
         /// <summary>
         /// Gets or Sets Int32
         /// </summary>
+
+        [Range(20, 200)]
         [DataMember(Name="int32")]
         public int? Int32 { get; set; }
 
         /// <summary>
         /// Gets or Sets Int64
         /// </summary>
+
         [DataMember(Name="int64")]
         public long? Int64 { get; set; }
 
@@ -48,37 +53,46 @@ namespace IO.Swagger.Models
         /// Gets or Sets Number
         /// </summary>
         [Required]
+
+        [Range(32, 543)]
         [DataMember(Name="number")]
         public decimal? Number { get; set; }
 
         /// <summary>
-        /// Gets or Sets Float
+        /// Gets or Sets _Float
         /// </summary>
+
+        [Range(54, 987)]
         [DataMember(Name="float")]
-        public float? Float { get; set; }
+        public float? _Float { get; set; }
 
         /// <summary>
-        /// Gets or Sets Double
+        /// Gets or Sets _Double
         /// </summary>
+
+        [Range(67, 123)]
         [DataMember(Name="double")]
-        public double? Double { get; set; }
+        public double? _Double { get; set; }
 
         /// <summary>
-        /// Gets or Sets String
+        /// Gets or Sets _String
         /// </summary>
+        [RegularExpression("/[a-z]/i")]
         [DataMember(Name="string")]
-        public string String { get; set; }
+        public string _String { get; set; }
 
         /// <summary>
-        /// Gets or Sets Byte
+        /// Gets or Sets _Byte
         /// </summary>
         [Required]
+
         [DataMember(Name="byte")]
-        public byte[] Byte { get; set; }
+        public byte[] _Byte { get; set; }
 
         /// <summary>
         /// Gets or Sets Binary
         /// </summary>
+
         [DataMember(Name="binary")]
         public byte[] Binary { get; set; }
 
@@ -86,18 +100,21 @@ namespace IO.Swagger.Models
         /// Gets or Sets Date
         /// </summary>
         [Required]
+
         [DataMember(Name="date")]
         public DateTime? Date { get; set; }
 
         /// <summary>
         /// Gets or Sets DateTime
         /// </summary>
+
         [DataMember(Name="dateTime")]
         public DateTime? DateTime { get; set; }
 
         /// <summary>
         /// Gets or Sets Uuid
         /// </summary>
+
         [DataMember(Name="uuid")]
         public Guid? Uuid { get; set; }
 
@@ -105,6 +122,7 @@ namespace IO.Swagger.Models
         /// Gets or Sets Password
         /// </summary>
         [Required]
+
         [DataMember(Name="password")]
         public string Password { get; set; }
 
@@ -120,10 +138,10 @@ namespace IO.Swagger.Models
             sb.Append("  Int32: ").Append(Int32).Append("\n");
             sb.Append("  Int64: ").Append(Int64).Append("\n");
             sb.Append("  Number: ").Append(Number).Append("\n");
-            sb.Append("  Float: ").Append(Float).Append("\n");
-            sb.Append("  Double: ").Append(Double).Append("\n");
-            sb.Append("  String: ").Append(String).Append("\n");
-            sb.Append("  Byte: ").Append(Byte).Append("\n");
+            sb.Append("  _Float: ").Append(_Float).Append("\n");
+            sb.Append("  _Double: ").Append(_Double).Append("\n");
+            sb.Append("  _String: ").Append(_String).Append("\n");
+            sb.Append("  _Byte: ").Append(_Byte).Append("\n");
             sb.Append("  Binary: ").Append(Binary).Append("\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
             sb.Append("  DateTime: ").Append(DateTime).Append("\n");
@@ -186,24 +204,24 @@ namespace IO.Swagger.Models
                     Number.Equals(other.Number)
                 ) && 
                 (
-                    Float == other.Float ||
-                    Float != null &&
-                    Float.Equals(other.Float)
+                    _Float == other._Float ||
+                    _Float != null &&
+                    _Float.Equals(other._Float)
                 ) && 
                 (
-                    Double == other.Double ||
-                    Double != null &&
-                    Double.Equals(other.Double)
+                    _Double == other._Double ||
+                    _Double != null &&
+                    _Double.Equals(other._Double)
                 ) && 
                 (
-                    String == other.String ||
-                    String != null &&
-                    String.Equals(other.String)
+                    _String == other._String ||
+                    _String != null &&
+                    _String.Equals(other._String)
                 ) && 
                 (
-                    Byte == other.Byte ||
-                    Byte != null &&
-                    Byte.Equals(other.Byte)
+                    _Byte == other._Byte ||
+                    _Byte != null &&
+                    _Byte.Equals(other._Byte)
                 ) && 
                 (
                     Binary == other.Binary ||
@@ -250,14 +268,14 @@ namespace IO.Swagger.Models
                     hashCode = hashCode * 59 + Int64.GetHashCode();
                     if (Number != null)
                     hashCode = hashCode * 59 + Number.GetHashCode();
-                    if (Float != null)
-                    hashCode = hashCode * 59 + Float.GetHashCode();
-                    if (Double != null)
-                    hashCode = hashCode * 59 + Double.GetHashCode();
-                    if (String != null)
-                    hashCode = hashCode * 59 + String.GetHashCode();
-                    if (Byte != null)
-                    hashCode = hashCode * 59 + Byte.GetHashCode();
+                    if (_Float != null)
+                    hashCode = hashCode * 59 + _Float.GetHashCode();
+                    if (_Double != null)
+                    hashCode = hashCode * 59 + _Double.GetHashCode();
+                    if (_String != null)
+                    hashCode = hashCode * 59 + _String.GetHashCode();
+                    if (_Byte != null)
+                    hashCode = hashCode * 59 + _Byte.GetHashCode();
                     if (Binary != null)
                     hashCode = hashCode * 59 + Binary.GetHashCode();
                     if (Date != null)

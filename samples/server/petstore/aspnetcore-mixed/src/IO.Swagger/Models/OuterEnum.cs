@@ -19,26 +19,27 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
-        /// <summary>
-        /// Gets or Sets OuterEnum
-        /// </summary>
-        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public enum OuterEnum
-        {
-            /// <summary>
-            /// Enum PlacedEnum for placed
-            /// </summary>
-            [EnumMember(Value = "placed")]
-            PlacedEnum = 0,
-            /// <summary>
-            /// Enum ApprovedEnum for approved
-            /// </summary>
-            [EnumMember(Value = "approved")]
-            ApprovedEnum = 1,
-            /// <summary>
-            /// Enum DeliveredEnum for delivered
-            /// </summary>
-            [EnumMember(Value = "delivered")]
-            DeliveredEnum = 2        }
+{
+  
+          /// <summary>
+          /// Gets or Sets OuterEnum
+          /// </summary>
+          [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+          public enum OuterEnum
+          {
+              /// <summary>
+              /// Enum PlacedEnum for placed
+              /// </summary>
+              [EnumMember(Value = "placed")]
+              PlacedEnum = 0,
+              /// <summary>
+              /// Enum ApprovedEnum for approved
+              /// </summary>
+              [EnumMember(Value = "approved")]
+              ApprovedEnum = 1,
+              /// <summary>
+              /// Enum DeliveredEnum for delivered
+              /// </summary>
+              [EnumMember(Value = "delivered")]
+              DeliveredEnum = 2          }
 }

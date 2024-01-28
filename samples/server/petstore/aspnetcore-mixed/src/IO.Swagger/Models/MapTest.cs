@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets MapMapOfString
         /// </summary>
+
         [DataMember(Name="map_map_of_string")]
         public Dictionary<string, Dictionary<string, string>> MapMapOfString { get; set; }
 
@@ -52,6 +53,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets MapOfEnumString
         /// </summary>
+
         [DataMember(Name="map_of_enum_string")]
         public Dictionary<string, InnerEnum> MapOfEnumString { get; set; }
 

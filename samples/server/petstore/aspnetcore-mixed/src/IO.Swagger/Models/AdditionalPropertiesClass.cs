@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,12 +29,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets MapProperty
         /// </summary>
+
         [DataMember(Name="map_property")]
         public Dictionary<string, string> MapProperty { get; set; }
 
         /// <summary>
         /// Gets or Sets MapOfMapProperty
         /// </summary>
+
         [DataMember(Name="map_of_map_property")]
         public Dictionary<string, Dictionary<string, string>> MapOfMapProperty { get; set; }
 

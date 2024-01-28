@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,6 +29,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets ArrayArrayNumber
         /// </summary>
+
         [DataMember(Name="ArrayArrayNumber")]
         public List<List<decimal?>> ArrayArrayNumber { get; set; }
 

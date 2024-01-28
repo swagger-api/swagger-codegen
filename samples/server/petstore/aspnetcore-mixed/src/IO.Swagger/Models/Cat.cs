@@ -19,16 +19,17 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public partial class Cat : Animal, IEquatable<Cat>
+    public partial class Cat : Animal, IEquatable<Cat>, InlineArrayItemsAllPetsResponse, OneOfPup, OneOfSinglePetResponsePet 
     { 
         /// <summary>
         /// Gets or Sets Declawed
         /// </summary>
+
         [DataMember(Name="declawed")]
         public bool? Declawed { get; set; }
 

@@ -19,28 +19,31 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public partial class Pup : IEquatable<Pup>
+    public partial class Pup : IEquatable<Pup>, OneOfPup 
     { 
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+
         [DataMember(Name="id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Category2
         /// </summary>
+
         [DataMember(Name="category2")]
         public Category Category2 { get; set; }
 
         /// <summary>
         /// Gets or Sets Pets
         /// </summary>
+
         [DataMember(Name="pets")]
         public List<SubCategoryPets> Pets { get; set; }
 

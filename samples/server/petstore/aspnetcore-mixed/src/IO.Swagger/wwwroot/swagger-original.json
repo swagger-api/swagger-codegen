@@ -288,7 +288,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body"
+                "$ref" : "#/components/schemas/pet_petId_body"
               }
             }
           }
@@ -360,7 +360,7 @@
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_1"
+                "$ref" : "#/components/schemas/petId_uploadImage_body"
               }
             }
           }
@@ -991,12 +991,12 @@
           "content" : {
             "application/xml; charset=utf-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_2"
+                "$ref" : "#/components/schemas/fake_body"
               }
             },
             "application/json; charset=utf-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_3"
+                "$ref" : "#/components/schemas/fake_body_1"
               }
             }
           },
@@ -1056,7 +1056,7 @@
           "content" : {
             "*/*" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_4"
+                "$ref" : "#/components/schemas/enum_form_body"
               }
             }
           }
@@ -1202,7 +1202,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_5"
+                "$ref" : "#/components/schemas/fake_jsonFormData_body"
               }
             }
           },
@@ -1411,7 +1411,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_6"
+                "$ref" : "#/components/schemas/animal_animalId_body"
               }
             }
           }
@@ -1599,7 +1599,7 @@
           "content" : {
             "application/x-www-form-urlencoded" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_7"
+                "$ref" : "#/components/schemas/dog_dogId_body"
               }
             }
           }
@@ -1683,7 +1683,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_8"
+                "$ref" : "#/components/schemas/parrot_body"
               }
             }
           }
@@ -1715,7 +1715,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_9"
+                "$ref" : "#/components/schemas/parrot_body_1"
               }
             }
           }
@@ -2323,7 +2323,7 @@
           "className" : "className"
         },
         "discriminator" : {
-          "propertyName" : "className"
+          "propertyName" : "ClassName"
         }
       },
       "Cat" : {
@@ -2685,7 +2685,7 @@
           }
         }
       },
-      "body" : {
+      "pet_petId_body" : {
         "properties" : {
           "name" : {
             "type" : "string",
@@ -2697,7 +2697,7 @@
           }
         }
       },
-      "body_1" : {
+      "petId_uploadImage_body" : {
         "properties" : {
           "additionalMetadata" : {
             "type" : "string",
@@ -2710,7 +2710,7 @@
           }
         }
       },
-      "body_2" : {
+      "fake_body" : {
         "required" : [ "byte", "double", "number", "pattern_without_delimiter" ],
         "properties" : {
           "integer" : {
@@ -2793,7 +2793,7 @@
           }
         }
       },
-      "body_3" : {
+      "fake_body_1" : {
         "required" : [ "byte", "double", "number", "pattern_without_delimiter" ],
         "properties" : {
           "integer" : {
@@ -2876,7 +2876,7 @@
           }
         }
       },
-      "body_4" : {
+      "enum_form_body" : {
         "properties" : {
           "enum_form_string_array" : {
             "type" : "array",
@@ -2901,7 +2901,7 @@
           }
         }
       },
-      "body_5" : {
+      "fake_jsonFormData_body" : {
         "required" : [ "param", "param2" ],
         "properties" : {
           "param" : {
@@ -2914,7 +2914,7 @@
           }
         }
       },
-      "body_6" : {
+      "animal_animalId_body" : {
         "properties" : {
           "name" : {
             "type" : "string",
@@ -2926,7 +2926,7 @@
           }
         }
       },
-      "body_7" : {
+      "dog_dogId_body" : {
         "properties" : {
           "name" : {
             "type" : "string",
@@ -2945,7 +2945,7 @@
           "$ref" : "#/components/schemas/Parakeet"
         } ]
       },
-      "body_8" : {
+      "parrot_body" : {
         "type" : "object",
         "properties" : {
           "parrots" : {
@@ -2970,7 +2970,7 @@
           "parrots" : [ "", "" ]
         }
       },
-      "body_9" : {
+      "parrot_body_1" : {
         "anyOf" : [ {
           "$ref" : "#/components/schemas/Macaw"
         }, {

@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// Model for testing model name starting with number
     /// </summary>
@@ -29,14 +29,16 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
+
         [DataMember(Name="name")]
         public int? Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Class
+        /// Gets or Sets _Class
         /// </summary>
+
         [DataMember(Name="class")]
-        public string Class { get; set; }
+        public string _Class { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -47,7 +49,7 @@ namespace IO.Swagger.Models
             var sb = new StringBuilder();
             sb.Append("class Model200Response {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Class: ").Append(Class).Append("\n");
+            sb.Append("  _Class: ").Append(_Class).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -90,9 +92,9 @@ namespace IO.Swagger.Models
                     Name.Equals(other.Name)
                 ) && 
                 (
-                    Class == other.Class ||
-                    Class != null &&
-                    Class.Equals(other.Class)
+                    _Class == other._Class ||
+                    _Class != null &&
+                    _Class.Equals(other._Class)
                 );
         }
 
@@ -108,8 +110,8 @@ namespace IO.Swagger.Models
                 // Suitable nullity checks etc, of course :)
                     if (Name != null)
                     hashCode = hashCode * 59 + Name.GetHashCode();
-                    if (Class != null)
-                    hashCode = hashCode * 59 + Class.GetHashCode();
+                    if (_Class != null)
+                    hashCode = hashCode * 59 + _Class.GetHashCode();
                 return hashCode;
             }
         }

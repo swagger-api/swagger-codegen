@@ -19,22 +19,24 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public partial class Macaw : IEquatable<Macaw>
+    public partial class Macaw : IEquatable<Macaw>, InlineResponse2001, InlineResponseItems200, ParrotBody1 
     { 
         /// <summary>
         /// Gets or Sets Color
         /// </summary>
+
         [DataMember(Name="color")]
         public string Color { get; set; }
 
         /// <summary>
         /// Gets or Sets Singer
         /// </summary>
+
         [DataMember(Name="singer")]
         public bool? Singer { get; set; }
 

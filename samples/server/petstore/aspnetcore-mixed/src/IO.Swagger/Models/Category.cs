@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,12 +29,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+
         [DataMember(Name="id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
+
         [DataMember(Name="name")]
         public string Name { get; set; }
 

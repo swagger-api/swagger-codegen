@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,18 +29,21 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Category
         /// </summary>
+
         [DataMember(Name="category")]
         public AllOfSubCategoryCategory Category { get; set; }
 
         /// <summary>
         /// Gets or Sets Category2
         /// </summary>
+
         [DataMember(Name="category2")]
         public Category Category2 { get; set; }
 
         /// <summary>
         /// Gets or Sets Pets
         /// </summary>
+
         [DataMember(Name="pets")]
         public List<SubCategoryPets> Pets { get; set; }
 

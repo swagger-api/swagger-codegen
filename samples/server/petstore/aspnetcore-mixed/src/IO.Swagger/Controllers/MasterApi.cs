@@ -42,7 +42,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<PartMaster>));
             string exampleJson = null;
-            exampleJson = "[ {\n  \"origin\" : \"\",\n  \"destination\" : \"\"\n}, {\n  \"origin\" : \"\",\n  \"destination\" : \"\"\n} ]";
+            exampleJson = "[ {\r\n  \"origin\" : \"\",\r\n  \"destination\" : \"\"\r\n}, {\r\n  \"origin\" : \"\",\r\n  \"destination\" : \"\"\r\n} ]";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<List<PartMaster>>(exampleJson)

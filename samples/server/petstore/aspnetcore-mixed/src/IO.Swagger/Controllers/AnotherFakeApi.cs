@@ -37,17 +37,17 @@ namespace IO.Swagger.Controllers
         [Route("/v3/another-fake/dummy")]
         [ValidateModelState]
         [SwaggerOperation("TestSpecialTags")]
-        [SwaggerResponse(statusCode: 200, type: typeof(Client), description: "successful operation")]
-        public virtual IActionResult TestSpecialTags([FromBody]Client body)
+        [SwaggerResponse(statusCode: 200, type: typeof(ModelClient), description: "successful operation")]
+        public virtual IActionResult TestSpecialTags([FromBody]ModelClient body)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(Client));
+            // return StatusCode(200, default(ModelClient));
             string exampleJson = null;
-            exampleJson = "{\n  \"client\" : \"client\"\n}";
+            exampleJson = "{\r\n  \"client\" : \"client\"\r\n}";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<Client>(exampleJson)
-                        : default(Client);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<ModelClient>(exampleJson)
+                        : default(ModelClient);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }

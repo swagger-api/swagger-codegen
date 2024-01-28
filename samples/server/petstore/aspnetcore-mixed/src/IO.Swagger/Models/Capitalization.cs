@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,30 +29,35 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets SmallCamel
         /// </summary>
+
         [DataMember(Name="smallCamel")]
         public string SmallCamel { get; set; }
 
         /// <summary>
         /// Gets or Sets CapitalCamel
         /// </summary>
+
         [DataMember(Name="CapitalCamel")]
         public string CapitalCamel { get; set; }
 
         /// <summary>
         /// Gets or Sets SmallSnake
         /// </summary>
+
         [DataMember(Name="small_Snake")]
         public string SmallSnake { get; set; }
 
         /// <summary>
         /// Gets or Sets CapitalSnake
         /// </summary>
+
         [DataMember(Name="Capital_Snake")]
         public string CapitalSnake { get; set; }
 
         /// <summary>
         /// Gets or Sets SCAETHFlowPoints
         /// </summary>
+
         [DataMember(Name="SCA_ETH_Flow_Points")]
         public string SCAETHFlowPoints { get; set; }
 
@@ -60,6 +65,7 @@ namespace IO.Swagger.Models
         /// Name of the pet 
         /// </summary>
         /// <value>Name of the pet </value>
+
         [DataMember(Name="ATT_NAME")]
         public string ATT_NAME { get; set; }
 

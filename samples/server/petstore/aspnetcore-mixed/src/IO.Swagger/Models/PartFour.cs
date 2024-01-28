@@ -19,16 +19,17 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public partial class PartFour : IEquatable<PartFour>
+    public partial class PartFour : IEquatable<PartFour>, OneOfPartMasterOrigin 
     { 
         /// <summary>
         /// Gets or Sets OtherIdPart
         /// </summary>
+
         [DataMember(Name="otherIdPart")]
         public string OtherIdPart { get; set; }
 

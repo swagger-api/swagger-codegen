@@ -89,7 +89,7 @@ namespace IO.Swagger
                     {
                         Version = "1.0.0",
                         Title = "Swagger Petstore",
-                        Description = "Swagger Petstore (ASP.NET Core 3.1)",
+                        Description = "Swagger Petstore (ASP.NET Core 7.0)",
                         Contact = new OpenApiContact()
                         {
                            Name = "Swagger Codegen Contributors",

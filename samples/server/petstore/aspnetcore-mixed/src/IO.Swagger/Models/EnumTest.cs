@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -51,6 +51,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets EnumString
         /// </summary>
+
         [DataMember(Name="enum_string")]
         public EnumStringEnum? EnumString { get; set; }
 
@@ -74,6 +75,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets EnumInteger
         /// </summary>
+
         [DataMember(Name="enum_integer")]
         public EnumIntegerEnum? EnumInteger { get; set; }
 
@@ -97,12 +99,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets EnumNumber
         /// </summary>
+
         [DataMember(Name="enum_number")]
         public EnumNumberEnum? EnumNumber { get; set; }
 
         /// <summary>
         /// Gets or Sets OuterEnum
         /// </summary>
+
         [DataMember(Name="outerEnum")]
         public OuterEnum OuterEnum { get; set; }
 

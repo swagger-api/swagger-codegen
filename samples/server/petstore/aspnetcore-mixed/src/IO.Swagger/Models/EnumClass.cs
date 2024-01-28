@@ -19,26 +19,27 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
-        /// <summary>
-        /// Gets or Sets EnumClass
-        /// </summary>
-        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public enum EnumClass
-        {
-            /// <summary>
-            /// Enum AbcEnum for _abc
-            /// </summary>
-            [EnumMember(Value = "_abc")]
-            AbcEnum = 0,
-            /// <summary>
-            /// Enum EfgEnum for -efg
-            /// </summary>
-            [EnumMember(Value = "-efg")]
-            EfgEnum = 1,
-            /// <summary>
-            /// Enum XyzEnum for (xyz)
-            /// </summary>
-            [EnumMember(Value = "(xyz)")]
-            XyzEnum = 2        }
+{
+  
+          /// <summary>
+          /// Gets or Sets EnumClass
+          /// </summary>
+          [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+          public enum EnumClass
+          {
+              /// <summary>
+              /// Enum AbcEnum for _abc
+              /// </summary>
+              [EnumMember(Value = "_abc")]
+              AbcEnum = 0,
+              /// <summary>
+              /// Enum EfgEnum for -efg
+              /// </summary>
+              [EnumMember(Value = "-efg")]
+              EfgEnum = 1,
+              /// <summary>
+              /// Enum XyzEnum for (xyz)
+              /// </summary>
+              [EnumMember(Value = "(xyz)")]
+              XyzEnum = 2          }
 }

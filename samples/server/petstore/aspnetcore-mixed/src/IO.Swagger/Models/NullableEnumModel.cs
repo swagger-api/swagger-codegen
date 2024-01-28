@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -51,6 +51,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets EnumProp
         /// </summary>
+
         [DataMember(Name="enumProp")]
         public EnumPropEnum? EnumProp { get; set; }
 

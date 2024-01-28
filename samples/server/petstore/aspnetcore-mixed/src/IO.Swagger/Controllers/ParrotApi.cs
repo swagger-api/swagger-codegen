@@ -39,7 +39,7 @@ namespace IO.Swagger.Controllers
         [ValidateModelState]
         [SwaggerOperation("AddParrot")]
         [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse2001), description: "successful operation")]
-        public virtual IActionResult AddParrot([FromBody]Body9 body)
+        public virtual IActionResult AddParrot([FromBody]ParrotBody1 body)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -90,7 +90,7 @@ namespace IO.Swagger.Controllers
         [ValidateModelState]
         [SwaggerOperation("UpdateParrots")]
         [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse200), description: "successful operation")]
-        public virtual IActionResult UpdateParrots([FromBody]Body8 body)
+        public virtual IActionResult UpdateParrots([FromBody]ParrotBody body)
         { 
             //TODO: Uncomment the next line to return response 405 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(405);
@@ -98,7 +98,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(InlineResponse200));
             string exampleJson = null;
-            exampleJson = "{\n  \"parrots\" : [ \"\", \"\" ]\n}";
+            exampleJson = "{\r\n  \"parrots\" : [ \"\", \"\" ]\r\n}";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<InlineResponse200>(exampleJson)

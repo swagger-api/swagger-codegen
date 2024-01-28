@@ -19,22 +19,24 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public partial class Parakeet : IEquatable<Parakeet>
+    public partial class Parakeet : IEquatable<Parakeet>, InlineResponse2001, InlineResponseItems200, ParrotBody1 
     { 
         /// <summary>
         /// Gets or Sets Color
         /// </summary>
+
         [DataMember(Name="color")]
         public string Color { get; set; }
 
         /// <summary>
         /// Gets or Sets SoundRepeater
         /// </summary>
+
         [DataMember(Name="soundRepeater")]
         public bool? SoundRepeater { get; set; }
 

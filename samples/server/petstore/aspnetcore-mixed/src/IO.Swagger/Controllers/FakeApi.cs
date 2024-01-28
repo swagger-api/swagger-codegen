@@ -67,7 +67,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(OuterComposite));
             string exampleJson = null;
-            exampleJson = "{\n  \"my_string\" : \"my_string\",\n  \"my_number\" : 0.8008281904610115,\n  \"my_boolean\" : true\n}";
+            exampleJson = "{\r\n  \"my_string\" : \"my_string\",\r\n  \"my_number\" : 0.8008281904610115,\r\n  \"my_boolean\" : true\r\n}";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<OuterComposite>(exampleJson)
@@ -133,17 +133,17 @@ namespace IO.Swagger.Controllers
         [Route("/v3/fake")]
         [ValidateModelState]
         [SwaggerOperation("TestClientModel")]
-        [SwaggerResponse(statusCode: 200, type: typeof(Client), description: "successful operation")]
-        public virtual IActionResult TestClientModel([FromBody]Client body)
+        [SwaggerResponse(statusCode: 200, type: typeof(ModelClient), description: "successful operation")]
+        public virtual IActionResult TestClientModel([FromBody]ModelClient body)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(Client));
+            // return StatusCode(200, default(ModelClient));
             string exampleJson = null;
-            exampleJson = "{\n  \"client\" : \"client\"\n}";
+            exampleJson = "{\r\n  \"client\" : \"client\"\r\n}";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<Client>(exampleJson)
-                        : default(Client);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<ModelClient>(exampleJson)
+                        : default(ModelClient);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -159,7 +159,7 @@ namespace IO.Swagger.Controllers
         [Authorize(AuthenticationSchemes = BasicAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("TestEndpointParameters")]
-        public virtual IActionResult TestEndpointParameters([FromBody]Body2 body)
+        public virtual IActionResult TestEndpointParameters([FromBody]FakeBody body)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -207,7 +207,7 @@ namespace IO.Swagger.Controllers
         [Route("/v3/fake/enum/form")]
         [ValidateModelState]
         [SwaggerOperation("TestEnumRequestBody")]
-        public virtual IActionResult TestEnumRequestBody([FromBody]Body4 body)
+        public virtual IActionResult TestEnumRequestBody([FromBody]EnumFormBody body)
         { 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -244,7 +244,7 @@ namespace IO.Swagger.Controllers
         [Route("/v3/fake/jsonFormData")]
         [ValidateModelState]
         [SwaggerOperation("TestJsonFormData")]
-        public virtual IActionResult TestJsonFormData([FromBody]Body5 body)
+        public virtual IActionResult TestJsonFormData([FromBody]FakeJsonFormDataBody body)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);

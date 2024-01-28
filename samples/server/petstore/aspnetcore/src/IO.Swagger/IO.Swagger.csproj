@@ -2,18 +2,18 @@
   <PropertyGroup>
     <Description>IO.Swagger</Description>
     <Copyright>IO.Swagger</Copyright>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>IO.Swagger</AssemblyName>
     <PackageId>IO.Swagger</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1"/>
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1"/>
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.5.1"/>
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.5.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.5.1"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.4.0"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />

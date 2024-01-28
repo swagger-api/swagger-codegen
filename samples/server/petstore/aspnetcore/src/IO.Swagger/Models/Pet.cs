@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,12 +29,14 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
+
         [DataMember(Name="id")]
         public long? Id { get; set; }
 
         /// <summary>
         /// Gets or Sets Category
         /// </summary>
+
         [DataMember(Name="category")]
         public Category Category { get; set; }
 
@@ -42,6 +44,7 @@ namespace IO.Swagger.Models
         /// Gets or Sets Name
         /// </summary>
         [Required]
+
         [DataMember(Name="name")]
         public string Name { get; set; }
 
@@ -49,12 +52,14 @@ namespace IO.Swagger.Models
         /// Gets or Sets PhotoUrls
         /// </summary>
         [Required]
+
         [DataMember(Name="photoUrls")]
         public List<string> PhotoUrls { get; set; }
 
         /// <summary>
         /// Gets or Sets Tags
         /// </summary>
+
         [DataMember(Name="tags")]
         public List<Tag> Tags { get; set; }
 
@@ -85,6 +90,7 @@ namespace IO.Swagger.Models
         /// pet status in the store
         /// </summary>
         /// <value>pet status in the store</value>
+
         [DataMember(Name="status")]
         public StatusEnum? Status { get; set; }
 

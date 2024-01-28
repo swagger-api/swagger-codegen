@@ -124,7 +124,7 @@ namespace IO.Swagger.Controllers
             //TODO: Uncomment the next line to return response 404 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(404);
             string exampleJson = null;
-            exampleJson = "{\n  \"id\" : 0,\n  \"username\" : \"hugomario\",\n  \"firstName\" : \"hugo\",\n  \"lastName\" : \"mercado\",\n  \"email\" : \"hugo.mercado.aws@gmail.com\",\n  \"password\" : \"*****\",\n  \"phone\" : \"000-00000000\",\n  \"userStatus\" : 1\n}";
+            exampleJson = "{\r\n  \"id\" : 0,\r\n  \"username\" : \"hugomario\",\r\n  \"firstName\" : \"hugo\",\r\n  \"lastName\" : \"mercado\",\r\n  \"email\" : \"hugo.mercado.aws@gmail.com\",\r\n  \"password\" : \"*****\",\r\n  \"phone\" : \"000-00000000\",\r\n  \"userStatus\" : 1\r\n}";
             
                         var example = exampleJson != null
                         ? JsonConvert.DeserializeObject<User>(exampleJson)

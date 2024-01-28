@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,18 +29,21 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets MyNumber
         /// </summary>
+
         [DataMember(Name="my_number")]
         public decimal? MyNumber { get; set; }
 
         /// <summary>
         /// Gets or Sets MyString
         /// </summary>
+
         [DataMember(Name="my_string")]
         public string MyString { get; set; }
 
         /// <summary>
         /// Gets or Sets MyBoolean
         /// </summary>
+
         [DataMember(Name="my_boolean")]
         public bool? MyBoolean { get; set; }
 

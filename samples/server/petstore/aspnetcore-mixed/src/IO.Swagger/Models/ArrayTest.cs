@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,18 +29,21 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets ArrayOfString
         /// </summary>
+
         [DataMember(Name="array_of_string")]
         public List<string> ArrayOfString { get; set; }
 
         /// <summary>
         /// Gets or Sets ArrayArrayOfInteger
         /// </summary>
+
         [DataMember(Name="array_array_of_integer")]
         public List<List<long?>> ArrayArrayOfInteger { get; set; }
 
         /// <summary>
         /// Gets or Sets ArrayArrayOfModel
         /// </summary>
+
         [DataMember(Name="array_array_of_model")]
         public List<List<ReadOnlyFirst>> ArrayArrayOfModel { get; set; }
 

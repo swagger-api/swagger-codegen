@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -46,6 +46,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets JustSymbol
         /// </summary>
+
         [DataMember(Name="just_symbol")]
         public JustSymbolEnum? JustSymbol { get; set; }
 
@@ -69,6 +70,7 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets ArrayEnum
         /// </summary>
+
         [DataMember(Name="array_enum")]
         public List<ArrayEnumEnum> ArrayEnum { get; set; }
 

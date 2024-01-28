@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace IO.Swagger.Models
-{ 
+{
     /// <summary>
     /// 
     /// </summary>
@@ -29,18 +29,21 @@ namespace IO.Swagger.Models
         /// <summary>
         /// Gets or Sets Uuid
         /// </summary>
+
         [DataMember(Name="uuid")]
         public Guid? Uuid { get; set; }
 
         /// <summary>
         /// Gets or Sets DateTime
         /// </summary>
+
         [DataMember(Name="dateTime")]
         public DateTime? DateTime { get; set; }
 
         /// <summary>
         /// Gets or Sets Map
         /// </summary>
+
         [DataMember(Name="map")]
         public Dictionary<string, Animal> Map { get; set; }
 
