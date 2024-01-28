@@ -3,6 +3,7 @@ package io.swagger.client.auth;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
+
 public class ApiKeyAuth implements Authentication {
     private final String location;
     private final String paramName;

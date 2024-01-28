@@ -26,6 +26,7 @@ import java.util.List;
  */
 
 
+
 public class SubCategory {
   @JsonProperty("category")
   private AllOfSubCategoryCategory category = null;
