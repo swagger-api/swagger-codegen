@@ -515,7 +515,7 @@ public class CodegenConfigurator implements Serializable {
         setVerboseFlags();
         setSystemProperties();
 
-        CodegenConfig config = CodegenConfigLoader.forName(lang);
+        CodegenConfig config = loadCodegenConfig();
         ClientOptInput input = new ClientOptInput();
 
         Predicate<URL> urlMatcher = null;
@@ -667,6 +667,10 @@ public class CodegenConfigurator implements Serializable {
 
         input.config(config);
         return input;
+    }
+
+    protected CodegenConfig loadCodegenConfig() {
+        return CodegenConfigLoader.forName(lang);
     }
 
     private ParseOptions buildParseOptions() {
