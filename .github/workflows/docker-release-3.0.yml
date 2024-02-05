@@ -83,8 +83,8 @@ jobs:
       - name: docker cli build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_minimal
+          context: ./modules/swagger-codegen-cli
+          file: ./modules/swagger-codegen-cli/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
