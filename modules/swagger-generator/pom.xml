@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.4.38-SNAPSHOT</version>
+        <version>2.4.40-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
@@ -276,17 +276,17 @@
         <dependency>
            <groupId>javax.xml.bind</groupId>
            <artifactId>jaxb-api</artifactId>
-           <version>2.3.0</version>
+           <version>2.3.1</version>
          </dependency>
          <dependency>
            <groupId>com.sun.xml.bind</groupId>
            <artifactId>jaxb-core</artifactId>
-           <version>2.3.0</version>
+           <version>2.3.0.1</version>
          </dependency>
          <dependency>
            <groupId>com.sun.xml.bind</groupId>
            <artifactId>jaxb-impl</artifactId>
-           <version>2.3.0</version>
+           <version>2.3.1</version>
          </dependency>
 
         <dependency>
@@ -329,7 +329,7 @@
     </dependencies>
     <properties>
         <servlet-api-version>2.5</servlet-api-version>
-        <logback-version>1.4.11</logback-version>
+        <logback-version>1.4.14</logback-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
         <zip-version>2.11.5</zip-version>
