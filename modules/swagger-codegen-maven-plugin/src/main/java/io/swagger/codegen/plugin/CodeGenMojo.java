@@ -173,6 +173,12 @@ public class CodeGenMojo extends AbstractMojo {
     private String modelNameSuffix;
 
     /**
+     * Adds a prefix for all generated local variables
+     */
+    @Parameter(name = "localVariablePrefix", required = false)
+    private String localVariablePrefix;
+
+    /**
      * Sets an optional ignoreFileOverride path
      */
     @Parameter(name = "ignoreFileOverride", required = false)
@@ -407,6 +413,10 @@ public class CodeGenMojo extends AbstractMojo {
 
         if (isNotEmpty(modelNameSuffix)) {
             configurator.setModelNameSuffix(modelNameSuffix);
+        }
+
+        if (isNotEmpty(localVariablePrefix)) {
+            configurator.setLocalVariablePrefix(localVariablePrefix);
         }
 
         if (null != templateDirectory) {
