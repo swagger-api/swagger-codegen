@@ -40,7 +40,7 @@ export interface FetchAPI {
 }
 
 /**
- *  
+ *
  * @export
  * @interface FetchArgs
  */
@@ -50,12 +50,12 @@ export interface FetchArgs {
 }
 
 /**
- * 
+ *
  * @export
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration;
+    protected configuration?: Configuration;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
@@ -63,16 +63,16 @@ export class BaseAPI {
             this.basePath = configuration.basePath || this.basePath;
         }
     }
-};
+}
 
 /**
- * 
+ *
  * @export
  * @class RequiredError
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    name: "RequiredError"
+    name = "RequiredError"
     constructor(public field: string, msg?: string) {
         super(msg);
     }
@@ -122,7 +122,7 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             localVarRequestOptions.body = localVarFormParams.toString();
 
