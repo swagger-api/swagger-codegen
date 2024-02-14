@@ -19,6 +19,7 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
     public static final String NPM_REPOSITORY = "npmRepository";
     public static final String SNAPSHOT = "snapshot";
     public static final String WITH_INTERFACES = "withInterfaces";
+    public static final String PUT_PARAMETERS_IN_OBJECT = "putParametersInObject";
 
     protected String npmName = null;
     protected String npmVersion = "1.0.0";
@@ -39,6 +40,7 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
         this.cliOptions.add(new CliOption(NPM_REPOSITORY, "Use this property to set an url your private npmRepo in the package.json"));
         this.cliOptions.add(new CliOption(SNAPSHOT, "When setting this property to true the version will be suffixed with -SNAPSHOT.yyyyMMddHHmm", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
         this.cliOptions.add(new CliOption(WITH_INTERFACES, "Setting this property to true will generate interfaces next to the default class implementations.", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
+        this.cliOptions.add(new CliOption(PUT_PARAMETERS_IN_OBJECT, "Setting this property to true will put class parameters in an object instead of explicity listed.", BooleanProperty.TYPE).defaultValue(Boolean.FALSE.toString()));
     }
 
     @Override
@@ -59,6 +61,10 @@ public class TypeScriptFetchClientCodegen extends AbstractTypeScriptClientCodege
 
         if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
+        }
+
+        if (additionalProperties.containsKey(PUT_PARAMETERS_IN_OBJECT)) {
+            additionalProperties.put(PUT_PARAMETERS_IN_OBJECT, Boolean.valueOf(additionalProperties.get(PUT_PARAMETERS_IN_OBJECT).toString()));
         }
     }
 
