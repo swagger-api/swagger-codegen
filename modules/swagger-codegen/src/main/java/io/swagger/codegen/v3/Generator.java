@@ -9,5 +9,5 @@ public interface Generator {
 
     List<File> generate();
     Map<String, Object> generateBundle();
-
+    String renderTemplate(String template, String context);
 }

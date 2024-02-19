@@ -1,5 +1,8 @@
 package io.swagger.codegen.v3;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
 import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
@@ -29,6 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -792,10 +797,25 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         // supporting files
         Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
-        Json.prettyPrint(bundle);
         generateSupportingFiles(files, bundle);
         config.processOpenAPI(openAPI);
         return files;
+    }
+
+    @Override
+    public String renderTemplate(String template, String context) {
+
+        try {
+            Map<String, Object> bundle = new ObjectMapper().readValue(context, Map.class);
+            Handlebars handlebars = new Handlebars();
+            Template hTemplate = handlebars.compileInline(template);
+            return hTemplate.apply(bundle);
+        } catch (IOException e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            return "Error rendering template: " + e.getMessage() + "\n" + sw.toString();
+        }
     }
 
     @Override
