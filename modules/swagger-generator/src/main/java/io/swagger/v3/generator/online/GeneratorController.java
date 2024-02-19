@@ -7,6 +7,8 @@ import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.service.GeneratorService;
+import io.swagger.codegen.v3.service.RenderRequest;
+import io.swagger.codegen.v3.service.RenderResponse;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.codegen.v3.service.GenerationRequest;
 import io.swagger.v3.generator.model.HiddenOptions;
@@ -482,6 +484,16 @@ public class GeneratorController {
         LOGGER.debug("generate end - " + requestLog);
         return responseContext;
 
+    }
+
+    public ResponseContext renderTemplate(RequestContext context, RenderRequest renderRequest) {
+        String result = new GeneratorService().renderTemplate(renderRequest);
+        RenderResponse response = new RenderResponse();
+        response.setValue(result);
+        return new ResponseContext()
+                .status(200)
+                .contentType(MediaType.APPLICATION_JSON_TYPE)
+                .entity(response);
     }
 
     public ResponseContext generateBundle(RequestContext context, GenerationRequest generationRequest) {

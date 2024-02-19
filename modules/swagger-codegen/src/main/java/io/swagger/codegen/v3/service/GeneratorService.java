@@ -60,4 +60,8 @@ public class GeneratorService {
         throw new RuntimeException("missing opts input");
     }
 
+    public String renderTemplate(RenderRequest renderRequest) {
+        return new DefaultGenerator().renderTemplate(renderRequest.getTemplate(), renderRequest.getContext());
+    }
+
 }
