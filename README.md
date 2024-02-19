@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-3)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
 
-- 3.0.53-SNAPSHOT:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
+- 3.0.54-SNAPSHOT:  [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/3.0.0.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-3)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-3)
 - Master (2.4.40-SNAPSHOT): [![Build Status](https://img.shields.io/travis/swagger-api/swagger-codegen/master.svg?label=Petstore%20Integration%20Test)](https://travis-ci.org/swagger-api/swagger-codegen)
 [![Java Test](https://img.shields.io/jenkins/build.svg?jobUrl=https://jenkins.swagger.io/job/oss-swagger-codegen-master)](https://jenkins.swagger.io/view/OSS%20-%20Java/job/oss-swagger-codegen-master)
@@ -112,8 +112,9 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
-3.0.53-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.53-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.52](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.52) (**current stable**) | 2023-12-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.52](https://github.com/swagger-api/swagger-codegen/tree/v3.0.52)
+3.0.54-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.54-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.53](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.53) (**current stable**) | 2024-02-14   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.53](https://github.com/swagger-api/swagger-codegen/tree/v3.0.53)
+[3.0.52](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.52) | 2023-12-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.52](https://github.com/swagger-api/swagger-codegen/tree/v3.0.52)
 [3.0.51](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.51) | 2023-11-21   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.51](https://github.com/swagger-api/swagger-codegen/tree/v3.0.51)
 [3.0.50](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.50) | 2023-10-26   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.50](https://github.com/swagger-api/swagger-codegen/tree/v3.0.50)
 [3.0.49](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.49) | 2023-10-23   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.49](https://github.com/swagger-api/swagger-codegen/tree/v3.0.49)
