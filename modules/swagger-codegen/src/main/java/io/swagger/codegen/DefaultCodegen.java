@@ -1685,8 +1685,7 @@ public class DefaultCodegen {
      * @param p Swagger property object
      * @return Codegen Property object
      */
-    public CodegenProperty fromProperty(String name, Property p) {
-        return fromProperty(name, p, null);
+    public CodegenProperty fromProperty(String name, Property p) {return fromProperty(name, p, null);
     }
     /**
      * Convert Swagger Property object to Codegen Property object

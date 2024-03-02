@@ -1,0 +1,6 @@
+      val {{paramName}}Param = request.remainingPathSegments.getOrElse {
+        {{#required}}
+        errors = "'{{paramName}}'' is a required path parameter" +: errors
+        {{/required}}
+        Nil
+      }

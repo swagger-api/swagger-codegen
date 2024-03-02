@@ -1,0 +1,28 @@
+//> using scala "3.2.0"
+//> using lib "com.lihaoyi::cask:0.8.3"
+//> using lib "com.lihaoyi::scalatags:0.12.0"
+//> using lib "com.softwaremill.sttp.client3::core:3.8.3"
+{{>licenseInfo}}
+
+package {{apiPackage}}
+
+{{#imports}}import _root_.{{import}}
+{{/imports}}
+
+object {{classname}}Service {
+  def apply() : {{classname}}Service = new {{classname}}Service {}
+}
+
+trait {{classname}}Service {
+{{#operations}}
+{{#operation}}
+  /** {{summary}}
+   * {{description}}
+   * @return {{returnType}}
+   */
+  def {{operationId}}({{vendorExtensions.x-param-list-typed}}) : {{vendorExtensions.x-response-type}} = {
+    ServiceResponse.notImplemented
+  }
+{{/operation}}
+{{/operations}}
+}

@@ -1,0 +1,36 @@
+{{>licenseInfo}}
+package {{package}}
+{{#imports}}import {{import}}
+{{/imports}}
+
+// see https://com-lihaoyi.github.io/upickle/
+import upickle.default.{ReadWriter => RW, macroRW}
+import upickle.default.*
+
+{{#models}}
+{{#model}}
+case class {{classname}}(
+  {{#vars}}
+  {{#description}}
+/* {{{description}}} */
+  {{/description}}
+  {{name}}: {{^required}}Option[{{/required}}{{datatype}}{{^required}}]{{/required}}{{#hasMore}},{{/hasMore}}
+  {{/vars}}) {
+
+  def asJson = write(this)
+
+}
+
+object {{classname}}{
+  implicit val rw: RW[{{classname}}] = macroRW
+
+  def fromJsonString(jason : String) : {{classname}} = read[{{classname}}](jason)
+
+  def manyFromJsonString(jason : String) : List[{{classname}}] = read[List[{{classname}}]](jason)
+
+  def mapFromJsonString(jason : String) : Map[String, {{classname}}] = read[Map[String, {{classname}}]](jason)
+
+}
+
+{{/model}}
+{{/models}}
