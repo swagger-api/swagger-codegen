@@ -1,0 +1,195 @@
+name: Build And Push Docker Release 3.0
+
+on:
+  workflow_dispatch:
+    branches: [ "3.0.0" ]
+    inputs:
+      tag:
+        description: tag/version to release
+        required: true
+jobs:
+  build_push_docker_release_30:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: git checkout 3.0.0
+        with:
+          ref: 3.0.0
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+      - name: preliminary checks
+        run: |
+          docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
+          set -e
+          # fail if templates/generators contain carriage return '\r'
+          /bin/bash ./bin/utils/detect_carriage_return.sh
+          # fail if generators contain merge conflicts
+          /bin/bash ./bin/utils/detect_merge_conflict.sh
+          # fail if generators contain tab '\t'
+          /bin/bash ./bin/utils/detect_tab_in_java_class.sh
+      - uses: s4u/maven-settings-action@v2.8.0
+        name: setup maven settings.xml
+        with:
+          servers: |
+            [{
+                "id": "sonatype-nexus-staging",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+            },
+            {
+                "id": "sonatype-nexus-snapshots",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+            }]
+      - name: Build with Maven
+        run: |
+          # mvn clean install -U -Pdocker -Plinux -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089
+      - name: docker build and push
+        run: |
+          export DOCKER_GENERATOR_IMAGE_NAME=swaggerapi/swagger-generator-v3-minimal
+          export DOCKER_GENERATOR_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3
+          export DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME=swaggerapi/swagger-generator-v3-root
+          export DOCKER_CODEGEN_CLI_IMAGE_NAME=swaggerapi/swagger-codegen-cli-v3
+          mvn -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 clean install -Pdocker -Prelease --settings $HOME/.m2/settings.xml
+          docker build --rm=false -t $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} -f ./modules/swagger-generator/Dockerfile_minimal ./modules/swagger-generator
+          docker tag $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_IMAGE_NAME:latest
+          docker push $DOCKER_GENERATOR_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_GENERATOR_IMAGE_NAME:latest
+          docker build --rm=false -t $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} ./modules/swagger-codegen-cli
+          docker tag $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }} $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
+          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_CODEGEN_CLI_IMAGE_NAME:latest
+          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}
+          docker push $DOCKER_GENERATOR_FULL_IMAGE_NAME:latest
+          echo "docker images:"
+          docker images | grep -i generator
+          echo "pushing $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}"
+          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }}
+          echo "pushing $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest"
+          docker push $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:latest
+          echo "tagging $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
+          docker tag $DOCKER_GENERATOR_ROOT_FULL_IMAGE_NAME:${{ env.TAG }} $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
+          echo "pushing $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root"
+          docker -D -l debug push $DOCKER_GENERATOR_FULL_IMAGE_NAME:${{ env.TAG }}-root
+      - name: deploy
+        run: |
+          echo "${{ env.TAG }}"
+
+          TOKEN="${{ secrets.RANCHER2_BEARER_TOKEN }}"
+          RANCHER_HOST="rancher.tools.swagger.io"
+          CLUSTER_ID="c-n8zp2"
+          NAMESPACE_NAME="swagger-oss"
+          K8S_OBJECT_TYPE="daemonsets"
+          K8S_OBJECT_NAME="swagger-generator-v3"
+          DEPLOY_IMAGE="swaggerapi/swagger-generator-v3:${{ env.TAG }}"
+
+          workloadStatus=""
+          getStatus() {
+              echo "Getting update status..."
+              if ! workloadStatus="$(curl -s -X GET \
+                -H "Authorization: Bearer ${TOKEN}" \
+                -H 'Content-Type: application/json' \
+                "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}/status")"
+              then
+                  echo 'ERROR - get status k8s API call failed!'
+                  echo "Exiting build"...
+                  exit 1
+              fi
+          }
+
+          # $1 = image to deploy
+          updateObject() {
+              local image="${1}"
+              echo "Updating image value..."
+
+              if ! curl -s -X PATCH \
+                -H "Authorization: Bearer ${TOKEN}" \
+                -H 'Content-Type: application/json-patch+json' \
+                "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}" \
+                -d "[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/image\", \"value\": \"${image}\"}]"
+              then
+                  echo 'ERROR - image update k8s API call failed!'
+                  echo "Exiting build..."
+                  exit 1
+              fi
+          }
+
+
+          # Check that the TAG is valid
+          if [[ ${{ env.TAG }} =~ ^[vV]?[0-9]*\.[0-9]*\.[0-9]*$ ]]; then
+              echo ""
+              echo "This is a Valid TAG..."
+
+              # Get current image/tag in case we need to rollback
+              getStatus
+              ROLLBACK_IMAGE="$(echo "${workloadStatus}" | jq -r '.spec.template.spec.containers[0].image')"
+              echo ""
+              echo "Current image: ${ROLLBACK_IMAGE}"
+
+              # Update image and validate response
+              echo ""
+              updateObject "${DEPLOY_IMAGE}"
+              echo ""
+
+              echo ""
+              echo "Waiting for pods to start..."
+              echo ""
+              sleep 60s
+
+              # Get state of the k8s object. If numberReady == desiredNumberScheduled, consider the upgrade successful. Else raise error
+              getStatus
+                  status="$(echo "${workloadStatus}" | jq '.status')"
+              echo ""
+              echo "${status}"
+              echo ""
+
+              numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
+              numberReady="$(echo "${status}" | jq -r '.numberReady')"
+
+              if (( numberReady == numberDesired )); then
+                  echo "${K8S_OBJECT_NAME} has been upgraded to ${DEPLOY_IMAGE}"
+
+              # If pods are not starting, rollback the upgrade and exit the build with error
+              else
+                  echo "state = error...rolling back upgrade"
+                  updateObject "${ROLLBACK_IMAGE}"
+                  echo ""
+
+                  echo ""
+                  echo "Waiting for rollback pods to start..."
+                  echo ""
+                  sleep 60s
+
+                  getStatus
+                  status="$(echo "${workloadStatus}" | jq '.status')"
+                  echo ""
+                  echo "${status}"
+                  echo ""
+
+                  numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
+                  numberReady="$(echo "${status}" | jq -r '.numberReady')"
+
+                  if (( numberReady == numberDesired )); then
+                      echo "Rollback to ${ROLLBACK_IMAGE} completed."
+                  else
+                      echo "FATAL - rollback failed"
+                  fi
+                  echo "Exiting Build..."
+                  exit 1
+              fi
+
+          else
+              echo "This TAG is not in a valid format..."
+              echo "Exiting Build..."
+              exit 0
+          fi
+          echo "Exiting Build..."
+          exit 0
+    env:
+      TAG: ${{ github.event.inputs.tag }}

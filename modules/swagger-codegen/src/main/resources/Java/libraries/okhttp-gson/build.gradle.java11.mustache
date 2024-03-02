@@ -25,7 +25,7 @@ dependencies {
     {{#threetenbp}}
     implementation 'org.threeten:threetenbp:1.3.5'
     {{/threetenbp}}
-    implementation 'com.sun.xml.ws:jaxws-rt:2.3.3'
+    implementation 'com.sun.xml.ws:jaxws-rt:{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}'
     testImplementation 'junit:junit:4.13.1'
     {{#wiremock}}
     testImplementation "com.github.tomakehurst:wiremock:2.27.2"

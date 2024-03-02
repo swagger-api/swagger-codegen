@@ -47,9 +47,16 @@
 
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
         <dependency>
+        {{#jakarta}}
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
+        {{/jakarta}}
+        {{^jakarta}}
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
+        {{/jakarta}}
             <scope>provided</scope>
         </dependency>
 
@@ -58,7 +65,7 @@
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxrs</artifactId>
             <!-- TOMCAT EE JaxRS v8.0.6 uses v3.0.2, https://www.apache.org/dyn/closer.cgi/tomee/tomee-8.0.6/ -->
-            <version>3.3.8</version>
+            <version>{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}3.5.5{{/jakarta}}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -79,9 +86,16 @@
 {{#useBeanValidation}}
        <!-- Bean Validation API support -->
        <dependency>
+           {{#jakarta}}
+           <groupId>jakarta.validation</groupId>
+           <artifactId>jakarta.validation-api</artifactId>
+           <version>3.0.2</version>
+           {{/jakarta}}
+           {{^jakarta}}
            <groupId>javax.validation</groupId>
            <artifactId>validation-api</artifactId>
            <version>1.1.0.Final</version>
+            {{/jakarta}}
            <scope>provided</scope>
        </dependency>
 {{/useBeanValidation}}

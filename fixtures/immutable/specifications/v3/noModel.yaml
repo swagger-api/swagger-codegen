@@ -1,0 +1,16 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: '1'
+servers:
+  - url: 'http://localhost:9080/1'
+paths:
+  /foo:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object

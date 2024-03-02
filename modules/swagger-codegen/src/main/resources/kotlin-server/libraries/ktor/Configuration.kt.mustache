@@ -2,8 +2,14 @@ package {{packageName}}
 
 // Use this file to hold package-level internal functions that return receiver object passed to the `install` method.
 import io.ktor.auth.OAuthServerSettings
-import io.ktor.features.*
-import io.ktor.http.*
+import io.ktor.features.Compression
+import io.ktor.features.HSTS
+import io.ktor.features.deflate
+import io.ktor.features.gzip
+import io.ktor.features.maxAge
+import io.ktor.features.minimumSize
+import io.ktor.http.HttpMethod
+import io.ktor.util.KtorExperimentalAPI
 import java.time.Duration
 import java.util.concurrent.Executors
 
@@ -13,7 +19,7 @@ import {{packageName}}.settings
 /**
  * Application block for [CORS] configuration.
  *
- * This file may be excluded in .swagger-codegen-ignore,
+ * This file may be excluded in .openapi-generator-ignore,
  * and application specific configuration can be applied in this function.
  *
  * See http://ktor.io/features/cors.html
@@ -37,7 +43,7 @@ internal fun ApplicationCORSConfiguration(): CORS.Configuration.() -> Unit {
 /**
  * Application block for [HSTS] configuration.
  *
- * This file may be excluded in .swagger-codegen-ignore,
+ * This file may be excluded in .openapi-generator-ignore,
  * and application specific configuration can be applied in this function.
  *
  * See http://ktor.io/features/hsts.html
@@ -58,7 +64,7 @@ internal fun ApplicationHstsConfiguration(): HSTS.Configuration.() -> Unit {
 /**
  * Application block for [Compression] configuration.
  *
- * This file may be excluded in .swagger-codegen-ignore,
+ * This file may be excluded in .openapi-generator-ignore,
  * and application specific configuration can be applied in this function.
  *
  * See http://ktor.io/features/compression.html
@@ -77,6 +83,7 @@ internal fun ApplicationCompressionConfiguration(): Compression.Configuration.()
 {{/featureCompression}}
 
 // Defines authentication mechanisms used throughout the application.
+@KtorExperimentalAPI
 val ApplicationAuthProviders: Map<String, OAuthServerSettings> = listOf<OAuthServerSettings>(
 {{#authMethods}}
     {{#isOAuth}}
@@ -88,8 +95,8 @@ val ApplicationAuthProviders: Map<String, OAuthServerSettings> = listOf<OAuthSer
             {{! TODO: flow, doesn't seem to be supported yet by ktor }}
             clientId = settings.property("auth.oauth.{{name}}.clientId").getString(),
             clientSecret = settings.property("auth.oauth.{{name}}.clientSecret").getString(),
-            defaultScopes = listOf({{#scopes}}"{{scope}}"{{#hasMore}}, {{/hasMore}}{{/scopes}})
-        ){{#hasMore}},{{/hasMore}}
+            defaultScopes = listOf({{#scopes}}"{{scope}}"{{^-last}}, {{/-last}}{{/scopes}})
+        ){{^-last}},{{/-last}}
     {{/isOAuth}}
 {{/authMethods}}
 //        OAuthServerSettings.OAuth2ServerSettings(

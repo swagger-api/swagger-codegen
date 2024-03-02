@@ -1,0 +1,335 @@
+openapi: 3.0.0
+servers:
+  - url: https://bikewise.org/api
+info:
+  contact:
+    email: support@bikeindex.org
+  description: >
+    <p>This is an API for accessing information about bicycling related
+    incidents. You can find the source code on <a
+    href="https://github.com/bikeindex/bikewise">GitHub</a>.</p>
+  title: BikeWise API v2
+  version: v2
+  x-apisguru-categories:
+    - open_data
+  x-logo:
+    url: https://www.bikewise.org/fav.ico
+  x-origin:
+    - converter:
+        url: https://github.com/lucybot/api-spec-converter
+        version: 2.7.31
+      format: swagger
+      url: https://bikewise.org/api/v2/swagger_doc
+      version: "1.2"
+  x-providerName: bikewise.org
+externalDocs:
+  url: https://www.bikewise.org/documentation/api_v2
+tags:
+  - description: Incidents matching parameters
+    name: incidents
+  - description: GeoJSON response for matching incidents
+    name: locations
+paths:
+  /v2/incidents:
+    get:
+      description: >
+
+        <p>If you’d like more detailed information about bike incidents, use this endpoint. For mapping, <code>locations</code> is probably a better bet.</p>
+
+
+        <p><strong>Notes on location searching</strong>: <br />
+
+        - <code>proximity</code> accepts an ip address, an address, zipcode, city, or latitude,longitude - i.e. <code>70.210.133.87</code>, <code>210 NW 11th Ave, Portland, OR</code>, <code>60647</code>, <code>Chicago, IL</code>, and <code>45.521728,-122.67326</code> are all acceptable<br />
+
+        - <code>proximity_square</code> sets the length of the sides of the square to find matches inside of. The square is centered on the location specified by <code>proximity</code>. It defaults to 100.</p>
+      operationId: GET--version-incidents---format-
+      parameters:
+        - description: |
+            <p>Page of results to fetch.</p>
+          in: query
+          name: page
+          required: false
+          schema:
+            default: 1
+            format: int32
+            type: integer
+        - description: |
+            <p>Number of results to return per page.</p>
+          in: query
+          name: per_page
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>End of period</p>
+          in: query
+          name: occurred_before
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Start of period</p>
+          in: query
+          name: occurred_after
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Only incidents of specific type</p>
+          in: query
+          name: incident_type
+          required: false
+          schema:
+            enum:
+              - crash
+              - hazard
+              - theft
+              - unconfirmed
+              - infrastructure_issue
+              - chop_shop
+            type: string
+        - description: |
+            <p>Center of location for proximity search</p>
+          in: query
+          name: proximity
+          required: false
+          schema:
+            type: string
+        - description: |
+            <p>Size of the proximity search</p>
+          in: query
+          name: proximity_square
+          required: false
+          schema:
+            default: 100
+            format: int32
+            type: integer
+        - description: |
+            <p>Full text search of incidents</p>
+          in: query
+          name: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: No response was specified
+      summary: Paginated incidents matching parameters
+      tags:
+        - incidents
+  "/v2/incidents/{id}":
+    get:
+      operationId: GET--version-incidents--id---format-
+      parameters:
+        - description: |
+            <p>Incident ID</p>
+          in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+      responses:
+        "200":
+          description: No response was specified
+      tags:
+        - incidents
+  /v2/locations:
+    get:
+      description: >
+        <p><strong>This endpoint behaves exactly like</strong>
+        <code>incidents</code>, but returns a valid geojson
+        <code>FeatureCollection</code> that looks like this:</p>
+
+
+        <pre><code>{
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              properties: {
+              id: 4474199,
+              type: "Theft",
+              occurred_at: 1428536937
+            },
+              geometry: {
+              type: "Point",
+              coordinates: [ -122.6244177, 45.5164386 ]
+            }
+          }
+        }
+
+        </code></pre>
+
+
+        <p>It doesn’t paginate. If you pass the <code>all</code> parameter it returns all matches (which can be big, &gt; 4mb), otherwise it returns the 100 most recent.</p>
+
+
+        <p><strong>Go forth and make maps!</strong></p>
+      operationId: GET--version-locations---format-
+      parameters:
+        - description: |
+            <p>End of period</p>
+          in: query
+          name: occurred_before
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Start of period</p>
+          in: query
+          name: occurred_after
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Only incidents of specific type</p>
+          in: query
+          name: incident_type
+          required: false
+          schema:
+            enum:
+              - crash
+              - hazard
+              - theft
+              - unconfirmed
+              - infrastructure_issue
+              - chop_shop
+            type: string
+        - description: |
+            <p>Center of location for proximity search</p>
+          in: query
+          name: proximity
+          required: false
+          schema:
+            type: string
+        - description: |
+            <p>Size of the proximity search</p>
+          in: query
+          name: proximity_square
+          required: false
+          schema:
+            default: 100
+            format: int32
+            type: integer
+        - description: |
+            <p>Full text search of incidents</p>
+          in: query
+          name: query
+          required: false
+          schema:
+            type: string
+        - description: |
+            <p>Max number of results to return. Defaults to 100</p>
+          in: query
+          name: limit
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Give ‘em all to me. Will ignore limit</p>
+          in: query
+          name: all
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: No response was specified
+      summary: Unpaginated geojson response
+      tags:
+        - locations
+  /v2/locations/markers:
+    get:
+      description: >
+        <p>This behaves exactly like the root <code>locations</code>
+        endpoint, but returns <a
+        href="https://github.com/mapbox/simplestyle-spec">simplestyled
+        markers</a> (<a
+        href="https://www.mapbox.com/guides/markers/#simple-style">mapbox styled
+        markers</a>)</p>
+
+
+        <p><strong>Go forth and make maps!</strong></p>
+      operationId: GET--version-locations-markers---format-
+      parameters:
+        - description: |
+            <p>End of period</p>
+          in: query
+          name: occurred_before
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Start of period</p>
+          in: query
+          name: occurred_after
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Only incidents of specific type</p>
+          in: query
+          name: incident_type
+          required: false
+          schema:
+            enum:
+              - crash
+              - hazard
+              - theft
+              - unconfirmed
+              - infrastructure_issue
+              - chop_shop
+            type: string
+        - description: |
+            <p>Center of location for proximity search</p>
+          in: query
+          name: proximity
+          required: false
+          schema:
+            type: string
+        - description: |
+            <p>Size of the proximity search</p>
+          in: query
+          name: proximity_square
+          required: false
+          schema:
+            default: 100
+            format: int32
+            type: integer
+        - description: |
+            <p>Full text search of incidents</p>
+          in: query
+          name: query
+          required: false
+          schema:
+            type: string
+        - description: |
+            <p>Max number of results to return. Defaults to 100</p>
+          in: query
+          name: limit
+          required: false
+          schema:
+            format: int32
+            type: integer
+        - description: |
+            <p>Give ‘em all to me. Will ignore limit</p>
+          in: query
+          name: all
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: No response was specified
+      summary: Unpaginated geojson response with simplestyled markers
+      tags:
+        - locations
