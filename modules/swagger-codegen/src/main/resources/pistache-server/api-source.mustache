@@ -92,6 +92,10 @@ void {{classname}}::{{operationIdSnakeCase}}_handler(const Pistache::Rest::Reque
       //send a 400 error
       response.send(Pistache::Http::Code::Bad_Request, e.what());
       return;
+    } catch (nlohmann::detail::exception & e) {
+      //send a 400 error
+      response.send(Pistache::Http::Code::Bad_Request, e.what());
+      return;
     }
 
 }
