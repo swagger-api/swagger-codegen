@@ -941,6 +941,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Fastly](https://www.fastly.com/)
 - [FINRA](https://github.com/FINRAOS/herd/)
 - [Flat](https://flat.io)
+- [Final Bytes](https://finalbytes.nl/)
 - [Finder](http://en.finder.pl/)
 - [Fitwell](https://fitwell.co/)
 - [FH Münster - University of Applied Sciences](http://www.fh-muenster.de)
