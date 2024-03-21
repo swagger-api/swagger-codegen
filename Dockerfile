@@ -1,4 +1,4 @@
-FROM maven:3-eclipse-temurin-11
+FROM maven:3-eclipse-temurin-11-alpine
 
 RUN set -x && \
     apk add --no-cache bash
