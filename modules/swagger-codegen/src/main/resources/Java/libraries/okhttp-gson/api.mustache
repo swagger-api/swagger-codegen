@@ -99,7 +99,7 @@ public class {{classname}} {
 
         // create path and map variables
         String {{localVariablePrefix}}localVarPath = "{{{path}}}"{{#pathParams}}
-            .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+            .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{localVariablePrefix}}apiClient.parameterToString({{{paramName}}}))){{/pathParams}};
 
         {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
         {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}localVarCollectionQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();{{#queryParams}}
