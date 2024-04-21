@@ -329,11 +329,11 @@
     </dependencies>
     <properties>
         <servlet-api-version>2.5</servlet-api-version>
-        <logback-version>1.4.14</logback-version>
+        <logback-version>1.5.3</logback-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
         <zip-version>2.11.5</zip-version>
         <jetty-version>9.4.53.v20231009</jetty-version>
-        <jersey2-version>2.41</jersey2-version>
+        <jersey2-version>2.42</jersey2-version>
     </properties>
 </project>

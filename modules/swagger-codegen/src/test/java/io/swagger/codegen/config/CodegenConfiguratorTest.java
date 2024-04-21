@@ -265,8 +265,7 @@ public class CodegenConfiguratorTest {
         assertEquals(configurator.getLanguageSpecificPrimitives().size(), 1);
         assertTrue(configurator.getLanguageSpecificPrimitives().contains("rolex"));
 
-        assertEquals(configurator.getDynamicProperties().size(), 1);
-        assertValueInMap(configurator.getDynamicProperties(), CodegenConstants.LOCAL_VARIABLE_PREFIX, "_");
+        assertEquals(configurator.getLocalVariablePrefix(), "_");
 
         assertEquals(configurator.getIgnoreFileOverride(), "/path/to/override/.swagger-codegen-ignore");
     }
