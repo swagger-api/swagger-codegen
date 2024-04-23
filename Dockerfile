@@ -14,7 +14,6 @@ COPY ./LICENSE ${GEN_DIR}
 COPY ./google_checkstyle.xml ${GEN_DIR}
 
 # Modules are copied individually here to allow for caching of docker layers between major.minor versions
-# NOTE: swagger-generator is not included here, it is available as swaggerapi/swagger-generator
 COPY ./modules/swagger-codegen-maven-plugin ${GEN_DIR}/modules/swagger-codegen-maven-plugin
 COPY ./modules/swagger-codegen-cli ${GEN_DIR}/modules/swagger-codegen-cli
 COPY ./modules/swagger-codegen ${GEN_DIR}/modules/swagger-codegen
