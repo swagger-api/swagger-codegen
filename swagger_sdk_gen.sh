@@ -8,7 +8,7 @@ if [ "$Branch" = "snapshot" ]
 elif [ "$Branch" = "production" ]
   then
     url="https://intouch-api-swagger.crm-staging-new.cc.capillarytech.com/swagger.json"
-    version="https://newapi.crm-staging-new.cc.capillarytech.com/version"
+    version="https://newapi.intouch-a-crm-crm-staging-new.cc.capillarytech.com/version"
 else " No Branch is selected"
 fi
 curl -k $version -o config.json
