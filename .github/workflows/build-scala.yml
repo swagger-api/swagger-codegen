@@ -1,0 +1,22 @@
+name: Scala Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: Set up Eclipse Temurin - JDK 19
+        uses: actions/setup-java@v3.6.0
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+      - name: Test
+        run: sbt test

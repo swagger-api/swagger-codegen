@@ -12,6 +12,7 @@ generated-files/*
 generated-code/*
 *.swp
 *.swo
+.bsp/
 
 /target
 /generated-files
