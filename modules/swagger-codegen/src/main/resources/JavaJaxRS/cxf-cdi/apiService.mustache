@@ -1,0 +1,32 @@
+package {{package}};
+
+import {{package}}.*;
+import {{modelPackage}}.*;
+
+import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import java.util.List;
+
+import java.io.InputStream;
+
+{{#jakarta}}
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
+{{/jakarta}}
+{{^jakarta}}
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+{{/jakarta}}
+
+{{>generatedAnnotation}}
+{{#operations}}
+public interface {{classname}}Service {
+  {{#operation}}
+      public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}SecurityContext securityContext);
+  {{/operation}}
+}
+{{/operations}}

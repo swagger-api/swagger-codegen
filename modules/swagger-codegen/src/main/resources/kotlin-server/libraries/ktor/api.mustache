@@ -1,0 +1,43 @@
+{{>licenseInfo}}
+package {{apiPackage}}
+
+import com.google.gson.Gson
+import io.ktor.application.call
+import io.ktor.auth.UserIdPrincipal
+import io.ktor.auth.authentication
+import io.ktor.auth.authenticate
+import io.ktor.auth.OAuthAccessTokenResponse
+import io.ktor.auth.OAuthServerSettings
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.locations.KtorExperimentalLocationsAPI
+import io.ktor.locations.delete
+import io.ktor.locations.get
+import io.ktor.locations.post
+import io.ktor.locations.put
+import io.ktor.locations.patch
+import io.ktor.response.respond
+import io.ktor.response.respondText
+import io.ktor.routing.Route
+import io.ktor.routing.route
+
+import {{packageName}}.Paths
+import {{packageName}}.infrastructure.ApiPrincipal
+
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{#operations}}
+@KtorExperimentalLocationsAPI
+fun Route.{{classname}}() {
+    val gson = Gson()
+    val empty = mutableMapOf<String, Any?>()
+{{#operation}}
+    {{! NOTE: Locations can be used on routes without body parameters.}}
+    {{#toLowerCase}}{{httpMethod}}{{/toLowerCase}}<Paths.{{operationId}}> {  _: Paths.{{operationId}} ->
+        {{>libraries/ktor/_api_body}}
+    }
+{{/operation}}
+}
+{{/operations}}

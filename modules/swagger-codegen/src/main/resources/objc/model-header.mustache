@@ -1,15 +1,23 @@
 #import <Foundation/Foundation.h>
-#import "SWGObject.h"
+#import "{{classPrefix}}Object.h"
+
+{{>licenceInfo}}
+
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
+{{#imports}}
+@protocol {{import}};
+@class {{import}};
+{{/imports}}
+
 {{newline}}
 {{#models}}
 {{#model}}
 
 @protocol {{classname}}
 @end
-  
-@interface {{classname}} : SWGObject
+
+@interface {{classname}} : {{#parent}}{{{parent}}}{{/parent}}{{^parent}}{{classPrefix}}Object{{/parent}}
 
 {{#vars}}
 {{#description}}/* {{{description}}} {{^required}}[optional]{{/required}}

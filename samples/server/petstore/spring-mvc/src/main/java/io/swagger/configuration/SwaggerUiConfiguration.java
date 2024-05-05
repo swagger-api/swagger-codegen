@@ -1,13 +1,34 @@
 package io.swagger.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.threeten.bp.Instant;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZonedDateTime;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
 
 
 @Configuration
+@ComponentScan(basePackages = "io.swagger.api")
 @EnableWebMvc
+@EnableSwagger2 //Loads the spring beans required by the framework
+@PropertySource("classpath:swagger.properties")
+@Import(SwaggerDocumentationConfig.class)
 public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
   private static final String[] SERVLET_RESOURCE_LOCATIONS = { "/" };
 
@@ -43,4 +64,29 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
     }
   }
 
+  @Bean
+  public Jackson2ObjectMapperBuilder builder() {
+    Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+        .indentOutput(true)
+        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .dateFormat(new RFC3339DateFormat());
+    return builder;
+  }
+
+  @Override
+  public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
+    super.configureMessageConverters(converters);
+  }
+
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
+    registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+  }
+
+  @Bean
+  public ObjectMapper objectMapper(){
+    return builder().build();
+  }
 }

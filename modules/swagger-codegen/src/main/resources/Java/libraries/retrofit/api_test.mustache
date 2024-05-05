@@ -1,0 +1,83 @@
+package {{package}};
+
+import {{invokerPackage}}.ApiClient;
+{{#imports}}import {{import}};
+{{/imports}}
+import org.junit.Before;
+import org.junit.Test;
+
+{{#wiremock}}
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import java.net.HttpURLConnection;
+import org.junit.AfterClass;
+{{/wiremock}}
+
+{{^fullJavaUtil}}
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+{{/fullJavaUtil}}
+
+{{#wiremock}}
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+{{/wiremock}}
+
+/**
+ * API tests for {{classname}}
+ */
+public class {{classname}}Test {
+
+    private {{classname}} api;
+
+    {{#wiremock}}
+    private static WireMockServer wireMockServer;
+
+    @Before
+    public void setup() {
+        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort());
+        wireMockServer.start();
+
+        configureFor(wireMockServer.port());
+
+        ApiClient apiClient = new ApiClient();
+        apiClient.getAdapterBuilder().setEndpoint("http://localhost:" + wireMockServer.port());
+        api = apiClient.createService({{classname}}.class);
+
+        {{#operations}}{{#operation}}
+        stubFor({{#lowercase}}{{httpMethod}}{{/lowercase}}(urlPathMatching("{{{path}}}"))
+                .willReturn(aResponse()
+                        .withStatus(HttpURLConnection.HTTP_OK)));
+        {{/operation}}{{/operations}}
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        wireMockServer.stop();
+    }
+    {{/wiremock}}
+    {{^wiremock}}
+    @Before
+    public void setup() {
+        api = new ApiClient().createService({{classname}}.class);
+    }
+    {{/wiremock}}
+
+    {{#operations}}{{#operation}}
+    /**
+     * {{summary}}
+     *
+     * {{notes}}
+     */
+    @Test
+    public void {{operationId}}Test() {
+        {{#allParams}}
+        {{{dataType}}} {{paramName}} = null;
+        {{/allParams}}
+        // {{#returnType}}{{{returnType}}} response = {{/returnType}}api.{{operationId}}({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+        // TODO: test validations
+    }
+    {{/operation}}{{/operations}}
+}

@@ -1,0 +1,939 @@
+openapi: 3.0.0
+servers:
+  - description: Production
+    url: https://api.ebay.com{basePath}
+    variables:
+      basePath:
+        default: /buy/deal/v1
+info:
+  contact:
+    name: eBay Inc,
+    x-twitter: ebay
+  description: This API allows third-party developers to search for and retrieve
+    details about eBay deals and events, as well as the items associated with
+    those deals and events.
+  license:
+    name: eBay API License Agreement
+    url: https://go.developer.ebay.com/api-license-agreement
+  title: Deal API
+  version: v1.1.0
+  x-apisguru-categories:
+    - ecommerce
+  x-logo:
+    backgroundColor: "#FFFFFF"
+    url: https://twitter.com/ebay/profile_image?size=original
+  x-origin:
+    - format: openapi
+      url: https://developer.ebay.com/api-docs/master/buy/deal/openapi/3/buy_deal_v1_oas3.json
+      version: "3.0"
+  x-providerName: ebay.com
+  x-serviceName: buy-deal
+paths:
+  /deal_item:
+    get:
+      description: "This method retrieves a paginated set of deal items. The result
+        set contains all deal items associated with the specified search
+        criteria and marketplace ID. Request headers This method uses the
+        X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay
+        Partner Networks and to improve the accuracy of shipping and delivery
+        time estimations. For details see, Request headers in the Buying
+        Integration Guide. Restrictions This method can return a maximum of
+        10,000 items. For a list of supported sites and other restrictions, see
+        API Restrictions. eBay Partner Network: In order to receive a commission
+        for your sales, you must use the URL returned in the itemAffiliateWebUrl
+        field to forward your buyer to the ebay.com site."
+      operationId: getDealItems
+      parameters:
+        - description: The unique identifier of the eBay category for the search.
+          in: query
+          name: category_ids
+          required: false
+          schema:
+            type: string
+        - description: "A filter for commissionable deals. Restriction: This filter is
+            currently only supported for the US marketplace."
+          in: query
+          name: commissionable
+          required: false
+          schema:
+            type: string
+        - description: A filter for items that can be shipped to the specified country.
+          in: query
+          name: delivery_country
+          required: false
+          schema:
+            type: string
+        - description: The maximum number of items, from the current result set, returned
+            on a single page.
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+        - description: "The number of items that will be skipped in the result set. This
+            is used with the limit field to control the pagination of the
+            output. For example, if the offset is set to 0 and the limit is set
+            to 10, the method will retrieve items 1 through 10 from the list of
+            items returned. If the offset is set to 10 and the limit is set to
+            10, the method will retrieve items 11 through 20 from the list of
+            items returned. Default: 0"
+          in: query
+          name: offset
+          required: false
+          schema:
+            type: string
+        - description: A header used to specify the eBay marketplace ID.
+          in: header
+          name: X-EBAY-C-MARKETPLACE-ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DealItemSearchResponse"
+          description: OK
+        "400":
+          description: Bad Request
+          x-response-codes:
+            errors:
+              "180001":
+                category: REQUEST
+                description: Invalid, missing or unsupported marketplace. Please refer to
+                  documentation.
+                domain: API_DEAL
+              "180002":
+                category: REQUEST
+                description: The specified limit is invalid. Maximum value supported is 100.
+                domain: API_DEAL
+              "180003":
+                category: REQUEST
+                description: The specified offset is invalid.
+                domain: API_DEAL
+              "180005":
+                category: REQUEST
+                description: category_ids length exceeded. Please check documentation for
+                  maximum values supported.
+                domain: API_DEAL
+              "180007":
+                category: REQUEST
+                description: Invalid or unsupported filter 'commissionable' for the requested
+                  marketplace. Please refer to documentation.
+                domain: API_DEAL
+              "180010":
+                category: REQUEST
+                description: Invalid filter for 'delivery_country'. Please refer to the
+                  documentation for supported values.
+                domain: API_DEAL
+        "403":
+          description: Forbidden
+          x-response-codes:
+            errors:
+              "180009":
+                category: REQUEST
+                description: Not authorized. Please contact developer support for assistance.
+                domain: API_DEAL
+        "500":
+          description: Internal Server Error
+          x-response-codes:
+            errors:
+              "180000":
+                category: APPLICATION
+                description: There was a problem with an eBay internal system or process.
+                  Contact eBay developer support for assistance.
+                domain: API_DEAL
+      security:
+        - api_auth:
+            - https://api.ebay.com/oauth/api_scope/buy.deal
+      tags:
+        - deal_item
+  /event:
+    get:
+      description: "This method returns paginated results containing all eBay events
+        for the specified marketplace. Request headers This method uses the
+        X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay
+        Partner Networks and to improve the accuracy of shipping and delivery
+        time estimations. For details see, Request headers in the Buying
+        Integration Guide. Restrictions This method can return a maximum of
+        10,000 items. For a list of supported sites and other restrictions, see
+        API Restrictions. eBay Partner Network: In order to receive a commission
+        for your sales, you must use the URL returned in the itemAffiliateWebUrl
+        field to forward your buyer to the ebay.com site."
+      operationId: getEvents
+      parameters:
+        - description: "The maximum number of items, from the current result set, returned
+            on a single page. Default: 20 Maximum Value: 100"
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+        - description: "The number of items that will be skipped in the result set. This
+            is used with the limit field to control the pagination of the
+            output. For example, if the offset is set to 0 and the limit is set
+            to 10, the method will retrieve items 1 through 10 from the list of
+            items returned. If the offset is set to 10 and the limit is set to
+            10, the method will retrieve items 11 through 20 from the list of
+            items returned. Default: 0"
+          in: query
+          name: offset
+          required: false
+          schema:
+            type: string
+        - description: A header used to specify the eBay marketplace ID.
+          in: header
+          name: X-EBAY-C-MARKETPLACE-ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventSearchResponse"
+          description: OK
+        "400":
+          description: Bad Request
+          x-response-codes:
+            errors:
+              "180001":
+                category: REQUEST
+                description: Invalid, missing or unsupported marketplace. Please refer to
+                  documentation.
+                domain: API_DEAL
+              "180002":
+                category: REQUEST
+                description: The specified limit is invalid. Maximum value supported is 100.
+                domain: API_DEAL
+              "180003":
+                category: REQUEST
+                description: The specified offset is invalid.
+                domain: API_DEAL
+        "403":
+          description: Forbidden
+          x-response-codes:
+            errors:
+              "180009":
+                category: REQUEST
+                description: Not authorized. Please contact developer support for assistance.
+                domain: API_DEAL
+        "500":
+          description: Internal Server Error
+          x-response-codes:
+            errors:
+              "180000":
+                category: APPLICATION
+                description: There was a problem with an eBay internal system or process.
+                  Contact eBay developer support for assistance.
+                domain: API_DEAL
+      security:
+        - api_auth:
+            - https://api.ebay.com/oauth/api_scope/buy.deal
+      tags:
+        - event
+  "/event/{event_id}":
+    get:
+      description: "This method retrieves the details for an eBay event. The result
+        set contains detailed information associated with the specified event
+        ID, such as applicable coupons, start and end dates, and event terms.
+        Request headers This method uses the X-EBAY-C-ENDUSERCTX request header
+        to support revenue sharing for eBay Partner Networks and to improve the
+        accuracy of shipping and delivery time estimations. For details see,
+        Request headers in the Buying Integration Guide. Restrictions This
+        method can return a maximum of 10,000 items. For a list of supported
+        sites and other restrictions, see API Restrictions. eBay Partner
+        Network: In order to receive a commission for your sales, you must use
+        the URL returned in the itemAffiliateWebUrl field to forward your buyer
+        to the ebay.com site."
+      operationId: getEvent
+      parameters:
+        - description: A header used to specify the eBay marketplace ID.
+          in: header
+          name: X-EBAY-C-MARKETPLACE-ID
+          required: true
+          schema:
+            type: string
+        - description: The unique identifier for the eBay event.
+          in: path
+          name: event_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+          description: OK
+        "400":
+          description: Bad Request
+        "403":
+          description: Forbidden
+          x-response-codes:
+            errors:
+              "180009":
+                category: REQUEST
+                description: Not authorized. Please contact developer support for assistance.
+                domain: API_DEAL
+        "404":
+          description: Not Found
+          x-response-codes:
+            errors:
+              "180004":
+                category: REQUEST
+                description: The event Id is invalid for the requested marketplace.
+                domain: API_DEAL
+        "500":
+          description: Internal Server Error
+          x-response-codes:
+            errors:
+              "180000":
+                category: APPLICATION
+                description: There was a problem with an eBay internal system or process.
+                  Contact eBay developer support for assistance.
+                domain: API_DEAL
+      security:
+        - api_auth:
+            - https://api.ebay.com/oauth/api_scope/buy.deal
+      tags:
+        - event
+  /event_item:
+    get:
+      description: "This method returns a paginated set of event items. The result set
+        contains all event items associated with the specified search criteria
+        and marketplace ID. Request headers This method uses the
+        X-EBAY-C-ENDUSERCTX request header to support revenue sharing for eBay
+        Partner Networks and to improve the accuracy of shipping and delivery
+        time estimations. For details see, Request headers in the Buying
+        Integration Guide. Restrictions This method can return a maximum of
+        10,000 items. For a list of supported sites and other restrictions, see
+        API Restrictions. eBay Partner Network: In order to receive a commission
+        for your sales, you must use the URL returned in the itemAffiliateWebUrl
+        field to forward your buyer to the ebay.com site."
+      operationId: getEventItems
+      parameters:
+        - description: "The unique identifier of the eBay category for the search. Maximum
+            Value: 1"
+          in: query
+          name: category_ids
+          required: false
+          schema:
+            type: string
+        - description: A filter for items that can be shipped to the specified country.
+          in: query
+          name: delivery_country
+          required: false
+          schema:
+            type: string
+        - description: "The unique identifiers for the eBay events. Maximum Value: 1"
+          in: query
+          name: event_ids
+          required: true
+          schema:
+            type: string
+        - description: "The maximum number of items, from the current result set, returned
+            on a single page. Default: 20"
+          in: query
+          name: limit
+          required: false
+          schema:
+            type: string
+        - description: "The number of items that will be skipped in the result set. This
+            is used with the limit field to control the pagination of the
+            output. For example, if the offset is set to 0 and the limit is set
+            to 10, the method will retrieve items 1 through 10 from the list of
+            items returned. If the offset is set to 10 and the limit is set to
+            10, the method will retrieve items 11 through 20 from the list of
+            items returned. Default: 0"
+          in: query
+          name: offset
+          required: false
+          schema:
+            type: string
+        - description: A header used to specify the eBay marketplace ID.
+          in: header
+          name: X-EBAY-C-MARKETPLACE-ID
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventItemSearchResponse"
+          description: OK
+        "400":
+          description: Bad Request
+          x-response-codes:
+            errors:
+              "180001":
+                category: REQUEST
+                description: Invalid, missing or unsupported marketplace. Please refer to
+                  documentation.
+                domain: API_DEAL
+              "180002":
+                category: REQUEST
+                description: The specified limit is invalid. Maximum value supported is 100.
+                domain: API_DEAL
+              "180003":
+                category: REQUEST
+                description: The specified offset is invalid.
+                domain: API_DEAL
+              "180004":
+                category: REQUEST
+                description: The event Id is invalid.
+                domain: API_DEAL
+              "180005":
+                category: REQUEST
+                description: category_ids length exceeded. Please check documentation for
+                  maximum values supported.
+                domain: API_DEAL
+              "180006":
+                category: REQUEST
+                description: event_ids length exceeded. Maximum supported is one.
+                domain: API_DEAL
+              "180008":
+                category: REQUEST
+                description: Missing eventId. Please provide a valid event Id for the
+                  marketplace.
+                domain: API_DEAL
+              "180010":
+                category: REQUEST
+                description: Invalid filter for 'delivery_country'. Please refer to the
+                  documentation for supported values.
+                domain: API_DEAL
+        "403":
+          description: Forbidden
+          x-response-codes:
+            errors:
+              "180009":
+                category: REQUEST
+                description: Not authorized. Please contact developer support for assistance.
+                domain: API_DEAL
+        "500":
+          description: Internal Server Error
+          x-response-codes:
+            errors:
+              "180000":
+                category: APPLICATION
+                description: There was a problem with an eBay internal system or process.
+                  Contact eBay developer support for assistance.
+                domain: API_DEAL
+      security:
+        - api_auth:
+            - https://api.ebay.com/oauth/api_scope/buy.deal
+      tags:
+        - event_item
+components:
+  schemas:
+    Amount:
+      description: The currency and value of the item.
+      properties:
+        currency:
+          description: "The three-letter ISO 4217 code representing the currency of the
+            amount in the value field. Default: The currency of the
+            authenticated user's country. For implementation help, refer to <a
+            href='https://developer.ebay.com/api-docs/buy/deal/types/bas:Curren\
+            cyCodeEnum'>eBay API documentation</a>"
+          type: string
+        value:
+          description: The monetary value, in the currency specified by the currency field.
+          type: string
+      type: object
+    Coupon:
+      description: The details for the coupon available for the item.
+      properties:
+        redemptionCode:
+          description: The coupon code.
+          type: string
+        terms:
+          $ref: "#/components/schemas/Terms"
+          description: The terms of use associated with the coupon.
+      type: object
+    DealItem:
+      description: The detailed data returned for the deal item.
+      properties:
+        additionalImages:
+          description: The additional images for the deal item.
+          items:
+            $ref: "#/components/schemas/Image"
+          type: array
+        categoryAncestorIds:
+          description: The IDs of the ancestors for the primary category.
+          items:
+            type: string
+          type: array
+        categoryId:
+          description: The ID of the leaf category for the deal item. A leaf category is
+            the lowest level in a category and has no children.
+          type: string
+        commissionable:
+          description: A boolean value specifying whether the listing has commission.
+          type: boolean
+        dealAffiliateWebUrl:
+          description: The deal associated with the item with affiliate attribution.
+          type: string
+        dealEndDate:
+          description: The date after which the deal ends.
+          type: string
+        dealStartDate:
+          description: The date on which the deal starts.
+          type: string
+        dealWebUrl:
+          description: The web URL for the deal associated with the item.
+          type: string
+        energyEfficiencyClass:
+          description: A string value specifying the Energy Efficiency class.
+          type: string
+        image:
+          $ref: "#/components/schemas/Image"
+          description: The primary image for the deal item.
+        itemAffiliateWebUrl:
+          description: The item web URL with affiliate attribution.
+          type: string
+        itemGroupId:
+          description: "The unique identifier for the deal item group. This is the parent
+            item ID for the seller-defined variations. Note: This field is
+            returned for multiple-SKU items."
+          type: string
+        itemGroupType:
+          description: An enumeration value that indicates the type of item group. An item
+            group contains items that have various aspect differences, such as
+            color, size, or storage capacity. For implementation help, refer to
+            <a
+            href='https://developer.ebay.com/api-docs/buy/deal/types/api:ItemGroupTypeEnum'>eBay
+            API documentation</a>
+          type: string
+        itemId:
+          description: "The unique identifier for the deal item. Note: This field is only
+            returned for single-SKU items."
+          type: string
+        itemWebUrl:
+          description: The web URL for the deal item.
+          type: string
+        legacyItemId:
+          description: The legacy item ID associated with the deal item.
+          type: string
+        marketingPrice:
+          $ref: "#/components/schemas/MarketingPrice"
+          description: The original price for the deal item, and the discount amount and
+            percentage.
+        price:
+          $ref: "#/components/schemas/Amount"
+          description: "The price for the deal item. Note: The price does include the
+            value-added tax (VAT) for applicable jurisdictions when requested
+            from supported marketplaces. In this case, users must pass the
+            X-EBAY-C-MARKETPLACE-ID request header specifying the supported
+            marketplace (such as EBAY_GB) to see the VAT-inclusive pricing. For
+            more information on VAT, refer to VAT Obligations in the EU."
+        qualifiedPrograms:
+          description: A list of programs applicable to the item.
+          items:
+            description: " For implementation help, refer to <a
+              href='https://developer.ebay.com/api-docs/buy/deal/types/api:Prog\
+              ramEnum'>eBay API documentation</a>"
+            type: string
+          type: array
+        shippingOptions:
+          description: The cost required to ship the deal item.
+          items:
+            $ref: "#/components/schemas/ShippingOption"
+          type: array
+        title:
+          description: The title of the deal item.
+          type: string
+        unitPrice:
+          $ref: "#/components/schemas/Amount"
+          description: "The price per unit for the deal item. Some European countries
+            require listings for certain types of products to include the price
+            per unit so that buyers can accurately compare prices. For example:
+            &quot;unitPricingMeasure&quot;: &quot;100g&quot;,
+            &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;:
+            &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;"
+        unitPricingMeasure:
+          description: "The designation used to specify the quantity of the deal item,
+            such as size, weight, volume, and count. This helps buyers compare
+            prices. For example, the following tells the buyer that the item is
+            7.99 per 100 grams. &quot;unitPricingMeasure&quot;:
+            &quot;100g&quot;, &quot;unitPrice&quot;: {
+            &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;,
+            &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;"
+          type: string
+      type: object
+    DealItemSearchResponse:
+      description: The result set for the deal item search.
+      properties:
+        dealItems:
+          description: A list of deal items that match the search criteria.
+          items:
+            $ref: "#/components/schemas/DealItem"
+          type: array
+        href:
+          description: The relative path to the current set of results.
+          type: string
+        limit:
+          description: "The maximum number of items, from the current result set, returned
+            on a single page. Default: 20"
+          format: int32
+          type: integer
+        next:
+          description: The relative path to the next set of results.
+          type: string
+        offset:
+          description: "The number of items that will be skipped in the result set. This
+            is used with the limit field to control the pagination of the
+            output. For example, if the offset is set to 0 and the limit is set
+            to 10, the method will retrieve items 1 through 10 from the list of
+            items returned. If the offset is set to 10 and the limit is set to
+            10, the method will retrieve items 11 through 20 from the list of
+            items returned. Default: 0"
+          format: int32
+          type: integer
+        prev:
+          description: The relative path to the previous set of results.
+          type: string
+        total:
+          description: The total number of matches for the search criteria.
+          format: int32
+          type: integer
+      type: object
+    Error:
+      description: This type defines the fields that can be returned in an error.
+      properties:
+        category:
+          description: Identifies the type of erro.
+          type: string
+        domain:
+          description: Name for the primary system where the error occurred. This is
+            relevant for application errors.
+          type: string
+        errorId:
+          description: A unique number to identify the error.
+          format: int32
+          type: integer
+        inputRefIds:
+          description: An array of request elements most closely associated to the error.
+          items:
+            type: string
+          type: array
+        longMessage:
+          description: A more detailed explanation of the error.
+          type: string
+        message:
+          description: Information on how to correct the problem, in the end user's terms
+            and language where applicable.
+          type: string
+        outputRefIds:
+          description: An array of request elements most closely associated to the error.
+          items:
+            type: string
+          type: array
+        parameters:
+          description: An array of name/value pairs that describe details the error
+            condition. These are useful when multiple errors are returned.
+          items:
+            $ref: "#/components/schemas/ErrorParameter"
+          type: array
+        subdomain:
+          description: "Further helps indicate which subsystem the error is coming from.
+            System subcategories include: Initialization, Serialization,
+            Security, Monitoring, Rate Limiting, etc."
+          type: string
+      type: object
+    ErrorParameter:
+      properties:
+        name:
+          description: The object of the error.
+          type: string
+        value:
+          description: The value of the object.
+          type: string
+      type: object
+    Event:
+      description: The result set for the event search.
+      properties:
+        applicableCoupons:
+          description: A list of coupons associated with the event.
+          items:
+            $ref: "#/components/schemas/Coupon"
+          type: array
+        description:
+          description: The event description.
+          type: string
+        endDate:
+          description: The end date for the event.
+          type: string
+        eventAffiliateWebUrl:
+          description: The URL of the View Event page for the event, which includes the
+            affiliate tracking ID.
+          type: string
+        eventId:
+          description: The unique identifier for the event.
+          type: string
+        eventWebUrl:
+          description: The web URL for the event.
+          type: string
+        images:
+          description: The images for the event.
+          items:
+            $ref: "#/components/schemas/Image"
+          type: array
+        startDate:
+          description: The start date for the event.
+          type: string
+        terms:
+          $ref: "#/components/schemas/Terms"
+          description: The terms associated with the event.
+        title:
+          description: The title of the event.
+          type: string
+      type: object
+    EventItem:
+      description: The detailed data returned for the event item.
+      properties:
+        additionalImages:
+          description: The additional images for the event item.
+          items:
+            $ref: "#/components/schemas/Image"
+          type: array
+        categoryAncestorIds:
+          description: The IDs of the ancestors for the primary category.
+          items:
+            type: string
+          type: array
+        categoryId:
+          description: The ID of the leaf category for the event item. A leaf category is
+            the lowest level in a category and has no children.
+          type: string
+        energyEfficiencyClass:
+          description: A string value specifying the Energy Efficiency class.
+          type: string
+        eventId:
+          description: The unique event identifier associated with the item.
+          type: string
+        image:
+          $ref: "#/components/schemas/Image"
+          description: The image for the event item.
+        itemAffiliateWebUrl:
+          description: The item web URL with affiliate attribution.
+          type: string
+        itemGroupId:
+          description: "The unique identifier for the event item group. This is the parent
+            item ID for the seller-defined variations. Note: This field is
+            returned for multiple-SKU items."
+          type: string
+        itemGroupType:
+          description: An enumeration value that indicates the type of item group. An item
+            group contains items that have various aspect differences, such as
+            color, size, or storage capacity. For implementation help, refer to
+            <a
+            href='https://developer.ebay.com/api-docs/buy/deal/types/api:ItemGroupTypeEnum'>eBay
+            API documentation</a>
+          type: string
+        itemId:
+          description: "The unique identifier for the event item. Note: This field is only
+            returned for single-SKU items."
+          type: string
+        itemWebUrl:
+          description: The web URL for the event item.
+          type: string
+        legacyItemId:
+          description: The legacy item ID associated with the event item.
+          type: string
+        marketingPrice:
+          $ref: "#/components/schemas/MarketingPrice"
+          description: The original price for the event item, and the discount amount and
+            percentage.
+        price:
+          $ref: "#/components/schemas/Amount"
+          description: The applicable price for the event item.
+        qualifiedPrograms:
+          description: A list of programs applicable to the event item.
+          items:
+            description: " For implementation help, refer to <a
+              href='https://developer.ebay.com/api-docs/buy/deal/types/api:Prog\
+              ramEnum'>eBay API documentation</a>"
+            type: string
+          type: array
+        shippingOptions:
+          description: The cost required to ship the event item.
+          items:
+            $ref: "#/components/schemas/ShippingOption"
+          type: array
+        title:
+          description: The title of the event item.
+          type: string
+        unitPrice:
+          $ref: "#/components/schemas/Amount"
+          description: "The price per unit for the event item. Some European countries
+            require listings for certain types of products to include the price
+            per unit so that buyers can accurately compare prices. For example:
+            &quot;unitPricingMeasure&quot;: &quot;100g&quot;,
+            &quot;unitPrice&quot;: { &nbsp;&nbsp;&quot;value&quot;:
+            &quot;7.99&quot;, &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;"
+        unitPricingMeasure:
+          description: "The designation used to specify the quantity of the event item,
+            such as size, weight, volume, and count. This helps buyers compare
+            prices. For example, the following tells the buyer that the item is
+            7.99 per 100 grams. &quot;unitPricingMeasure&quot;:
+            &quot;100g&quot;, &quot;unitPrice&quot;: {
+            &nbsp;&nbsp;&quot;value&quot;: &quot;7.99&quot;,
+            &nbsp;&nbsp;&quot;currency&quot;: &quot;GBP&quot;"
+          type: string
+      type: object
+    EventItemSearchResponse:
+      description: The result set for the event item search.
+      properties:
+        eventItems:
+          description: A list of event items that match the search criteria.
+          items:
+            $ref: "#/components/schemas/EventItem"
+          type: array
+        href:
+          description: The relative path to the current set of results.
+          type: string
+        limit:
+          description: "The maximum number of items, from the current result set, returned
+            on a single page. Default: 20"
+          format: int32
+          type: integer
+        next:
+          description: The relative path to the next set of results.
+          type: string
+        offset:
+          description: "The number of items that will be skipped in the result set. This
+            is used with the limit field to control the pagination of the
+            output. For example, if the offset is set to 0 and the limit is set
+            to 10, the method will retrieve items 1 through 10 from the list of
+            items returned. If the offset is set to 10 and the limit is set to
+            10, the method will retrieve items 11 through 20 from the list of
+            items returned. Default: 0"
+          format: int32
+          type: integer
+        prev:
+          description: The relative path to the previous set of results.
+          type: string
+        total:
+          description: The total number of matches for the specified search criteria.
+          format: int32
+          type: integer
+      type: object
+    EventSearchResponse:
+      description: The result set for the specified event search criteria.
+      properties:
+        events:
+          description: A list of results that match the search criteria.
+          items:
+            $ref: "#/components/schemas/Event"
+          type: array
+        href:
+          description: The relative path to the current set of results.
+          type: string
+        limit:
+          description: "The maximum number of items, from the current result set, returned
+            on a single page. Default: 20"
+          format: int32
+          type: integer
+        next:
+          description: The relative path to the next set of results.
+          type: string
+        offset:
+          description: "The number of items that will be skipped in the result set. This
+            is used with the limit field to control the pagination of the
+            output. For example, if the offset is set to 0 and the limit is set
+            to 10, the method will retrieve items 1 through 10 from the list of
+            items returned. If the offset is set to 10 and the limit is set to
+            10, the method will retrieve items 11 through 20 from the list of
+            items returned. Default: 0"
+          format: int32
+          type: integer
+        prev:
+          description: The relative path to the previous set of results.
+          type: string
+        total:
+          description: The total number of matches for the specified search criteria.
+          format: int32
+          type: integer
+      type: object
+    Image:
+      description: The type that defines the details of an image, such as size and URL.
+      properties:
+        height:
+          description: The height of the image.
+          type: string
+        imageUrl:
+          description: The relative path to the image location.
+          type: string
+        text:
+          description: The text associated with the image.
+          type: string
+        width:
+          description: The width of the image.
+          type: string
+      type: object
+    MarketingPrice:
+      description: A type that describes the seller discount.
+      properties:
+        discountAmount:
+          $ref: "#/components/schemas/Amount"
+          description: The monetary value of the seller discount.
+        discountPercentage:
+          description: The percentage of the seller discount based on the value returned
+            in the originalPrice field.
+          type: string
+        originalPrice:
+          $ref: "#/components/schemas/Amount"
+          description: The monetary value of the item prior to the discount.
+        priceTreatment:
+          description: "The pricing treatment (discount) that was applied to the price of
+            the item. Note: The pricing treatment affects how and where the
+            discounted price can be displayed. For implementation help, refer to
+            <a
+            href='https://developer.ebay.com/api-docs/buy/deal/types/api:PriceT\
+            reatmentEnum'>eBay API documentation</a>"
+          type: string
+      type: object
+    ShippingOption:
+      description: The details provided for the shipping provider, such as shipping
+        cost and type.
+      properties:
+        shippingCost:
+          $ref: "#/components/schemas/Amount"
+          description: "The final shipping cost for all items after all discounts are
+            applied. Note: The price does include the value-added tax (VAT) for
+            applicable jurisdictions when requested from supported marketplaces.
+            In this case, users must pass the X-EBAY-C-MARKETPLACE-ID request
+            header specifying the supported marketplace (such as EBAY_GB) to see
+            the VAT-inclusive pricing. For more information on VAT, refer to VAT
+            Obligations in the EU."
+        shippingCostType:
+          description: "The class of the shipping cost. Valid Values: FIXED or CALCULATED
+            Code so that your app gracefully handles any future changes to this
+            list."
+          type: string
+      type: object
+    Terms:
+      description: The terms for the event, provided in a full-text description and summary.
+      properties:
+        fullText:
+          description: A full-text description of the terms.
+          type: string
+        summary:
+          description: A summarized description of the terms.
+          type: string
+      type: object
+  securitySchemes:
+    api_auth:
+      description: The security definitions for this API. Please check individual
+        operations for applicable scopes.
+      flows:
+        clientCredentials:
+          scopes:
+            https://api.ebay.com/oauth/api_scope/buy.deal: View eBay sale events and deals.
+          tokenUrl: https://api.ebay.com/identity/v1/oauth2/token
+      type: oauth2

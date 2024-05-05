@@ -2,17 +2,43 @@
 
 {{#operations}}
 {{#operation}}
-exports.{{nickname}} = function({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
 
-  var examples = {};
-  {{#examples}}
-  examples['{{contentType}}'] = {{{example}}};
-  {{/examples}}
-
+/**
+ {{#summary}}
+ * {{{summary}}}
+ {{/summary}}
+ {{#notes}}
+ * {{{notes}}}
+ {{/notes}}
+ *
+{{#allParams}}
+ * {{paramName}} {{{dataType}}} {{{description}}}{{^required}} (optional){{/required}}
+{{/allParams}}
+{{^returnType}}
+ * no response value expected for this operation
+{{/returnType}}
+{{#returnType}}
+ * returns {{{returnType}}}
+{{/returnType}}
+ **/
+exports.{{{operationId}}} = function({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}) {
+  return new Promise(function(resolve, reject) {
   {{#returnType}}
-  if(Object.keys(examples).length > 0)
-    return examples[Object.keys(examples)[0]];
-  {{/returnType}}
+    var examples = {};
+    {{#examples}}
+    examples['{{contentType}}'] = {{{example}}};
+    {{/examples}}
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+    {{/returnType}}
+    {{^returnType}}
+    resolve();
+    {{/returnType}}
+  });
 }
+
 {{/operation}}
 {{/operations}}

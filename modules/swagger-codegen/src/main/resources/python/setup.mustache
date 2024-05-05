@@ -1,40 +1,49 @@
-import sys
-from setuptools import setup, find_packages
+# coding: utf-8
 
-{{#apiInfo}}{{#apis}}{{^hasMore}}
+{{>partial_header}}
 
-# To install the library, open a Terminal shell, then run this
-# file by typing:
+from setuptools import setup, find_packages  # noqa: H301
+
+NAME = "{{{projectName}}}"
+VERSION = "{{packageVersion}}"
+{{#apiInfo}}
+{{#apis}}
+{{^hasMore}}
+# To install the library, run the following
 #
 # python setup.py install
 #
-# You need to have the setuptools module installed.
-# Try reading the setuptools documentation:
+# prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["urllib3 >= 1.10", "six >= 1.9", "certifi"]
+REQUIRES = [
+    "certifi>=2017.4.17",
+    "python-dateutil>=2.1",
+    "six>=1.10",
+    "urllib3>=1.23"
+]
+    
+{{#asyncio}}
+REQUIRES.append("aiohttp")
+{{/asyncio}}
+{{#tornado}}
+REQUIRES.append("tornado")
+{{/tornado}}
 
 setup(
-    name="{{module}}",
-    version="{{version}}",
+    name=NAME,
+    version=VERSION,
     description="{{appName}}",
     author_email="{{infoEmail}}",
-    url="{{infoUrl}}",
+    url="{{packageUrl}}",
     keywords=["Swagger", "{{appName}}"],
     install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,
     long_description="""\
-    {{appDescription}}
+    {{appDescription}}  # noqa: E501
     """
 )
-
-{{/hasMore}}{{/apis}}{{/apiInfo}}
-
-
-
-
-
-
-
-
+{{/hasMore}}
+{{/apis}}
+{{/apiInfo}}

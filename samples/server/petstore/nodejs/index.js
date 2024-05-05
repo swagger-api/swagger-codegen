@@ -1,38 +1,44 @@
 'use strict';
 
-var app = require('connect')();
-var http = require('http');
-var swaggerTools = require('swagger-tools');
+var fs = require('fs'),
+    path = require('path'),
+    http = require('http');
 
+var app = require('connect')();
+var swaggerTools = require('swagger-tools');
+var jsyaml = require('js-yaml');
 var serverPort = 8080;
 
 // swaggerRouter configuration
 var options = {
-    swaggerUi: '/swagger.json',
-    controllers: './controllers',
-    useStubs: process.env.NODE_ENV === 'development' ? true : false // Conditionally turn on stubs (mock mode)
+  swaggerUi: path.join(__dirname, '/swagger.json'),
+  controllers: path.join(__dirname, './controllers'),
+  useStubs: process.env.NODE_ENV === 'development' // Conditionally turn on stubs (mock mode)
 };
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
-var swaggerDoc = require('./api/swagger.json');
+var spec = fs.readFileSync(path.join(__dirname,'api/swagger.yaml'), 'utf8');
+var swaggerDoc = jsyaml.safeLoad(spec);
 
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
-    // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
-    app.use(middleware.swaggerMetadata());
 
-    // Validate Swagger requests
-    app.use(middleware.swaggerValidator());
+  // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
+  app.use(middleware.swaggerMetadata());
 
-    // Route validated requests to appropriate controller
-    app.use(middleware.swaggerRouter(options));
+  // Validate Swagger requests
+  app.use(middleware.swaggerValidator());
 
-    // Serve the Swagger documents and Swagger UI
-    app.use(middleware.swaggerUi());
+  // Route validated requests to appropriate controller
+  app.use(middleware.swaggerRouter(options));
 
-    // Start the server
-    http.createServer(app).listen(8080, function () {
-        console.log('Your server is listening on port %d (http://localhost:%d)', 8080, 8080);
-        console.log('Swagger-ui is available on http://localhost:%d/docs', 8080);
-    });
+  // Serve the Swagger documents and Swagger UI
+  app.use(middleware.swaggerUi());
+
+  // Start the server
+  http.createServer(app).listen(serverPort, function () {
+    console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
+    console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
+  });
+
 });

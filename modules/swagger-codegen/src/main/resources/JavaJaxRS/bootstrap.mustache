@@ -1,0 +1,39 @@
+package {{apiPackage}};
+
+import io.swagger.jaxrs.config.SwaggerContextService;
+import io.swagger.models.*;
+
+import io.swagger.models.auth.*;
+
+{{#jakarta}}
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+{{/jakarta}}
+{{^jakarta}}
+import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+{{/jakarta}}
+
+public class Bootstrap extends HttpServlet {
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    Info info = new Info()
+      .title("{{title}}")
+      .description("{{{appDescription}}}")
+      .termsOfService("{{termsOfService}}")
+      .contact(new Contact()
+        .email("{{infoEmail}}"))
+      .license(new License()
+        .name("{{licenseInfo}}")
+        .url("{{licenseUrl}}"));
+
+    ServletContext context = config.getServletContext();
+    Swagger swagger = new Swagger().info(info);
+
+    new SwaggerContextService().withServletConfig(config).updateSwagger(swagger);
+  }
+}

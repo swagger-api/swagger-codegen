@@ -1,0 +1,2221 @@
+openapi: 3.0.0
+servers:
+  - url: https://test.api.amadeus.com/v2
+info:
+  description: >-
+
+    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token.
+
+
+    Please also be aware that our test environment is based on a subset of the production, if you are not returning any results try with big cities/airports like LON (London) or NYC (New-York).
+  title: Flight Offers Search
+  version: 2.2.0
+  x-apisguru-categories:
+    - location
+  x-origin:
+    - format: swagger
+      url: https://developers.amadeus.com/PAS-EAS/api/v0/documents/10181/file
+      version: "2.0"
+  x-providerName: amadeus.com
+  x-release-note:
+    2.0.0:
+      - Initial Version
+      - Includes search and price flight offer
+    2.1.0:
+      - Add currencies, aircraft and carriers dictionary
+    2.2.0:
+      - Add maxPrice filtering
+  x-status: validated
+  x-tags:
+    - "#online-retail"
+    - "#mobile-services"
+    - "#ama-for-dev"
+paths:
+  /shopping/flight-offers:
+    get:
+      description: ""
+      operationId: getFlightOffers
+      parameters:
+        - description: city/airport [IATA
+            code](http://www.iata.org/publications/Pages/code-search.aspx) from
+            which the traveler will depart, e.g. BOS for Boston
+          example: SYD
+          in: query
+          name: originLocationCode
+          required: true
+          schema:
+            pattern: "[A-Z]{3}"
+            type: string
+        - description: city/airport [IATA
+            code](http://www.iata.org/publications/Pages/code-search.aspx) to
+            which the traveler is going, e.g. PAR for Paris
+          example: BKK
+          in: query
+          name: destinationLocationCode
+          required: true
+          schema:
+            pattern: "[A-Z]{3}"
+            type: string
+        - description: the date on which the traveler will depart from the origin to go to
+            the destination. Dates are specified in the [ISO
+            8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format,
+            e.g. 2017-12-25
+          example: 2021-02-01
+          in: query
+          name: departureDate
+          required: true
+          schema:
+            format: date
+            type: string
+        - description: the date on which the traveler will depart from the destination to
+            return to the origin. If this parameter is not specified, only
+            one-way itineraries are found. If this parameter is specified, only
+            round-trip itineraries are found. Dates are specified in the [ISO
+            8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format,
+            e.g. 2018-02-28
+          in: query
+          name: returnDate
+          required: false
+          schema:
+            format: date
+            type: string
+        - description: the number of adult travelers (age 12 or older on date of departure).
+          in: query
+          name: adults
+          required: true
+          schema:
+            default: 1
+            maximum: 9
+            minimum: 1
+            type: integer
+        - description: the number of child travelers (older than age 2 and younger than
+            age 12 on date of departure) who will each have their own separate
+            seat. If specified, this number should be greater than or equal to 0
+          in: query
+          name: children
+          required: false
+          schema:
+            maximum: 9
+            minimum: 0
+            type: integer
+        - description: the number of infant travelers (whose age is less or equal to 2 on
+            date of departure). Infants travel on the lap of an adult traveler,
+            and thus the number of infants must not exceed the number of adults.
+            If specified, this number should be greater than or equal to 0
+          in: query
+          name: infants
+          required: false
+          schema:
+            maximum: 9
+            minimum: 0
+            type: integer
+        - description: most of the flight time should be spent in a cabin of this quality
+            or higher. The accepted travel class is economy, premium economy,
+            business or first class. If no travel class is specified, the search
+            considers any travel class
+          in: query
+          name: travelClass
+          required: false
+          schema:
+            enum:
+              - ECONOMY
+              - PREMIUM_ECONOMY
+              - BUSINESS
+              - FIRST
+            type: string
+        - description: >
+            This option ensures that the system will only consider these
+            airlines. This can not be cumulated with parameter
+            excludedAirlineCodes.
+
+
+            Airlines are specified as [IATA airline codes](http://www.iata.org/publications/Pages/code-search.aspx) and are comma-separated, e.g. 6X,7X,8X
+          explode: false
+          in: query
+          name: includedAirlineCodes
+          required: false
+          schema:
+            pattern: "[0-9A-Z]{2}"
+            type: string
+          style: form
+        - description: >
+            This option ensures that the system will ignore these airlines.
+            This can not be cumulated with parameter includedAirlineCodes.
+
+
+            Airlines are specified as [IATA airline codes](http://www.iata.org/publications/Pages/code-search.aspx) and are comma-separated, e.g. 6X,7X,8X
+          explode: false
+          in: query
+          name: excludedAirlineCodes
+          required: false
+          schema:
+            pattern: "[0-9A-Z]{2}"
+            type: string
+          style: form
+        - description: if set to true, the search will find only flights going from the
+            origin to the destination with no stop in between
+          in: query
+          name: nonStop
+          required: false
+          schema:
+            default: false
+            type: boolean
+        - description: the preferred currency for the flight offers. Currency is specified
+            in the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format,
+            e.g. EUR for Euro
+          in: query
+          name: currencyCode
+          required: false
+          schema:
+            pattern: "[A-Z]{3}"
+            type: string
+        - description: maximum price per traveler. By default, no limit is applied. If
+            specified, the value should be a positive number with no decimals
+          in: query
+          name: maxPrice
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+        - description: maximum number of flight offers to return. If specified, the value
+            should be greater than or equal to 1
+          in: query
+          name: max
+          required: false
+          schema:
+            default: 250
+            minimum: 1
+            type: integer
+      responses:
+        "200":
+          $ref: "#/components/responses/GETAirOffersReply"
+        "400":
+          $ref: "#/components/responses/400_Search"
+        default:
+          $ref: "#/components/responses/500"
+      summary: Return list of Flight Offers based on searching criteria.
+      tags:
+        - Shopping
+    post:
+      description: ""
+      operationId: searchFlightOffers
+      parameters:
+        - $ref: "#/components/parameters/getOverride"
+      requestBody:
+        content:
+          application/vnd.amadeus+json:
+            schema:
+              $ref: "#/components/schemas/GetFlightOffersQuery"
+        description: list of criteria to retrieve a list of flight offers
+        required: true
+      responses:
+        "200":
+          $ref: "#/components/responses/returnAirOffers"
+        "400":
+          $ref: "#/components/responses/400_Search"
+        default:
+          $ref: "#/components/responses/500"
+      summary: Return list of Flight Offers based on posted searching criteria.
+      tags:
+        - Shopping
+components:
+  parameters:
+    getOverride:
+      description: the HTTP method to apply
+      in: header
+      name: X-HTTP-Method-Override
+      required: true
+      schema:
+        default: GET
+        type: string
+  responses:
+    "500":
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            $ref: "#/components/schemas/Error_500"
+      description: Unexpected error
+    400_Search:
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            $ref: "#/components/schemas/Error_400"
+      description: |
+        code    | title
+        ------- | -------------------------------------
+        425     | INVALID DATE
+        477     | INVALID FORMAT
+        2668    | PARAMETER COMBINATION INVALID/RESTRICTED
+        4926    | INVALID DATA RECEIVED
+        10661   | MAXIMUM NUMBER OF OCCURRENCES EXCEEDED
+        32171   | MANDATORY DATA MISSING
+    GETAirOffersReply:
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            example:
+              data:
+                - id: "1"
+                  instantTicketingRequired: false
+                  itineraries:
+                    - duration: PT32H15M
+                      segments:
+                        - aircraft:
+                            code: "789"
+                          arrival:
+                            at: 2021-02-02T00:30:00
+                            iataCode: SIN
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-01T19:15:00
+                            iataCode: SYD
+                            terminal: "1"
+                          duration: PT8H15M
+                          id: "1"
+                          number: "13"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-02T23:30:00
+                            iataCode: DMK
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-02T22:05:00
+                            iataCode: SIN
+                            terminal: "1"
+                          duration: PT2H25M
+                          id: "2"
+                          number: "868"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                    - duration: PT15H
+                      segments:
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-06T02:50:00
+                            iataCode: SIN
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-05T23:15:00
+                            iataCode: DMK
+                            terminal: "1"
+                          duration: PT2H35M
+                          id: "5"
+                          number: "867"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                        - aircraft:
+                            code: "789"
+                          arrival:
+                            at: 2021-02-06T18:15:00
+                            iataCode: SYD
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-06T06:55:00
+                            iataCode: SIN
+                            terminal: "1"
+                          duration: PT8H20M
+                          id: "6"
+                          number: "12"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                  lastTicketingDate: 2020-08-04
+                  nonHomogeneous: false
+                  numberOfBookableSeats: 9
+                  oneWay: false
+                  price:
+                    base: "334.00"
+                    currency: EUR
+                    fees:
+                      - amount: "0.00"
+                        type: SUPPLIER
+                      - amount: "0.00"
+                        type: TICKETING
+                    grandTotal: "546.70"
+                    total: "546.70"
+                  pricingOptions:
+                    fareType:
+                      - PUBLISHED
+                    includedCheckedBagsOnly: true
+                  source: GDS
+                  travelerPricings:
+                    - fareDetailsBySegment:
+                        - cabin: ECONOMY
+                          class: O
+                          fareBasis: O2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "1"
+                        - cabin: ECONOMY
+                          class: O
+                          fareBasis: O2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "2"
+                        - cabin: ECONOMY
+                          class: X
+                          fareBasis: X2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "5"
+                        - cabin: ECONOMY
+                          class: H
+                          fareBasis: H2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "6"
+                      fareOption: STANDARD
+                      price:
+                        base: "334.00"
+                        currency: EUR
+                        total: "546.70"
+                      travelerId: "1"
+                      travelerType: ADULT
+                  type: flight-offer
+                  validatingAirlineCodes:
+                    - HR
+                - id: "2"
+                  instantTicketingRequired: false
+                  itineraries:
+                    - duration: PT32H15M
+                      segments:
+                        - aircraft:
+                            code: "789"
+                          arrival:
+                            at: 2021-02-02T00:30:00
+                            iataCode: SIN
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-01T19:15:00
+                            iataCode: SYD
+                            terminal: "1"
+                          duration: PT8H15M
+                          id: "1"
+                          number: "13"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-02T23:30:00
+                            iataCode: DMK
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-02T22:05:00
+                            iataCode: SIN
+                            terminal: "1"
+                          duration: PT2H25M
+                          id: "2"
+                          number: "868"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                    - duration: PT16H35M
+                      segments:
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-05T20:00:00
+                            iataCode: SIN
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-05T16:25:00
+                            iataCode: DMK
+                            terminal: "1"
+                          duration: PT2H35M
+                          id: "7"
+                          number: "869"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-06T13:00:00
+                            iataCode: SYD
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-06T02:00:00
+                            iataCode: SIN
+                            terminal: "1"
+                          duration: PT8H
+                          id: "8"
+                          number: "2"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                  lastTicketingDate: 2020-08-04
+                  nonHomogeneous: false
+                  numberOfBookableSeats: 9
+                  oneWay: false
+                  price:
+                    base: "334.00"
+                    currency: EUR
+                    fees:
+                      - amount: "0.00"
+                        type: SUPPLIER
+                      - amount: "0.00"
+                        type: TICKETING
+                    grandTotal: "546.70"
+                    total: "546.70"
+                  pricingOptions:
+                    fareType:
+                      - PUBLISHED
+                    includedCheckedBagsOnly: true
+                  source: GDS
+                  travelerPricings:
+                    - fareDetailsBySegment:
+                        - cabin: ECONOMY
+                          class: O
+                          fareBasis: O2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "1"
+                        - cabin: ECONOMY
+                          class: O
+                          fareBasis: O2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "2"
+                        - cabin: ECONOMY
+                          class: X
+                          fareBasis: X2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "7"
+                        - cabin: ECONOMY
+                          class: H
+                          fareBasis: H2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "8"
+                      fareOption: STANDARD
+                      price:
+                        base: "334.00"
+                        currency: EUR
+                        total: "546.70"
+                      travelerId: "1"
+                      travelerType: ADULT
+                  type: flight-offer
+                  validatingAirlineCodes:
+                    - HR
+                - id: "3"
+                  instantTicketingRequired: false
+                  itineraries:
+                    - duration: PT13H30M
+                      segments:
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-01T19:15:00
+                            iataCode: SIN
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-01T14:00:00
+                            iataCode: SYD
+                            terminal: "1"
+                          duration: PT8H15M
+                          id: "3"
+                          number: "3"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-01T23:30:00
+                            iataCode: DMK
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-01T22:05:00
+                            iataCode: SIN
+                            terminal: "1"
+                          duration: PT2H25M
+                          id: "4"
+                          number: "868"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                    - duration: PT15H
+                      segments:
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2021-02-06T02:50:00
+                            iataCode: SIN
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-05T23:15:00
+                            iataCode: DMK
+                            terminal: "1"
+                          duration: PT2H35M
+                          id: "5"
+                          number: "867"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                        - aircraft:
+                            code: "789"
+                          arrival:
+                            at: 2021-02-06T18:15:00
+                            iataCode: SYD
+                            terminal: "1"
+                          blacklistedInEU: false
+                          carrierCode: TR
+                          departure:
+                            at: 2021-02-06T06:55:00
+                            iataCode: SIN
+                            terminal: "1"
+                          duration: PT8H20M
+                          id: "6"
+                          number: "12"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: TR
+                  lastTicketingDate: 2020-08-04
+                  nonHomogeneous: false
+                  numberOfBookableSeats: 9
+                  oneWay: false
+                  price:
+                    base: "340.00"
+                    currency: EUR
+                    fees:
+                      - amount: "0.00"
+                        type: SUPPLIER
+                      - amount: "0.00"
+                        type: TICKETING
+                    grandTotal: "552.70"
+                    total: "552.70"
+                  pricingOptions:
+                    fareType:
+                      - PUBLISHED
+                    includedCheckedBagsOnly: true
+                  source: GDS
+                  travelerPricings:
+                    - fareDetailsBySegment:
+                        - cabin: ECONOMY
+                          class: O
+                          fareBasis: O2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "3"
+                        - cabin: ECONOMY
+                          class: X
+                          fareBasis: X2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "4"
+                        - cabin: ECONOMY
+                          class: X
+                          fareBasis: X2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "5"
+                        - cabin: ECONOMY
+                          class: H
+                          fareBasis: H2TR24
+                          includedCheckedBags:
+                            weight: 20
+                            weightUnit: KG
+                          segmentId: "6"
+                      fareOption: STANDARD
+                      price:
+                        base: "340.00"
+                        currency: EUR
+                        total: "552.70"
+                      travelerId: "1"
+                      travelerType: ADULT
+                  type: flight-offer
+                  validatingAirlineCodes:
+                    - HR
+              dictionaries:
+                aircraft:
+                  "789": BOEING 787-9
+                  77W: BOEING 777-300ER
+                carriers:
+                  TR: SCOOT
+                currencies:
+                  EUR: EURO
+                locations:
+                  DMK:
+                    cityCode: BKK
+                    countryCode: TH
+                  SIN:
+                    cityCode: SIN
+                    countryCode: SG
+                  SYD:
+                    cityCode: SYD
+                    countryCode: AU
+              meta:
+                count: 3
+                links:
+                  self: https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2021-02-01&returnDate=2021-02-05&adults=1&max=3
+            properties:
+              data:
+                items:
+                  $ref: "#/components/schemas/FlightOffer"
+                type: array
+              dictionaries:
+                $ref: "#/components/schemas/Dictionaries"
+              meta:
+                $ref: "#/components/schemas/Collection_Meta_Link"
+              warnings:
+                items:
+                  $ref: "#/components/schemas/Issue"
+                type: array
+            required:
+              - data
+            title: Success
+      description: Successful Operation
+    returnAirOffers:
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            example:
+              data:
+                - id: "1"
+                  instantTicketingRequired: false
+                  itineraries:
+                    - duration: PT15H55M
+                      segments:
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2020-08-02T13:10:00
+                            iataCode: LHR
+                            terminal: "5"
+                          blacklistedInEU: false
+                          carrierCode: BA
+                          departure:
+                            at: 2020-08-01T21:50:00
+                            iataCode: GIG
+                            terminal: "2"
+                          duration: PT11H20M
+                          id: "1"
+                          number: "248"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: BA
+                        - aircraft:
+                            code: "321"
+                          arrival:
+                            at: 2020-08-02T18:45:00
+                            iataCode: MAD
+                            terminal: 4S
+                          blacklistedInEU: false
+                          carrierCode: BA
+                          departure:
+                            at: 2020-08-02T15:15:00
+                            iataCode: LHR
+                            terminal: "5"
+                          duration: PT2H30M
+                          id: "2"
+                          number: "462"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: BA
+                    - duration: PT13H35M
+                      segments:
+                        - aircraft:
+                            code: "346"
+                          arrival:
+                            at: 2020-08-06T05:40:00
+                            iataCode: GRU
+                            terminal: "3"
+                          blacklistedInEU: false
+                          carrierCode: IB
+                          departure:
+                            at: 2020-08-05T23:55:00
+                            iataCode: MAD
+                            terminal: 4S
+                          duration: PT10H45M
+                          id: "5"
+                          number: "6827"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: IB
+                        - aircraft:
+                            code: "320"
+                          arrival:
+                            at: 2020-08-06T08:30:00
+                            iataCode: GIG
+                            terminal: "2"
+                          blacklistedInEU: false
+                          carrierCode: LA
+                          departure:
+                            at: 2020-08-06T07:30:00
+                            iataCode: GRU
+                            terminal: "2"
+                          duration: PT1H
+                          id: "6"
+                          number: "4508"
+                          numberOfStops: 0
+                  lastTicketingDate: 2020-01-16
+                  nonHomogeneous: false
+                  numberOfBookableSeats: 7
+                  oneWay: false
+                  price:
+                    base: "3661.00"
+                    currency: USD
+                    fees:
+                      - amount: "0.00"
+                        type: SUPPLIER
+                      - amount: "0.00"
+                        type: TICKETING
+                    grandTotal: "3842.10"
+                    total: "3842.10"
+                  pricingOptions:
+                    fareType:
+                      - PUBLISHED
+                    includedCheckedBagsOnly: false
+                  source: GDS
+                  travelerPricings:
+                    - fareDetailsBySegment:
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: R
+                          fareBasis: RNNZ60S3
+                          includedCheckedBags:
+                            quantity: 2
+                          segmentId: "1"
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: J
+                          fareBasis: RNNZ60S3
+                          includedCheckedBags:
+                            quantity: 2
+                          segmentId: "2"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          includedCheckedBags:
+                            quantity: 1
+                          segmentId: "5"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          includedCheckedBags:
+                            quantity: 1
+                          segmentId: "6"
+                      fareOption: STANDARD
+                      price:
+                        base: "2088.00"
+                        currency: USD
+                        total: "2178.55"
+                      travelerId: "1"
+                      travelerType: ADULT
+                    - fareDetailsBySegment:
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: R
+                          fareBasis: RNNZ60S3
+                          segmentId: "1"
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: J
+                          fareBasis: RNNZ60S3
+                          segmentId: "2"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          segmentId: "5"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          segmentId: "6"
+                      fareOption: STANDARD
+                      price:
+                        base: "1573.00"
+                        currency: USD
+                        total: "1663.55"
+                      travelerId: "2"
+                      travelerType: CHILD
+                  type: flight-offer
+                  validatingAirlineCodes:
+                    - BA
+                - id: "2"
+                  instantTicketingRequired: false
+                  itineraries:
+                    - duration: PT15H55M
+                      segments:
+                        - aircraft:
+                            code: "788"
+                          arrival:
+                            at: 2020-08-02T13:10:00
+                            iataCode: LHR
+                            terminal: "5"
+                          blacklistedInEU: false
+                          carrierCode: BA
+                          departure:
+                            at: 2020-08-01T21:50:00
+                            iataCode: GIG
+                            terminal: "2"
+                          duration: PT11H20M
+                          id: "1"
+                          number: "248"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: BA
+                        - aircraft:
+                            code: "321"
+                          arrival:
+                            at: 2020-08-02T18:45:00
+                            iataCode: MAD
+                            terminal: 4S
+                          blacklistedInEU: false
+                          carrierCode: BA
+                          departure:
+                            at: 2020-08-02T15:15:00
+                            iataCode: LHR
+                            terminal: "5"
+                          duration: PT2H30M
+                          id: "2"
+                          number: "462"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: BA
+                    - duration: PT19H5M
+                      segments:
+                        - aircraft:
+                            code: "346"
+                          arrival:
+                            at: 2020-08-06T05:40:00
+                            iataCode: GRU
+                            terminal: "3"
+                          blacklistedInEU: false
+                          carrierCode: IB
+                          departure:
+                            at: 2020-08-05T23:55:00
+                            iataCode: MAD
+                            terminal: 4S
+                          duration: PT10H45M
+                          id: "3"
+                          number: "6827"
+                          numberOfStops: 0
+                          operating:
+                            carrierCode: IB
+                        - aircraft:
+                            code: "321"
+                          arrival:
+                            at: 2020-08-06T14:00:00
+                            iataCode: GIG
+                            terminal: "2"
+                          blacklistedInEU: false
+                          carrierCode: LA
+                          departure:
+                            at: 2020-08-06T13:00:00
+                            iataCode: GRU
+                            terminal: "2"
+                          duration: PT1H
+                          id: "4"
+                          number: "4537"
+                          numberOfStops: 0
+                  lastTicketingDate: 2020-01-16
+                  nonHomogeneous: false
+                  numberOfBookableSeats: 7
+                  oneWay: false
+                  price:
+                    base: "3661.00"
+                    currency: USD
+                    fees:
+                      - amount: "0.00"
+                        type: SUPPLIER
+                      - amount: "0.00"
+                        type: TICKETING
+                    grandTotal: "3842.10"
+                    total: "3842.10"
+                  pricingOptions:
+                    fareType:
+                      - PUBLISHED
+                    includedCheckedBagsOnly: false
+                  source: GDS
+                  travelerPricings:
+                    - fareDetailsBySegment:
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: R
+                          fareBasis: RNNZ60S3
+                          includedCheckedBags:
+                            quantity: 2
+                          segmentId: "1"
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: J
+                          fareBasis: RNNZ60S3
+                          includedCheckedBags:
+                            quantity: 2
+                          segmentId: "2"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          includedCheckedBags:
+                            quantity: 1
+                          segmentId: "3"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          includedCheckedBags:
+                            quantity: 1
+                          segmentId: "4"
+                      fareOption: STANDARD
+                      price:
+                        base: "2088.00"
+                        currency: USD
+                        total: "2178.55"
+                      travelerId: "1"
+                      travelerType: ADULT
+                    - fareDetailsBySegment:
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: R
+                          fareBasis: RNNZ60S3
+                          segmentId: "1"
+                        - brandedFare: BUSINESS
+                          cabin: BUSINESS
+                          class: J
+                          fareBasis: RNNZ60S3
+                          segmentId: "2"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          segmentId: "3"
+                        - brandedFare: BAGSEAT
+                          cabin: ECONOMY
+                          class: V
+                          fareBasis: VDH0NNM3
+                          segmentId: "4"
+                      fareOption: STANDARD
+                      price:
+                        base: "1573.00"
+                        currency: USD
+                        total: "1663.55"
+                      travelerId: "2"
+                      travelerType: CHILD
+                  type: flight-offer
+                  validatingAirlineCodes:
+                    - BA
+              dictionaries:
+                aircraft:
+                  "320": AIRBUS INDUSTRIE A320-100/200
+                  "321": AIRBUS INDUSTRIE A321
+                  "346": AIRBUS INDUSTRIE A340-600
+                  "788": BOEING 787-8
+                carriers:
+                  BA: BRITISH AIRWAYS
+                  IB: IBERIA
+                  LA: LATAM AIRLINES GROUP
+                currencies:
+                  USD: US DOLLAR
+                locations:
+                  GIG:
+                    cityCode: RIO
+                    countryCode: BR
+                  GRU:
+                    cityCode: SAO
+                    countryCode: BR
+                  LHR:
+                    cityCode: LON
+                    countryCode: GB
+                  MAD:
+                    cityCode: MAD
+                    countryCode: ES
+              meta:
+                count: 2
+            properties:
+              data:
+                items:
+                  $ref: "#/components/schemas/FlightOffer"
+                type: array
+              dictionaries:
+                $ref: "#/components/schemas/Dictionaries"
+              meta:
+                $ref: "#/components/schemas/Collection_Meta"
+              warnings:
+                items:
+                  $ref: "#/components/schemas/Issue"
+                type: array
+            required:
+              - data
+            title: Success
+      description: Successful Operation
+  schemas:
+    AdditionalServiceType:
+      description: additional service type
+      enum:
+        - CHECKED_BAGS
+        - MEALS
+        - SEATS
+        - OTHER_SERVICES
+      example: CHECKED_BAGS
+      type: string
+    AircraftEntry:
+      additionalProperties:
+        description: the manufacturer/model of aircraft
+        type: string
+      properties:
+        key:
+          type: string
+      type: object
+    AircraftEquipment:
+      description: information related to the aircraft
+      properties:
+        code:
+          description: >
+            IATA aircraft code
+            (http://www.flugzeuginfo.net/table_accodes_iata_en.php)
+          example: "318"
+          pattern: "[a-zA-Z0-9]{3}"
+          type: string
+    BaggageAllowance:
+      description: baggageAllowance
+      properties:
+        quantity:
+          description: Total number of units
+          example: 1
+          type: integer
+        weight:
+          description: Weight of the baggage allowance
+          example: 20
+          type: integer
+        weightUnit:
+          description: Code to qualify unit as pounds or kilos
+          example: KG
+          type: string
+      type: object
+    CarrierEntry:
+      additionalProperties:
+        description: the carrier name
+        type: string
+      properties:
+        key:
+          type: string
+      type: object
+    Co2Emission:
+      properties:
+        cabin:
+          $ref: "#/components/schemas/TravelClass"
+        weight:
+          description: Weight of Co2 emitted for the concerned segment
+          example: 90
+          type: integer
+        weightUnit:
+          description: Code to qualify unit as pounds or kilos
+          example: KG
+          type: string
+      type: object
+    Collection_Meta:
+      properties:
+        count:
+          example: 1
+          type: integer
+        oneWayCombinations:
+          items:
+            properties:
+              flightOfferIds:
+                items:
+                  type: string
+                type: array
+              originDestinationId:
+                type: string
+            title: oneWayCombinations
+          type: array
+      title: Collection_Meta
+    Collection_Meta_Link:
+      properties:
+        count:
+          example: 1
+          type: integer
+        links:
+          example:
+            self: https://test.api.amadeus.com/v1/area/resources?param=value
+          properties:
+            first:
+              example: https://test.api.amadeus.com/v1/area/resources?...
+              format: uri
+              type: string
+            last:
+              example: https://test.api.amadeus.com/v1/area/resources?...
+              format: uri
+              type: string
+            next:
+              example: https://test.api.amadeus.com/v1/area/resources?...
+              format: uri
+              type: string
+            previous:
+              example: https://test.api.amadeus.com/v1/area/resources?...
+              format: uri
+              type: string
+            self:
+              example: https://test.api.amadeus.com/v1/area/resources?...
+              format: uri
+              type: string
+            up:
+              example: https://test.api.amadeus.com/v1/area/resources?...
+              format: uri
+              type: string
+          title: CollectionLinks
+      title: Collection_Meta
+    Coverage:
+      description: part of the trip covered by the travel class restriction
+        (ALL_SEGMENTS if ommited)
+      enum:
+        - MOST_SEGMENTS
+        - AT_LEAST_ONE_SEGMENT
+        - ALL_SEGMENTS
+      example: MOST_SEGMENTS
+      type: string
+    CurrencyEntry:
+      additionalProperties:
+        example: EUR
+        type: string
+      properties:
+        key:
+          example: Euro
+          type: string
+      required:
+        - key
+    DateTimeRange:
+      properties:
+        date:
+          description: Dates are specified in the [ISO
+            8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format,
+            e.g. 2018-12-25
+          example: 2018-09-22
+          format: date
+          type: string
+        dateWindow:
+          description: >
+            Either 1, 2 or 3 extra days around the local date (IxD for +/- x
+            days - Ex: I3D), Either 1 to 3 days after the local date (PxD for +x
+            days - Ex: P3D), or 1 to 3 days before the local date (MxD for -x
+            days - Ex: M3D)
+
+
+            Can not be combined with "originRadius" or "destinationRadius".
+          example: I3D
+          pattern: ^[MPI][1-3]D
+          type: string
+        time:
+          description: Local time. hh:mm:ss format, e.g 10:30:00
+          example: 10:30:00
+          type: string
+        timeWindow:
+          description: >
+            1 to 12 hours around (both +and -) the local time. Possibly limited
+            by the number of extra days when specified, i.e.  in some
+            situations, it may not be used to exceed the maximum date range.
+            [1-12]H format, e.g. 6H
+
+
+            Can not be combined with "originRadius" or "destinationRadius".
+          example: 2H
+          pattern: ^([1-9]|10|11|12)H
+          type: string
+      required:
+        - date
+      title: dateTimeRange
+      type: object
+    Dictionaries:
+      properties:
+        aircraft:
+          $ref: "#/components/schemas/AircraftEntry"
+        carriers:
+          $ref: "#/components/schemas/CarrierEntry"
+        currencies:
+          $ref: "#/components/schemas/CurrencyEntry"
+        locations:
+          $ref: "#/components/schemas/LocationEntry"
+      type: object
+    Error_400:
+      example:
+        errors:
+          - code: 477
+            detail: invalid query parameter format
+            source:
+              example: CDG
+              parameter: airport
+            status: 400
+            title: INVALID FORMAT
+      properties:
+        errors:
+          items:
+            $ref: "#/components/schemas/Issue"
+          type: array
+      required:
+        - errors
+    Error_500:
+      example:
+        errors:
+          - code: 141
+            status: 500
+            title: SYSTEM ERROR HAS OCCURRED
+      properties:
+        errors:
+          items:
+            $ref: "#/components/schemas/Issue"
+          type: array
+      required:
+        - errors
+    ExtendedPricingOptions:
+      description: fare filter options
+      properties:
+        includedCheckedBagsOnly:
+          description: If true, returns the flight-offers with included checked bags only
+          example: true
+          type: boolean
+      title: pricingOptions
+      type: object
+    Extended_Price:
+      allOf:
+        - properties:
+            additionalServices:
+              items:
+                properties:
+                  amount:
+                    example: "332.70"
+                    type: string
+                  type:
+                    $ref: "#/components/schemas/AdditionalServiceType"
+                title: AdditionalService
+                type: object
+              title: AdditionalServices
+              type: array
+            billingCurrency:
+              description: Currency of the payment. It may be different than the requested
+                currency
+              example: EUR
+              type: string
+            grandTotal:
+              description: Total amount paid by the user (including fees and selected
+                additional services).
+              example: "987.00"
+              type: string
+            margin:
+              description: BOOK step ONLY - The price margin percentage (plus or minus) that
+                the booking can tolerate. When set to 0, then no price magin is
+                tolerated.
+              example: "1.00"
+              type: string
+          type: object
+        - $ref: "#/components/schemas/Price"
+      description: price information
+      title: Price
+      type: object
+    Fee:
+      description: a fee
+      properties:
+        amount:
+          example: "332.70"
+          type: string
+        type:
+          $ref: "#/components/schemas/FeeType"
+    FeeType:
+      description: type of fee
+      enum:
+        - TICKETING
+        - FORM_OF_PAYMENT
+        - SUPPLIER
+      example: TICKETING
+      type: string
+    FlightEndPoint:
+      allOf:
+        - $ref: "#/components/schemas/OriginalFlightEndPoint"
+        - properties:
+            at:
+              description: local date and time in
+                [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
+                YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+              example: 2017-10-23T20:00:00
+              format: date-time
+              type: string
+          type: object
+      description: departure or arrival information
+      title: FlightEndPoint
+    FlightOffer:
+      properties:
+        disablePricing:
+          description: BOOK step ONLY - If true, allows to book a PNR without pricing.
+            Only for the source "GDS"
+          example: false
+          type: boolean
+        id:
+          description: Id of the flight offer
+          example: "1"
+          type: string
+        instantTicketingRequired:
+          description: If true, inform that a ticketing will be required at booking step.
+          example: false
+          type: boolean
+        itineraries:
+          items:
+            properties:
+              duration:
+                description: duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
+                  PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m
+                example: PT2H10M
+                type: string
+              segments:
+                items:
+                  $ref: "#/components/schemas/Segment"
+                maxItems: 9
+                minItems: 1
+                title: Segments
+                type: array
+            required:
+              - segments
+            title: Itineraries
+            type: object
+          maxItems: 250
+          minItems: 1
+          type: array
+        lastTicketingDate:
+          description: If booked on the same day as the search (with respect to timezone),
+            this flight offer is guaranteed to be thereafter valid for ticketing
+            until this date (included). Unspecified when it does not make sense
+            for this flight offer (e.g. no control over ticketing once booked).
+            YYYY-MM-DD format, e.g. 2019-06-07
+          example: 2018-06-19T00:00:00.000Z
+          type: string
+        nonHomogeneous:
+          description: If true, upon completion of the booking, this pricing solution is
+            expected to yield multiple records (a record contains booking
+            information confirmed and stored, typically a Passenger Name Record
+            (PNR), in the provider GDS or system)
+          example: false
+          type: boolean
+        numberOfBookableSeats:
+          description: Number of seats bookable in a single request. Can not be higher
+            than 9.
+          example: 9
+          maximum: 9
+          minimum: 1
+          type: number
+        oneWay:
+          description: If true, the flight offer fulfills only one originDestination and
+            has to be combined with other oneWays to complete the whole journey.
+          example: false
+          type: boolean
+        paymentCardRequired:
+          description: If true, a payment card is mandatory to book this flight offer
+          example: false
+          type: boolean
+        price:
+          $ref: "#/components/schemas/Extended_Price"
+        pricingOptions:
+          properties:
+            fareType:
+              $ref: "#/components/schemas/PricingOptionsFareType"
+            includedCheckedBagsOnly:
+              description: If true, returns the flight-offers with included checked bags only
+              example: true
+              type: boolean
+            noPenaltyFare:
+              description: If true, returns the flight-offers with no penalty fares only
+              example: true
+              type: boolean
+            noRestrictionFare:
+              description: If true, returns the flight-offers with no restriction fares only
+              example: true
+              type: boolean
+            refundableFare:
+              description: If true, returns the flight-offers with refundable fares only
+              example: true
+              type: boolean
+          title: PricingOptions
+          type: object
+        source:
+          $ref: "#/components/schemas/FlightOfferSource"
+        travelerPricings:
+          description: Fare information for each traveler/segment
+          items:
+            properties:
+              associatedAdultId:
+                description: if type="HELD_INFANT", corresponds to the adult traveler's id who
+                  will share the seat
+                type: string
+              fareDetailsBySegment:
+                items:
+                  description: Fare details of the segment
+                  properties:
+                    additionalServices:
+                      properties:
+                        chargeableCheckedBags:
+                          $ref: "#/components/schemas/BaggageAllowance"
+                        chargeableSeatNumber:
+                          description: seat number
+                          example: 33D
+                          pattern: "[1-9][0-9]{0,2}[A-Z]?"
+                          type: string
+                        otherServices:
+                          description: Other services to add
+                          example:
+                            - PRIORITY_BOARDING
+                          items:
+                            $ref: "#/components/schemas/ServiceName"
+                          type: array
+                      title: AdditionalServicesRequest
+                      type: object
+                    allotmentDetails:
+                      properties:
+                        tourName:
+                          type: string
+                        tourReference:
+                          type: string
+                      title: AllotmentDetails
+                      type: object
+                    brandedFare:
+                      description: The name of the Fare Family corresponding to the fares. Only for
+                        the GDS provider and if the airline has fare families
+                        filled
+                      example: LIGHTONE
+                      type: string
+                    cabin:
+                      $ref: "#/components/schemas/TravelClass"
+                    class:
+                      description: The code of the booking class, a.k.a. class of service or
+                        Reservations/Booking Designator (RBD)
+                      example: A
+                      pattern: "[A-Z]{1}"
+                      type: string
+                    fareBasis:
+                      description: Fare basis specifying the rules of a fare. Usually, though not
+                        always, is composed of the booking class code followed
+                        by a set of letters and digits representing other
+                        characteristics of the ticket, such as refundability,
+                        minimum stay requirements, discounts or special
+                        promotional elements.
+                      example: ANNNNF4K
+                      pattern: "[[A-Z0-9]{1,18}"
+                      type: string
+                    includedCheckedBags:
+                      $ref: "#/components/schemas/BaggageAllowance"
+                    isAllotment:
+                      description: True if the corresponding booking class is in an allotment
+                      example: true
+                      type: boolean
+                    segmentId:
+                      description: Id of the segment
+                      example: "1"
+                      type: string
+                    sliceDiceIndicator:
+                      $ref: "#/components/schemas/SliceDiceIndicator"
+                  required:
+                    - segmentId
+                  title: FareDetailsBySegment
+                maxItems: 18
+                minItems: 1
+                type: array
+              fareOption:
+                $ref: "#/components/schemas/TravelerPricingFareOption"
+              price:
+                $ref: "#/components/schemas/Price"
+              travelerId:
+                description: Id of the traveler
+                example: "1"
+                type: string
+              travelerType:
+                $ref: "#/components/schemas/TravelerType"
+            required:
+              - travelerId
+              - fareOption
+              - travelerType
+              - fareDetailsBySegment
+            title: TravelerPricing
+          maxItems: 18
+          minItems: 1
+          title: TravelerPricings
+          type: array
+        type:
+          description: the resource name
+          example: flight-offer
+          type: string
+        validatingAirlineCodes:
+          description: This option ensures that the system will only consider these
+            airlines.
+          example:
+            - AF
+          items:
+            type: string
+          maxItems: 9
+          minItems: 1
+          type: array
+      required:
+        - type
+        - id
+      title: Flight-offer
+      type: object
+    FlightOfferSource:
+      description: source of the flight offer
+      enum:
+        - GDS
+      example: GDS
+      type: string
+    FlightSegment:
+      description: defining a flight segment; including both operating and marketing
+        details when applicable
+      properties:
+        aircraft:
+          $ref: "#/components/schemas/AircraftEquipment"
+        arrival:
+          $ref: "#/components/schemas/FlightEndPoint"
+        carrierCode:
+          description: providing the airline / carrier code
+          example: DL
+          maxLength: 2
+          minLength: 1
+          type: string
+        departure:
+          $ref: "#/components/schemas/FlightEndPoint"
+        duration:
+          description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
+            PnYnMnDTnHnMnS format, e.g. PT2H10M
+          example: PT2H10M
+          type: string
+        number:
+          description: the flight number as assigned by the carrier
+          example: "212"
+          maxLength: 4
+          minLength: 1
+          type: string
+        operating:
+          $ref: "#/components/schemas/OperatingFlight"
+        stops:
+          description: information regarding the different stops composing the flight
+            segment. E.g. technical stop, change of gauge...
+          items:
+            $ref: "#/components/schemas/FlightStop"
+          type: array
+      type: object
+    FlightStop:
+      allOf:
+        - $ref: "#/components/schemas/OriginalFlightStop"
+        - properties:
+            arrivalAt:
+              description: arrival at the stop in
+                [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
+                YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+              example: 2017-10-23T20:00:00
+              format: date-time
+              type: string
+            departureAt:
+              description: departure from the stop in
+                [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
+                YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+              example: 2017-10-23T20:00:00
+              format: date-time
+              type: string
+          type: object
+      description: details of stops for direct or change of gauge flights
+      title: FlightStop
+    GetFlightOffersQuery:
+      example:
+        currencyCode: USD
+        originDestinations:
+          - departureDateTimeRange:
+              date: 2020-08-01
+              time: 10:00:00
+            destinationLocationCode: MAD
+            id: "1"
+            originLocationCode: RIO
+          - departureDateTimeRange:
+              date: 2020-08-05
+              time: 17:00:00
+            destinationLocationCode: RIO
+            id: "2"
+            originLocationCode: MAD
+        searchCriteria:
+          flightFilters:
+            cabinRestrictions:
+              - cabin: BUSINESS
+                coverage: MOST_SEGMENTS
+                originDestinationIds:
+                  - "1"
+            carrierRestrictions:
+              excludedCarrierCodes:
+                - AA
+                - TP
+                - AZ
+          maxFlightOffers: 2
+        sources:
+          - GDS
+        travelers:
+          - id: "1"
+            travelerType: ADULT
+          - id: "2"
+            travelerType: CHILD
+      properties:
+        currencyCode:
+          description: The currency code, as defined in [ISO
+            4217](https://en.wikipedia.org/wiki/ISO_4217), to reflect the
+            currency in which this amount is expressed.
+          example: EUR
+          type: string
+        originDestinations:
+          description: Origins and Destinations must be properly ordered in time
+            (chronological order in accordance with the timezone of each
+            location) to describe the journey consistently. Dates and times must
+            not be past nor more than 365 days in the future, according to
+            provider settings.Number of Origins and Destinations must not exceed
+            the limit defined in provider settings.
+          items:
+            $ref: "#/components/schemas/OriginDestination"
+          maxItems: 6
+          minItems: 1
+          title: originDestinations
+          type: array
+        searchCriteria:
+          $ref: "#/components/schemas/SearchCriteria"
+        sources:
+          description: Allows enable one or more sources. If present in the list, these
+            sources will be called by the system.
+          items:
+            $ref: "#/components/schemas/FlightOfferSource"
+          minItems: 1
+          title: sources
+          type: array
+        travelers:
+          items:
+            $ref: "#/components/schemas/Traveler"
+          maxItems: 18
+          minItems: 1
+          title: travelers
+          type: array
+      required:
+        - originDestinations
+        - travelers
+        - sources
+      title: getFlightOffersQuery
+    Issue:
+      properties:
+        code:
+          description: an application-specific error code
+          format: int64
+          type: integer
+        detail:
+          description: explanation of the error
+          type: string
+        source:
+          description: an object containing references to the source of the error
+          maxProperties: 1
+          properties:
+            example:
+              description: a string indicating an example of the right value
+              type: string
+            parameter:
+              description: a string indicating which URI query parameter caused the issue
+              type: string
+            pointer:
+              description: a JSON Pointer [RFC6901] to the associated entity in the request
+                document
+              type: string
+          title: Issue_Source
+          type: object
+        status:
+          description: the HTTP status code applicable to this error
+          type: integer
+        title:
+          description: a short summary of the error
+          type: string
+    LocationEntry:
+      additionalProperties:
+        $ref: "#/components/schemas/LocationValue"
+      properties:
+        key:
+          type: string
+      required:
+        - key
+    LocationValue:
+      properties:
+        cityCode:
+          description: City code associated to the airport
+          example: PAR
+          type: string
+        countryCode:
+          description: Country code of the airport
+          example: FR
+          type: string
+    OperatingFlight:
+      description: information about the operating flight
+      properties:
+        carrierCode:
+          description: providing the airline / carrier code
+          example: DL
+          maxLength: 2
+          minLength: 1
+          type: string
+      type: object
+    OriginDestination:
+      properties:
+        alternativeDestinationsCodes:
+          description: Set of alternative destination location, such as a city or an
+            airport. Currently, only the locations defined in
+            [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are
+            supported.
+          items:
+            title: code
+            type: string
+          maxItems: 2
+          minItems: 1
+          type: array
+        alternativeOriginsCodes:
+          description: Set of alternative origin location, such as a city or an airport.
+            Currently, only the locations defined in
+            [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are
+            supported.
+          example:
+            - LON
+            - MUC
+          items:
+            title: code
+            type: string
+          maxItems: 2
+          minItems: 1
+          type: array
+        arrivalDateTimeRange:
+          $ref: "#/components/schemas/DateTimeRange"
+        departureDateTimeRange:
+          $ref: "#/components/schemas/DateTimeRange"
+        destinationLocationCode:
+          description: Destination location, such as a city or an airport. Currently, only
+            the locations defined in
+            [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are
+            supported.
+          example: NYC
+          type: string
+        destinationRadius:
+          description: >
+            Include other possible locations around the point, located less
+            than this distance in kilometers away. Max:300
+
+
+            Can not be combined with "dateWindow" or "timeWindow".
+          example: 200
+          type: number
+        excludedConnectionPoints:
+          description: List of excluded connections points. Any FlightOffer with these
+            connections points will be present in response. Currently, only the
+            locations defined in IATA are supported. Used only by the AMADEUS
+            provider
+          example:
+            - MRS
+          items:
+            title: code
+            type: string
+          maxItems: 3
+          minItems: 1
+          type: array
+        id:
+          example: 1
+          type: string
+        includedConnectionPoints:
+          description: List of included connections points. When an includedViaPoints
+            option is specified, all FlightOffer returned must at least go via
+            this Connecting Point. Currently, only the locations defined in IATA
+            are supported. Used only by the AMADEUS provider
+          example:
+            - MRS
+          items:
+            title: code
+            type: string
+          maxItems: 2
+          minItems: 1
+          type: array
+        originLocationCode:
+          description: Origin location, such as a city or an airport. Currently, only the
+            locations defined in
+            [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are
+            supported.
+          example: PAR
+          type: string
+        originRadius:
+          description: >
+            Include other possible locations around the point, located less
+            than this distance in kilometers away. Max:300
+
+
+            Can not be combined with "dateWindow" or "timeWindow".
+          example: 200
+          type: number
+      type: object
+    OriginalFlightEndPoint:
+      description: departure or arrival information
+      properties:
+        iataCode:
+          description: "[IATA airline
+            codes](http://www.iata.org/publications/Pages/code-search.aspx)"
+          example: JFK
+          type: string
+        terminal:
+          description: terminal name / number
+          example: T2
+          type: string
+      type: object
+    OriginalFlightStop:
+      description: details of stops for direct or change of gauge flights
+      properties:
+        duration:
+          description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
+            PnYnMnDTnHnMnS format, e.g. PT2H10M
+          example: PT2H10M
+          type: string
+        iataCode:
+          description: "[IATA airline
+            codes](http://www.iata.org/publications/Pages/code-search.aspx)"
+          example: JFK
+          type: string
+      type: object
+    Price:
+      properties:
+        base:
+          description: Amount without taxes
+          example: "632.70"
+          type: string
+        currency:
+          example: USD
+          type: string
+        fees:
+          description: List of applicable fees
+          items:
+            $ref: "#/components/schemas/Fee"
+          type: array
+        refundableTaxes:
+          description: The amount of taxes which are refundable
+          example: "200.00"
+          type: string
+        taxes:
+          items:
+            $ref: "#/components/schemas/Tax"
+          type: array
+        total:
+          description: Total amount paid by the user
+          example: "932.70"
+          type: string
+    PricingOptionsFareType:
+      description: type of fare of the flight-offer
+      example:
+        - PUBLISHED
+      items:
+        enum:
+          - PUBLISHED
+          - NEGOTIATED
+          - CORPORATE
+        type: string
+      type: array
+    SearchCriteria:
+      properties:
+        addOneWayOffers:
+          description: This option allows activate the one-way combinable feature
+          example: true
+          type: boolean
+        additionalInformation:
+          properties:
+            brandedFares:
+              description: If true, returns the fare family name for each flight-offer which
+                supports fare family
+              example: true
+              type: boolean
+            chargeableCheckedBags:
+              description: If true, returns the price of the first additional bag when the
+                airline is an "Amadeus Ancillary Services" member.
+              example: true
+              type: boolean
+          title: AdditionalInformation
+          type: object
+        allowAlternativeFareOptions:
+          description: This option allows to default to a standard fareOption if no offers
+            are found for the selected fareOption.
+          example: true
+          type: boolean
+        excludeAllotments:
+          description: This option allows to exclude the isAllotment flag associated to a
+            booking class in the search response when it exist.
+          example: false
+          type: boolean
+        flightFilters:
+          properties:
+            busSegmentAllowed:
+              description: This flag enable/disable filtering of bus segment
+              example: true
+              type: boolean
+            cabinRestrictions:
+              description: Restriction towards cabins.
+              items:
+                properties:
+                  cabin:
+                    $ref: "#/components/schemas/TravelClass"
+                  coverage:
+                    $ref: "#/components/schemas/Coverage"
+                  originDestinationIds:
+                    description: The list of originDestination identifiers for which the
+                      cabinRestriction applies
+                    example:
+                      - 1
+                      - 2
+                    items:
+                      type: string
+                    title: originDestinationIds
+                    type: array
+                title: CabinRestriction
+                type: object
+              maxItems: 6
+              minItems: 1
+              title: CabinRestrictions
+              type: array
+            carrierRestrictions:
+              description: Restriction towards carriers.
+              properties:
+                blacklistedInEUAllowed:
+                  description: This flag enable/disable filtering of blacklisted airline by EU.
+                    The list of the banned airlines is published in the Official
+                    Journal of the European Union, where they are included as
+                    annexes A and B to the Commission Regulation. The blacklist
+                    of an airline can concern all its flights or some specific
+                    aircraft types pertaining to the airline
+                  type: boolean
+                excludedCarrierCodes:
+                  description: This option ensures that the system will only consider these
+                    airlines.
+                  items:
+                    type: string
+                  maxItems: 99
+                  minItems: 1
+                  type: array
+                includedCarrierCodes:
+                  description: This option ensures that the system will only consider these
+                    airlines.
+                  items:
+                    type: string
+                  maxItems: 99
+                  minItems: 1
+                  type: array
+              title: CarrierRestrictions
+              type: object
+            connectionRestriction:
+              description: Restriction towards number of connections.
+              properties:
+                airportChangeAllowed:
+                  description: Allow to change airport during connection
+                  example: false
+                  type: boolean
+                maxNumberOfConnections:
+                  description: The maximal number of connections for each itinerary. Value can be
+                    0, 1 or 2.
+                  example: 2
+                  type: number
+                technicalStopsAllowed:
+                  description: This option allows the single segment to have one or more
+                    intermediate stops (technical stops).
+                  example: true
+                  type: boolean
+              title: ConnectionRestriction
+              type: object
+            crossBorderAllowed:
+              description: Allows to search a location outside the borders when a radius
+                around a location is specified. Default is false.
+              example: false
+              type: boolean
+            maxFlightTime:
+              description: This option allows to modify the value for the Elapsed Flying Time
+                (EFT) masterPricer option
+              example: 200
+              type: number
+            moreOvernightsAllowed:
+              description: This flag enables/disables the possibility to have more overnight
+                flights in Low Fare Search
+              example: false
+              type: boolean
+            railSegmentAllowed:
+              description: This flag enable/disable filtering of rail segment (TGV AIR, RAIL
+                ...)
+              example: true
+              type: boolean
+            returnToDepartureAirport:
+              description: This option force to retrieve flight-offer with a departure and a
+                return in the same airport
+              example: false
+              type: boolean
+          title: FlightFilters
+          type: object
+        maxFlightOffers:
+          default: 250
+          description: Maximum number of flight offers returned (Max 250)
+          example: 250
+          type: number
+        maxPrice:
+          description: maximum price per traveler. By default, no limit is applied. If
+            specified, the value should be a positive number with no decimals
+          example: 100
+          type: integer
+        oneFlightOfferPerDay:
+          description: Requests the system to find at least one flight-offer per day, if
+            possible, when a range of dates is specified. Default is false.
+          example: true
+          type: boolean
+        pricingOptions:
+          $ref: "#/components/schemas/ExtendedPricingOptions"
+      type: object
+    Segment:
+      allOf:
+        - properties:
+            blacklistedInEU:
+              description: >
+                When the flight has a marketing or/and operating airline that is
+                identified as blacklisted by the European Commission.
+
+
+                To improve travel safety, the European Commission regularly updates the list of the banned carriers from operating in Europe. It allows any Travel Agency located in the European Union to easily identify and hide any travel recommendation based on some unsafe airlines.
+
+                The [list of the banned airlines](https://ec.europa.eu/transport/sites/transport/files/air-safety-list_en.pdf) is published in the Official Journal of the European Union, where they are included as annexes A and B to the Commission Regulation. The blacklist of an airline can concern all its flights or some specific aircraft types pertaining to the airline
+              example: false
+              type: boolean
+            co2Emissions:
+              description: Co2 informations
+              items:
+                $ref: "#/components/schemas/Co2Emission"
+              minItems: 1
+              type: array
+            id:
+              description: Id of the segment
+              example: 1
+              type: string
+            numberOfStops:
+              description: Number of stops
+              example: 0
+              type: integer
+          type: object
+        - $ref: "#/components/schemas/FlightSegment"
+    ServiceName:
+      description: type of service
+      enum:
+        - PRIORITY_BOARDING
+        - AIRPORT_CHECKIN
+      example: PRIORITY_BOARDING
+      type: string
+    SliceDiceIndicator:
+      description: slice and Dice indicator, such as Local Availability, Sub
+        OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability
+      enum:
+        - LOCAL_AVAILABILITY
+        - SUB_OD_AVAILABILITY_1
+        - SUB_OD_AVAILABILITY_2
+      type: string
+    Tax:
+      description: a tax
+      properties:
+        amount:
+          example: "332.70"
+          type: string
+        code:
+          example: MX
+          type: string
+      type: object
+    TravelClass:
+      description: quality of service offered in the cabin where the seat is located
+        in this flight. Economy, premium economy, business or first class
+      enum:
+        - ECONOMY
+        - PREMIUM_ECONOMY
+        - BUSINESS
+        - FIRST
+      example: PREMIUM_ECONOMY
+      type: string
+    Traveler:
+      properties:
+        associatedAdultId:
+          description: if type="HELD_INFANT", corresponds to the adult travelers's id who
+            will share the seat
+          type: string
+        id:
+          example: 1
+          type: string
+        travelerType:
+          $ref: "#/components/schemas/TravelerType"
+      required:
+        - id
+        - travelerType
+      type: object
+    TravelerPricingFareOption:
+      description: >
+        option specifying a group of fares, which may be valid under
+        certain conditons
+
+        Can be used to specify special fare discount for a passenger
+      enum:
+        - STANDARD
+        - INCLUSIVE_TOUR
+        - SPANISH_MELILLA_RESIDENT
+        - SPANISH_CEUTA_RESIDENT
+        - SPANISH_CANARY_RESIDENT
+        - SPANISH_BALEARIC_RESIDENT
+        - AIR_FRANCE_METROPOLITAN_DISCOUNT_PASS
+        - AIR_FRANCE_DOM_DISCOUNT_PASS
+        - AIR_FRANCE_COMBINED_DISCOUNT_PASS
+        - AIR_FRANCE_FAMILY
+        - ADULT_WITH_COMPANION
+        - COMPANION
+      example: STANDARD
+      type: string
+    TravelerType:
+      description: >
+        traveler type
+
+        age restrictions : CHILD < 12y, HELD_INFANT < 2y, SEATED_INFANT < 2y, SENIOR >=60y
+      enum:
+        - ADULT
+        - CHILD
+        - SENIOR
+        - YOUNG
+        - HELD_INFANT
+        - SEATED_INFANT
+        - STUDENT
+      example: ADULT
+      type: string
+x-generatedAt: 2020-08-03T12:56:24.746Z

@@ -1,0 +1,2622 @@
+openapi: 3.0.0
+servers:
+  - url: https://platform.climate.com/
+info:
+  contact:
+    email: developer@climate.com
+    name: Climate FieldView Support
+  description: >
+    **Last Modified**: Thu Oct 29 12:30:46 PDT 2020
+
+
+
+    All endpoints are only accessible via HTTPS.
+
+
+    * All API endpoints are located at `https://platform.climate.com` (e.g.
+
+    `https://platform.climate.com/v4/fields`).
+
+
+    * The authorization token endpoint is located at
+
+    `https://api.climate.com/api/oauth/token`.
+
+
+    ## Troubleshooting
+
+
+    `X-Http-Request-Id` response header will be returned on every call,
+
+    successful or not. If you experience an issue with our api and need
+
+    to contact technical support, please supply the value of the `X-Http-Request-Id`
+
+    header along with an approximate time of when the request was made.
+
+
+    ## Request Limits
+
+
+    When you’re onboarded to Climate’s API platform, your `x-api-key` is assigned a custom usage plan. Usage plans are unique to each partner and have the following key attributes:
+
+
+    1. Throttling information
+        * burstLimit: Maximum rate limit over a period ranging from 1 second to a few seconds
+        * rateLimit: A steady-state rate limit
+
+    2. Quota information
+        * Limit: The maximum number of requests that can be made in a given month
+
+    When the request rate threshold is exceeded, a `429` response code is returned. Optionally, the [`Retry-After`](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.37) header may be returned:
+
+
+    Following are examples of rate limit errors:
+
+
+    1. Rate limit exceeded:
+
+
+    <br>HTTP/1.1 429
+
+    <br>Content-Type: application/json
+
+    <br>Content-Length: 32
+
+       {"message":"Too Many Requests"}
+
+    2. Quota exhausted:
+
+    <br>HTTP/1.1 429
+
+    <br>Content-Type: application/json
+
+    <br>Content-Length: 29
+
+        {"message":"Limit Exceeded"}
+
+    ## Pagination
+
+
+    Pagination is performed via headers. Any request which returns a `"results"`
+
+    array may be paginated. The following figure shows how query results are laid out with
+
+    X-Limit=4 and no filter applied.
+
+
+    <img style="width:70%;height:auto;" src="https://s3-us-west-2.amazonaws.com/climate-com/images/svg_upload_tests/paging.png">
+
+
+    * If there are no results, a response code of `304` will be returned.
+
+
+    * If the response is the last set of results, a response code of `200` or
+
+    `206` will be returned.
+
+
+    * If there are more results, a response code of `206` will be returned.
+
+
+    * If `X-Next-Token` is provided in the request headers but the token has
+
+    expired, a response code of `409` will be returned. This is only applicable
+
+    for some endpoints; see specific endpoint documentation below.
+
+
+    #### X-Limit
+
+
+    The page size can be controlled with the `X-Limit` header. Valid values are
+
+    `1-100` and defaults to `100`.
+
+
+    #### X-Next-Token
+
+
+    If the results are paginated, a response header of `X-Next-Token` will be
+
+    returned. Use the associated value in the subsequent request (via the `X-Next-Token`
+
+    request header) to retrieve the next page. The following sequence diagram shows how to
+
+    use `X-Next-Token` to fetch all the records.
+
+
+    <img src="https://s3-us-west-2.amazonaws.com/climate-com/images/svg_upload_tests/x-next-token.svg">
+
+
+
+    ## Chunked Uploads
+
+
+    Uploads larger than `5MiB` (`5242880 bytes`) must be done in `5MiB` chunks
+
+    (with the exception of the final chunk). Each chunk request MUST contain a
+
+    `Content-Range` header specifying the portion of the upload, and a `Content-Type`
+
+    header specifying binary content type (`application/octet-stream`). Range
+
+    uploads must be contiguous. The maximum upload size is capped at `500MiB` (`524288000 bytes`).
+
+
+    ## Chunked Downloads
+
+
+    Downloads larger than `5MiB` (`5242880 bytes`) must be done in `1-5MiB`
+
+    chunks (with the exception of the final chunk, which may be less than `1MiB`).
+
+    Each chunk request MUST contain a `Range` header specifying the requested portion of the download,
+
+    and an `Accept` header specifying binary and json content types  (`application/octet-stream,application/json`)
+
+    or all content types (`*/*`).
+
+
+    ## Drivers
+
+
+    If you need drivers to process agronomic data, download the ADAPT plugin below. We only support the plugin in the Windows environment, minimum is Windows 7 SP1.
+
+
+    For asPlanted, asHarvested and asApplied data:
+
+    * [ADAPT Plugin](https://dev.fieldview.com/drivers/ClimateADAPTPlugin_latest.exe)
+
+    <br>Release notes can be found [here](https://dev.fieldview.com/drivers/adapt-release-notes.txt).
+
+    <br>Download and use of the ADAPT plugin means that you agree to the EULA for use of the ADAPT plugin.
+
+    <br>Please review the [EULA](https://dev.fieldview.com/EULA/ADAPT%20Plugin%20EULA-06-19.pdf) (last updated on June 6th, 2019) before download and use of the ADAPT plugin.
+
+    <br>For more information, please refer to:
+      * [ADAPT Resources](https://adaptframework.org/)
+      * [ADAPT Overview](https://aggateway.atlassian.net/wiki/spaces/ADM/overview)
+      * [ADAPT FAQ](https://aggateway.atlassian.net/wiki/spaces/ADM/pages/165942474/ADAPT+Frequently-Asked+Questions+FAQ)
+      * [ADAPT Videos](https://adaptframework.org/adapt-videos/)
+
+    ## Sample Test Data
+
+
+    Sample agronomic data:
+
+    * [asPlanted and asHarvested data](https://dev.fieldview.com/sample-agronomic-data/Planting_Harvesting_data_04_18_2018_21_46_18.zip)
+
+    * [asApplied data set 1](https://dev.fieldview.com/sample-agronomic-data/as-applied-data1.zip)
+
+    * [asApplied data set 2](https://dev.fieldview.com/sample-agronomic-data/as-applied-data2.zip)
+
+    <br>To upload the sample data to your account, please follow the instructions in this [link](https://support.climate.com/kt#/kA02A000000AaxzSAC/en_US).
+
+
+    Sample soil data:
+
+    * [Sample soil data](https://dev.fieldview.com/sample-soil-data/soil-sample.xml)
+
+    ---
+  title: Climate FieldView Platform APIs
+  version: 4.0.11
+  x-apisguru-categories:
+    - open_data
+  x-logo:
+    url: https://climate.com/static_assets/favicons/fieldview/apple-touch-icon.png
+  x-origin:
+    - format: openapi
+      url: https://dev.fieldview.com/openapi/platform.yaml
+      version: "3.0"
+  x-providerName: climate.com
+tags:
+  - description: Field Boundary data endpoints.
+    name: Boundaries
+  - description: Field data endpoints.
+    name: Fields
+  - description: General data upload endpoints.
+    name: Uploads
+  - description: General data retrieval endpoints.
+    name: Layers
+  - description: Resource Owner data endpoints.
+    name: ResourceOwners
+  - description: Farm organization data endpoints.
+    name: FarmOrganizations
+paths:
+  /v4/boundaries:
+    post:
+      description: >-
+        Upload a **Boundary** entry by passing the geometry of the
+        boundary. This will store the boundary but will not create field in
+        Climate FieldView and will not link to an existing field in Climate
+        FieldView.
+
+        This is restricted to callers with **boundaries:write** scope.
+
+        To upload a field boundary for field creation in Climate FieldView, please use **POST /v4/uploads**.
+      operationId: uploadBoundary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoundaryUpload"
+      responses:
+        "200":
+          $ref: "#/components/responses/UploadBoundaryOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - boundaries:write
+      summary: Upload a boundary
+      tags:
+        - Boundaries
+  /v4/boundaries/query:
+    post:
+      description: Retrieve multiple **Boundaries** (up to 10 per request).
+      operationId: fetchBoundaries
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoundariesQuery"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchBoundariesOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - fields:read
+      summary: Retrieve Boundaries in batch
+      tags:
+        - Boundaries
+  "/v4/boundaries/{boundaryId}":
+    get:
+      description: Retrieve a **Boundary** by ID.
+      operationId: fetchBoundaryById
+      parameters:
+        - in: path
+          name: boundaryId
+          required: true
+          schema:
+            format: uuid
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchBoundaryByIdOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:read
+      summary: Retrieve a Boundary by ID
+      tags:
+        - Boundaries
+  "/v4/farmOrganizations/{farmOrganizationType}/{farmOrganizationId}":
+    get:
+      description: Retrieve a given **farm organization** by organization type and ID.
+      operationId: fetchFarmOrganizationByTypeAndId
+      parameters:
+        - $ref: "#/components/parameters/FarmOrganizationType"
+        - $ref: "#/components/parameters/FarmOrganizationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchFarmOrganizationByTypeAndIdOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - farmOrganizations:read
+      summary: Retrieve a specific farm organization by organization type and ID
+      tags:
+        - FarmOrganizations
+  /v4/fields:
+    get:
+      description: Retrieve list of **Fields**. Filter the results by field name if
+        the `fieldName` query parameter is specified.
+      operationId: fetchFields
+      parameters:
+        - $ref: "#/components/parameters/X-Next-Token"
+        - $ref: "#/components/parameters/X-Limit"
+        - $ref: "#/components/parameters/OptionalFieldNamePrefix"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchFieldsOk"
+        "206":
+          $ref: "#/components/responses/FetchFieldsPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:read
+      summary: Retrieve list of Fields
+      tags:
+        - Fields
+  "/v4/fields/{fieldId}":
+    get:
+      description: Retrieve a given **Field** by ID.
+      operationId: fetchFieldById
+      parameters:
+        - $ref: "#/components/parameters/FieldId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchFieldByIdOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:read
+      summary: Retrieve a specific Field by ID
+      tags:
+        - Fields
+  /v4/layers/asApplied:
+    get:
+      description: Retrieve a list of application activities. The id in the response
+        is used for  GET /v4/layers/asApplied/{activityId}/contents.
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/X-Next-Token"
+        - $ref: "#/components/parameters/X-Limit"
+        - $ref: "#/components/parameters/OptionalResourceOwnerId"
+        - $ref: "#/components/parameters/OccurredAfter"
+        - $ref: "#/components/parameters/OccurredBefore"
+        - $ref: "#/components/parameters/UpdatedAfter"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchApplicationActivitiesOk"
+        "206":
+          $ref: "#/components/responses/FetchApplicationActivitiesPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - asApplied:read
+      summary: Retrieve a list of application activities
+      tags:
+        - Layers
+  "/v4/layers/asApplied/{activityId}/contents":
+    get:
+      description: Retrieve an individual application activity by id.  Ids are
+        retrieved via the  /layers/asApplied route. Downloads larger than `5MiB`
+        (`5242880 bytes`) in size, must be downloaded in chunks no larger than
+        `5MiB` (`5242880 bytes`) and no smaller than `1MiB`  (`1048576 bytes`).
+        The last chunk could be less than `1MiB` (`1048576 bytes`). The data is
+        compressed using .zip format.
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/ApplicationActivityId"
+        - $ref: "#/components/parameters/Range"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchApplicationActivityOk"
+        "206":
+          $ref: "#/components/responses/FetchApplicationActivityPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "416":
+          $ref: "#/components/responses/416"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - asApplied:read
+      summary: Retrieve the raw application activity
+      tags:
+        - Layers
+  /v4/layers/asHarvested:
+    get:
+      description: Retrieve a list of harvest activities. The id in the response is
+        used for  GET /v4/layers/asHarvested/{activityId}/contents.
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/X-Next-Token"
+        - $ref: "#/components/parameters/X-Limit"
+        - $ref: "#/components/parameters/OptionalResourceOwnerId"
+        - $ref: "#/components/parameters/OccurredAfter"
+        - $ref: "#/components/parameters/OccurredBefore"
+        - $ref: "#/components/parameters/UpdatedAfter"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchHarvestActivitiesOk"
+        "206":
+          $ref: "#/components/responses/FetchHarvestActivitiesPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - asHarvested:read
+      summary: Retrieve a list of harvest activities
+      tags:
+        - Layers
+  "/v4/layers/asHarvested/{activityId}/contents":
+    get:
+      description: Retrieve an individual harvest activity by id.  Ids are retrieved
+        via the  /layers/asHarvested route. Downloads larger than `5MiB`
+        (`5242880 bytes`) in size, must be downloaded in chunks no larger than
+        `5MiB` (`5242880 bytes`) and no smaller than `1MiB`  (`1048576 bytes`).
+        The last chunk could be less than `1MiB` (`1048576 bytes`). The data is
+        compressed using .zip format.
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/HarvestActivityId"
+        - $ref: "#/components/parameters/Range"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchHarvestActivityOk"
+        "206":
+          $ref: "#/components/responses/FetchHarvestActivityPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "416":
+          $ref: "#/components/responses/416"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - asHarvested:read
+      summary: Retrieve the raw harvest activity
+      tags:
+        - Layers
+  /v4/layers/asPlanted:
+    get:
+      description: Retrieve a list of planting activities. The id in the response is
+        used for  GET /v4/layers/asPlanted/{activityId}/contents.
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/X-Next-Token"
+        - $ref: "#/components/parameters/X-Limit"
+        - $ref: "#/components/parameters/OptionalResourceOwnerId"
+        - $ref: "#/components/parameters/OccurredAfter"
+        - $ref: "#/components/parameters/OccurredBefore"
+        - $ref: "#/components/parameters/UpdatedAfter"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchPlantingActivitiesOk"
+        "206":
+          $ref: "#/components/responses/FetchPlantingActivitiesPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - asPlanted:read
+      summary: Retrieve a list of planting activities
+      tags:
+        - Layers
+  "/v4/layers/asPlanted/{activityId}/contents":
+    get:
+      description: Retrieve an individual planting activity by id.  Ids are retrieved
+        via the  /layers/asPlanted route. Downloads larger than `5MiB` (`5242880
+        bytes`) in size, must be downloaded in chunks no larger than `5MiB`
+        (`5242880 bytes`) and no smaller than `1MiB`  (`1048576 bytes`). The
+        last chunk could be less than `1MiB` (`1048576 bytes`).  The data is
+        compressed using .zip format.
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/PlantingActivityId"
+        - $ref: "#/components/parameters/Range"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchPlantingActivityOk"
+        "206":
+          $ref: "#/components/responses/FetchPlantingActivityPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "416":
+          $ref: "#/components/responses/416"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - asPlanted:read
+      summary: Retrieve the raw planting activity
+      tags:
+        - Layers
+  /v4/layers/scoutingObservations:
+    get:
+      description: Retrieve a list of scouting observations created or updated by the
+        user identified by the Authorization header.
+      parameters:
+        - $ref: "#/components/parameters/X-Next-Token"
+        - $ref: "#/components/parameters/X-Limit"
+        - $ref: "#/components/parameters/OccurredAfter"
+        - $ref: "#/components/parameters/OccurredBefore"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchScoutingObservationsOk"
+        "206":
+          $ref: "#/components/responses/FetchScoutingObservationsPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - scouting:read
+      summary: Retrieve a list of scouting observations
+      tags:
+        - Layers
+  "/v4/layers/scoutingObservations/{scoutingObservationId}":
+    get:
+      description: Retrieve an individual scouting observation by id.  Ids are
+        retrieved via the /layers/scoutingObservations route.
+      parameters:
+        - $ref: "#/components/parameters/ScoutingObservationId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchScoutingObservationByIdOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - scouting:read
+      summary: Retrieve individual scouting observation
+      tags:
+        - Layers
+  "/v4/layers/scoutingObservations/{scoutingObservationId}/attachments":
+    get:
+      description: Retrieve attachments associated with a given scouting observation.
+        Photos added to scouting notes in the FieldView app are capped to 20MB,
+        and we won’t store photos larger than that in a scouting note.
+      parameters:
+        - $ref: "#/components/parameters/ScoutingObservationId"
+        - $ref: "#/components/parameters/X-Next-Token"
+        - $ref: "#/components/parameters/X-Limit"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchScoutingObservationAttachmentsOk"
+        "206":
+          $ref: "#/components/responses/FetchScoutingObservationAttachmentsPartial"
+        "304":
+          $ref: "#/components/responses/304"
+        "400":
+          $ref: "#/components/responses/400"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - scouting:read
+      summary: Retrieve attachments associated with a given scouting observation.
+      tags:
+        - Layers
+  "/v4/layers/scoutingObservations/{scoutingObservationId}/attachments/{attachmentId}/contents":
+    get:
+      description: Photos added to scouting notes in the FieldView app are capped to
+        `20MiB` (`20971520 bytes`), and we won’t store photos larger than that
+        in a scouting note. Downloads larger than `5MiB` (`5242880 bytes`) in
+        size, must be downloaded in chunks no larger than `5MiB` (`5242880
+        bytes`) and no smaller than `1MiB` (`1048576 bytes`). The last chunk
+        could be less than `1MiB` (`1048576 bytes`).
+      parameters:
+        - $ref: "#/components/parameters/Accept"
+        - $ref: "#/components/parameters/ScoutingObservationId"
+        - $ref: "#/components/parameters/ScoutingObservationAttachmentId"
+        - $ref: "#/components/parameters/Range"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchScoutingObservationAttachmentContentsOk"
+        "206":
+          $ref: "#/components/responses/FetchScoutingObservationAttachmentContentsPartial"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "416":
+          $ref: "#/components/responses/416"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - scouting:read
+      summary: Retrieve the binary contents of a scouting observation’s attachment.
+      tags:
+        - Layers
+  "/v4/resourceOwners/{resourceOwnerId}":
+    get:
+      description: Retrieve a resource owner for the given `resourceOwnerId`.
+      operationId: getResourceOwner
+      parameters:
+        - $ref: "#/components/parameters/ResourceOwnerId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchResourceOwnerOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - resourceOwners:read
+      summary: Retrieve a resource owner by ID
+      tags:
+        - ResourceOwners
+  /v4/uploads:
+    post:
+      description: >-
+        Step one in uploading a data product. The method will return an
+        **Upload** ID which the caller will use in subsequent `PUT` requests.
+
+        The following `contentTypes` may be uploaded:
+            <details><summary>__image/vnd.climate.thermal.geotiff__</summary>
+
+            Allows for the upload of a thermal image. The image is a single band geotiff with 64 bit signed floating point values in degrees Celsius. The Coordinate Reference System (CRS) must be UTM with WGS84 datum.
+
+            The following metadata entries are required to be embedded in the geotiff:
+              * acquisitionStartDate - ISO8601 date
+              * acquisitionEndDate - ISO8601 date
+              * isCalibrated - boolean
+
+            The following metadata entries are optional:
+              * sourceId - uuid referencing the asset in the partner's system
+              * fieldId - uuid referencing a field in the Climate system
+              * boundaryId - uuid referencing a boundary in the Climate system
+              * brandId - uuid referencing a partner's branding in the Climate system
+              * name - name of the layer. The maximum number of characters that will be accepted as input is 20.
+
+            Requires either imagery:write or platform scope.
+          </details>
+          <details><summary>__image/vnd.climate.ndvi.geotiff__</summary>
+
+            Allows for the upload of a NDVI image. The image is a single band geotiff with 64 bit signed floating point values in the range of -1 to 1 inclusive. The Coordinate Reference System (CRS) must be UTM with WGS84 datum.
+
+            The following metadata entries are required to be embedded in the geotiff:
+              * acquisitionStartDate - ISO8601 date
+              * acquisitionEndDate - ISO8601 date
+
+            The following metadata entries are optional:
+              * sourceId - uuid referencing the asset in the partner's system
+              * fieldId - uuid referencing a field in the Climate system
+              * boundaryId - uuid referencing a boundary in the Climate system
+              * brandId - uuid referencing a partner's branding in the Climate system
+              * name - name of the layer. The maximum number of characters that will be accepted as input is 20.
+
+            Requires either imagery:write or platform scope.
+          </details>
+          <details><summary> __image/vnd.climate.rgb.geotiff__</summary>
+
+            Allows for the upload of a true color image. The image is a multi band geotiff with 24-bit composite values. Each band is 8 bits with values in the range of 0 to 255. The Coordinate Reference System (CRS) must be UTM with WGS84 datum. The geotiff must contain 3 bands in the order Red, Green, Blue.
+
+            The following metadata entries are required to be embedded in the geotiff:
+              * acquisitionStartDate - ISO8601 date
+              * acquisitionEndDate - ISO8601 date
+              * isCalibrated - boolean
+
+            The following metadata entries are optional:
+              * sourceId - uuid referencing the asset in the partner's system
+              * fieldId - uuid referencing a field in the Climate system
+              * boundaryId - uuid referencing a boundary in the Climate system
+              * brandId - uuid referencing a partner's branding in the Climate system
+              * reflectanceComputeMethod - either TOA or GROUND
+              * name - name of the layer. The maximum number of characters that will be accepted as input is 20.
+
+            Requires either imagery:write or platform scope.
+          </details>
+          <details><summary> __image/vnd.climate.rgb-nir.geotiff__</summary>
+
+            Allows for the upload of a Near Infrared (NIR) image. The Coordinate Reference System (CRS) must be UTM with WGS84 datum.
+
+            The following metadata entries are required to be embedded in the geotiff:
+              * acquisitionStartDate - ISO8601 date
+              * acquisitionEndDate - ISO8601 date
+              * isCalibrated - boolean
+
+            The following metadata entries are optional:
+              * sourceId - uuid referencing the asset in the partner's system
+              * fieldId - uuid referencing a field in the Climate system
+              * boundaryId - uuid referencing a boundary in the Climate system
+              * brandId - uuid referencing a partner's branding in the Climate system
+              * reflectanceComputeMethod - either TOA or GROUND
+              * name - name of the layer. The maximum number of characters that will be accepted as input is 20.
+
+            Requires either imagery:write or platform scope.
+          </details>
+          <details><summary>__image/vnd.climate.rgb-cir.geotiff__</summary>
+
+            Allows for the upload of a Color Infrared (CIR) image. The Coordinate Reference System (CRS) must be UTM with WGS84 datum.
+
+            The following metadata entries are required to be embedded in the geotiff:
+              * acquisitionStartDate - ISO8601 date
+              * acquisitionEndDate - ISO8601 date
+              * isCalibrated - boolean
+
+            The following metadata entries are optional:
+              * sourceId - uuid referencing the asset in the partner's system
+              * fieldId - uuid referencing a field in the Climate system
+              * boundaryId - uuid referencing a boundary in the Climate system
+              * brandId - uuid referencing a partner's branding in the Climate system
+              * reflectanceComputeMethod - either TOA or GROUND
+              * name - name of the layer. The maximum number of characters that will be accepted as input is 20.
+
+            Requires either imagery:write or platform scope.
+          </details>
+          <details><summary> __application/vnd.climate.field.geojson__</summary>
+
+            Allows for the upload of a valid geojson feature (https://tools.ietf.org/html/rfc7946#section-3.2).
+
+            The feature must contain the following entry in the properties section:
+              * fieldName
+
+            Optionally, the feature may contain the following entries in the properties properties:
+              * farmName - defaults to *default*
+              * clientName - defaults to *default*
+
+            Additionally, the type field of the geometry field must one of the following:
+              * Polygon
+              * MultiPolygon
+
+            The coordinates field of the geometry field must contain no more than 10,000 points.
+            The total area of the field may not be larger than 20,000 acres in size.
+
+            Requires either fields:write or platform scope.
+          </details>
+          <details><summary> __application/vnd.climate.rx.planting.shp__</summary>
+
+            Allows for the upload of a planting prescription in shapefile format.  The upload must be an archive in the zip format.  It should contain one and only one of each of the following file types:
+              * .shp
+              * .shx
+              * .dbf
+
+            All files with the above suffixes must have the same prefix, ie Back40.shp, Back40.shx and Back40.dbf.
+
+            Requires either rx:write or platform scope.
+          </details>
+          <details><summary> __application/vnd.climate.modus.xml__</summary>
+
+            Allows for the upload of a soil sampling file in the modus 1.0 format with some restrictions.  The upload must be a single xml file.
+
+            The following elements are required to be present in the modus file.
+              * EventCode - Max length of 64 bytes
+              * EventDate - Must be in ISO8601
+              * SoilSample - Has a maxOccurs of 20k
+              * Depth - Has a maxOccurs of 50
+              * LabName - Must be non-empty.
+              * StartingDepth - 0 to 36 inclusive, default 0
+              * EndingDepth - 1 - 36 inclusive, default 1
+              * ColumnDepth
+              * DepthUnit - must be inches
+              * Geometry - point in wgs84
+
+            Requires the soil:write scope.
+           </details>
+           <details><summary> __application/vnd.climate.stand-count.geojson__</summary>
+
+            Allows for the upload of a valid [geojson feature collection](https://tools.ietf.org/html/rfc7946#section-3.3).
+
+            Each feature in the collection must contain the following entry in its properties section:
+              * StandPPA - A count of the number of plants per acre:
+
+            Additionally, the type field of each feature's geometry field must be:
+              * Point
+
+            Requires `imagery:write` scope.
+           </details>
+           <details><summary> __application/vnd.climate.weed-count.geojson__</summary>
+
+            Allows for the upload of a valid [geojson feature collection](https://tools.ietf.org/html/rfc7946#section-3.3).
+
+            Each feature in the collection must contain the following entry in its properties section:
+              * StandPPA - A count of the number of plants per acre:
+
+            Additionally, the type field of each feature's geometry field must be:
+              * Point
+
+            Requires `imagery:write` scope.
+           </details>
+      operationId: postUpload
+      parameters:
+        - $ref: "#/components/parameters/X-Recipient-Email"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Upload"
+      responses:
+        "201":
+          $ref: "#/components/responses/PostUploadOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:write
+            - imagery:write
+            - rx:write
+            - standCount:write
+            - weedCount:write
+      summary: Initiate a new upload
+      tags:
+        - Uploads
+  /v4/uploads/status/query:
+    post:
+      description: Check the status of multiple **Uploads** (up to 100 per request).
+      operationId: fetchUploadStatuses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadStatusQuery"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchUploadStatusesOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:write
+            - imagery:write
+            - rx:write
+      summary: Retrieve Upload statuses in batch
+      tags:
+        - Uploads
+  "/v4/uploads/{uploadId}":
+    put:
+      description: Send chunked data for an **Upload**.
+      operationId: chunkedUpload
+      parameters:
+        - $ref: "#/components/parameters/ContentRange"
+        - $ref: "#/components/parameters/UploadId"
+        - $ref: "#/components/parameters/BinaryContentType"
+      responses:
+        "204":
+          $ref: "#/components/responses/204"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:write
+            - imagery:write
+            - rx:write
+            - soil:write
+      summary: Chunked upload of data
+      tags:
+        - Uploads
+  "/v4/uploads/{uploadId}/status":
+    get:
+      description: Check the status of an **Upload** by ID.
+      operationId: fetchUploadStatusById
+      parameters:
+        - $ref: "#/components/parameters/UploadId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FetchUploadStatusByIdOk"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "429":
+          $ref: "#/components/responses/429"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      security:
+        - api_key: []
+        - oauth2_authorization_code:
+            - platform
+            - fields:write
+            - imagery:write
+            - rx:write
+      summary: Retrieve Upload status
+      tags:
+        - Uploads
+components:
+  parameters:
+    Accept:
+      description: Must be either \*/* or application/octet-stream,application/json
+      in: header
+      name: Accept
+      required: true
+      schema:
+        type: string
+    ApplicationActivityId:
+      description: Unique identifier of the Application Activity.
+      in: path
+      name: activityId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    BinaryContentType:
+      description: Must be `application/octet-stream`
+      in: header
+      name: Content-Type
+      required: true
+      schema:
+        type: string
+    ContentRange:
+      description: Byte range `bytes start-end/total`
+        (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16). e.g.
+        bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880 bytes) in
+        size must be downloaded in chunks no larger than 5MiB (5242880 bytes)
+        and no smaller than 1MiB (1048576 bytes). The last chunk could be less
+        than 1MiB (1048576 bytes).
+      in: header
+      name: Content-Range
+      required: true
+      schema:
+        type: string
+    FarmOrganizationId:
+      description: Unique identifier of the farm organization.
+      in: path
+      name: farmOrganizationId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    FarmOrganizationType:
+      description: Type of the farm organization.
+      in: path
+      name: farmOrganizationType
+      required: true
+      schema:
+        enum:
+          - farm
+        type: string
+    FieldId:
+      description: Unique identifier of the Field.
+      in: path
+      name: fieldId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    HarvestActivityId:
+      description: Unique identifier of the Harvest Activity.
+      in: path
+      name: activityId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    OccurredAfter:
+      description: Optional start time by which to filter layer results. Time must be
+        in ISO 8601 format with time zone, e.g. 2016-05-13T00:00:00Z
+        (https://tools.ietf.org/html/rfc3339). Layers with an end time at or
+        after (inclusive) the specified time will match this filter. If both
+        occurredAfter and occurredBefore are populated, occurredAfter must be <=
+        occurredBefore.
+      in: query
+      name: occurredAfter
+      required: false
+      schema:
+        format: date-time
+        type: string
+    OccurredBefore:
+      description: Optional end time by which to filter layer results. Time must be in
+        ISO 8601 format with time zone, e.g. 2016-05-13T00:00:00Z
+        (https://tools.ietf.org/html/rfc3339). Layers with a start time at or
+        before (inclusive) the specified time. If both occurredAfter and
+        occurredBefore are populated, occurredAfter must be <= occurredBefore.
+      in: query
+      name: occurredBefore
+      required: false
+      schema:
+        format: date-time
+        type: string
+    OptionalFieldNamePrefix:
+      description: Optional prefix filter for field name. Must be at least 3 characters.
+      in: query
+      name: fieldName
+      required: false
+      schema:
+        type: string
+    OptionalResourceOwnerId:
+      description: Optional unique identifier of the resource owner.  If
+        resourceOwnerId is not specified, it defaults to the
+        x-authenticated-user-uuid.
+      in: query
+      name: resourceOwnerId
+      required: false
+      schema:
+        format: uuid
+        type: string
+    OptionalResourceOwnerIdList:
+      description: Optional comma-separated list of resource owner unique identifiers
+        by which to filter results.
+      in: query
+      name: resourceOwnerId
+      required: false
+      schema:
+        type: string
+    PlantingActivityId:
+      description: Unique identifier of the Planting Activity.
+      in: path
+      name: activityId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    Range:
+      description: Byte range `bytes=start-end`
+        (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35.1).
+        e.g. bytes=0-1048576. Currently only single range value is supported.
+        Both start and end need to be specified, end value should be greater
+        than start and end - start should not be greater than 5MiB.
+      in: header
+      name: Range
+      required: true
+      schema:
+        type: string
+    ResourceOwnerId:
+      description: Unique identifier of the resource owner.
+      in: path
+      name: resourceOwnerId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    ScoutingObservationAttachmentId:
+      description: Unique identifier of the attachment.
+      in: path
+      name: attachmentId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    ScoutingObservationId:
+      description: Unique identifier of the Scouting Observation.
+      in: path
+      name: scoutingObservationId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    UpdatedAfter:
+      description: Optional updated time by which to filter layer results. Time must
+        be in ISO 8601 format with time zone, e.g. 2016-05-13T00:00:00Z
+        (https://tools.ietf.org/html/rfc3339). Layers with a modification time
+        at or after (inclusive) the specified time.
+      in: query
+      name: updatedAfter
+      required: false
+      schema:
+        format: date-time
+        type: string
+    UploadId:
+      description: Unique identifier of an Upload.
+      in: path
+      name: uploadId
+      required: true
+      schema:
+        format: uuid
+        type: string
+    X-Limit:
+      description: Max number of results to return per batch.  Must be between 1 and
+        100 inclusive.  Defaults to 100.
+      in: header
+      name: X-Limit
+      required: false
+      schema:
+        format: int32
+        maximum: 100
+        minimum: 1
+        type: integer
+    X-Next-Token:
+      description: Opaque string which allows for fetching the next batch of
+        results.  Can be used to poll for changes.
+      in: header
+      name: X-Next-Token
+      required: false
+      schema:
+        type: string
+    X-Recipient-Email:
+      description: Email address associated with a Climate account, used when to
+        sending to another user.
+      in: header
+      name: X-Recipient-Email
+      required: false
+      schema:
+        type: string
+  responses:
+    "200":
+      description: OK
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "204":
+      description: No Content
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "304":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Empty"
+      description: Not Modified
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: A token which may be used to poll for updates.
+          schema:
+            type: string
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Bad Input
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "401":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Unauthorized
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Forbidden
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Not Found
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "409":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Conflict
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "410":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Gone
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "416":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Range Not Satisfiable
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "429":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Too Many Requests
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "500":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Internal Server Error
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    "503":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Server Busy
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying the request.
+          schema:
+            format: int32
+            type: integer
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    FetchApplicationActivitiesOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApplicationActivities"
+      description: OK
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to poll for updates.
+          schema:
+            type: string
+    FetchApplicationActivitiesPartial:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApplicationActivities"
+      description: Partial Result
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to fetch next batch of results.
+          schema:
+            type: string
+    FetchApplicationActivityOk:
+      content:
+        application/octet-stream:
+          schema:
+            $ref: "#/components/schemas/ApplicationActivityContents"
+      description: OK
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request
+          schema:
+            type: string
+    FetchApplicationActivityPartial:
+      content:
+        application/octet-stream:
+          schema:
+            $ref: "#/components/schemas/ApplicationActivityContents"
+      description: Partial Result
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    FetchBoundariesOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Boundaries"
+      description: OK
+    FetchBoundaryByIdOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Boundary"
+      description: OK
+    FetchFarmOrganizationByTypeAndIdOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/FarmOrganization"
+      description: Returns the requested farm organization.
+      headers:
+        X-Http-Request-Id:
+          schema:
+            type: string
+    FetchFieldByIdOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Field"
+      description: Returns the requested Field.
+      headers:
+        X-Http-Request-Id:
+          schema:
+            type: string
+    FetchFieldsOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fields"
+      description: OK
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to poll for updates.
+          schema:
+            type: string
+    FetchFieldsPartial:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fields"
+      description: Partial Result
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to fetch next batch of results.
+          schema:
+            type: string
+    FetchHarvestActivitiesOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HarvestActivities"
+      description: OK
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to poll for updates.
+          schema:
+            type: string
+    FetchHarvestActivitiesPartial:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HarvestActivities"
+      description: Partial Result
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to fetch next batch of results.
+          schema:
+            type: string
+    FetchHarvestActivityOk:
+      content:
+        application/octet-stream:
+          schema:
+            $ref: "#/components/schemas/HarvestActivityContents"
+      description: OK
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request
+          schema:
+            type: string
+    FetchHarvestActivityPartial:
+      content:
+        application/octet-stream:
+          schema:
+            $ref: "#/components/schemas/HarvestActivityContents"
+      description: Partial Result
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    FetchPlantingActivitiesOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlantingActivities"
+      description: OK
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to poll for updates.
+          schema:
+            type: string
+    FetchPlantingActivitiesPartial:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlantingActivities"
+      description: Partial Result
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to fetch next batch of results.
+          schema:
+            type: string
+    FetchPlantingActivityOk:
+      content:
+        application/octet-stream:
+          schema:
+            $ref: "#/components/schemas/PlantingActivityContents"
+      description: OK
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request
+          schema:
+            type: string
+    FetchPlantingActivityPartial:
+      content:
+        application/octet-stream:
+          schema:
+            $ref: "#/components/schemas/PlantingActivityContents"
+      description: Partial Result
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    FetchResourceOwnerOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ResourceOwner"
+      description: OK
+    FetchScoutingObservationAttachmentContentsOk:
+      content:
+        image/jpeg:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservationAttachmentContents"
+      description: OK
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request
+          schema:
+            type: string
+    FetchScoutingObservationAttachmentContentsPartial:
+      content:
+        image/jpeg:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservationAttachmentContents"
+      description: Partial Result
+      headers:
+        Content-Range:
+          description: Byte range `bytes start-end/total`
+            (https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.16).
+            e.g. bytes 0-5242880/10242880. Downloads larger than 5MiB (5242880
+            bytes) in size must be downloaded in chunks no larger than 5MiB
+            (5242880 bytes) and no smaller than 1MiB (1048576 bytes). The last
+            chunk could be less than 1MiB (1048576 bytes).
+          schema:
+            type: string
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    FetchScoutingObservationAttachmentsOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservationAttachments"
+      description: OK
+    FetchScoutingObservationAttachmentsPartial:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservationAttachments"
+      description: Partial Result
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to fetch next batch of results.
+          schema:
+            type: string
+    FetchScoutingObservationByIdOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservation"
+      description: Returns the requested scouting observation.
+      headers:
+        X-Http-Request-Id:
+          schema:
+            type: string
+    FetchScoutingObservationsOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservations"
+      description: OK
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to poll for updates.
+          schema:
+            type: string
+    FetchScoutingObservationsPartial:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ScoutingObservations"
+      description: Partial Result
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+        X-Next-Token:
+          description: Token used to fetch next batch of results.
+          schema:
+            type: string
+    FetchUploadStatusByIdOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UploadStatus"
+      description: OK
+    FetchUploadStatusesOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UploadStatuses"
+      description: OK
+    PostUploadOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreatedUpload"
+      description: Returns a new upload with ID used to PUT file contents.
+      headers:
+        X-Http-Request-Id:
+          schema:
+            type: string
+    ReportConflict:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Conflict (Report generation is still in progress)
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    ReportGone:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Gone (Report is expired)
+      headers:
+        X-Http-Request-Id:
+          description: Unique identifier assigned to the request.
+          schema:
+            type: string
+    UploadBoundaryOk:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UploadedBoundaryId"
+      description: OK
+  schemas:
+    ApplicationActivities:
+      description: A batch of application activities
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/ApplicationActivitySummary"
+          type: array
+      required:
+        - results
+    ApplicationActivityContents:
+      properties:
+        body:
+          $ref: "#/components/schemas/BinaryData"
+      required:
+        - body
+    ApplicationActivitySummary:
+      properties:
+        createdAt:
+          description: The time the application activity was created. Time in ISO 8601
+            format with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        endTime:
+          description: The start time of the application activity. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        fieldIds:
+          description: Array of field ids associated the application activity.
+          items:
+            type: string
+          type: array
+        id:
+          description: The id of an application activity.
+          format: uuid
+          type: string
+        length:
+          description: The size in bytes of the raw application activity file.
+          format: int64
+          type: integer
+        startTime:
+          description: The start time of the application activity. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time the application activity was last updated. Time in ISO
+            8601 format with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+      required:
+        - id
+        - startTime
+        - endTime
+        - createdAt
+        - updatedAt
+        - length
+        - fieldIds
+      type: object
+    Area:
+      description: Area with units. Units are always "hectare".
+      example:
+        q: 1
+        u: hectare
+      properties:
+        q:
+          format: float
+          type: number
+        u:
+          type: string
+      required:
+        - q
+        - u
+    BinaryData:
+      description: Binary contents
+      format: binary
+      type: string
+    Boundaries:
+      description: A batch of boundary results
+      properties:
+        features:
+          items:
+            $ref: "#/components/schemas/Boundary"
+          type: array
+        type:
+          enum:
+            - FeatureCollection
+          type: string
+      required:
+        - type
+        - features
+    BoundariesQuery:
+      properties:
+        ids:
+          items:
+            description: Unique identifier for the boundary.
+            format: uuid
+            type: string
+          type: array
+      required:
+        - ids
+      type: object
+    Boundary:
+      description: Arbitrary boundary.  GeoJSON Feature.
+      properties:
+        geometry:
+          $ref: "#/components/schemas/Geometry"
+        id:
+          format: uuid
+          type: string
+        properties:
+          $ref: "#/components/schemas/BoundaryProperties"
+        type:
+          enum:
+            - Feature
+          type: string
+      required:
+        - id
+        - type
+        - geometry
+        - properties
+    BoundaryProperties:
+      description: Properties map.
+      properties:
+        area:
+          $ref: "#/components/schemas/Area"
+        centroid:
+          $ref: "#/components/schemas/Point"
+      required:
+        - area
+        - centroid
+    BoundaryUpload:
+      description: Arbitrary boundary in a geometry map
+      properties:
+        geometry:
+          $ref: "#/components/schemas/Geometry"
+      required:
+        - geometry
+    CreatedUpload:
+      description: Successfully created upload request
+      format: uuid
+      type: string
+    Empty:
+      type: object
+    Error:
+      properties:
+        error:
+          properties:
+            code:
+              type: string
+            id:
+              format: uuid
+              type: string
+            message:
+              description: Description of the error encountered.
+              type: string
+          required:
+            - id
+            - code
+            - message
+          type: object
+      type: object
+    FarmOrganization:
+      description: Logical representation of a farm organization with a name and type.
+      example:
+        id: 00000000-0000-0000-0000-000000000000
+        name: Back Forty
+        type: farm
+      properties:
+        id:
+          description: Unique identifier for a farm organization.
+          format: uuid
+          type: string
+        name:
+          description: Name of the farm organization.
+          type: string
+        type:
+          description: Type of the farm organization.
+          enum:
+            - farm
+          type: string
+      required:
+        - id
+        - name
+        - type
+    Field:
+      description: Logical representation of a Field with a name.  Spatial attributes
+        of the Field are provided in the Boundary.
+      example:
+        boundaryId: 00000000-0000-0000-0000-000000000000
+        id: 00000000-0000-0000-0000-000000000000
+        name: Back Forty
+        parent:
+          id: 00000000-0000-0000-0000-000000000000
+          type: farm
+        resourceOwnerId: 00000000-0000-0000-0000-000000000000
+      properties:
+        boundaryId:
+          description: Unique identifier for the current Field's Boundary.
+          format: uuid
+          type: string
+        id:
+          description: Unique identifier for a Field.
+          format: uuid
+          type: string
+        name:
+          description: Name of the Field.
+          type: string
+        parent:
+          $ref: "#/components/schemas/Parent"
+        resourceOwnerId:
+          description: Unique identifier of the resource owner that owns the Field.
+          format: uuid
+          type: string
+      required:
+        - id
+        - name
+        - boundaryId
+        - resourceOwnerId
+        - parent
+    Fields:
+      description: A batch of field results
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/Field"
+          type: array
+      required:
+        - results
+    Geometry:
+      description: GeoJSON
+      example:
+        coordinates:
+          - 0
+          - 0
+        type: Point
+      properties:
+        coordinates:
+          items:
+            type: string
+          type: array
+        type:
+          enum:
+            - Point
+            - Polygon
+            - MultiPolygon
+          type: string
+      required:
+        - type
+        - coordinates
+    HarvestActivities:
+      description: A batch of harvest activities
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/HarvestActivitySummary"
+          type: array
+      required:
+        - results
+    HarvestActivityContents:
+      properties:
+        body:
+          $ref: "#/components/schemas/BinaryData"
+      required:
+        - body
+    HarvestActivitySummary:
+      properties:
+        createdAt:
+          description: The time the harvest activity was created. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        endTime:
+          description: The start time of the harvest activity. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        fieldIds:
+          description: Array of field ids associated the harvest activity.
+          items:
+            type: string
+          type: array
+        id:
+          description: The id of a harvest activity.
+          format: uuid
+          type: string
+        length:
+          description: The size in bytes of the raw harvest activity file.
+          format: int64
+          type: integer
+        startTime:
+          description: The start time of the harvest activity. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time the harvest activity was last updated. Time in ISO 8601
+            format with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+      required:
+        - id
+        - startTime
+        - endTime
+        - createdAt
+        - updatedAt
+        - length
+        - fieldIds
+      type: object
+    Metadata:
+      additionalProperties: true
+      type: object
+    Parent:
+      description: A minimal set of attributes regarding the parent of a farm organization.
+      properties:
+        id:
+          description: Unique identifier for the parent of a farm organization.
+          format: uuid
+          type: string
+        type:
+          description: Type of the parent of a farm organization.
+          enum:
+            - farm
+          type: string
+      required:
+        - id
+        - type
+    PlantingActivities:
+      description: A batch of planting activities
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/PlantingActivitySummary"
+          type: array
+      required:
+        - results
+    PlantingActivityContents:
+      properties:
+        body:
+          $ref: "#/components/schemas/BinaryData"
+      required:
+        - body
+    PlantingActivitySummary:
+      properties:
+        createdAt:
+          description: The time the planting activity was created. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        endTime:
+          description: The start time of the planting activity. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        fieldIds:
+          description: Array of field ids associated the planting activity.
+          items:
+            type: string
+          type: array
+        id:
+          description: The id of a planting activity.
+          format: uuid
+          type: string
+        length:
+          description: The size in bytes of the raw planting activity file.
+          format: int64
+          type: integer
+        startTime:
+          description: The start time of the planting activity. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time the planting activity was last updated. Time in ISO 8601
+            format with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+      required:
+        - id
+        - startTime
+        - endTime
+        - createdAt
+        - updatedAt
+        - length
+        - fieldIds
+      type: object
+    Point:
+      example:
+        coordinates:
+          - -122.2
+          - 38.1
+        type: Point
+      properties:
+        coordinates:
+          items:
+            format: float
+            type: number
+          type: array
+        type:
+          type: string
+      required:
+        - coordinates
+        - type
+    ResourceOwner:
+      properties:
+        email:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+        - email
+      type: object
+    ScoutingObservation:
+      properties:
+        endTime:
+          description: The start time of the scouting observation. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        fieldIds:
+          description: Array of field ids associated with this observation.
+          items:
+            type: string
+          type: array
+        id:
+          description: The id of a scouting observation.
+          format: uuid
+          type: string
+        location:
+          $ref: "#/components/schemas/Geometry"
+          description: Where the scouting observation occurred.  GeoJson in WGS84.
+        locationDisplayColor:
+          description: |
+            Color of scouting pin assigned in the Climate FieldView app.
+            Limited in the Ux to a set of RGB values.
+            * #307af7
+            * #38d753
+            * #b037e4
+            * #ef3e3e
+            * #f7ec41
+            * #ff8439
+            * #808080
+          enum:
+            - "#307af7"
+            - "#38d753"
+            - "#b037e4"
+            - "#ef3e3e"
+            - "#f7ec41"
+            - "#ff8439"
+            - "#808080"
+          type: string
+        note:
+          description: The text of the scouting observation. Maximum of 4000 characters.
+          type: string
+        startTime:
+          description: The start time of the scouting observation. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        status:
+          description: "The status of the scouting observation For example : ACTIVE,
+            DELETED"
+          enum:
+            - ACTIVE
+            - DELETED
+          type: string
+        tags:
+          description: For example, ROCK_STONE, PONDING_WET, HAIL Maximum 20 tags allowed,
+            40 characters per tag.
+          items:
+            $ref: "#/components/schemas/ScoutingTag"
+          type: array
+        timespan:
+          description: Permanent or seasonal
+          enum:
+            - PERMANENT
+            - SEASONAL
+          type: string
+        title:
+          description: The title or summary of the scouting observation. 40 Characters
+            long, no emojis, and leading and trailing whitespace will be
+            trimmed.
+          type: string
+        updatedAt:
+          description: The time the scouting observation or any of its attachments was
+            last updated.Time in ISO 8601 format with UTC timezone, 3 fractional
+            seconds. (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+      required:
+        - id
+        - title
+        - note
+        - location
+        - startTime
+        - endTime
+        - updatedAt
+        - fieldIds
+        - tags
+        - timespan
+        - locationDisplayColor
+        - status
+      type: object
+    ScoutingObservationAttachment:
+      properties:
+        contentType:
+          description: The content type of the attachment, e.g. image/png.
+          type: string
+        id:
+          description: id of the attachment
+          format: uuid
+          type: string
+        length:
+          description: The number of bytes in the attachment.
+          format: int64
+          type: integer
+        status:
+          description: "The status of the attachment. For example : ACTIVE, DELETED"
+          enum:
+            - ACTIVE
+            - DELETED
+          type: string
+        updatedAt:
+          description: |
+            The time the attachment was last updated.
+            Time in ISO 8601 format with UTC timezone, 3 fractional seconds.
+            (https://tools.ietf.org/html/rfc3339)
+          format: date-time
+          type: string
+      required:
+        - id
+        - updatedAt
+        - contentType
+        - length
+        - status
+      type: object
+    ScoutingObservationAttachmentContents:
+      properties:
+        body:
+          $ref: "#/components/schemas/BinaryData"
+      required:
+        - body
+    ScoutingObservationAttachments:
+      description: A batch of scouting attachments
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/ScoutingObservationAttachment"
+          type: array
+      required:
+        - results
+    ScoutingObservationSummary:
+      properties:
+        endTime:
+          description: The start time of the scouting observation. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        id:
+          description: The id of a scouting observation.
+          format: uuid
+          type: string
+        startTime:
+          description: The start time of the scouting observation. Time in ISO 8601 format
+            with UTC timezone, 3 fractional seconds
+            (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+        updatedAt:
+          description: The time the scouting observation or any of its attachments was
+            last updated.Time in ISO 8601 format with UTC timezone, 3 fractional
+            seconds. (https://tools.ietf.org/html/rfc3339).
+          format: date-time
+          type: string
+      required:
+        - id
+        - startTime
+        - endTime
+        - updatedAt
+      type: object
+    ScoutingObservations:
+      description: A batch of scouting observations
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/ScoutingObservationSummary"
+          type: array
+      required:
+        - results
+    ScoutingTag:
+      properties:
+        code:
+          type: string
+      required:
+        - code
+      type: object
+    Upload:
+      description: Client request to upload data for a user.
+      properties:
+        contentType:
+          description: Content type representing data being uploaded (e.g.
+            image/vnd.climate.rgb.geotiff)
+          enum:
+            - application/vnd.climate.field.geojson
+            - image/vnd.climate.thermal.geotiff
+            - image/vnd.climate.ndvi.geotiff
+            - image/vnd.climate.waterstress.geotiff
+            - image/vnd.climate.elevation.geotiff
+            - image/vnd.climate.raw.geotiff
+            - image/vnd.climate.rgb.geotiff
+          format: mime-type
+          type: string
+        length:
+          description: Content size in bytes
+          format: int64
+          type: integer
+        md5:
+          description: Base64 encoded md5 hash of the content
+          type: string
+        metadata:
+          $ref: "#/components/schemas/Metadata"
+      required:
+        - contentType
+        - md5
+        - length
+      type: object
+    UploadStatus:
+      properties:
+        id:
+          description: Unique identifier for the upload.
+          format: uuid
+          type: string
+        status:
+          description: >
+            Current status of the upload:
+              * `UPLOADING` - Uploading has started, parts are still coming in.
+              * `INVALID` - Upload has failed validity check.
+              * `PENDING` - Upload has been received by Climate and is being processed.
+              * `INBOX` - The upload is awaiting user acceptance in their Data Inbox.
+              * `DECLINED` - The user has declined the upload in their Data Inbox.
+              * `IMPORTING` - The user has accepted the upload and it is being imported into their account.
+              * `SUCCESS` - The upload has been successfully imported.
+          enum:
+            - UPLOADING
+            - INVALID
+            - PENDING
+            - INBOX
+            - DECLINED
+            - IMPORTING
+            - SUCCESS
+          type: string
+      required:
+        - id
+        - status
+      type: object
+    UploadStatusQuery:
+      properties:
+        ids:
+          items:
+            description: Unique identifier for the upload.
+            format: uuid
+            type: string
+          type: array
+      required:
+        - ids
+      type: object
+    UploadStatuses:
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/UploadStatus"
+          type: array
+      required:
+        - results
+      type: object
+    UploadedBoundaryId:
+      description: Unique identifier of a successfully uploaded boundary
+      properties:
+        id:
+          format: uuid
+          type: string
+      required:
+        - id
+  securitySchemes:
+    api_key:
+      description: >-
+        API access key used to control throttling (429 responses).  This
+        key is typically formatted:
+
+        `partner-{name}-{uuid}`
+      in: header
+      name: X-Api-Key
+      type: apiKey
+    oauth2_authorization_code:
+      description: >-
+        Log in with FieldView OAuth2 provider (Authorization Code Grant).
+        Used to authorize the client (partner) and
+
+        user. The *access_token* is required to be provided in the `Authorization` header on all calls to the FieldView
+
+        APIs with the following format `Bearer $access_token`.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://climate.com/static/app-login/
+          scopes:
+            asApplied:read: Required for retrieving as applied data
+            asHarvested:read: Required for retrieving harvest data
+            asPlanted:read: Required for retrieving planting data
+            avroAgronomicData:read: Required for retrieving agronomic data
+            customerInsights:read: Required for retrieving customer insights metrics data
+            diagnostics:read: Required for retrieving CNH machine diagnostic data
+            farmOrganizations:read: Required for retrieving farm organization information
+            fields:read: Required for retrieving field and boundary information
+            fields:write: Required for uploading field boundaries
+            imagery:write: Required for uploading imagery
+            operations:read: Required for retrieving operation information
+            plantingActivitySummary:read: Required for retrieving planting activity summary data
+            platform: (DEPRECATED) Legacy scope used for some Platform APIs
+            resourceOwners:read: Required for retrieving resource owner information
+            rx:write: Required for uploading prescriptions
+            scouting:read: Required for retrieving user\'s scouting information
+            soil:write: Required for uploading soil sample results
+          tokenUrl: https://api.climate.com/api/oauth/token
+      type: oauth2

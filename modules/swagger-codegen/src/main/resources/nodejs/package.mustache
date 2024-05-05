@@ -1,15 +1,24 @@
 {
   "name": "{{projectName}}",
   "version": "{{appVersion}}",
-  "description": "{{appDescription}}",
+  "description": "{{{appDescription}}}",
   "main": "index.js",
+  {{^googleCloudFunctions}}
+  "scripts": {
+	"prestart": "npm install",
+	"start": "node index.js"
+  },
+  {{/googleCloudFunctions}}
   "keywords": [
     "swagger"
   ],
-  "license": "MIT",
+  "license": "Unlicense",
   "private": true,
   "dependencies": {
+  {{^googleCloudFunctions}}
     "connect": "^3.2.0",
-    "swagger-tools": "0.8.*"
+  {{/googleCloudFunctions}}
+    "js-yaml": "^3.3.0",
+    "swagger-tools": "0.10.1"
   }
 }

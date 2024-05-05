@@ -3,13 +3,15 @@ package io.swagger.codegen.languages;
 import com.google.common.base.CaseFormat;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
+
+import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenSecurity;
 import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.properties.ArrayProperty;
@@ -23,7 +25,7 @@ import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,13 +41,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenConfig {
+public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements CodegenConfig {
     protected String mainPackage = "io.swagger.client";
-    protected String invokerPackage = mainPackage + ".core";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-client";
     protected String artifactVersion = "1.0.0";
-    protected String sourceFolder = "src/main/scala";
     protected String resourcesFolder = "src/main/resources";
     protected String configKey = "apiRequest";
     protected int defaultTimeoutInMs = 5000;
@@ -60,18 +60,21 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
      * unmarshalling problems and any other RuntimeException will be considered as ApiErrors.
      */
     protected boolean onlyOneSuccess = true;
-    Logger LOGGER = LoggerFactory.getLogger(AkkaScalaClientCodegen.class);
+
+    @SuppressWarnings("hiding")
+    protected Logger LOGGER = LoggerFactory.getLogger(AkkaScalaClientCodegen.class);
 
     public AkkaScalaClientCodegen() {
         super();
         outputFolder = "generated-code/scala";
         modelTemplateFiles.put("model.mustache", ".scala");
         apiTemplateFiles.put("api.mustache", ".scala");
-        templateDir = "akka-scala";
+        embeddedTemplateDir = templateDir = "akka-scala";
         apiPackage = mainPackage + ".api";
         modelPackage = mainPackage + ".model";
+        invokerPackage = mainPackage + ".core";
 
-        reservedWords = new HashSet<String>(
+        setReservedWordsLowerCase(
                 Arrays.asList(
                         "abstract", "case", "catch", "class", "def", "do", "else", "extends",
                         "false", "final", "finally", "for", "forSome", "if", "implicit",
@@ -80,10 +83,10 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
                         "trait", "try", "true", "type", "val", "var", "while", "with", "yield")
         );
 
-        additionalProperties.put("invokerPackage", invokerPackage);
-        additionalProperties.put("groupId", groupId);
-        additionalProperties.put("artifactId", artifactId);
-        additionalProperties.put("artifactVersion", artifactVersion);
+        additionalProperties.put(CodegenConstants.INVOKER_PACKAGE, invokerPackage);
+        additionalProperties.put(CodegenConstants.GROUP_ID, groupId);
+        additionalProperties.put(CodegenConstants.ARTIFACT_ID, artifactId);
+        additionalProperties.put(CodegenConstants.ARTIFACT_VERSION, artifactVersion);
         additionalProperties.put("configKey", configKey);
         additionalProperties.put("configKeyPath", configKeyPath);
         additionalProperties.put("defaultTimeout", defaultTimeoutInMs);
@@ -95,7 +98,9 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         additionalProperties.put("fnEnumEntry", new EnumEntryLambda());
         additionalProperties.put("onlyOneSuccess", onlyOneSuccess);
 
+        supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+        supportingFiles.add(new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         supportingFiles.add(new SupportingFile("reference.mustache", resourcesFolder, "reference.conf"));
         final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
         supportingFiles.add(new SupportingFile("apiRequest.mustache", invokerFolder, "ApiRequest.scala"));
@@ -130,48 +135,31 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         typeMapping.put("file", "File");
         typeMapping.put("number", "Double");
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList(
-                        "String",
-                        "boolean",
-                        "Boolean",
-                        "Double",
-                        "Int",
-                        "Long",
-                        "Float",
-                        "Object",
-                        "List",
-                        "Seq",
-                        "Map")
-        );
         instantiationTypes.put("array", "ListBuffer");
         instantiationTypes.put("map", "Map");
     }
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.CLIENT;
     }
 
+    @Override
     public String getName() {
         return "akka-scala";
     }
 
+    @Override
     public String getHelp() {
-        return "Generates a Scala client library base on Akka/Spray.";
+        return "Generates a Scala client library (beta) base on Akka/Spray.";
     }
 
     @Override
     public String escapeReservedWord(String name) {
+        if(this.reservedWordsMappings().containsKey(name)) {
+            return this.reservedWordsMappings().get(name);
+        }        
         return "`" + name + "`";
-    }
-
-    @Override
-    public String apiFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
-    }
-
-    public String modelFileFolder() {
-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
     }
 
     @Override
@@ -207,21 +195,6 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
     }
 
     @Override
-    public String getTypeDeclaration(Property p) {
-        if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
-            return getSwaggerType(p) + "[" + getTypeDeclaration(inner) + "]";
-        } else if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            Property inner = mp.getAdditionalProperties();
-
-            return getSwaggerType(p) + "[String, " + getTypeDeclaration(inner) + "]";
-        }
-        return super.getTypeDeclaration(p);
-    }
-
-    @Override
     public List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes) {
         final List<CodegenSecurity> codegenSecurities = super.fromSecurity(schemes);
         if (!removeOAuthSecurities) {
@@ -251,18 +224,12 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
 
     @Override
     public String toOperationId(String operationId) {
-        return super.toOperationId(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, operationId));
-    }
+        // throw exception if method name is empty
+        if (StringUtils.isEmpty(operationId)) {
+            throw new RuntimeException("Empty method name (operationId) not allowed");
+        }
 
-    private String formatIdentifier(String name, boolean capitalized) {
-        String identifier = camelize(name, true);
-        if (capitalized) {
-            identifier = StringUtils.capitalize(identifier);
-        }
-        if (identifier.matches("[a-zA-Z_$][\\w_$]+") && !reservedWords.contains(identifier)) {
-            return identifier;
-        }
-        return escapeReservedWord(identifier);
+        return super.toOperationId(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, operationId));
     }
 
     @Override
@@ -281,35 +248,6 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
     }
 
     @Override
-    public String getSwaggerType(Property p) {
-        String swaggerType = super.getSwaggerType(p);
-        String type;
-        if (typeMapping.containsKey(swaggerType)) {
-            type = typeMapping.get(swaggerType);
-            if (languageSpecificPrimitives.contains(type)) {
-                return toModelName(type);
-            }
-        } else {
-            type = swaggerType;
-        }
-        return toModelName(type);
-    }
-
-    @Override
-    public String toInstantiationType(Property p) {
-        if (p instanceof MapProperty) {
-            MapProperty ap = (MapProperty) p;
-            String inner = getSwaggerType(ap.getAdditionalProperties());
-            return instantiationTypes.get("map") + "[String, " + inner + "]";
-        } else if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            String inner = getSwaggerType(ap.getItems());
-            return instantiationTypes.get("array") + "[" + inner + "]";
-        } else {
-            return null;
-        }
-    }
-
     public String toDefaultValue(Property p) {
         if (!p.getRequired()) {
             return "None";
@@ -343,6 +281,11 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         }
     }
 
+    @Override
+    public String toModelName(final String name) {
+        return formatIdentifier(name, true);
+    }
+
     private static abstract class CustomLambda implements Mustache.Lambda {
         @Override
         public void execute(Template.Fragment frag, Writer out) throws IOException {
@@ -353,7 +296,6 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
 
         public abstract String formatFragment(String fragment);
     }
-
 
     private static class JavadocLambda extends CustomLambda {
         @Override
@@ -396,4 +338,9 @@ public class AkkaScalaClientCodegen extends DefaultCodegen implements CodegenCon
         }
     }
 
+    @Override
+    public String escapeQuotationMark(String input) {
+        // remove " to avoid code injection
+        return input.replace("\"", "");
+    }
 }

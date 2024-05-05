@@ -2,6 +2,7 @@ package io.swagger.generator.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.models.auth.SecuritySchemeDefinition;
 
 import java.util.Map;
@@ -11,6 +12,17 @@ public class GeneratorInput {
     private Map<String, String> options;
     private String swaggerUrl;
     private SecuritySchemeDefinition auth;
+    private AuthorizationValue authorizationValue;
+
+    private Boolean usingFlattenSpec = true;
+
+    public AuthorizationValue getAuthorizationValue() {
+        return authorizationValue;
+    }
+
+    public void setAuthorizationValue(AuthorizationValue authorizationValue) {
+        this.authorizationValue = authorizationValue;
+    }
 
     @ApiModelProperty(dataType = "Object")
     public JsonNode getSpec() {
@@ -29,6 +41,7 @@ public class GeneratorInput {
         this.options = options;
     }
 
+    @ApiModelProperty(example = "http://petstore.swagger.io/v2/swagger.json")
     public String getSwaggerUrl() {
         return swaggerUrl;
     }
@@ -37,11 +50,26 @@ public class GeneratorInput {
         this.swaggerUrl = url;
     }
 
+    @Deprecated
     public SecuritySchemeDefinition getSecurityDefinition() {
         return auth;
     }
 
+    @Deprecated
     public void setSecurityDefinition(SecuritySchemeDefinition auth) {
         this.auth = auth;
     }
+
+    public Boolean isUsingFlattenSpec() {
+        return usingFlattenSpec;
+    }
+
+    public Boolean getUsingFlattenSpec() {
+        return usingFlattenSpec;
+    }
+
+    public void setUsingFlattenSpec(Boolean usingFlattenSpec) {
+        this.usingFlattenSpec = usingFlattenSpec;
+    }
+
 }

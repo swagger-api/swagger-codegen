@@ -1,0 +1,45 @@
+package {{package}};
+
+import java.util.Objects;
+{{#imports}}import {{import}};
+{{/imports}}
+{{#serializableModel}}
+import java.io.Serializable;
+{{/serializableModel}}
+{{#useBeanValidation}}
+import org.springframework.validation.annotation.Validated;
+{{#jakarta}}
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+{{/jakarta}}
+{{^jakarta}}
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+{{/jakarta}}
+{{/useBeanValidation}}
+{{#jackson}}
+{{#withXml}}
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+{{/withXml}}
+{{/jackson}}
+{{#withXml}}
+{{#jakarta}}
+import jakarta.xml.bind.annotation.*;
+{{/jakarta}}
+{{^jakarta}}
+import javax.xml.bind.annotation.*;
+{{/jakarta}}
+{{/withXml}}
+
+{{#models}}
+{{#model}}
+{{#isEnum}}
+{{>enumOuterClass}}
+{{/isEnum}}
+{{^isEnum}}
+{{>pojo}}
+{{/isEnum}}
+{{/model}}
+{{/models}}

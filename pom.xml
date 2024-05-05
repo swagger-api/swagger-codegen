@@ -1,5 +1,4 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -10,26 +9,28 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>2.1.2</version>
+    <version>2.4.42-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
         <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
         <url>https://github.com/swagger-api/swagger-codegen</url>
     </scm>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
     <developers>
         <developer>
             <id>fehguy</id>
             <name>Tony Tam</name>
             <email>fehguy@gmail.com</email>
         </developer>
+        <developer>
+            <id>wing328</id>
+            <name>William Cheng</name>
+            <email>wing328hk@gmail.com</email>
+        </developer>
     </developers>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/swagger-api/swagger-core/issues</url>
+        <url>https://github.com/swagger-api/swagger-codegen/issues</url>
     </issueManagement>
     <mailingLists>
         <mailingList>
@@ -51,23 +52,92 @@
             <extension>
                 <groupId>org.jvnet.wagon-svn</groupId>
                 <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
+                <version>1.12</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-alpha-6</version>
+                <version>3.5.2</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-1</version>
+                <version>1.0-beta-2</version>
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
         <directory>target</directory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <!-- Uncomment this to format before checkstyle -->
+                <!-- <executions>
+                    <execution>
+                        <id>format</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions> -->
+                <configuration>
+                    <lineEnding>LF</lineEnding>
+                </configuration>
+            </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>google_checkstyle.xml</configLocation>
+                            Don't include generated sources a la http://stackoverflow.com/a/30406454
+                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <linkXRef>false</linkXRef>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>6.19</version>
+                    </dependency>
+                </dependencies>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-version}</version>
+                <configuration>
+                    <testNGArtifactName>none:none</testNGArtifactName>
+                    <argLine>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar --add-opens java.base/java.lang=ALL-UNNAMED -Djdk.attach.allowAttachSelf</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test-testng</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <junitArtifactName>none:none</junitArtifactName>
+                            <testNGArtifactName>org.testng:testng</testNGArtifactName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -83,55 +153,13 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                    <source>1.6</source>
-                    <encoding>UTF-8</encoding>
-                    <maxmemory>1g</maxmemory>
-                    <links>
-                        <link>http://java.sun.com/javase/6/docs/api/</link>
-                    </links>
-                    <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
+                <version>3.10.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -146,71 +174,103 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>2.1</version>
+                <version>3.12.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.5.3</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <source>1.8</source>
+                    <encoding>UTF-8</encoding>
+                    <maxmemory>1g</maxmemory>
+                    <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.2.5</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>net.alchim31.maven</groupId>
-                    <artifactId>scala-maven-plugin</artifactId>
-                    <version>${scala-maven-plugin-version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <configuration>
-                        <releaseProfiles>release</releaseProfiles>
-                        <goals>sign</goals>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.7</version>
-                    <configuration>
-                        <aggregate>true</aggregate>
-                        <source>1.6</source>
-                        <encoding>UTF-8</encoding>
-                        <maxmemory>1g</maxmemory>
-                        <links>
-                            <link>http://java.sun.com/javase/6/docs/api/</link>
-                        </links>
-                        <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>2.1.2</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>0.5.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
     <profiles>
+        <profile>
+            <id>security</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>6.5.3</version>
+                        <configuration>
+                            <skipSystemScope>true</skipSystemScope>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>release-profile</id>
             <properties>
@@ -234,6 +294,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.3.0</version>
                         <executions>
                             <execution>
                                 <id>add-source</id>
@@ -265,6 +326,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -288,11 +350,11 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/android-java</module>
+                <module>samples/client/petstore/android/volley</module>
             </modules>
         </profile>
         <profile>
-            <id>java-client</id>
+            <id>bash-client</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -300,7 +362,175 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java</module>
+                <module>samples/client/petstore/bash</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>clojure-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>clojure</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/clojure</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>haskell-http-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>haskell-http-client</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/haskell-http-client</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>haskell-http-client-integration-test</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>haskell-http-client</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/haskell-http-client/tests-integration</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-jersey1</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/jersey1</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-jersey2</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/jersey2</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-okhttp-gson</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp-gson</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-okhttp-gson-parcelable</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp-gson/parcelableModel</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-okhttp4-gson</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp4-gson</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-okhttp4-gson-parcelable</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/okhttp4-gson/parcelableModel</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-retrofit</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/retrofit</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-retrofit2</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/retrofit2</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-retrofit2-rx</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/retrofit2rx</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-client-feign</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/java/feign</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>javascript-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>javascript</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/javascript</module>
             </modules>
         </profile>
         <profile>
@@ -324,7 +554,91 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/objc</module>
+                <module>samples/client/petstore/objc/default/SwaggerClientTests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>swift-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>swift</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/swift/default/SwaggerClientTests</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-msf4j-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/java-msf4/</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-cxf-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-cxf</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-resteasy-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-resteasy/default</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-resteasy-server-joda</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-resteasy/joda</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-resteasy-eap-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-resteasy/eap</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-resteasy-eap-server-joda</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs-resteasy/eap-joda</module>
             </modules>
         </profile>
         <profile>
@@ -336,7 +650,103 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/server/petstore/jaxrs</module>
+                <module>samples/server/petstore/jaxrs/jersey2</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jaxrs-server-jersey1</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/jaxrs/jersey1</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>typescript-fetch-client-tests-default</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-fetch/tests/default</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>typescript-fetch-client-builds-default</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-fetch/builds/default</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>typescript-fetch-client-builds-es6-target</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-fetch/builds/es6-target</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>typescript-fetch-client-builds-with-npm-version</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>typescript-angularjs-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-angularjs/npm</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>typescript-node-npm-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/typescript-node/npm</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>python-client</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/python</module>
             </modules>
         </profile>
         <profile>
@@ -352,7 +762,7 @@
             </modules>
         </profile>
         <profile>
-            <id>retrofit-client</id>
+            <id>go-client</id>
             <activation>
                 <property>
                     <name>env</name>
@@ -360,7 +770,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/retrofit</module>
+                <module>samples/client/petstore/go</module>
             </modules>
         </profile>
         <profile>
@@ -376,6 +786,177 @@
             </modules>
         </profile>
         <profile>
+            <id>springboot-beanvalidation</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/springboot-beanvalidation</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>springboot</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/springboot</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>spring-cloud</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/spring-cloud</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>scalatra-server</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/scalatra</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-inflector</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/java-inflector</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>java-undertowr</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>java</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/server/petstore/undertow</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>samples-java8</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>samples-jave8</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/akka-scala</module>
+                <module>samples/client/petstore/java/feign</module>
+                <module>samples/client/petstore/java/google-api-client</module>
+                <module>samples/client/petstore/java/jersey1</module>
+                <module>samples/client/petstore/java/jersey2</module>
+                <module>samples/client/petstore/java/okhttp-gson</module>
+                <module>samples/client/petstore/java/resteasy</module>
+                <module>samples/client/petstore/java/resttemplate</module>
+                <module>samples/client/petstore/java/resttemplate-withXml</module>
+                <module>samples/client/petstore/java/retrofit2</module>
+                <module>samples/client/petstore/java/retrofit2rx</module>
+                <module>samples/client/petstore/java/retrofit</module>
+                <module>samples/client/petstore/java/vertx</module>
+                <module>samples/client/petstore/jaxrs-cxf-client</module>
+                <module>samples/server/petstore/java-inflector</module>
+                <module>samples/server/petstore/java-pkmst</module>
+                <module>samples/server/petstore/java-vertx/async</module>
+                <module>samples/server/petstore/java-vertx/rx</module>
+                <module>samples/server/petstore/jaxrs-cxf-annotated-base-path</module>
+                <module>samples/server/petstore/jaxrs-cxf-cdi</module>
+                <module>samples/server/petstore/jaxrs-cxf</module>
+                <module>samples/server/petstore/jaxrs-cxf-non-spring-app</module>
+                <module>samples/server/petstore/jaxrs-datelib-j8</module>
+                <module>samples/server/petstore/jaxrs/jersey1</module>
+                <module>samples/server/petstore/jaxrs/jersey1-useTags</module>
+                <module>samples/server/petstore/jaxrs/jersey2</module>
+                <module>samples/server/petstore/jaxrs/jersey2-useTags</module>
+                <module>samples/server/petstore/jaxrs-resteasy/default</module>
+                <module>samples/server/petstore/jaxrs-resteasy/eap-java8</module>
+                <module>samples/server/petstore/jaxrs-resteasy/eap-joda</module>
+                <module>samples/server/petstore/jaxrs-resteasy/eap</module>
+                <module>samples/server/petstore/jaxrs-resteasy/joda</module>
+                <module>samples/server/petstore/jaxrs-spec-interface</module>
+                <module>samples/server/petstore/springboot-beanvalidation</module>
+                <module>samples/server/petstore/springboot</module>
+                <module>samples/server/petstore/springboot-useoptional</module>
+                <module>samples/client/petstore/spring-cloud</module>
+                <module>samples/server/petstore/spring-mvc-j8-async</module>
+                <module>samples/server/petstore/spring-mvc-j8-localdatetime</module>
+                <module>samples/server/petstore/spring-mvc</module>
+                <module>samples/server/petstore/undertow</module>
+            </modules>
+            <properties>
+                <maven.compiler.release></maven.compiler.release>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.10.1</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>samples-other</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>samples-other</value>
+                </property>
+            </activation>
+            <modules>
+                <module>samples/client/petstore/php/SwaggerClient-php</module>
+                <module>samples/client/petstore/ruby</module>
+                <module>samples/client/petstore/scala</module>
+                <module>samples/client/petstore/akka-scala</module>
+                <module>samples/client/petstore/javascript</module>
+                <module>samples/client/petstore/python</module>
+                <module>samples/client/petstore/python-asyncio</module>
+                <module>samples/client/petstore/typescript-angular-v4/npm</module>
+                <module>samples/client/petstore/typescript-angular-v4.3/npm</module>
+                <module>samples/client/petstore/typescript-angular-v5/npm</module>
+                <module>samples/client/petstore/typescript-angular-v6/npm</module>
+                <module>samples/server/petstore/java-play-framework-api-package-override</module>
+                <module>samples/server/petstore/java-play-framework-controller-only</module>
+                <module>samples/server/petstore/java-play-framework</module>
+                <module>samples/server/petstore/java-play-framework-no-bean-validation</module>
+                <module>samples/server/petstore/java-play-framework-no-exception-handling</module>
+                <module>samples/server/petstore/java-play-framework-no-interface</module>
+                <module>samples/server/petstore/java-play-framework-no-swagger-ui</module>
+                <module>samples/server/petstore/java-play-framework-no-wrap-calls</module>
+                <module>samples/server/petstore/scala-lagom-server</module>
+                <module>samples/server/petstore/scalatra</module>
+            </modules>
+        </profile>
+        <profile>
             <id>samples</id>
             <activation>
                 <property>
@@ -384,38 +965,18 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/android-java</module>
-                <module>samples/client/petstore/java</module>
-                <module>samples/client/petstore/scala</module>
-                <module>samples/server/petstore/jaxrs</module>
-                <module>samples/server/petstore/spring-mvc</module>
-                <!--module>samples/client/petstore/objc</module-->
-                <module>samples/client/petstore/ruby</module>
             </modules>
         </profile>
     </profiles>
     <modules>
         <module>modules/swagger-codegen</module>
         <module>modules/swagger-codegen-cli</module>
+        <module>modules/swagger-codegen-maven-plugin</module>
         <module>modules/swagger-generator</module>
     </modules>
     <reporting>
         <outputDirectory>target/site</outputDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                    <debug>true</debug>
-                    <links>
-                        <link>http://java.sun.com/javaee/5/docs/api</link>
-                        <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-                    </links>
-                    <excludePackageNames/>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
@@ -424,7 +985,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.3</version>
+                <version>3.3.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -432,7 +993,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.4.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -446,10 +1007,43 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit-version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jmockit</groupId>
+                <artifactId>jmockit</artifactId>
+                <version>${jmockit-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -463,18 +1057,31 @@
         </repository>
     </repositories>
     <properties>
-        <swagger-parser-version>1.0.8</swagger-parser-version>
+        <maven.compiler.release>8</maven.compiler.release>
+        <swagger-parser-version>1.0.70</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
-        <felix-version>2.3.4</felix-version>
-        <swagger-core-version>1.5.0</swagger-core-version>
-        <scala-test-version>2.1.4</scala-test-version>
-        <commons-io-version>2.3</commons-io-version>
-        <commons-cli-version>1.2</commons-cli-version>
-        <junit-version>4.8.1</junit-version>
+        <felix-version>3.3.0</felix-version>
+        <swagger-core-version>1.6.14</swagger-core-version>
+        <commons-io-version>2.16.1</commons-io-version>
+        <commons-cli-version>1.7.0</commons-cli-version>
+        <junit-version>4.13.2</junit-version>
+        <jackson-version>2.17.0</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>2.4</commons-lang-version>
-        <slf4j-version>1.6.3</slf4j-version>
-        <scala-maven-plugin-version>3.1.5</scala-maven-plugin-version>
-        <jmustache-version>1.9</jmustache-version>
+        <commons-lang-version>3.14.0</commons-lang-version>
+        <slf4j-version>1.7.36</slf4j-version>
+        <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
+        <!--
+        NOTE: jmustache 1.15 is the last version that supports Java 8
+        Codegen support of Java 8 should be removed if updating to 1.16+
+         -->
+        <jmustache-version>1.15</jmustache-version>
+        <testng-version>7.10.1</testng-version>
+        <surefire-version>3.0.0</surefire-version>
+        <jmockit-version>1.49</jmockit-version>
+        <mockito-version>5.11.0</mockito-version>
+        <reflections-version>0.10.2</reflections-version>
+        <snakeyaml-version>2.2</snakeyaml-version>
+        <httpclient-version>4.5.14</httpclient-version>
+        <json-version>20231013</json-version>
     </properties>
 </project>

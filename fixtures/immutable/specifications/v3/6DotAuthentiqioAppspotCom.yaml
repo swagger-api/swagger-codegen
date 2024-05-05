@@ -1,0 +1,672 @@
+openapi: 3.0.0
+servers:
+  - url: https://6-dot-authentiqio.appspot.com
+info:
+  contact:
+    email: hello@authentiq.com
+    name: Authentiq team
+    url: http://authentiq.io/support
+  description: Strong authentication, without the passwords.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://authentiq.com/terms/
+  title: Authentiq API
+  version: "6"
+  x-apisguru-categories:
+    - security
+  x-logo:
+    backgroundColor: "#F26641"
+    url: https://www.authentiq.com/theme/images/authentiq-logo-a-inverse.svg
+  x-origin:
+    - format: openapi
+      url: https://raw.githubusercontent.com/AuthentiqID/authentiq-docs/master/docs/swagger/issuer.yaml
+      version: "3.0"
+  x-providerName: 6-dot-authentiqio.appspot.com
+paths:
+  /key:
+    delete:
+      description: |
+        Revoke an Authentiq ID using email & phone.
+
+        If called with `email` and `phone` only, a verification code
+        will be sent by email. Do a second call adding `code` to
+        complete the revocation.
+      operationId: key_revoke_nosecret
+      parameters:
+        - description: primary email associated to Key (ID)
+          in: query
+          name: email
+          required: true
+          schema:
+            type: string
+        - description: primary phone number, international representation
+          in: query
+          name: phone
+          required: true
+          schema:
+            type: string
+        - description: verification code sent by email
+          in: query
+          name: code
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: pending or done
+                    type: string
+                type: object
+          description: Successfully deleted
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Authentication error `auth-error`
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unknown key `unknown-key`
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Confirm with code sent `confirm-first`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - delete
+    post:
+      description: |
+        Register a new ID `JWT(sub, devtoken)`
+
+        v5: `JWT(sub, pk, devtoken, ...)`
+
+        See: https://github.com/skion/authentiq/wiki/JWT-Examples
+      operationId: key_register
+      requestBody:
+        $ref: "#/components/requestBodies/AuthentiqID"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                properties:
+                  secret:
+                    description: revoke key
+                    type: string
+                  status:
+                    description: registered
+                    type: string
+                type: object
+          description: Successfully registered
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Key already registered `duplicate-key`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - post
+  "/key/{PK}":
+    delete:
+      description: Revoke an Identity (Key) with a revocation secret
+      operationId: key_revoke
+      parameters:
+        - $ref: "#/components/parameters/PK"
+        - description: revokation secret
+          in: query
+          name: secret
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: done
+                    type: string
+                type: object
+          description: Successful response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Key not found / wrong code `auth-error`
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unknown key `unknown-key`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - delete
+    get:
+      description: |
+        Get public details of an Authentiq ID.
+      operationId: key_retrieve
+      parameters:
+        - $ref: "#/components/parameters/PK"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  since:
+                    format: date-time
+                    type: string
+                  status:
+                    type: string
+                  sub:
+                    description: base64safe encoded public signing key
+                    type: string
+                title: JWT
+                type: object
+          description: Successfully retrieved
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unknown key `unknown-key`
+        "410":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Key is revoked (gone). `revoked-key`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - get
+    head:
+      description: |
+        HEAD info on Authentiq ID
+      parameters:
+        - $ref: "#/components/parameters/PK"
+      responses:
+        "200":
+          description: Key exists
+        "404":
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unknown key `unknown-key`
+        "410":
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Key is revoked `revoked-key`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - head
+    post:
+      description: |
+        update properties of an Authentiq ID.
+        (not operational in v4; use PUT for now)
+
+        v5: POST issuer-signed email & phone scopes in
+        a self-signed JWT
+
+        See: https://github.com/skion/authentiq/wiki/JWT-Examples
+      operationId: key_update
+      parameters:
+        - $ref: "#/components/parameters/PK"
+      requestBody:
+        $ref: "#/components/requestBodies/AuthentiqID"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: confirmed
+                    type: string
+                type: object
+          description: Successfully updated
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unknown key `unknown-key`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - post
+    put:
+      description: |
+        Update Authentiq ID by replacing the object.
+
+        v4: `JWT(sub,email,phone)` to bind email/phone hash;
+
+        v5: POST issuer-signed email & phone scopes
+        and PUT to update registration `JWT(sub, pk, devtoken, ...)`
+
+        See: https://github.com/skion/authentiq/wiki/JWT-Examples
+      operationId: key_bind
+      parameters:
+        - $ref: "#/components/parameters/PK"
+      requestBody:
+        $ref: "#/components/requestBodies/AuthentiqID"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: confirmed
+                    type: string
+                type: object
+          description: Successfully updated
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unknown key `unknown-key`
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Already bound to another key `duplicate-hash`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - key
+        - put
+  /login:
+    post:
+      description: |
+        push sign-in request
+        See: https://github.com/skion/authentiq/wiki/JWT-Examples
+      operationId: push_login_request
+      parameters:
+        - description: URI App will connect to
+          in: query
+          name: callback
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: "#/components/schemas/PushToken"
+        description: Push Token.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: sent
+                    type: string
+                type: object
+          description: Successful response
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Unauthorized for this callback audience `aud-error` or JWT should
+            be self-signed `auth-error`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - login
+        - post
+  /scope:
+    post:
+      description: |
+        scope verification request
+        See: https://github.com/skion/authentiq/wiki/JWT-Examples
+      operationId: sign_request
+      parameters:
+        - description: test only mode, using test issuer
+          in: query
+          name: test
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: "#/components/schemas/Claims"
+        description: Claims of scope
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                properties:
+                  job:
+                    description: 20-character ID
+                    type: string
+                  status:
+                    description: waiting
+                    type: string
+                type: object
+          description: Successful response
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Too Many Requests on same address / number `rate-limit`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - scope
+        - post
+  "/scope/{job}":
+    delete:
+      description: delete a verification job
+      operationId: sign_delete
+      parameters:
+        - $ref: "#/components/parameters/JobID"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: done
+                    type: string
+                type: object
+          description: Successfully deleted
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Job not found `unknown-job`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - scope
+        - delete
+    get:
+      description: get the status / current content of a verification job
+      operationId: sign_retrieve
+      parameters:
+        - $ref: "#/components/parameters/JobID"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                properties:
+                  exp:
+                    type: integer
+                  field:
+                    type: string
+                  sub:
+                    description: base64safe encoded public signing key
+                    type: string
+                title: JWT
+                type: object
+            application/jwt:
+              schema:
+                properties:
+                  exp:
+                    type: integer
+                  field:
+                    type: string
+                  sub:
+                    description: base64safe encoded public signing key
+                    type: string
+                title: JWT
+                type: object
+          description: Successful response (JWT)
+        "204":
+          description: Confirmed, waiting for signing
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+            application/jwt:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Job not found `unknown-job`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - scope
+        - get
+    head:
+      description: HEAD to get the status of a verification job
+      operationId: sign_retrieve_head
+      parameters:
+        - $ref: "#/components/parameters/JobID"
+      responses:
+        "200":
+          description: Confirmed and signed
+        "204":
+          description: Confirmed, waiting for signing
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Job not found `unknown-job`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - scope
+        - head
+    post:
+      description: this is a scope confirmation
+      operationId: sign_confirm
+      parameters:
+        - $ref: "#/components/parameters/JobID"
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: confirmed
+                    type: string
+                type: object
+          description: Successfully confirmed
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Confirmation error `auth-error`
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Job not found `unknown-job`
+        "405":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: JWT POSTed to scope `not-supported`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - scope
+        - post
+    put:
+      description: |
+        authority updates a JWT with its signature
+        See: https://github.com/skion/authentiq/wiki/JWT-Examples
+      operationId: sign_update
+      parameters:
+        - $ref: "#/components/parameters/JobID"
+      responses:
+        "200":
+          content:
+            application/jwt:
+              schema:
+                properties:
+                  jwt:
+                    description: result is JWT or JSON??
+                    type: string
+                  status:
+                    description: ready
+                    type: string
+                type: object
+          description: Successfully updated
+        "404":
+          content:
+            application/jwt:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Job not found `unknown-job`
+        "409":
+          content:
+            application/jwt:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Job not confirmed yet `confirm-first`
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+      tags:
+        - scope
+        - put
+components:
+  parameters:
+    JobID:
+      description: Job ID (20 chars)
+      in: path
+      name: job
+      required: true
+      schema:
+        type: string
+    PK:
+      description: Public Signing Key - Authentiq ID (43 chars)
+      in: path
+      name: PK
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    AuthentiqID:
+      content:
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/AuthentiqID"
+      description: Authentiq ID to register
+      required: true
+  responses:
+    ErrorResponse:
+      content:
+        "*/*":
+          schema:
+            $ref: "#/components/schemas/Error"
+      description: Error response
+  schemas:
+    AuthentiqID:
+      description: |
+        Authentiq ID in JWT format, self-signed.
+      properties:
+        devtoken:
+          description: device token for push messages
+          type: string
+        sub:
+          description: UUID and public signing key
+          type: string
+      required:
+        - sub
+    Claims:
+      description: |
+        Claim in JWT format, self- or issuer-signed.
+      properties:
+        email:
+          description: ""
+          type: string
+        phone:
+          description: ""
+          type: string
+        scope:
+          description: claim scope
+          type: string
+        sub:
+          description: UUID
+          type: string
+        type:
+          description: ""
+          type: string
+      required:
+        - sub
+        - scope
+    Error:
+      properties:
+        detail:
+          type: string
+        error:
+          type: integer
+        title:
+          type: string
+        type:
+          description: unique uri for this error
+          type: string
+      required:
+        - error
+    PushToken:
+      description: |
+        PushToken in JWT format, self-signed.
+      properties:
+        aud:
+          description: audience (URI)
+          type: string
+        exp:
+          type: integer
+        iat:
+          type: integer
+        iss:
+          description: issuer (URI)
+          type: string
+        nbf:
+          type: integer
+        sub:
+          description: UUID and public signing key
+          type: string
+      required:
+        - sub
+        - iss
+        - aud

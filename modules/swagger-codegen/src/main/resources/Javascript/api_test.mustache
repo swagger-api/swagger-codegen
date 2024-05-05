@@ -1,0 +1,130 @@
+{{>licenseInfo}}
+(function(root, factory) {
+{{#loadTestDataFromFile}}
+  var testDataFile = process.env.TEST_DATA_FILE
+    ? process.env.TEST_DATA_FILE
+    : '{{testDataFile}}';
+{{/loadTestDataFromFile}}
+  if (typeof define === 'function' && define.amd) {
+    // AMD.
+    define(['expect.js'{{#loadTestDataFromFile}}, 'json-pointer', '{{#invokerPackage}}../{{/invokerPackage}}../assert-equals'{{/loadTestDataFromFile}}, '../{{#invokerPackage}}../{{/invokerPackage}}../{{sourceFolder}}/{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}index'{{#loadTestDataFromFile}}, testDataFile{{/loadTestDataFromFile}}], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // CommonJS-like environments that support module.exports, like Node.
+    factory(require('expect.js'){{#loadTestDataFromFile}}, require('json-pointer'), require('{{#invokerPackage}}../{{/invokerPackage}}../assert-equals'){{/loadTestDataFromFile}}, require('../{{#invokerPackage}}../{{/invokerPackage}}../{{sourceFolder}}/{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}index'){{#loadTestDataFromFile}}, require(testDataFile){{/loadTestDataFromFile}});
+  } else {
+    // Browser globals (root is window)
+{{#loadTestDataFromFile}}
+    // TODO: load browser test data from file. Maybe via FileSystem (Mozilla, chrome.fileSystem)?
+    var testData = null;
+{{/loadTestDataFromFile}}
+    factory(root.expect{{#loadTestDataFromFile}}, root.JsonPointer, root.assertEquals{{/loadTestDataFromFile}}, root.{{moduleName}}{{#loadTestDataFromFile}}, testData{{/loadTestDataFromFile}});
+  }
+}(this, function(expect{{#loadTestDataFromFile}}, pointer, assertEquals{{/loadTestDataFromFile}}, {{moduleName}}{{#loadTestDataFromFile}}, testData{{/loadTestDataFromFile}}) {
+  'use strict';
+
+  var instance;
+{{#loadTestDataFromFile}}
+  var testDataCache;
+
+  function getTestData(pointer) {
+    return testDataCache.get('{{#invokerPackage}}/{{invokerPackage}}{{/invokerPackage}}/{{classname}}' + pointer);
+  }
+
+  before(function() {
+    testDataCache = pointer(testData);
+  });
+
+{{/loadTestDataFromFile}}
+
+  beforeEach(function() {
+    instance = new {{moduleName}}.{{classname}}();
+  });
+
+  describe({{#invokerPackage}}'{{invokerPackage}}'{{/invokerPackage}}{{^invokerPackage}}'(package)'{{/invokerPackage}}, function() {
+    describe('{{classname}}', function() {
+{{#operations}}
+  {{#operation}}
+      describe('{{operationId}}', function() {
+        it('should call {{operationId}} successfully', function(done) {
+    {{^loadTestDataFromFile}}
+          // TODO: uncomment{{#hasParams}}, update parameter values for{{/hasParams}} {{operationId}} call{{#returnType}} and complete the assertions{{/returnType}}
+          /*
+    {{/loadTestDataFromFile}}
+    {{#requiredParams}}
+      {{#vendorExtensions.x-cache-current-param}}
+          var {{paramName}} = {{!
+        }}{{#loadTestDataFromFile}}getTestData('/{{operationId}}/{{paramName}}');{{/loadTestDataFromFile}}{{!
+        }}{{^loadTestDataFromFile}}{{>api-test-param}}{{#isPrimitiveType}};{{/isPrimitiveType}}{{/loadTestDataFromFile}}
+      {{/vendorExtensions.x-cache-current-param}}
+    {{/requiredParams}}
+    {{#hasOptionalParams}}
+          var opts = {};
+      {{#allParams}}
+        {{^required}}
+          {{#vendorExtensions.x-cache-current-param}}
+          opts.{{paramName}} = {{!
+        }}{{#loadTestDataFromFile}}getTestData('/{{operationId}}/{{paramName}}');{{/loadTestDataFromFile}}{{!
+        }}{{^loadTestDataFromFile}}{{>api-test-param}}{{#isPrimitiveType}};{{/isPrimitiveType}}{{/loadTestDataFromFile}}
+          {{/vendorExtensions.x-cache-current-param}}
+        {{/required}}
+      {{/allParams}}
+    {{/hasOptionalParams}}
+
+          instance.{{operationId}}({{vendorExtensions.x-codegen-arg-list}}{{^usePromises}}{{#hasParams}}, {{/hasParams}}function(error, data, response){{/usePromises}}{{#usePromises}}).then(function(data){{/usePromises}} {
+    {{^usePromises}}
+            if (error) {
+              done(error);
+              return;
+            }
+    {{/usePromises}}
+    {{#returnType}}
+      {{#loadTestDataFromFile}}
+            let expected = getTestData('/{{operationId}}/response');
+            assertEquals(expected, data);
+      {{/loadTestDataFromFile}}
+      {{^loadTestDataFromFile}}
+            // TODO: update response assertions
+        {{#vendorExtensions.x-is-container}}
+            let dataCtr = data;
+            expect(dataCtr).to.be.an({{#isListContainer}}Array{{/isListContainer}}{{#isMapContainer}}Object{{/isMapContainer}});
+            expect(dataCtr).to.not.be.empty();
+            for (let p in dataCtr) {
+              let data = dataCtr[p];
+        {{/vendorExtensions.x-is-container}}
+            {{#vendorExtensions.x-is-container}}  {{/vendorExtensions.x-is-container}}expect(data).to.be.a({{^returnTypeIsPrimitive}}{{moduleName}}.{{/returnTypeIsPrimitive}}{{vendorExtensions.x-expect-js-type}});
+        {{#returnTypeIsPrimitive}}
+            {{#vendorExtensions.x-is-container}}  {{/vendorExtensions.x-is-container}}{{^loadTestDataFromFile}}// {{/loadTestDataFromFile}}expect(data).to.be({{>api-test-response}});
+        {{/returnTypeIsPrimitive}}
+        {{^returnTypeIsPrimitive}}
+          {{#vendorExtensions.x-is-container}}
+            {{#vendorExtensions.x-indent}}
+{{>api-test-response-complex}}{{!
+            }}{{/vendorExtensions.x-indent}}{{!
+          }}{{/vendorExtensions.x-is-container}}{{!
+          }}{{^vendorExtensions.x-is-container}}{{!
+            }}{{>api-test-response-complex}}{{!
+          }}{{/vendorExtensions.x-is-container}}{{!
+        }}{{/returnTypeIsPrimitive}}{{!
+        }}{{#vendorExtensions.x-is-container}}{{!
+}}            }
+        {{/vendorExtensions.x-is-container}}
+      {{/loadTestDataFromFile}}
+    {{/returnType}}
+
+            done();
+          }{{#usePromises}}, function(error) {
+            done(error);
+          }{{/usePromises}});
+    {{^loadTestDataFromFile}}
+          */
+          // TODO: uncomment and complete method invocation above, then delete this line and the next:
+          done();
+    {{/loadTestDataFromFile}}
+        });
+      });
+  {{/operation}}
+{{/operations}}
+    });
+  });
+
+}));

@@ -1,0 +1,37 @@
+/**
+ * {{{description}}}
+{{#vars}}
+ * @param {{name}} {{{description}}}
+{{/vars}}
+ */
+data class {{classname}} (
+{{#vars}}
+{{#required}}
+{{>data_class_req_var}}{{^@last}},{{/@last}}
+{{/required}}
+{{^required}}
+{{>data_class_opt_var}}{{^@last}},{{/@last}}
+{{/required}}
+{{/vars}}
+) {
+{{#hasEnums}}{{#vars}}
+
+{{#isEnum}}
+    /**
+    * {{{description}}}
+    * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
+    */
+    {{#items}}
+    enum class {{{datatypeWithEnum}}}(val value: {{{datatype}}}{{#isNullable}}?{{/isNullable}}){
+    {{/items}}
+    {{^items}}
+    enum class {{nameInCamelCase}}(val value: {{{datatype}}}){
+    {{/items}}
+    {{#allowableValues}}{{#enumVars}}
+        {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+    {{/enumVars}}{{/allowableValues}}
+    }
+
+{{/isEnum}}
+{{/vars}}{{/hasEnums}}
+}

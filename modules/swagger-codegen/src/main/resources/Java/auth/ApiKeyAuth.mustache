@@ -1,7 +1,13 @@
+{{>licenseInfo}}
+
 package {{invokerPackage}}.auth;
 
-import java.util.Map;
+import {{invokerPackage}}.Pair;
 
+import java.util.Map;
+import java.util.List;
+
+{{>generatedAnnotation}}
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;
@@ -39,16 +45,19 @@ public class ApiKeyAuth implements Authentication {
   }
 
   @Override
-  public void applyToParams(Map<String, String> queryParams, Map<String, String> headerParams) {
+  public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
+    if (apiKey == null) {
+      return;
+    }
     String value;
     if (apiKeyPrefix != null) {
       value = apiKeyPrefix + " " + apiKey;
     } else {
       value = apiKey;
     }
-    if (location == "query") {
-      queryParams.put(paramName, value);
-    } else if (location == "header") {
+    if ("query".equals(location)) {
+      queryParams.add(new Pair(paramName, value));
+    } else if ("header".equals(location)) {
       headerParams.put(paramName, value);
     }
   }

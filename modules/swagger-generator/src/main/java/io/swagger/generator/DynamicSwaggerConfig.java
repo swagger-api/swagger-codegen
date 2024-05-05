@@ -7,15 +7,33 @@ import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
+import io.swagger.models.Scheme;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.PathParameter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DynamicSwaggerConfig extends BeanConfig {
     static List<String> clients = new ArrayList<String>();
     static List<String> servers = new ArrayList<String>();
+
+    static {
+        List<CodegenConfig> extensions = Codegen.getExtensions();
+        for (CodegenConfig config : extensions) {
+            if (config.getTag().equals(CodegenType.CLIENT)
+                    || config.getTag().equals(CodegenType.DOCUMENTATION)) {
+                clients.add(config.getName());
+            } else if (config.getTag().equals(CodegenType.SERVER)) {
+                servers.add(config.getName());
+            }
+        }
+        Collections.sort(clients, String.CASE_INSENSITIVE_ORDER);
+        Collections.sort(servers, String.CASE_INSENSITIVE_ORDER);
+    }
 
     @Override
     public Swagger configure(Swagger swagger) {
@@ -26,48 +44,47 @@ public class DynamicSwaggerConfig extends BeanConfig {
             Parameter framework = post.getParameters().get(0);
             if (framework instanceof PathParameter) {
                 PathParameter param = (PathParameter) framework;
-                StringBuilder b = new StringBuilder();
-                for (String client : clients) {
-                    if (b.toString().length() > 0) {
-                        b.append(", ");
-                    }
-                    b.append(client);
+                param.setEnum(clients);
+            }
+
+            Operation get = clientPath.getGet();
+            if (get != null) {
+                framework = get.getParameters().get(0);
+                if (framework instanceof PathParameter) {
+                    PathParameter param = (PathParameter) framework;
+                    param.setEnum(clients);
                 }
-                param.setDescription("available clients: " + b.toString());
             }
         }
 
         Path serverPath = swagger.getPaths().get("/gen/servers/{framework}");
-        // update the path description based on what servers are available via SPI
         if (serverPath != null) {
             Operation post = serverPath.getPost();
             Parameter framework = post.getParameters().get(0);
             if (framework instanceof PathParameter) {
                 PathParameter param = (PathParameter) framework;
-                StringBuilder b = new StringBuilder();
-                for (String server : servers) {
-                    if (b.toString().length() > 0) {
-                        b.append(", ");
-                    }
-                    b.append(server);
+                param.setEnum(servers);
+            }
+
+            Operation get = serverPath.getGet();
+            if (get != null) {
+                framework = get.getParameters().get(0);
+                if (framework instanceof PathParameter) {
+                    PathParameter param = (PathParameter) framework;
+                    param.setEnum(servers);
                 }
-                param.setDescription("available clients: " + b.toString());
             }
         }
 
-        return swagger.info(getInfo())
-                .host(getHost())
-                .basePath("/api");
-    }
+        Swagger result = swagger
+            .info(getInfo())
+            .host(getHost())
+            .basePath(getBasePath());
 
-    static {
-        List<CodegenConfig> extensions = Codegen.getExtensions();
-        for (CodegenConfig config : extensions) {
-            if (config.getTag().equals(CodegenType.CLIENT) || config.getTag().equals(CodegenType.DOCUMENTATION)) {
-                clients.add(config.getName());
-            } else if (config.getTag().equals(CodegenType.SERVER)) {
-                servers.add(config.getName());
-            }
+        if (getSchemes() != null) {
+            result = result.schemes(Arrays.stream(getSchemes()).map(s -> Scheme.forValue(s)).collect(Collectors.toList()));
         }
+
+        return result;
     }
 }

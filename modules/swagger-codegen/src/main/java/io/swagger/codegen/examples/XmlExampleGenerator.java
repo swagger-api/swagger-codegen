@@ -9,17 +9,24 @@ import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.IntegerProperty;
 import io.swagger.models.properties.LongProperty;
+import io.swagger.models.properties.DecimalProperty;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.BaseIntegerProperty;
+import io.swagger.models.properties.AbstractNumericProperty;
+import io.swagger.models.properties.PasswordProperty;
+import io.swagger.models.properties.UUIDProperty;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
-import org.codehaus.plexus.util.StringUtils;
 
-import java.text.SimpleDateFormat;
+import org.apache.commons.lang3.StringUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -27,19 +34,18 @@ import java.util.Map;
 import java.util.Set;
 
 public class XmlExampleGenerator {
+    protected final Logger LOGGER = LoggerFactory.getLogger(XmlExampleGenerator.class);
     public static String NEWLINE = "\n";
     public static String TAG_START = "<";
     public static String CLOSE_TAG = ">";
     public static String TAG_END = "</";
     private static String EMPTY = "";
     protected Map<String, Model> examples;
-    protected SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    protected SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public XmlExampleGenerator(Map<String, Model> examples) {
         this.examples = examples;
         if (examples == null) {
-            examples = new HashMap<String, Model>();
+            this.examples = new HashMap<String, Model>(); 
         }
     }
 
@@ -74,22 +80,21 @@ public class XmlExampleGenerator {
         Map<String, Property> elements = new LinkedHashMap<String, Property>();
 
         String name = modelName;
-        String namespace;
-        String prefix;
-        Boolean wrapped;
-
         Xml xml = model.getXml();
         if (xml != null) {
             if (xml.getName() != null) {
                 name = xml.getName();
             }
         }
-        for (String pName : model.getProperties().keySet()) {
-            Property p = model.getProperties().get(pName);
-            if (p != null && p.getXml() != null && p.getXml().getAttribute() != null && p.getXml().getAttribute()) {
-                attributes.put(pName, p);
-            } else {
-                elements.put(pName, p);
+        // TODO: map objects will not enter this block
+        if(model.getProperties() != null) {
+            for (String pName : model.getProperties().keySet()) {
+                Property p = model.getProperties().get(pName);
+                if (p != null && p.getXml() != null && p.getXml().getAttribute() != null && p.getXml().getAttribute()) {
+                    attributes.put(pName, p);
+                } else {
+                    elements.put(pName, p);
+                }
             }
         }
         sb.append(indent(indent)).append(TAG_START);
@@ -114,6 +119,7 @@ public class XmlExampleGenerator {
         return sb.toString();
     }
 
+    @SuppressWarnings("static-method")
     protected String quote(String string) {
         return "\"" + string + "\"";
     }
@@ -128,7 +134,7 @@ public class XmlExampleGenerator {
             ArrayProperty p = (ArrayProperty) property;
             Property inner = p.getItems();
             boolean wrapped = false;
-            if (property.getXml() != null && property.getXml().getWrapped()) {
+            if (property.getXml() != null && property.getXml().getWrapped() != null && property.getXml().getWrapped()) {
                 wrapped = true;
             }
             if (wrapped) {
@@ -167,55 +173,57 @@ public class XmlExampleGenerator {
         return sb.toString();
     }
 
+    /**
+    * Get the example string value for the given Property.
+    *
+    * If an example value was not provided in the specification, a default will be generated.
+    *
+    * @param property Property to get example string for
+    *
+    * @return Example String
+    */
     protected String getExample(Property property) {
-        if (property instanceof DateTimeProperty) {
-            if (property.getExample() != null) {
-                return property.getExample();
-            } else {
-                return dtFormat.format(new Date());
-            }
-        } else if (property instanceof StringProperty) {
-            if (property.getExample() != null) {
-                return property.getExample();
-            } else {
-                return "string";
-            }
+        if (property.getExample() != null) {
+            return property.getExample().toString();
+        } else if (property instanceof DateTimeProperty) {
+            return "2000-01-23T04:56:07.000Z";
         } else if (property instanceof DateProperty) {
-            if (property.getExample() != null) {
-                return property.getExample();
-            } else {
-                return dateFormat.format(new Date());
-            }
-        } else if (property instanceof IntegerProperty) {
-            if (property.getExample() != null) {
-                return property.getExample();
-            } else {
-                return "0";
-            }
+            return "2000-01-23";
         } else if (property instanceof BooleanProperty) {
-            if (property.getExample() != null) {
-                return property.getExample();
-            } else {
-                return "true";
-            }
+            return "true";
         } else if (property instanceof LongProperty) {
-            if (property.getExample() != null) {
-                return property.getExample();
-            } else {
-                return "123456";
-            }
+            return "123456789";
+        } else if (property instanceof DoubleProperty) { // derived from DecimalProperty so make sure this is first
+            return "3.149";
+        }  else if (property instanceof DecimalProperty) {
+            return "1.3579";
+        } else if (property instanceof PasswordProperty) {
+            return "********";
+        } else if (property instanceof UUIDProperty) {
+            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
+        // do these last in case the specific types above are derived from these classes
+        } else if (property instanceof StringProperty) {
+            return "aeiou";
+        } else if (property instanceof BaseIntegerProperty) {
+            return "123";
+        } else if (property instanceof AbstractNumericProperty) {
+            return "1.23";
         }
-        return "not implemented " + property;
+        LOGGER.warn("default example value not implemented for " + property);
+        return "";
     }
 
+    @SuppressWarnings("static-method")
     protected String openTag(String name) {
         return "<" + name + ">";
     }
 
+    @SuppressWarnings("static-method")
     protected String closeTag(String name) {
         return "</" + name + ">";
     }
 
+    @SuppressWarnings("static-method")
     protected String indent(int indent) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < indent; i++) {

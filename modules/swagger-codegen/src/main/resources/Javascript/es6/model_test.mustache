@@ -1,0 +1,57 @@
+{{>licenseInfo}}
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD.
+    define(['expect.js', '../{{#invokerPackage}}../{{/invokerPackage}}../{{sourceFolder}}/{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}index'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // CommonJS-like environments that support module.exports, like Node.
+    factory(require('expect.js'), require('../{{#invokerPackage}}../{{/invokerPackage}}../{{sourceFolder}}/{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}index'));
+  } else {
+    // Browser globals (root is window)
+    factory(root.expect, root.{{moduleName}});
+  }
+}(this, function(expect, {{moduleName}}) {
+  'use strict';
+
+  var instance;
+
+  describe({{#invokerPackage}}'{{invokerPackage}}'{{/invokerPackage}}{{^invokerPackage}}'(package)'{{/invokerPackage}}, function() {
+{{#models}}
+  {{#model}}
+    describe('{{classname}}', function() {
+      beforeEach(function() {
+        instance = {{^isEnum}}new {{/isEnum}}{{moduleName}}.{{classname}}{{^isEnum}}(){{/isEnum}};
+      });
+
+      it('should create an instance of {{classname}}', function() {
+        // TODO: update the code to test {{classname}}
+        expect(instance).to.be.a({{^isEnum}}{{moduleName}}.{{classname}}{{/isEnum}}{{#isEnum}}'object'{{/isEnum}});
+      });
+
+    {{^isEnum}}
+      {{#vars}}
+      it('should have the property {{name}} (base name: "{{baseName}}")', function() {
+        // TODO: update the code to test the property {{name}}
+        expect(instance).to.have.property('{{name}}');
+        // expect({{^emitModelMethods}}instance.{{name}}{{/emitModelMethods}}{{#emitModelMethods}}instance.{{getter}}(){{/emitModelMethods}}).to.be(expectedValueLiteral);
+      });
+
+      {{/vars}}
+    {{/isEnum}}
+    {{#isEnum}}
+      {{#allowableValues}}
+        {{#enumVars}}
+      it('should have the property {{name}}', function() {
+        expect(instance).to.have.property('{{name}}');
+        expect(instance.{{name}}).to.be({{value}});
+      });
+
+        {{/enumVars}}
+      {{/allowableValues}}
+    {{/isEnum}}
+  {{/model}}
+{{/models}}
+    });
+  });
+
+}));

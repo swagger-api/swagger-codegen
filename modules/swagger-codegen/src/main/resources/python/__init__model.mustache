@@ -1,5 +1,10 @@
+# coding: utf-8
+
+# flake8: noqa
+{{>partial_header}}
+
 from __future__ import absolute_import
 
 # import models into model package
-{{#models}}{{#model}}from .{{classVarName}} import {{classname}}
-{{/model}}{{/models}}
+{{#models}}{{#model}}from {{modelPackage}}.{{classFilename}} import {{classname}}{{/model}}
+{{/models}}

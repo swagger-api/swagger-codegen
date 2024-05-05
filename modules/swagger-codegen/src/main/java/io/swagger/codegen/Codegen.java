@@ -1,19 +1,23 @@
 package io.swagger.codegen;
 
-import io.swagger.models.Swagger;
-import io.swagger.parser.SwaggerParser;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import config.Config;
+import config.ConfigParser;
+import io.swagger.models.Swagger;
+import io.swagger.parser.SwaggerParser;
 
 /**
  * @deprecated use instead {@link io.swagger.codegen.DefaultGenerator}
@@ -21,6 +25,9 @@ import java.util.ServiceLoader;
  */
 @Deprecated
 public class Codegen extends DefaultGenerator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Codegen.class);
+
     static Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
     static String configString;
     static String debugInfoOptions = "\nThe following additional debug options are available for all codegen targets:" +
@@ -29,9 +36,8 @@ public class Codegen extends DefaultGenerator {
             "\n -DdebugOperations prints operations passed to the template engine" +
             "\n -DdebugSupportingFiles prints additional data passed to the template engine";
 
+    @SuppressWarnings("deprecation")
     public static void main(String[] args) {
-
-        StringBuilder sb = new StringBuilder();
 
         Options options = new Options();
         options.addOption("h", "help", false, "shows this message");
@@ -41,6 +47,7 @@ public class Codegen extends DefaultGenerator {
         options.addOption("t", "template-dir", true, "folder containing the template files");
         options.addOption("d", "debug-info", false, "prints additional info for debugging");
         options.addOption("a", "auth", true, "adds authorization headers when fetching the swagger definitions remotely. Pass in a URL-encoded string of name:header with a comma separating multiple values");
+        options.addOption("c", "config", true, "location of the configuration file");
 
         ClientOptInput clientOptInput = new ClientOptInput();
         ClientOpts clientOpts = new ClientOpts();
@@ -84,8 +91,20 @@ public class Codegen extends DefaultGenerator {
             if (cmd.hasOption("i")) {
                 swagger = new SwaggerParser().read(cmd.getOptionValue("i"), clientOptInput.getAuthorizationValues(), true);
             }
+            if (cmd.hasOption("c")) {
+                String configFile = cmd.getOptionValue("c");
+                Config genConfig = ConfigParser.read(configFile);
+                config = clientOptInput.getConfig();
+                if (null != genConfig && null != config) {
+                    for (CliOption langCliOption : config.cliOptions()) {
+                        if (genConfig.hasOption(langCliOption.getOpt())) {
+                            config.additionalProperties().put(langCliOption.getOpt(), genConfig.getOption(langCliOption.getOpt()));
+                        }
+                    }
+                }
+            }
             if (cmd.hasOption("t")) {
-                clientOpts.getProperties().put("templateDir", String.valueOf(cmd.getOptionValue("t")));
+                clientOpts.getProperties().put(CodegenConstants.TEMPLATE_DIR, String.valueOf(cmd.getOptionValue("t")));
             }
         } catch (Exception e) {
             usage(options);
@@ -97,16 +116,15 @@ public class Codegen extends DefaultGenerator {
                     .swagger(swagger);
             new Codegen().opts(clientOptInput).generate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
     public static List<CodegenConfig> getExtensions() {
         ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
         List<CodegenConfig> output = new ArrayList<CodegenConfig>();
-        Iterator<CodegenConfig> itr = loader.iterator();
-        while (itr.hasNext()) {
-            output.add(itr.next());
+        for (CodegenConfig aLoader : loader) {
+            output.add(aLoader);
         }
         return output;
     }
@@ -122,9 +140,9 @@ public class Codegen extends DefaultGenerator {
         } else {
             // see if it's a class
             try {
-                System.out.println("loading class " + name);
-                Class customClass = Class.forName(name);
-                System.out.println("loaded");
+                LOGGER.debug("loading class " + name);
+                Class<?> customClass = Class.forName(name);
+                LOGGER.debug("loaded");
                 return (CodegenConfig) customClass.newInstance();
             } catch (Exception e) {
                 throw new RuntimeException("can't load class " + name);

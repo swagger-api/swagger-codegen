@@ -1,0 +1,38 @@
+package {{apiPackage}};
+
+import java.time.LocalDate;
+{{#jakarta}}
+import jakarta.ws.rs.ext.ParamConverter;
+import jakarta.ws.rs.ext.ParamConverterProvider;
+import jakarta.ws.rs.ext.Provider;
+{{/jakarta}}
+{{^jakarta}}
+import javax.ws.rs.ext.ParamConverter;
+import javax.ws.rs.ext.ParamConverterProvider;
+import javax.ws.rs.ext.Provider;
+{{/jakarta}}
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
+@Provider
+public class LocalDateProvider implements ParamConverterProvider {
+
+    public static class LocalDateConverter implements ParamConverter<LocalDate> {
+
+        public LocalDate fromString(String string) {
+            LocalDate localDate = LocalDate.parse(string);
+            return localDate;
+        }
+
+        public String toString(LocalDate t) {
+            return t.toString();
+        }
+    }
+
+    public <T> ParamConverter<T> getConverter(Class<T> type, Type type1, Annotation[] antns) {
+        if (LocalDate.class.equals(type)) {
+            return (ParamConverter<T>) new LocalDateConverter();
+        }
+        return null;
+    }
+}

@@ -1,6 +1,7 @@
+{{>licenseInfo}}
+
 import {{apiPackage}}._
-import akka.actor.ActorSystem
-import io.swagger.app.{ResourcesApp, SwaggerApp}
+import io.swagger.app.{ ResourcesApp, SwaggerApp }
 import javax.servlet.ServletContext
 import org.scalatra.LifeCycle
 
@@ -8,9 +9,8 @@ class ScalatraBootstrap extends LifeCycle {
   implicit val swagger = new SwaggerApp
 
   override def init(context: ServletContext) {
-    implicit val system = ActorSystem("appActorSystem")
     try {
-      {{#apiInfo}}{{#apis}}context mount (new {{classname}}, "/{{baseName}}/*")
+      {{#apiInfo}}{{#apis}}context mount (new {{classname}}, "{{basePathWithoutHost}}/{{baseName}}/*")
       {{/apis}}{{/apiInfo}}
       context mount (new ResourcesApp, "/api-docs/*")
     } catch {

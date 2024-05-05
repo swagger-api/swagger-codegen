@@ -1,0 +1,23 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+{{#useBeanValidation}}
+{{#jakarta}}
+import jakarta.validation.constraints.*;
+import jakarta.validation.Valid;
+{{/jakarta}}
+{{^jakarta}}
+import javax.validation.constraints.*;
+import javax.validation.Valid;
+{{/jakarta}}
+{{/useBeanValidation}}
+{{#models}}
+{{#model}}{{#description}}
+/**
+ * {{description}}
+ **/{{/description}}
+{{#isEnum}}{{>enumClass}}{{/isEnum}}
+{{^isEnum}}{{>pojo}}{{/isEnum}}
+{{/model}}
+{{/models}}

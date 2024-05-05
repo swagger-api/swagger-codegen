@@ -1,0 +1,15 @@
+package {{invokerPackage}};
+
+{{#jakarta}}
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
+{{/jakarta}}
+{{^jakarta}}
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+{{/jakarta}}
+
+@ApplicationPath("/")
+public class RestApplication extends Application {
+  // Add implementation-specific details here
+}
