@@ -15,7 +15,7 @@ namespace IO.Swagger.Client
     /// <summary>
     /// API Response
     /// </summary>
-        public class ApiResponse<T>
+    public class ApiResponse<T>
     {
         /// <summary>
         /// Gets or sets the status code (HTTP status code)
