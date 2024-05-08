@@ -20,7 +20,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
-
 namespace IO.Swagger.Model
 {
     /// <summary>
@@ -36,7 +35,7 @@ namespace IO.Swagger.Model
         /// <param name="bar">bar.</param>
         /// <param name="beer">beer.</param>
         /// <param name="drunk">drunk.</param>
-        public AllOfSubCategoryCategory(bool? foo = default(bool?), int? bar = default(int?), string beer = default(string), User drunk = default(User), long? id = default(long?), string name = default(string)) : base(id, name)
+        public AllOfSubCategoryCategory(bool? foo = default(bool?), int? bar = default(int?), string beer = default(string), User drunk = default(User), bool? foo = default(bool?), User drunk = default(User), long? id = default(long?), string name = default(string)) : base(id, name)
         {
             this.Foo = foo;
             this.Bar = bar;
