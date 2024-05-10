@@ -29,7 +29,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.55</version>
+    <version>3.0.56</version>
 </dependency>
 ```
 
@@ -104,8 +104,9 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
-3.0.56-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.56-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.55](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.55) (**current stable**) | 2024-04-22   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.55](https://github.com/swagger-api/swagger-codegen/tree/v3.0.55)
+3.0.57-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.57-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.56](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.56) (**current stable**) | 2024-05-10   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.56](https://github.com/swagger-api/swagger-codegen/tree/v3.0.56)
+[3.0.55](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.55) | 2024-04-22   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.55](https://github.com/swagger-api/swagger-codegen/tree/v3.0.55)
 [3.0.54](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.54) | 2024-02-19   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.54](https://github.com/swagger-api/swagger-codegen/tree/v3.0.54)
 [3.0.53](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.53) | 2024-02-14   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.53](https://github.com/swagger-api/swagger-codegen/tree/v3.0.53)
 [3.0.52](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.52) | 2023-12-30   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.52](https://github.com/swagger-api/swagger-codegen/tree/v3.0.52)
@@ -216,12 +217,12 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 If you're looking for the latest stable version, you can grab it directly from Maven.org (Java 8 runtime at a minimum):
 
 ```sh
-wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.55/swagger-codegen-cli-3.0.55.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.56/swagger-codegen-cli-3.0.56.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar --help
 ```
 
-For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.55/swagger-codegen-cli-3.0.55.jar`
+For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.net/packages/wget.htm) or you can use Invoke-WebRequest in PowerShell (3.0+), e.g. `Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.56/swagger-codegen-cli-3.0.56.jar`
 
 On a mac, it's even easier with `brew`:
 ```sh
@@ -406,7 +407,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 ```
 (if you're on Windows, replace the last command with `java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client`)
 
-You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.55/swagger-codegen-cli-3.0.55.jar)
+You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.56/swagger-codegen-cli-3.0.56.jar)
 
 To get a list of **general** options available, please run `java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate --help`
 
