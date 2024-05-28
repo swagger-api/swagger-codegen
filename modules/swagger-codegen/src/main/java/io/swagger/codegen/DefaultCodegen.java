@@ -2299,11 +2299,15 @@ public class DefaultCodegen {
                 Response response = entry.getValue();
                 CodegenResponse r = fromResponse(entry.getKey(), response);
                 r.hasMore = true;
-                if (r.baseType != null &&
-                        !defaultIncludes.contains(r.baseType) &&
-                        !languageSpecificPrimitives.contains(r.baseType)) {
-                    imports.add(r.baseType);
+                if (r.schema != null) {
+                    Property responseProperty = response.getSchema();
+                    CodegenProperty iterator = fromProperty("response", responseProperty);
+                    while (iterator!=null){
+                        imports.add(iterator.baseType);
+                        iterator = iterator.items;
+                    }
                 }
+                imports.add(r.baseType);
                 r.isDefault = response == methodResponse;
                 op.responses.add(r);
                 if (Boolean.TRUE.equals(r.isBinary) && Boolean.TRUE.equals(r.isDefault)){
@@ -2510,16 +2514,10 @@ public class DefaultCodegen {
             responseProperty.setRequired(true);
             CodegenProperty cm = fromProperty("response", responseProperty);
 
-            if (responseProperty instanceof ArrayProperty) {
-                ArrayProperty ap = (ArrayProperty) responseProperty;
-                CodegenProperty innerProperty = fromProperty("response", ap.getItems());
-                r.baseType = innerProperty.baseType;
+            if (cm.complexType != null) {
+                r.baseType = cm.complexType;
             } else {
-                if (cm.complexType != null) {
-                    r.baseType = cm.complexType;
-                } else {
-                    r.baseType = cm.baseType;
-                }
+                r.baseType = cm.baseType;
             }
             r.dataType = cm.datatype;
 
