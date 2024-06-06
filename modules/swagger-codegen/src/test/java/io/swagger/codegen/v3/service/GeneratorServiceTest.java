@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -1022,6 +1023,47 @@ public class GeneratorServiceTest {
         Assert.assertFalse(files.isEmpty());
         System.out.println("Generated server in:\n" + path);
     }
+
+    @Test
+    public void testSecurityScopesAreProperlyApplied() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("spring")
+                .spec(loadSpecAsNode("3_0_0/issue-9843.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        boolean petFound = false, userFound = false;
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length()).replace("\\", "/");
+            if ("/src/main/java/io/swagger/api/PetApi_.java".equals(relPath)) {
+                petFound = true;
+                String actualContents = FileUtils.readFileToString(f, Charset.defaultCharset());
+                Assert.assertTrue(actualContents.contains("@SecurityRequirement(name = \"petstore_auth\", scopes = {"));
+                Assert.assertTrue(actualContents.contains("\"read:pets\""));
+                Assert.assertFalse(actualContents.contains("\"write:pets\""));
+                Assert.assertFalse(actualContents.contains(":users\""));
+            } else if ("/src/main/java/io/swagger/api/UserApi.java".equals(relPath)) {
+                userFound = true;
+                String actualContents = FileUtils.readFileToString(f, Charset.defaultCharset());
+                Assert.assertTrue(actualContents.contains("@SecurityRequirement(name = \"petstore_auth\", scopes = {"));
+                Assert.assertTrue(actualContents.contains("\"write:users\""));
+                Assert.assertFalse(actualContents.contains(":pets\""));
+            }
+        }
+        final String fileExpectedFormat = "%s expected to be generated";
+        Assert.assertTrue(petFound, String.format(fileExpectedFormat, "PetApi.java"));
+        Assert.assertTrue(userFound, String.format(fileExpectedFormat, "UserApi.java"));
+    }
+
     protected static File getTmpFolder() {
         try {
             File outputFolder = Files.createTempFile("codegentest-", "-tmp").toFile();

@@ -17,8 +17,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.*;
 import io.swagger.v3.oas.models.tags.Tag;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -1157,14 +1156,53 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         final Map<String, SecurityScheme> authMethods = new HashMap<>();
         for (SecurityRequirement requirement : securities) {
-            for (String key : requirement.keySet()) {
-                SecurityScheme securityScheme = securitySchemes.get(key);
+            requirement.forEach((securitySchemeName, endpointScopes) -> {
+                SecurityScheme securityScheme = securitySchemes.get(securitySchemeName);
                 if (securityScheme != null) {
-                    authMethods.put(key, securityScheme);
+                    SecurityScheme endpointSecurityScheme = selectScopeSubsetForScheme(securityScheme, endpointScopes);
+                    authMethods.put(securitySchemeName, endpointSecurityScheme);
                 }
-            }
+            });
         }
         return authMethods;
+    }
+
+    private static SecurityScheme selectScopeSubsetForScheme(SecurityScheme originalScheme, List<String> scopesToSelect) {
+        OAuthFlows originalFlows = originalScheme.getFlows();
+        if (originalFlows == null) {
+            return originalScheme;
+        }
+        OAuthFlows flowsWithScopeSubset = new OAuthFlows()
+                .authorizationCode(selectScopeSubsetForFlow(originalFlows.getAuthorizationCode(), scopesToSelect))
+                .clientCredentials(selectScopeSubsetForFlow(originalFlows.getClientCredentials(), scopesToSelect))
+                .implicit(selectScopeSubsetForFlow(originalFlows.getImplicit(), scopesToSelect))
+                .password(selectScopeSubsetForFlow(originalFlows.getPassword(), scopesToSelect))
+                .extensions(originalFlows.getExtensions());
+        return new SecurityScheme()
+                .type(originalScheme.getType())
+                .$ref(originalScheme.get$ref())
+                .name(originalScheme.getName())
+                .description(originalScheme.getDescription())
+                .scheme(originalScheme.getScheme())
+                .in(originalScheme.getIn())
+                .flows(flowsWithScopeSubset)
+                .bearerFormat(originalScheme.getBearerFormat())
+                .openIdConnectUrl(originalScheme.getOpenIdConnectUrl())
+                .extensions(originalScheme.getExtensions());
+    }
+
+    private static OAuthFlow selectScopeSubsetForFlow(OAuthFlow originalFlow, List<String> scopesToSelect) {
+        if (originalFlow != null) {
+            Scopes scopeSubset = new Scopes();
+            originalFlow.getScopes().entrySet().stream().filter(e -> scopesToSelect.contains(e.getKey())).forEach(e -> scopeSubset.put(e.getKey(), e.getValue()));
+            return new OAuthFlow()
+                    .authorizationUrl(originalFlow.getAuthorizationUrl())
+                    .tokenUrl(originalFlow.getTokenUrl())
+                    .refreshUrl(originalFlow.getRefreshUrl())
+                    .scopes(scopeSubset)
+                    .extensions(originalFlow.getExtensions());
+        }
+        return null;
     }
 
     private Boolean getCustomOptionBooleanValue(String option) {
