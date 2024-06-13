@@ -52,6 +52,11 @@ class EnumClass(object):
         self._configuration = _configuration
         self.discriminator = None
 
+    @staticmethod
+    def get_allowed_values():
+        allowed_values = [EnumClass._ABC, EnumClass._EFG, EnumClass._XYZ_]  # noqa: E501
+        return allowed_values
+
     def to_dict(self):
         """Returns the model properties as a dict"""
         result = {}
