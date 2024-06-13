@@ -893,6 +893,34 @@ Instead of using `swaggerUrl` with an URL to the OpenAPI/Swagger spec, one can i
 }
 ```
 
+###Online Generator Powershell Script
+
+The following powershell command will complete the above steps in one go.
+Substitute: 
+1)
+http://petstore.swagger.io/v2/swagger.json with the URL of your swagger file.
+2)
+{fullfolderpath} with the full path of the folder your project Json will be saved to.
+3)
+{lang} with the language you wish to generatre, e.g. csharp-dotnet2
+
+```sh
+	$projectTitle = "petstore"
+	$projectFolder = "{fullfolderpath}"
+	$language = "{lang}" ##e.g. "csharp-dotnet2"
+	$codegenuri = [Uri]::new("https://generator.swagger.io/api/gen/clients/$language");
+	$swaggerUri = [Uri]::new("http://petstore.swagger.io/v2/swagger.json");
+	cd $projectFolder
+	iwr -Uri $swaggerUri -o ("$projectFolder\$projectTitle.json")
+	$speccontent = [IO.File]::ReadAllText("$projectFolder\$projectTitle.json")
+	$payload = ("{`"options`": {`"packageName`": `"$projectTitle`"},`"spec`": $speccontent}")
+	iwr -ContentType "application/json" -Method Post -Body ($payload) -Uri $codegenuri -o  ("$projectFolder\output_$projectTitle_$language.json") -Verbose
+	$outputcontent = [IO.File]::ReadAllText("$projectFolder\output_$projectTitle_$language.json")
+	$link = $outputcontent| ConvertFrom-Json| select -expand link 
+	$link
+	iwr -Uri $link -OutFile ("$projectFolder\output_$projectTitle.zip")
+```
+
 Guidelines for Contribution
 ---------------------------
 
