@@ -17,7 +17,7 @@ while 3.X ([`3.0.0` branch](https://github.com/swagger-api/swagger-codegen/tree/
 
 ### Swagger Codegen 3.X ([`3.0.0` branch](https://github.com/swagger-api/swagger-codegen/tree/3.0.0))
 
-Swagger Codegen 2.X supports OpenAPI version 3 (and version 2 via spec conversion to version 3)
+Swagger Codegen 3.X supports OpenAPI version 3 (and version 2 via spec conversion to version 3)
 [Online generator of version 3.X](https://github.com/swagger-api/swagger-codegen/tree/3.0.0#online-generators) supports both generation from Swagger/OpenAPI version 2 (by using engine + generators of 2.X) and version 3 specifications.
 
 group id: `io.swagger.codegen.v3`
