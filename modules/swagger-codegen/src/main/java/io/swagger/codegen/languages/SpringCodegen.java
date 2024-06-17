@@ -7,6 +7,8 @@ import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
 import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.codegen.languages.features.OptionalFeatures;
+import io.swagger.codegen.mustache.SplitStringLambda;
+import io.swagger.codegen.mustache.TrimWhitespaceLambda;
 import io.swagger.models.Operation;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -376,6 +378,10 @@ public class SpringCodegen extends AbstractJavaCodegen
                 writer.write(fragment.execute().replaceAll("\\r|\\n", ""));
             }
         });
+
+        additionalProperties.put("lambdaTrimWhitespace", new TrimWhitespaceLambda());
+
+        additionalProperties.put("lambdaSplitString", new SplitStringLambda());
     }
 
     @Override
