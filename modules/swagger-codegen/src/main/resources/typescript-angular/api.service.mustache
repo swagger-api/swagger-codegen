@@ -263,7 +263,7 @@ export class {{classname}} {
         const canConsumeForm = this.canConsumeForm(consumes);
 
 {{^useHttpClient}}
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): any; };
 {{/useHttpClient}}
 {{#useHttpClient}}
         let formParams: { append(param: string, value: any): void | HttpParams; };
