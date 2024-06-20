@@ -149,6 +149,16 @@ namespace IO.Swagger.Model
         }
 
         /// <summary>
+        /// Deserialize the JSON string into a <see cref="MyClassWithRequiredInlineEnum" /> object.
+        /// </summary>
+        /// <param name="json">JSON string.</param>
+        /// <returns>Object representation of the JSON string.</returns>
+        public static MyClassWithRequiredInlineEnum FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<MyClassWithRequiredInlineEnum>(json);
+        }
+
+        /// <summary>
         /// Returns true if objects are equal
         /// </summary>
         /// <param name="input">Object to be compared</param>

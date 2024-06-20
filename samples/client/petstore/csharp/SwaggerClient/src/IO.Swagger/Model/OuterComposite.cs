@@ -86,6 +86,16 @@ namespace IO.Swagger.Model
         }
 
         /// <summary>
+        /// Deserialize the JSON string into a <see cref="OuterComposite" /> object.
+        /// </summary>
+        /// <param name="json">JSON string.</param>
+        /// <returns>Object representation of the JSON string.</returns>
+        public static OuterComposite FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<OuterComposite>(json);
+        }
+
+        /// <summary>
         /// Returns true if objects are equal
         /// </summary>
         /// <param name="input">Object to be compared</param>
