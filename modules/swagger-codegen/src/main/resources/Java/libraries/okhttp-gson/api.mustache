@@ -76,6 +76,73 @@ public class {{classname}} {
     }
 
     {{#operation}}
+    {{#hasOptionalParams}}
+    public static class {{operationIdCamelCase}}Optionals {
+      {{#allParams}}{{^required}}
+        public {{{dataType}}} {{paramName}}() {
+            return this.{{paramName}};
+        }
+
+        public {{operationIdCamelCase}}Optionals {{paramName}}({{{dataType}}} {{paramName}}) {
+            this.{{paramName}} = {{paramName}};
+            return this;
+        }
+
+        private {{{dataType}}} {{paramName}} = null;
+        {{/required}}{{/allParams}}
+    }
+    {{/hasOptionalParams}}
+
+    {{#hasOptionalParams}}
+    /**
+     * Build call for {{operationId}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public com.squareup.okhttp.Call {{operationId}}Call({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return {{operationId}}Call({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}, {{/allParams}}progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for {{operationId}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public com.squareup.okhttp.Call {{operationId}}OptsCall({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new {{operationIdCamelCase}}Optionals();
+        }
+        return {{operationId}}Call({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}, {{/allParams}}progressListener, progressRequestListener);
+    }
+    {{/hasOptionalParams}}
+
     /**
      * Build call for {{operationId}}{{#allParams}}
      * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{/allParams}}
@@ -187,6 +254,54 @@ public class {{classname}} {
         {{/performBeanValidation}}
     }
 
+    {{#hasOptionalParams}}
+    /**
+     * {{summary}}
+     * {{notes}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}{{#returnType}}
+     * @return {{returnType}}{{/returnType}}
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws ApiException {
+        {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+
+    /**
+     * {{summary}}
+     * {{notes}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param optionals An object containing the optional parameters for this API call.{{#returnType}}
+     * @return {{returnType}}{{/returnType}}
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}Opts({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new {{operationIdCamelCase}}Optionals();
+        }
+        {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+    {{/hasOptionalParams}}
+
     /**
      * {{summary}}
      * {{notes}}{{#allParams}}
@@ -208,6 +323,54 @@ public class {{classname}} {
         {{#returnType}}ApiResponse<{{{returnType}}}> {{localVariablePrefix}}resp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
         return {{localVariablePrefix}}resp.getData();{{/returnType}}
     }
+
+    {{#hasOptionalParams}}
+    /**
+     * {{summary}}
+     * {{notes}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}{{#returnType}}
+     * @return {{returnType}}{{/returnType}}
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws ApiException {
+        return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+
+    /**
+     * {{summary}}
+     * {{notes}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param optionals An object containing the optional parameters for this API call.{{#returnType}}
+     * @return {{returnType}}{{/returnType}}
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}OptsWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new {{operationIdCamelCase}}Optionals();
+        }
+        return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+    {{/hasOptionalParams}}
 
     /**
      * {{summary}}
@@ -231,6 +394,56 @@ public class {{classname}} {
         {{#returnType}}Type {{localVariablePrefix}}localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
         return {{localVariablePrefix}}apiClient.execute({{localVariablePrefix}}call, {{localVariablePrefix}}localVarReturnType);{{/returnType}}{{^returnType}}return {{localVariablePrefix}}apiClient.execute({{localVariablePrefix}}call);{{/returnType}}
     }
+
+    {{#hasOptionalParams}}
+    /**
+     * {{summary}} (asynchronously)
+     * {{notes}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public com.squareup.okhttp.Call {{operationId}}Async({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
+        return {{operationId}}Async({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}, {{/allParams}}{{localVariablePrefix}}callback);
+    }
+
+    /**
+     * {{summary}} (asynchronously)
+     * {{notes}}{{#requiredParams}}
+     * @param {{paramName}} {{description}} (required){{/requiredParams}}
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+        {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+        {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public com.squareup.okhttp.Call {{operationId}}OptsAsync({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals, final ApiCallback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{localVariablePrefix}}callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new {{operationIdCamelCase}}Optionals();
+        }
+        return {{operationId}}Async({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}, {{/allParams}}{{localVariablePrefix}}callback);
+    }
+    {{/hasOptionalParams}}
 
     /**
      * {{summary}} (asynchronously)
