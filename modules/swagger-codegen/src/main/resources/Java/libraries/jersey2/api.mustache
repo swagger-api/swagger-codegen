@@ -105,7 +105,7 @@ public class {{classname}} {
     {{/required}}{{/allParams}}
     // create path and map variables
     String {{localVariablePrefix}}localVarPath = "{{{path}}}"{{#pathParams}}
-      .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{{paramName}}}.toString())){{/pathParams}};
+      .replaceAll("\\{" + "{{baseName}}" + "\\}", {{localVariablePrefix}}apiClient.escapeString({{localVariablePrefix}}apiClient.parameterToString({{{paramName}}}))){{/pathParams}};
 
     // query params
     {{javaUtilPrefix}}List<Pair> {{localVariablePrefix}}localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
