@@ -1057,7 +1057,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
 
     @Override
     public String escapeUnsafeCharacters(String input) {
-        String intermediate = input.replace("*/", "*_/").replace("/*", "/_*").replace("--", "- -");
+        String intermediate = input.replace("*/", "*_/").replace("/*", "/_*").replace("--", "- -").replace("--", "- -");
 
         intermediate = intermediate.replaceAll("~~N1", "\n    /// ");
         intermediate = intermediate.replaceAll("~~N2", "\n        /// ");
