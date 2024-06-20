@@ -111,7 +111,7 @@ Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for addit
   - [Workflow Integration](#workflow-integration)
     - [Maven Integration](#maven-integration)
     - [Gradle Integration](#gradle-integration)
-  - [Github Integration](#github-integration)
+  - [GitHub Integration](#github-integration)
   - [Online Generators](#online-generators)
   - [Guidelines for Contribution](https://github.com/swagger-api/swagger-codegen/blob/master/CONTRIBUTING.md#guidelines-for-contributing)
   - [Companies/Projects using Swagger Codegen](#companiesprojects-using-swagger-codegen)
@@ -813,7 +813,7 @@ To push the auto-generated SDK to GitHub, we provide `git_push.sh` to streamline
  -i modules/swagger-codegen/src/test/resources/2_0/petstore.json -l perl \
  --git-user-id "swaggerapi" \
  --git-repo-id "petstore-perl" \
- --release-note "Github integration demo" \
+ --release-note "GitHub integration demo" \
  -o /var/tmp/perl/petstore
 ```
  3) Push the SDK to GitHub

@@ -218,4 +218,4 @@ In Zsh, the generated `_{{scriptName}}` file (e.g. _petstore-cli) must be copied
 - [ ] Add support to bash 4.0-4.2 (currently must be >= 4.3)
 - [ ] Add manpage generation
 - [ ] Add support for form data
-- [ ] Move todos to Github issues
+- [ ] Move todos to GitHub issues

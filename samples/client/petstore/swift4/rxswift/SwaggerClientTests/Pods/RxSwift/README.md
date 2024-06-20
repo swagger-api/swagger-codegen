@@ -71,7 +71,7 @@ KVO observing, async operations and streams are all unified under [abstraction o
   </tr>
   <tr>
     <td>Define search for GitHub repositories ...</td>
-    <th rowspan="9"><img src="https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GithubSearch.gif"></th>
+    <th rowspan="9"><img src="https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GitHubSearch.gif"></th>
   </tr>
   <tr>
     <td><div class="highlight highlight-source-swift"><pre>

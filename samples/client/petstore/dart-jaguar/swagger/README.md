@@ -21,8 +21,8 @@ pub run build_runner build
 
 ## Installation & Usage
 
-### Github
-If this Dart package is published to Github, please include the following in pubspec.yaml
+### GitHub
+If this Dart package is published to GitHub, please include the following in pubspec.yaml
 ```
 name: swagger
 version: 1.0.0
@@ -121,7 +121,7 @@ Class | Method | HTTP request | Description
 - **Type**: OAuth
 - **Flow**: implicit
 - **Authorization URL**: http://petstore.swagger.io/api/oauth/dialog
-- **Scopes**: 
+- **Scopes**:
  - **write:pets**: modify pets in your account
  - **read:pets**: read your pets
 
