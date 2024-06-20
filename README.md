@@ -925,6 +925,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [CloudBoost](https://www.CloudBoost.io/)
 - [Cloudsmith](https://cloudsmith.io/)
 - [Conplement](http://www.conplement.de/)
+- [Crusoe Cloud](https://crusoecloud.com)
 - [Cummins](http://www.cummins.com/)
 - [Cupix](http://www.cupix.com)
 - [DBBest Technologies](https://www.dbbest.com)
