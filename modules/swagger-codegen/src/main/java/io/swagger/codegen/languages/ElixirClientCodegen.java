@@ -654,6 +654,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
                 sb.append(param.dataType);
             } else if (param.isFile) {
                 sb.append("String.t");
+            } else if (param.isUuid) {
+                sb.append("String.t");
             } else {
                 // <module>.Model.<type>.t
                 sb.append(moduleName);
