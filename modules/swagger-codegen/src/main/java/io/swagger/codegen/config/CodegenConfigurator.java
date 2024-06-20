@@ -68,8 +68,8 @@ public class CodegenConfigurator implements Serializable {
     private Set<String> languageSpecificPrimitives = new HashSet<String>();
     private Map<String, String> reservedWordMappings = new HashMap<String, String>();
 
-    private String gitUserId = "GIT_USER_ID";
-    private String gitRepoId = "GIT_REPO_ID";
+    private String gitUserId = "git_user_id";
+    private String gitRepoId = "git_repo_id";
     private String gitRepoBaseURL = "GIT_REPO_BASE_URL";
     private String releaseNote = "Minor update";
     private String httpUserAgent;
