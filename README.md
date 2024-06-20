@@ -1056,6 +1056,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [ZEEF.com](https://zeef.com/)
 - [zooplus](https://www.zooplus.com/)
 - [Trifork](https://www.trifork.com/)
+- [Remain Software](https://remainsoftware.com/extranet/download-type/remain-api-studio-download/)
 
 Presentations/Videos/Tutorials/Books
 ----------------------------------------
