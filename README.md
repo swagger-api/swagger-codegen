@@ -700,6 +700,15 @@ Your config file for Java can look like
 }
 ```
 
+Also you can pass config options via command line:
+
+```sh
+java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  -i http://petstore.swagger.io/v2/swagger.json \
+  -l java --library=okhttp-gson \
+  -o samples/client/petstore/java
+```
+
 For all the unspecified options default values will be used.
 
 Another way to override default options is to extend the config class for the specific language.
