@@ -62,7 +62,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.57</version>
+    <version>3.0.60</version>
 </dependency>
 ```
 
@@ -126,8 +126,9 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
-3.0.60-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.60-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.59](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.59) (**current stable**) | 2024-07-22   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.59](https://github.com/swagger-api/swagger-codegen/tree/v3.0.59)
+3.0.61-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.61-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.60](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.60) (**current stable**) | 2024-08-01   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.60](https://github.com/swagger-api/swagger-codegen/tree/v3.0.60)
+[3.0.59](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.59) | 2024-07-22   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.59](https://github.com/swagger-api/swagger-codegen/tree/v3.0.59)
 [3.0.58](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.58) | 2024-07-08   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.58](https://github.com/swagger-api/swagger-codegen/tree/v3.0.58)
 [3.0.57](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.57) | 2024-05-27   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.57](https://github.com/swagger-api/swagger-codegen/tree/v3.0.57)
 [3.0.56](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.56) | 2024-05-10   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.56](https://github.com/swagger-api/swagger-codegen/tree/v3.0.56)
@@ -247,7 +248,7 @@ wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.42/swagge
 java -jar swagger-codegen-cli.jar help
 
 # Download current stable 3.x.x branch (OpenAPI version 3)
-wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.57/swagger-codegen-cli-3.0.57.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.60/swagger-codegen-cli-3.0.60.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar --help
 ```
