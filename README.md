@@ -927,6 +927,7 @@ Here are some companies/projects using Swagger Codegen in production. To add you
 - [Carus](https://www.carus.com/)
 - [Cisco](http://www.cisco.com/)
 - [CloudBoost](https://www.CloudBoost.io/)
+- [Cloudmersive](https://cloudmersive.com/)
 - [Cloudsmith](https://cloudsmith.io/)
 - [Conplement](http://www.conplement.de/)
 - [Cummins](http://www.cummins.com/)
