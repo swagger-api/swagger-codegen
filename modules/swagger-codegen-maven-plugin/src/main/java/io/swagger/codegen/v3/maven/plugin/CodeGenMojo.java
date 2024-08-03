@@ -316,7 +316,9 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(readonly = true, required = true, defaultValue = "${project}")
     private MavenProject project;
 
-
+    @Parameter(name = "resolveRequestBody", property = "codegen.resolveRequestBody", required = false, defaultValue = "false")
+    private Boolean resolveRequestBody;
+    
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -418,6 +420,10 @@ public class CodeGenMojo extends AbstractMojo {
 
         if (null != templateDirectory) {
             configurator.setTemplateDir(templateDirectory.getAbsolutePath());
+        }
+        
+        if(null != resolveRequestBody) {
+        	configurator.setResolveRequestBody(resolveRequestBody);
         }
 
         // Set generation options
