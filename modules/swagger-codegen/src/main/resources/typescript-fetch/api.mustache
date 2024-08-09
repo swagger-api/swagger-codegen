@@ -90,17 +90,33 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        {{#putParametersInObject}}
+        {{nickname}}({{#hasParams}}params: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{#-last}} {{/-last}}{{/allParams}}}, {{/hasParams}}options: any = {}): FetchArgs {
+        {{/putParametersInObject}}
+        {{^putParametersInObject}}
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options: any = {}): FetchArgs {
+        {{/putParametersInObject}}
     {{#allParams}}
     {{#required}}
             // verify required parameter '{{paramName}}' is not null or undefined
+            {{#putParametersInObject}}
+            if (params["{{paramName}}"] === null || params["{{paramName}}"] === undefined) {
+            {{/putParametersInObject}}            
+            {{^putParametersInObject}}
             if ({{paramName}} === null || {{paramName}} === undefined) {
+            {{/putParametersInObject}}
                 throw new RequiredError('{{paramName}}','Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
             }
     {{/required}}
     {{/allParams}}
+            {{#putParametersInObject}}
+            const localVarPath = `{{{path}}}`{{#pathParams}}
+                .replace(`{${"{{baseName}}"}}`, encodeURIComponent(String(params["{{paramName}}"]))){{/pathParams}};
+            {{/putParametersInObject}}
+            {{^putParametersInObject}}
             const localVarPath = `{{{path}}}`{{#pathParams}}
                 .replace(`{${"{{baseName}}"}}`, encodeURIComponent(String({{paramName}}))){{/pathParams}};
+            {{/putParametersInObject}}
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: '{{httpMethod}}' }, options);
             const localVarHeaderParameter = {} as any;
@@ -147,6 +163,34 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
 
     {{/authMethods}}
     {{#queryParams}}
+        {{#putParametersInObject}}
+            {{#isListContainer}}
+            if (params["{{paramName}}"]) {
+            {{#isCollectionFormatMulti}}
+                localVarQueryParameter['{{baseName}}'] = params["{{paramName}}"];
+            {{/isCollectionFormatMulti}}
+            {{^isCollectionFormatMulti}}
+                localVarQueryParameter['{{baseName}}'] = params["{{paramName}}"].join(COLLECTION_FORMATS["{{collectionFormat}}"]);
+            {{/isCollectionFormatMulti}}
+            }
+            {{/isListContainer}}
+            {{^isListContainer}}
+            if (params["{{paramName}}"] !== undefined) {
+                {{#isDateTime}}
+                localVarQueryParameter['{{baseName}}'] = (params["{{paramName}}"] as any).toISOString();
+                {{/isDateTime}}
+                {{^isDateTime}}
+                {{#isDate}}
+                localVarQueryParameter['{{baseName}}'] = (params["{{paramName}}"] as any).toISOString();
+                {{/isDate}}
+                {{^isDate}}
+                localVarQueryParameter['{{baseName}}'] = params["{{paramName}}"];
+                {{/isDate}}
+                {{/isDateTime}}
+            }
+            {{/isListContainer}}
+        {{/putParametersInObject}}
+        {{^putParametersInObject}}
             {{#isListContainer}}
             if ({{paramName}}) {
             {{#isCollectionFormatMulti}}
@@ -174,9 +218,23 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
                 {{/isDateTime}}
             }
             {{/isListContainer}}
+        {{/putParametersInObject}}
 
     {{/queryParams}}
     {{#headerParams}}
+        {{#putParametersInObject}}
+            {{#isListContainer}}
+            if (params["{{paramName}}"]) {
+                localVarHeaderParameter['{{baseName}}'] = params["{{paramName}}"].join(COLLECTION_FORMATS["{{collectionFormat}}"]));
+            }
+            {{/isListContainer}}
+            {{^isListContainer}}
+            if (params["{{paramName}}"] !== undefined && params["{{paramName}}"] !== null) {
+                localVarHeaderParameter['{{baseName}}'] = String(params["{{paramName}}"]);
+            }
+            {{/isListContainer}}
+        {{/putParametersInObject}}
+        {{^putParametersInObject}}
             {{#isListContainer}}
             if ({{paramName}}) {
                 localVarHeaderParameter['{{baseName}}'] = {{paramName}}.join(COLLECTION_FORMATS["{{collectionFormat}}"]));
@@ -187,9 +245,30 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter['{{baseName}}'] = String({{paramName}});
             }
             {{/isListContainer}}
+        {{/putParametersInObject}}
 
     {{/headerParams}}
     {{#formParams}}
+      {{#putParametersInObject}}
+            {{#isListContainer}}
+            if (params["{{paramName}}"]) {
+            {{#isCollectionFormatMulti}}
+                params["{{paramName}}"].forEach((element) => {
+                    localVarFormParams.append('{{baseName}}', element as any);
+                })
+            {{/isCollectionFormatMulti}}
+            {{^isCollectionFormatMulti}}
+                    localVarFormParams.set('{{baseName}}', params["{{paramName}}"].join(COLLECTION_FORMATS["{{collectionFormat}}"]));
+            {{/isCollectionFormatMulti}}
+            }
+            {{/isListContainer}}
+            {{^isListContainer}}
+            if (params["{{paramName}}"] !== undefined) {
+                localVarFormParams.set('{{baseName}}', params["{{paramName}}"] as any);
+            }
+            {{/isListContainer}}
+        {{/putParametersInObject}}
+        {{^putParametersInObject}}
             {{#isListContainer}}
             if ({{paramName}}) {
             {{#isCollectionFormatMulti}}
@@ -207,6 +286,7 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
                 localVarFormParams.set('{{baseName}}', {{paramName}} as any);
             }
             {{/isListContainer}}
+        {{/putParametersInObject}}
 
     {{/formParams}}
     {{#hasFormParams}}
@@ -231,7 +311,12 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
     {{/hasFormParams}}
     {{#bodyParam}}
             const needsSerialization = (<any>"{{dataType}}" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            {{#putParametersInObject}}
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(params["{{paramName}}"] || {}) : (params["{{paramName}}"] || "");
+            {{/putParametersInObject}}
+            {{^putParametersInObject}}
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify({{paramName}} || {}) : ({{paramName}} || "");
+            {{/putParametersInObject}}
     {{/bodyParam}}
 
             return {
@@ -262,6 +347,21 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        {{#putParametersInObject}}
+        {{nickname}}({{#hasParams}}params: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{#-last}} {{/-last}}{{/allParams}}}, {{/hasParams}}options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
+            const localVarFetchArgs = {{classname}}FetchParamCreator(configuration).{{nickname}}({{#hasParams}}params, {{/hasParams}}options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response{{#returnType}}.json(){{/returnType}};
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        {{/putParametersInObject}}         
+        {{^putParametersInObject}}
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Response{{/returnType}}> {
             const localVarFetchArgs = {{classname}}FetchParamCreator(configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
@@ -274,6 +374,8 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
                 });
             };
         },
+        {{/putParametersInObject}}
+
     {{/operation}}
     }
 };
@@ -297,9 +399,17 @@ export const {{classname}}Factory = function (configuration?: Configuration, fet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        {{#putParametersInObject}}
+        {{nickname}}({{#hasParams}}params: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{#-last}} {{/-last}}{{/allParams}}}, {{/hasParams}}options?: any) {
+            return {{classname}}Fp(configuration).{{nickname}}({{#hasParams}}params, {{/hasParams}}options)(fetch, basePath);
+        },
+        {{/putParametersInObject}}         
+        {{^putParametersInObject}}
         {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any) {
             return {{classname}}Fp(configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(fetch, basePath);
         },
+        {{/putParametersInObject}}
+
     {{/operation}}
     };
 };
@@ -325,7 +435,12 @@ export interface {{classname}}Interface {
      * @throws {RequiredError}
      * @memberof {{classname}}Interface
      */
+    {{#putParametersInObject}}
+    {{nickname}}({{#hasParams}}params: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{#-last}} {{/-last}}{{/allParams}}}, {{/hasParams}}options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>;
+    {{/putParametersInObject}}
+    {{^putParametersInObject}}
     {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any): Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>;
+    {{/putParametersInObject}}
 
 {{/operation}}
 }
@@ -357,9 +472,16 @@ export class {{classname}} extends BaseAPI {
      * @throws {RequiredError}
      * @memberof {{classname}}
      */
+    {{#putParametersInObject}}
+    public {{nickname}}({{#hasParams}}params: { {{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{^-last}}, {{/-last}}{{#-last}} {{/-last}}{{/allParams}}}, {{/hasParams}}options?: any) {
+        return {{classname}}Fp(this.configuration).{{nickname}}({{#hasParams}}params, {{/hasParams}}options)(this.fetch, this.basePath);
+    }
+    {{/putParametersInObject}}
+    {{^putParametersInObject}}
     public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: any) {
         return {{classname}}Fp(this.configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options)(this.fetch, this.basePath);
     }
+    {{/putParametersInObject}}
 
     {{/operation}}
 }
