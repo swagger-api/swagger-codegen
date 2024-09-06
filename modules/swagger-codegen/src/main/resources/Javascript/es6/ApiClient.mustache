@@ -1,6 +1,5 @@
 {{>licenseInfo}}
 import superagent from "superagent";
-import querystring from "querystring";
 
 {{#emitJSDoc}}/**
 * @module {{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}ApiClient
@@ -420,7 +419,8 @@ export class ApiClient {
         }
 
         if (contentType === 'application/x-www-form-urlencoded') {
-            request.send(querystring.stringify(this.normalizeParams(formParams)));
+            const searchParams = new URLSearchParams(this.normalizeParams(formParams));
+            request.send(searchParams.toString());
         } else if (contentType == 'multipart/form-data') {
             var _formParams = this.normalizeParams(formParams);
             for (var key in _formParams) {

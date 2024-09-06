@@ -54,6 +54,7 @@ public class CodegenConfigurator implements Serializable {
     private String invokerPackage;
     private String modelNamePrefix;
     private String modelNameSuffix;
+    private String localVariablePrefix;
     private String groupId;
     private String artifactId;
     private String artifactVersion;
@@ -139,6 +140,15 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator setModelNameSuffix(String suffix) {
         this.modelNameSuffix = suffix;
+        return this;
+    }
+
+    public String getLocalVariablePrefix() {
+        return localVariablePrefix;
+    }
+
+    public CodegenConfigurator setLocalVariablePrefix(String localVariablePrefix) {
+        this.localVariablePrefix = localVariablePrefix;
         return this;
     }
 
@@ -427,6 +437,7 @@ public class CodegenConfigurator implements Serializable {
         checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
         checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
+        checkAndSetAdditionalProperty(localVariablePrefix, CodegenConstants.LOCAL_VARIABLE_PREFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
         checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
         checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
