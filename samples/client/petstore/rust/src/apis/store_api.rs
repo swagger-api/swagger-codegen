@@ -37,8 +37,8 @@ impl<C: hyper::client::Connect> StoreApiClient<C> {
 pub trait StoreApi {
     fn delete_order(&self, order_id: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
     fn get_inventory(&self, ) -> Box<Future<Item = ::std::collections::HashMap<String, i32>, Error = Error<serde_json::Value>>>;
-    fn get_order_by_id(&self, order_id: i64) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>>;
-    fn place_order(&self, body: ::models::Order) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>>;
+    fn get_order_by_id(&self, order_id: i64) -> Box<Future<Item = crate::models::Order, Error = Error<serde_json::Value>>>;
+    fn place_order(&self, body: crate::models::Order) -> Box<Future<Item = crate::models::Order, Error = Error<serde_json::Value>>>;
 }
 
 
@@ -156,7 +156,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
         )
     }
 
-    fn get_order_by_id(&self, order_id: i64) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>> {
+    fn get_order_by_id(&self, order_id: i64) -> Box<Future<Item = crate::models::Order, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Get;
@@ -200,13 +200,13 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::models::Order, _> = serde_json::from_slice(&body);
+                let parsed: Result<crate::models::Order, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
     }
 
-    fn place_order(&self, body: ::models::Order) -> Box<Future<Item = ::models::Order, Error = Error<serde_json::Value>>> {
+    fn place_order(&self, body: crate::models::Order) -> Box<Future<Item = crate::models::Order, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
@@ -254,7 +254,7 @@ impl<C: hyper::client::Connect>StoreApi for StoreApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::models::Order, _> = serde_json::from_slice(&body);
+                let parsed: Result<crate::models::Order, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
