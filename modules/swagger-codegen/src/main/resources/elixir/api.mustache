@@ -34,7 +34,7 @@ defmodule {{moduleName}}.Api.{{classname}} do
   def {{#underscored}}{{operationId}}{{/underscored}}(connection, {{#allParams}}{{#required}}{{#underscored}}{{paramName}}{{/underscored}}, {{/required}}{{/allParams}}{{^hasOptionalParams}}_{{/hasOptionalParams}}opts \\ []) do
 {{#hasOptionalParams}}
     optional_params = %{
-      {{#allParams}}{{^required}}{{^isPathParam}}:"{{baseName}}" => {{#isBodyParam}}:body{{/isBodyParam}}{{#isFormParam}}:form{{/isFormParam}}{{#isQueryParam}}:query{{/isQueryParam}}{{#isHeaderParam}}:headers{{/isHeaderParam}}{{/isPathParam}}{{#hasMore}},
+      {{#allParams}}{{^required}}{{^isPathParam}}{{#atom}}{{baseName}}{{/atom}} => {{#isBodyParam}}:body{{/isBodyParam}}{{#isFormParam}}:form{{/isFormParam}}{{#isQueryParam}}:query{{/isQueryParam}}{{#isHeaderParam}}:headers{{/isHeaderParam}}{{/isPathParam}}{{#hasMore}},
       {{/hasMore}}{{/required}}{{/allParams}}
     }
 {{/hasOptionalParams}}

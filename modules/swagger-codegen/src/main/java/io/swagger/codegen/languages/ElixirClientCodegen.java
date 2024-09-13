@@ -20,8 +20,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     protected String moduleName;
     protected static final String defaultModuleName = "Swagger.Client";
 
-    // This is the name of elixir project name;
-    protected static final String defaultPackageName = "swagger_client";
+  // This is the name of elixir project name;
+  protected static final String defaultPackageName = "swagger_client";
 
   String supportedElixirVersion = "1.4";
   List<String> extraApplications = Arrays.asList(":logger");
@@ -33,8 +33,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
   public ElixirClientCodegen() {
     super();
 
-        // set the output folder here
-        outputFolder = "generated-code/elixir";
+    // set the output folder here
+    outputFolder = "generated-code/elixir";
 
         /*
          * Models.  You can write model files using the modelTemplateFiles map.
@@ -79,9 +79,9 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
 
         /**
          * Additional Properties.  These values can be passed to the templates and
-         * are available in models, apis, and supporting files
-         */
-        additionalProperties.put("apiVersion", apiVersion);
+     * are available in models, apis, and supporting files
+     */
+    additionalProperties.put("apiVersion", apiVersion);
 
         /**
          * Supporting Files.  You can write single files for the generator with the
@@ -155,8 +155,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     /**
-     * Configures the type of generator.
-     *
+   * Configures the type of generator.
+   *
      * @return the CodegenType for this generator
      * @see io.swagger.codegen.CodegenType
      */
@@ -180,48 +180,55 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
      *
      * @return A string value for the help message
      */
-    public String getHelp() {
-        return "Generates an elixir client library (alpha).";
-    }
+  public String getHelp() {
+    return "Generates an elixir client library (alpha).";
+  }
 
-    @Override
-    public void processOpts() {
-        super.processOpts();
-        additionalProperties.put("supportedElixirVersion", supportedElixirVersion);
-        additionalProperties.put("extraApplications", join(",", extraApplications));
-        additionalProperties.put("deps", deps);
-        additionalProperties.put("underscored", new Mustache.Lambda() {
-            @Override
+  @Override
+  public void processOpts() {
+    super.processOpts();
+    additionalProperties.put("supportedElixirVersion", supportedElixirVersion);
+    additionalProperties.put("extraApplications", join(",", extraApplications));
+    additionalProperties.put("deps", deps);
+    additionalProperties.put("underscored", new Mustache.Lambda() {
+      @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
-                writer.write(underscored(fragment.execute()));
-            }
-        });
-        additionalProperties.put("modulized", new Mustache.Lambda() {
-            @Override
+        writer.write(underscored(fragment.execute()));
+      }
+    });
+    additionalProperties.put("atom", new Mustache.Lambda() {
+      @Override
+      public void execute(Template.Fragment fragment, Writer writer)
+          throws IOException {
+        writer.write(atom(fragment.execute()));
+      }
+    });
+    additionalProperties.put("modulized", new Mustache.Lambda() {
+      @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
-                writer.write(modulized(fragment.execute()));
-            }
-        });
+        writer.write(modulized(fragment.execute()));
+      }
+    });
 
-        if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+    if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             setModuleName((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
-        }
     }
+  }
 
-    @Override
-    public void preprocessSwagger(Swagger swagger) {
-         Info info = swagger.getInfo();
-         if (moduleName == null) {
-             if (info.getTitle() != null) {
-                 // default to the appName (from title field)
-                 setModuleName(modulized(escapeText(info.getTitle())));
-             } else {
-                 setModuleName(defaultModuleName);
-             }
-        }
-        additionalProperties.put("moduleName", moduleName);
+  @Override
+  public void preprocessSwagger(Swagger swagger) {
+    Info info = swagger.getInfo();
+    if (moduleName == null) {
+      if (info.getTitle() != null) {
+        // default to the appName (from title field)
+        setModuleName(modulized(escapeText(info.getTitle())));
+      } else {
+        setModuleName(defaultModuleName);
+      }
+    }
+    additionalProperties.put("moduleName", moduleName);
 
-        if (!additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
+    if (!additionalProperties.containsKey(CodegenConstants.PACKAGE_NAME)) {
             additionalProperties.put(CodegenConstants.PACKAGE_NAME, underscored(moduleName));
         }
 
@@ -247,7 +254,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}([^\\{]*)");
         for (CodegenOperation o : os) {
             ArrayList<String> pathTemplateNames = new ArrayList<String>();
-            Matcher matcher = pattern.matcher(o.path);
+      Matcher matcher = pattern.matcher(o.path);
             StringBuffer buffer = new StringBuffer();
             while (matcher.find()) {
                 String pathTemplateName = matcher.group(1);
@@ -255,27 +262,27 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
                 pathTemplateNames.add(pathTemplateName);
             }
             ExtendedCodegenOperation eco = new ExtendedCodegenOperation(o);
-            if (buffer.toString().isEmpty()) {
-                eco.setReplacedPathName(o.path);
-            } else {
-                eco.setReplacedPathName(buffer.toString());
-            }
-            eco.setPathTemplateNames(pathTemplateNames);
+      if (buffer.toString().isEmpty()) {
+        eco.setReplacedPathName(o.path);
+      } else {
+        eco.setReplacedPathName(buffer.toString());
+      }
+      eco.setPathTemplateNames(pathTemplateNames);
 
-            // detect multipart form types
-            if (eco.hasConsumes == Boolean.TRUE) {
-                Map<String, String> firstType = eco.consumes.get(0);
-                if (firstType != null) {
-                    if ("multipart/form-data".equals(firstType.get("mediaType"))) {
-                        eco.isMultipart = Boolean.TRUE;
-                    }
-                }
-            }
-
-            newOs.add(eco);
+      // detect multipart form types
+      if (eco.hasConsumes == Boolean.TRUE) {
+        Map<String, String> firstType = eco.consumes.get(0);
+        if (firstType != null) {
+          if ("multipart/form-data".equals(firstType.get("mediaType"))) {
+            eco.isMultipart = Boolean.TRUE;
+          }
         }
-        operations.put("operation", newOs);
-        return objs;
+      }
+
+      newOs.add(eco);
+    }
+    operations.put("operation", newOs);
+    return objs;
     }
 
     @Override
@@ -284,17 +291,17 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         return new ExtendedCodegenModel(cm);
     }
 
-    // We should use String.join if we can use Java8
-    String join(CharSequence charSequence, Iterable<String> iterable) {
-        StringBuilder buf = new StringBuilder();
-        for (String str : iterable) {
-            if (0 < buf.length()) {
-                buf.append((charSequence));
-            }
-            buf.append(str);
-        }
-        return buf.toString();
+  // We should use String.join if we can use Java8
+  String join(CharSequence charSequence, Iterable<String> iterable) {
+    StringBuilder buf = new StringBuilder();
+    for (String str : iterable) {
+      if (0 < buf.length()) {
+        buf.append((charSequence));
+      }
+      buf.append(str);
     }
+    return buf.toString();
+  }
 
   String underscored(String words) {
     ArrayList<String> underscoredWords = new ArrayList<String>();
@@ -304,14 +311,31 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     String finalClean = join("_", underscoredWords);
     return String.join("_", finalClean.split("[/]"));
   }
+
+  public String atom(String word) {
+    if (word.isEmpty()) {
+      return ":\"\""; // Empty atom
     }
 
-    String modulized(String words) {
-        ArrayList<String> modulizedWords = new ArrayList<String>();
-        for (String word : words.split(" ")) {
-            modulizedWords.add(camelize(word));
-        }
-        return join("", modulizedWords);
+    // Pattern for valid unquoted atom (starts with lowercase letter or
+    // underscore, followed by letters, numbers, underscores, or @)
+    Pattern validUnquotedAtom = Pattern.compile("^[a-z_][a-zA-Z0-9_@]*[!?]?$");
+
+    if (validUnquotedAtom.matcher(word).matches()) {
+      return ":" + word; // Unquoted atom
+    } else {
+      // Quote the atom and escape any double quotes within
+      String escaped = word.replace("\"", "\\\"");
+      return ":\"" + escaped + "\""; // Quoted atom
+    }
+  }
+
+  String modulized(String words) {
+    ArrayList<String> modulizedWords = new ArrayList<String>();
+    for (String word : words.split(" ")) {
+      modulizedWords.add(camelize(word));
+    }
+    return join("", modulizedWords);
     }
 
     /**
@@ -326,11 +350,11 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     private String sourceFolder() {
-        ArrayList<String> underscoredWords = new ArrayList<String>();
-        for (String word : moduleName.split("\\.")) {
-            underscoredWords.add(underscore(word));
-        }
-        return "lib/" + join("/", underscoredWords);
+    ArrayList<String> underscoredWords = new ArrayList<String>();
+    for (String word : moduleName.split("\\.")) {
+      underscoredWords.add(underscore(word));
+    }
+    return "lib/" + join("/", underscoredWords);
     }
 
     /**
@@ -351,40 +375,40 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
-    public String toApiName(String name) {
-        if (name.length() == 0) {
-            return "Default";
-        }
-        return camelize(name);
+  public String toApiName(String name) {
+    if (name.length() == 0) {
+      return "Default";
+    }
+    return camelize(name);
+  }
+
+  @Override
+  public String toApiFilename(String name) {
+    // replace - with _ e.g. created-at => created_at
+    name = name.replaceAll("-", "_");
+
+    // e.g. PetApi.go => pet_api.go
+    return underscore(name);
+  }
+
+  @Override
+  public String toModelName(String name) {
+    // camelize the model name
+    // phone_number => PhoneNumber
+    return camelize(toModelFilename(name));
+  }
+
+  @Override
+  public String toModelFilename(String name) {
+    if (!StringUtils.isEmpty(modelNamePrefix)) {
+      name = modelNamePrefix + "_" + name;
     }
 
-    @Override
-    public String toApiFilename(String name) {
-        // replace - with _ e.g. created-at => created_at
-        name = name.replaceAll("-", "_");
-
-        // e.g. PetApi.go => pet_api.go
-        return underscore(name);
+    if (!StringUtils.isEmpty(modelNameSuffix)) {
+      name = name + "_" + modelNameSuffix;
     }
 
-    @Override
-    public String toModelName(String name) {
-        // camelize the model name
-        // phone_number => PhoneNumber
-        return camelize(toModelFilename(name));
-    }
-
-    @Override
-    public String toModelFilename(String name) {
-        if (!StringUtils.isEmpty(modelNamePrefix)) {
-            name = modelNamePrefix + "_" + name;
-        }
-
-        if (!StringUtils.isEmpty(modelNameSuffix)) {
-            name = name + "_" + modelNameSuffix;
-        }
-
-        name = sanitizeName(name);
+    name = sanitizeName(name);
 
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
@@ -399,7 +423,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         }
 
         return underscore(name);
-    }
+  }
 
     @Override
     public String toOperationId(String operationId) {
@@ -408,7 +432,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
             throw new RuntimeException("Empty method name (operationId) not allowed");
         }
 
-        return camelize(sanitizeName(operationId));
+    return camelize(sanitizeName(operationId));
     }
 
     /**
@@ -419,27 +443,27 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
      */
     @Override
     public String getTypeDeclaration(Property p) {
-        // SubClasses of AbstractProperty
-        //
-        // ArrayProperty
-        // MapProperty
-        // PasswordProperty
-        // StringProperty
-        //     EmailProperty
-        //     ByteArrayProperty
-        // DateProperty
-        // UUIDProperty
-        // DateTimeProperty
-        // ObjectProperty
-        // AbstractNumericProperty
-        //     BaseIntegerProperty
-        //         IntegerProperty
-        //         LongProperty
-        //     DecimalProperty
-        //         DoubleProperty
-        //         FloatProperty
-        // BinaryProperty
-        // BooleanProperty
+    // SubClasses of AbstractProperty
+    //
+    // ArrayProperty
+    // MapProperty
+    // PasswordProperty
+    // StringProperty
+    //     EmailProperty
+    //     ByteArrayProperty
+    // DateProperty
+    // UUIDProperty
+    // DateTimeProperty
+    // ObjectProperty
+    // AbstractNumericProperty
+    //     BaseIntegerProperty
+    //         IntegerProperty
+    //         LongProperty
+    //     DecimalProperty
+    //         DoubleProperty
+    //         FloatProperty
+    // BinaryProperty
+    // BooleanProperty
         // RefProperty
         // FileProperty
         if (p instanceof ArrayProperty) {
@@ -451,47 +475,47 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
             Property inner = mp.getAdditionalProperties();
             return "%{optional(String.t) => " + getTypeDeclaration(inner) + "}";
         } else if (p instanceof PasswordProperty) {
-            return "String.t";
-        } else if (p instanceof EmailProperty) {
-            return "String.t";
-        } else if (p instanceof ByteArrayProperty) {
-            return "binary()";
-        } else if (p instanceof StringProperty) {
-            return "String.t";
-        } else if (p instanceof DateProperty) {
-            return "Date.t";
-        } else if (p instanceof UUIDProperty) {
-            return "String.t";
-        } else if (p instanceof DateTimeProperty) {
-            return "DateTime.t";
-        } else if (p instanceof ObjectProperty) {
-            // How to map it?
-            return super.getTypeDeclaration(p);
-        } else if (p instanceof IntegerProperty) {
-            return "integer()";
-        } else if (p instanceof LongProperty) {
-            return "integer()";
-        } else if (p instanceof BaseIntegerProperty) {
-            return "integer()";
-        } else if (p instanceof DoubleProperty) {
-            return "float()";
-        } else if (p instanceof FloatProperty) {
-            return "float()";
-        } else if (p instanceof DecimalProperty) {
-            return "float()";
-        } else if (p instanceof AbstractNumericProperty) {
-            return "number()";
-        } else if (p instanceof BinaryProperty) {
-            return "binary()";
-        } else if (p instanceof BooleanProperty) {
-            return "boolean()";
-        } else if (p instanceof RefProperty) {
-            // How to map it?
-            return super.getTypeDeclaration(p);
-        } else if (p instanceof FileProperty) {
-            return "String.t";
-        }
-        return super.getTypeDeclaration(p);
+      return "String.t";
+    } else if (p instanceof EmailProperty) {
+      return "String.t";
+    } else if (p instanceof ByteArrayProperty) {
+      return "binary()";
+    } else if (p instanceof StringProperty) {
+      return "String.t";
+    } else if (p instanceof DateProperty) {
+      return "Date.t";
+    } else if (p instanceof UUIDProperty) {
+      return "String.t";
+    } else if (p instanceof DateTimeProperty) {
+      return "DateTime.t";
+    } else if (p instanceof ObjectProperty) {
+      // How to map it?
+      return super.getTypeDeclaration(p);
+    } else if (p instanceof IntegerProperty) {
+      return "integer()";
+    } else if (p instanceof LongProperty) {
+      return "integer()";
+    } else if (p instanceof BaseIntegerProperty) {
+      return "integer()";
+    } else if (p instanceof DoubleProperty) {
+      return "float()";
+    } else if (p instanceof FloatProperty) {
+      return "float()";
+    } else if (p instanceof DecimalProperty) {
+      return "float()";
+    } else if (p instanceof AbstractNumericProperty) {
+      return "number()";
+    } else if (p instanceof BinaryProperty) {
+      return "binary()";
+    } else if (p instanceof BooleanProperty) {
+      return "boolean()";
+    } else if (p instanceof RefProperty) {
+      // How to map it?
+      return super.getTypeDeclaration(p);
+    } else if (p instanceof FileProperty) {
+      return "String.t";
+    }
+    return super.getTypeDeclaration(p);
     }
 
     /**
@@ -500,79 +524,79 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
      *
      * @return a string value of the type or complex model for this property
      * @see io.swagger.models.properties.Property
-     */
-    @Override
-    public String getSwaggerType(Property p) {
-        String swaggerType = super.getSwaggerType(p);
-        String type = null;
-        if (typeMapping.containsKey(swaggerType)) {
-            type = typeMapping.get(swaggerType);
-            if (languageSpecificPrimitives.contains(type))
-                return toModelName(type);
-        } else
-            type = swaggerType;
+   */
+  @Override
+  public String getSwaggerType(Property p) {
+    String swaggerType = super.getSwaggerType(p);
+    String type = null;
+    if (typeMapping.containsKey(swaggerType)) {
+      type = typeMapping.get(swaggerType);
+      if (languageSpecificPrimitives.contains(type))
         return toModelName(type);
-    }
+    } else
+      type = swaggerType;
+    return toModelName(type);
+  }
 
-    class ExtendedCodegenOperation extends CodegenOperation {
-        private List<String> pathTemplateNames = new ArrayList<String>();
-        private String replacedPathName;
+  class ExtendedCodegenOperation extends CodegenOperation {
+    private List<String> pathTemplateNames = new ArrayList<String>();
+    private String replacedPathName;
 
-        public ExtendedCodegenOperation(CodegenOperation o) {
-            super();
+    public ExtendedCodegenOperation(CodegenOperation o) {
+      super();
 
-            // Copy all fields of CodegenOperation
-            this.responseHeaders.addAll(o.responseHeaders);
-            this.hasAuthMethods = o.hasAuthMethods;
-            this.hasConsumes = o.hasConsumes;
-            this.hasProduces = o.hasProduces;
-            this.hasParams = o.hasParams;
-            this.hasOptionalParams = o.hasOptionalParams;
-            this.returnTypeIsPrimitive = o.returnTypeIsPrimitive;
-            this.returnSimpleType = o.returnSimpleType;
-            this.subresourceOperation = o.subresourceOperation;
-            this.isMapContainer = o.isMapContainer;
-            this.isListContainer = o.isListContainer;
-            this.isMultipart = o.isMultipart;
-            this.hasMore = o.hasMore;
-            this.isResponseBinary = o.isResponseBinary;
-            this.hasReference = o.hasReference;
-            this.isRestfulIndex = o.isRestfulIndex;
-            this.isRestfulShow = o.isRestfulShow;
-            this.isRestfulCreate = o.isRestfulCreate;
-            this.isRestfulUpdate = o.isRestfulUpdate;
-            this.isRestfulDestroy = o.isRestfulDestroy;
-            this.isRestful = o.isRestful;
-            this.path = o.path;
-            this.operationId = o.operationId;
-            this.returnType = o.returnType;
-            this.httpMethod = o.httpMethod;
-            this.returnBaseType = o.returnBaseType;
-            this.returnContainer = o.returnContainer;
-            this.summary = o.summary;
-            this.unescapedNotes = o.unescapedNotes;
-            this.notes = o.notes;
-            this.baseName = o.baseName;
-            this.defaultResponse = o.defaultResponse;
-            this.discriminator = o.discriminator;
-            this.consumes = o.consumes;
-            this.produces = o.produces;
-            this.bodyParam = o.bodyParam;
-            this.allParams = o.allParams;
-            this.bodyParams = o.bodyParams;
-            this.pathParams = o.pathParams;
-            this.queryParams = o.queryParams;
-            this.headerParams = o.headerParams;
-            this.formParams = o.formParams;
-            this.authMethods = o.authMethods;
-            this.tags = o.tags;
-            this.responses = o.responses;
-            this.imports = o.imports;
-            this.examples = o.examples;
-            this.externalDocs = o.externalDocs;
-            this.vendorExtensions = o.vendorExtensions;
-            this.nickname = o.nickname;
-            this.operationIdLowerCase = o.operationIdLowerCase;
+      // Copy all fields of CodegenOperation
+      this.responseHeaders.addAll(o.responseHeaders);
+      this.hasAuthMethods = o.hasAuthMethods;
+      this.hasConsumes = o.hasConsumes;
+      this.hasProduces = o.hasProduces;
+      this.hasParams = o.hasParams;
+      this.hasOptionalParams = o.hasOptionalParams;
+      this.returnTypeIsPrimitive = o.returnTypeIsPrimitive;
+      this.returnSimpleType = o.returnSimpleType;
+      this.subresourceOperation = o.subresourceOperation;
+      this.isMapContainer = o.isMapContainer;
+      this.isListContainer = o.isListContainer;
+      this.isMultipart = o.isMultipart;
+      this.hasMore = o.hasMore;
+      this.isResponseBinary = o.isResponseBinary;
+      this.hasReference = o.hasReference;
+      this.isRestfulIndex = o.isRestfulIndex;
+      this.isRestfulShow = o.isRestfulShow;
+      this.isRestfulCreate = o.isRestfulCreate;
+      this.isRestfulUpdate = o.isRestfulUpdate;
+      this.isRestfulDestroy = o.isRestfulDestroy;
+      this.isRestful = o.isRestful;
+      this.path = o.path;
+      this.operationId = o.operationId;
+      this.returnType = o.returnType;
+      this.httpMethod = o.httpMethod;
+      this.returnBaseType = o.returnBaseType;
+      this.returnContainer = o.returnContainer;
+      this.summary = o.summary;
+      this.unescapedNotes = o.unescapedNotes;
+      this.notes = o.notes;
+      this.baseName = o.baseName;
+      this.defaultResponse = o.defaultResponse;
+      this.discriminator = o.discriminator;
+      this.consumes = o.consumes;
+      this.produces = o.produces;
+      this.bodyParam = o.bodyParam;
+      this.allParams = o.allParams;
+      this.bodyParams = o.bodyParams;
+      this.pathParams = o.pathParams;
+      this.queryParams = o.queryParams;
+      this.headerParams = o.headerParams;
+      this.formParams = o.formParams;
+      this.authMethods = o.authMethods;
+      this.tags = o.tags;
+      this.responses = o.responses;
+      this.imports = o.imports;
+      this.examples = o.examples;
+      this.externalDocs = o.externalDocs;
+      this.vendorExtensions = o.vendorExtensions;
+      this.nickname = o.nickname;
+      this.operationIdLowerCase = o.operationIdLowerCase;
             this.operationIdCamelCase = o.operationIdCamelCase;
         }
 
@@ -590,103 +614,103 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
 
         public void setReplacedPathName(String replacedPathName) {
             this.replacedPathName = replacedPathName;
+    }
+
+    public String typespec() {
+      StringBuilder sb = new StringBuilder("@spec ");
+      sb.append(underscore(operationId));
+      sb.append("(Tesla.Env.client, ");
+
+      for (CodegenParameter param : allParams) {
+        if (param.required) {
+          buildTypespec(param, sb);
+          sb.append(", ");
         }
+      }
 
-        public String typespec() {
-            StringBuilder sb = new StringBuilder("@spec ");
-            sb.append(underscore(operationId));
-            sb.append("(Tesla.Env.client, ");
-
-            for (CodegenParameter param : allParams) {
-                if (param.required) {
-                    buildTypespec(param, sb);
-                    sb.append(", ");
-                }
-            }
-
-            sb.append("keyword()) :: {:ok, ");
-            if (returnBaseType == null) {
-                sb.append("nil");
-            } else if (returnSimpleType) {
-                if (!returnTypeIsPrimitive) {
-                    sb.append(moduleName);
-                    sb.append(".Model.");
-                }
-                sb.append(returnBaseType);
-                sb.append(".t");
-            } else if (returnContainer == null) {
-                sb.append(returnBaseType);
-                sb.append(".t");
-            } else {
-                if (returnContainer.equals("array")) {
-                    sb.append("list(");
-                    if (!returnTypeIsPrimitive) {
-                        sb.append(moduleName);
-                        sb.append(".Model.");
-                    }
-                    sb.append(returnBaseType);
-                    sb.append(".t)");
-                } else if (returnContainer.equals("map")) {
-                    sb.append("map()");
-                }
-            }
-            sb.append("} | {:error, Tesla.Env.t}");
-            return sb.toString();
+      sb.append("keyword()) :: {:ok, ");
+      if (returnBaseType == null) {
+        sb.append("nil");
+      } else if (returnSimpleType) {
+        if (!returnTypeIsPrimitive) {
+          sb.append(moduleName);
+          sb.append(".Model.");
         }
-
-        private void buildTypespec(CodegenParameter param, StringBuilder sb) {
-            if (param.dataType == null) {
-                sb.append("nil");
-            } else if (param.isListContainer) {
-                // list(<subtype>)
-                sb.append("list(");
-                if (param.isBodyParam) {
-                    buildTypespec(param.items.items, sb);
-                } else {
-                    buildTypespec(param.items, sb);
-                }
-                sb.append(")");
-            } else if (param.isMapContainer) {
-                // %{optional(String.t) => <subtype>}
-                sb.append("%{optional(String.t) => ");
-                buildTypespec(param.items, sb);
-                sb.append("}");
-            } else if (param.isPrimitiveType) {
-                // like `integer()`, `String.t`
-                sb.append(param.dataType);
-            } else if (param.isFile) {
-                sb.append("String.t");
-            } else {
-                // <module>.Model.<type>.t
-                sb.append(moduleName);
-                sb.append(".Model.");
-                sb.append(param.dataType);
-                sb.append(".t");
-            }
+        sb.append(returnBaseType);
+        sb.append(".t");
+      } else if (returnContainer == null) {
+        sb.append(returnBaseType);
+        sb.append(".t");
+      } else {
+        if (returnContainer.equals("array")) {
+          sb.append("list(");
+          if (!returnTypeIsPrimitive) {
+            sb.append(moduleName);
+            sb.append(".Model.");
+          }
+          sb.append(returnBaseType);
+          sb.append(".t)");
+        } else if (returnContainer.equals("map")) {
+          sb.append("map()");
         }
-        private void buildTypespec(CodegenProperty property, StringBuilder sb) {
-            if (property.isListContainer) {
-                sb.append("list(");
-                buildTypespec(property.items, sb);
-                sb.append(")");
-            } else if (property.isMapContainer) {
-                sb.append("%{optional(String.t) => ");
-                buildTypespec(property.items, sb);
-                sb.append("}");
-            } else if (property.isPrimitiveType) {
-                sb.append(property.baseType);
-                sb.append(".t");
-            } else {
-                sb.append(moduleName);
-                sb.append(".Model.");
-                sb.append(property.baseType);
-                sb.append(".t");
-            }
-        }
+      }
+      sb.append("} | {:error, Tesla.Env.t}");
+      return sb.toString();
+    }
 
-        public String decodedStruct() {
-            // Let Poison decode the entire response into a generic blob
-            if (isMapContainer) {
+    private void buildTypespec(CodegenParameter param, StringBuilder sb) {
+      if (param.dataType == null) {
+        sb.append("nil");
+      } else if (param.isListContainer) {
+        // list(<subtype>)
+        sb.append("list(");
+        if (param.isBodyParam) {
+          buildTypespec(param.items.items, sb);
+        } else {
+          buildTypespec(param.items, sb);
+        }
+        sb.append(")");
+      } else if (param.isMapContainer) {
+        // %{optional(String.t) => <subtype>}
+        sb.append("%{optional(String.t) => ");
+        buildTypespec(param.items, sb);
+        sb.append("}");
+      } else if (param.isPrimitiveType) {
+        // like `integer()`, `String.t`
+        sb.append(param.dataType);
+      } else if (param.isFile) {
+        sb.append("String.t");
+      } else {
+        // <module>.Model.<type>.t
+        sb.append(moduleName);
+        sb.append(".Model.");
+        sb.append(param.dataType);
+        sb.append(".t");
+      }
+    }
+    private void buildTypespec(CodegenProperty property, StringBuilder sb) {
+      if (property.isListContainer) {
+        sb.append("list(");
+        buildTypespec(property.items, sb);
+        sb.append(")");
+      } else if (property.isMapContainer) {
+        sb.append("%{optional(String.t) => ");
+        buildTypespec(property.items, sb);
+        sb.append("}");
+      } else if (property.isPrimitiveType) {
+        sb.append(property.baseType);
+        sb.append(".t");
+      } else {
+        sb.append(moduleName);
+        sb.append(".Model.");
+        sb.append(property.baseType);
+        sb.append(".t");
+      }
+    }
+
+    public String decodedStruct() {
+      // Let Poison decode the entire response into a generic blob
+      if (isMapContainer) {
                 return "";
             }
             // Primitive return type, don't even try to decode
@@ -694,94 +718,94 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
                 return "false";
             }
             StringBuilder sb = new StringBuilder();
-            if (isListContainer) {
-                sb.append("[");
-            }
-            sb.append("%");
-            sb.append(moduleName);
-            sb.append(".Model.");
-            sb.append(returnBaseType);
-            sb.append("{}");
-            if (isListContainer) {
-                sb.append("]");
-            }
-            return sb.toString();
-        }
+      if (isListContainer) {
+        sb.append("[");
+      }
+      sb.append("%");
+      sb.append(moduleName);
+      sb.append(".Model.");
+      sb.append(returnBaseType);
+      sb.append("{}");
+      if (isListContainer) {
+        sb.append("]");
+      }
+      return sb.toString();
+    }
+  }
+
+  class ExtendedCodegenModel extends CodegenModel {
+    public boolean hasImports;
+    public ExtendedCodegenModel(CodegenModel cm) {
+      super();
+
+      // Copy all fields of CodegenModel
+      this.parent = cm.parent;
+      this.parentSchema = cm.parentSchema;
+      this.parentModel = cm.parentModel;
+      this.interfaceModels = cm.interfaceModels;
+      this.children = cm.children;
+      this.name = cm.name;
+      this.classname = cm.classname;
+      this.title = cm.title;
+      this.description = cm.description;
+      this.classVarName = cm.classVarName;
+      this.modelJson = cm.modelJson;
+      this.dataType = cm.dataType;
+      this.xmlPrefix = cm.xmlPrefix;
+      this.xmlNamespace = cm.xmlNamespace;
+      this.xmlName = cm.xmlName;
+      this.classFilename = cm.classFilename;
+      this.unescapedDescription = cm.unescapedDescription;
+      this.discriminator = cm.discriminator;
+      this.defaultValue = cm.defaultValue;
+      this.arrayModelType = cm.arrayModelType;
+      this.isAlias = cm.isAlias;
+      this.vars = cm.vars;
+      this.requiredVars = cm.requiredVars;
+      this.optionalVars = cm.optionalVars;
+      this.readOnlyVars = cm.readOnlyVars;
+      this.readWriteVars = cm.readWriteVars;
+      this.allVars = cm.allVars;
+      this.parentVars = cm.parentVars;
+      this.allowableValues = cm.allowableValues;
+      this.mandatory = cm.mandatory;
+      this.allMandatory = cm.allMandatory;
+      this.imports = cm.imports;
+      this.hasVars = cm.hasVars;
+      this.emptyVars = cm.emptyVars;
+      this.hasMoreModels = cm.hasMoreModels;
+      this.hasEnums = cm.hasEnums;
+      this.isEnum = cm.isEnum;
+      this.hasRequired = cm.hasRequired;
+      this.hasOptional = cm.hasOptional;
+      this.isArrayModel = cm.isArrayModel;
+      this.hasChildren = cm.hasChildren;
+      this.hasOnlyReadOnly = cm.hasOnlyReadOnly;
+      this.externalDocs = cm.externalDocs;
+      this.vendorExtensions = cm.vendorExtensions;
+      this.additionalPropertiesType = cm.additionalPropertiesType;
+
+      this.hasImports = !this.imports.isEmpty();
     }
 
-    class ExtendedCodegenModel extends CodegenModel {
-        public boolean hasImports;
-        public ExtendedCodegenModel(CodegenModel cm) {
-            super();
-
-            // Copy all fields of CodegenModel
-            this.parent = cm.parent;
-            this.parentSchema = cm.parentSchema;
-            this.parentModel = cm.parentModel;
-            this.interfaceModels = cm.interfaceModels;
-            this.children = cm.children;
-            this.name = cm.name;
-            this.classname = cm.classname;
-            this.title = cm.title;
-            this.description = cm.description;
-            this.classVarName = cm.classVarName;
-            this.modelJson = cm.modelJson;
-            this.dataType = cm.dataType;
-            this.xmlPrefix = cm.xmlPrefix;
-            this.xmlNamespace = cm.xmlNamespace;
-            this.xmlName = cm.xmlName;
-            this.classFilename = cm.classFilename;
-            this.unescapedDescription = cm.unescapedDescription;
-            this.discriminator = cm.discriminator;
-            this.defaultValue = cm.defaultValue;
-            this.arrayModelType = cm.arrayModelType;
-            this.isAlias = cm.isAlias;
-            this.vars = cm.vars;
-            this.requiredVars = cm.requiredVars;
-            this.optionalVars = cm.optionalVars;
-            this.readOnlyVars = cm.readOnlyVars;
-            this.readWriteVars = cm.readWriteVars;
-            this.allVars = cm.allVars;
-            this.parentVars = cm.parentVars;
-            this.allowableValues = cm.allowableValues;
-            this.mandatory = cm.mandatory;
-            this.allMandatory = cm.allMandatory;
-            this.imports = cm.imports;
-            this.hasVars = cm.hasVars;
-            this.emptyVars = cm.emptyVars;
-            this.hasMoreModels = cm.hasMoreModels;
-            this.hasEnums = cm.hasEnums;
-            this.isEnum = cm.isEnum;
-            this.hasRequired = cm.hasRequired;
-            this.hasOptional = cm.hasOptional;
-            this.isArrayModel = cm.isArrayModel;
-            this.hasChildren = cm.hasChildren;
-            this.hasOnlyReadOnly = cm.hasOnlyReadOnly;
-            this.externalDocs = cm.externalDocs;
-            this.vendorExtensions = cm.vendorExtensions;
-            this.additionalPropertiesType = cm.additionalPropertiesType;
-
-            this.hasImports = !this.imports.isEmpty();
+    public boolean hasComplexVars() {
+      for (CodegenProperty p : vars) {
+        if (!p.isPrimitiveType) {
+          return true;
         }
-
-        public boolean hasComplexVars() {
-            for (CodegenProperty p : vars) {
-                if (!p.isPrimitiveType) {
-                    return true;
-                }
-            }
-            return false;
-        }
+      }
+      return false;
     }
+  }
 
-    @Override
-    public String escapeQuotationMark(String input) {
-        return input.replace("\"", "");
-    }
+  @Override
+  public String escapeQuotationMark(String input) {
+    return input.replace("\"", "");
+  }
 
-    @Override
-    public String escapeUnsafeCharacters(String input) {
-        // no need to escape as Elixir does not support multi-line comments
+  @Override
+  public String escapeUnsafeCharacters(String input) {
+    // no need to escape as Elixir does not support multi-line comments
         return input;
     }
 
