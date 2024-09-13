@@ -28,7 +28,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_boolean_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterBoolean.t} | {:error, Tesla.Env.t}
   def fake_outer_boolean_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -56,7 +56,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_composite_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterComposite.t} | {:error, Tesla.Env.t}
   def fake_outer_composite_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -84,7 +84,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_number_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterNumber.t} | {:error, Tesla.Env.t}
   def fake_outer_number_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -112,7 +112,7 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec fake_outer_string_serialize(Tesla.Env.client, keyword()) :: {:ok, SwaggerPetstore.Model.OuterString.t} | {:error, Tesla.Env.t}
   def fake_outer_string_serialize(connection, opts \\ []) do
     optional_params = %{
-      :"body" => :body
+      :body => :body
     }
     %{}
     |> method(:post)
@@ -206,16 +206,16 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec test_endpoint_parameters(Tesla.Env.client, float(), float(), String.t, binary(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def test_endpoint_parameters(connection, number, double, pattern_without_delimiter, byte, opts \\ []) do
     optional_params = %{
-      :"integer" => :form,
-      :"int32" => :form,
-      :"int64" => :form,
-      :"float" => :form,
-      :"string" => :form,
-      :"binary" => :form,
-      :"date" => :form,
-      :"dateTime" => :form,
-      :"password" => :form,
-      :"callback" => :form
+      :integer => :form,
+      :int32 => :form,
+      :int64 => :form,
+      :float => :form,
+      :string => :form,
+      :binary => :form,
+      :date => :form,
+      :dateTime => :form,
+      :password => :form,
+      :callback => :form
     }
     %{}
     |> method(:post)
@@ -255,14 +255,14 @@ defmodule SwaggerPetstore.Api.Fake do
   @spec test_enum_parameters(Tesla.Env.client, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def test_enum_parameters(connection, opts \\ []) do
     optional_params = %{
-      :"enum_form_string_array" => :form,
-      :"enum_form_string" => :form,
-      :"enum_header_string_array" => :headers,
-      :"enum_header_string" => :headers,
-      :"enum_query_string_array" => :query,
-      :"enum_query_string" => :query,
-      :"enum_query_integer" => :query,
-      :"enum_query_double" => :form
+      :enum_form_string_array => :form,
+      :enum_form_string => :form,
+      :enum_header_string_array => :headers,
+      :enum_header_string => :headers,
+      :enum_query_string_array => :query,
+      :enum_query_string => :query,
+      :enum_query_integer => :query,
+      :enum_query_double => :form
     }
     %{}
     |> method(:get)
@@ -280,7 +280,7 @@ defmodule SwaggerPetstore.Api.Fake do
   ## Parameters
 
   - connection (SwaggerPetstore.Connection): Connection to server
-  - param (Object): request body
+  - param (Map): request body
   - opts (KeywordList): [optional] Optional parameters
 
   ## Returns
@@ -288,7 +288,7 @@ defmodule SwaggerPetstore.Api.Fake do
   {:ok, %{}} on success
   {:error, info} on failure
   """
-  @spec test_inline_additional_properties(Tesla.Env.client, SwaggerPetstore.Model.Object.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
+  @spec test_inline_additional_properties(Tesla.Env.client, Map, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def test_inline_additional_properties(connection, param, _opts \\ []) do
     %{}
     |> method(:post)

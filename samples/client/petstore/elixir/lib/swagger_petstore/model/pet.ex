@@ -9,21 +9,21 @@ defmodule SwaggerPetstore.Model.Pet do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"id",
-    :"category",
-    :"name",
-    :"photoUrls",
-    :"tags",
-    :"status"
+    :id,
+    :category,
+    :name,
+    :photoUrls,
+    :tags,
+    :status
   ]
 
   @type t :: %__MODULE__{
-    :"id" => integer(),
-    :"category" => Category,
-    :"name" => String.t,
-    :"photoUrls" => [String.t],
-    :"tags" => [Tag],
-    :"status" => String.t
+    :id => integer(),
+    :category => Category,
+    :name => String.t,
+    :photoUrls => [String.t],
+    :tags => [Tag],
+    :status => String.t
   }
 end
 
@@ -31,8 +31,8 @@ defimpl Poison.Decoder, for: SwaggerPetstore.Model.Pet do
   import SwaggerPetstore.Deserializer
   def decode(value, options) do
     value
-    |> deserialize(:"category", :struct, SwaggerPetstore.Model.Category, options)
-    |> deserialize(:"tags", :list, SwaggerPetstore.Model.Tag, options)
+    |> deserialize(:category, :struct, SwaggerPetstore.Model.Category, options)
+    |> deserialize(:tags, :list, SwaggerPetstore.Model.Tag, options)
   end
 end
 

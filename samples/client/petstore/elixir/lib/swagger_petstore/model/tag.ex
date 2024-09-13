@@ -9,13 +9,13 @@ defmodule SwaggerPetstore.Model.Tag do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"id",
-    :"name"
+    :id,
+    :name
   ]
 
   @type t :: %__MODULE__{
-    :"id" => integer(),
-    :"name" => String.t
+    :id => integer(),
+    :name => String.t
   }
 end
 
