@@ -23,15 +23,15 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     // This is the name of elixir project name;
     protected static final String defaultPackageName = "swagger_client";
 
-    String supportedElixirVersion = "1.4";
-    List<String> extraApplications = Arrays.asList(":logger");
-    List<String> deps = Arrays.asList(
-            "{:tesla, \"~> 0.8\"}",
-            "{:poison, \">= 1.0.0\"}"
-    );
+  String supportedElixirVersion = "1.4";
+  List<String> extraApplications = Arrays.asList(":logger");
+  List<String> deps =
+      Arrays.asList(
+        "{:tesla, \"~> 1.12.1\"}", 
+        "{:poison, \">= 6.0.0\"}");
 
-    public ElixirClientCodegen() {
-        super();
+  public ElixirClientCodegen() {
+    super();
 
         // set the output folder here
         outputFolder = "generated-code/elixir";
