@@ -296,12 +296,14 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         return buf.toString();
     }
 
-    String underscored(String words) {
-        ArrayList<String> underscoredWords = new ArrayList<String>();
-        for (String word : words.split(" ")) {
-            underscoredWords.add(underscore(word));
-        }
-        return join("_", underscoredWords);
+  String underscored(String words) {
+    ArrayList<String> underscoredWords = new ArrayList<String>();
+    for (String word : words.split("[ ]")) {
+      underscoredWords.add(underscore(word));
+    }
+    String finalClean = join("_", underscoredWords);
+    return String.join("_", finalClean.split("[/]"));
+  }
     }
 
     String modulized(String words) {
