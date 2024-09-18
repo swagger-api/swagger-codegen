@@ -77,8 +77,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
                         "__CALLER__")
         );
 
-        /**
-         * Additional Properties.  These values can be passed to the templates and
+    /**
+     * Additional Properties.  These values can be passed to the templates and
      * are available in models, apis, and supporting files
      */
     additionalProperties.put("apiVersion", apiVersion);
@@ -154,7 +154,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         cliOptions.add(new CliOption(CodegenConstants.PACKAGE_NAME, "Elixir package name (convention: lowercase)."));
     }
 
-    /**
+  /**
    * Configures the type of generator.
    *
      * @return the CodegenType for this generator
@@ -210,6 +210,49 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
       }
     });
 
+    final Map<String, String> typeMapping4lambda = this.typeMapping;
+    final String modelPackage = this.additionalProperties.get("invokerPackage") + ".Model";
+
+    additionalProperties.put("corrected_datatype", new Mustache.Lambda( ) {
+      private boolean isBasic(String f) {
+        return f.endsWith("()") | f.endsWith(".t") || f.endsWith(".t()") || f.endsWith("()]") && !(f.matches("^[A-Z].*"));
+      }
+      @Override
+      public void execute(Template.Fragment fragment, Writer writer)
+              throws IOException {
+        String f = fragment.execute();
+        boolean basic = isBasic(f);
+        if(basic == true) {
+          writer.write(f);
+        }else{
+          // handle the list of structs case
+          if(f.startsWith("[") && f.endsWith("]")) {
+            String inner = f.substring(1, f.length() -1).trim() ;
+            if(isBasic(inner)) {
+              writer.write(f);
+            }else {
+              writer.write("[" + modelPackage + "." + inner + ".t()" + "]");
+            }
+          }
+          //handle the map key/value case
+          else if (f.startsWith("%{")) {
+            String assocOperator = "&#x3D;&gt;";
+            int startAssoc = f.indexOf(assocOperator);
+            int endAssoc = f.indexOf(assocOperator) + assocOperator.length();
+            String start = f.substring(0, startAssoc).trim().replace("%{", "");
+            String end = f.substring(endAssoc, f.length()).trim().replace("}","");
+
+            String newString = "%{" + start + " => " + modelPackage + "." + end + ".t()" + "}";
+            writer.write( newString);
+          }
+          else {
+            writer.write(modelPackage + "." + f + ".t()");
+          }
+        }
+      }
+    });
+
+
     if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
             setModuleName((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
     }
@@ -246,22 +289,28 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
             "deserializer.ex"));
     }
 
-    @Override
-    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-        Map<String, Object> operations = (Map<String, Object>) super.postProcessOperations(objs).get("operations");
-        List<CodegenOperation> os = (List<CodegenOperation>) operations.get("operation");
-        List<ExtendedCodegenOperation> newOs = new ArrayList<ExtendedCodegenOperation>();
-        Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}([^\\{]*)");
-        for (CodegenOperation o : os) {
-            ArrayList<String> pathTemplateNames = new ArrayList<String>();
+  @Override
+  public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+    Map<String, Object> operations =
+        (Map<String, Object>)super.postProcessOperations(objs).get(
+            "operations");
+    List<CodegenOperation> os =
+        (List<CodegenOperation>)operations.get("operation");
+    List<ExtendedCodegenOperation> newOs =
+        new ArrayList<ExtendedCodegenOperation>();
+    Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}([^\\{]*)");
+    for (CodegenOperation o : os) {
+      ArrayList<String> pathTemplateNames = new ArrayList<String>();
       Matcher matcher = pattern.matcher(o.path);
-            StringBuffer buffer = new StringBuffer();
-            while (matcher.find()) {
-                String pathTemplateName = matcher.group(1);
-                matcher.appendReplacement(buffer, "#{" + underscore(pathTemplateName) + "}" + "$2");
-                pathTemplateNames.add(pathTemplateName);
-            }
-            ExtendedCodegenOperation eco = new ExtendedCodegenOperation(o);
+      StringBuffer buffer = new StringBuffer();
+      while (matcher.find()) {
+        String pathTemplateName = matcher.group(1);
+        matcher.appendReplacement(buffer, "#{" + underscore(pathTemplateName) +
+                                              "}"
+                                              + "$2");
+        pathTemplateNames.add(pathTemplateName);
+      }
+      ExtendedCodegenOperation eco = new ExtendedCodegenOperation(o);
       if (buffer.toString().isEmpty()) {
         eco.setReplacedPathName(o.path);
       } else {
@@ -422,7 +471,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
         }
 
-        return underscore(name);
+    return underscore(name);
   }
 
     @Override
@@ -636,8 +685,12 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
           sb.append(moduleName);
           sb.append(".Model.");
         }
-        sb.append(returnBaseType);
-        sb.append(".t");
+        if(returnBaseType.equals("Map")) {
+          sb.append("%{}");
+        }else {
+          sb.append(returnBaseType);
+          sb.append(".t");
+        }
       } else if (returnContainer == null) {
         sb.append(returnBaseType);
         sb.append(".t");

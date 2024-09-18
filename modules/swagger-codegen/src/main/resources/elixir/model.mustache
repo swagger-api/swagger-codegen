@@ -11,7 +11,7 @@
   ]
 
   @type t :: %__MODULE__{
-    {{#vars}}{{#atom}}{{baseName}}{{/atom}} => {{{datatype}}}{{#hasMore}},
+    {{#vars}}{{#atom}}{{baseName}}{{/atom}} => {{#corrected_datatype}}{{datatype}}{{/corrected_datatype}}{{#hasMore}},
     {{/hasMore}}{{/vars}}
   }
 end
