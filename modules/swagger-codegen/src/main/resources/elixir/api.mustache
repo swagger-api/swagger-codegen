@@ -27,7 +27,7 @@ defmodule {{moduleName}}.Api.{{classname}} do
 {{/required}}{{/allParams}}
   ## Returns
 
-  `{:ok, {{#isListContainer}}[{{returnBaseType}}, ...]{{/isListContainer}}{{#isMapContainer}}%{}{{/isMapContainer}}{{^returnType}}%{}{{/returnType}}{{#returnSimpleType}}{{#returnType}}{{#isMapContainer}}{{/isMapContainer}}{{{returnType}}}{{/returnType}}{{/returnSimpleType}}}` on success
+  `{:ok, {{#isListContainer}}[{{returnBaseType}}, ...]{{/isListContainer}}{{#isMapContainer}}%{}{{/isMapContainer}}{{^returnType}}%{}{{/returnType}}{{#returnSimpleType}}{{#returnType}}{{#isMapContainer}}{{/isMapContainer}}{{{returnType}}}{{/returnType}}{{/returnSimpleType}}{{{closebrace}}}` on success
   `{:error, info}` on failure
   """
   {{typespec}}

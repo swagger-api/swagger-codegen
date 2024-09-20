@@ -85,11 +85,15 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
      */
     additionalProperties.put("apiVersion", apiVersion);
 
-        /**
-         * Supporting Files.  You can write single files for the generator with the
-         * entire object tree available.  If the input file has a suffix of `.mustache
-         * it will be processed by the template engine.  Otherwise, it will be copied
-         */
+    //required to prevent code checker barfing on '}}}' in api.moustache
+    additionalProperties.put("closebrace", "}");
+
+
+      /**
+       * Supporting Files.  You can write single files for the generator with the
+       * entire object tree available.  If the input file has a suffix of `.mustache
+       * it will be processed by the template engine.  Otherwise, it will be copied
+       */
         supportingFiles.add(new SupportingFile("README.md.mustache",   // the input template or file
                 "",                                                       // the destination folder, relative `outputFolder`
                 "README.md")                                          // the output file
