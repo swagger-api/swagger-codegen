@@ -9,12 +9,23 @@ module.exports.{{nickname}} = function {{nickname}} (req, res, next) {
   {{#allParams}}
   var {{paramName}} = req.swagger.params['{{baseName}}'].value;
   {{/allParams}}
+  var responseHeaders = [];
+  var header = {};
+  var responseHeaderSchema;
+  {{#responses}}
+  {{#headers}}
+  responseHeaderSchema = {{{jsonSchema}}};
+  header.name = '{{name}}';
+  header.value = responseHeaderSchema.default;
+  responseHeaders.push(header);
+  {{/headers}}
+  {{/responses}}
   {{classname}}.{{nickname}}({{#allParams}}{{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}})
     .then(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, response, null, responseHeaders);
     })
     .catch(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, response, null, responseHeaders);
     });
 };
 {{/operation}}
