@@ -116,7 +116,7 @@ defmodule {{moduleName}}.RequestBuilder do
   def decode(response), do: {:error, response}
 
   def decode(%Tesla.Env{status: 200} = env, false), do: {:ok, env}
-  def decode({:ok, %Tesla.Env{status: 200, body: body}}, struct) do: Poison.decode(body, as: struct)
-    def decode(%Tesla.Env{status: 200, body: body}, struct), do: Poison.decode(body, as: struct)
+  def decode({:ok, %Tesla.Env{status: 200, body: body}}, struct), do: Poison.decode(body, as: struct)
+  def decode(%Tesla.Env{status: 200, body: body}, struct), do: Poison.decode(body, as: struct)
   def decode(response, _struct), do: {:error, response}
 end
