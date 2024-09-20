@@ -30,6 +30,8 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         "{:tesla, \"~> 1.12.1\"}", 
         "{:poison, \">= 6.0.0\"}");
 
+  Pattern MODULE_PATTERN = Pattern.compile("^[A-Z][a-zA-Z0-9]*(\\.[A-Z][a-zA-Z0-9]*)*$");
+
   public ElixirClientCodegen() {
     super();
 
@@ -211,49 +213,9 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     });
 
     final Map<String, String> typeMapping4lambda = this.typeMapping;
-    final String modelPackage = this.additionalProperties.get("invokerPackage") + ".Model";
+    final Map<String,Object> props = this.additionalProperties;
 
-    additionalProperties.put("corrected_datatype", new Mustache.Lambda( ) {
-      private boolean isBasic(String f) {
-        return f.endsWith("()") | f.endsWith(".t") || f.endsWith(".t()") || f.endsWith("()]") && !(f.matches("^[A-Z].*"));
-      }
-      @Override
-      public void execute(Template.Fragment fragment, Writer writer)
-              throws IOException {
-        String f = fragment.execute();
-        boolean basic = isBasic(f);
-        if(basic == true) {
-          writer.write(f);
-        }else{
-          // handle the list of structs case
-          if(f.startsWith("[") && f.endsWith("]")) {
-            String inner = f.substring(1, f.length() -1).trim() ;
-            if(isBasic(inner)) {
-              writer.write(f);
-            }else {
-              writer.write("[" + modelPackage + "." + inner + ".t()" + "]");
-            }
-          }
-          //handle the map key/value case
-          else if (f.startsWith("%{")) {
-            String assocOperator = "&#x3D;&gt;";
-            int startAssoc = f.indexOf(assocOperator);
-            int endAssoc = f.indexOf(assocOperator) + assocOperator.length();
-            String start = f.substring(0, startAssoc).trim().replace("%{", "");
-            String end = f.substring(endAssoc, f.length()).trim().replace("}","");
-
-            String newString = "%{" + start + " => " + modelPackage + "." + end + ".t()" + "}";
-            writer.write( newString);
-          }
-          else {
-            writer.write(modelPackage + "." + f + ".t()");
-          }
-        }
-      }
-    });
-
-
-    if (additionalProperties.containsKey(CodegenConstants.INVOKER_PACKAGE)) {
+    if (additionalProperties.get(CodegenConstants.INVOKER_PACKAGE) !=null ) {
             setModuleName((String) additionalProperties.get(CodegenConstants.INVOKER_PACKAGE));
     }
   }
@@ -484,6 +446,16 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
     return camelize(sanitizeName(operationId));
     }
 
+    private String getModelPackageName() {
+        Object moduleName = this.additionalProperties.get("moduleName");
+        Object invokerPackage = this.additionalProperties.get(CodegenConstants.INVOKER_PACKAGE);
+        if(moduleName!= null) {
+            return "" +  moduleName + ".Model";
+        }else {
+            return "" +  invokerPackage + ".Model";
+        }
+    }
+
     /**
      * Optional - type declaration.  This is a String which is used by the templates to instantiate your
      * types.  There is typically special handling for different property types
@@ -518,11 +490,21 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
         if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
-            return "[" + getTypeDeclaration(inner) + "]";
+            String innerType = getTypeDeclaration(inner);
+            if(MODULE_PATTERN.matcher(innerType).matches()) {
+                return "["  + innerType + ".t()"  +"]";
+            }else {
+                return "[" + innerType + "]";
+            }
         } else if (p instanceof MapProperty) {
             MapProperty mp = (MapProperty) p;
             Property inner = mp.getAdditionalProperties();
-            return "%{optional(String.t) => " + getTypeDeclaration(inner) + "}";
+            String innerType = getTypeDeclaration(inner);
+            if(MODULE_PATTERN.matcher(innerType).matches()) {
+                return "%{optional(String.t) => " + getTypeDeclaration(inner) + ".t()" + "}";
+            }else {
+                return "%{optional(String.t) => " + getTypeDeclaration(inner) + "}";
+            }
         } else if (p instanceof PasswordProperty) {
       return "String.t";
     } else if (p instanceof EmailProperty) {
@@ -560,7 +542,7 @@ public class ElixirClientCodegen extends DefaultCodegen implements CodegenConfig
       return "boolean()";
     } else if (p instanceof RefProperty) {
       // How to map it?
-      return super.getTypeDeclaration(p);
+      return "" + getModelPackageName() + "." + super.getTypeDeclaration(p);
     } else if (p instanceof FileProperty) {
       return "String.t";
     }
