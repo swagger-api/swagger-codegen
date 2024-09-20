@@ -21,7 +21,7 @@ defmodule SwaggerPetstore.Model.EnumTest do
     :enum_string_required => String.t,
     :enum_integer => integer(),
     :enum_number => float(),
-    :outerEnum => OuterEnum
+    :outerEnum => SwaggerPetstore.Model.OuterEnum
   }
 end
 

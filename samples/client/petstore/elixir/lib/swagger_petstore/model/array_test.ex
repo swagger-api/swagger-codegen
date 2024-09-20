@@ -17,7 +17,7 @@ defmodule SwaggerPetstore.Model.ArrayTest do
   @type t :: %__MODULE__{
     :array_of_string => [String.t],
     :array_array_of_integer => [[integer()]],
-    :array_array_of_model => [[ReadOnlyFirst]]
+    :array_array_of_model => [[SwaggerPetstore.Model.ReadOnlyFirst.t()]]
   }
 end
 

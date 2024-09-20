@@ -17,7 +17,7 @@ defmodule SwaggerPetstore.Model.MixedPropertiesAndAdditionalPropertiesClass do
   @type t :: %__MODULE__{
     :uuid => String.t,
     :dateTime => DateTime.t,
-    :map => %{optional(String.t) => Animal}
+    :map => %{optional(String.t) => SwaggerPetstore.Model.Animal.t()}
   }
 end
 

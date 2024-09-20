@@ -15,9 +15,9 @@ defmodule SwaggerPetstore.Model.OuterComposite do
   ]
 
   @type t :: %__MODULE__{
-    :my_number => OuterNumber,
-    :my_string => OuterString,
-    :my_boolean => OuterBoolean
+    :my_number => SwaggerPetstore.Model.OuterNumber,
+    :my_string => SwaggerPetstore.Model.OuterString,
+    :my_boolean => SwaggerPetstore.Model.OuterBoolean
   }
 end
 

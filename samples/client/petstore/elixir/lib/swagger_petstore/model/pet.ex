@@ -19,10 +19,10 @@ defmodule SwaggerPetstore.Model.Pet do
 
   @type t :: %__MODULE__{
     :id => integer(),
-    :category => Category,
+    :category => SwaggerPetstore.Model.Category,
     :name => String.t,
     :photoUrls => [String.t],
-    :tags => [Tag],
+    :tags => [SwaggerPetstore.Model.Tag.t()],
     :status => String.t
   }
 end
