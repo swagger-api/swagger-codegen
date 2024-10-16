@@ -271,4 +271,4 @@ When code is generated from this project, it shall be considered **AS IS** and o
 
 ## Thank You
 
-💚💚💚 We'd like to give a big shout our to all those who've contributed to Swagger Codegen, be that in raising issues, fixing bugs, [authoring templates](./docs/template-creators.md), or crafting useful [content](./docs/public-content.md) for others to benefit from. 💚💚💚
+💚💚💚 We'd like to give a big shout out to all those who've contributed to Swagger Codegen, be that in raising issues, fixing bugs, [authoring templates](./docs/template-creators.md), or crafting useful [content](./docs/public-content.md) for others to benefit from. 💚💚💚

@@ -1,10 +1,10 @@
-## Versioning
+# Versioning
 
 Both 2.X and 3.X version lines of Swagger Codegen are available and are independently maintained.
 
 **NOTE:** version 2.X (`io.swagger`) and 3.X (`io.swagger.codegen.v3`) have **different** group ids.
 
-### Swagger Codegen 2.X
+## Swagger Codegen 2.X
 
 |||
 |----|-----|
@@ -24,7 +24,7 @@ dependency example:
 </dependency>
 ```
 
-### Swagger Codegen 3.X ([`3.0.0` branch](https://github.com/swagger-api/swagger-codegen/tree/3.0.0))
+## Swagger Codegen 3.X
 
 |||
 |----|-----|
@@ -43,9 +43,3 @@ dependency example:
     <version>3.0.61</version>
 </dependency>
 ```
-
-
-(for main ReadMe)
-[Online generator of version 3.X](https://github.com/swagger-api/swagger-codegen/tree/3.0.0#online-generators) supports both generation from Swagger/OpenAPI version 2 (by using engine + generators of 2.X) and version 3 specifications.
-
-

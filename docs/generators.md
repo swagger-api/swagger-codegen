@@ -17,7 +17,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar meta \
   -o output/myLibrary -n myClientCodegen -p com.my.company.codegen
 ```
 
-This will write, in the folder `output/myLibrary`, all the files you need to get started, including a `README.md. Once modified and compiled, you can load your library with the codegen and generate clients with your own, custom-rolled logic.
+This will write, in the folder `output/myLibrary`, all the files you need to get started, including a `README.md`. Once modified and compiled, you can load your library with the codegen and generate clients with your own, custom-rolled logic.
 
 You would then compile your library in the `output/myLibrary` folder with `mvn package` and execute the codegen like such:
 
@@ -51,7 +51,7 @@ to the code generator like this:
 -i ./modules/swagger-codegen/src/test/resources/2_0/petstore.json
 ```
 
-Great for creating libraries on your ci server, from the [Swagger Editor](http://editor.swagger.io)... or while coding on an airplane.
+Great for creating libraries on your ci server, from the [Swagger Editor](http://editor.swagger.io)... or while coding on an airplane ✈️.
 
 ## Ignore file format
 
