@@ -84,7 +84,7 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 Swagger Codegen Version    | Release Date | Swagger / OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
-[3.0.62](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.62) (**current stable**) | 2024-08-27   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.62](https://github.com/swagger-api/swagger-codegen/tree/v3.0.62)
+[3.0.63](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.63) (**current stable**) | 2024-10-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.63](https://github.com/swagger-api/swagger-codegen/tree/v3.0.63)
 [2.4.43](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.43) (**current stable**) | 2024-08-09   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.42](https://github.com/swagger-api/swagger-codegen/tree/v2.4.43)
 
 💁 Here's also an overview of what's coming around the corner:
@@ -126,7 +126,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client
 ```
 
-You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.62/swagger-codegen-cli-3.0.62.jar).
+You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.63/swagger-codegen-cli-3.0.63.jar).
 
 To get a list of **general** options available, please run:
 
