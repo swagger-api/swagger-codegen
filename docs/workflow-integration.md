@@ -1,4 +1,4 @@
-# Worklfow Integrations
+# Workflow Integrations
 
 ## Maven Integration
 
