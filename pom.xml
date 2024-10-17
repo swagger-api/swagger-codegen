@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.63-SNAPSHOT</version>
+    <version>3.0.64-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -1201,8 +1201,8 @@
     </repositories>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <swagger-codegen-generators-version>1.0.53-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.22</swagger-core-version>
+        <swagger-codegen-generators-version>1.0.54-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.2.25</swagger-core-version>
         <swagger-core-version-v1>1.6.14</swagger-core-version-v1>
         <swagger-parser-version>2.1.22</swagger-parser-version>
         <swagger-parser-version-v1>1.0.71</swagger-parser-version-v1>
@@ -1210,24 +1210,24 @@
         <jackson-databind-version>2.16.1</jackson-databind-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <commons-io-version>2.16.1</commons-io-version>
+        <commons-io-version>2.17.0</commons-io-version>
         <commons-cli-version>1.9.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.16.0</commons-lang-version>
+        <commons-lang-version>3.17.0</commons-lang-version>
         <slf4j-version>2.0.9</slf4j-version>
-        <logback-version>1.5.7</logback-version>
+        <logback-version>1.5.11</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.16</jmustache-version>
         <testng-version>7.10.2</testng-version>
-        <surefire-version>3.4.0</surefire-version>
+        <surefire-version>3.5.1</surefire-version>
         <jmockit-version>1.49</jmockit-version>
         <reflections-version>0.10.2</reflections-version>
-        <mockito-version>5.12.0</mockito-version>
-        <snakeyaml-version>2.2</snakeyaml-version>
+        <mockito-version>5.14.2</mockito-version>
+        <snakeyaml-version>2.3</snakeyaml-version>
         <handlebars-version>4.3.1</handlebars-version>
         <httpclient-version>4.5.14</httpclient-version>
-        <jersey-version>2.44</jersey-version>
+        <jersey-version>2.45</jersey-version>
         <json-version>20231013</json-version>
     </properties>
 </project>
