@@ -46,8 +46,8 @@ cd /vagrant
 
 - [Official web service](https://hub.docker.com/r/swaggerapi/swagger-generator-v3/)
 - [Official web service with "standard" user](https://hub.docker.com/r/swaggerapi/swagger-generator-v3-root/)
-- [official minimal web service](https://hub.docker.com/r/swaggerapi/swagger-generator-v3-minimal/)
-- [official CLI](https://hub.docker.com/r/swaggerapi/swagger-codegen-cli-v3/)
+- [Official minimal web service](https://hub.docker.com/r/swaggerapi/swagger-generator-v3-minimal/)
+- [Official CLI](https://hub.docker.com/r/swaggerapi/swagger-codegen-cli-v3/)
 
 ### Swagger Generator Docker Image
 

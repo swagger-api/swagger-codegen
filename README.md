@@ -120,7 +120,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
    -o /var/tmp/php_api_client
 ```
 
-**Note:** if you're on Windows, replace the last command with
+**Note:** if you're on Windows, replace the last command with:
 
 ```sh
 java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i http://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client
@@ -134,7 +134,7 @@ To get a list of **general** options available, please run:
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate --help
 ```
 
-To get a list of PHP specified options (which can be passed to the generator with a config file via the `-c` option), please run
+To get a list of PHP specified options (which can be passed to the generator with a config file via the `-c` option), please run:
 
 ```sh
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l php
@@ -161,7 +161,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
   -o samples/client/petstore/java                                               # The output destination.
 ```
 
-with a number of options. You can get the options with the `generate --help` command (below only shows partial results):
+You can get the options with the `generate --help` command (below only shows partial results):
 
 ```text
 NAME
@@ -291,8 +291,8 @@ The Swagger Codegen project is intended as a benefit for users of the Swagger / 
 - The templates included with this project are subject to the [License](./LICENSE).
 - Generated code is intentionally _not_ subject to the parent project license
 
-When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties--expressed or implied--for generated code.  You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
+When code is generated from this project, it shall be considered **AS IS** and owned by the user of the software.  There are no warranties, expressed or implied, for generated code. You can do what you wish with it, and once generated, the code is your responsibility and subject to the licensing terms that you deem appropriate.
 
 ## Thank You
 
-💚💚💚 We'd like to give a big shout our to all those who've contributed to Swagger Codegen, be that in raising issues, fixing bugs, authoring templates, or crafting useful content for others to benefit from. 💚💚💚
+💚💚💚 We'd like to give a big shout out to all those who've contributed to Swagger Codegen, be that in raising issues, fixing bugs, authoring templates, or crafting useful content for others to benefit from. 💚💚💚
