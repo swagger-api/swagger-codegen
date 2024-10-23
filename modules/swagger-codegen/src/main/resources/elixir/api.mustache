@@ -23,7 +23,7 @@ defmodule {{moduleName}}.Api.{{classname}} do
   - connection (`{{moduleName}}.Connection`): Connection to server
 {{#allParams}}{{#required}}  - {{#underscored}}{{paramName}}{{/underscored}} (`{{dataType}}`): {{description}}
 {{/required}}{{/allParams}}  - opts (`KeywordList`): [optional] Optional parameters
-{{#allParams}}{{^required}}    - {{#underscored}}:{{paramName}}{{/underscored}} ({{dataType}}): {{description}}
+{{#allParams}}{{^required}}    - :{{paramName}} ({{dataType}}): {{description}}
 {{/required}}{{/allParams}}
   ## Returns
 
