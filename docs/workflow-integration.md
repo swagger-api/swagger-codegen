@@ -2,7 +2,7 @@
 
 ## Maven Integration
 
-You can use the [swagger-codegen-maven-plugin](modules/swagger-codegen-maven-plugin/README.md) for integrating with your workflow, and generating any codegen target.
+You can use the [swagger-codegen-maven-plugin](https://github.com/swagger-api/swagger-codegen/blob/3.0.0/modules/swagger-codegen-maven-plugin/README.md ) for integrating with your workflow, and generating any codegen target.
 
 ## Gradle Integration
 
