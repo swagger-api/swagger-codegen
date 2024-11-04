@@ -725,6 +725,65 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     }
 
+    private void generateConfigFiles(List<File> files, Map<String, Object> bundle) {
+        for (SupportingFile support : config.configFiles()) {
+            try {
+                String outputFolder = config.outputFolder();
+                if (StringUtils.isNotEmpty(support.folder)) {
+                    outputFolder += File.separator + support.folder;
+                }
+                File of = new File(outputFolder);
+                if (!of.isDirectory()) {
+                    of.mkdirs();
+                }
+                String outputFilename = outputFolder + File.separator + support.destinationFilename.replace('/', File.separatorChar);
+                if (!config.shouldOverwrite(outputFilename)) {
+                    LOGGER.info("Skipped overwriting " + outputFilename);
+                    continue;
+                }
+                String templateFile;
+                if( support instanceof GlobalSupportingFile) {
+                    templateFile = config.getCommonTemplateDir() + File.separator +  support.templateFile;
+                } else {
+                    templateFile = getFullTemplateFile(config, support.templateFile);
+                }
+
+                if(ignoreProcessor.allowsFile(new File(outputFilename))) {
+                    if (templateFile.endsWith("mustache")) {
+                        String rendered = templateEngine.getRendered(templateFile, bundle);
+                        writeToFile(outputFilename, rendered);
+                        files.add(new File(outputFilename));
+                    } else {
+                        InputStream in = null;
+
+                        try {
+                            in = new FileInputStream(templateFile);
+                        } catch (Exception e) {
+                            // continue
+                        }
+                        if (in == null) {
+                            in = this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(templateFile));
+                        }
+                        File outputFile = new File(outputFilename);
+                        OutputStream out = new FileOutputStream(outputFile, false);
+                        if (in != null) {
+                            LOGGER.info("writing file " + outputFile);
+                            IOUtils.copy(in, out);
+                            out.close();
+                        } else {
+                            LOGGER.warn("can't open " + templateFile + " for input");
+                        }
+                        files.add(outputFile);
+                    }
+                } else {
+                    LOGGER.info("Skipped generation of " + outputFilename + " due to rule in .swagger-codegen-ignore");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Could not generate config file '" + support + "'", e);
+            }
+        }
+    }
+
     private Map<String, Object> buildSupportFileBundle(List<Object> allOperations, List<Object> allModels) {
 
         Map<String, Object> bundle = new HashMap<>();
@@ -795,8 +854,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         List<Object> allOperations = new ArrayList<>();
         generateApis(files, allOperations, allModels);
 
-        // supporting files
+        // supporting and config files
         Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
+        generateConfigFiles(files, bundle);
         generateSupportingFiles(files, bundle);
         config.processOpenAPI(openAPI);
         return files;
@@ -840,7 +900,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         // supporting files
         Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
-        Json.prettyPrint(bundle);
+        generateConfigFiles(files, bundle);
         generateSupportingFiles(files, bundle);
         config.processOpenAPI(openAPI);
         return bundle;
