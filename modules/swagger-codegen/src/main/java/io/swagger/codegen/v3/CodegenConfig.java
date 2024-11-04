@@ -83,6 +83,8 @@ public interface CodegenConfig {
 
     List<SupportingFile> supportingFiles();
 
+    List<SupportingFile> configFiles();
+
     String getInputSpec();
 
     void setInputSpec(String inputSpec);
