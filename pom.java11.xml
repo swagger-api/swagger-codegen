@@ -9,7 +9,7 @@
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
-    <version>3.0.64</version>
+    <version>3.0.65-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -1219,7 +1219,7 @@
     </repositories>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <swagger-codegen-generators-version>1.0.54</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.55-SNAPSHOT</swagger-codegen-generators-version>
         <swagger-core-version>2.2.22</swagger-core-version>
         <swagger-core-version-v1>1.6.14</swagger-core-version-v1>
         <swagger-parser-version>2.1.22</swagger-parser-version>
