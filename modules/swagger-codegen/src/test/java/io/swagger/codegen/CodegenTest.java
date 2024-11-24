@@ -140,6 +140,23 @@ public class CodegenTest {
         Assert.assertFalse(statusParam.hasMore);
     }
 
+    @Test(description = "handle array in body parameter")
+    public void arrayBodyParameterTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/postBodyTest.json");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/animals";
+        final Operation p = model.getPaths().get(path).getPost();
+        Assert.assertNotNull(p);
+        final CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions());
+
+        // verify that inner definition is properly nested
+        // https://github.com/swagger-api/swagger-codegen/issues/6759
+        Assert.assertTrue(op.bodyParam.isListContainer, "top level is a container");
+        Assert.assertTrue(op.bodyParam.items.isNotContainer, "second level is not a container");
+        Assert.assertNull(op.bodyParam.items.items, "second level is not a container");
+        Assert.assertEquals(op.bodyParam.items.datatype, "Animal");
+    }
+
     @Test(description = "handle enum array in query parameter test")
     public void enumArrayQueryParameterTest() {
         final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/petstore.json");
