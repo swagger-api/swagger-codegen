@@ -21,6 +21,7 @@ then
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
+  -DjavaVersion=17 \
   -o intouch_api/java_client/java \
   -c config.json
   tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
