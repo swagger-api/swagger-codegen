@@ -3,11 +3,11 @@ if $Build_Codegen ; then
 fi
 if [ "$Branch" = "snapshot" ]
   then
-    url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v2/api-docs"
+    url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/api-docs"
     version="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/meta/version"
 elif [ "$Branch" = "production" ]
   then
-    url="https://intouch-api-v3-swagger.crm-staging-new.cc.capillarytech.com/v2/api-docs"
+    url="https://intouch-api-v3-swagger.crm-staging-new.cc.capillarytech.com/v3/api-docs"
     version="https://intouch-api-v3-swagger.crm-staging-new.cc.capillarytech.com/v3/meta/version"
 else " No Branch is selected"
 fi
