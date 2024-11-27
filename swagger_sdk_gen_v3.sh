@@ -17,16 +17,18 @@ echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
   rm -rf intouch_api/java_client/java
-  java -jar modules/swagger-codegen-cli-jsvt/swagger-codegen-cli.jar generate \
-  -i $url  \
-  -l java \
-  -DdateLibrary=java8 \
-  -DjavaVersion=17 \
-  -o intouch_api/java_client/java \
-  -c config.json
-  tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
-  mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
-  fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
+    curl -O https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.36/swagger-codegen-cli-3.0.36.jar
+    java -jar swagger-codegen-cli-3.0.36.jar generate \
+    -i $url  \
+    -l java \
+    -DdateLibrary=java8 \
+    -DjavaVersion=17 \
+    -o intouch_api/java_client/java \
+    -c config.json
+    tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
+    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
+    fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
+
 
 elif [ "$Client" = "c#" ]
 then rm -rf intouch_api/csharp_client/c#
