@@ -1,0 +1,17 @@
+<settings>
+    <servers>
+        <!-- Server for snapshot repository -->
+        <server>
+            <id>capillarymavensnapshotrepo</id> <!-- This should match the repository ID used in pom.xml or command line -->
+            <username>reporead</username>
+            <password>capMaven42</password>
+        </server>
+
+        <!-- Server for release repository -->
+        <server>
+            <id>capillarymavenrepo</id> <!-- This should match the repository ID used in pom.xml or command line -->
+            <username>reporead</username>
+            <password>capMaven42</password>
+        </server>
+    </servers>
+</settings>
