@@ -17,7 +17,7 @@ echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then 
   rm -rf intouch_api/java_client/java
-  java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
+  java -jar modules/swagger-codegen-cli-jsvt/swagger-codegen-cli.jar generate \
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
