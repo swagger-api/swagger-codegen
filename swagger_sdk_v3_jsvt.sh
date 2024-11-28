@@ -1,6 +1,10 @@
-if $Build_Codegen ; then
-    mvn3 clean package -Dmaven.test.skip=true
+if $Build_Codegen; then
+  mvn3 clean package -Dmaven.test.skip=true
 fi
+
+echo "{\"artifactVersion\":\"1.40-SNAPSHOT\"}" >config.json
+echo "GENERATING SDK"
+
 if [ "$Branch" = "snapshot" ]
   then
     url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/api-docs"
@@ -9,25 +13,22 @@ elif [ "$Branch" = "production" ]
   then
     url="https://intouch-api-v3-swagger.crm-staging-new.cc.capillarytech.com/v3/api-docs"
     version="https://intouch-api-v3-swagger.crm-staging-new.cc.capillarytech.com/v3/meta/version"
-else " No Branch is selected"
+else
+  "No Branch is selected"
 fi
-curl -k $version -o config.json
-#echo '{"artifactVersion":"0.0.1-SNAPSHOT","invokerPackage":"SwaggerV3\\\\Client","modelPackage":"SwaggerV3\\\\Client\\\\Model","apiPackage":"SwaggerV3\\\\Client\\\\Api"}'>config_php.json
-echo "GENERATING SDK"
-if [ "$Client" = "java" ]
-then 
+
+if [ "$Client" = "java" ]; then
   rm -rf intouch_api/java_client/java
-    curl -O https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.9/swagger-codegen-cli-3.0.9.jar
-    java -jar swagger-codegen-cli-3.0.9.jar generate \
-    -i $url  \
-    -l java \
-    -DdateLibrary=java8 \
-    -DjavaVersion=17 \
-    -o intouch_api/java_client/java \
-    -c config.json
-    tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
-    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
-    fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
+  java -jar modules/swagger-codegen-cli-jsvt/target/swagger-codegen-cli.jar generate \
+  -i $url  \
+  -l java \
+  -DdateLibrary=java8 \
+  -DjavaVersion=17 \
+  -o intouch_api/java_client/java \
+  -c config.json
+  tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
+  mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
+  fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
 
 
 elif [ "$Client" = "c#" ]
