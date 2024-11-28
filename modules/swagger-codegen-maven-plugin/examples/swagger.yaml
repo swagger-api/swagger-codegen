@@ -1,702 +1,4970 @@
 ---
-swagger: "2.0"
+openapi: 3.0.1
 info:
-  description: "This is a sample server Petstore server.  You can find out more about\
-    \ Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\
-    \  For this sample, you can use the api key `special-key` to test the authorization\
-    \ filters."
-  version: "1.0.0"
-  title: "Swagger Petstore"
-  termsOfService: "http://swagger.io/terms/"
-  contact:
-    email: "apiteam@swagger.io"
-  license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/v2"
-tags:
-- name: "pet"
-  description: "Everything about your Pets"
-  externalDocs:
-    description: "Find out more"
-    url: "http://swagger.io"
-- name: "store"
-  description: "Access to Petstore orders"
-- name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
-schemes:
-- "http"
+  title: INTOUCH-API-V3-JSVT
+  description: One stop for all Target Loyalty,Authentication, Webhooks and Integrations
+    Apis
+  version: '1.0'
+servers:
+  - url: https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com
+    description: Generated server url
+security:
+  - basicAuth: []
+  - bearerAuth: []
 paths:
-  /pet:
-    post:
-      tags:
-      - "pet"
-      summary: "Add a new pet to the store"
-      description: ""
-      operationId: "addPet"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet object that needs to be added to the store"
-        required: true
-        schema:
-          $ref: "#/definitions/Pet"
-      responses:
-        405:
-          description: "Invalid input"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
+  "/v3/webHooks/{webHookId}":
     put:
       tags:
-      - "pet"
-      summary: "Update an existing pet"
-      description: ""
-      operationId: "updatePet"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
+        - web-hook-controller
+      operationId: updateWebHook
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet object that needs to be added to the store"
+        - name: webHookId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              "$ref": "#/components/schemas/WebHookEntity"
         required: true
-        schema:
-          $ref: "#/definitions/Pet"
       responses:
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Pet not found"
-        405:
-          description: "Validation exception"
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
       security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /pet/findByStatus:
+        - basicAuth: []
+        - bearerAuth: []
+    delete:
+      tags:
+        - web-hook-controller
+      operationId: deleteWebHook
+      parameters:
+        - name: webHookId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/userLoyaltyTargets/{userLoyaltyTargetId}":
+    put:
+      tags:
+        - target-group-controller
+      operationId: updateUserLoyaltyTargets
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: userLoyaltyTargetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserLoyaltyTargets"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperUserLoyaltyTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/unifiedTargets":
+    put:
+      tags:
+        - target-group-controller
+      operationId: editUnifiedTargets
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UnifiedTargetUpdateData"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperUnifiedTargetUpdateData"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}":
+    put:
+      tags:
+        - target-group-controller
+      operationId: editTarget
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Targets"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    delete:
+      tags:
+        - target-group-controller
+      operationId: deactivateTarget
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperBoolean"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targetPeriods":
     get:
       tags:
-      - "pet"
-      summary: "Finds Pets by status"
-      description: "Multiple status values can be provided with comma separated strings"
-      operationId: "findPetsByStatus"
-      produces:
-      - "application/xml"
-      - "application/json"
+        - target-group-controller
+      operationId: getTargetPeriods
       parameters:
-      - name: "status"
-        in: "query"
-        description: "Status values that need to be considered for filter"
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetPeriods"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    put:
+      tags:
+        - target-group-controller
+      operationId: editTargetPeriods
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/TargetPeriods"
         required: true
-        type: "array"
-        items:
-          type: "string"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetPeriods"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    post:
+      tags:
+        - target-group-controller
+      operationId: createTargetPeriods
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/TargetPeriods"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetPeriods"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/editTargetGroup/{targetGroupId}":
+    put:
+      tags:
+        - target-group-controller
+      operationId: editTargetGroup
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TargetGroups"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargetGroups"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/editTargetDates/{targetGroupId}":
+    put:
+      tags:
+        - target-group-controller
+      operationId: editTargetDates
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: offset
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargetGroups"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/integrations/clients/{clientKey}":
+    get:
+      tags:
+        - integrations-controller
+      operationId: getClient
+      parameters:
+        - name: clientKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperIntegrationsClient"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    put:
+      tags:
+        - integrations-controller
+      operationId: updateClient
+      parameters:
+        - name: clientKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/IntegrationsClient"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperIntegrationsClient"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    delete:
+      tags:
+        - integrations-controller
+      operationId: deleteClient
+      parameters:
+        - name: clientKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperIntegrationsClient"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getWebHooks
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    post:
+      tags:
+        - web-hook-controller
+      operationId: addWebHook
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              "$ref": "#/components/schemas/WebHookEntity"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/updateTargetCompletedMessageStatus":
+    post:
+      tags:
+        - user-controller
+      summary: Update User Loyalty Target Completed Message Status
+      operationId: updateTargetCompletedMessageStatus
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserTargetCompletionEvent"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListUserLoyaltyTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/replayEvents":
+    post:
+      tags:
+        - user-controller
+      operationId: replayEvents
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ReplayEventsParams"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperReplayEventsParams"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getAllTargetGroups
+      parameters:
+        - name: includeOnlyActive
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: includeUserCreatedTargetGroups
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: includeOnlyTargetGroupDetails
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetGroups"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    post:
+      tags:
+        - target-group-controller
+      operationId: createTargetGroups
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TargetGroups"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargetGroups"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/userTargetEvents":
+    post:
+      tags:
+        - target-group-controller
+      operationId: createUserTargetEvents
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/UserTargetEvents"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListUserTargetEvents"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/userLoyaltyTargets":
+    post:
+      tags:
+        - target-group-controller
+      operationId: createUserLoyaltyTargets
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/UserLoyaltyTargets"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListUserLoyaltyTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getTargets
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    post:
+      tags:
+        - target-group-controller
+      operationId: createTargets
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/Targets"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/upload":
+    post:
+      tags:
+        - target-group-controller
+      operationId: uploadUserTargets
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/UserTargetUploadDetails"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListUserTargetUploadDetails"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/unEnroll":
+    post:
+      tags:
+        - target-group-controller
+      operationId: userUnEnrollApi
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/UnEnrollViaApi"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperLong"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/enroll":
+    post:
+      tags:
+        - target-group-controller
+      operationId: userEnrollApi
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/EnrollViaApi"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperLong"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/enrollViaAudience":
+    post:
+      tags:
+        - target-group-controller
+      operationId: enrollUsersViaAudienceFilter
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/EnrollUsersViaAudienceDetails"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListEnrollUsersViaAudienceDetails"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/communications/upsert":
+    post:
+      tags:
+        - target-group-controller
+      operationId: upsertTargetCommunications
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/TargetCommunications"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetCommunications"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/returnBillTargetEvents":
+    post:
+      tags:
+        - target-group-controller
+      operationId: returnBillTargetEvents
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                "$ref": "#/components/schemas/ReturnBillTargetEvents"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListReturnBillTargetEvents"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/isValidName":
+    post:
+      tags:
+        - target-group-controller
+      operationId: isValidName
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperBoolean"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/oauth/token/generate":
+    post:
+      tags:
+        - o-auth-controller
+      operationId: generateToken
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              "$ref": "#/components/schemas/TokenRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTokenResponse"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/internal/customers/bulk/get":
+    post:
+      tags:
+        - internal-customer-controller
+      operationId: getBulkUsers
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListCustomer"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/integrations/clients":
+    get:
+      tags:
+        - integrations-controller
+      operationId: getClients
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListIntegrationsClient"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    post:
+      tags:
+        - integrations-controller
+      operationId: createClient
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/IntegrationsClient"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperIntegrationsClient"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventMetaData":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getEventMetadata
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventMetaData/{eventPath}/{eventName}":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getSubEventMetadata
+      parameters:
+        - name: eventPath
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: eventName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventMetaData/{eventName}":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getEventMetadata_1
+      parameters:
+        - name: eventName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventLog/{eventId}":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getEventLog
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventLog/requestId/{requestId}":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getEventLogByRequestId
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventLog/refId/{refId}":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getEventLogByRefId
+      parameters:
+        - name: refId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/webHooks/eventLog/refId/{refId}/requestId/{requestId}":
+    get:
+      tags:
+        - web-hook-controller
+      operationId: getEventLogByRefId_1
+      parameters:
+        - name: refId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapper"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/verticals/{name}":
+    get:
+      tags:
+        - org-vertical-controller
+      operationId: getOrgsMappedToVertical
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int64
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/{userId}/targetGroups":
+    get:
+      tags:
+        - user-controller
+      summary: Get current target and streaks status for passed user for current evaluation
+        period
+      operationId: getUserTargets
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: includeInactive
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: includeInactiveTargets
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: targetRuleId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: trackingDate
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: excludedEntities
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+        - name: includeOnlyEnrolled
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperUserTargetStatus"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/{userId}/enrolledTargets":
+    get:
+      tags:
+        - user-controller
+      operationId: getEnrolledUserTargets
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetRuleIds
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: enrollmentType
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: trackingDate
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: includeOnlyUserCreated
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/{targetRuleId}/getUserTargetValueForEntityIds/{userId}":
+    get:
+      tags:
+        - user-controller
+      operationId: getUserTargetValueForEntityIds
+      parameters:
+        - name: targetRuleId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: entityIds
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: billDate
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListUserTargetEvents"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/triggerTargetCommunications":
+    get:
+      tags:
+        - user-controller
+      summary: Triggers target communications
+      operationId: triggerTargetCommunications
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargetCommBulkIngestDto"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/targetCompletionStatus":
+    get:
+      tags:
+        - user-controller
+      summary: Get target completion status for all users for last evaluation period
+      operationId: getUserTargetsForOrg
+      parameters:
+        - name: onlyUnpublished
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1000
+        - name: targetEvaluationType
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - FIXED_CALENDAR_WINDOW
+              - CYCLIC_WINDOW
+              - PERIOD_AGNOSTIC_WINDOW
+              - CALENDAR_CYCLIC_WINDOW
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListUserTargetStatus"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/users/targetCompleted/{targetAchievedEventLogId}":
+    get:
+      tags:
+        - user-controller
+      operationId: getTargetCompletedDetails
+      parameters:
+        - name: targetAchievedEventLogId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargetCompletedDetailsDto"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getTargetGroups
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: includePeriods
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperTargetGroups"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+    delete:
+      tags:
+        - target-group-controller
+      operationId: deactivateTargetGroups
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperBoolean"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/getUploadedFiles":
+    get:
+      tags:
+        - target-group-controller
+      summary: Get target upload file details, by default all status files will be
+        fetched
+      operationId: getUploadFileDetails
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: uploadFileHandle
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PaginatedResponseListUserTargetUploadFileDetails"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/{targetGroupId}/targets/{targetId}/communications":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getTargetCommunicationTemplate
+      parameters:
+        - name: targetGroupId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: targetId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetCommunications"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/targets":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getTargetsByEntity
+      parameters:
+        - name: entity
+          in: query
+          required: false
+          schema:
+            type: string
+            default: POINTS
+        - name: includeInactive
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: includeUserCreatedTargetGroups
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/targets/trackingType":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getTargetsByTrackingType
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: includeInactive
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: includeUserCreatedTargetGroups
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargets"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/targetGroups/channels":
+    get:
+      tags:
+        - target-group-controller
+      operationId: getTargetChannels
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListTargetChannel"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/ruleGrammar/{eventName}":
+    get:
+      tags:
+        - rule-expression-controller
+      operationId: getRuleExpression
+      parameters:
+        - name: eventName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/milestones":
+    get:
+      tags:
+        - milestone-controller
+      operationId: getAllMileStones
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: target-on
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: start-date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: end-date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: require-periods
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: includeUserCreatedTargetGroups
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PaginatedResponseListTargetGroups"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/meta/version":
+    get:
+      tags:
+        - meta-resource
+      operationId: getVersion
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/integrations/scopes":
+    get:
+      tags:
+        - integrations-controller
+      operationId: getAllScopes
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ResponseWrapperListIntegrationsScopeEntity"
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/authenticate":
+    get:
+      tags:
+        - auth-check-controller
+      operationId: getstatus
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: string
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/admin/authenticate":
+    get:
+      tags:
+        - auth-check-controller
+      operationId: getAdminstatus
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: string
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/cache/clearorgconfig":
+    delete:
+      tags:
+        - cache-controller
+      operationId: clearOrgConfigCache
+      parameters:
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+  "/v3/cache/clearorgconfig/{configKey}":
+    delete:
+      tags:
+        - cache-controller
+      operationId: clearOrgConfig
+      parameters:
+        - name: configKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-KEY
+          in: header
+          description: Header for X-CAP-API-AUTH-KEY
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-AUTH-ORG-ID
+          in: header
+          description: Header for X-CAP-API-AUTH-ORG-ID
+          required: false
+          schema:
+            type: string
+        - name: X-CAP-API-OAUTH-TOKEN
+          in: header
+          description: Header for X-CAP-API-OAUTH-TOKEN
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+components:
+  schemas:
+    Attribution:
+      type: object
+      properties:
+        createdOn:
+          type: string
+          format: date-time
+        lastUpdatedOn:
+          type: string
+          format: date-time
+        lastUpdatedBy:
+          "$ref": "#/components/schemas/OrgEntity"
+        createdBy:
+          "$ref": "#/components/schemas/OrgEntity"
+      readOnly: true
+    OrgEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        code:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
           enum:
-          - "available"
-          - "pending"
-          - "sold"
-          default: "available"
-        collectionFormat: "csv"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Pet"
-        400:
-          description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /pet/findByTags:
-    get:
-      tags:
-      - "pet"
-      summary: "Finds Pets by tags"
-      description: "Multiple tags can be provided with comma separated strings. Use\
-        \ tag1, tag2, tag3 for testing."
-      operationId: "findPetsByTags"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "tags"
-        in: "query"
-        description: "Tags to filter by"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "csv"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Pet"
-        400:
-          description: "Invalid tag value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /pet/{petId}:
-    get:
-      tags:
-      - "pet"
-      summary: "Find pet by ID"
-      description: "Returns a single pet"
-      operationId: "getPetById"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "petId"
-        in: "path"
-        description: "ID of pet to return"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Pet"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Pet not found"
-      security:
-      - api_key: []
-    post:
-      tags:
-      - "pet"
-      summary: "Updates a pet in the store with form data"
-      description: ""
-      operationId: "updatePetWithForm"
-      consumes:
-      - "application/x-www-form-urlencoded"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "petId"
-        in: "path"
-        description: "ID of pet that needs to be updated"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "name"
-        in: "formData"
-        description: "Updated name of the pet"
-        required: false
-        type: "string"
-      - name: "status"
-        in: "formData"
-        description: "Updated status of the pet"
-        required: false
-        type: "string"
-      responses:
-        405:
-          description: "Invalid input"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-    delete:
-      tags:
-      - "pet"
-      summary: "Deletes a pet"
-      description: ""
-      operationId: "deletePet"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "petId"
-        in: "path"
-        description: "Pet id to delete"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        400:
-          description: "Invalid pet value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /pet/{petId}/uploadImage:
-    post:
-      tags:
-      - "pet"
-      summary: "uploads an image"
-      description: ""
-      operationId: "uploadFile"
-      consumes:
-      - "multipart/form-data"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "petId"
-        in: "path"
-        description: "ID of pet to update"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "additionalMetadata"
-        in: "formData"
-        description: "Additional data to pass to server"
-        required: false
-        type: "string"
-      - name: "file"
-        in: "formData"
-        description: "file to upload"
-        required: false
-        type: "file"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/ApiResponse"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /store/inventory:
-    get:
-      tags:
-      - "store"
-      summary: "Returns pet inventories by status"
-      description: "Returns a map of status codes to quantities"
-      operationId: "getInventory"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "object"
-            additionalProperties:
-              type: "integer"
-              format: "int32"
-      security:
-      - api_key: []
-  /store/order:
-    post:
-      tags:
-      - "store"
-      summary: "Place an order for a pet"
-      description: ""
-      operationId: "placeOrder"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "order placed for purchasing the pet"
-        required: true
-        schema:
-          $ref: "#/definitions/Order"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Order"
-        400:
-          description: "Invalid Order"
-  /store/order/{orderId}:
-    get:
-      tags:
-      - "store"
-      summary: "Find purchase order by ID"
-      description: "For valid response try integer IDs with value <= 5 or > 10. Other\
-        \ values will generated exceptions"
-      operationId: "getOrderById"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "orderId"
-        in: "path"
-        description: "ID of pet that needs to be fetched"
-        required: true
-        type: "integer"
-        maximum: 5.0
-        minimum: 1.0
-        format: "int64"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Order"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Order not found"
-    delete:
-      tags:
-      - "store"
-      summary: "Delete purchase order by ID"
-      description: "For valid response try integer IDs with value < 1000. Anything\
-        \ above 1000 or nonintegers will generate API errors"
-      operationId: "deleteOrder"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "orderId"
-        in: "path"
-        description: "ID of the order that needs to be deleted"
-        required: true
-        type: "string"
-        minimum: 1.0
-      responses:
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Order not found"
-  /user:
-    post:
-      tags:
-      - "user"
-      summary: "Create user"
-      description: "This can only be done by the logged in user."
-      operationId: "createUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Created user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
-      responses:
-        default:
-          description: "successful operation"
-  /user/createWithArray:
-    post:
-      tags:
-      - "user"
-      summary: "Creates list of users with given input array"
-      description: ""
-      operationId: "createUsersWithArrayInput"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "List of user object"
-        required: true
-        schema:
-          type: "array"
+            - ZONE
+            - CONCEPT
+            - STORE
+            - TILL
+            - STR_SERVER
+            - ADMIN_USER
+            - ASSOCIATE
+            - RULE
+            - OU
+    PossibleValue:
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+    WebHookEntity:
+      required:
+        - eventNames
+        - methodType
+        - name
+        - webHookId
+        - webHookUrl
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        webHookId:
+          type: string
+        name:
+          type: string
+        eventNames:
+          maxItems: 2147483647
+          minItems: 1
+          type: array
           items:
-            $ref: "#/definitions/User"
-      responses:
-        default:
-          description: "successful operation"
-  /user/createWithList:
-    post:
-      tags:
-      - "user"
-      summary: "Creates list of users with given input array"
-      description: ""
-      operationId: "createUsersWithListInput"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "List of user object"
-        required: true
-        schema:
-          type: "array"
+            type: string
+        webHookUrl:
+          type: string
+        webHookType:
+          type: string
+          enum:
+            - HTTP
+            - QUEUE
+            - QUEUE_INT
+        methodType:
+          type: string
+          enum:
+            - POST
+            - PUT
+        webHookHeaders:
+          type: object
+          additionalProperties:
+            type: string
+        noOfRetryAttempts:
+          type: integer
+          format: int32
+        maxAllowedConnections:
+          type: integer
+          format: int32
+        active:
+          type: boolean
+        slaInSeconds:
+          type: integer
+          format: int64
+        consumerGroupId:
+          type: string
+        tillDetailsEnrichmentEnabled:
+          type: boolean
+        storeDetailsEnrichmentEnabled:
+          type: boolean
+        customerIdentifiersToBeEnriched:
+          type: array
           items:
-            $ref: "#/definitions/User"
-      responses:
-        default:
-          description: "successful operation"
-  /user/login:
-    get:
-      tags:
-      - "user"
-      summary: "Logs user into the system"
-      description: ""
-      operationId: "loginUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "query"
-        description: "The user name for login"
-        required: true
-        type: "string"
-      - name: "password"
-        in: "query"
-        description: "The password for login in clear text"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "string"
-          headers:
-            X-Rate-Limit:
-              type: "integer"
-              format: "int32"
-              description: "calls per hour allowed by the user"
-            X-Expires-After:
-              type: "string"
-              format: "date-time"
-              description: "date in UTC when toekn expires"
-        400:
-          description: "Invalid username/password supplied"
-  /user/logout:
-    get:
-      tags:
-      - "user"
-      summary: "Logs out current logged in user session"
-      description: ""
-      operationId: "logoutUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters: []
-      responses:
-        default:
-          description: "successful operation"
-  /user/{username}:
-    get:
-      tags:
-      - "user"
-      summary: "Get user by user name"
-      description: ""
-      operationId: "getUserByName"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
-        400:
-          description: "Invalid username supplied"
-        404:
-          description: "User not found"
-    put:
-      tags:
-      - "user"
-      summary: "Updated user"
-      description: "This can only be done by the logged in user."
-      operationId: "updateUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "name that need to be deleted"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
-      responses:
-        400:
-          description: "Invalid user supplied"
-        404:
-          description: "User not found"
-    delete:
-      tags:
-      - "user"
-      summary: "Delete user"
-      description: "This can only be done by the logged in user."
-      operationId: "deleteUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be deleted"
-        required: true
-        type: "string"
-      responses:
-        400:
-          description: "Invalid username supplied"
-        404:
-          description: "User not found"
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/api/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
-definitions:
-  Order:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      petId:
-        type: "integer"
-        format: "int64"
-      quantity:
-        type: "integer"
-        format: "int32"
-      shipDate:
-        type: "string"
-        format: "date-time"
-      status:
-        type: "string"
-        description: "Order Status"
-        enum:
-        - "placed"
-        - "approved"
-        - "delivered"
-      complete:
-        type: "boolean"
-        default: false
-    xml:
-      name: "Order"
-  Category:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      name:
-        type: "string"
-    xml:
-      name: "Category"
-  User:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      username:
-        type: "string"
-      firstName:
-        type: "string"
-      lastName:
-        type: "string"
-      email:
-        type: "string"
-      password:
-        type: "string"
-      phone:
-        type: "string"
-      userStatus:
-        type: "integer"
-        format: "int32"
-        description: "User Status"
-    xml:
-      name: "User"
-  Tag:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      name:
-        type: "string"
-    xml:
-      name: "Tag"
-  Pet:
-    type: "object"
-    required:
-    - "name"
-    - "photoUrls"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      category:
-        $ref: "#/definitions/Category"
-      name:
-        type: "string"
-        example: "doggie"
-      photoUrls:
-        type: "array"
-        xml:
-          name: "photoUrl"
-          wrapped: true
-        items:
-          type: "string"
-      tags:
-        type: "array"
-        xml:
-          name: "tag"
-          wrapped: true
-        items:
-          $ref: "#/definitions/Tag"
-      status:
-        type: "string"
-        description: "pet status in the store"
-        enum:
-        - "available"
-        - "pending"
-        - "sold"
-    xml:
-      name: "Pet"
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
-      message:
-        type: "string"
-externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+            type: string
+        awardedReferenceEnrichmentEnabled:
+          type: boolean
+        availablePointsBalanceEnrichmentEnabled:
+          type: boolean
+        neoEnrichment:
+          "$ref": "#/components/schemas/PossibleValue"
+        possibleValues:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PossibleValue"
+    ApiError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+    ApiWarning:
+      type: object
+      properties:
+        message:
+          type: string
+    ResponseWrapper:
+      type: object
+      properties:
+        data:
+          type: object
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetMilestoneTriggers:
+      required:
+        - triggerName
+        - triggerType
+        - triggerValue
+        - triggerValueType
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        triggerName:
+          type: string
+        description:
+          type: string
+        isActive:
+          type: boolean
+        triggerType:
+          type: string
+          enum:
+            - SYSTEM_TRIGGER
+            - CUSTOM_TRIGGER
+        triggerValueType:
+          type: string
+          enum:
+            - ABSOLUTE
+            - PERCENTAGE
+        triggerValue:
+          type: number
+        targetRuleId:
+          type: integer
+          format: int64
+    TargetMilestoneTriggersDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        orgId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        createdBy:
+          type: integer
+          format: int64
+        createdOn:
+          type: string
+          format: date-time
+        lastUpdatedOn:
+          type: string
+          format: date-time
+        lastUpdatedBy:
+          type: integer
+          format: int64
+        triggerType:
+          type: string
+          enum:
+            - SYSTEM_TRIGGER
+            - CUSTOM_TRIGGER
+        triggerValueType:
+          type: string
+          enum:
+            - ABSOLUTE
+            - PERCENTAGE
+        targetRuleId:
+          type: integer
+          format: int64
+        triggerValue:
+          type: number
+        achievedAtId:
+          type: integer
+          format: int64
+        achievedAt:
+          type: string
+          format: date-time
+        active:
+          type: boolean
+    UserLoyaltyTargets:
+      required:
+        - targetValue
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        userId:
+          type: integer
+          format: int64
+        periodId:
+          type: integer
+          format: int64
+        targetRuleId:
+          type: integer
+          format: int64
+        targetValue:
+          type: number
+        achievedValue:
+          type: number
+        targetName:
+          type: string
+        targetType:
+          type: string
+          enum:
+            - QUANTITY
+            - SALES
+            - COUNT
+            - VISIT
+            - GROSS_SALES
+            - REGULAR_POINTS
+            - PROMOTIONAL_POINTS
+            - ALL_POINTS
+            - EXTENDED_FIELD
+            - EVENT_ATTRIBUTE
+            - REGULAR
+            - PROMOTIONAL
+            - ALL
+        targetEntity:
+          type: string
+          enum:
+            - TRANSACTION
+            - LINEITEM
+            - POINTS
+            - EVENT
+            - ALTERNATE_CURRENCIES
+        unEnrolledOn:
+          type: string
+          format: date-time
+        createdOn:
+          type: string
+          format: date-time
+        enrolledOn:
+          type: string
+          format: date-time
+        targetMilestoneTriggersList:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetMilestoneTriggers"
+        emfMessageSent:
+          type: boolean
+        promoEngineMessageSent:
+          type: boolean
+        targetMilestoneTriggersListDtos:
+          type: array
+          writeOnly: true
+          items:
+            "$ref": "#/components/schemas/TargetMilestoneTriggersDto"
+        targetAchievedEmfMessageSent:
+          type: boolean
+        unEnrolled:
+          type: boolean
+    ResponseWrapperUserLoyaltyTargets:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserLoyaltyTargets"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    AggregateWindow:
+      type: object
+      properties:
+        windowType:
+          type: string
+          enum:
+            - MAX
+            - MIN
+        windowTimeUnit:
+          type: string
+          enum:
+            - DAY
+        windowValue:
+          type: integer
+          format: int32
+    TargetAudienceFilter:
+      type: object
+      properties:
+        audienceGroupId:
+          type: integer
+          format: int64
+        versionId:
+          type: integer
+          format: int64
+        audienceFilterMetaId:
+          type: integer
+          format: int64
+        lastUpdatedOn:
+          type: string
+          format: date-time
+    TargetPeriodDefaultValues:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        periodId:
+          type: integer
+          format: int64
+        defaultValue:
+          type: number
+    TargetRuleFilter:
+      type: object
+      properties:
+        entityType:
+          type: string
+          enum:
+            - STORE
+            - ZONE
+            - CONCEPT
+            - TARGET
+        entityIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    TargetRuleMetaData:
+      type: object
+      properties:
+        name:
+          type: string
+        aggregateFunction:
+          type: string
+          enum:
+            - SUM
+            - COUNT
+        aggregateWindow:
+          "$ref": "#/components/schemas/AggregateWindow"
+        programId:
+          type: integer
+          format: int64
+        alternateCurrencyIdentifier:
+          type: string
+    Targets:
+      required:
+        - name
+        - targetEntity
+        - targetType
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        name:
+          maxLength: 200
+          minLength: 0
+          type: string
+        emfRuleSetId:
+          type: integer
+          format: int64
+        emfUnrolledRulesetId:
+          type: integer
+          format: int64
+        targetType:
+          type: string
+          enum:
+            - QUANTITY
+            - SALES
+            - COUNT
+            - VISIT
+            - GROSS_SALES
+            - REGULAR_POINTS
+            - PROMOTIONAL_POINTS
+            - ALL_POINTS
+            - EXTENDED_FIELD
+            - EVENT_ATTRIBUTE
+            - REGULAR
+            - PROMOTIONAL
+            - ALL
+        targetEntity:
+          type: string
+          enum:
+            - TRANSACTION
+            - LINEITEM
+            - POINTS
+            - EVENT
+            - ALTERNATE_CURRENCIES
+        eventName:
+          type: string
+        emfRulesetPayload:
+          type: string
+          writeOnly: true
+        targetGroupId:
+          type: integer
+          format: int64
+        description:
+          type: string
+        active:
+          type: boolean
+        emfUnrolledRulesetPayload:
+          type: string
+          writeOnly: true
+        expression:
+          type: string
+        expressionJson:
+          type: string
+        filters:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetRuleFilter"
+        enrolmentMethod:
+          type: string
+          enum:
+            - TRANSACTION
+            - IMPORT
+            - AUDIENCE_FILTER
+        defaultValues:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetPeriodDefaultValues"
+        targetPeriodDefaultValuesMap:
+          type: object
+          additionalProperties:
+            "$ref": "#/components/schemas/TargetPeriodDefaultValues"
+        targetMilestoneTriggers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetMilestoneTriggers"
+        targetAudienceFilter:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetAudienceFilter"
+        extendedFieldInfo:
+          "$ref": "#/components/schemas/TargetRuleMetaData"
+    UnifiedTargetExpression:
+      type: object
+      properties:
+        aggregation:
+          type: string
+          enum:
+            - SUM
+            - COUNT
+        thresholdValue:
+          type: number
+        ruleExpression:
+          type: string
+    UnifiedTargetUpdateData:
+      type: object
+      properties:
+        unifiedTargetExpression:
+          "$ref": "#/components/schemas/UnifiedTargetExpression"
+        targets:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Targets"
+        deactivateTargetIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    ResponseWrapperUnifiedTargetUpdateData:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UnifiedTargetUpdateData"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ResponseWrapperTargets:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/Targets"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetPeriods:
+      required:
+        - endDate
+        - refCode
+        - startDate
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        refCode:
+          maxLength: 50
+          minLength: 0
+          type: string
+        periodStatus:
+          type: string
+          readOnly: true
+          enum:
+            - RUNNING
+            - ENDED
+            - NOT_STARTED
+        targetGroupId:
+          type: integer
+          format: int64
+        description:
+          type: string
+        active:
+          type: boolean
+    ResponseWrapperListTargetPeriods:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetPeriods"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    Streak:
+      required:
+        - name
+        - targetCountOfSequence
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        targetGroupId:
+          type: integer
+          format: int64
+        name:
+          maxLength: 210
+          minLength: 1
+          type: string
+        targetCountOfSequence:
+          type: integer
+          format: int32
+        createdOn:
+          type: string
+          format: date-time
+      readOnly: true
+    TargetGroups:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        orgId:
+          type: integer
+          format: int64
+        name:
+          maxLength: 200
+          minLength: 1
+          type: string
+        fromDate:
+          type: string
+          format: date-time
+          readOnly: true
+          deprecated: true
+        toDate:
+          type: string
+          format: date-time
+          readOnly: true
+          deprecated: true
+        active:
+          type: boolean
+          readOnly: true
+        preferredTillId:
+          type: integer
+          format: int64
+        periods:
+          type: array
+          readOnly: true
+          items:
+            "$ref": "#/components/schemas/TargetPeriods"
+        streaks:
+          type: array
+          readOnly: true
+          items:
+            "$ref": "#/components/schemas/Streak"
+        activePeriod:
+          "$ref": "#/components/schemas/TargetPeriods"
+        totalPeriods:
+          type: integer
+          format: int32
+          readOnly: true
+        description:
+          type: string
+        targetEvaluationType:
+          type: string
+          readOnly: true
+          enum:
+            - FIXED_CALENDAR_WINDOW
+            - CYCLIC_WINDOW
+            - PERIOD_AGNOSTIC_WINDOW
+            - CALENDAR_CYCLIC_WINDOW
+        recurringCycles:
+          type: integer
+          format: int32
+          readOnly: true
+        frequency:
+          type: integer
+          format: int32
+          readOnly: true
+        targetCycleStartDate:
+          type: string
+          format: date-time
+          readOnly: true
+        targetCycleEndDate:
+          type: string
+          format: date-time
+          readOnly: true
+        frequencyType:
+          type: string
+          readOnly: true
+          enum:
+            - MONTHLY
+            - QUARTERLY
+            - HALF_YEARLY
+            - YEARLY
+            - CUSTOM
+            - DAILY
+            - WEEKLY
+        trackingType:
+          type: string
+          readOnly: true
+          enum:
+            - DEFAULT
+            - CAPPING
+            - UNIFIED
+            - STREAKS
+            - NON_CONTINUOUS_STREAKS
+        createdOn:
+          type: string
+          format: date-time
+          readOnly: true
+        targets:
+          type: array
+          readOnly: true
+          items:
+            "$ref": "#/components/schemas/Targets"
+        combinationType:
+          type: string
+          readOnly: true
+          enum:
+            - ANY
+            - ALL
+            - MIXED
+        unifiedTargetExpression:
+          "$ref": "#/components/schemas/UnifiedTargetExpression"
+        leaderboardEnabled:
+          type: boolean
+          readOnly: true
+        userCreated:
+          type: boolean
+    ResponseWrapperTargetGroups:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/TargetGroups"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    IntegrationsClient:
+      required:
+        - defaultTillId
+        - description
+        - expirationTokenTime
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        name:
+          maxLength: 100
+          minLength: 1
+          type: string
+        clientKey:
+          type: string
+        clientSecret:
+          type: string
+        isValid:
+          type: boolean
+        description:
+          maxLength: 100
+          minLength: 1
+          type: string
+        expirationTokenTime:
+          minimum: 10
+          type: integer
+          format: int32
+        defaultTillId:
+          type: integer
+          format: int64
+        scopes:
+          type: array
+          items:
+            "$ref": "#/components/schemas/IntegrationsScope"
+        accessGroupId:
+          type: integer
+          format: int32
+        configKeys:
+          type: object
+          additionalProperties:
+            type: string
+    IntegrationsScope:
+      required:
+        - entityId
+        - permission
+      type: object
+      properties:
+        permission:
+          type: string
+          enum:
+            - READ
+            - WRITE
+            - READWRITE
+        entityId:
+          type: integer
+          format: int64
+        resources:
+          type: array
+          items:
+            type: string
+    ResponseWrapperIntegrationsClient:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/IntegrationsClient"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    UserTargetCompletionEvent:
+      required:
+        - periodId
+        - userIds
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        periodId:
+          type: integer
+          format: int64
+        userIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    ResponseWrapperListUserLoyaltyTargets:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserLoyaltyTargets"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ReplayEventsParams:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        orgId:
+          type: integer
+          format: int64
+        key:
+          type: string
+        message:
+          type: string
+        successCount:
+          type: integer
+          format: int32
+        userTargetIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    ResponseWrapperReplayEventsParams:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/ReplayEventsParams"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    LineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        serial:
+          type: integer
+          format: int64
+        amount:
+          type: number
+        description:
+          type: string
+        discount:
+          type: number
+        qty:
+          type: number
+        value:
+          type: number
+        itemCode:
+          type: string
+        extendedFields:
+          type: object
+          additionalProperties:
+            type: string
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        billNumber:
+          type: string
+        amount:
+          type: number
+        discount:
+          type: number
+        grossAmount:
+          type: number
+        customerId:
+          type: integer
+          format: int64
+        lifeTimePurchases:
+          type: integer
+          format: int64
+        source:
+          type: string
+        qty:
+          type: number
+        extendedFields:
+          type: object
+          additionalProperties:
+            type: string
+    UserTargetEvents:
+      required:
+        - targetEntityId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        userId:
+          type: integer
+          format: int64
+        targetAchievedValue:
+          type: number
+        targetEntity:
+          type: string
+          enum:
+            - TRANSACTION
+            - LINEITEM
+            - POINTS
+            - EVENT
+            - ALTERNATE_CURRENCIES
+        eventType:
+          type: string
+          enum:
+            - ADD_TRANSACTION
+            - RETURN_BILL
+            - ENROL
+            - UNENROL
+        targetEvaluationType:
+          type: string
+          enum:
+            - FIXED_CALENDAR_WINDOW
+            - CYCLIC_WINDOW
+            - PERIOD_AGNOSTIC_WINDOW
+            - CALENDAR_CYCLIC_WINDOW
+        targetGroupId:
+          type: integer
+          format: int64
+        targetGroupName:
+          type: string
+        targetRuleId:
+          type: integer
+          format: int64
+        periodId:
+          type: integer
+          format: int64
+        targetEntityId:
+          type: integer
+          format: int64
+          readOnly: true
+        transaction:
+          "$ref": "#/components/schemas/Transaction"
+        lineItem:
+          "$ref": "#/components/schemas/LineItem"
+        targetValue:
+          type: number
+        eventDate:
+          type: string
+          format: date-time
+        billDate:
+          type: string
+          format: date-time
+        storeUnitId:
+          type: integer
+          format: int64
+        targetName:
+          type: string
+        points:
+          type: number
+          writeOnly: true
+        value:
+          type: number
+        periodStartDate:
+          type: string
+          format: date-time
+        periodEndDate:
+          type: string
+          format: date-time
+        periodRefCode:
+          type: string
+        definedTargetValue:
+          type: number
+        prevTargetAchievedValue:
+          type: number
+        eventLogId:
+          type: integer
+          format: int64
+        trackingValue:
+          type: number
+        eventAttributes:
+          type: object
+          additionalProperties:
+            type: string
+        targetValueTrackable:
+          type: boolean
+    ResponseWrapperListUserTargetEvents:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserTargetEvents"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ResponseWrapperListTargets:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Targets"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    UserTargetUploadDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        fileHandle:
+          type: string
+        fileName:
+          type: string
+        columnsMapping:
+          type: object
+          additionalProperties:
+            type: string
+        uploadId:
+          type: integer
+          format: int64
+    ResponseWrapperListUserTargetUploadDetails:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserTargetUploadDetails"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    UnEnrollViaApi:
+      required:
+        - customerId
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+    ResponseWrapperLong:
+      type: object
+      properties:
+        data:
+          type: integer
+          format: int64
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    EnrollViaApi:
+      required:
+        - customerId
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        periodName:
+          type: string
+        initialBalance:
+          type: integer
+          format: int64
+        resetStreakStatus:
+          type: boolean
+    EnrollUsersViaAudienceDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        uploadMetaId:
+          type: integer
+          format: int64
+        groupId:
+          type: integer
+          format: int64
+        versionId:
+          type: integer
+          format: int64
+    ResponseWrapperListEnrollUsersViaAudienceDetails:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/EnrollUsersViaAudienceDetails"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetCommunicationConfig:
+      required:
+        - value
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          maxLength: 100
+          minLength: 0
+          type: string
+    TargetCommunications:
+      required:
+        - messageTemplate
+        - sender
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        targetId:
+          type: integer
+          format: int64
+        targetGroupId:
+          type: integer
+          format: int64
+        communicationType:
+          type: string
+          enum:
+            - START
+            - FINISH
+            - CHANGE
+            - REMINDER
+        channelId:
+          type: integer
+          format: int64
+        subjectTemplate:
+          type: string
+        messageTemplate:
+          type: string
+        sender:
+          type: string
+        offsetDays:
+          maximum: 30
+          minimum: 0
+          type: integer
+          format: int32
+        active:
+          type: boolean
+        configs:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetCommunicationConfig"
+        supportedCommChannels:
+          type: array
+          items:
+            type: string
+    ResponseWrapperListTargetCommunications:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetCommunications"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ReturnBillTargetEvents:
+      required:
+        - targetEntityId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        userId:
+          type: integer
+          format: int64
+        targetEntity:
+          type: string
+          enum:
+            - TRANSACTION
+            - LINEITEM
+            - POINTS
+            - EVENT
+            - ALTERNATE_CURRENCIES
+        targetGroupId:
+          type: integer
+          format: int64
+        returnTxnTargetRuleId:
+          type: integer
+          format: int64
+        addTxnTargetRuleId:
+          type: integer
+          format: int64
+        periodId:
+          type: integer
+          format: int64
+        targetEntityId:
+          type: integer
+          format: int64
+          readOnly: true
+        transaction:
+          "$ref": "#/components/schemas/Transaction"
+        lineItem:
+          "$ref": "#/components/schemas/LineItem"
+        targetValue:
+          type: number
+        eventDate:
+          type: string
+          format: date-time
+        billDate:
+          type: string
+          format: date-time
+        storeUnitId:
+          type: integer
+          format: int64
+        returnAmount:
+          type: number
+        returnQuantity:
+          type: number
+        returnGrossAmount:
+          type: number
+        eventLogId:
+          type: integer
+          format: int64
+        effectiveBillAmount:
+          type: number
+        billLineItemIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        points:
+          type: number
+        value:
+          type: number
+        targetValueTrackable:
+          type: boolean
+        isWholeBillReturned:
+          type: boolean
+        isWholeLineItemReturned:
+          type: boolean
+    ResponseWrapperListReturnBillTargetEvents:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ReturnBillTargetEvents"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ResponseWrapperBoolean:
+      type: object
+      properties:
+        data:
+          type: boolean
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TokenRequest:
+      type: object
+      properties:
+        key:
+          type: string
+        secret:
+          type: string
+    ResponseWrapperTokenResponse:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/TokenResponse"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        ttlSeconds:
+          type: integer
+          format: int32
+    CommChannel:
+      type: object
+      properties:
+        type:
+          type: string
+        accountId:
+          type: string
+        value:
+          type: string
+        primary:
+          type: boolean
+        verified:
+          type: boolean
+        subscribed:
+          type: boolean
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        profiles:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Profile"
+        loyaltyInfo:
+          "$ref": "#/components/schemas/LoyaltyInfo"
+        customFields:
+          type: object
+          additionalProperties:
+            type: string
+    LoyaltyInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        loyaltyType:
+          type: string
+          enum:
+            - loyalty
+            - non_loyalty
+        lifetimePurchases:
+          type: number
+        loyaltyId:
+          type: integer
+          format: int64
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        firstName:
+          type: string
+        lastName:
+          type: string
+        commChannels:
+          uniqueItems: true
+          type: array
+          items:
+            "$ref": "#/components/schemas/CommChannel"
+        source:
+          type: string
+        accountId:
+          type: string
+        userId:
+          type: integer
+          format: int64
+        orgId:
+          type: integer
+          format: int64
+        orgSourceId:
+          type: integer
+          format: int64
+    ResponseWrapperListCustomer:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Customer"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ResponseWrapperUserTargetStatus:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/UserTargetStatus"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetMilestoneTriggersExtension:
+      required:
+        - triggerName
+        - triggerType
+        - triggerValue
+        - triggerValueType
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        triggerName:
+          type: string
+        description:
+          type: string
+        isActive:
+          type: boolean
+        triggerType:
+          type: string
+          enum:
+            - SYSTEM_TRIGGER
+            - CUSTOM_TRIGGER
+        triggerValueType:
+          type: string
+          enum:
+            - ABSOLUTE
+            - PERCENTAGE
+        triggerValue:
+          type: number
+        targetRuleId:
+          type: integer
+          format: int64
+        userTargetId:
+          type: integer
+          format: int64
+        orgId:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        isAchieved:
+          type: boolean
+        achievedDate:
+          type: string
+          format: date-time
+        redeemablePoints:
+          type: number
+        delayedPoints:
+          type: number
+        externalTriggeredPoints:
+          type: number
+        messageIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        couponIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    UserPeriodTargetStatus:
+      type: object
+      properties:
+        targetId:
+          type: integer
+          format: int64
+        periodId:
+          type: integer
+          format: int64
+        programId:
+          type: integer
+          format: int64
+        alternateCurrencyIdentifier:
+          type: string
+        alternateCurrencyName:
+          type: string
+        periodRefCode:
+          type: string
+        periodStartDate:
+          type: string
+          format: date-time
+        periodEndDate:
+          type: string
+          format: date-time
+        targetValue:
+          type: number
+        targetAchievedValue:
+          type: number
+        targetName:
+          type: string
+        targetType:
+          type: string
+          enum:
+            - QUANTITY
+            - SALES
+            - COUNT
+            - VISIT
+            - GROSS_SALES
+            - REGULAR_POINTS
+            - PROMOTIONAL_POINTS
+            - ALL_POINTS
+            - EXTENDED_FIELD
+            - EVENT_ATTRIBUTE
+            - REGULAR
+            - PROMOTIONAL
+            - ALL
+        targetEntity:
+          type: string
+          enum:
+            - TRANSACTION
+            - LINEITEM
+            - POINTS
+            - EVENT
+            - ALTERNATE_CURRENCIES
+        targetRuleId:
+          type: integer
+          format: int64
+        enrolledOn:
+          type: string
+          format: date-time
+        eventName:
+          type: string
+        periodStartDateWithTimeStamp:
+          type: string
+          format: date-time
+        periodEndDateWithTimeStamp:
+          type: string
+          format: date-time
+        targetAchievedDateTime:
+          type: string
+          format: date-time
+        unEnrolled:
+          type: boolean
+        currentPeriod:
+          type: boolean
+        milestones:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetMilestoneTriggersExtension"
+    UserStreakStatus:
+      type: object
+      properties:
+        userStreakId:
+          type: integer
+          format: int64
+        streakId:
+          type: integer
+          format: int64
+        streakName:
+          type: string
+        status:
+          type: string
+          enum:
+            - INPROGRESS
+            - ACHIEVED
+            - DROPPED
+            - NOT_STARTED
+        currentCount:
+          type: integer
+          format: int32
+        totalTargetCountOfSequence:
+          type: integer
+          format: int32
+        streakAchievedUserTargetId:
+          type: integer
+          format: int64
+        streakAchievedDateTime:
+          type: string
+          format: date-time
+    UserTargetGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        name:
+          type: string
+        orgId:
+          type: integer
+          format: int64
+        preferredTillId:
+          type: integer
+          format: int64
+        targets:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserPeriodTargetStatus"
+        streaks:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserStreakStatus"
+        targetEvaluationType:
+          type: string
+          enum:
+            - FIXED_CALENDAR_WINDOW
+            - CYCLIC_WINDOW
+            - PERIOD_AGNOSTIC_WINDOW
+            - CALENDAR_CYCLIC_WINDOW
+        isUnifiedTargetsAchieved:
+          type: boolean
+        trackingType:
+          type: string
+          enum:
+            - DEFAULT
+            - CAPPING
+            - UNIFIED
+            - STREAKS
+            - NON_CONTINUOUS_STREAKS
+    UserTargetStatus:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        customer:
+          "$ref": "#/components/schemas/Customer"
+        targetGroups:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserTargetGroup"
+    OrgSource:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        name:
+          type: string
+        channelId:
+          type: integer
+          format: int64
+        uuid:
+          type: string
+        toMirror:
+          type: boolean
+        sourceAccountId:
+          type: string
+        isActive:
+          type: boolean
+        configs:
+          type: array
+          items:
+            "$ref": "#/components/schemas/OrgSourceConfig"
+    OrgSourceConfig:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    ResponseWrapperTargetCommBulkIngestDto:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/TargetCommBulkIngestDto"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetCommBulkIngestDto:
+      type: object
+      properties:
+        communicationTemplate:
+          "$ref": "#/components/schemas/TargetCommunications"
+        users:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Customer"
+        targetPeriod:
+          "$ref": "#/components/schemas/TargetPeriods"
+        target:
+          "$ref": "#/components/schemas/Targets"
+        userTargets:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserLoyaltyTargets"
+        orgId:
+          type: integer
+          format: int64
+        orgSource:
+          "$ref": "#/components/schemas/OrgSource"
+    ResponseWrapperListUserTargetStatus:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserTargetStatus"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ResponseWrapperTargetCompletedDetailsDto:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/TargetCompletedDetailsDto"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetCompletedDetailsDto:
+      type: object
+      properties:
+        orgId:
+          type: integer
+          format: int64
+        targetGroupID:
+          type: integer
+          format: int64
+        targetGroupName:
+          type: string
+        targetId:
+          type: integer
+          format: int64
+        targetName:
+          type: string
+        targetDescription:
+          type: string
+        targetPeriodID:
+          type: integer
+          format: int64
+        targetPeriodName:
+          type: string
+        targetValue:
+          type: number
+        achievedValue:
+          type: number
+        mileStoneName:
+          type: string
+        triggerValue:
+          type: number
+        sourceId:
+          type: integer
+          format: int64
+        sourceType:
+          type: string
+          enum:
+            - USERTARGET
+            - MILESTONE
+            - UNIFIED
+        targetsAsPartOfUnified:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetCompletedDetailsDto"
+    ResponseWrapperListTargetGroups:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetGroups"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    PaginatedParam:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        total:
+          type: integer
+          format: int64
+    PaginatedResponseListUserTargetUploadFileDetails:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/PaginatedParam"
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserTargetUploadFileDetails"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    UserTargetUploadFileDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        attribution:
+          "$ref": "#/components/schemas/Attribution"
+        uploadMetaId:
+          type: integer
+          format: int64
+        uploadFileName:
+          type: string
+        uploadFileHandle:
+          type: string
+        successFileHandle:
+          type: string
+        errorFileHandle:
+          type: string
+        uploadedCount:
+          type: integer
+          format: int64
+        failureCount:
+          type: integer
+          format: int64
+        successCount:
+          type: integer
+          format: int64
+        currentStatus:
+          type: string
+        batchCount:
+          type: integer
+          format: int32
+        tempTableName:
+          type: string
+    ResponseWrapperListTargetChannel:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetChannel"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    TargetChannel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    PaginatedResponseListTargetGroups:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/PaginatedParam"
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TargetGroups"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    IntegrationsScopeEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        entity:
+          type: string
+    ResponseWrapperListIntegrationsScopeEntity:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/IntegrationsScopeEntity"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+    ResponseWrapperListIntegrationsClient:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/IntegrationsClient"
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiError"
+        warnings:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ApiWarning"
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
