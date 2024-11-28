@@ -24,6 +24,7 @@ open class Name: JSONEncodable {
         nillableDictionary["snake_case"] = self.snakeCase?.encodeToJSON()
         nillableDictionary["property"] = self.property
         nillableDictionary["123Number"] = self._123Number?.encodeToJSON()
+
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

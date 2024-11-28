@@ -4,20 +4,17 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
-
-
+import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 public class ModelApiResponse   {
-  
-  private Integer code = null;
-  private String type = null;
-  private String message = null;
+  private Integer code = null;  private String type = null;  private String message = null;
 
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("code")
   public Integer getCode() {
     return code;
@@ -29,6 +26,7 @@ public class ModelApiResponse   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("type")
   public String getType() {
     return type;
@@ -40,6 +38,7 @@ public class ModelApiResponse   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -50,7 +49,7 @@ public class ModelApiResponse   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -84,11 +83,10 @@ public class ModelApiResponse   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

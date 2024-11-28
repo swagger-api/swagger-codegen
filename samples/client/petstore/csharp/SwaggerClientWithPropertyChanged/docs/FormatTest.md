@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 **Integer** | **int?** |  | [optional] 
 **Int32** | **int?** |  | [optional] 
 **Int64** | **long?** |  | [optional] 
-**Number** | **decimal?** |  | 
+**Number** | [**decimal?**](BigDecimal.md) |  | 
 **_Float** | **float?** |  | [optional] 
 **_Double** | **double?** |  | [optional] 
 **_String** | **string** |  | [optional] 

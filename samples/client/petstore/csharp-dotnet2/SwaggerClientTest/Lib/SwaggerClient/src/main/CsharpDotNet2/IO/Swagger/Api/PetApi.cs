@@ -25,23 +25,39 @@ namespace IO.Swagger.Api
         /// <returns></returns>
         void DeletePet (long? petId, string apiKey);
         /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        ApiResponse DoCategoryStuff (SubCategory body);
+        /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         /// <returns>List&lt;Pet&gt;</returns>
         List<Pet> FindPetsByStatus (List<string> status);
         /// <summary>
-        /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         /// <returns>List&lt;Pet&gt;</returns>
         List<Pet> FindPetsByTags (List<string> tags);
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>AllPetsResponse</returns>
+        AllPetsResponse GetAllPets ();
         /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         /// <returns>Pet</returns>
         Pet GetPetById (long? petId);
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>SinglePetResponse</returns>
+        SinglePetResponse GetRandomPet ();
         /// <summary>
         /// Update an existing pet 
         /// </summary>
@@ -52,18 +68,17 @@ namespace IO.Swagger.Api
         /// Updates a pet in the store with form data 
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="name">Updated name of the pet</param>
-        /// <param name="status">Updated status of the pet</param>
+        /// <param name="name"></param>
+        /// <param name="status"></param>
         /// <returns></returns>
         void UpdatePetWithForm (long? petId, string name, string status);
         /// <summary>
         /// uploads an image 
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
-        /// <param name="additionalMetadata">Additional data to pass to server</param>
-        /// <param name="file">file to upload</param>
+        /// <param name="body"></param>
         /// <returns>ApiResponse</returns>
-        ApiResponse UploadFile (long? petId, string additionalMetadata, System.IO.Stream file);
+        ApiResponse UploadFile (long? petId, Object body);
     }
   
     /// <summary>
@@ -122,14 +137,12 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Add a new pet to the store 
         /// </summary>
-        /// <param name="body">Pet object that needs to be added to the store</param> 
-        /// <returns></returns>            
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns></returns>
         public void AddPet (Pet body)
         {
-            
             // verify the required parameter 'body' is set
             if (body == null) throw new ApiException(400, "Missing required parameter 'body' when calling AddPet");
-            
     
             var path = "/pet";
             path = path.Replace("{format}", "json");
@@ -159,15 +172,13 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Deletes a pet 
         /// </summary>
-        /// <param name="petId">Pet id to delete</param> 
-        /// <param name="apiKey"></param> 
-        /// <returns></returns>            
+        /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
         public void DeletePet (long? petId, string apiKey)
         {
-            
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling DeletePet");
-            
     
             var path = "/pet/{petId}";
             path = path.Replace("{format}", "json");
@@ -196,16 +207,47 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        public ApiResponse DoCategoryStuff (SubCategory body)
+        {
+    
+            var path = "/pet/category";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.POST, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling DoCategoryStuff: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling DoCategoryStuff: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (ApiResponse) ApiClient.Deserialize(response.Content, typeof(ApiResponse), response.Headers);
+        }
+    
+        /// <summary>
         /// Finds Pets by status Multiple status values can be provided with comma separated strings
         /// </summary>
-        /// <param name="status">Status values that need to be considered for filter</param> 
-        /// <returns>List&lt;Pet&gt;</returns>            
+        /// <param name="status">Status values that need to be considered for filter</param>
+        /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByStatus (List<string> status)
         {
-            
             // verify the required parameter 'status' is set
             if (status == null) throw new ApiException(400, "Missing required parameter 'status' when calling FindPetsByStatus");
-            
     
             var path = "/pet/findByStatus";
             path = path.Replace("{format}", "json");
@@ -233,16 +275,14 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
-        /// Finds Pets by tags Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+        /// Finds Pets by tags Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
         /// </summary>
-        /// <param name="tags">Tags to filter by</param> 
-        /// <returns>List&lt;Pet&gt;</returns>            
+        /// <param name="tags">Tags to filter by</param>
+        /// <returns>List&lt;Pet&gt;</returns>
         public List<Pet> FindPetsByTags (List<string> tags)
         {
-            
             // verify the required parameter 'tags' is set
             if (tags == null) throw new ApiException(400, "Missing required parameter 'tags' when calling FindPetsByTags");
-            
     
             var path = "/pet/findByTags";
             path = path.Replace("{format}", "json");
@@ -270,16 +310,45 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>AllPetsResponse</returns>
+        public AllPetsResponse GetAllPets ()
+        {
+    
+            var path = "/allPets";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetAllPets: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetAllPets: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (AllPetsResponse) ApiClient.Deserialize(response.Content, typeof(AllPetsResponse), response.Headers);
+        }
+    
+        /// <summary>
         /// Find pet by ID Returns a single pet
         /// </summary>
-        /// <param name="petId">ID of pet to return</param> 
-        /// <returns>Pet</returns>            
+        /// <param name="petId">ID of pet to return</param>
+        /// <returns>Pet</returns>
         public Pet GetPetById (long? petId)
         {
-            
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling GetPetById");
-            
     
             var path = "/pet/{petId}";
             path = path.Replace("{format}", "json");
@@ -307,16 +376,45 @@ namespace IO.Swagger.Api
         }
     
         /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>SinglePetResponse</returns>
+        public SinglePetResponse GetRandomPet ()
+        {
+    
+            var path = "/randomPet";
+            path = path.Replace("{format}", "json");
+                
+            var queryParams = new Dictionary<String, String>();
+            var headerParams = new Dictionary<String, String>();
+            var formParams = new Dictionary<String, String>();
+            var fileParams = new Dictionary<String, FileParameter>();
+            String postBody = null;
+    
+                                                    
+            // authentication setting, if any
+            String[] authSettings = new String[] {  };
+    
+            // make the HTTP request
+            IRestResponse response = (IRestResponse) ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+    
+            if (((int)response.StatusCode) >= 400)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetRandomPet: " + response.Content, response.Content);
+            else if (((int)response.StatusCode) == 0)
+                throw new ApiException ((int)response.StatusCode, "Error calling GetRandomPet: " + response.ErrorMessage, response.ErrorMessage);
+    
+            return (SinglePetResponse) ApiClient.Deserialize(response.Content, typeof(SinglePetResponse), response.Headers);
+        }
+    
+        /// <summary>
         /// Update an existing pet 
         /// </summary>
-        /// <param name="body">Pet object that needs to be added to the store</param> 
-        /// <returns></returns>            
+        /// <param name="body">Pet object that needs to be added to the store</param>
+        /// <returns></returns>
         public void UpdatePet (Pet body)
         {
-            
             // verify the required parameter 'body' is set
             if (body == null) throw new ApiException(400, "Missing required parameter 'body' when calling UpdatePet");
-            
     
             var path = "/pet";
             path = path.Replace("{format}", "json");
@@ -346,16 +444,14 @@ namespace IO.Swagger.Api
         /// <summary>
         /// Updates a pet in the store with form data 
         /// </summary>
-        /// <param name="petId">ID of pet that needs to be updated</param> 
-        /// <param name="name">Updated name of the pet</param> 
-        /// <param name="status">Updated status of the pet</param> 
-        /// <returns></returns>            
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public void UpdatePetWithForm (long? petId, string name, string status)
         {
-            
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling UpdatePetWithForm");
-            
     
             var path = "/pet/{petId}";
             path = path.Replace("{format}", "json");
@@ -387,16 +483,13 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
         /// <summary>
         /// uploads an image 
         /// </summary>
-        /// <param name="petId">ID of pet to update</param> 
-        /// <param name="additionalMetadata">Additional data to pass to server</param> 
-        /// <param name="file">file to upload</param> 
-        /// <returns>ApiResponse</returns>            
-        public ApiResponse UploadFile (long? petId, string additionalMetadata, System.IO.Stream file)
+        /// <param name="petId">ID of pet to update</param>
+        /// <param name="body"></param>
+        /// <returns>ApiResponse</returns>
+        public ApiResponse UploadFile (long? petId, Object body)
         {
-            
             // verify the required parameter 'petId' is set
             if (petId == null) throw new ApiException(400, "Missing required parameter 'petId' when calling UploadFile");
-            
     
             var path = "/pet/{petId}/uploadImage";
             path = path.Replace("{format}", "json");
@@ -408,9 +501,8 @@ if (status != null) formParams.Add("status", ApiClient.ParameterToString(status)
             var fileParams = new Dictionary<String, FileParameter>();
             String postBody = null;
     
-                                    if (additionalMetadata != null) formParams.Add("additionalMetadata", ApiClient.ParameterToString(additionalMetadata)); // form parameter
-if (file != null) fileParams.Add("file", ApiClient.ParameterToFile("file", file));
-                
+                                                postBody = ApiClient.Serialize(body); // http body (model) parameter
+    
             // authentication setting, if any
             String[] authSettings = new String[] { "petstore_auth" };
     

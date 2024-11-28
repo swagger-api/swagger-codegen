@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class UserApi {
   private ApiClient apiClient;
 
@@ -42,14 +41,12 @@ public class UserApi {
    */
   public void createUser(User body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling createUser");
     }
-    
     // create path and map variables
-    String localVarPath = "/user".replaceAll("\\{format\\}","json");
+    String localVarPath = "/user";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -57,20 +54,18 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      
+      "*/*"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
     String[] localVarAuthNames = new String[] {  };
-
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
@@ -82,14 +77,12 @@ public class UserApi {
    */
   public void createUsersWithArrayInput(List<User> body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling createUsersWithArrayInput");
     }
-    
     // create path and map variables
-    String localVarPath = "/user/createWithArray".replaceAll("\\{format\\}","json");
+    String localVarPath = "/user/createWithArray";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -97,20 +90,18 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      
+      "*/*"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
     String[] localVarAuthNames = new String[] {  };
-
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
@@ -122,14 +113,12 @@ public class UserApi {
    */
   public void createUsersWithListInput(List<User> body) throws ApiException {
     Object localVarPostBody = body;
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling createUsersWithListInput");
     }
-    
     // create path and map variables
-    String localVarPath = "/user/createWithList".replaceAll("\\{format\\}","json");
+    String localVarPath = "/user/createWithList";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -137,20 +126,18 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      
+      "*/*"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
     String[] localVarAuthNames = new String[] {  };
-
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
@@ -162,14 +149,12 @@ public class UserApi {
    */
   public void deleteUser(String username) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'username' is set
     if (username == null) {
       throw new ApiException(400, "Missing the required parameter 'username' when calling deleteUser");
     }
-    
     // create path and map variables
-    String localVarPath = "/user/{username}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/user/{username}"
       .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
     // query params
@@ -178,10 +163,9 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -191,7 +175,6 @@ public class UserApi {
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
     String[] localVarAuthNames = new String[] {  };
-
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
@@ -204,14 +187,12 @@ public class UserApi {
    */
   public User getUserByName(String username) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'username' is set
     if (username == null) {
       throw new ApiException(400, "Missing the required parameter 'username' when calling getUserByName");
     }
-    
     // create path and map variables
-    String localVarPath = "/user/{username}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/user/{username}"
       .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
     // query params
@@ -220,8 +201,7 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -236,7 +216,7 @@ public class UserApi {
 
     GenericType<User> localVarReturnType = new GenericType<User>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+  }
   /**
    * Logs user into the system
    * 
@@ -247,19 +227,16 @@ public class UserApi {
    */
   public String loginUser(String username, String password) throws ApiException {
     Object localVarPostBody = null;
-    
     // verify the required parameter 'username' is set
     if (username == null) {
       throw new ApiException(400, "Missing the required parameter 'username' when calling loginUser");
     }
-    
     // verify the required parameter 'password' is set
     if (password == null) {
       throw new ApiException(400, "Missing the required parameter 'password' when calling loginUser");
     }
-    
     // create path and map variables
-    String localVarPath = "/user/login".replaceAll("\\{format\\}","json");
+    String localVarPath = "/user/login";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -269,8 +246,7 @@ public class UserApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "username", username));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "password", password));
 
-    
-    
+
     final String[] localVarAccepts = {
       "application/xml", "application/json"
     };
@@ -285,7 +261,7 @@ public class UserApi {
 
     GenericType<String> localVarReturnType = new GenericType<String>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
+  }
   /**
    * Logs out current logged in user session
    * 
@@ -293,9 +269,8 @@ public class UserApi {
    */
   public void logoutUser() throws ApiException {
     Object localVarPostBody = null;
-    
     // create path and map variables
-    String localVarPath = "/user/logout".replaceAll("\\{format\\}","json");
+    String localVarPath = "/user/logout";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -303,10 +278,9 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -317,31 +291,27 @@ public class UserApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-
     apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
    * Updated user
    * This can only be done by the logged in user.
-   * @param username name that need to be deleted (required)
    * @param body Updated user object (required)
+   * @param username name that need to be deleted (required)
    * @throws ApiException if fails to make API call
    */
-  public void updateUser(String username, User body) throws ApiException {
+  public void updateUser(User body, String username) throws ApiException {
     Object localVarPostBody = body;
-    
-    // verify the required parameter 'username' is set
-    if (username == null) {
-      throw new ApiException(400, "Missing the required parameter 'username' when calling updateUser");
-    }
-    
     // verify the required parameter 'body' is set
     if (body == null) {
       throw new ApiException(400, "Missing the required parameter 'body' when calling updateUser");
     }
-    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling updateUser");
+    }
     // create path and map variables
-    String localVarPath = "/user/{username}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/user/{username}"
       .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
 
     // query params
@@ -350,20 +320,18 @@ public class UserApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
-    
+
     final String[] localVarAccepts = {
-      "application/xml", "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      
+      "*/*"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
     String[] localVarAuthNames = new String[] {  };
-
 
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }

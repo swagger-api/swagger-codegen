@@ -6,27 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.joda.time.DateTime;
-
-
-
+import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 public class Order   {
-  
-  private Long id = null;
-  private Long petId = null;
-  private Integer quantity = null;
-  private DateTime shipDate = null;
-
-  /**
+  private Long id = null;  private Long petId = null;  private Integer quantity = null;  private DateTime shipDate = null;  /**
    * Order Status
    */
   public enum StatusEnum {
     PLACED("placed"),
-
-        APPROVED("approved"),
-
-        DELIVERED("delivered");
+    APPROVED("approved"),
+    DELIVERED("delivered");
     private String value;
 
     StatusEnum(String value) {
@@ -39,13 +30,12 @@ public class Order   {
       return String.valueOf(value);
     }
   }
-
-  private StatusEnum status = null;
-  private Boolean complete = false;
+  private StatusEnum status = null;  private Boolean complete = false;
 
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -57,6 +47,7 @@ public class Order   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("petId")
   public Long getPetId() {
     return petId;
@@ -68,6 +59,7 @@ public class Order   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -79,6 +71,7 @@ public class Order   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("shipDate")
   public DateTime getShipDate() {
     return shipDate;
@@ -91,6 +84,7 @@ public class Order   {
    * Order Status
    **/
   
+  @Schema(description = "Order Status")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -102,8 +96,9 @@ public class Order   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("complete")
-  public Boolean getComplete() {
+  public Boolean isComplete() {
     return complete;
   }
   public void setComplete(Boolean complete) {
@@ -112,7 +107,7 @@ public class Order   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -152,11 +147,10 @@ public class Order   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

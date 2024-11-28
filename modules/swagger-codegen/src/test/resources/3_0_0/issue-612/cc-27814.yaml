@@ -1,0 +1,65 @@
+---
+openapi: 3.0.0
+info:
+  title: PolymorphismTest
+  description: Test Polymorphism
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+paths:
+  /inventory:
+    post:
+      tags:
+        - admins
+      summary: adds an inventory item
+      description: Adds an item to the system
+      operationId: addNewInventory
+      requestBody:
+        description: Inventory item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassAorB'
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: invalid input, object invalid
+        "409":
+          description: an existing item already exists
+components:
+  schemas:
+    ClassA:
+      required:
+        - aId
+        - objectType
+      type: object
+      properties:
+        aId:
+          type: integer
+        objectType:
+          type: string
+    ClassB:
+      required:
+        - bId
+        - objectType
+      type: object
+      properties:
+        bId:
+          type: string
+        objectType:
+          type: string
+    ClassAorB:
+      discriminator:
+        propertyName: objectType
+      oneOf:
+        - $ref: '#/components/schemas/ClassA'
+        - $ref: '#/components/schemas/ClassB'

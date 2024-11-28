@@ -3,10 +3,12 @@ package io.swagger.api.impl;
 import io.swagger.api.*;
 import io.swagger.model.*;
 
-import io.swagger.model.Pet;
 import java.io.File;
 import io.swagger.model.ModelApiResponse;
+import io.swagger.model.Pet;
+import io.swagger.model.SubCategory;
 
+import java.util.Map;
 import java.util.List;
 import io.swagger.api.NotFoundException;
 
@@ -16,8 +18,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-
-
+import javax.validation.constraints.*;
 public class PetApiServiceImpl extends PetApiService {
     @Override
     public Response addPet(Pet body, SecurityContext securityContext) throws NotFoundException {
@@ -30,12 +31,17 @@ public class PetApiServiceImpl extends PetApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response findPetsByStatus(List<String> status, SecurityContext securityContext) throws NotFoundException {
+    public Response doCategoryStuff(SubCategory body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response findPetsByTags(List<String> tags, SecurityContext securityContext) throws NotFoundException {
+    public Response findPetsByStatus( @NotNull List<String> status, SecurityContext securityContext) throws NotFoundException {
+        // do some magic!
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
+    public Response findPetsByTags( @NotNull List<String> tags, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }

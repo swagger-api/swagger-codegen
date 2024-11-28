@@ -1,0 +1,47 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: sergio.bilello@gmail.com
+  title: meetings
+  description: meetings API
+  version: 1.0.0
+servers:
+  - url: 'https://test.us'
+components:
+  securitySchemes:
+    bearerAuth:
+      name: Authorization
+      type: apiKey
+      in: header
+paths:
+  '/v2/users/{userId}/meetings':
+    post:
+      tags:
+        - createMeeting
+      parameters:
+        - schema:
+            type: string
+          name: userId
+          in: path
+          required: true
+          description: Id of an existing user.
+      operationId: createMeeting
+      description: Create Meeting
+      summary: MeetingTimeFrame
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '3_0_0/issue-11166/RequestCreateMeeting.yaml'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '3_0_0/issue-11166/ResponseCreateMeeting.yaml'
+tags:
+  - name: createMeeting
+    description: Create Meeting
+security:
+  - bearerAuth: []

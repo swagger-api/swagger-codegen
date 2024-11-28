@@ -1,21 +1,16 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Animal;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
-public class Dog extends Animal  {
+public class Dog extends Animal implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet  {
   @JsonProperty("breed")
   private String breed = null;
-
   /**
    **/
   public Dog breed(String breed) {
@@ -24,7 +19,7 @@ public class Dog extends Animal  {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("breed")
   public String getBreed() {
     return breed;
@@ -35,7 +30,7 @@ public class Dog extends Animal  {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -65,11 +60,10 @@ public class Dog extends Animal  {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

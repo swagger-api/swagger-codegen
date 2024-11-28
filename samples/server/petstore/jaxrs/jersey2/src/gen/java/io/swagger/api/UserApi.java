@@ -4,12 +4,19 @@ import io.swagger.model.*;
 import io.swagger.api.UserApiService;
 import io.swagger.api.factories.UserApiServiceFactory;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import io.swagger.model.User;
-import java.util.List;
 
+import java.util.Map;
 import java.util.List;
 import io.swagger.api.NotFoundException;
 
@@ -18,51 +25,76 @@ import java.io.InputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.servlet.ServletConfig;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.validation.constraints.*;
+
 
 @Path("/user")
 
 
-@io.swagger.annotations.Api(description = "the user API")
-
 public class UserApi  {
-   private final UserApiService delegate = UserApiServiceFactory.getUserApi();
+   private final UserApiService delegate;
+
+   public UserApi(@Context ServletConfig servletContext) {
+      UserApiService delegate = null;
+
+      if (servletContext != null) {
+         String implClass = servletContext.getInitParameter("UserApi.implementation");
+         if (implClass != null && !"".equals(implClass.trim())) {
+            try {
+               delegate = (UserApiService) Class.forName(implClass).newInstance();
+            } catch (Exception e) {
+               throw new RuntimeException(e);
+            }
+         } 
+      }
+
+      if (delegate == null) {
+         delegate = UserApiServiceFactory.getUserApi();
+      }
+
+      this.delegate = delegate;
+   }
 
     @POST
     
+    @Consumes({ "*/*" })
     
-    @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Create user", notes = "This can only be done by the logged in user.", response = void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
-    public Response createUser(@ApiParam(value = "Created user object" ,required=true) User body
+    @Operation(summary = "Create user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response createUser(@Parameter(in = ParameterIn.DEFAULT, description = "Created user object" ,required=true) User body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUser(body,securityContext);
     }
     @POST
     @Path("/createWithArray")
+    @Consumes({ "*/*" })
     
-    @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Creates list of users with given input array", notes = "", response = void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
-    public Response createUsersWithArrayInput(@ApiParam(value = "List of user object" ,required=true) List<User> body
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response createUsersWithArrayInput(@Parameter(in = ParameterIn.DEFAULT, description = "List of user object" ,required=true) List<User> body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUsersWithArrayInput(body,securityContext);
     }
     @POST
     @Path("/createWithList")
+    @Consumes({ "*/*" })
     
-    @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Creates list of users with given input array", notes = "", response = void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
-    public Response createUsersWithListInput(@ApiParam(value = "List of user object" ,required=true) List<User> body
+    @Operation(summary = "Creates list of users with given input array", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response createUsersWithListInput(@Parameter(in = ParameterIn.DEFAULT, description = "List of user object" ,required=true) List<User> body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUsersWithListInput(body,securityContext);
@@ -70,13 +102,13 @@ public class UserApi  {
     @DELETE
     @Path("/{username}")
     
-    @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Delete user", notes = "This can only be done by the logged in user.", response = void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = void.class),
+    
+    @Operation(summary = "Delete user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = void.class) })
-    public Response deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathParam("username") String username
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    public Response deleteUser(@Parameter(in = ParameterIn.PATH, description = "The name that needs to be deleted",required=true) @PathParam("username") String username
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteUser(username,securityContext);
@@ -85,14 +117,14 @@ public class UserApi  {
     @Path("/{username}")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Get user by user name", notes = "", response = User.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = User.class),
+    @Operation(summary = "Get user by user name", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = User.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = User.class),
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = User.class) })
-    public Response getUserByName(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    public Response getUserByName(@Parameter(in = ParameterIn.PATH, description = "The name that needs to be fetched. Use user1 for testing. ",required=true) @PathParam("username") String username
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.getUserByName(username,securityContext);
@@ -101,13 +133,13 @@ public class UserApi  {
     @Path("/login")
     
     @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Logs user into the system", notes = "", response = String.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = String.class),
+    @Operation(summary = "Logs user into the system", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/xml", schema = @Schema(implementation = String.class))),
         
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username/password supplied", response = String.class) })
-    public Response loginUser(@ApiParam(value = "The user name for login",required=true) @QueryParam("username") String username
-,@ApiParam(value = "The password for login in clear text",required=true) @QueryParam("password") String password
+        @ApiResponse(responseCode = "400", description = "Invalid username/password supplied") })
+    public Response loginUser(@Parameter(in = ParameterIn.QUERY, description = "The user name for login",required=true) @QueryParam("username") String username
+,@Parameter(in = ParameterIn.QUERY, description = "The password for login in clear text",required=true) @QueryParam("password") String password
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.loginUser(username,password,securityContext);
@@ -115,27 +147,28 @@ public class UserApi  {
     @GET
     @Path("/logout")
     
-    @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Logs out current logged in user session", notes = "", response = void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = void.class) })
+    
+    @Operation(summary = "Logs out current logged in user session", description = "", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
     public Response logoutUser(@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.logoutUser(securityContext);
     }
     @PUT
     @Path("/{username}")
+    @Consumes({ "*/*" })
     
-    @Produces({ "application/xml", "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Updated user", notes = "This can only be done by the logged in user.", response = void.class, tags={ "user", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid user supplied", response = void.class),
+    @Operation(summary = "Updated user", description = "This can only be done by the logged in user.", tags={ "user" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid user supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = void.class) })
-    public Response updateUser(@ApiParam(value = "name that need to be deleted",required=true) @PathParam("username") String username
-,@ApiParam(value = "Updated user object" ,required=true) User body
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    public Response updateUser(@Parameter(in = ParameterIn.DEFAULT, description = "Updated user object" ,required=true) User body
+
+,@Parameter(in = ParameterIn.PATH, description = "name that need to be deleted",required=true) @PathParam("username") String username
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.updateUser(username,body,securityContext);
+        return delegate.updateUser(body,username,securityContext);
     }
 }

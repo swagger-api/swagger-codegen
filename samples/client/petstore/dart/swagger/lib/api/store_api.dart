@@ -9,12 +9,8 @@ class StoreApi {
 
   /// Delete purchase order by ID
   ///
-  /// For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
-  Future deleteOrder(String orderId,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  /// For valid response try integer IDs with positive integer value.\\ \\ Negative or non-integer values will generate API errors
+  Future deleteOrder(int orderId) async {
     Object postBody = null;
 
     // verify required params are set
@@ -38,7 +34,6 @@ class StoreApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -57,7 +52,8 @@ class StoreApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -65,11 +61,7 @@ class StoreApi {
   /// Returns pet inventories by status
   ///
   /// Returns a map of status codes to quantities
-  Future<Map<String, int>> getInventory( {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future<Map<String, int>> getInventory() async {
     Object postBody = null;
 
     // verify required params are set
@@ -90,7 +82,6 @@ class StoreApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -109,19 +100,16 @@ class StoreApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Map<String, int>') as Map<String, int> ;
+      return
+          new Map<String, int>.from(apiClient.deserialize(response.body, 'Map<String, int>')) ;
     } else {
       return null;
     }
   }
   /// Find purchase order by ID
   ///
-  /// For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
-  Future<Order> getOrderById(int orderId,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  /// For valid response try integer IDs with value &gt;&#x3D; 1 and &lt;&#x3D; 10.\\ \\ Other values will generated exceptions
+  Future<Order> getOrderById(int orderId) async {
     Object postBody = null;
 
     // verify required params are set
@@ -145,7 +133,6 @@ class StoreApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -164,7 +151,8 @@ class StoreApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Order') as Order ;
+      return
+          apiClient.deserialize(response.body, 'Order') as Order ;
     } else {
       return null;
     }
@@ -172,11 +160,7 @@ class StoreApi {
   /// Place an order for a pet
   ///
   /// 
-  Future<Order> placeOrder(Order body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future<Order> placeOrder(Order body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -192,7 +176,7 @@ class StoreApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -200,7 +184,6 @@ class StoreApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -219,7 +202,8 @@ class StoreApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Order') as Order ;
+      return
+          apiClient.deserialize(response.body, 'Order') as Order ;
     } else {
       return null;
     }

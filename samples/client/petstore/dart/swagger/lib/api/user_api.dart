@@ -10,11 +10,7 @@ class UserApi {
   /// Create user
   ///
   /// This can only be done by the logged in user.
-  Future createUser(User body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future createUser(User body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -30,7 +26,7 @@ class UserApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -38,7 +34,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -57,7 +52,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -65,11 +61,7 @@ class UserApi {
   /// Creates list of users with given input array
   ///
   /// 
-  Future createUsersWithArrayInput(List<User> body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future createUsersWithArrayInput(List<User> body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -85,7 +77,7 @@ class UserApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -93,7 +85,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -112,7 +103,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -120,11 +112,7 @@ class UserApi {
   /// Creates list of users with given input array
   ///
   /// 
-  Future createUsersWithListInput(List<User> body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future createUsersWithListInput(List<User> body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -140,7 +128,7 @@ class UserApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -148,7 +136,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -167,7 +154,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -175,11 +163,7 @@ class UserApi {
   /// Delete user
   ///
   /// This can only be done by the logged in user.
-  Future deleteUser(String username,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future deleteUser(String username) async {
     Object postBody = null;
 
     // verify required params are set
@@ -203,7 +187,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -222,7 +205,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -230,11 +214,7 @@ class UserApi {
   /// Get user by user name
   ///
   /// 
-  Future<User> getUserByName(String username,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future<User> getUserByName(String username) async {
     Object postBody = null;
 
     // verify required params are set
@@ -258,7 +238,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -277,7 +256,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'User') as User ;
+      return
+          apiClient.deserialize(response.body, 'User') as User ;
     } else {
       return null;
     }
@@ -285,11 +265,7 @@ class UserApi {
   /// Logs user into the system
   ///
   /// 
-  Future<String> loginUser(String username, String password,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future<String> loginUser(String username, String password) async {
     Object postBody = null;
 
     // verify required params are set
@@ -318,7 +294,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -337,7 +312,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'String') as String ;
+      return
+          apiClient.deserialize(response.body, 'String') as String ;
     } else {
       return null;
     }
@@ -345,11 +321,7 @@ class UserApi {
   /// Logs out current logged in user session
   ///
   /// 
-  Future logoutUser( {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future logoutUser() async {
     Object postBody = null;
 
     // verify required params are set
@@ -370,7 +342,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -389,7 +360,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -397,19 +369,15 @@ class UserApi {
   /// Updated user
   ///
   /// This can only be done by the logged in user.
-  Future updateUser(String username, User body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future userUsernamePut(User body, String username) async {
     Object postBody = body;
 
     // verify required params are set
-    if(username == null) {
-     throw new ApiException(400, "Missing required param: username");
-    }
     if(body == null) {
      throw new ApiException(400, "Missing required param: body");
+    }
+    if(username == null) {
+     throw new ApiException(400, "Missing required param: username");
     }
 
     // create path and map variables
@@ -420,7 +388,7 @@ class UserApi {
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     
-    List<String> contentTypes = [];
+    List<String> contentTypes = ["application/json"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = [];
@@ -428,7 +396,6 @@ class UserApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -447,7 +414,8 @@ class UserApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }

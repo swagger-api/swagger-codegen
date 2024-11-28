@@ -10,11 +10,7 @@ class PetApi {
   /// Add a new pet to the store
   ///
   /// 
-  Future addPet(Pet body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future addPet(Pet body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -38,7 +34,6 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -57,7 +52,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -65,11 +61,7 @@ class PetApi {
   /// Deletes a pet
   ///
   /// 
-  Future deletePet(int petId,  {  String apiKey,  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future deletePet(int petId, { String apiKey }) async {
     Object postBody = null;
 
     // verify required params are set
@@ -94,7 +86,6 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -113,19 +104,64 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<ApiResponse> doCategoryStuff({ SubCategory body }) async {
+    Object postBody = body;
+
+    // verify required params are set
+
+    // create path and map variables
+    String path = "/pet/category".replaceAll("{format}","json");
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+    
+    List<String> contentTypes = ["application/json"];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+          }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'POST',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return
+          apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
+    } else {
+      return null;
     }
   }
   /// Finds Pets by status
   ///
   /// Multiple status values can be provided with comma separated strings
-  Future<List<Pet>> findPetsByStatus(List<String> status,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future<List<Pet>> findPetsByStatus(List<String> status) async {
     Object postBody = null;
 
     // verify required params are set
@@ -140,7 +176,7 @@ class PetApi {
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("csv", "status", status));
+      queryParams.addAll(_convertParametersForCollectionFormat("multi", "status", status));
     
     List<String> contentTypes = [];
 
@@ -150,7 +186,6 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -169,19 +204,17 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'List<Pet>') as List<Pet> ;
+      return
+        (apiClient.deserialize(response.body, 'List<Pet>') as List).map((item) => item as Pet).toList();
     } else {
       return null;
     }
   }
   /// Finds Pets by tags
   ///
-  /// Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-  Future<List<Pet>> findPetsByTags(List<String> tags,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  /// Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.
+  @deprecated
+  Future<List<Pet>> findPetsByTags(List<String> tags) async {
     Object postBody = null;
 
     // verify required params are set
@@ -196,7 +229,7 @@ class PetApi {
     List<QueryParam> queryParams = [];
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
-      queryParams.addAll(_convertParametersForCollectionFormat("csv", "tags", tags));
+      queryParams.addAll(_convertParametersForCollectionFormat("multi", "tags", tags));
     
     List<String> contentTypes = [];
 
@@ -206,7 +239,6 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -225,7 +257,56 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'List<Pet>') as List<Pet> ;
+      return
+        (apiClient.deserialize(response.body, 'List<Pet>') as List).map((item) => item as Pet).toList();
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<AllPetsResponse> getAllPets() async {
+    Object postBody = null;
+
+    // verify required params are set
+
+    // create path and map variables
+    String path = "/allPets".replaceAll("{format}","json");
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+    
+    List<String> contentTypes = [];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+          }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'GET',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return
+          apiClient.deserialize(response.body, 'AllPetsResponse') as AllPetsResponse ;
     } else {
       return null;
     }
@@ -233,11 +314,7 @@ class PetApi {
   /// Find pet by ID
   ///
   /// Returns a single pet
-  Future<Pet> getPetById(int petId,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future<Pet> getPetById(int petId) async {
     Object postBody = null;
 
     // verify required params are set
@@ -261,7 +338,6 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -280,7 +356,56 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'Pet') as Pet ;
+      return
+          apiClient.deserialize(response.body, 'Pet') as Pet ;
+    } else {
+      return null;
+    }
+  }
+  /// 
+  ///
+  /// 
+  Future<SinglePetResponse> getRandomPet() async {
+    Object postBody = null;
+
+    // verify required params are set
+
+    // create path and map variables
+    String path = "/randomPet".replaceAll("{format}","json");
+
+    // query params
+    List<QueryParam> queryParams = [];
+    Map<String, String> headerParams = {};
+    Map<String, String> formParams = {};
+    
+    List<String> contentTypes = [];
+
+    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    List<String> authNames = [];
+
+    if(contentType.startsWith("multipart/form-data")) {
+      bool hasFields = false;
+      MultipartRequest mp = new MultipartRequest(null, null);
+      if(hasFields)
+        postBody = mp;
+    }
+    else {
+          }
+
+    var response = await apiClient.invokeAPI(path,
+                                             'GET',
+                                             queryParams,
+                                             postBody,
+                                             headerParams,
+                                             formParams,
+                                             contentType,
+                                             authNames);
+
+    if(response.statusCode >= 400) {
+      throw new ApiException(response.statusCode, response.body);
+    } else if(response.body != null) {
+      return
+          apiClient.deserialize(response.body, 'SinglePetResponse') as SinglePetResponse ;
     } else {
       return null;
     }
@@ -288,11 +413,7 @@ class PetApi {
   /// Update an existing pet
   ///
   /// 
-  Future updatePet(Pet body,  {  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future updatePet(Pet body) async {
     Object postBody = body;
 
     // verify required params are set
@@ -316,7 +437,6 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if(hasFields)
         postBody = mp;
     }
@@ -335,7 +455,8 @@ class PetApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -343,11 +464,7 @@ class PetApi {
   /// Updates a pet in the store with form data
   ///
   /// 
-  Future updatePetWithForm(int petId,  {  String name,  String status,  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
+  Future updatePetWithForm(int petId, { String name, String status }) async {
     Object postBody = null;
 
     // verify required params are set
@@ -371,25 +488,22 @@ class PetApi {
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
       if (name != null) {
         hasFields = true;
-        mp.fields['name'] = apiClient.parameterToString(name);
+        mp.fields['name'] = parameterToString(name);
       }
-      
       if (status != null) {
         hasFields = true;
-        mp.fields['status'] = apiClient.parameterToString(status);
+        mp.fields['status'] = parameterToString(status);
       }
-      
       if(hasFields)
         postBody = mp;
     }
     else {
       if (name != null)
-        formParams['name'] = apiClient.parameterToString(name);
+        formParams['name'] = parameterToString(name);
 if (status != null)
-        formParams['status'] = apiClient.parameterToString(status);
+        formParams['status'] = parameterToString(status);
     }
 
     var response = await apiClient.invokeAPI(path,
@@ -404,7 +518,8 @@ if (status != null)
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return ;
+      return
+          ;
     } else {
       return ;
     }
@@ -412,12 +527,8 @@ if (status != null)
   /// uploads an image
   ///
   /// 
-  Future<ApiResponse> uploadFile(int petId,  {  String additionalMetadata,  MultipartFile file,  bool justIgnoreThisFlag: true}) async {
-    if (!justIgnoreThisFlag) {
-      print('Why???   Just trust me, I only need this variable inside the mustache codegen template.');
-      // This code may be removed as soon as dart accepts trailing spaces (has already been implemented).
-    }
-    Object postBody = null;
+  Future<ApiResponse> uploadFile(int petId, { Object body }) async {
+    Object postBody = body;
 
     // verify required params are set
     if(petId == null) {
@@ -432,7 +543,7 @@ if (status != null)
     Map<String, String> headerParams = {};
     Map<String, String> formParams = {};
     
-    List<String> contentTypes = ["multipart/form-data"];
+    List<String> contentTypes = ["application/octet-stream"];
 
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
     List<String> authNames = ["petstore_auth"];
@@ -440,26 +551,11 @@ if (status != null)
     if(contentType.startsWith("multipart/form-data")) {
       bool hasFields = false;
       MultipartRequest mp = new MultipartRequest(null, null);
-      
-      if (additionalMetadata != null) {
-        hasFields = true;
-        mp.fields['additionalMetadata'] = apiClient.parameterToString(additionalMetadata);
-      }
-      
-      if (file != null) {
-        hasFields = true;
-        mp.fields['file'] = file.field;
-        mp.files.add(file);
-      }
-      
       if(hasFields)
         postBody = mp;
     }
     else {
-      if (additionalMetadata != null)
-        formParams['additionalMetadata'] = apiClient.parameterToString(additionalMetadata);
-
-    }
+          }
 
     var response = await apiClient.invokeAPI(path,
                                              'POST',
@@ -473,7 +569,8 @@ if (status != null)
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
+      return
+          apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
     } else {
       return null;
     }

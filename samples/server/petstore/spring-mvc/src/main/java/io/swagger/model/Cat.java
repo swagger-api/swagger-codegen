@@ -3,34 +3,66 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.Animal;
+import io.swagger.model.Category;
+import io.swagger.model.Pet;
+import io.swagger.model.Tag;
+import java.util.List;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Cat
  */
+@Validated
 
-public class Cat extends Animal  {
-  @JsonProperty("declawed")
-  private Boolean declawed = null;
 
-  public Cat declawed(Boolean declawed) {
-    this.declawed = declawed;
+public class Cat extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
+  @JsonProperty("hunts")
+  private Boolean hunts = null;
+
+  @JsonProperty("age")
+  private Integer age = null;
+
+  public Cat hunts(Boolean hunts) {
+    this.hunts = hunts;
     return this;
   }
 
-   /**
-   * Get declawed
-   * @return declawed
-  **/
+  /**
+   * Get hunts
+   * @return hunts
+   **/
   @ApiModelProperty(value = "")
-  public Boolean getDeclawed() {
-    return declawed;
+  
+    public Boolean isHunts() {
+    return hunts;
   }
 
-  public void setDeclawed(Boolean declawed) {
-    this.declawed = declawed;
+  public void setHunts(Boolean hunts) {
+    this.hunts = hunts;
+  }
+
+  public Cat age(Integer age) {
+    this.age = age;
+    return this;
+  }
+
+  /**
+   * Get age
+   * @return age
+   **/
+  @ApiModelProperty(value = "")
+  
+    public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
   }
 
 
@@ -43,13 +75,14 @@ public class Cat extends Animal  {
       return false;
     }
     Cat cat = (Cat) o;
-    return Objects.equals(this.declawed, cat.declawed) &&
+    return Objects.equals(this.hunts, cat.hunts) &&
+        Objects.equals(this.age, cat.age) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(declawed, super.hashCode());
+    return Objects.hash(hunts, age, super.hashCode());
   }
 
   @Override
@@ -57,7 +90,8 @@ public class Cat extends Animal  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Cat {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    declawed: ").append(toIndentedString(declawed)).append("\n");
+    sb.append("    hunts: ").append(toIndentedString(hunts)).append("\n");
+    sb.append("    age: ").append(toIndentedString(age)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -73,4 +107,3 @@ public class Cat extends Animal  {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

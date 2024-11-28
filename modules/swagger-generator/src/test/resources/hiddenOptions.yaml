@@ -1,0 +1,32 @@
+clients:
+- ada
+- bash
+- eiffel
+- elixir
+- erlang-client
+- haskell-http-client
+- lua
+- powershell
+- r
+- rust
+- scalaz
+- typescript-aurelia
+- typescript-jquery
+- elm
+
+servers:
+- finch
+- java-play-framework
+- java-vertx
+- jaxrs-resteasy-eap
+- php-symfony
+- pistache-server
+- restbed
+- rust-server
+- ze-ph
+- ada-server
+- java-pkmst
+- scala-lagom-server
+
+clientsV3:
+- html
