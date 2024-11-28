@@ -19,7 +19,7 @@ fi
 
 if [ "$Client" = "java" ]; then
   rm -rf intouch_api/java_client/java
-  java -jar modules/swagger-codegen-cli-jsvt/target/swagger-codegen-cli.jar generate \
+  java -jar modules/swagger-codegen-cli-jsvt/target/swagger-codegen-cli-jsvt.jar generate \
   -i $url  \
   -l java \
   -DdateLibrary=java8 \
