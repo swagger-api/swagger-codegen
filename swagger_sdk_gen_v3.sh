@@ -26,7 +26,7 @@ then
     -o intouch_api/java_client/java \
     -c config.json
     tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
-    mvn3 clean deploy -DaltDeploymentRepository=capillarymavensnapshotrepo::default::scp://reporead@ci.capillary.co.in/data/mvnro/snapshots
+    mvn3 clean deploy -DaltDeploymentRepository=capillarymavensnapshotrepo::default::scp://reporead@ci.capillary.co.in/data/mvnro/snapshots -f intouch_api/java_client/java/pom.xml
     fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
 
 
