@@ -6,14 +6,33 @@
   <packaging>jar</packaging>
   <name>swagger-petstore-jersey2</name>
   <version>1.0.0</version>
+  <url>https://github.com/swagger-api/swagger-codegen</url>
+  <description>Swagger Java</description>
   <scm>
-    <connection>scm:git:git@github.com:swagger-api/swagger-mustache.git</connection>
+    <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
     <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
     <url>https://github.com/swagger-api/swagger-codegen</url>
   </scm>
   <prerequisites>
     <maven>2.2.0</maven>
   </prerequisites>
+
+  <licenses>
+    <license>
+      <name>Unlicense</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Swagger</name>
+      <email>apiteam@swagger.io</email>
+      <organization>Swagger</organization>
+      <organizationUrl>http://swagger.io</organizationUrl>
+    </developer>
+  </developers>
 
   <build>
     <plugins>
@@ -98,22 +117,68 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
+        <version>3.6.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.4</version>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>sign-artifacts</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <dependencies>
     <dependency>
-      <groupId>io.swagger</groupId>
+      <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
       <version>${swagger-core-version}</version>
     </dependency>
@@ -134,6 +199,11 @@
       <artifactId>jersey-media-json-jackson</artifactId>
       <version>${jersey-version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>2.29.1</version>
+    </dependency>
 
     <!-- JSON processing: jackson -->
     <dependency>
@@ -153,22 +223,9 @@
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-joda</artifactId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
       <version>${jackson-version}</version>
     </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <version>${jodatime-version}</version>
-    </dependency>
-
-    <!-- Base64 encoding that works in both JVM and Android -->
-    <dependency>
-      <groupId>com.brsanthu</groupId>
-      <artifactId>migbase64</artifactId>
-      <version>2.2</version>
-    </dependency>
-
     <!-- test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -178,11 +235,10 @@
     </dependency>
   </dependencies>
   <properties>
-    <swagger-core-version>1.5.9</swagger-core-version>
-    <jersey-version>2.22.2</jersey-version>
-    <jackson-version>2.7.5</jackson-version>
-    <jodatime-version>2.9.4</jodatime-version>
+    <swagger-core-version>2.0.0</swagger-core-version>
+    <jersey-version>2.29.1</jersey-version>
+    <jackson-version>2.10.1</jackson-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
-    <junit-version>4.12</junit-version>
+    <junit-version>4.13.1</junit-version>
   </properties>
 </project>

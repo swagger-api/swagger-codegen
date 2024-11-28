@@ -4,13 +4,25 @@ import io.swagger.model.*;
 import io.swagger.api.FakeApiService;
 import io.swagger.api.factories.FakeApiServiceFactory;
 
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-import io.swagger.model.Client;
-import java.util.Date;
 import java.math.BigDecimal;
+import io.swagger.model.Client;
+import io.swagger.model.EnumFormBody;
+import io.swagger.model.FakeBody;
+import io.swagger.model.FakeBody1;
+import io.swagger.model.FakeJsonFormDataBody;
+import io.swagger.model.OuterComposite;
 
+import java.util.Map;
 import java.util.List;
 import io.swagger.api.NotFoundException;
 
@@ -19,27 +31,102 @@ import java.io.InputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.servlet.ServletConfig;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
+import javax.validation.constraints.*;
+
 
 @Path("/fake")
 
 
-@io.swagger.annotations.Api(description = "the fake API")
-
 public class FakeApi  {
-   private final FakeApiService delegate = FakeApiServiceFactory.getFakeApi();
+   private final FakeApiService delegate;
 
+   public FakeApi(@Context ServletConfig servletContext) {
+      FakeApiService delegate = null;
+
+      if (servletContext != null) {
+         String implClass = servletContext.getInitParameter("FakeApi.implementation");
+         if (implClass != null && !"".equals(implClass.trim())) {
+            try {
+               delegate = (FakeApiService) Class.forName(implClass).newInstance();
+            } catch (Exception e) {
+               throw new RuntimeException(e);
+            }
+         } 
+      }
+
+      if (delegate == null) {
+         delegate = FakeApiServiceFactory.getFakeApi();
+      }
+
+      this.delegate = delegate;
+   }
+
+    @POST
+    @Path("/outer/boolean")
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of outer boolean types", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Output boolean", content = @Content(mediaType = "*/*", schema = @Schema(implementation = Boolean.class))) })
+    public Response fakeOuterBooleanSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input boolean as post body" ) Boolean body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.fakeOuterBooleanSerialize(body,securityContext);
+    }
+    @POST
+    @Path("/outer/composite")
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of object with outer number type", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Output composite", content = @Content(mediaType = "*/*", schema = @Schema(implementation = OuterComposite.class))) })
+    public Response fakeOuterCompositeSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input composite as post body" ) OuterComposite body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.fakeOuterCompositeSerialize(body,securityContext);
+    }
+    @POST
+    @Path("/outer/number")
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of outer number types", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Output number", content = @Content(mediaType = "*/*", schema = @Schema(implementation = BigDecimal.class))) })
+    public Response fakeOuterNumberSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input number as post body" ) BigDecimal body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.fakeOuterNumberSerialize(body,securityContext);
+    }
+    @POST
+    @Path("/outer/string")
+    @Consumes({ "*/*" })
+    @Produces({ "*/*" })
+    @Operation(summary = "", description = "Test serialization of outer string types", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Output string", content = @Content(mediaType = "*/*", schema = @Schema(implementation = String.class))) })
+    public Response fakeOuterStringSerialize(@Parameter(in = ParameterIn.DEFAULT, description = "Input string as post body" ) String body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.fakeOuterStringSerialize(body,securityContext);
+    }
     @PATCH
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "To test \"client\" model", notes = "", response = Client.class, tags={ "fake", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 200, message = "successful operation", response = Client.class) })
-    public Response testClientModel(@ApiParam(value = "client model" ,required=true) Client body
+    @Operation(summary = "To test \"client\" model", description = "To test \"client\" model", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Client.class))) })
+    public Response testClientModel(@Parameter(in = ParameterIn.DEFAULT, description = "client model" ,required=true) Client body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.testClientModel(body,securityContext);
@@ -47,51 +134,85 @@ public class FakeApi  {
     @POST
     
     @Consumes({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
-    @Produces({ "application/xml; charset=utf-8", "application/json; charset=utf-8" })
-    @io.swagger.annotations.ApiOperation(value = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", notes = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", response = void.class, authorizations = {
-        @io.swagger.annotations.Authorization(value = "http_basic_test")
-    }, tags={ "fake", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid username supplied", response = void.class),
+    
+    @Operation(summary = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", description = "Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 ", security = {
+        @SecurityRequirement(name = "http_basic_test")    }, tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "User not found", response = void.class) })
-    public Response testEndpointParameters(@ApiParam(value = "None", required=true)  @FormParam("number")  BigDecimal number
-,@ApiParam(value = "None", required=true)  @FormParam("double")  Double _double
-,@ApiParam(value = "None", required=true)  @FormParam("pattern_without_delimiter")  String patternWithoutDelimiter
-,@ApiParam(value = "None", required=true)  @FormParam("byte")  byte[] _byte
-,@ApiParam(value = "None")  @FormParam("integer")  Integer integer
-,@ApiParam(value = "None")  @FormParam("int32")  Integer int32
-,@ApiParam(value = "None")  @FormParam("int64")  Long int64
-,@ApiParam(value = "None")  @FormParam("float")  Float _float
-,@ApiParam(value = "None")  @FormParam("string")  String string
-,@ApiParam(value = "None")  @FormParam("binary")  byte[] binary
-,@ApiParam(value = "None")  @FormParam("date")  Date date
-,@ApiParam(value = "None")  @FormParam("dateTime")  Date dateTime
-,@ApiParam(value = "None")  @FormParam("password")  String password
-,@ApiParam(value = "None")  @FormParam("callback")  String paramCallback
+        @ApiResponse(responseCode = "404", description = "User not found") })
+    public Response testEndpointParameters(@Parameter(in = ParameterIn.DEFAULT, description = "" ,required=true) FakeBody body
+
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.testEndpointParameters(number,_double,patternWithoutDelimiter,_byte,integer,int32,int64,_float,string,binary,date,dateTime,password,paramCallback,securityContext);
+        return delegate.testEndpointParameters(body,securityContext);
     }
     @GET
     
-    @Consumes({ "application/json" })
-    @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "To test enum parameters", notes = "", response = void.class, tags={ "fake", })
-    @io.swagger.annotations.ApiResponses(value = { 
-        @io.swagger.annotations.ApiResponse(code = 400, message = "Invalid request", response = void.class),
+    
+    
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
         
-        @io.swagger.annotations.ApiResponse(code = 404, message = "Not found", response = void.class) })
-    public Response testEnumParameters(@ApiParam(value = "Form parameter enum test (string array)", allowableValues=">, $")  @FormParam("enum_form_string_array")  List<String> enumFormStringArray
-,@ApiParam(value = "Form parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg")  @DefaultValue("-efg") @FormParam("enum_form_string")  String enumFormString
-,@ApiParam(value = "Header parameter enum test (string array)" , allowableValues=">, $")@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray
-,@ApiParam(value = "Header parameter enum test (string)" , allowableValues="_abc, -efg, (xyz)", defaultValue="-efg")@HeaderParam("enum_header_string") String enumHeaderString
-,@ApiParam(value = "Query parameter enum test (string array)", allowableValues=">, $") @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
-,@ApiParam(value = "Query parameter enum test (string)", allowableValues="_abc, -efg, (xyz)", defaultValue="-efg") @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
-,@ApiParam(value = "Query parameter enum test (double)") @QueryParam("enum_query_integer") BigDecimal enumQueryInteger
-,@ApiParam(value = "Query parameter enum test (double)")  @FormParam("enum_query_double")  Double enumQueryDouble
+        @ApiResponse(responseCode = "404", description = "Not found") })
+    public Response testEnumParameters(
+@Parameter(in = ParameterIn.HEADER, description = "Header parameter enum test (string array)" , schema=@Schema(allowableValues={ ">", "$" })
+)@HeaderParam("enum_header_string_array") List<String> enumHeaderStringArray
+
+,
+@Parameter(in = ParameterIn.HEADER, description = "Header parameter enum test (string)" , schema=@Schema(allowableValues={ "_abc", "-efg", "(xyz)" })
+)@HeaderParam("enum_header_string") String enumHeaderString
+
+,@Parameter(in = ParameterIn.QUERY, description = "Query parameter enum test (string array)", schema=@Schema(allowableValues={ ">", "$" })
+) @QueryParam("enum_query_string_array") List<String> enumQueryStringArray
+,@Parameter(in = ParameterIn.QUERY, description = "Query parameter enum test (string)", schema=@Schema(allowableValues={ "_abc", "-efg", "(xyz)" })
+) @DefaultValue("-efg") @QueryParam("enum_query_string") String enumQueryString
+,@Parameter(in = ParameterIn.QUERY, description = "Query parameter enum test (double)", schema=@Schema(allowableValues={ "1", "-2" })
+) @QueryParam("enum_query_integer") Integer enumQueryInteger
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.testEnumParameters(enumFormStringArray,enumFormString,enumHeaderStringArray,enumHeaderString,enumQueryStringArray,enumQueryString,enumQueryInteger,enumQueryDouble,securityContext);
+        return delegate.testEnumParameters(enumHeaderStringArray,enumHeaderString,enumQueryStringArray,enumQueryString,enumQueryInteger,securityContext);
+    }
+    @POST
+    @Path("/enum/form")
+    @Consumes({ "*/*" })
+    
+    @Operation(summary = "To test enum parameters", description = "To test enum parameters", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "400", description = "Invalid request"),
+        
+        @ApiResponse(responseCode = "404", description = "Not found") })
+    public Response testEnumRequestBody(@Parameter(in = ParameterIn.DEFAULT, description = "" ) EnumFormBody body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.testEnumRequestBody(body,securityContext);
+    }
+    @POST
+    @Path("/inline-additionalProperties")
+    @Consumes({ "application/json" })
+    
+    @Operation(summary = "test inline additionalProperties", description = "", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response testInlineAdditionalProperties(@Parameter(in = ParameterIn.DEFAULT, description = "request body" ,required=true) Map<String, String> body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.testInlineAdditionalProperties(body,securityContext);
+    }
+    @POST
+    @Path("/jsonFormData")
+    @Consumes({ "application/json" })
+    
+    @Operation(summary = "test json serialization of form data", description = "", tags={ "fake" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "successful operation") })
+    public Response testJsonFormData(@Parameter(in = ParameterIn.DEFAULT, description = "" ,required=true) FakeJsonFormDataBody body
+
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.testJsonFormData(body,securityContext);
     }
 }

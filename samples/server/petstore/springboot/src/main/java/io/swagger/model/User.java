@@ -3,12 +3,16 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * User
  */
+@Validated
+
 
 public class User   {
   @JsonProperty("id")
@@ -40,12 +44,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
-  public Long getId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getId() {
     return id;
   }
 
@@ -58,12 +63,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get username
    * @return username
-  **/
-  @ApiModelProperty(value = "")
-  public String getUsername() {
+   **/
+  @Schema(description = "")
+  
+    public String getUsername() {
     return username;
   }
 
@@ -76,12 +82,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get firstName
    * @return firstName
-  **/
-  @ApiModelProperty(value = "")
-  public String getFirstName() {
+   **/
+  @Schema(description = "")
+  
+    public String getFirstName() {
     return firstName;
   }
 
@@ -94,12 +101,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get lastName
    * @return lastName
-  **/
-  @ApiModelProperty(value = "")
-  public String getLastName() {
+   **/
+  @Schema(description = "")
+  
+    public String getLastName() {
     return lastName;
   }
 
@@ -112,12 +120,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get email
    * @return email
-  **/
-  @ApiModelProperty(value = "")
-  public String getEmail() {
+   **/
+  @Schema(description = "")
+  
+    public String getEmail() {
     return email;
   }
 
@@ -130,12 +139,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get password
    * @return password
-  **/
-  @ApiModelProperty(value = "")
-  public String getPassword() {
+   **/
+  @Schema(description = "")
+  
+    public String getPassword() {
     return password;
   }
 
@@ -148,12 +158,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * Get phone
    * @return phone
-  **/
-  @ApiModelProperty(value = "")
-  public String getPhone() {
+   **/
+  @Schema(description = "")
+  
+    public String getPhone() {
     return phone;
   }
 
@@ -166,12 +177,13 @@ public class User   {
     return this;
   }
 
-   /**
+  /**
    * User Status
    * @return userStatus
-  **/
-  @ApiModelProperty(value = "User Status")
-  public Integer getUserStatus() {
+   **/
+  @Schema(description = "User Status")
+  
+    public Integer getUserStatus() {
     return userStatus;
   }
 
@@ -232,4 +244,3 @@ public class User   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

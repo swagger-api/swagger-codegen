@@ -1,6 +1,6 @@
-# \UserApi
+# {{classname}}
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,24 +13,22 @@ Method | HTTP request | Description
 [**LogoutUser**](UserApi.md#LogoutUser) | **Get** /user/logout | Logs out current logged in user session
 [**UpdateUser**](UserApi.md#UpdateUser) | **Put** /user/{username} | Updated user
 
-
 # **CreateUser**
-> CreateUser($body)
-
+> CreateUser(ctx, body)
 Create user
 
 This can only be done by the logged in user.
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**User**](User.md)| Created user object | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**User**](User.md)| Created user object | 
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -38,28 +36,25 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **CreateUsersWithArrayInput**
-> CreateUsersWithArrayInput($body)
-
+> CreateUsersWithArrayInput(ctx, body)
 Creates list of users with given input array
 
-
-
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[]User**](User.md)| List of user object | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**[]User**](User.md)| List of user object | 
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -67,28 +62,25 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **CreateUsersWithListInput**
-> CreateUsersWithListInput($body)
-
+> CreateUsersWithListInput(ctx, body)
 Creates list of users with given input array
 
-
-
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**[]User**](User.md)| List of user object | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**[]User**](User.md)| List of user object | 
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -96,28 +88,27 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DeleteUser**
-> DeleteUser($username)
-
+> DeleteUser(ctx, username)
 Delete user
 
 This can only be done by the logged in user.
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The name that needs to be deleted | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **username** | **string**| The name that needs to be deleted | 
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -126,23 +117,20 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **GetUserByName**
-> User GetUserByName($username)
-
+> User GetUserByName(ctx, username)
 Get user by user name
 
-
-
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The name that needs to be fetched. Use user1 for testing.  | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **username** | **string**| The name that needs to be fetched. Use user1 for testing.  | 
 
 ### Return type
 
@@ -160,19 +148,16 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **LoginUser**
-> string LoginUser($username, $password)
-
+> string LoginUser(ctx, username, password)
 Logs user into the system
 
-
-
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| The user name for login | 
- **password** | **string**| The password for login in clear text | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **username** | **string**| The user name for login | 
+  **password** | **string**| The password for login in clear text | 
 
 ### Return type
 
@@ -190,19 +175,15 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **LogoutUser**
-> LogoutUser()
-
+> LogoutUser(ctx, )
 Logs out current logged in user session
 
-
-
-
-### Parameters
+### Required Parameters
 This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -211,28 +192,27 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **UpdateUser**
-> UpdateUser($username, $body)
-
+> UpdateUser(ctx, body, username)
 Updated user
 
 This can only be done by the logged in user.
 
-
-### Parameters
+### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string**| name that need to be deleted | 
- **body** | [**User**](User.md)| Updated user object | 
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **body** | [**User**](User.md)| Updated user object | 
+  **username** | **string**| name that need to be deleted | 
 
 ### Return type
 
-void (empty response body)
+ (empty response body)
 
 ### Authorization
 
@@ -240,8 +220,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

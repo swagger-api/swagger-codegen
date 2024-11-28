@@ -28,8 +28,8 @@ public class Response<T> {
     public convenience init(response: NSHTTPURLResponse, body: T?) {
         let rawHeader = response.allHeaderFields
         var header = [String:String]()
-        for (key, value) in rawHeader {
-            header[key as! String] = value as? String
+        for case let (key, value) as (String, String) in rawHeader {
+            header[key] = value
         }
         self.init(statusCode: response.statusCode, header: header, body: body)
     }
@@ -121,6 +121,7 @@ class Decoders {
                 "yyyy-MM-dd'T'HH:mm:ss.SSS"
             ].map { (format: String) -> NSDateFormatter in
                 let formatter = NSDateFormatter()
+                formatter.locale = NSLocale(localeIdentifier:"en_US_POSIX")
                 formatter.dateFormat = format
                 return formatter
             }
@@ -139,7 +140,16 @@ class Decoders {
                     return NSDate(timeIntervalSince1970: Double(sourceInt / 1000) )
                 }
                 fatalError("formatter failed to parse \(source)")
-            } 
+            }
+
+            // Decoder for ISOFullDate
+            Decoders.addDecoder(clazz: ISOFullDate.self, decoder: { (source: AnyObject) -> ISOFullDate in
+                if let string = source as? String,
+                   let isoDate = ISOFullDate.from(string: string) {
+                    return isoDate
+                }
+                fatalError("formatter failed to parse \(source)")
+            }) 
 
             // Decoder for [Category]
             Decoders.addDecoder(clazz: [Category].self) { (source: AnyObject) -> [Category] in

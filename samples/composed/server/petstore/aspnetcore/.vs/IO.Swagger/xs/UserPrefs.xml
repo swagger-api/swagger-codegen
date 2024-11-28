@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{2995AB37-1DEF-4B08-9489-0FDD40CBEC1C}|Default">
+  <MonoDevelop.Ide.ItemProperties.IO.Swagger PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/IO.Swagger/Controllers/PetApi.cs">
+    <Files>
+      <File FileName="src/IO.Swagger/Controllers/PetApi.cs" Line="49" Column="34" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="IO.Swagger" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

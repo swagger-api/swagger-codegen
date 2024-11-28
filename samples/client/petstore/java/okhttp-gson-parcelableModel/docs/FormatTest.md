@@ -1,4 +1,3 @@
-
 # FormatTest
 
 ## Properties
@@ -12,11 +11,8 @@ Name | Type | Description | Notes
 **_double** | **Double** |  |  [optional]
 **string** | **String** |  |  [optional]
 **_byte** | **byte[]** |  | 
-**binary** | **byte[]** |  |  [optional]
+**binary** | [**File**](File.md) |  |  [optional]
 **date** | [**LocalDate**](LocalDate.md) |  | 
-**dateTime** | [**DateTime**](DateTime.md) |  |  [optional]
-**uuid** | **String** |  |  [optional]
+**dateTime** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**uuid** | [**UUID**](UUID.md) |  |  [optional]
 **password** | **String** |  | 
-
-
-

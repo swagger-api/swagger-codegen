@@ -9,14 +9,15 @@ import Foundation
 
 
 open class NumberOnly: JSONEncodable {
-    public var justNumber: Double?
+    public var justNumber: BigDecimal?
 
     public init() {}
 
     // MARK: JSONEncodable
-    func encodeToJSON() -> Any {
+    open func encodeToJSON() -> Any {
         var nillableDictionary = [String:Any?]()
-        nillableDictionary["JustNumber"] = self.justNumber
+        nillableDictionary["JustNumber"] = self.justNumber?.encodeToJSON()
+
         let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
         return dictionary
     }

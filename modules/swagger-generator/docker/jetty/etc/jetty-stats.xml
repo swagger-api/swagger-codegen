@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<!-- =============================================================== -->
+<!-- Mixin the Statistics Handler                                    -->
+<!-- =============================================================== -->
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+  <Call name="insertHandler">
+    <Arg>
+      <New id="StatsHandler" class="org.eclipse.jetty.server.handler.StatisticsHandler">
+      </New>
+    </Arg>
+  </Call>
+  <Call class="org.eclipse.jetty.server.ServerConnectionStatistics" name="addToAllConnectors">
+    <Arg><Ref refid="Server"/></Arg>
+  </Call>
+</Configure>

@@ -1,9 +1,9 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>io.swagger</groupId>
+        <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.2.2</version>
+        <version>3.0.36</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -31,7 +31,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.swagger.codegen.SwaggerCodegen</mainClass>
+                            <mainClass>io.swagger.codegen.v3.cli.SwaggerCodegen</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -61,42 +61,66 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Point at the eclipse-formatter.xml in the swagger-codegen parent project directory -->
+                    <configFile>${project.basedir}${file.separator}${project.parent.relativePath}${file.separator}eclipse-formatter.xml</configFile>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <dependencies>
 
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--https://github.com/airlift/airline-->
         <dependency>
-            <groupId>io.airlift</groupId>
-            <artifactId>airline</artifactId>
-            <version>0.7</version>
+            <groupId>io.swagger.codegen.v3</groupId>
+            <artifactId>swagger-codegen-generators</artifactId>
+            <version>${swagger-codegen-generators-version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser-v3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.argparse4j</groupId>
+            <artifactId>argparse4j</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang-version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.googlecode.lambdaj</groupId>
             <artifactId>lambdaj</artifactId>
             <version>2.3.3</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j-version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-<!--             <version>${testng-version}</version> -->
+            <!--             <version>${testng-version}</version> -->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jmockit</groupId>
             <artifactId>jmockit</artifactId>
-<!--             <version>${jmockit-version}</version> -->
+            <!--             <version>${jmockit-version}</version> -->
             <scope>test</scope>
         </dependency>
     </dependencies>

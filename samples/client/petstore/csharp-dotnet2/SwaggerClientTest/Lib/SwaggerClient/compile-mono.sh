@@ -1,4 +1,4 @@
-wget -nc https://nuget.org/nuget.exe;
+curl --location --request GET 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' --output './nuget.exe'
 mozroots --import --sync
 mono nuget.exe install vendor/packages.config -o vendor;
 mkdir -p bin;

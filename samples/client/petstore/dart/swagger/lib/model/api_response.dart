@@ -1,26 +1,44 @@
 part of swagger.api;
 
-
-@Entity()
 class ApiResponse {
   
-  @Property(name: 'code')
   int code = null;
-  
 
-  @Property(name: 'type')
   String type = null;
-  
 
-  @Property(name: 'message')
   String message = null;
-  
+
   ApiResponse();
 
   @override
-  String toString()  {
+  String toString() {
     return 'ApiResponse[code=$code, type=$type, message=$message, ]';
   }
 
-}
+  ApiResponse.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    code = json['code'];
+    type = json['type'];
+    message = json['message'];
+  }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'code': code,
+      'type': type,
+      'message': message
+     };
+  }
+
+  static List<ApiResponse> listFromJson(List<dynamic> json) {
+    return json == null ? new List<ApiResponse>() : json.map((value) => new ApiResponse.fromJson(value)).toList();
+  }
+
+  static Map<String, ApiResponse> mapFromJson(Map<String, Map<String, dynamic>> json) {
+    var map = new Map<String, ApiResponse>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, Map<String, dynamic> value) => map[key] = new ApiResponse.fromJson(value));
+    }
+    return map;
+  }
+}

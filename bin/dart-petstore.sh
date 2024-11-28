@@ -25,9 +25,9 @@ then
 fi
 
 # if you've executed sbt assembly previously it will use that instead.
-export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
+export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -Dlogback.configurationFile=bin/logback.xml"
 
-ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger"
+ags="$@ generate -i modules/swagger-codegen/src/test/resources/3_0_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger -DhideGenerationTimestamp=true --flatten-inline-schema"
 
 # then options to generate the library for vm would be:
 #ags="$@ generate -i modules/swagger-codegen/src/test/resources/2_0/petstore.yaml -l dart -o samples/client/petstore/dart/swagger_vm -DbrowserClient=false -DpubName=swagger_vm"

@@ -1,20 +1,15 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class Client   {
   @JsonProperty("client")
   private String client = null;
-
   /**
    **/
   public Client client(String client) {
@@ -23,7 +18,7 @@ public class Client   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("client")
   public String getClient() {
     return client;
@@ -34,7 +29,7 @@ public class Client   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -54,7 +49,6 @@ public class Client   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Client {\n");
-    
     sb.append("    client: ").append(toIndentedString(client)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -64,11 +58,10 @@ public class Client   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

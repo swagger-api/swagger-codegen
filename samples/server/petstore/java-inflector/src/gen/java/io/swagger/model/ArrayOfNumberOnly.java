@@ -1,10 +1,8 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +10,9 @@ import java.util.List;
 
 
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class ArrayOfNumberOnly   {
   @JsonProperty("ArrayNumber")
-  private List<BigDecimal> arrayNumber = new ArrayList<BigDecimal>();
-
+  private List<BigDecimal> arrayNumber = null;
   /**
    **/
   public ArrayOfNumberOnly arrayNumber(List<BigDecimal> arrayNumber) {
@@ -26,7 +21,7 @@ public class ArrayOfNumberOnly   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("ArrayNumber")
   public List<BigDecimal> getArrayNumber() {
     return arrayNumber;
@@ -37,7 +32,7 @@ public class ArrayOfNumberOnly   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -57,7 +52,6 @@ public class ArrayOfNumberOnly   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ArrayOfNumberOnly {\n");
-    
     sb.append("    arrayNumber: ").append(toIndentedString(arrayNumber)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -67,11 +61,10 @@ public class ArrayOfNumberOnly   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

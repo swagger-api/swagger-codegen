@@ -1,6 +1,6 @@
 # UserApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,7 +12,6 @@ Method | HTTP request | Description
 [**loginUser**](UserApi.md#loginUser) | **GET** user/login | Logs user into the system
 [**logoutUser**](UserApi.md#logoutUser) | **GET** user/logout | Logs out current logged in user session
 [**updateUser**](UserApi.md#updateUser) | **PUT** user/{username} | Updated user
-
 
 <a name="createUser"></a>
 # **createUser**
@@ -56,16 +55,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 <a name="createUsersWithArrayInput"></a>
 # **createUsersWithArrayInput**
 > Void createUsersWithArrayInput(body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```java
@@ -101,16 +98,14 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 <a name="createUsersWithListInput"></a>
 # **createUsersWithListInput**
 > Void createUsersWithListInput(body)
 
 Creates list of users with given input array
-
-
 
 ### Example
 ```java
@@ -146,8 +141,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 <a name="deleteUser"></a>
 # **deleteUser**
@@ -192,15 +187,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 <a name="getUserByName"></a>
 # **getUserByName**
 > User getUserByName(username)
 
 Get user by user name
-
-
 
 ### Example
 ```java
@@ -244,8 +237,6 @@ No authorization required
 > String loginUser(username, password)
 
 Logs user into the system
-
-
 
 ### Example
 ```java
@@ -292,8 +283,6 @@ No authorization required
 
 Logs out current logged in user session
 
-
-
 ### Example
 ```java
 // Import classes:
@@ -325,11 +314,11 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 <a name="updateUser"></a>
 # **updateUser**
-> Void updateUser(username, body)
+> Void updateUser(body, username)
 
 Updated user
 
@@ -343,10 +332,10 @@ This can only be done by the logged in user.
 
 
 UserApi apiInstance = new UserApi();
-String username = "username_example"; // String | name that need to be deleted
 User body = new User(); // User | Updated user object
+String username = "username_example"; // String | name that need to be deleted
 try {
-    Void result = apiInstance.updateUser(username, body);
+    Void result = apiInstance.updateUser(body, username);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling UserApi#updateUser");
@@ -358,8 +347,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **String**| name that need to be deleted |
  **body** | [**User**](User.md)| Updated user object |
+ **username** | **String**| name that need to be deleted |
 
 ### Return type
 
@@ -371,6 +360,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 

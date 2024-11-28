@@ -1,6 +1,6 @@
-# petstore_api.UserApi
+# swagger_client.UserApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**logout_user**](UserApi.md#logout_user) | **GET** /user/logout | Logs out current logged in user session
 [**update_user**](UserApi.md#update_user) | **PUT** /user/{username} | Updated user
 
-
 # **create_user**
 > create_user(body)
 
@@ -21,19 +20,19 @@ Create user
 
 This can only be done by the logged in user.
 
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
-body = petstore_api.User() # User | Created user object
+api_instance = swagger_client.UserApi()
+body = swagger_client.User() # User | Created user object
 
-try: 
+try:
     # Create user
     api_instance.create_user(body)
 except ApiException as e:
@@ -56,8 +55,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -66,21 +65,19 @@ No authorization required
 
 Creates list of users with given input array
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
-body = [petstore_api.User()] # list[User] | List of user object
+api_instance = swagger_client.UserApi()
+body = [swagger_client.User()] # list[User] | List of user object
 
-try: 
+try:
     # Creates list of users with given input array
     api_instance.create_users_with_array_input(body)
 except ApiException as e:
@@ -103,8 +100,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -113,21 +110,19 @@ No authorization required
 
 Creates list of users with given input array
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
-body = [petstore_api.User()] # list[User] | List of user object
+api_instance = swagger_client.UserApi()
+body = [swagger_client.User()] # list[User] | List of user object
 
-try: 
+try:
     # Creates list of users with given input array
     api_instance.create_users_with_list_input(body)
 except ApiException as e:
@@ -150,8 +145,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -162,19 +157,19 @@ Delete user
 
 This can only be done by the logged in user.
 
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
+api_instance = swagger_client.UserApi()
 username = 'username_example' # str | The name that needs to be deleted
 
-try: 
+try:
     # Delete user
     api_instance.delete_user(username)
 except ApiException as e:
@@ -198,7 +193,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -207,21 +202,19 @@ No authorization required
 
 Get user by user name
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
+api_instance = swagger_client.UserApi()
 username = 'username_example' # str | The name that needs to be fetched. Use user1 for testing. 
 
-try: 
+try:
     # Get user by user name
     api_response = api_instance.get_user_by_name(username)
     pprint(api_response)
@@ -255,22 +248,20 @@ No authorization required
 
 Logs user into the system
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
+api_instance = swagger_client.UserApi()
 username = 'username_example' # str | The user name for login
 password = 'password_example' # str | The password for login in clear text
 
-try: 
+try:
     # Logs user into the system
     api_response = api_instance.login_user(username, password)
     pprint(api_response)
@@ -305,20 +296,18 @@ No authorization required
 
 Logs out current logged in user session
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
+api_instance = swagger_client.UserApi()
 
-try: 
+try:
     # Logs out current logged in user session
     api_instance.logout_user()
 except ApiException as e:
@@ -339,33 +328,33 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_user**
-> update_user(username, body)
+> update_user(body, username)
 
 Updated user
 
 This can only be done by the logged in user.
 
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = petstore_api.UserApi()
+api_instance = swagger_client.UserApi()
+body = swagger_client.User() # User | Updated user object
 username = 'username_example' # str | name that need to be deleted
-body = petstore_api.User() # User | Updated user object
 
-try: 
+try:
     # Updated user
-    api_instance.update_user(username, body)
+    api_instance.update_user(body, username)
 except ApiException as e:
     print("Exception when calling UserApi->update_user: %s\n" % e)
 ```
@@ -374,8 +363,8 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **str**| name that need to be deleted | 
  **body** | [**User**](User.md)| Updated user object | 
+ **username** | **str**| name that need to be deleted | 
 
 ### Return type
 
@@ -387,8 +376,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Content-Type**: */*
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

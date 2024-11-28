@@ -1,0 +1,50 @@
+#!/bin/sh
+
+
+# set the environment variables received from the command line
+for i; do
+case "$i" in
+  *=*) echo $i ;
+  key=${i%=*}
+  value=${i#*=};
+  export $key=$value
+esac
+done
+
+
+if [ ! -d "${APP_DIR}" ]; then
+  # determine app home
+  APP_DIR=`pwd`
+
+  # make APP_DIR absolute
+  APP_DIR=`cd "${APP_DIR}"; pwd`
+fi
+echo APP_DIR: $APP_DIR
+JAVA_EXEC=`which java`
+if [ -x "$JAVA_HOME/bin/java" ]; then
+    JAVA_EXEC=$JAVA_HOME/bin/java
+fi
+
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.utf-8
+
+NEW_SIZE=${JAVA_NEW-128m}
+PERM_SIZE=${JAVA_PERM-128m}
+HEAP=${JAVA_MEM-512m}
+
+mkdir -p work
+
+# configure jetty
+JETTY_OPTS="-Djetty.http.port=${HTTP_PORT-8000} "
+
+# debug options (disabled!)
+JAVA_DEBUG_OPTIONS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8005,server=y,suspend=n "
+
+# APP options
+APP_OPTS="-DHIDDEN_OPTIONS_PATH=${HIDDEN_OPTIONS_PATH} -DHIDDEN_OPTIONS=${HIDDEN_OPTIONS}"
+# JVM options
+JAVA_OPTS="-Djava.security.manager -Djava.security.policy==grantall.policy -DgeneratorWriteDirs="/tmp" -server -Duser.timezone=GMT -Xms${HEAP} -Xmx${HEAP} -XX:NewSize=${NEW_SIZE} -XX:MaxNewSize=${NEW_SIZE} -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:PermSize=${PERM_SIZE} -XX:MaxPermSize=${PERM_SIZE} -Dfile.encoding=UTF-8"
+
+echo "Starting application with command: "
+echo ${JAVA_EXEC} ${JETTY_OPTS} ${APP_OPTS} ${JAVA_OPTS} -jar $JETTY_HOME/start.jar
+exec ${JAVA_EXEC} ${JETTY_OPTS} ${APP_OPTS} ${JAVA_OPTS} -jar $JETTY_HOME/start.jar

@@ -2,48 +2,31 @@ package io.swagger.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
- @XmlType(name = "Pet", propOrder =
-	{ "id", "category", "name", "photoUrls", "tags", "status"
-})
+import javax.xml.bind.annotation.*;
 
-@XmlRootElement(name="Pet")
-public class Pet  {
-  
 
-  @XmlElement(name="id")
+
+public class Pet   {
   private Long id = null;
-
-  @XmlElement(name="category")
   private Category category = null;
-
-  @XmlElement(name="name")
   private String name = null;
-
-  @XmlElement(name="photoUrls")
   private List<String> photoUrls = new ArrayList<String>();
-
-  @XmlElement(name="tags")
   private List<Tag> tags = new ArrayList<Tag>();
-
 @XmlType(name="StatusEnum")
-@XmlEnum
+@XmlEnum(String.class)
 public enum StatusEnum {
 
-    AVAILABLE(String.valueOf("available")), PENDING(String.valueOf("pending")), SOLD(String.valueOf("sold"));
+    @XmlEnumValue("available") AVAILABLE(String.valueOf("available")), @XmlEnumValue("pending") PENDING(String.valueOf("pending")), @XmlEnumValue("sold") SOLD(String.valueOf("sold"));
 
 
     private String value;
@@ -56,69 +39,156 @@ public enum StatusEnum {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
     public static StatusEnum fromValue(String v) {
-        return valueOf(v);
+        for (StatusEnum b : StatusEnum.values()) {
+            if (String.valueOf(b.value).equals(v)) {
+                return b;
+            }
+        }
+        return null;
     }
 }
-
-
-  @XmlElement(name="status")
   private StatusEnum status = null;
 
   /**
    **/
+  public Pet id(Long id) {
+    this.id = id;
+    return this;
+  }
+
   
+  
+  @Schema(description = "")
+  @JsonProperty("id")
   public Long getId() {
     return id;
   }
   public void setId(Long id) {
     this.id = id;
   }
+
   /**
    **/
+  public Pet category(Category category) {
+    this.category = category;
+    return this;
+  }
+
   
+  
+  @Schema(description = "")
+  @JsonProperty("category")
+  @Valid
   public Category getCategory() {
     return category;
   }
   public void setCategory(Category category) {
     this.category = category;
   }
+
   /**
    **/
+  public Pet name(String name) {
+    this.name = name;
+    return this;
+  }
+
   
+  
+  @Schema(example = "doggie", required = true, description = "")
+  @JsonProperty("name")
+  @NotNull
   public String getName() {
     return name;
   }
   public void setName(String name) {
     this.name = name;
   }
+
   /**
    **/
+  public Pet photoUrls(List<String> photoUrls) {
+    this.photoUrls = photoUrls;
+    return this;
+  }
+
   
+  
+  @Schema(required = true, description = "")
+  @JsonProperty("photoUrls")
+  @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
   public void setPhotoUrls(List<String> photoUrls) {
     this.photoUrls = photoUrls;
   }
+
   /**
    **/
+  public Pet tags(List<Tag> tags) {
+    this.tags = tags;
+    return this;
+  }
+
   
+  
+  @Schema(description = "")
+  @JsonProperty("tags")
+  @Valid
   public List<Tag> getTags() {
     return tags;
   }
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
+
   /**
    * pet status in the store
    **/
+  public Pet status(StatusEnum status) {
+    this.status = status;
+    return this;
+  }
+
   
+  
+  @Schema(description = "pet status in the store")
+  @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
   }
   public void setStatus(StatusEnum status) {
     this.status = status;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Pet pet = (Pet) o;
+    return Objects.equals(id, pet.id) &&
+        Objects.equals(category, pet.category) &&
+        Objects.equals(name, pet.name) &&
+        Objects.equals(photoUrls, pet.photoUrls) &&
+        Objects.equals(tags, pet.tags) &&
+        Objects.equals(status, pet.status);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, category, name, photoUrls, tags, status);
   }
 
   @Override
@@ -140,11 +210,10 @@ public enum StatusEnum {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private static String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

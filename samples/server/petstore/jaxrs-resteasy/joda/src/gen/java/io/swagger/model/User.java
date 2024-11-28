@@ -4,25 +4,17 @@ import java.util.Objects;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-
-
-
+import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 public class User   {
-  
-  private Long id = null;
-  private String username = null;
-  private String firstName = null;
-  private String lastName = null;
-  private String email = null;
-  private String password = null;
-  private String phone = null;
-  private Integer userStatus = null;
+  private Long id = null;  private String username = null;  private String firstName = null;  private String lastName = null;  private String email = null;  private String password = null;  private String phone = null;  private Integer userStatus = null;
 
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -34,6 +26,7 @@ public class User   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -45,6 +38,7 @@ public class User   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("firstName")
   public String getFirstName() {
     return firstName;
@@ -56,6 +50,7 @@ public class User   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("lastName")
   public String getLastName() {
     return lastName;
@@ -67,6 +62,7 @@ public class User   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -78,6 +74,7 @@ public class User   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -89,6 +86,7 @@ public class User   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("phone")
   public String getPhone() {
     return phone;
@@ -101,6 +99,7 @@ public class User   {
    * User Status
    **/
   
+  @Schema(description = "User Status")
   @JsonProperty("userStatus")
   public Integer getUserStatus() {
     return userStatus;
@@ -111,7 +110,7 @@ public class User   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -155,11 +154,10 @@ public class User   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

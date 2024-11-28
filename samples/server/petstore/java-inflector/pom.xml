@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -7,12 +8,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.swagger</groupId>
     <artifactId>swagger-inflector-server</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>swagger-inflector-server</name>
     <version>1.0.0</version>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
+
+    <licenses>
+        <license>
+            <name>Unlicense</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <build>
         <defaultGoal>install</defaultGoal>
@@ -32,7 +38,8 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/gen/java</source>
+                                <source>
+                                src/gen/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -78,7 +85,7 @@
                     <monitoredDirName>.</monitoredDirName>
                     <scanTargets>
                         <scanTarget>inflector.yaml</scanTarget>
-                        <scanTarget>src/main/swagger/swagger.yaml</scanTarget>
+                        <scanTarget>src/main/resources/openapi3.yaml</scanTarget>
                     </scanTargets>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
                     <webApp>
@@ -110,11 +117,12 @@
         </repository>
     </repositories>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <swagger-inflector-version>1.0.4</swagger-inflector-version>
-        <jetty-version>9.2.9.v20150224</jetty-version>
-        <logback-version>1.0.1</logback-version>
-        <junit-version>4.8.2</junit-version>
+        <jetty-version>9.4.9.v20180320</jetty-version>
+        <logback-version>1.2.9</logback-version>
+        <junit-version>4.13.1</junit-version>
         <slf4j-version>1.6.3</slf4j-version>
+        <swagger-inflector-version>2.0.0</swagger-inflector-version>
     </properties>
 </project>

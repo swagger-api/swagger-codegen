@@ -1,0 +1,11 @@
+controllerPackage: io.swagger.v3.generator.online
+modelPackage: io.swagger.v3.generator.model
+swaggerUrl: openapi.yaml
+
+# loads all by default, or pick and choose
+entityProcessors:
+  - json
+  - yaml
+
+#rootPath: /api
+environment: production

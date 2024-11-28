@@ -7,7 +7,6 @@ import retrofit.http.*;
 import retrofit.mime.*;
 
 import io.swagger.client.model.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,6 @@ public interface UserApi {
    * @param body Created user object (required)
    * @return Void
    */
-  
   @POST("/user")
   Void createUser(
     @retrofit.http.Body User body
@@ -32,9 +30,7 @@ public interface UserApi {
    * Async method
    * @param body Created user object (required)
    * @param cb callback method
-   * @return void
    */
-  
   @POST("/user")
   void createUser(
     @retrofit.http.Body User body, Callback<Void> cb
@@ -46,7 +42,6 @@ public interface UserApi {
    * @param body List of user object (required)
    * @return Void
    */
-  
   @POST("/user/createWithArray")
   Void createUsersWithArrayInput(
     @retrofit.http.Body List<User> body
@@ -57,9 +52,7 @@ public interface UserApi {
    * Async method
    * @param body List of user object (required)
    * @param cb callback method
-   * @return void
    */
-  
   @POST("/user/createWithArray")
   void createUsersWithArrayInput(
     @retrofit.http.Body List<User> body, Callback<Void> cb
@@ -71,7 +64,6 @@ public interface UserApi {
    * @param body List of user object (required)
    * @return Void
    */
-  
   @POST("/user/createWithList")
   Void createUsersWithListInput(
     @retrofit.http.Body List<User> body
@@ -82,9 +74,7 @@ public interface UserApi {
    * Async method
    * @param body List of user object (required)
    * @param cb callback method
-   * @return void
    */
-  
   @POST("/user/createWithList")
   void createUsersWithListInput(
     @retrofit.http.Body List<User> body, Callback<Void> cb
@@ -96,7 +86,6 @@ public interface UserApi {
    * @param username The name that needs to be deleted (required)
    * @return Void
    */
-  
   @DELETE("/user/{username}")
   Void deleteUser(
     @retrofit.http.Path("username") String username
@@ -107,9 +96,7 @@ public interface UserApi {
    * Async method
    * @param username The name that needs to be deleted (required)
    * @param cb callback method
-   * @return void
    */
-  
   @DELETE("/user/{username}")
   void deleteUser(
     @retrofit.http.Path("username") String username, Callback<Void> cb
@@ -121,7 +108,6 @@ public interface UserApi {
    * @param username The name that needs to be fetched. Use user1 for testing.  (required)
    * @return User
    */
-  
   @GET("/user/{username}")
   User getUserByName(
     @retrofit.http.Path("username") String username
@@ -132,9 +118,7 @@ public interface UserApi {
    * Async method
    * @param username The name that needs to be fetched. Use user1 for testing.  (required)
    * @param cb callback method
-   * @return void
    */
-  
   @GET("/user/{username}")
   void getUserByName(
     @retrofit.http.Path("username") String username, Callback<User> cb
@@ -147,7 +131,6 @@ public interface UserApi {
    * @param password The password for login in clear text (required)
    * @return String
    */
-  
   @GET("/user/login")
   String loginUser(
     @retrofit.http.Query("username") String username, @retrofit.http.Query("password") String password
@@ -159,9 +142,7 @@ public interface UserApi {
    * @param username The user name for login (required)
    * @param password The password for login in clear text (required)
    * @param cb callback method
-   * @return void
    */
-  
   @GET("/user/login")
   void loginUser(
     @retrofit.http.Query("username") String username, @retrofit.http.Query("password") String password, Callback<String> cb
@@ -172,7 +153,6 @@ public interface UserApi {
    * 
    * @return Void
    */
-  
   @GET("/user/logout")
   Void logoutUser();
     
@@ -181,9 +161,7 @@ public interface UserApi {
    * Logs out current logged in user session
    * Async method
    * @param cb callback method
-   * @return void
    */
-  
   @GET("/user/logout")
   void logoutUser(
     Callback<Void> cb
@@ -192,27 +170,24 @@ public interface UserApi {
    * Updated user
    * Sync method
    * This can only be done by the logged in user.
-   * @param username name that need to be deleted (required)
    * @param body Updated user object (required)
+   * @param username name that need to be deleted (required)
    * @return Void
    */
-  
   @PUT("/user/{username}")
   Void updateUser(
-    @retrofit.http.Path("username") String username, @retrofit.http.Body User body
+    @retrofit.http.Body User body, @retrofit.http.Path("username") String username
   );
 
   /**
    * Updated user
    * Async method
-   * @param username name that need to be deleted (required)
    * @param body Updated user object (required)
+   * @param username name that need to be deleted (required)
    * @param cb callback method
-   * @return void
    */
-  
   @PUT("/user/{username}")
   void updateUser(
-    @retrofit.http.Path("username") String username, @retrofit.http.Body User body, Callback<Void> cb
+    @retrofit.http.Body User body, @retrofit.http.Path("username") String username, Callback<Void> cb
   );
 }

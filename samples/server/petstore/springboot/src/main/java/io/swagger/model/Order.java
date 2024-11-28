@@ -4,13 +4,17 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.joda.time.DateTime;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.threeten.bp.OffsetDateTime;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Order
  */
+@Validated
+
 
 public class Order   {
   @JsonProperty("id")
@@ -23,7 +27,7 @@ public class Order   {
   private Integer quantity = null;
 
   @JsonProperty("shipDate")
-  private DateTime shipDate = null;
+  private OffsetDateTime shipDate = null;
 
   /**
    * Order Status
@@ -57,7 +61,6 @@ public class Order   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -69,12 +72,13 @@ public class Order   {
     return this;
   }
 
-   /**
+  /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
-  public Long getId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getId() {
     return id;
   }
 
@@ -87,12 +91,13 @@ public class Order   {
     return this;
   }
 
-   /**
+  /**
    * Get petId
    * @return petId
-  **/
-  @ApiModelProperty(value = "")
-  public Long getPetId() {
+   **/
+  @Schema(description = "")
+  
+    public Long getPetId() {
     return petId;
   }
 
@@ -105,12 +110,13 @@ public class Order   {
     return this;
   }
 
-   /**
+  /**
    * Get quantity
    * @return quantity
-  **/
-  @ApiModelProperty(value = "")
-  public Integer getQuantity() {
+   **/
+  @Schema(description = "")
+  
+    public Integer getQuantity() {
     return quantity;
   }
 
@@ -118,21 +124,23 @@ public class Order   {
     this.quantity = quantity;
   }
 
-  public Order shipDate(DateTime shipDate) {
+  public Order shipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
     return this;
   }
 
-   /**
+  /**
    * Get shipDate
    * @return shipDate
-  **/
-  @ApiModelProperty(value = "")
-  public DateTime getShipDate() {
+   **/
+  @Schema(description = "")
+  
+    @Valid
+    public OffsetDateTime getShipDate() {
     return shipDate;
   }
 
-  public void setShipDate(DateTime shipDate) {
+  public void setShipDate(OffsetDateTime shipDate) {
     this.shipDate = shipDate;
   }
 
@@ -141,12 +149,13 @@ public class Order   {
     return this;
   }
 
-   /**
+  /**
    * Order Status
    * @return status
-  **/
-  @ApiModelProperty(value = "Order Status")
-  public StatusEnum getStatus() {
+   **/
+  @Schema(description = "Order Status")
+  
+    public StatusEnum getStatus() {
     return status;
   }
 
@@ -159,12 +168,13 @@ public class Order   {
     return this;
   }
 
-   /**
+  /**
    * Get complete
    * @return complete
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean getComplete() {
+   **/
+  @Schema(description = "")
+  
+    public Boolean isComplete() {
     return complete;
   }
 
@@ -221,4 +231,3 @@ public class Order   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

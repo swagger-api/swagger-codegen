@@ -15,14 +15,10 @@ class ApiClient {
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
 
-  final dson = new Dartson.JSON()
-                   ..addTransformer(new DateTimeParser(), DateTime);
-  final DateFormat _dateFormatter = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "http://petstore.swagger.io/v2"}) {
+  ApiClient({this.basePath: "/"}) {
     // Setup authentications (key: authentication name, value: authentication).
     _authentications['api_key'] = new ApiKeyAuth("header", "api_key");
     _authentications['petstore_auth'] = new OAuth();
@@ -30,24 +26,6 @@ class ApiClient {
 
   void addDefaultHeader(String key, String value) {
      _defaultHeaderMap[key] = value;
-  }
-
-  /// Format the given Date object into string.
-  String formatDate(DateTime date) {
-    return _dateFormatter.format(date);
-  }
-
-  /// Format the given parameter object into string.
-  String parameterToString(Object param) {
-    if (param == null) {
-      return '';
-    } else if (param is DateTime) {
-      return formatDate(param);
-    } else if (param is List) {
-      return (param).join(',');
-    } else {
-      return param.toString();
-    }
   }
 
   dynamic _deserialize(dynamic value, String targetType) {
@@ -61,18 +39,48 @@ class ApiClient {
           return value is bool ? value : '$value'.toLowerCase() == 'true';
         case 'double':
           return value is double ? value : double.parse('$value');
+        case 'AllOfSubCategoryCategory':
+          return new AllOfSubCategoryCategory.fromJson(value);
+        case 'AllPetsResponse':
+          return new AllPetsResponse.fromJson(value);
         case 'ApiResponse':
-          return dson.map(value, new ApiResponse());
+          return new ApiResponse.fromJson(value);
+        case 'Body':
+          return new Body.fromJson(value);
+        case 'Cat':
+          return new Cat.fromJson(value);
+        case 'CatAllOf2':
+          return new CatAllOf2.fromJson(value);
         case 'Category':
-          return dson.map(value, new Category());
+          return new Category.fromJson(value);
+        case 'Dog':
+          return new Dog.fromJson(value);
+        case 'DogAllOf2':
+          return new DogAllOf2.fromJson(value);
+        case 'InlineArrayItemsAllPetsResponse':
+          return new InlineArrayItemsAllPetsResponse.fromJson(value);
+        case 'NullableEnumModel':
+          return new NullableEnumModel.fromJson(value);
+        case 'OneOfSinglePetResponsePet':
+          return new OneOfSinglePetResponsePet.fromJson(value);
+        case 'OneOfinlineArrayItemsAllPetsResponse':
+          return new OneOfinlineArrayItemsAllPetsResponse.fromJson(value);
         case 'Order':
-          return dson.map(value, new Order());
+          return new Order.fromJson(value);
         case 'Pet':
-          return dson.map(value, new Pet());
+          return new Pet.fromJson(value);
+        case 'SinglePetResponse':
+          return new SinglePetResponse.fromJson(value);
+        case 'SubCategory':
+          return new SubCategory.fromJson(value);
+        case 'SubCategoryPets':
+          return new SubCategoryPets.fromJson(value);
         case 'Tag':
-          return dson.map(value, new Tag());
+          return new Tag.fromJson(value);
+        case 'Test':
+          return new Test.fromJson(value);
         case 'User':
-          return dson.map(value, new User());
+          return new User.fromJson(value);
         default:
           {
             Match match;
@@ -94,13 +102,13 @@ class ApiClient {
     throw new ApiException(500, 'Could not find a suitable class for deserialization');
   }
 
-  dynamic deserialize(String json, String targetType) {
+  dynamic deserialize(String jsonVal, String targetType) {
     // Remove all spaces.  Necessary for reg expressions as well.
     targetType = targetType.replaceAll(' ', '');
 
-    if (targetType == 'String') return json;
+    if (targetType == 'String') return jsonVal;
 
-    var decodedJson = JSON.decode(json);
+    var decodedJson = json.decode(jsonVal);
     return _deserialize(decodedJson, targetType);
   }
 
@@ -108,10 +116,8 @@ class ApiClient {
     String serialized = '';
     if (obj == null) {
       serialized = '';
-    } else if (obj is String) {
-      serialized = obj;
     } else {
-      serialized = dson.encode(obj);
+      serialized = json.encode(obj);
     }
     return serialized;
   }
@@ -140,7 +146,7 @@ class ApiClient {
     headerParams['Content-Type'] = contentType;
 
     if(body is MultipartRequest) {
-      var request = new MultipartRequest(method, Uri.parse(url));      
+      var request = new MultipartRequest(method, Uri.parse(url));
       request.fields.addAll(body.fields);
       request.files.addAll(body.files);
       request.headers.addAll(body.headers);
@@ -165,12 +171,20 @@ class ApiClient {
   }
 
   /// Update query and header parameters based on authentication settings.
-  /// @param authNames The authentications to apply  
+  /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames, List<QueryParam> queryParams, Map<String, String> headerParams) {
     authNames.forEach((authName) {
       Authentication auth = _authentications[authName];
       if (auth == null) throw new ArgumentError("Authentication undefined: " + authName);
       auth.applyToParams(queryParams, headerParams);
+    });
+  }
+
+  void setAccessToken(String accessToken) {
+    _authentications.forEach((key, auth) {
+      if (auth is OAuth) {
+        auth.setAccessToken(accessToken);
+      }
     });
   }
 }

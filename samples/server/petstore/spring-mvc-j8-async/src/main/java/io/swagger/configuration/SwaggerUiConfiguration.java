@@ -6,6 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -16,11 +18,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 
-
 @Configuration
 @ComponentScan(basePackages = "io.swagger.api")
 @EnableWebMvc
-@EnableSwagger2 //Loads the spring beans required by the framework
+@EnableSwagger2
 @PropertySource("classpath:swagger.properties")
 @Import(SwaggerDocumentationConfig.class)
 public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
@@ -58,14 +59,29 @@ public class SwaggerUiConfiguration extends WebMvcConfigurerAdapter {
     }
   }
 
+  @Bean
+  public Jackson2ObjectMapperBuilder builder() {
+    Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+        .indentOutput(true)
+        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .dateFormat(new RFC3339DateFormat());
+    return builder;
+  }
+
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-    ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
-        .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-        .dateFormat( new RFC3339DateFormat())
-        .build();
-    converters.add(new MappingJackson2HttpMessageConverter(objectMapper));
+    converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
     super.configureMessageConverters(converters);
   }
 
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
+    registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+  }
+
+  @Bean
+  public ObjectMapper objectMapper(){
+    return builder().build();
+  }
 }

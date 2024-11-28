@@ -8,28 +8,18 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.List;
-
-
-
+import javax.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 public class Pet   {
-  
-  private Long id = null;
-  private Category category = null;
-  private String name = null;
-  private List<String> photoUrls = new ArrayList<String>();
-  private List<Tag> tags = new ArrayList<Tag>();
-
-  /**
+  private Long id = null;  private Category category = null;  private String name = null;  private List<String> photoUrls = new ArrayList<String>();  private List<Tag> tags = new ArrayList<Tag>();  /**
    * pet status in the store
    */
   public enum StatusEnum {
     AVAILABLE("available"),
-
-        PENDING("pending"),
-
-        SOLD("sold");
+    PENDING("pending"),
+    SOLD("sold");
     private String value;
 
     StatusEnum(String value) {
@@ -42,12 +32,12 @@ public class Pet   {
       return String.valueOf(value);
     }
   }
-
   private StatusEnum status = null;
 
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("id")
   public Long getId() {
     return id;
@@ -59,6 +49,7 @@ public class Pet   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("category")
   public Category getCategory() {
     return category;
@@ -70,7 +61,9 @@ public class Pet   {
   /**
    **/
   
+  @Schema(example = "doggie", required = true, description = "")
   @JsonProperty("name")
+  @NotNull
   public String getName() {
     return name;
   }
@@ -81,7 +74,9 @@ public class Pet   {
   /**
    **/
   
+  @Schema(required = true, description = "")
   @JsonProperty("photoUrls")
+  @NotNull
   public List<String> getPhotoUrls() {
     return photoUrls;
   }
@@ -92,6 +87,7 @@ public class Pet   {
   /**
    **/
   
+  @Schema(description = "")
   @JsonProperty("tags")
   public List<Tag> getTags() {
     return tags;
@@ -104,6 +100,7 @@ public class Pet   {
    * pet status in the store
    **/
   
+  @Schema(description = "pet status in the store")
   @JsonProperty("status")
   public StatusEnum getStatus() {
     return status;
@@ -114,7 +111,7 @@ public class Pet   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -154,11 +151,10 @@ public class Pet   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-

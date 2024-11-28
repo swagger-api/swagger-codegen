@@ -10,10 +10,15 @@ import io.swagger.model.Category;
 import io.swagger.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Pet
  */
+@Validated
+
 
 public class Pet   {
   @JsonProperty("id")
@@ -26,10 +31,12 @@ public class Pet   {
   private String name = null;
 
   @JsonProperty("photoUrls")
-  private List<String> photoUrls = new ArrayList<String>();
+  @Valid
+  private List<String> photoUrls = new ArrayList<>();
 
   @JsonProperty("tags")
-  private List<Tag> tags = new ArrayList<Tag>();
+  @Valid
+  private List<Tag> tags = null;
 
   /**
    * pet status in the store
@@ -63,7 +70,6 @@ public class Pet   {
       return null;
     }
   }
-
   @JsonProperty("status")
   private StatusEnum status = null;
 
@@ -72,12 +78,13 @@ public class Pet   {
     return this;
   }
 
-   /**
+  /**
    * Get id
    * @return id
-  **/
+   **/
   @ApiModelProperty(value = "")
-  public Long getId() {
+  
+    public Long getId() {
     return id;
   }
 
@@ -90,12 +97,14 @@ public class Pet   {
     return this;
   }
 
-   /**
+  /**
    * Get category
    * @return category
-  **/
+   **/
   @ApiModelProperty(value = "")
-  public Category getCategory() {
+  
+    @Valid
+    public Category getCategory() {
     return category;
   }
 
@@ -108,12 +117,14 @@ public class Pet   {
     return this;
   }
 
-   /**
+  /**
    * Get name
    * @return name
-  **/
+   **/
   @ApiModelProperty(example = "doggie", required = true, value = "")
-  public String getName() {
+      @NotNull
+
+    public String getName() {
     return name;
   }
 
@@ -131,12 +142,14 @@ public class Pet   {
     return this;
   }
 
-   /**
+  /**
    * Get photoUrls
    * @return photoUrls
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
-  public List<String> getPhotoUrls() {
+      @NotNull
+
+    public List<String> getPhotoUrls() {
     return photoUrls;
   }
 
@@ -150,16 +163,20 @@ public class Pet   {
   }
 
   public Pet addTagsItem(Tag tagsItem) {
+    if (this.tags == null) {
+      this.tags = new ArrayList<>();
+    }
     this.tags.add(tagsItem);
     return this;
   }
 
-   /**
+  /**
    * Get tags
    * @return tags
-  **/
+   **/
   @ApiModelProperty(value = "")
-  public List<Tag> getTags() {
+      @Valid
+    public List<Tag> getTags() {
     return tags;
   }
 
@@ -172,12 +189,13 @@ public class Pet   {
     return this;
   }
 
-   /**
+  /**
    * pet status in the store
    * @return status
-  **/
+   **/
   @ApiModelProperty(value = "pet status in the store")
-  public StatusEnum getStatus() {
+  
+    public StatusEnum getStatus() {
     return status;
   }
 
@@ -234,4 +252,3 @@ public class Pet   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

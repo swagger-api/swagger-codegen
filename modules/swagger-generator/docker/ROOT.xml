@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<!--
+  This file is needed to allow to add an external dir as classpath source for generator webapp.
+  This is needed specifically to allow to add custom templates/generators as jar files, without needing to
+  rebuild the image
+  As `extraClasspath` property of WebAppContext is not capable of interpreting a directory as a jar container
+  (https://github.com/eclipse/jetty.project/issues/150), such directory is instead used here to list contained
+  jar files and build a csv string
+
+-->
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+  <Set name="contextPath">/</Set>
+  <Set name="war"><Property name="jetty.webapps" default="."/>/ROOT.war</Set>
+  <New id="jarFilter" class="sun.misc.JarFilter">
+  </New>
+  <New id="classpathDirFile" class="java.io.File">
+    <Arg>/jetty_home/lib/shared</Arg>
+  </New>
+  <Ref refid="classpathDirFile">
+    <Call id="files" name="list">
+      <Arg><Ref refid="jarFilter"/></Arg>
+    </Call>
+  </Ref>
+  <Call id="oneLiner" class="java.lang.String" name="join">
+    <Arg>,/jetty_home/lib/shared/</Arg>
+    <Arg><Ref refid="files"/></Arg>
+  </Call>
+  <Set name="extraClasspath">/jetty_home/lib/shared/<Ref refid="oneLiner"/></Set>
+</Configure>

@@ -1,27 +1,19 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.swagger</groupId>
+        <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.2.2</version>
+        <version>3.0.36</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
     <packaging>war</packaging>
     <name>swagger-generator</name>
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/version.prop</include>
-                    <include>logback.xml</include>
-                </includes>
-            </resource>
-        </resources>
+        <defaultGoal>install</defaultGoal>
+        <directory>target</directory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -30,36 +22,53 @@
                         <phase>package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
+                            <goal>copy</goal>
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-runner</artifactId>
+                                    <version>${jetty-version}</version>
+                                    <destFileName>jetty-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-version}</version>
                 <configuration>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/swagger-ui-master/dist</directory>
-                            <excludes>
-                                <exclude>index.html</exclude>
-                            </excludes>
-                        </resource>
-                    </webResources>
+                    <systemPropertyVariables>
+                        <java.security.policy>${java.security.policy}</java.security.policy>
+                        <generatorWriteDirs>${java.io.tmpdir},.</generatorWriteDirs>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.6</version>
+                <version>2.22.2</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.security.policy>${java.security.policy}</java.security.policy>
+                        <generatorWriteDirs>${java.io.tmpdir},.</generatorWriteDirs>
+                    </systemPropertyVariables>
+                </configuration>
                 <executions>
                     <execution>
+                        <id>integration-test</id>
                         <goals>
                             <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
                             <goal>verify</goal>
                         </goals>
                     </execution>
@@ -70,14 +79,33 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty-version}</version>
                 <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopPort>${JETTY_TEST_STOP_PORT}</stopPort>
+                    <stopKey>STOP</stopKey>
+                    <useTestScope>true</useTestScope>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>config</name>
+                            <value>src/main/resources/inflector.yaml</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>org.eclipse.jetty.util.log.Log</name>
+                            <value>org.eclipse.jetty.util.log.Slf4jLog</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>logback.configurationFile</name>
+                            <value>src/main/resources/logback.xml</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>java.security.policy</name>
+                            <value>${java.security.policy}</value>
+                        </systemProperty>
+                    </systemProperties>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
-                    <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
-                    <stopPort>8079</stopPort>
-                    <stopKey>stopit</stopKey>
                     <httpConnector>
-                        <port>8083</port>
+                        <port>${JETTY_TEST_HTTP_PORT}</port>
                         <idleTimeout>60000</idleTimeout>
                     </httpConnector>
                 </configuration>
@@ -86,10 +114,12 @@
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
+                            <goal>stop</goal>
                             <goal>start</goal>
                         </goals>
                         <configuration>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <daemon>true</daemon>
                         </configuration>
                     </execution>
                     <execution>
@@ -102,122 +132,304 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>swagger-ui</id>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
-                            <unpack>true</unpack>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Point at the eclipse-formatter.xml in the swagger-codegen parent project directory -->
+                    <configFile>${project.basedir}${file.separator}${project.parent.relativePath}${file.separator}eclipse-formatter.xml</configFile>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>linux</id>
+            <properties>
+                <docker-host-ip>localhost</docker-host-ip>
+            </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <docker-latest-tag>latest</docker-latest-tag>
+                <dockerfile.tag.skip>false</dockerfile.tag.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <HIDDEN_OPTIONS_DEFAULT_PATH>hiddenOptions.yaml</HIDDEN_OPTIONS_DEFAULT_PATH>
+                <JAVA_MEM>1024m</JAVA_MEM>
+                <HTTP_PORT>8080</HTTP_PORT>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-annotations</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-deploy</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-server</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-http</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-io</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-jndi</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-plus</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-security</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-server</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-servlet</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-start</artifactId>
+                                            <version>${jetty-version}</version>
+                                            <classifier>shaded</classifier>
+                                            <destFileName>start.jar</destFileName>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-util</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-webapp</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty</groupId>
+                                            <artifactId>jetty-xml</artifactId>
+                                            <version>${jetty-version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>javax.servlet</groupId>
+                                            <artifactId>javax.servlet-api</artifactId>
+                                            <version>${servlet-api.version}</version>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.eclipse.jetty.toolchain</groupId>
+                                            <artifactId>jetty-schemas</artifactId>
+                                            <version>3.1</version>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>dockerfile-maven-plugin</artifactId>
+                        <version>1.4.13</version>
+                        <executions>
+                            <execution>
+                                <id>build</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3</repository>
+                                    <tag>${docker-latest-tag}</tag>
+                                    <buildArgs>
+                                        <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
+                                        <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
+                                        <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
+                                    </buildArgs>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>tag</id>
+                                <goals>
+                                    <goal>tag</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3</repository>
+                                    <tag>${project.version}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>build-root</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
+                                    <tag>${docker-latest-tag}</tag>
+                                    <buildArgs>
+                                        <HIDDEN_OPTIONS_DEFAULT_PATH>${HIDDEN_OPTIONS_DEFAULT_PATH}</HIDDEN_OPTIONS_DEFAULT_PATH>
+                                        <JAVA_MEM>${JAVA_MEM}</JAVA_MEM>
+                                        <HTTP_PORT>${HTTP_PORT}</HTTP_PORT>
+                                    </buildArgs>
+                                    <dockerfile>Dockerfile_root</dockerfile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>tag-root</id>
+                                <goals>
+                                    <goal>tag</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
+                                    <tag>${project.version}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>push</id>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3</repository>
+                                    <tag>${docker-latest-tag}</tag>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>push-root</id>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                                <configuration>
+                                    <repository>swaggerapi/swagger-generator-v3-root</repository>
+                                    <tag>${docker-latest-tag}</tag>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-jersey2-jaxrs</artifactId>
-            <version>${swagger-core-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-codegen</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-codegen</artifactId>
-            <version>${project.parent.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback-version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api-version}</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet-core</artifactId>
-            <version>${jersey2-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-multipart</artifactId>
-            <version>${jersey2-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.lingala.zip4j</groupId>
-            <artifactId>zip4j</artifactId>
-            <version>${zip-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-start</artifactId>
-            <version>${jetty-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-xml</artifactId>
-            <version>${jetty-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-deploy</artifactId>
-            <version>${jetty-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-runner</artifactId>
-            <version>${jetty-version}</version>
+            <groupId>io.swagger.codegen.v3</groupId>
+            <artifactId>swagger-codegen</artifactId>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.glassfish</groupId>
-                    <artifactId>javax.el</artifactId>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.codegen.v3</groupId>
+            <artifactId>swagger-codegen-generators</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-inflector</artifactId>
+            <version>${inflector-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.woodstox</groupId>
+                    <artifactId>woodstox-core-asl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.inject</groupId>
+                    <artifactId>javax.inject</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.inject</groupId>
+                    <artifactId>javax.inject</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>aopalliance</groupId>
+                    <artifactId>aopalliance</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <properties>
-        <servlet-api-version>2.5</servlet-api-version>
-        <logback-version>1.0.1</logback-version>
+        <java.security.policy>grantall.policy</java.security.policy>
+        <dockerfile.tag.skip>true</dockerfile.tag.skip>
+        <docker-latest-tag>unstable</docker-latest-tag>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <servlet-api-version>2.5</servlet-api-version>
-        <zip-version>1.3.2</zip-version>
-        <jetty-version>9.2.9.v20150224</jetty-version>
-        <jersey2-version>2.6</jersey2-version>
+        <jetty-version>9.4.49.v20220914</jetty-version>
+        <inflector-version>2.0.8</inflector-version>
+        <junit-version>4.13.2</junit-version>
+        <servlet-api.version>3.1.0</servlet-api.version>
+        <JETTY_TEST_HTTP_PORT>8080</JETTY_TEST_HTTP_PORT>
+        <JETTY_TEST_STOP_PORT>8079</JETTY_TEST_STOP_PORT>
     </properties>
 </project>

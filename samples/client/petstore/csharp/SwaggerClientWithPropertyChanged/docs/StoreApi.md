@@ -1,14 +1,13 @@
 # IO.Swagger.Api.StoreApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteOrder**](StoreApi.md#deleteorder) | **DELETE** /store/order/{orderId} | Delete purchase order by ID
+[**DeleteOrder**](StoreApi.md#deleteorder) | **DELETE** /store/order/{order_id} | Delete purchase order by ID
 [**GetInventory**](StoreApi.md#getinventory) | **GET** /store/inventory | Returns pet inventories by status
-[**GetOrderById**](StoreApi.md#getorderbyid) | **GET** /store/order/{orderId} | Find purchase order by ID
+[**GetOrderById**](StoreApi.md#getorderbyid) | **GET** /store/order/{order_id} | Find purchase order by ID
 [**PlaceOrder**](StoreApi.md#placeorder) | **POST** /store/order | Place an order for a pet
-
 
 <a name="deleteorder"></a>
 # **DeleteOrder**
@@ -32,7 +31,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var orderId = orderId_example;  // string | ID of the order that needs to be deleted
 
@@ -67,10 +65,9 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="getinventory"></a>
 # **GetInventory**
 > Dictionary<string, int?> GetInventory ()
@@ -93,11 +90,10 @@ namespace Example
     {
         public void main()
         {
-            
             // Configure API key authorization: api_key
-            Configuration.Default.ApiKey.Add("api_key", "YOUR_API_KEY");
+            Configuration.Default.AddApiKey("api_key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.ApiKeyPrefix.Add("api_key", "Bearer");
+            // Configuration.Default.AddApiKeyPrefix("api_key", "Bearer");
 
             var apiInstance = new StoreApi();
 
@@ -133,7 +129,6 @@ This endpoint does not need any parameter.
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="getorderbyid"></a>
 # **GetOrderById**
 > Order GetOrderById (long? orderId)
@@ -156,7 +151,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var orderId = 789;  // long? | ID of pet that needs to be fetched
 
@@ -195,14 +189,11 @@ No authorization required
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a name="placeorder"></a>
 # **PlaceOrder**
 > Order PlaceOrder (Order body)
 
 Place an order for a pet
-
-
 
 ### Example
 ```csharp
@@ -218,7 +209,6 @@ namespace Example
     {
         public void main()
         {
-            
             var apiInstance = new StoreApi();
             var body = new Order(); // Order | order placed for purchasing the pet
 
@@ -253,8 +243,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: */*
  - **Accept**: application/xml, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

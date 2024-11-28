@@ -1,38 +1,57 @@
 part of swagger.api;
 
-
-@Entity()
 class Order {
   
-  @Property(name: 'id')
   int id = null;
-  
 
-  @Property(name: 'petId')
   int petId = null;
-  
 
-  @Property(name: 'quantity')
   int quantity = null;
-  
 
-  @Property(name: 'shipDate')
   DateTime shipDate = null;
-  
 /* Order Status */
-  @Property(name: 'status')
   String status = null;
   //enum statusEnum {  placed,  approved,  delivered,  };
 
-  @Property(name: 'complete')
-  bool complete = null;
-  
+  bool complete = false;
+
   Order();
 
   @override
-  String toString()  {
+  String toString() {
     return 'Order[id=$id, petId=$petId, quantity=$quantity, shipDate=$shipDate, status=$status, complete=$complete, ]';
   }
 
-}
+  Order.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    id = json['id'];
+    petId = json['petId'];
+    quantity = json['quantity'];
+    shipDate = json['shipDate'] == null ? null : DateTime.parse(json['shipDate']);
+    status = json['status'];
+    complete = json['complete'];
+  }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'petId': petId,
+      'quantity': quantity,
+      'shipDate': shipDate == null ? '' : shipDate.toUtc().toIso8601String(),
+      'status': status,
+      'complete': complete
+     };
+  }
+
+  static List<Order> listFromJson(List<dynamic> json) {
+    return json == null ? new List<Order>() : json.map((value) => new Order.fromJson(value)).toList();
+  }
+
+  static Map<String, Order> mapFromJson(Map<String, Map<String, dynamic>> json) {
+    var map = new Map<String, Order>();
+    if (json != null && json.length > 0) {
+      json.forEach((String key, Map<String, dynamic> value) => map[key] = new Order.fromJson(value));
+    }
+    return map;
+  }
+}

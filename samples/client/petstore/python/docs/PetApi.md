@@ -1,42 +1,43 @@
-# petstore_api.PetApi
+# swagger_client.PetApi
 
-All URIs are relative to *http://petstore.swagger.io/v2*
+All URIs are relative to *http://petstore.swagger.io:80/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_pet**](PetApi.md#add_pet) | **POST** /pet | Add a new pet to the store
 [**delete_pet**](PetApi.md#delete_pet) | **DELETE** /pet/{petId} | Deletes a pet
+[**do_category_stuff**](PetApi.md#do_category_stuff) | **POST** /pet/category | 
 [**find_pets_by_status**](PetApi.md#find_pets_by_status) | **GET** /pet/findByStatus | Finds Pets by status
 [**find_pets_by_tags**](PetApi.md#find_pets_by_tags) | **GET** /pet/findByTags | Finds Pets by tags
+[**get_all_pets**](PetApi.md#get_all_pets) | **GET** /allPets | 
 [**get_pet_by_id**](PetApi.md#get_pet_by_id) | **GET** /pet/{petId} | Find pet by ID
+[**get_random_pet**](PetApi.md#get_random_pet) | **GET** /randomPet | 
 [**update_pet**](PetApi.md#update_pet) | **PUT** /pet | Update an existing pet
 [**update_pet_with_form**](PetApi.md#update_pet_with_form) | **POST** /pet/{petId} | Updates a pet in the store with form data
 [**upload_file**](PetApi.md#upload_file) | **POST** /pet/{petId}/uploadImage | uploads an image
-
 
 # **add_pet**
 > add_pet(body)
 
 Add a new pet to the store
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
-body = petstore_api.Pet() # Pet | Pet object that needs to be added to the store
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
+body = swagger_client.Pet() # Pet | Pet object that needs to be added to the store
 
-try: 
+try:
     # Add a new pet to the store
     api_instance.add_pet(body)
 except ApiException as e:
@@ -60,7 +61,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -69,25 +70,24 @@ void (empty response body)
 
 Deletes a pet
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
 pet_id = 789 # int | Pet id to delete
 api_key = 'api_key_example' # str |  (optional)
 
-try: 
+try:
     # Deletes a pet
     api_instance.delete_pet(pet_id, api_key=api_key)
 except ApiException as e:
@@ -112,7 +112,52 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **do_category_stuff**
+> ApiResponse do_category_stuff(body=body)
+
+
+
+### Example
+```python
+from __future__ import print_function
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.PetApi()
+body = swagger_client.SubCategory() # SubCategory |  (optional)
+
+try:
+    api_response = api_instance.do_category_stuff(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling PetApi->do_category_stuff: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SubCategory**](SubCategory.md)|  | [optional] 
+
+### Return type
+
+[**ApiResponse**](ApiResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -123,22 +168,23 @@ Finds Pets by status
 
 Multiple status values can be provided with comma separated strings
 
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
 status = ['status_example'] # list[str] | Status values that need to be considered for filter
 
-try: 
+try:
     # Finds Pets by status
     api_response = api_instance.find_pets_by_status(status)
     pprint(api_response)
@@ -174,22 +220,23 @@ Finds Pets by tags
 
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
 
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
 tags = ['tags_example'] # list[str] | Tags to filter by
 
-try: 
+try:
     # Finds Pets by tags
     api_response = api_instance.find_pets_by_tags(tags)
     pprint(api_response)
@@ -218,6 +265,47 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_all_pets**
+> AllPetsResponse get_all_pets()
+
+
+
+### Example
+```python
+from __future__ import print_function
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.PetApi()
+
+try:
+    api_response = api_instance.get_all_pets()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling PetApi->get_all_pets: %s\n" % e)
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**AllPetsResponse**](AllPetsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_pet_by_id**
 > Pet get_pet_by_id(pet_id)
 
@@ -225,24 +313,25 @@ Find pet by ID
 
 Returns a single pet
 
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure API key authorization: api_key
-petstore_api.configuration.api_key['api_key'] = 'YOUR_API_KEY'
+configuration = swagger_client.Configuration()
+configuration.api_key['api_key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# petstore_api.configuration.api_key_prefix['api_key'] = 'Bearer'
+# configuration.api_key_prefix['api_key'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
 pet_id = 789 # int | ID of pet to return
 
-try: 
+try:
     # Find pet by ID
     api_response = api_instance.get_pet_by_id(pet_id)
     pprint(api_response)
@@ -271,29 +360,69 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_random_pet**
+> SinglePetResponse get_random_pet()
+
+
+
+### Example
+```python
+from __future__ import print_function
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.PetApi()
+
+try:
+    api_response = api_instance.get_random_pet()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling PetApi->get_random_pet: %s\n" % e)
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SinglePetResponse**](SinglePetResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **update_pet**
 > update_pet(body)
 
 Update an existing pet
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
-body = petstore_api.Pet() # Pet | Pet object that needs to be added to the store
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
+body = swagger_client.Pet() # Pet | Pet object that needs to be added to the store
 
-try: 
+try:
     # Update an existing pet
     api_instance.update_pet(body)
 except ApiException as e:
@@ -317,7 +446,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, application/xml
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -326,26 +455,25 @@ void (empty response body)
 
 Updates a pet in the store with form data
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
 pet_id = 789 # int | ID of pet that needs to be updated
-name = 'name_example' # str | Updated name of the pet (optional)
-status = 'status_example' # str | Updated status of the pet (optional)
+name = 'name_example' # str |  (optional)
+status = 'status_example' # str |  (optional)
 
-try: 
+try:
     # Updates a pet in the store with form data
     api_instance.update_pet_with_form(pet_id, name=name, status=status)
 except ApiException as e:
@@ -357,8 +485,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pet_id** | **int**| ID of pet that needs to be updated | 
- **name** | **str**| Updated name of the pet | [optional] 
- **status** | **str**| Updated status of the pet | [optional] 
+ **name** | **str**|  | [optional] 
+ **status** | **str**|  | [optional] 
 
 ### Return type
 
@@ -371,7 +499,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/xml, application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -380,26 +508,25 @@ void (empty response body)
 
 uploads an image
 
-
-
-### Example 
+### Example
 ```python
-from __future__ import print_statement
+from __future__ import print_function
 import time
-import petstore_api
-from petstore_api.rest import ApiException
+import swagger_client
+from swagger_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: petstore_auth
-petstore_api.configuration.access_token = 'YOUR_ACCESS_TOKEN'
+configuration = swagger_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
 
 # create an instance of the API class
-api_instance = petstore_api.PetApi()
+api_instance = swagger_client.PetApi(swagger_client.ApiClient(configuration))
 pet_id = 789 # int | ID of pet to update
-additional_metadata = 'additional_metadata_example' # str | Additional data to pass to server (optional)
-file = '/path/to/file.txt' # file | file to upload (optional)
+additional_metadata = 'additional_metadata_example' # str |  (optional)
+file = 'file_example' # str |  (optional)
 
-try: 
+try:
     # uploads an image
     api_response = api_instance.upload_file(pet_id, additional_metadata=additional_metadata, file=file)
     pprint(api_response)
@@ -412,8 +539,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pet_id** | **int**| ID of pet to update | 
- **additional_metadata** | **str**| Additional data to pass to server | [optional] 
- **file** | **file**| file to upload | [optional] 
+ **additional_metadata** | **str**|  | [optional] 
+ **file** | **str**|  | [optional] 
 
 ### Return type
 

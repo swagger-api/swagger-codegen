@@ -1,61 +1,46 @@
 package io.swagger.model;
-
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 
 
 
-
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaInflectorServerCodegen", date = "2016-08-20T17:24:26.037+08:00")
 public class FormatTest   {
   @JsonProperty("integer")
   private Integer integer = null;
-
   @JsonProperty("int32")
   private Integer int32 = null;
-
   @JsonProperty("int64")
   private Long int64 = null;
-
   @JsonProperty("number")
   private BigDecimal number = null;
-
   @JsonProperty("float")
   private Float _float = null;
-
   @JsonProperty("double")
   private Double _double = null;
-
   @JsonProperty("string")
   private String string = null;
-
   @JsonProperty("byte")
   private byte[] _byte = null;
-
   @JsonProperty("binary")
-  private byte[] binary = null;
-
+  private File binary = null;
   @JsonProperty("date")
   private Date date = null;
-
   @JsonProperty("dateTime")
   private Date dateTime = null;
-
   @JsonProperty("uuid")
-  private String uuid = null;
-
+  private UUID uuid = null;
   @JsonProperty("password")
   private String password = null;
-
   /**
-   * minimum: 10.0
-   * maximum: 100.0
+   * minimum: 10
+   * maximum: 100
    **/
   public FormatTest integer(Integer integer) {
     this.integer = integer;
@@ -63,7 +48,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("integer")
   public Integer getInteger() {
     return integer;
@@ -73,8 +58,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 20.0
-   * maximum: 200.0
+   * minimum: 20
+   * maximum: 200
    **/
   public FormatTest int32(Integer int32) {
     this.int32 = int32;
@@ -82,7 +67,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("int32")
   public Integer getInt32() {
     return int32;
@@ -99,7 +84,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("int64")
   public Long getInt64() {
     return int64;
@@ -109,8 +94,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 32.1
-   * maximum: 543.2
+   * minimum: 32
+   * maximum: 543
    **/
   public FormatTest number(BigDecimal number) {
     this.number = number;
@@ -118,7 +103,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("number")
   public BigDecimal getNumber() {
     return number;
@@ -128,8 +113,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 54.3
-   * maximum: 987.6
+   * minimum: 54
+   * maximum: 987
    **/
   public FormatTest _float(Float _float) {
     this._float = _float;
@@ -137,7 +122,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("float")
   public Float getFloat() {
     return _float;
@@ -147,8 +132,8 @@ public class FormatTest   {
   }
 
   /**
-   * minimum: 67.8
-   * maximum: 123.4
+   * minimum: 67
+   * maximum: 123
    **/
   public FormatTest _double(Double _double) {
     this._double = _double;
@@ -156,7 +141,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("double")
   public Double getDouble() {
     return _double;
@@ -173,7 +158,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("string")
   public String getString() {
     return string;
@@ -190,7 +175,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("byte")
   public byte[] getByte() {
     return _byte;
@@ -201,18 +186,18 @@ public class FormatTest   {
 
   /**
    **/
-  public FormatTest binary(byte[] binary) {
+  public FormatTest binary(File binary) {
     this.binary = binary;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("binary")
-  public byte[] getBinary() {
+  public File getBinary() {
     return binary;
   }
-  public void setBinary(byte[] binary) {
+  public void setBinary(File binary) {
     this.binary = binary;
   }
 
@@ -224,7 +209,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("date")
   public Date getDate() {
     return date;
@@ -241,7 +226,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("dateTime")
   public Date getDateTime() {
     return dateTime;
@@ -252,18 +237,18 @@ public class FormatTest   {
 
   /**
    **/
-  public FormatTest uuid(String uuid) {
+  public FormatTest uuid(UUID uuid) {
     this.uuid = uuid;
     return this;
   }
 
   
-  @ApiModelProperty(example = "null", value = "")
+  @Schema(description = "")
   @JsonProperty("uuid")
-  public String getUuid() {
+  public UUID getUuid() {
     return uuid;
   }
-  public void setUuid(String uuid) {
+  public void setUuid(UUID uuid) {
     this.uuid = uuid;
   }
 
@@ -275,7 +260,7 @@ public class FormatTest   {
   }
 
   
-  @ApiModelProperty(example = "null", required = true, value = "")
+  @Schema(required = true, description = "")
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -286,7 +271,7 @@ public class FormatTest   {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -318,7 +303,6 @@ public class FormatTest   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class FormatTest {\n");
-    
     sb.append("    integer: ").append(toIndentedString(integer)).append("\n");
     sb.append("    int32: ").append(toIndentedString(int32)).append("\n");
     sb.append("    int64: ").append(toIndentedString(int64)).append("\n");
@@ -340,11 +324,10 @@ public class FormatTest   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
   }
 }
-
