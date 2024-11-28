@@ -8,13 +8,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>swagger-codegen-cli</artifactId>
+    <artifactId>swagger-codegen-cli-jsvt</artifactId>
     <packaging>jar</packaging>
 
     <name>swagger-codegen (executable)</name>
 
     <build>
-        <finalName>swagger-codegen-cli</finalName>
+        <finalName>swagger-codegen-cli-jsvt</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
