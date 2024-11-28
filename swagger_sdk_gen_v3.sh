@@ -26,12 +26,7 @@ then
     -o intouch_api/java_client/java \
     -c config.json
     tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
-    mvn3 deploy:deploy-file \
-        -Dfile=/var/lib/jenkins/.m2/repository/io/swagger/swagger-java-client-v3/10.40-SNAPSHOT/swagger-java-client-v3-10.40-SNAPSHOT.jar \  # Replace with the correct path to your generated JAR file
-        -Dpackaging=jar \
-        -DrepositoryId=capillarymavensnapshotrepo \  # Use the ID from the POM distributionManagement section
-        -Durl=scp://reporead@ci.capillary.co.in/data/mvnro/snapshots \  # Repository URL from your POM
-
+    mvn clean deploy -f intouch_api/java_client/java/pom.xml
     fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
 
 
