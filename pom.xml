@@ -806,6 +806,41 @@
             </snapshots>
         </repository>
     </repositories>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.0.0-M1</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>deploy</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+
+    <!-- Make sure wagon-ssh is available -->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+    </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>capillarymavenrepo</id>
+            <name>Capillary Maven Repo</name>
+            <url>scp://capillary@mvnrepo.capillary.co.in/data/mvn/releases</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <id>capillarymavensnapshotrepo</id>
+            <name>Capillary Maven Snapshot Repo</name>
+            <url>scp://capillary@mvnrepo.capillary.co.in/data/mvn/snapshots</url>
+            <layout>default</layout>
+        </snapshotRepository>
+    </distributionManagement>
     <properties>
         <swagger-parser-version>1.0.24</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
