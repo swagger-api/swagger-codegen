@@ -935,11 +935,11 @@
                 <version>${swagger-core-version-v1}</version>
             </dependency>
             <!-- swagger-parser v2 -->
-            <dependency>
-                <groupId>io.swagger.parser.v3</groupId>
-                <artifactId>swagger-parser</artifactId>
-                <version>${swagger-parser-version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.swagger.parser.v3</groupId>-->
+<!--                <artifactId>swagger-parser</artifactId>-->
+<!--                <version>${swagger-parser-version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>io.swagger.parser.v3</groupId>
                 <artifactId>swagger-parser-core</artifactId>

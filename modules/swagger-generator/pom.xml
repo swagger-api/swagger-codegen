@@ -294,29 +294,29 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-inflector</artifactId>
-            <version>${inflector-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.codehaus.woodstox</groupId>
-                    <artifactId>woodstox-core-asl</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.activation</groupId>
-                    <artifactId>activation</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.inject</groupId>
-                    <artifactId>javax.inject</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.swagger</groupId>-->
+<!--            <artifactId>swagger-inflector</artifactId>-->
+<!--            <version>${inflector-version}</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.codehaus.woodstox</groupId>-->
+<!--                    <artifactId>woodstox-core-asl</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>javax.activation</groupId>-->
+<!--                    <artifactId>activation</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>javax.xml.bind</groupId>-->
+<!--                    <artifactId>jaxb-api</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>javax.inject</groupId>-->
+<!--                    <artifactId>javax.inject</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
