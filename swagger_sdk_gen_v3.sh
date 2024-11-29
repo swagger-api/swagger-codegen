@@ -24,7 +24,7 @@ then
     docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
         -i /local/$url \
         -g java \
-        -DdateLibrary=java8 \
+        -p dateLibrary=java8 \
         -o /local/intouch_api/java_client/java \
         -c /local/config.json
 
