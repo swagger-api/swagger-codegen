@@ -16,17 +16,34 @@ curl -k $version -o config.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then
+    echo "Removing existing Java client SDK..."
     rm -rf intouch_api/java_client/java
-    openapi-generator-cli generate \
-    -i $url  \
-    -l java \
-    -DdateLibrary=java8 \
-    -o intouch_api/java_client/java \
-    -c config.json
-    tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
-    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
-    fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
 
+    # Step 2: Generate the SDK using OpenAPI Generator (via Docker)
+    echo "Generating SDK using OpenAPI Generator..."
+    docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
+        -i /local/$url \
+        -l java \
+        -DdateLibrary=java8 \
+        -o /local/intouch_api/java_client/java \
+        -c /local/config.json
+
+    # Step 3: Create a .tar.gz archive of the generated SDK
+    echo "Creating .tar.gz archive..."
+    tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
+
+    # Step 4: Deploy the SDK using Maven
+    echo "Deploying SDK using Maven..."
+    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
+
+    # Step 5: Create a .deb package using fpm
+    echo "Creating .deb package using fpm..."
+    fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER \
+        -C ./intouch_api/java_client \
+        --deb-no-default-config-files \
+        java="/usr/share/java/capillary-libs/swagger-v3-sdk"
+
+    echo "Build and deployment completed successfully."
 
 elif [ "$Client" = "c#" ]
 then rm -rf intouch_api/csharp_client/c#
