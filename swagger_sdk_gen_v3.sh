@@ -17,11 +17,11 @@ echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then
    rm -rf intouch_api/java_client/java
-     docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
-       -i https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/api-docs/v3 \
-       -g java \
-       -p dateLibrary=java8 \
-       -o intouch_api/java_client/java
+     docker run --rm -v $(pwd):/local -e url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/api-docs/v3" openapitools/openapi-generator-cli generate \
+         -i $url \
+         -g java \
+         -p dateLibrary=java8 \
+         -o intouch_api/java_client/java
      tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
      mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
      fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER -C ./intouch_api/java_client --deb-no-default-config-files  java="/usr/share/java/capillary-libs/swagger-v3-sdk"
