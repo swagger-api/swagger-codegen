@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "swagger": "3.0.1",
   "info": {
     "title": "INTOUCH-API-V3-JSVT",
     "description": "One stop for all Target Loyalty,Authentication, Webhooks and Integrations Apis",
