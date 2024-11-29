@@ -3,7 +3,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.65-SNAPSHOT</version>
+        <version>3.0.9</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -69,6 +69,14 @@
                     <configFile>${project.basedir}${file.separator}${project.parent.relativePath}${file.separator}eclipse-formatter.xml</configFile>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -125,6 +133,12 @@
             <groupId>org.jmockit</groupId>
             <artifactId>jmockit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.codegen.v3</groupId>
+            <artifactId>swagger-codegen</artifactId>
+            <version>3.0.65-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
