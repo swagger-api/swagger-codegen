@@ -26,14 +26,14 @@ then
         -g java \
         -p dateLibrary=java8 \
         -o intouch_api/java_client/java \
-
+    xml --format intouch_api/java_client/java/pom.xml -o intouch_api/java_client/java/pom.xml
     # Step 3: Create a .tar.gz archive of the generated SDK
     echo "Creating .tar.gz archive..."
     tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
 
     # Step 4: Deploy the SDK using Maven
     echo "Deploying SDK using Maven..."
-    mvn3 clean deploy
+    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
     # Step 5: Create a .deb package using fpm
     echo "Creating .deb package using fpm..."
     fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER \
