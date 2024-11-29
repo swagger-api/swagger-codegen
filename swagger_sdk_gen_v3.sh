@@ -16,49 +16,33 @@ curl -k $version -o config.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then
-    #!/bin/bash
-
-    # Step 1: Clean up any existing SDK (optional)
     echo "Removing existing Java client SDK..."
     rm -rf intouch_api/java_client/java
 
-    # Step 2: Ensure the output directory exists
-    echo "Creating directory for generated SDK..."
-    mkdir -p intouch_api/java_client/java
-
-    # Step 3: Generate the SDK using OpenAPI Generator
+    # Step 2: Generate the SDK using OpenAPI Generator (via Docker)
     echo "Generating SDK using OpenAPI Generator..."
     docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
         -i $url \
         -g java \
         -p dateLibrary=java8 \
-        --maven \
-        -o intouch_api/java_client/java
+        -o intouch_api/java_client/java \
 
-    # Step 4: Check if pom.xml exists
-    if [ ! -f intouch_api/java_client/java/pom.xml ]; then
-        echo "Error: pom.xml not found in the generated directory!"
-        exit 1
-    fi
-
-    # Step 5: Create a .tar.gz archive of the generated SDK
+    # Step 3: Create a .tar.gz archive of the generated SDK
     echo "Creating .tar.gz archive..."
     tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
 
-    # Step 6: Deploy the SDK using Maven
+    # Step 4: Deploy the SDK using Maven
     echo "Deploying SDK using Maven..."
-    mvn clean deploy -f intouch_api/java_client/java/pom.xml
+    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
 
-    # Step 7: Create a .deb package using fpm
+    # Step 5: Create a .deb package using fpm
     echo "Creating .deb package using fpm..."
     fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER \
         -C ./intouch_api/java_client \
         --deb-no-default-config-files \
         java="/usr/share/java/capillary-libs/swagger-v3-sdk"
 
-    # Final success message
     echo "Build and deployment completed successfully."
-
 
 elif [ "$Client" = "c#" ]
 then rm -rf intouch_api/csharp_client/c#
