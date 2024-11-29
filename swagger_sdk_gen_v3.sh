@@ -26,7 +26,6 @@ then
         -g java \
         -p dateLibrary=java8 \
         -o intouch_api/java_client/java \
-        -c config.json
 
     # Step 3: Create a .tar.gz archive of the generated SDK
     echo "Creating .tar.gz archive..."
