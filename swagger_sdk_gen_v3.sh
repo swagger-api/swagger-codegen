@@ -33,8 +33,7 @@ then
 
     # Step 4: Deploy the SDK using Maven
     echo "Deploying SDK using Maven..."
-    mvn3 clean deploy -f intouch_api/java_client/java/pom.xml
-
+    mvn3 clean deploy
     # Step 5: Create a .deb package using fpm
     echo "Creating .deb package using fpm..."
     fpm -f -s "dir" -t "deb" -a "all" -n "java-swagger-v3-sdk" -v $BUILD_NUMBER \
