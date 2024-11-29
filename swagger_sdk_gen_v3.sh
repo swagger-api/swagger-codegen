@@ -22,11 +22,11 @@ then
     # Step 2: Generate the SDK using OpenAPI Generator (via Docker)
     echo "Generating SDK using OpenAPI Generator..."
     docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
-        -i /local/$url \
+        -i $url \
         -g java \
         -p dateLibrary=java8 \
-        -o /local/intouch_api/java_client/java \
-        -c /local/config.json
+        -o intouch_api/java_client/java \
+        -c config.json
 
     # Step 3: Create a .tar.gz archive of the generated SDK
     echo "Creating .tar.gz archive..."
