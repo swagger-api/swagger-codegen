@@ -3,7 +3,7 @@ if $Build_Codegen ; then
 fi
 if [ "$Branch" = "snapshot" ]
   then
-    url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/api-docs"
+    url="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/api-docs/v3"
     version="https://intouch-api-v3-swagger.crm-nightly-new.cc.capillarytech.com/v3/meta/version"
 elif [ "$Branch" = "production" ]
   then
@@ -18,7 +18,7 @@ if [ "$Client" = "java" ]
 then
   rm -rf intouch_api/java_client/java
     java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-    -i modules/swagger-codegen-maven-plugin/examples/swagger.yaml  \
+    -i $url  \
     -l java \
     -DdateLibrary=java8 \
     -o intouch_api/java_client/java \
