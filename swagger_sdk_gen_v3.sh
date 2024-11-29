@@ -16,9 +16,9 @@ curl -k $version -o config.json
 echo "GENERATING SDK"
 if [ "$Client" = "java" ]
 then
-  rm -rf intouch_api/java_client/java
+    rm -rf intouch_api/java_client/java
     java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
-    -i swagger.json  \
+    -i $url  \
     -l java \
     -DdateLibrary=java8 \
     -o intouch_api/java_client/java \
