@@ -25,7 +25,7 @@ then
         -i $url \
         -g java \
         -p dateLibrary=java8 \
-        -o intouch_api/java_client/java \
+        -o intouch_api/java_client/java
     xmllint --format intouch_api/java_client/java/pom.xml --output intouch_api/java_client/java/pom.xml
     # Step 3: Create a .tar.gz archive of the generated SDK
     echo "Creating .tar.gz archive..."
