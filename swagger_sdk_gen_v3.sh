@@ -26,7 +26,7 @@ then
         -g java \
         -p dateLibrary=java8 \
         -o intouch_api/java_client/java \
-    xml --format intouch_api/java_client/java/pom.xml -o intouch_api/java_client/java/pom.xml
+    xmllint --format intouch_api/java_client/java/pom.xml --output intouch_api/java_client/java/pom.xml
     # Step 3: Create a .tar.gz archive of the generated SDK
     echo "Creating .tar.gz archive..."
     tar cvzf intouch_api/java_client/java_swagger_sdk_$BUILD_NUMBER.tar.gz -C ./intouch_api/java_client/java/ .
