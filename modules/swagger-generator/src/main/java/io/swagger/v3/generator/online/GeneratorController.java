@@ -7,6 +7,8 @@ import io.swagger.codegen.CodegenConfigLoader;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.service.GeneratorService;
+import io.swagger.codegen.v3.service.RenderRequest;
+import io.swagger.codegen.v3.service.RenderResponse;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.codegen.v3.service.GenerationRequest;
 import io.swagger.v3.generator.model.HiddenOptions;
@@ -484,6 +486,68 @@ public class GeneratorController {
 
     }
 
+    public ResponseContext renderTemplate(RequestContext context, RenderRequest renderRequest) {
+        String result = new GeneratorService().renderTemplate(renderRequest);
+        RenderResponse response = new RenderResponse();
+        response.setValue(result);
+        return new ResponseContext()
+                .status(200)
+                .contentType(MediaType.APPLICATION_JSON_TYPE)
+                .entity(response);
+    }
+
+    public ResponseContext generateBundle(RequestContext context, GenerationRequest generationRequest) {
+
+        String requestLog = requestLog(generationRequest);
+        LOGGER.debug("generate start - " + requestLog);
+        File outputRootFolder = getTmpFolder();
+        String destPath = null;
+
+        if(generationRequest != null && generationRequest.getOptions() != null) {
+            Object destPathObj = generationRequest.getOptions().getAdditionalProperties().get("outputFolder");
+            if (destPathObj != null && destPathObj instanceof String) {
+                destPath = (String)destPathObj;
+            }
+        }
+        if(destPath == null) {
+            destPath = "";
+        }
+
+        // remove double slashes
+        destPath.replaceAll("//", "/");
+
+        if(destPath.indexOf("..") != -1) {
+            return new ResponseContext()
+                    .status(400)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .entity("Illegal output folder");
+        }
+
+        // remove leading slash (will typically not hurt)
+        if(destPath.indexOf("/") == 0 && destPath.length() > 1) {
+            destPath = destPath.substring(1);
+        }
+
+        // destPath is where the files are written, relative to output folder
+        LOGGER.info("using destination path " + destPath);
+
+        File outputContentFolder = null;
+        if (!StringUtils.isBlank(destPath.trim())) {
+            outputContentFolder = new File(outputRootFolder, destPath);
+        } else {
+            outputContentFolder = outputRootFolder;
+        }
+        generationRequest.getOptions().setOutputDir(outputContentFolder.getAbsolutePath());
+        File outputFile = new File(getTmpFolder(), generationRequest.getLang() + "-bundle.zip");
+
+        LOGGER.info("file zip file: " + outputFile.getAbsolutePath());
+
+        ResponseContext responseContext = generateBundle(generationRequest, outputRootFolder, outputContentFolder, outputFile);
+        LOGGER.debug("generate end - " + requestLog);
+        return responseContext;
+
+    }
+
     protected static File getTmpFolder() {
         try {
             File outputFolder = Files.createTempDirectory("codegen-").toFile();
@@ -557,6 +621,45 @@ public class GeneratorController {
 
 
     }
+
+    private ResponseContext generateBundle(GenerationRequest generationRequest, File outputRootFolder, File outputContentFolder, File outputFile) {
+        GeneratorService generatorService = new GeneratorService();
+        try {
+            generatorService.generationRequest(generationRequest);
+        } catch (Exception e) {
+            String msg = "Error processing generation request: " + e.getMessage();
+            LOGGER.error(msg, e);
+            return new ResponseContext()
+                    .status(400)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .entity(msg);
+        }
+
+        // final List<File> files;
+        final Map<String, Object> files;
+        try {
+            files = generatorService.generateBundle();
+        } catch (Exception e) {
+            String msg = String.format("Error generating `%s` code : %s", generationRequest.getLang(), e.getMessage());
+            LOGGER.error(msg, e);
+            return new ResponseContext()
+                    .status(500)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .entity(msg);
+        }
+        if (files.size() > 0) {
+            return new ResponseContext()
+                    .status(200)
+                    .contentType(MediaType.APPLICATION_JSON_TYPE)
+                    .entity(files);
+        } else {
+            return new ResponseContext()
+                    .status(500)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .entity("A target generation was attempted, but no files were created");
+        }
+    }
+
     private ResponseContext downloadFile(File outputRootFolder, File outputContentFolder, File outputFile, String lang, GenerationRequest.Type type) {
 
         final ZipUtil zipUtil = new ZipUtil();

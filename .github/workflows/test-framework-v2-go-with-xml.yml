@@ -1,0 +1,175 @@
+name: Test Framework V2 Go With XML
+
+on:
+  # execute on demand
+  workflow_dispatch:
+    branches: ["master"]
+
+jobs:
+
+  # builds codegen cli and uploads its artifact
+  build-codegen:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 11 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: build codegen
+        run: |
+          mkdir codegen-cli
+          echo "BUILDING ${{ env.VERSION }}"
+          mvn -version
+          mvn -q -B package -DskipTests -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.count=3
+          cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar codegen-cli
+
+          mkdir test-cfg-files
+          cp samples/client/petstore/go/pom.xml test-cfg-files
+          cp samples/client/petstore/go/auth_test.go test-cfg-files
+          cp samples/client/petstore/go/pet_api_test.go test-cfg-files
+          cp samples/client/petstore/go/user_api_test.go test-cfg-files
+          cp samples/client/petstore/go/test.go.bak test-cfg-files
+      - name: upload codegen cli
+        uses: actions/upload-artifact@v2
+        with:
+          name: codegen-cli
+          path: codegen-cli
+      - name: upload test cfg file
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-cfg-files
+          path: test-cfg-files
+
+    env:
+      VERSION: ${{ github.event.inputs.version }}
+
+  generate:
+
+    needs: build-codegen
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 8 ]
+
+
+    outputs:
+      generate_outcome: ${{ steps.outcome.outputs.generate_outcome }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Download codegen cli
+        uses: actions/download-artifact@v2
+        with:
+          name: codegen-cli
+      - name: generate
+        id: generate
+        continue-on-error: true
+        uses: ./.github/actions/generate
+        with:
+          language: go
+          job-name: ${{ env.JOB_NAME }}
+          spec-url: https://raw.githubusercontent.com/swagger-api/swagger-codegen/master/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
+          options: " -DpackageName=petstore,withXml=true"
+      - id: outcome
+        run: |
+          echo "generate_outcome=${{ steps.generate.outcome }}" >> $GITHUB_OUTPUT
+          echo ${{ steps.generate.outcome }} > generate_outcome_${{ env.JOB_NAME }}
+      - name: upload generate outcome
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_outcome
+          path: generate_outcome_${{ env.JOB_NAME }}
+      - name: upload generate logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_logs
+          path: ${{ steps.generate.outputs.logs }}
+      - name: upload generated code
+        if: contains(steps.generate.outcome, 'success')
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generated
+          path: ${{ steps.generate.outputs.path }}
+    env:
+      JOB_NAME: "go-with-xml-v2-sample"
+
+
+  build:
+
+    needs: generate
+    if: contains(needs.generate.outputs.generate_outcome, 'success')
+    runs-on: ubuntu-latest
+
+    strategy:
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      matrix:
+        go-version: ['^1.13.1']
+        java: [ 8 ]
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generated
+          path: generated/${{ env.JOB_NAME }}
+      - name: Download logs
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}generate_logs
+      - name: Download Javascript V2 test cfg files
+        uses: actions/download-artifact@v2
+        with:
+          name: test-cfg-files
+          path: generated
+    ###############################################
+    ##### DYNAMIC: Dependent on build environment
+    ###############################################
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+    ###############################################
+    ##### END DYNAMIC: Dependent on build environment
+    ###############################################
+      - name: build
+        id: build
+        uses: ./.github/actions/build
+        continue-on-error: true
+        with:
+          path: generated
+          job-name: ${{ env.JOB_NAME }}
+          build-commands: mvn verify
+      - id: outcome
+        run: |
+          echo "build_outcome=${{ steps.build.outcome }}" >> $GITHUB_OUTPUT
+          echo ${{ steps.build.outcome }} > ${{ env.JOB_NAME }}build_outcome
+      - name: upload build outcome
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}build_outcome
+          path: ${{ env.JOB_NAME }}build_outcome
+      - name: upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.JOB_NAME }}logs
+          path: ${{ steps.build.outputs.logs }}
+    env:
+      JOB_NAME: "go-with-xml-v2-sample"

@@ -1,0 +1,39 @@
+name: 'Generate'
+description: 'codegen generate'
+inputs:
+  spec-url:
+    description: 'Url of the openapi definition'
+    required: true
+    default: 'https://petstore3.swagger.io/api/v3/openapi.json'
+  language:
+    description: 'Language to generate'
+    required: true
+  job-name:
+    description: 'Job name'
+    required: true
+  options:
+    description: 'Language Options'
+    required: false
+    default: ""
+outputs:
+  logs:
+    description: "logs"
+    value: ${{ steps.generate.outputs.logs }}
+  path:
+    description: "output path"
+    value: ${{ steps.generate.outputs.path }}
+runs:
+  using: "composite"
+  steps:
+    - id: generate
+      name: generate
+      run: |
+        logfile=${{ inputs.job-name }}.log
+        chmod +x ${{ github.action_path }}/generate.sh
+        echo "${{ inputs.language }} ${{ inputs.job-name }} ${{ inputs.spec-url }} ${{ inputs.options }}"
+        echo -e "\n****** generate ******\n" > $logfile
+        echo "logs=$(echo $logfile)" >> $GITHUB_OUTPUT
+        ${{ github.action_path }}/generate.sh ${{ inputs.language }} ${{ inputs.job-name }} ${{ inputs.spec-url }} ${{ inputs.options }} 2>&1 | tee --append $logfile
+        echo "path=$(echo generated/${{ inputs.job-name }})" >> $GITHUB_OUTPUT
+        echo "logs=$(echo $logfile)" >> $GITHUB_OUTPUT
+      shell: bash

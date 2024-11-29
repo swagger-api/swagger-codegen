@@ -1,5 +1,8 @@
 package io.swagger.codegen.v3;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
 import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
@@ -29,6 +32,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -720,6 +725,65 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     }
 
+    private void generateConfigFiles(List<File> files, Map<String, Object> bundle) {
+        for (SupportingFile support : config.configFiles()) {
+            try {
+                String outputFolder = config.outputFolder();
+                if (StringUtils.isNotEmpty(support.folder)) {
+                    outputFolder += File.separator + support.folder;
+                }
+                File of = new File(outputFolder);
+                if (!of.isDirectory()) {
+                    of.mkdirs();
+                }
+                String outputFilename = outputFolder + File.separator + support.destinationFilename.replace('/', File.separatorChar);
+                if (!config.shouldOverwrite(outputFilename)) {
+                    LOGGER.info("Skipped overwriting " + outputFilename);
+                    continue;
+                }
+                String templateFile;
+                if( support instanceof GlobalSupportingFile) {
+                    templateFile = config.getCommonTemplateDir() + File.separator +  support.templateFile;
+                } else {
+                    templateFile = getFullTemplateFile(config, support.templateFile);
+                }
+
+                if(ignoreProcessor.allowsFile(new File(outputFilename))) {
+                    if (templateFile.endsWith("mustache")) {
+                        String rendered = templateEngine.getRendered(templateFile, bundle);
+                        writeToFile(outputFilename, rendered);
+                        files.add(new File(outputFilename));
+                    } else {
+                        InputStream in = null;
+
+                        try {
+                            in = new FileInputStream(templateFile);
+                        } catch (Exception e) {
+                            // continue
+                        }
+                        if (in == null) {
+                            in = this.getClass().getClassLoader().getResourceAsStream(getCPResourcePath(templateFile));
+                        }
+                        File outputFile = new File(outputFilename);
+                        OutputStream out = new FileOutputStream(outputFile, false);
+                        if (in != null) {
+                            LOGGER.info("writing file " + outputFile);
+                            IOUtils.copy(in, out);
+                            out.close();
+                        } else {
+                            LOGGER.warn("can't open " + templateFile + " for input");
+                        }
+                        files.add(outputFile);
+                    }
+                } else {
+                    LOGGER.info("Skipped generation of " + outputFilename + " due to rule in .swagger-codegen-ignore");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Could not generate config file '" + support + "'", e);
+            }
+        }
+    }
+
     private Map<String, Object> buildSupportFileBundle(List<Object> allOperations, List<Object> allModels) {
 
         Map<String, Object> bundle = new HashMap<>();
@@ -790,11 +854,56 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         List<Object> allOperations = new ArrayList<>();
         generateApis(files, allOperations, allModels);
 
-        // supporting files
+        // supporting and config files
         Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
+        generateConfigFiles(files, bundle);
         generateSupportingFiles(files, bundle);
         config.processOpenAPI(openAPI);
         return files;
+    }
+
+    @Override
+    public String renderTemplate(String template, String context) {
+
+        try {
+            Map<String, Object> bundle = new ObjectMapper().readValue(context, Map.class);
+            Handlebars handlebars = new Handlebars();
+            Template hTemplate = handlebars.compileInline(template);
+            return hTemplate.apply(bundle);
+        } catch (IOException e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            return "Error rendering template: " + e.getMessage() + "\n" + sw.toString();
+        }
+    }
+
+    @Override
+    public Map<String, Object> generateBundle() {
+
+        if (openAPI == null) {
+            throw new RuntimeException("missing OpenAPI input!");
+        }
+        if (config == null) {
+            throw new RuntimeException("missing configuration input!");
+        }
+        configureGeneratorProperties();
+        configureSwaggerInfo();
+
+        List<File> files = new ArrayList<>();
+        // models
+        List<Object> allModels = new ArrayList<>();
+        generateModels(files, allModels);
+        // apis
+        List<Object> allOperations = new ArrayList<>();
+        generateApis(files, allOperations, allModels);
+
+        // supporting files
+        Map<String, Object> bundle = buildSupportFileBundle(allOperations, allModels);
+        generateConfigFiles(files, bundle);
+        generateSupportingFiles(files, bundle);
+        config.processOpenAPI(openAPI);
+        return bundle;
     }
 
     private File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
@@ -913,9 +1022,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         final List<SecurityRequirement> globalSecurities = openAPI.getSecurity();
         for (Tag tag : tags) {
             try {
-                CodegenOperation codegenOperation = config.fromOperation(resourcePath, httpMethod, operation, schemas, openAPI);
+                CodegenOperation codegenOperation = config.fromOperation(config.escapeQuotationMark(resourcePath), httpMethod, operation, schemas, openAPI);
                 codegenOperation.tags = new ArrayList<>(tags);
-                config.addOperationToGroup(config.sanitizeTag(tag.getName()), resourcePath, operation, codegenOperation, operations);
+                config.addOperationToGroup(config.sanitizeTag(tag.getName()), config.escapeQuotationMark(resourcePath), operation, codegenOperation, operations);
 
                 List<SecurityRequirement> securities = operation.getSecurity();
                 if (securities != null && securities.isEmpty()) {

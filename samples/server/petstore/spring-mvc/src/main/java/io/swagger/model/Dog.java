@@ -20,6 +20,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class Dog extends Pet implements OneOfAllPetsResponseItems, OneOfSinglePetResponsePet {
   @JsonProperty("bark")
   private Boolean bark = null;

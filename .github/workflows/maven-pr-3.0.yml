@@ -1,0 +1,102 @@
+name: Build Test PR 3.0
+
+on:
+  pull_request:
+    branches: [ "3.0.0" ]
+
+jobs:
+  build_pr_30:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8, 11, 17 ]
+
+    env:
+      GENERATORS_VERSION_PROPERTY: ""
+    steps:
+      - uses: actions/checkout@v3
+        name: git checkout 3.0.0
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+      - name: preliminary checks
+        run: |
+          docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
+          set -e
+          # fail if templates/generators contain carriage return '\r'
+          /bin/bash ./bin/utils/detect_carriage_return.sh
+          # fail if generators contain merge conflicts
+          /bin/bash ./bin/utils/detect_merge_conflict.sh
+          # fail if generators contain tab '\t'
+          /bin/bash ./bin/utils/detect_tab_in_java_class.sh
+      - name: Build with Maven
+        if: ${{ matrix.java != 8 }}
+        run: |
+          export MY_POM_VERSION=`mvn -Dswagger-codegen-generators-version=1.0.37 -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+          echo "POM VERSION" ${MY_POM_VERSION}
+          export GENERATORS_VERSION=`sed -n 's/<swagger\-codegen\-generators\-version>\([^\s]*\)<\/swagger\-codegen\-generators\-version>/\1/p' pom.xml`
+          export GENERATORS_VERSION=`echo ${GENERATORS_VERSION} | tr -d '[:space:]'`          
+          echo "GENERATORS_VERSION" ${GENERATORS_VERSION}
+          export GENERATORS_VERSION_PROPERTY=""
+          if [[ ! $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
+          then
+            if [[ ! $GENERATORS_VERSION =~ ^.*SNAPSHOT$ ]];
+            then
+              # check release version exists
+              export GENERATORS_FOUND_JSON=`curl -s --max-time 60 --retry 15 --connect-timeout 20 https://search.maven.org/solrsearch/select?q=g:io.swagger.codegen.v3%20AND%20a:swagger-codegen-generators%20AND%20v:${GENERATORS_VERSION}%20AND%20p:jar`
+              export GENERATORS_FOUND=`echo ${GENERATORS_FOUND_JSON} | jq '.response.numFound'`
+              echo "GENERATORS_FOUND" ${GENERATORS_FOUND}
+              if [[ $GENERATORS_FOUND == '0' ]];
+              then
+                echo "generators version not found"
+                rm -f maven-metadata.json
+                curl -o maven-metadata.json -s --max-time 60 --retry 15 --connect-timeout 30  -H "accept: application/json" https://oss.sonatype.org/service/local/repositories/snapshots/content/io/swagger/codegen/v3/swagger-codegen-generators/
+                LAST_SNAP=`jq '[.data | sort_by(.lastModified) | reverse | .[] | select( .text | contains("1."))]| .[0].text' maven-metadata.json`
+                export LAST_SNAP=${LAST_SNAP:1:${#LAST_SNAP}-2}
+                echo "LAST_SNAP $LAST_SNAP"
+                export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
+              fi
+            fi
+          fi
+          echo "GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
+          echo "GENERATORS_VERSION_PROPERTY=${GENERATORS_VERSION_PROPERTY}" >> $GITHUB_ENV
+          mvn clean verify -U -DJETTY_TEST_HTTP_PORT=8070 -DJETTY_TEST_STOP_PORT=8069 ${GENERATORS_VERSION_PROPERTY}
+      - name: Build and test samples Java 8
+        if: ${{ matrix.java == 8 }}
+        run: |
+          export MY_POM_VERSION=`mvn -Dswagger-codegen-generators-version=1.0.37 -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+          echo "POM VERSION" ${MY_POM_VERSION}
+          export GENERATORS_VERSION=`sed -n 's/<swagger\-codegen\-generators\-version>\([^\s]*\)<\/swagger\-codegen\-generators\-version>/\1/p' pom.xml`
+          export GENERATORS_VERSION=`echo ${GENERATORS_VERSION} | tr -d '[:space:]'`          
+          echo "GENERATORS_VERSION" ${GENERATORS_VERSION}
+          export GENERATORS_VERSION_PROPERTY=""
+          if [[ ! $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
+          then
+            if [[ ! $GENERATORS_VERSION =~ ^.*SNAPSHOT$ ]];
+            then
+              # check release version exists
+              export GENERATORS_FOUND_JSON=`curl -s --max-time 60 --retry 15 --connect-timeout 20 https://search.maven.org/solrsearch/select?q=g:io.swagger.codegen.v3%20AND%20a:swagger-codegen-generators%20AND%20v:${GENERATORS_VERSION}%20AND%20p:jar`
+              export GENERATORS_FOUND=`echo ${GENERATORS_FOUND_JSON} | jq '.response.numFound'`
+              echo "GENERATORS_FOUND" ${GENERATORS_FOUND}
+              if [[ $GENERATORS_FOUND == '0' ]];
+              then
+                echo "generators version not found"
+                rm -f maven-metadata.json
+                curl -o maven-metadata.json -s --max-time 60 --retry 15 --connect-timeout 30  -H "accept: application/json" https://oss.sonatype.org/service/local/repositories/snapshots/content/io/swagger/codegen/v3/swagger-codegen-generators/
+                LAST_SNAP=`jq '[.data | sort_by(.lastModified) | reverse | .[] | select( .text | contains("1."))]| .[0].text' maven-metadata.json`
+                export LAST_SNAP=${LAST_SNAP:1:${#LAST_SNAP}-2}
+                echo "LAST_SNAP $LAST_SNAP"
+                export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
+              fi
+            fi
+          fi
+          echo "GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
+          echo "GENERATORS_VERSION_PROPERTY=${GENERATORS_VERSION_PROPERTY}" >> $GITHUB_ENV
+          cp -a pom.java8.xml pom.xml
+          echo "Test samples - GENERATORS_VERSION_PROPERTY ${GENERATORS_VERSION_PROPERTY}"
+          mvn verify -U -Psamples -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Dproject.build.sourceEncoding=UTF8 -Dfile.encoding=UTF8 ${GENERATORS_VERSION_PROPERTY}
+          cp -a pom.java11.xml pom.xml

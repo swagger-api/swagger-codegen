@@ -4,7 +4,7 @@ servers:
 info:
   description: 'This is an online swagger codegen server.  You can find out more at
     https://github.com/swagger-api/swagger-codegen or on [irc.freenode.net, #swagger](http://swagger.io/irc/).'
-  version: 3.0.36
+  version: 3.0.65-SNAPSHOT
   title: Swagger Generator
   license:
     name: Apache 2.0
@@ -205,6 +205,48 @@ paths:
                 type: "object"
                 additionalProperties:
                   $ref: "#/components/schemas/CliOption"
+  "/model":
+    post:
+      tags:
+        - clients
+        - servers
+        - documentation
+        - config
+      x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
+      operationId: generateBundle
+      summary: Generates the intermediate model ("bundle") and returns it as a JSON.
+        body.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/GenerationRequest"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+  "/render":
+    post:
+      tags:
+        - documentation
+      x-swagger-router-controller: io.swagger.v3.generator.online.GeneratorController
+      operationId: renderTemplate
+      summary: render a template using the provided data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RenderRequest"
+      responses:
+        '200':
+          description: successful operation
+          content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RenderResponse"
 components:
   parameters:
     version:
@@ -292,6 +334,9 @@ components:
         type:
           type: string
           description: Authorization type
+          enum:
+          - query
+          - header
     Options:
       x-swagger-router-model: io.swagger.codegen.v3.service.Options
       properties:
@@ -439,3 +484,26 @@ components:
             type: "string"
         default:
           type: "string"
+    RenderRequest:
+      x-swagger-router-model: io.swagger.codegen.v3.service.RenderRequest
+      required:
+        - template
+        - context
+      properties:
+        template:
+          type: string
+          title: template
+          description: template as string
+          example: "{{!mustache}}"
+        context:
+          type: string
+          title: context
+          description: context as string
+          example: "{}"
+    RenderResponse:
+      x-swagger-router-model: io.swagger.codegen.v3.service.RenderResponse
+      required:
+        - value
+      properties:
+        value:
+          type: string

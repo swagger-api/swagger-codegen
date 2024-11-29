@@ -8,4 +8,4 @@ docker run --rm -it \
         -e GEN_DIR=/gen \
         -v "${PWD}:/gen" \
         --entrypoint /gen/docker-stub.sh \
-        openjdk:8-jre-alpine "$@"
+        openjdk:17-jre-alpine "$@"

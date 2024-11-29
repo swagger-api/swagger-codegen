@@ -1,5 +1,5 @@
 FROM openjdk:8-jre-alpine
-
+ENV disableOas31Resolve=False
 WORKDIR /generator
 RUN mkdir /generator/lib
 COPY src/main/resources/inflector.yaml /generator/
