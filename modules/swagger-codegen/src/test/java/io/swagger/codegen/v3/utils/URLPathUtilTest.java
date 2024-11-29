@@ -3,6 +3,8 @@ package io.swagger.codegen.v3.utils;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
+import io.swagger.v3.oas.models.servers.ServerVariable;
+import io.swagger.v3.oas.models.servers.ServerVariables;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
@@ -13,7 +15,7 @@ import java.net.URL;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class URLPathUtilTest {
@@ -47,8 +49,8 @@ public class URLPathUtilTest {
         verify(openAPI).getServers();
         verify(servers).isEmpty();
 
-        verifyZeroInteractions(server);
-        verifyZeroInteractions(config);
+        verifyNoMoreInteractions(server);
+        verifyNoMoreInteractions(config);
     }
 
     @Test
@@ -61,7 +63,7 @@ public class URLPathUtilTest {
 
         verify(openAPI).getServers();
         verify(servers).isEmpty();
-        verifyZeroInteractions(config);
+        verifyNoMoreInteractions(config);
     }
 
     @Test
@@ -74,7 +76,7 @@ public class URLPathUtilTest {
 
         verify(openAPI).getServers();
         verify(servers).isEmpty();
-        verifyZeroInteractions(config);
+        verifyNoMoreInteractions(config);
     }
 
     @Test (description = "verify a relative url when input url is not present.")
@@ -117,5 +119,37 @@ public class URLPathUtilTest {
         verify(openAPI).getServers();
         verify(servers).isEmpty();
         verify(config).getInputURL();
+    }
+
+    @Test (description = "verify a url with variable substitutions.")
+    public void testVariableSubstitution() throws Exception {
+        ServerVariable portVariable = new ServerVariable();
+        portVariable.setDefault("8080");
+
+        ServerVariables vars = new ServerVariables();
+        vars.addServerVariable("port", portVariable);
+
+        when(server.getVariables()).thenReturn(vars);
+        when(server.getUrl()).thenReturn("http://myhost:{port}/mypath");
+
+        URL url = URLPathUtil.getServerURL(openAPI, config);
+
+        Assert.assertEquals(new URL("http://myhost:8080/mypath"), url);
+    }
+
+    @Test (description = "verify a url with variable substitutions when default is missing.")
+    public void testVariableSubstitutionMissingDefault() throws Exception {
+        ServerVariable portVariable = new ServerVariable();
+
+        ServerVariables vars = new ServerVariables();
+        vars.addServerVariable("port", portVariable);
+
+        when(server.getVariables()).thenReturn(vars);
+        when(server.getUrl()).thenReturn("http://myhost:{port}/mypath");
+
+        // No default for port, resulting URL is invalid.
+        URL url = URLPathUtil.getServerURL(openAPI, config);
+
+        Assert.assertEquals(new URL("http://myhost:8080/mypath"), url);
     }
 }

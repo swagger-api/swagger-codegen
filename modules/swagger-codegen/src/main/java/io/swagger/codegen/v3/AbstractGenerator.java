@@ -144,4 +144,5 @@ public abstract class AbstractGenerator {
         }
         return name;
     }
+
 }

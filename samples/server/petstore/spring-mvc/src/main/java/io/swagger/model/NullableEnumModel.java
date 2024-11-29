@@ -16,6 +16,7 @@ import javax.validation.constraints.*;
 @Validated
 
 
+
 public class NullableEnumModel   {
   /**
    * Gets or Sets enumProp

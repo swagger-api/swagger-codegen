@@ -45,7 +45,7 @@ ${nuget_cmd} install src/IO.Swagger/packages.config -o packages;
 echo "[INFO] Copy DLLs to the 'bin' folder"
 mkdir -p bin;
 cp packages/Newtonsoft.Json.10.0.3/lib/net45/Newtonsoft.Json.dll bin/Newtonsoft.Json.dll;
-cp packages/RestSharp.105.1.0/lib/net45/RestSharp.dll bin/RestSharp.dll;
+cp packages/RestSharp.110.2.0/lib/net45/RestSharp.dll bin/RestSharp.dll;
 cp packages/JsonSubTypes.1.2.0/lib/net45/JsonSubTypes.dll bin/JsonSubTypes.dll
 
 echo "[INFO] Run 'mcs' to build bin/IO.Swagger.dll"

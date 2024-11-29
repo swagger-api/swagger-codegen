@@ -83,6 +83,8 @@ public interface CodegenConfig {
 
     List<SupportingFile> supportingFiles();
 
+    List<SupportingFile> configFiles();
+
     String getInputSpec();
 
     void setInputSpec(String inputSpec);
@@ -254,5 +256,17 @@ public interface CodegenConfig {
 
     default boolean checkAliasModel() {
         return false;
+    }
+
+    default boolean isPrivileged() {
+        return false;
+    }
+
+    default int getPriority() {
+        return Integer.MIN_VALUE;
+    }
+
+    default String getCodeName() {
+        return getName();
     }
 }
