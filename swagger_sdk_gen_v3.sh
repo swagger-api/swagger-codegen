@@ -23,7 +23,7 @@ then
     echo "Generating SDK using OpenAPI Generator..."
     docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
         -i /local/$url \
-        -l java \
+        -g java \
         -DdateLibrary=java8 \
         -o /local/intouch_api/java_client/java \
         -c /local/config.json
