@@ -18,7 +18,7 @@ if [ "$Client" = "java" ]
 then
     echo "Removing existing Java client SDK..."
     rm -rf intouch_api/java_client/java
-
+    mkdir -p intouch_api/java_client/java
     # Step 2: Generate the SDK using OpenAPI Generator (via Docker)
     echo "Generating SDK using OpenAPI Generator..."
     docker run --rm -v $(pwd):/local openapitools/openapi-generator-cli generate \
