@@ -23,7 +23,7 @@ let primitives = [
                     "any"
                  ];
 
-class ObjectSerializer {
+export class ObjectSerializer {
 
     public static findCorrectType(data: any, expectedType: string) {
         if (data == undefined) {
@@ -129,6 +129,7 @@ class ObjectSerializer {
 
 {{#models}}
 {{#model}}
+{{^isArrayModel}}
 {{#description}}
 /**
 * {{{description}}}
@@ -189,6 +190,7 @@ export namespace {{classname}} {
 {{/vars}}
 }
 {{/hasEnums}}
+{{/isArrayModel}}
 {{/model}}
 {{/models}}
 
@@ -209,7 +211,9 @@ let enumsMap: {[index: string]: any} = {
 let typeMap: {[index: string]: any} = {
     {{#models}}
         {{#model}}
+        {{^isArrayModel}}
     "{{classname}}": {{classname}},
+        {{/isArrayModel}}
         {{/model}}
     {{/models}}
 }
