@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.swagger.codegen.v3.CodegenArgument;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -434,7 +435,11 @@ public class CodeGenMojo extends AbstractMojo {
         }
 
         if (null != generateSupportingFiles && generateSupportingFiles) {
-            System.setProperty(CodegenConstants.SUPPORTING_FILES, supportingFilesToGenerate);
+            if (StringUtils.isBlank(supportingFilesToGenerate)) {
+                System.setProperty(CodegenConstants.SUPPORTING_FILES, "true");
+            } else {
+                System.setProperty(CodegenConstants.SUPPORTING_FILES, supportingFilesToGenerate);
+            }
         } else {
             System.clearProperty(CodegenConstants.SUPPORTING_FILES);
         }

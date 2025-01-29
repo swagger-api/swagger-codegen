@@ -680,6 +680,7 @@ public class CodegenConfigurator implements Serializable {
         options.setFlatten(true);
         options.setFlattenComposedSchemas(flattenInlineSchema);
         options.setSkipMatches(this.skipInlineModelMatches);
+        options.setResolveResponses(true);
 
         if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
             setSafelyResolveURLParseOptions(options);
