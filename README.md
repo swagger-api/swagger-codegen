@@ -97,7 +97,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i https://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client
 ```
 
-You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.44/swagger-codegen-cli-2.4.44.jar)
+You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.67/swagger-codegen-cli-3.0.67.jar)
 
 To get a list of **general** options available, you can run the following:
 
