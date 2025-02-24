@@ -99,7 +99,7 @@ if(hasProperty('target') && target == 'android') {
 ext {
     swagger_annotations_version = "2.0.0"
     jackson_version = "2.10.1"
-    feign_version = "11.6"
+    feign_version = "13.5"
     feign_form_version = "3.8.0"
     junit_version = "4.12"
     oltu_version = "1.0.2"
