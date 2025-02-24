@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import feign.*;
 
+
 public interface FakeApi extends ApiClient.Api {
 
   /**
@@ -86,7 +87,7 @@ public interface FakeApi extends ApiClient.Api {
    */
   @RequestLine("POST /fake")
   @Headers({
-      "Content-Type: application/xml; charset&#x3D;utf-8",
+      "Content-Type: application/xml; charset=utf-8",
       "Accept: */*",
   })
   void testEndpointParameters(FakeBody body);

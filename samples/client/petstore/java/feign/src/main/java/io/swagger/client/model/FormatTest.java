@@ -28,6 +28,7 @@ import java.util.UUID;
  */
 
 
+
 public class FormatTest {
   @JsonProperty("integer")
   private Integer integer = null;

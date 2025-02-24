@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 
 
+
 public class SinglePetResponse {
   @JsonProperty("pet")
   private OneOfSinglePetResponsePet pet = null;

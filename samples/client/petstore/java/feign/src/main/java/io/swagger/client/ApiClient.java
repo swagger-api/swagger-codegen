@@ -20,6 +20,7 @@ import feign.slf4j.Slf4jLogger;
 import io.swagger.client.auth.*;
 import io.swagger.client.auth.OAuth.AccessTokenListener;
 
+
 public class ApiClient {
   public interface Api {}
 
