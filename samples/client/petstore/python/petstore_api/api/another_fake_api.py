@@ -42,7 +42,7 @@ class AnotherFakeApi(object):
         >>> thread = api.test_special_tags(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
@@ -64,7 +64,7 @@ class AnotherFakeApi(object):
         >>> thread = api.test_special_tags_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,

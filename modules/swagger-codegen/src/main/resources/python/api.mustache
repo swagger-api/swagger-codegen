@@ -42,11 +42,11 @@ class {{classname}}(object):
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
 {{#allParams}}
         :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
 {{/allParams}}
-        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
+        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}.
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -73,11 +73,11 @@ class {{classname}}(object):
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
 {{#allParams}}
         :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/optional}}
 {{/allParams}}
-        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
+        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}.
                  If the method is called asynchronously,
                  returns the request thread.
         """
