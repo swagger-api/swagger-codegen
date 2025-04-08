@@ -2313,7 +2313,7 @@ public class DefaultCodegen {
                     op.isResponseFile = Boolean.TRUE;
                 }
                 if (Boolean.TRUE.equals(r.isString)
-                        && operation.getProduces().contains("plain/text") // otherwise if "application/json" => wrap text with "..", and escape
+                        && operation.getProduces() != null && operation.getProduces().contains("text/plain") // otherwise if "application/json" => wrap text with "..", and escape
                         && Boolean.TRUE.equals(r.isDefault)){
                     op.isResponseText = Boolean.TRUE;
                 }
