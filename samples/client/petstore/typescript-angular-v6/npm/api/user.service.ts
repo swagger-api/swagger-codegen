@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class UserService {
 
-    protected basePath = 'https://petstore.swagger.io/v2';
+    protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -95,6 +95,7 @@ export class UserService {
         return this.httpClient.post<any>(`${this.basePath}/user`,
             body,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -142,6 +143,7 @@ export class UserService {
         return this.httpClient.post<any>(`${this.basePath}/user/createWithArray`,
             body,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -189,6 +191,7 @@ export class UserService {
         return this.httpClient.post<any>(`${this.basePath}/user/createWithList`,
             body,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -231,6 +234,7 @@ export class UserService {
 
         return this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -273,6 +277,7 @@ export class UserService {
 
         return this.httpClient.get<User>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -329,6 +334,7 @@ export class UserService {
         return this.httpClient.get<string>(`${this.basePath}/user/login`,
             {
                 params: queryParameters,
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -366,6 +372,7 @@ export class UserService {
 
         return this.httpClient.get<any>(`${this.basePath}/user/logout`,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -418,6 +425,7 @@ export class UserService {
         return this.httpClient.put<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             body,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

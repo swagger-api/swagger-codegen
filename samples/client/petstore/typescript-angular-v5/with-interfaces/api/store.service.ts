@@ -28,7 +28,7 @@ import { StoreServiceInterface }                            from './store.servic
 @Injectable()
 export class StoreService implements StoreServiceInterface {
 
-    protected basePath = 'https://petstore.swagger.io/v2';
+    protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -91,6 +91,7 @@ export class StoreService implements StoreServiceInterface {
 
         return this.httpClient.delete<any>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -132,6 +133,7 @@ export class StoreService implements StoreServiceInterface {
 
         return this.httpClient.get<{ [key: string]: number; }>(`${this.basePath}/store/inventory`,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -174,6 +176,7 @@ export class StoreService implements StoreServiceInterface {
 
         return this.httpClient.get<Order>(`${this.basePath}/store/order/${encodeURIComponent(String(orderId))}`,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -221,6 +224,7 @@ export class StoreService implements StoreServiceInterface {
         return this.httpClient.post<Order>(`${this.basePath}/store/order`,
             body,
             {
+                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
