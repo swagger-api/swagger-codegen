@@ -96,7 +96,6 @@ export class UserService implements UserServiceInterface {
         return this.httpClient.post<any>(`${this.basePath}/user`,
             body,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -144,7 +143,6 @@ export class UserService implements UserServiceInterface {
         return this.httpClient.post<any>(`${this.basePath}/user/createWithArray`,
             body,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -192,7 +190,6 @@ export class UserService implements UserServiceInterface {
         return this.httpClient.post<any>(`${this.basePath}/user/createWithList`,
             body,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -235,7 +232,6 @@ export class UserService implements UserServiceInterface {
 
         return this.httpClient.delete<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -278,7 +274,6 @@ export class UserService implements UserServiceInterface {
 
         return this.httpClient.get<User>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -335,7 +330,6 @@ export class UserService implements UserServiceInterface {
         return this.httpClient.get<string>(`${this.basePath}/user/login`,
             {
                 params: queryParameters,
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -373,7 +367,6 @@ export class UserService implements UserServiceInterface {
 
         return this.httpClient.get<any>(`${this.basePath}/user/logout`,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -426,7 +419,6 @@ export class UserService implements UserServiceInterface {
         return this.httpClient.put<any>(`${this.basePath}/user/${encodeURIComponent(String(username))}`,
             body,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

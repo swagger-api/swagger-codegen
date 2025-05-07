@@ -104,7 +104,6 @@ export class FakeService {
         return this.httpClient.put<any>(`${this.basePath}/fake`,
             convertFormParamsToString ? formParams.toString() : formParams,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

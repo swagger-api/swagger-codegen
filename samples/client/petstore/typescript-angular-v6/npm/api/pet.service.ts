@@ -106,7 +106,6 @@ export class PetService {
         return this.httpClient.post<any>(`${this.basePath}/pet`,
             body,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -162,7 +161,6 @@ export class PetService {
 
         return this.httpClient.delete<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -219,7 +217,6 @@ export class PetService {
         return this.httpClient.get<Array<Pet>>(`${this.basePath}/pet/findByStatus`,
             {
                 params: queryParameters,
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -276,7 +273,6 @@ export class PetService {
         return this.httpClient.get<Array<Pet>>(`${this.basePath}/pet/findByTags`,
             {
                 params: queryParameters,
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -324,7 +320,6 @@ export class PetService {
 
         return this.httpClient.get<Pet>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -382,7 +377,6 @@ export class PetService {
         return this.httpClient.put<any>(`${this.basePath}/pet`,
             body,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -457,7 +451,6 @@ export class PetService {
         return this.httpClient.post<any>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}`,
             convertFormParamsToString ? formParams.toString() : formParams,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -534,7 +527,6 @@ export class PetService {
         return this.httpClient.post<ApiResponse>(`${this.basePath}/pet/${encodeURIComponent(String(petId))}/uploadImage`,
             convertFormParamsToString ? formParams.toString() : formParams,
             {
-                // not text :(
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
