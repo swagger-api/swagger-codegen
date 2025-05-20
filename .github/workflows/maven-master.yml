@@ -69,9 +69,9 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
           tags: swaggerapi/swagger-codegen-cli:unstable
-        env:
-          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+    env:
+      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
   build-java8:
 
     runs-on: ubuntu-latest
