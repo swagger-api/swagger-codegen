@@ -104,6 +104,16 @@ namespace IO.Swagger.Model
         }
 
         /// <summary>
+        /// Deserialize the JSON string into a <see cref="Name" /> object.
+        /// </summary>
+        /// <param name="json">JSON string.</param>
+        /// <returns>Object representation of the JSON string.</returns>
+        public static Name FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<Name>(json);
+        }
+
+        /// <summary>
         /// Returns true if objects are equal
         /// </summary>
         /// <param name="input">Object to be compared</param>
