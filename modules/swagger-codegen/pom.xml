@@ -10,6 +10,7 @@
     <artifactId>swagger-codegen</artifactId>
     <packaging>jar</packaging>
     <name>swagger-codegen (core library)</name>
+    <description>swagger-codegen (core library)</description>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <defaultGoal>install</defaultGoal>
@@ -294,13 +295,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

@@ -10,6 +10,7 @@
     <artifactId>swagger-generator</artifactId>
     <packaging>war</packaging>
     <name>swagger-generator</name>
+    <description>swagger-generator</description>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
