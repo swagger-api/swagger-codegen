@@ -3,6 +3,8 @@
 =end
 
 require 'date'
+{{#imports}}require_relative '{{import}}'
+{{/imports}}
 
 module {{moduleName}}
 {{#models}}
