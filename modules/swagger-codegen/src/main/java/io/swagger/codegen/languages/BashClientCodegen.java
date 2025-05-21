@@ -473,6 +473,8 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   }
 
+
+
   /**
    * Override with any special text escaping logic
    */
@@ -562,7 +564,8 @@ public class BashClientCodegen extends DefaultCodegen implements CodegenConfig {
 
   @Override
   public String escapeQuotationMark(String input) {
-      return input;
+    // remove ' to avoid code injection
+    return input.replace("'", "\'\\\'\'");
   }
 
   /**

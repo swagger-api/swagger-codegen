@@ -237,4 +237,18 @@ public interface CodegenConfig {
     void setIgnoreImportMapping(boolean ignoreImportMapping);
 
     boolean defaultIgnoreImportMappingOption();
+
+    boolean isUsingFlattenSpec();
+
+    default boolean isPrivileged() {
+        return false;
+    }
+
+    default int getPriority() {
+        return Integer.MIN_VALUE;
+    }
+
+    default String getCodeName() {
+        return getName();
+    }
 }

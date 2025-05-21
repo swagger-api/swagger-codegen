@@ -37,6 +37,7 @@ public class JavaOptionsProvider implements OptionsProvider {
     public static final String USE_BEANVALIDATION = "false";
     public static final String ALLOW_UNICODE_IDENTIFIERS_VALUE = "false";
     public static final String ADDITIONAL_MODEL_TYPE_ANNOTATIONS = "@TestAnnotation";
+    public static final String JAKARTA_VALUE = "false";
 
 
     private ImmutableMap<String, String> options;
@@ -80,6 +81,7 @@ public class JavaOptionsProvider implements OptionsProvider {
                 .put(JavaClientCodegen.CHECK_DUPLICATED_MODEL_NAME, "false")
                         //.put("supportJava6", "true")
                 .put(JavaClientCodegen.ADDITIONAL_MODEL_TYPE_ANNOTATIONS, ADDITIONAL_MODEL_TYPE_ANNOTATIONS)
+                .put(JavaClientCodegen.JAKARTA, JAKARTA_VALUE)
                 .build();
     }
 
@@ -87,10 +89,14 @@ public class JavaOptionsProvider implements OptionsProvider {
      * Use the default options, but override the ones found in additionalOptions.
      */
     public JavaOptionsProvider(Map<String, String> additionalOptions) {
-         options = new ImmutableMap.Builder<String, String>()
-                .putAll(options)
-                .putAll(additionalOptions)
-                .build();
+
+        ImmutableMap.Builder b = new ImmutableMap.Builder<String, String>();
+        if (options != null) {
+            b = b.putAll(options);
+        }
+        options = b
+            .putAll(additionalOptions)
+            .build();
     }
 
     @Override

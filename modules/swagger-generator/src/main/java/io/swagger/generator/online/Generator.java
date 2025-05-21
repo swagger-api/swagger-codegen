@@ -10,6 +10,7 @@ import io.swagger.generator.util.ZipUtil;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import io.swagger.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,19 @@ public class Generator {
             LOGGER.debug("ignoring empty spec");
             node = null;
         }
+        CodegenConfig codegenConfig = null;
+        try {
+            codegenConfig = CodegenConfigLoader.forName(language);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Unsupported target " + language + " supplied");
+        }
+
         Swagger swagger;
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        if (codegenConfig.isUsingFlattenSpec() && !Boolean.FALSE.equals(opts.isUsingFlattenSpec())) {
+            parseOptions.setFlatten(true);
+        }
         if (node == null) {
             if (opts.getSwaggerUrl() != null) {
                 if (opts.getAuthorizationValue() != null) {
@@ -82,9 +95,9 @@ public class Generator {
 
                     swagger =
                             new SwaggerParser().read(opts.getSwaggerUrl(), authorizationValues,
-                                    true);
+                                    parseOptions);
                 } else {
-                    swagger = new SwaggerParser().read(opts.getSwaggerUrl());
+                    swagger = new SwaggerParser().read(opts.getSwaggerUrl(), null, parseOptions);
                 }
             } else {
                 throw new BadRequestException("No swagger specification was supplied");
@@ -92,9 +105,9 @@ public class Generator {
         } else if (opts.getAuthorizationValue() != null) {
             List<AuthorizationValue> authorizationValues = new ArrayList<AuthorizationValue>();
             authorizationValues.add(opts.getAuthorizationValue());
-            swagger = new SwaggerParser().read(node, authorizationValues, true);
+            swagger = new SwaggerParser().read(node, authorizationValues, parseOptions);
         } else {
-            swagger = new SwaggerParser().read(node, true);
+            swagger = new SwaggerParser().read(node, null,parseOptions);
         }
         if (swagger == null) {
             throw new BadRequestException("The swagger specification supplied was not valid");
@@ -116,12 +129,6 @@ public class Generator {
 
         clientOptInput.opts(clientOpts).swagger(swagger);
 
-        CodegenConfig codegenConfig = null;
-        try {
-            codegenConfig = CodegenConfigLoader.forName(language);
-        } catch (RuntimeException e) {
-            throw new BadRequestException("Unsupported target " + language + " supplied");
-        }
 
         if (opts.getOptions() != null) {
             codegenConfig.additionalProperties().putAll(opts.getOptions());

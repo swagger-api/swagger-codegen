@@ -509,10 +509,6 @@ public class GenerateTest {
             new Expectations() {
                 {
                     CodegenConfigurator.fromFile(anyString);
-                    result = null;
-
-                    new CodegenConfigurator();
-                    times = 1;
                     result = configurator;
                 }
             };
@@ -522,19 +518,15 @@ public class GenerateTest {
             {
 
                 configurator.toClientOptInput();
-                times = 1;
                 result = clientOptInput;
+                minTimes = 1;
 
-                new DefaultGenerator();
-                times = 1;
-                result = generator;
+                DefaultGenerator g = new DefaultGenerator();
 
-                generator.opts(clientOptInput);
-                times = 1;
-                result = generator;
+                g.opts(clientOptInput);
+                result = g;
 
-                generator.generate();
-                times = 1;
+                g.generate();
 
             }
         };
