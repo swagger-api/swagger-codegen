@@ -1,14 +1,10 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>5</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-project</artifactId>
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
+    <description>swagger-codegen-project</description>
     <version>3.0.69-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
@@ -27,6 +23,13 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <id>frantuma</id>
+            <name>Francesco Tumanischvili</name>
+            <email>frantuma@yahoo.com</email>
+        </developer>
+    </developers>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <outputDirectory>target/classes</outputDirectory>
@@ -65,9 +68,9 @@
                     </execution>
                 </executions> -->
                 <configuration>
-                    <compilerSource>1.7</compilerSource>
-                    <compilerCompliance>1.7</compilerCompliance>
-                    <compilerTargetPlatform>1.7</compilerTargetPlatform>
+                    <compilerSource>1.8</compilerSource>
+                    <compilerCompliance>1.8</compilerCompliance>
+                    <compilerTargetPlatform>1.8</compilerTargetPlatform>
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
@@ -147,7 +150,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -169,12 +172,6 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.0</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -233,6 +230,18 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                    <waitMaxTime>3600</waitMaxTime>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -245,6 +254,18 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <configuration>
+                        <!-- Prevent `gpg` from using pinentry programs -->
+                        <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -314,7 +335,7 @@
             </build>
         </profile>
         <profile>
-            <id>release-sign-artifacts</id>
+            <id>release</id>
             <activation>
                 <property>
                     <name>performRelease</name>
@@ -326,6 +347,14 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <configuration>
+                            <!-- Prevent `gpg` from using pinentry programs -->
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -1177,28 +1206,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>sonatype-releases</id>
-            <url>https://oss.sonatype.org/content/repositories/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <swagger-codegen-generators-version>1.0.57-SNAPSHOT</swagger-codegen-generators-version>
@@ -1229,5 +1236,6 @@
         <httpclient-version>4.5.14</httpclient-version>
         <jersey-version>2.46</jersey-version>
         <json-version>20231013</json-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
