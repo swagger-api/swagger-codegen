@@ -29,6 +29,7 @@ import java.util.UUID;
  */
 
 
+
 public class MixedPropertiesAndAdditionalPropertiesClass {
   @JsonProperty("uuid")
   private UUID uuid = null;

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import feign.*;
 
+
 public interface FakeClassnameTags123Api extends ApiClient.Api {
 
   /**
