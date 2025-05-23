@@ -48,6 +48,8 @@ public class PetApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Add a new pet to the store
      * 
@@ -58,6 +60,7 @@ public class PetApi {
     public void addPet(Pet body) throws RestClientException {
         addPetWithHttpInfo(body);
     }
+
 
     /**
      * Add a new pet to the store
@@ -95,6 +98,45 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class DeletePetOptionals {
+        
+        public String apiKey() {
+            return this.apiKey;
+        }
+
+        public DeletePetOptionals apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        private String apiKey = null;
+        
+    }
+
+    /**
+    * Deletes a pet
+    * 
+    * @param petId Pet id to delete (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deletePet(Long petId) throws RestClientException {
+        deletePet(petId, null);
+    }
+
+    /**
+    * Deletes a pet
+    * 
+    * @param petId Pet id to delete (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deletePetOpts(Long petId, DeletePetOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new DeletePetOptionals();
+        }
+        deletePet(petId, optionals.apiKey());
+    }
+
     /**
      * Deletes a pet
      * 
@@ -105,6 +147,32 @@ public class PetApi {
      */
     public void deletePet(Long petId, String apiKey) throws RestClientException {
         deletePetWithHttpInfo(petId, apiKey);
+    }
+
+    /**
+    * Deletes a pet
+    * 
+    * @param petId Pet id to delete (required)
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> deletePetWithHttpInfo(Long petId) throws RestClientException {
+        return deletePetWithHttpInfo(petId, null);
+    }
+
+    /**
+    * Deletes a pet
+    * 
+    * @param petId Pet id to delete (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> deletePetOptsWithHttpInfo(Long petId, DeletePetOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new DeletePetOptionals();
+        }
+        return deletePetWithHttpInfo(petId, optionals.apiKey());
     }
 
     /**
@@ -148,6 +216,8 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Finds Pets by status
      * Multiple status values can be provided with comma separated strings
@@ -160,6 +230,7 @@ public class PetApi {
     public List<Pet> findPetsByStatus(List<String> status) throws RestClientException {
         return findPetsByStatusWithHttpInfo(status).getBody();
     }
+
 
     /**
      * Finds Pets by status
@@ -198,6 +269,8 @@ public class PetApi {
         ParameterizedTypeReference<List<Pet>> returnType = new ParameterizedTypeReference<List<Pet>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Finds Pets by tags
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -211,6 +284,7 @@ public class PetApi {
     public List<Pet> findPetsByTags(List<String> tags) throws RestClientException {
         return findPetsByTagsWithHttpInfo(tags).getBody();
     }
+
 
     /**
      * Finds Pets by tags
@@ -250,6 +324,8 @@ public class PetApi {
         ParameterizedTypeReference<List<Pet>> returnType = new ParameterizedTypeReference<List<Pet>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Find pet by ID
      * Returns a single pet
@@ -263,6 +339,7 @@ public class PetApi {
     public Pet getPetById(Long petId) throws RestClientException {
         return getPetByIdWithHttpInfo(petId).getBody();
     }
+
 
     /**
      * Find pet by ID
@@ -303,6 +380,8 @@ public class PetApi {
         ParameterizedTypeReference<Pet> returnType = new ParameterizedTypeReference<Pet>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Update an existing pet
      * 
@@ -315,6 +394,7 @@ public class PetApi {
     public void updatePet(Pet body) throws RestClientException {
         updatePetWithHttpInfo(body);
     }
+
 
     /**
      * Update an existing pet
@@ -354,6 +434,56 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class UpdatePetWithFormOptionals {
+        
+        public String name() {
+            return this.name;
+        }
+
+        public UpdatePetWithFormOptionals name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String name = null;
+        
+        public String status() {
+            return this.status;
+        }
+
+        public UpdatePetWithFormOptionals status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        private String status = null;
+        
+    }
+
+    /**
+    * Updates a pet in the store with form data
+    * 
+    * @param petId ID of pet that needs to be updated (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updatePetWithForm(Long petId) throws RestClientException {
+        updatePetWithForm(petId, null, null);
+    }
+
+    /**
+    * Updates a pet in the store with form data
+    * 
+    * @param petId ID of pet that needs to be updated (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updatePetWithFormOpts(Long petId, UpdatePetWithFormOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UpdatePetWithFormOptionals();
+        }
+        updatePetWithForm(petId, optionals.name(), optionals.status());
+    }
+
     /**
      * Updates a pet in the store with form data
      * 
@@ -365,6 +495,32 @@ public class PetApi {
      */
     public void updatePetWithForm(Long petId, String name, String status) throws RestClientException {
         updatePetWithFormWithHttpInfo(petId, name, status);
+    }
+
+    /**
+    * Updates a pet in the store with form data
+    * 
+    * @param petId ID of pet that needs to be updated (required)
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> updatePetWithFormWithHttpInfo(Long petId) throws RestClientException {
+        return updatePetWithFormWithHttpInfo(petId, null, null);
+    }
+
+    /**
+    * Updates a pet in the store with form data
+    * 
+    * @param petId ID of pet that needs to be updated (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> updatePetWithFormOptsWithHttpInfo(Long petId, UpdatePetWithFormOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UpdatePetWithFormOptionals();
+        }
+        return updatePetWithFormWithHttpInfo(petId, optionals.name(), optionals.status());
     }
 
     /**
@@ -413,6 +569,58 @@ public class PetApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class UploadFileOptionals {
+        
+        public String additionalMetadata() {
+            return this.additionalMetadata;
+        }
+
+        public UploadFileOptionals additionalMetadata(String additionalMetadata) {
+            this.additionalMetadata = additionalMetadata;
+            return this;
+        }
+
+        private String additionalMetadata = null;
+        
+        public File file() {
+            return this.file;
+        }
+
+        public UploadFileOptionals file(File file) {
+            this.file = file;
+            return this;
+        }
+
+        private File file = null;
+        
+    }
+
+    /**
+    * uploads an image
+    * 
+    * @param petId ID of pet to update (required)
+    * @return ModelApiResponse
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ModelApiResponse uploadFile(Long petId) throws RestClientException {
+        return uploadFile(petId, null, null);
+    }
+
+    /**
+    * uploads an image
+    * 
+    * @param petId ID of pet to update (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ModelApiResponse
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ModelApiResponse uploadFileOpts(Long petId, UploadFileOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UploadFileOptionals();
+        }
+        return uploadFile(petId, optionals.additionalMetadata(), optionals.file());
+    }
+
     /**
      * uploads an image
      * 
@@ -425,6 +633,32 @@ public class PetApi {
      */
     public ModelApiResponse uploadFile(Long petId, String additionalMetadata, File file) throws RestClientException {
         return uploadFileWithHttpInfo(petId, additionalMetadata, file).getBody();
+    }
+
+    /**
+    * uploads an image
+    * 
+    * @param petId ID of pet to update (required)
+    * @return ResponseEntity&lt;ModelApiResponse&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<ModelApiResponse> uploadFileWithHttpInfo(Long petId) throws RestClientException {
+        return uploadFileWithHttpInfo(petId, null, null);
+    }
+
+    /**
+    * uploads an image
+    * 
+    * @param petId ID of pet to update (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;ModelApiResponse&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<ModelApiResponse> uploadFileOptsWithHttpInfo(Long petId, UploadFileOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UploadFileOptionals();
+        }
+        return uploadFileWithHttpInfo(petId, optionals.additionalMetadata(), optionals.file());
     }
 
     /**
