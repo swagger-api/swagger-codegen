@@ -72,6 +72,7 @@ jobs:
         docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
         set -e
     - name: Build generator image and push
+      if: env.RELEASE_OK == 'nope'
       uses: docker/build-push-action@v5
       with:
         context: ./modules/swagger-generator
@@ -79,6 +80,7 @@ jobs:
         provenance: false
         tags: swaggerapi/swagger-generator:${{ env.SC_RELEASE_TAG }},swaggerapi/swagger-generator:latest
     - name: Build CLI image and push
+      if: env.RELEASE_OK == 'nope'
       uses: docker/build-push-action@v5
       with:
         context: ./modules/swagger-codegen-cli
