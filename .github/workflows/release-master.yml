@@ -58,7 +58,7 @@ jobs:
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
         git config --global hub.protocol https
-        git remote set-url origin https://\${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/''' + 'swagger-api/swagger-codegen' + '''.git
+        git remote set-url origin https://\${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/swagger-api/swagger-codegen.git
     - name:  Run maven deploy/release
       if: env.RELEASE_OK == 'nope'
       run: |
