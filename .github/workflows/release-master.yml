@@ -60,7 +60,7 @@ jobs:
         git config --global hub.protocol https
         git remote set-url origin https://\${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/''' + 'swagger-api/swagger-codegen' + '''.git
     - name:  Run maven deploy/release
-      if: env.RELEASE_OK == 'yes'
+      if: env.RELEASE_OK == 'nope'
       run: |
         mvn --no-transfer-progress -B -Prelease deploy
     - name: Set up QEMU
@@ -76,7 +76,6 @@ jobs:
       with:
         context: ./modules/swagger-generator
         push: true
-        platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
         provenance: false
         tags: swaggerapi/swagger-generator:${{ env.SC_RELEASE_TAG }},swaggerapi/swagger-generator:latest
     - name: Build CLI image and push
@@ -84,7 +83,6 @@ jobs:
       with:
         context: ./modules/swagger-codegen-cli
         push: true
-        platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
         provenance: false
         tags: swaggerapi/swagger-codegen-cli:${{ env.SC_RELEASE_TAG }},swaggerapi/swagger-codegen-cli:latest
     - name: Run post release script
