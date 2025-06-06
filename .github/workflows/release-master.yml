@@ -60,7 +60,7 @@ jobs:
         git config --global hub.protocol https
         git remote set-url origin https://\${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/swagger-api/swagger-codegen.git
     - name:  Run maven deploy/release
-      if: env.RELEASE_OK == 'nope'
+      if: env.RELEASE_OK == 'yes'
       run: |
         mvn --no-transfer-progress -B -Prelease deploy
     - name: Set up QEMU
@@ -72,7 +72,7 @@ jobs:
         docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
         set -e
     - name: Build generator image and push
-      if: env.RELEASE_OK == 'nope'
+      if: env.RELEASE_OK == 'yes'
       uses: docker/build-push-action@v5
       with:
         context: ./modules/swagger-generator
@@ -80,7 +80,7 @@ jobs:
         provenance: false
         tags: swaggerapi/swagger-generator:${{ env.SC_RELEASE_TAG }},swaggerapi/swagger-generator:latest
     - name: Build CLI image and push
-      if: env.RELEASE_OK == 'nope'
+      if: env.RELEASE_OK == 'yes'
       uses: docker/build-push-action@v5
       with:
         context: ./modules/swagger-codegen-cli
