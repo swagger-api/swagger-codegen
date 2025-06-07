@@ -42,7 +42,7 @@ class StoreApi(object):
         >>> thread = api.delete_order(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param str order_id: ID of the order that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -64,7 +64,7 @@ class StoreApi(object):
         >>> thread = api.delete_order_with_http_info(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param str order_id: ID of the order that needs to be deleted (required)
         :return: None
                  If the method is called asynchronously,
@@ -137,7 +137,7 @@ class StoreApi(object):
         >>> thread = api.get_inventory(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :return: dict(str, int)
                  If the method is called asynchronously,
                  returns the request thread.
@@ -158,7 +158,7 @@ class StoreApi(object):
         >>> thread = api.get_inventory_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :return: dict(str, int)
                  If the method is called asynchronously,
                  returns the request thread.
@@ -224,7 +224,7 @@ class StoreApi(object):
         >>> thread = api.get_order_by_id(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param int order_id: ID of pet that needs to be fetched (required)
         :return: Order
                  If the method is called asynchronously,
@@ -246,7 +246,7 @@ class StoreApi(object):
         >>> thread = api.get_order_by_id_with_http_info(order_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param int order_id: ID of pet that needs to be fetched (required)
         :return: Order
                  If the method is called asynchronously,
@@ -323,7 +323,7 @@ class StoreApi(object):
         >>> thread = api.place_order(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param Order body: order placed for purchasing the pet (required)
         :return: Order
                  If the method is called asynchronously,
@@ -345,7 +345,7 @@ class StoreApi(object):
         >>> thread = api.place_order_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param Order body: order placed for purchasing the pet (required)
         :return: Order
                  If the method is called asynchronously,
