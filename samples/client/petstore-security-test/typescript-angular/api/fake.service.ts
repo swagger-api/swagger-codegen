@@ -46,7 +46,7 @@ export class FakeService {
      */
     private canConsumeForm(consumes: string[]): boolean {
         const form = 'multipart/form-data';
-        for (let consume of consumes) {
+        for (const consume of consumes) {
             if (form === consume) {
                 return true;
             }
@@ -67,6 +67,7 @@ export class FakeService {
     public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
     public testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
@@ -74,20 +75,20 @@ export class FakeService {
             'application/json',
             '*_/   =end --       '
         ];
-        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
         }
 
         // to determine the Content-Type header
-        let consumes: string[] = [
+        const consumes: string[] = [
             'application/json',
             '*_/   =end --       '
         ];
 
         const canConsumeForm = this.canConsumeForm(consumes);
 
-        let formParams: { append(param: string, value: any): void; };
+        let formParams: { append(param: string, value: any): void | HttpParams; };
         let useForm = false;
         let convertFormParamsToString = false;
         if (useForm) {

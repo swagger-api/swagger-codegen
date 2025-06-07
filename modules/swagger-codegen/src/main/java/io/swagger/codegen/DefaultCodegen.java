@@ -2312,6 +2312,11 @@ public class DefaultCodegen {
                 if (Boolean.TRUE.equals(r.isFile) && Boolean.TRUE.equals(r.isDefault)){
                     op.isResponseFile = Boolean.TRUE;
                 }
+                if (Boolean.TRUE.equals(r.isString)
+                        && operation.getProduces() != null && operation.getProduces().contains("text/plain") // otherwise if "application/json" => wrap text with "..", and escape
+                        && Boolean.TRUE.equals(r.isDefault)){
+                    op.isResponseText = Boolean.TRUE;
+                }
             }
             op.responses.get(op.responses.size() - 1).hasMore = false;
 
