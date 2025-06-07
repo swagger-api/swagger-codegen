@@ -9,15 +9,15 @@ defmodule SwaggerPetstore.Model.ApiResponse do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"code",
-    :"type",
-    :"message"
+    :code,
+    :type,
+    :message
   ]
 
   @type t :: %__MODULE__{
-    :"code" => integer(),
-    :"type" => String.t,
-    :"message" => String.t
+    :code => integer(),
+    :type => String.t,
+    :message => String.t
   }
 end
 
