@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.languages.CSharpClientCodegen;
 
+import java.io.File;
+
 public class CSharpClientCodegenTest {
 
     @Test
@@ -35,6 +37,22 @@ public class CSharpClientCodegenTest {
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
+    }
+
+    @Test(description = "TEST_FOLDER should be updated with SOURCE_FOLDER when SOURCE_FOLDER is set")
+    public void testAdditionalPropertiesPutForSourceFolder() throws Exception {
+        final CSharpClientCodegen codegen = new CSharpClientCodegen();
+
+        final String expectedSourceFolder = "CustomSourceFolder";
+
+        codegen.additionalProperties().put(CodegenConstants.SOURCE_FOLDER, expectedSourceFolder);
+        codegen.processOpts();
+
+        final String expectedTestFolder = codegen.outputFolder() + File.separator + expectedSourceFolder;
+
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.SOURCE_FOLDER), expectedSourceFolder);
+        Assert.assertTrue(codegen.apiTestFileFolder().startsWith(expectedTestFolder));
+        Assert.assertTrue(codegen.modelTestFileFolder().startsWith(expectedTestFolder));
     }
 
 }
