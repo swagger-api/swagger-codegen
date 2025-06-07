@@ -68,6 +68,16 @@ namespace IO.Swagger.Model
         }
 
         /// <summary>
+        /// Deserialize the JSON string into a <see cref="ArrayOfNumberOnly" /> object.
+        /// </summary>
+        /// <param name="json">JSON string.</param>
+        /// <returns>Object representation of the JSON string.</returns>
+        public static ArrayOfNumberOnly FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<ArrayOfNumberOnly>(json);
+        }
+
+        /// <summary>
         /// Returns true if objects are equal
         /// </summary>
         /// <param name="input">Object to be compared</param>

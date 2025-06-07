@@ -77,6 +77,16 @@ namespace IO.Swagger.Model
         }
 
         /// <summary>
+        /// Deserialize the JSON string into a <see cref="AdditionalPropertiesClass" /> object.
+        /// </summary>
+        /// <param name="json">JSON string.</param>
+        /// <returns>Object representation of the JSON string.</returns>
+        public static AdditionalPropertiesClass FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<AdditionalPropertiesClass>(json);
+        }
+
+        /// <summary>
         /// Returns true if objects are equal
         /// </summary>
         /// <param name="input">Object to be compared</param>
