@@ -244,7 +244,7 @@ class ObjectSerializer
             $subClass = substr($class, 0, -2);
             $values = [];
             foreach ($data as $key => $value) {
-                $values[] = self::deserialize($value, $subClass, null);
+                $values[$key] = self::deserialize($value, $subClass, null);
             }
             return $values;
         } elseif ($class === 'object') {
