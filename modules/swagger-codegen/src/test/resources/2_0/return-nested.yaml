@@ -1,0 +1,68 @@
+basePath: /v1
+definitions:
+  Pet:
+    properties:
+      id:
+        format: int64
+        type: integer
+      name:
+        example: doggie
+        type: string
+    required:
+      - name
+    type: object
+    xml:
+      name: Pet
+host: test.io
+info:
+  contact:
+    email: apiteam@swagger.io
+  description: nested collection return type test
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  termsOfService: 'http://swagger.io/terms/'
+  title: nested collection return type test
+  version: 1.0.0
+paths:
+  /arraytest:
+    get:
+      description: return a nested collection containing a defined type
+      operationId: arraytest
+      produces:
+        - application/json
+        - application/xml
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: '#/definitions/Pet'
+      summary: return a  nested collection return type
+      tags:
+        - pet
+  /maptest:
+    get:
+      description: return a nested map containing a defined type
+      operationId: maptest
+      produces:
+        - application/json
+        - application/xml
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+              additionalProperties:
+                $ref: '#/definitions/Pet'
+      summary: return a  nested collection return type
+      tags:
+        - pet
+schemes:
+  - http
+swagger: '2.0'
