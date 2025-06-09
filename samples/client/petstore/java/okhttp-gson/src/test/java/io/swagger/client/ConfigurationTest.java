@@ -9,7 +9,8 @@ public class ConfigurationTest {
     public void testDefaultApiClient() {
         ApiClient apiClient = Configuration.getDefaultApiClient();
         assertNotNull(apiClient);
-        assertEquals("http://petstore.swagger.io:80/v2", apiClient.getBasePath());
+        assertEquals("petstore.swagger.io:80", apiClient.getHost());
+        assertEquals("/v2", apiClient.getBasePath());
         assertFalse(apiClient.isDebugging());
     }
 }
