@@ -75,6 +75,7 @@ class ApiClient(object):
         self.cookie = cookie
         # Set default User-Agent.
         self.user_agent = 'Swagger-Codegen/1.0.0/python'
+        self.client_side_validation = configuration.client_side_validation
 
     def __del__(self):
         if self._pool is not None:
@@ -296,13 +297,13 @@ class ApiClient(object):
         :param header_params: Header parameters to be
             placed in the request header.
         :param body: Request body.
-        :param post_params dict: Request post form parameters,
+        :param dict post_params: Request post form parameters,
             for `application/x-www-form-urlencoded`, `multipart/form-data`.
-        :param auth_settings list: Auth Settings names for the request.
+        :param list auth_settings: Auth Settings names for the request.
         :param response: Response data type.
-        :param files dict: key -> filename, value -> filepath,
+        :param dict files: key -> filename, value -> filepath,
             for `multipart/form-data`.
-        :param async_req bool: execute request asynchronously
+        :param bool async_req: execute request asynchronously
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param collection_formats: dict of collection formats for path, query,
@@ -533,7 +534,7 @@ class ApiClient(object):
                                  content_disposition).group(1)
             path = os.path.join(os.path.dirname(path), filename)
 
-        with open(path, "wb") as f:
+        with open(path, "w") as f:
             f.write(response.data)
 
         return path
