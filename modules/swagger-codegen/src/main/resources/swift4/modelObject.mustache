@@ -22,6 +22,9 @@ public {{#useModelClasses}}class{{/useModelClasses}}{{^useModelClasses}}struct{{
 {{/isEnum}}
 {{/allVars}}
 
+{{^unwrapRequired}}
+    public init() {}{{/unwrapRequired}}
+	
 {{#hasVars}}
     public init({{#allVars}}{{name}}: {{{datatypeWithEnum}}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/allVars}}) {
         {{#allVars}}
