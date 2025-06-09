@@ -58,14 +58,14 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 Swagger Codegen Version    | Release Date | Swagger / OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
 [3.0.65](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.65) (**current stable**) | 2024-12-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.65](https://github.com/swagger-api/swagger-codegen/tree/v3.0.65)
-[2.4.44](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.44) (**current stable**) | 2024-12-18   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.44](https://github.com/swagger-api/swagger-codegen/tree/v2.4.43)
+[2.4.45](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.45) (**current stable**) | 2025-06-08   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.45](https://github.com/swagger-api/swagger-codegen/tree/v2.4.45)
 
 💁 Here's also an overview of what's coming around the corner:
 
 Swagger Codegen Version    | Release Date | Swagger / OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
 3.0.66-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.66-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-2.4.45-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/swagger-codegen-cli/2.4.45-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
+2.4.46-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/swagger-codegen-cli/2.4.46-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
 
 For detailed breakdown of all versions, please see the [full compatibility listing](./docs/compatibility.md).
 
@@ -97,7 +97,7 @@ java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate \
 java -jar modules\swagger-codegen-cli\target\swagger-codegen-cli.jar generate -i https://petstore.swagger.io/v2/swagger.json -l php -o c:\temp\php_api_client
 ```
 
-You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.44/swagger-codegen-cli-2.4.44.jar)
+You can also download the JAR (latest release) directly from [maven.org](https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.45/swagger-codegen-cli-2.4.45.jar)
 
 To get a list of **general** options available, you can run the following:
 

@@ -4,7 +4,7 @@ If you're looking for the latest stable version, you can grab it directly from M
 
 ```sh
 # Download current stable 2.x.x branch (Swagger and OpenAPI version 2)
-wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.44/swagger-codegen-cli-2.4.44.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.45/swagger-codegen-cli-2.4.45.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 
@@ -19,7 +19,7 @@ For Windows users, you will need to install [wget](http://gnuwin32.sourceforge.n
 example:
 
 ```powershell
-Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.44/swagger-codegen-cli-2.4.44.jar
+Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.45/swagger-codegen-cli-2.4.45.jar
 ```
 
 On a mac, it's even easier with `brew`:
