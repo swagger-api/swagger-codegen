@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/bionic64"
 
   config.vm.provider "virtualbox" do |v|
     v.name = "swagger-codegen"
@@ -24,12 +24,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #Provision
   config.vm.provision "shell", inline: <<-SHELL
     sudo touch /var/lib/cloud/instance/locale-check.skip
-    sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-    sudo sh -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list'
-    sudo apt-cache policy docker-engine
+    sudo apt-get install ca-certificates curl gnupg lsb-release -y
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
     sudo apt-get upgrade -y
-    sudo apt-get install -y docker-engine
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
     sudo usermod -aG docker vagrant
   SHELL
 
