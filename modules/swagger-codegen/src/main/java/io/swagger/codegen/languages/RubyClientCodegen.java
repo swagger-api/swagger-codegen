@@ -42,9 +42,9 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String gemVersion = "1.0.0";
     protected String specFolder = "spec";
     protected String libFolder = "lib";
-    protected String gemLicense = "proprietary";
+    protected String gemLicense = "Unlicense";
     protected String gemRequiredRubyVersion = ">= 1.9";
-    protected String gemHomepage = "http://swagger.io";
+    protected String gemHomepage = "https://github.com/swagger-api/swagger-codegen";
     protected String gemSummary = "A ruby wrapper for the swagger APIs";
     protected String gemDescription = "This gem maps to a swagger API";
     protected String gemAuthor = "";
