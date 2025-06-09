@@ -1,0 +1,139 @@
+{
+  "intNoAnnotation" : 0,
+  "intDefaultExample" : 440,
+  "intDefault" : 6,
+  "intMinMax" : 1507,
+  "strNoAnnotation" : "strNoAnnotation",
+  "strDefaultExample" : ":-D",
+  "strDefault" : "computer",
+  "strAllowableValues" : "mercury",
+  "strFormatUrl" : "http://example.com/aeiou",
+  "strFormatUuid" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "strSizeMinMax" : "strSizeMinMax",
+  "boolNoAnnotation" : true,
+  "boolDefaultExample" : false,
+  "boolDefault" : false,
+  "decimalNoAnnotation" : 5.962133916683182,
+  "decimalDefaultExample" : 7700.0077,
+  "decimalDefault" : 5.637376656633329,
+  "decimalMinMax" : 21.690410552491734,
+  "arrayNoAnnotation" : [ "arrayNoAnnotation", "arrayNoAnnotation" ],
+  "arrayExample" : [ "AAA111", "BBB222", "CCC333" ],
+  "arrayItemNoAnnotation" : [ {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  } ],
+  "arrayItemSizeMax" : [ {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  }, {
+    "str" : "str",
+    "decimal" : 7.061401241503109,
+    "coordinate" : {
+      "x" : 9,
+      "y" : 3,
+      "z" : 2
+    }
+  } ],
+  "arrayItemExample" : [ {
+    "str" : "alpha",
+    "decimal" : 6.01,
+    "coordinate" : {
+      "x" : -4,
+      "y" : 12,
+      "z" : 16
+    }
+  }, {
+    "str" : "beta",
+    "decimal" : -3.005,
+    "coordinate" : {
+      "x" : 3,
+      "y" : 7,
+      "z" : 21
+    }
+  } ],
+  "dateNoAnnotation" : "2000-01-23",
+  "dateTimeNoAnnotation" : "2000-01-23T04:56:07.000"
+}

@@ -186,7 +186,7 @@ public class ExampleGenerator {
         } else if (property instanceof DateSchema) {
             return "2000-01-23";
         } else if (property instanceof DateTimeSchema) {
-            return "2000-01-23T04:56:07.000+00:00";
+            return "2000-01-23T04:56:07.000";
         } else if (property instanceof NumberSchema) {
             Double min = property.getMinimum() == null ? null : property.getMinimum().doubleValue();
             Double max = property.getMaximum() == null ? null : property.getMaximum().doubleValue();
@@ -227,7 +227,14 @@ public class ExampleGenerator {
             logger.warn("Ref property with empty model.");
 
         }*/ else if (property instanceof UUIDSchema) {
-            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91"; 
+            return "046b6c7f-0b8a-43b9-b35d-6489e6daee91";
+        } else if (property.get$ref() != null) {
+            String ref = property.get$ref();
+            String simpleName = ref.replace("#/components/schemas/", "");
+            Schema model = examples.get(simpleName);
+            if (model != null) {
+                return resolveModelToExample(ref, mediaType, model, processedModels);
+            }
         }
 
         return "";
@@ -251,7 +258,7 @@ public class ExampleGenerator {
             return schema.getExample();
         }
         processedModels.add(name);
-        Map<String, Object> values = new HashMap<>();
+        Map<String, Object> values = new LinkedHashMap<>();
 
         logger.debug("Resolving model '{}' to example", name);
 
@@ -261,8 +268,8 @@ public class ExampleGenerator {
         } else if (schema.getProperties() != null) {
             logger.debug("Creating example from model values");
             for (Object propertyName : schema.getProperties().keySet()) {
-                schema.getProperties().get(propertyName.toString());
-                values.put(propertyName.toString(), resolvePropertyToExample(propertyName.toString(), mediaType, schema, processedModels));
+                Schema property = (Schema) schema.getProperties().get(propertyName.toString());
+                values.put(propertyName.toString(), resolvePropertyToExample(propertyName.toString(), mediaType, property, processedModels));
             }
             schema.setExample(values);
         }
