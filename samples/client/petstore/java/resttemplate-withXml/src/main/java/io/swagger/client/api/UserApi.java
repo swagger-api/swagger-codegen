@@ -46,6 +46,8 @@ public class UserApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Create user
      * This can only be done by the logged in user.
@@ -56,6 +58,7 @@ public class UserApi {
     public void createUser(User body) throws RestClientException {
         createUserWithHttpInfo(body);
     }
+
 
     /**
      * Create user
@@ -91,6 +94,8 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Creates list of users with given input array
      * 
@@ -101,6 +106,7 @@ public class UserApi {
     public void createUsersWithArrayInput(List<User> body) throws RestClientException {
         createUsersWithArrayInputWithHttpInfo(body);
     }
+
 
     /**
      * Creates list of users with given input array
@@ -136,6 +142,8 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Creates list of users with given input array
      * 
@@ -146,6 +154,7 @@ public class UserApi {
     public void createUsersWithListInput(List<User> body) throws RestClientException {
         createUsersWithListInputWithHttpInfo(body);
     }
+
 
     /**
      * Creates list of users with given input array
@@ -181,6 +190,8 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Delete user
      * This can only be done by the logged in user.
@@ -192,6 +203,7 @@ public class UserApi {
     public void deleteUser(String username) throws RestClientException {
         deleteUserWithHttpInfo(username);
     }
+
 
     /**
      * Delete user
@@ -231,6 +243,8 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Get user by user name
      * 
@@ -244,6 +258,7 @@ public class UserApi {
     public User getUserByName(String username) throws RestClientException {
         return getUserByNameWithHttpInfo(username).getBody();
     }
+
 
     /**
      * Get user by user name
@@ -284,6 +299,8 @@ public class UserApi {
         ParameterizedTypeReference<User> returnType = new ParameterizedTypeReference<User>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Logs user into the system
      * 
@@ -297,6 +314,7 @@ public class UserApi {
     public String loginUser(String username, String password) throws RestClientException {
         return loginUserWithHttpInfo(username, password).getBody();
     }
+
 
     /**
      * Logs user into the system
@@ -342,6 +360,8 @@ public class UserApi {
         ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<String>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Logs out current logged in user session
      * 
@@ -351,6 +371,7 @@ public class UserApi {
     public void logoutUser() throws RestClientException {
         logoutUserWithHttpInfo();
     }
+
 
     /**
      * Logs out current logged in user session
@@ -380,6 +401,8 @@ public class UserApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Updated user
      * This can only be done by the logged in user.
@@ -392,6 +415,7 @@ public class UserApi {
     public void updateUser(String username, User body) throws RestClientException {
         updateUserWithHttpInfo(username, body);
     }
+
 
     /**
      * Updated user
