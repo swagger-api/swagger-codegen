@@ -3,6 +3,7 @@ package io.swagger.codegen.languages;
 import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
@@ -61,6 +62,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         // at the moment
         importMapping.clear();
 
+        this.supportsInheritance = true;
         modelPackage = "models";
         apiPackage = "api";
         outputFolder = "generated-code" + File.separator + "ruby";
@@ -256,6 +258,11 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
         writeOptional(outputFolder, new SupportingFile("api_client_spec.mustache", specFolder, "api_client_spec.rb"));
         // not including base object test as the moment as not all API has model
         //writeOptional(outputFolder, new SupportingFile("base_object_spec.mustache", specFolder, "base_object_spec.rb"));
+    }
+
+    @Override
+    public String toModelImport(String name) {
+        return this.toModelFilename(name);
     }
 
     @Override
@@ -602,6 +609,13 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
             return "N" + enumName;
         } else {
             return enumName;
+        }
+    }
+
+    @Override
+    protected void addImport(CodegenModel m, String type) {
+        if (m.parent != null && m.parent.equals(type)) {
+            super.addImport(m, type);
         }
     }
 
