@@ -9,25 +9,25 @@ defmodule SwaggerPetstore.Model.User do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"id",
-    :"username",
-    :"firstName",
-    :"lastName",
-    :"email",
-    :"password",
-    :"phone",
-    :"userStatus"
+    :id,
+    :username,
+    :firstName,
+    :lastName,
+    :email,
+    :password,
+    :phone,
+    :userStatus
   ]
 
   @type t :: %__MODULE__{
-    :"id" => integer(),
-    :"username" => String.t,
-    :"firstName" => String.t,
-    :"lastName" => String.t,
-    :"email" => String.t,
-    :"password" => String.t,
-    :"phone" => String.t,
-    :"userStatus" => integer()
+    :id => integer(),
+    :username => String.t,
+    :firstName => String.t,
+    :lastName => String.t,
+    :email => String.t,
+    :password => String.t,
+    :phone => String.t,
+    :userStatus => integer()
   }
 end
 
