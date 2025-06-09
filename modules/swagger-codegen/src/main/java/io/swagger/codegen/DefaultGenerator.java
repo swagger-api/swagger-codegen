@@ -736,6 +736,28 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         bundle.put("models", allModels);
         bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
         bundle.put("modelPackage", config.modelPackage());
+        if (allOperations != null) {
+            // For each API group...
+            for (HashMap<String, Object> apiGroup : (List<HashMap<String, Object>>) (Object) allOperations) {                
+                HashMap<String, Object> apiGroupOperationsContainer = 
+                    (HashMap<String, Object>) apiGroup.get("operations");
+                List<CodegenOperation> apiGroupOperations = 
+                    (List<CodegenOperation>) (Object) apiGroupOperationsContainer.get("operation");
+                // For each operation within the API group...
+                for (CodegenOperation apiGroupOperation : apiGroupOperations) {
+                    // If this operation has a file response, indicate that the API hasFileOperations...
+                    if (apiGroupOperation.isResponseFile) {
+                        bundle.put("hasFileOperations", true);
+                        break;
+                    }
+                }
+                // If we've already found at least one API Group containing an operation that must return
+                // file responses, we're done...
+                if (bundle.containsKey("hasFileOperations")) {
+                    break;
+                }
+            }
+        }
         List<CodegenSecurity> authMethods = config.fromSecurity(swagger.getSecurityDefinitions());
         if (authMethods != null && !authMethods.isEmpty()) {
             bundle.put("authMethods", authMethods);
