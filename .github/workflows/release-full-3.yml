@@ -32,9 +32,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           server-id: central
+          cache: maven
+          overwrite-settings: false
           server-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           server-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           gpg-private-key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Add Central-Portal snapshot repo to settings.xml
+        uses: s4u/maven-settings-action@v3.1.0
+        with:
+          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
       - name: Cache Maven repository
         uses: actions/cache@v4
         with:
@@ -60,12 +68,19 @@ jobs:
           fi
           echo "SC_VERSION=$MY_POM_VERSION" >> $GITHUB_ENV
       - name: Check Release Version codegen-generators
-        id: preRelease generators
+        id: preReleaseGenerators
         if: env.RELEASE_OK == 'yes'
         working-directory: generators-repo
         run: |
           # export GPG_TTY=$(tty)
-          export MY_POM_VERSION_GENERATORS=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+          SNAP_API="https://central.sonatype.com/repository/maven-snapshots"
+          ARTIFACT_PATH="io/swagger/codegen/v3/swagger-codegen"
+          ROOT_META="${SNAP_API}/${ARTIFACT_PATH}/maven-metadata.xml"
+          export LAST_SNAP=$(curl -s "$ROOT_META" | grep -oP '(?<=<version>)3\.[^<]+' | sort -V | tail -n1)
+          echo "LAST_SNAP $LAST_SNAP"
+          export CODEGEN_VERSION_PROPERTY=-Dswagger-codegen-version=$LAST_SNAP
+          export MY_POM_VERSION_GENERATORS=`mvn -q -Dexec.executable="echo" ${CODEGEN_VERSION_PROPERTY} -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+          echo "generator version: " ${MY_POM_VERSION_GENERATORS}
           if [[ $MY_POM_VERSION_GENERATORS =~ ^.*SNAPSHOT$ ]];
           then
             echo "not releasing snapshot version: " ${MY_POM_VERSION_GENERATORS}
@@ -73,7 +88,8 @@ jobs:
           else
             echo "RELEASE_OK=yes" >> $GITHUB_ENV
           fi
-          echo "SC_VERSION_GENERATORS=$MY_POM_VERSION_GENERATORS" >> $GITHUB_ENV
+          echo "generator version: " ${MY_POM_VERSION_GENERATORS}
+          echo "SC_VERSION_GENERATORS=${MY_POM_VERSION_GENERATORS}" >> $GITHUB_ENV
       - name:  Run maven install for codegen-generators
         if: env.RELEASE_OK == 'yes'
         working-directory: generators-repo
@@ -286,3 +302,4 @@ jobs:
       SC_VERSION_GENERATORS:
       GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
+      MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
