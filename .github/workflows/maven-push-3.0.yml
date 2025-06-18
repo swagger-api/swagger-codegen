@@ -71,10 +71,7 @@ jobs:
                 SNAP_API="https://central.sonatype.com/repository/maven-snapshots"
                 ARTIFACT_PATH="io/swagger/codegen/v3/swagger-codegen-generators"
                 ROOT_META="${SNAP_API}/${ARTIFACT_PATH}/maven-metadata.xml"
-                LATEST_DIR=$(curl -s "$ROOT_META" | grep -oP '(?<=<version>)1\.[^<]+' | sort -V | tail -n1)
-                SNAP_META="${SNAP_API}/${ARTIFACT_PATH}/${LATEST_DIR}/maven-metadata.xml"
-                LAST_SNAP=$(curl -s "$SNAP_META" | grep -oP '(?<=<value>)[^<]+' | head -n1)
-                export LAST_SNAP=${LAST_SNAP:1:${#LAST_SNAP}-2}
+                export LAST_SNAP=$(curl -s "$ROOT_META" | grep -oP '(?<=<version>)1\.[^<]+' | sort -V | tail -n1)
                 echo "LAST_SNAP $LAST_SNAP"
                 export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
               fi
