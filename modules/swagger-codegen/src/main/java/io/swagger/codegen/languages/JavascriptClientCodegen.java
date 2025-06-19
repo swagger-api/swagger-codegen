@@ -873,7 +873,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
     public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
-        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums) {
+        if (allDefinitions != null && codegenModel != null && codegenModel.parent != null && codegenModel.hasEnums && codegenModel.parentSchema != null) {
             final Model parentModel = allDefinitions.get(codegenModel.parentSchema);
             final CodegenModel parentCodegenModel = super.fromModel(codegenModel.parent, parentModel, allDefinitions);
             codegenModel = JavascriptClientCodegen.reconcileInlineEnums(codegenModel, parentCodegenModel);
@@ -898,6 +898,14 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
 
         return codegenModel;
+    }
+
+    @Override
+    protected void addAdditionPropertiesToCodeGenModel(CodegenModel codegenModel, ModelImpl swaggerModel) {
+        super.addAdditionPropertiesToCodeGenModel(codegenModel, swaggerModel);
+        if (swaggerModel.getAdditionalProperties() != null) {
+            codegenModel.additionalPropertiesType = getSwaggerType(swaggerModel.getAdditionalProperties());
+        }
     }
 
     private String sanitizePath(String p) {
@@ -1050,10 +1058,12 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
 
         // Provide access to all property models.
-        for (CodegenModel cgModel : new HashSet<CodegenModel>(cgModels.values())) {
+        for (CodegenModel cgModel : cgModels.values()) {
+            detectRecursiveModel(cgModel.allVars, cgModel.classname, cgModels);
             postProcessProperties(cgModel.vars, cgModels);
-            if (cgModel.allVars != cgModel.vars)
+            if (cgModel.allVars != cgModel.vars) {
                 postProcessProperties(cgModel.allVars, cgModels);
+            }
         }
 
         return objs;
@@ -1305,6 +1315,27 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         return objs;
     }
 
+    public void detectRecursiveModel(List<CodegenProperty> allVars, String className, Map<String, CodegenModel> allModels) {
+        if (allVars == null || allVars.isEmpty()) {
+            return;
+        }
+        for (CodegenProperty codegenProperty : allVars) {
+            if (codegenProperty.isPrimitiveType) {
+                continue;
+            }
+            if (codegenProperty.isListContainer || codegenProperty.isMapContainer) {
+                if (className.equalsIgnoreCase(codegenProperty.items.datatype)) {
+                    codegenProperty.items.vendorExtensions.put("x-is-recursive-model", Boolean.TRUE);
+                    continue;
+                }
+            }
+            if (className.equalsIgnoreCase(codegenProperty.datatype)) {
+                codegenProperty.vendorExtensions.put("x-is-recursive-model", Boolean.TRUE);
+                continue;
+            }
+        }
+    }
+
     @Override
     protected boolean needToImport(String type) {
         return !defaultIncludes.contains(type)
@@ -1389,7 +1420,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
 
     @Override
     public String toEnumValue(String value, String datatype) {
-        if ("Integer".equals(datatype) || "Number".equals(datatype)) {
+        if ("Integer".equals(datatype) || "Number".equals(datatype) || "Boolean".equals(datatype)) {
             return value;
         } else {
             return "\"" + escapeText(value) + "\"";

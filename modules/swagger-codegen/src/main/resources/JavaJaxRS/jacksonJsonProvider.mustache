@@ -13,9 +13,16 @@ import com.fasterxml.jackson.datatype.joda.*;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
+{{#jakarta}}
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.ext.Provider;
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
+{{/jakarta}}
 
 @Provider
 @Produces({MediaType.APPLICATION_JSON})

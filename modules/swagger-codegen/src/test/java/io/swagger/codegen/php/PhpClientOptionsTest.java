@@ -48,6 +48,8 @@ public class PhpClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setGitRepoId(PhpClientOptionsProvider.GIT_REPO_ID_VALUE);
             times = 1;
+            clientCodegen.setGitRepoBaseURL(PhpClientOptionsProvider.GIT_REPO_BASE_URL_VALUE);
+            times = 1;
             clientCodegen.setArtifactVersion(PhpClientOptionsProvider.ARTIFACT_VERSION_VALUE);
             times = 1;
         }};

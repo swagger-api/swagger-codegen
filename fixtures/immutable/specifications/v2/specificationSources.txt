@@ -1,0 +1,7 @@
+petstore.json -> https://petstore.swagger.io/v2/swagger.json
+petstorefake.yaml -> https://raw.githubusercontent.com/swagger-api/swagger-codegen/8f1b693bf7727500c24e80a4930b5def6be2ad0e/modules/swagger-codegen/src/test/resources/2_0/petstore-with-fake-endpoints-models-for-testing.yaml
+    from codegen test dir, fake model for testing..
+requiredTest.json -> https://raw.githubusercontent.com/swagger-api/swagger-codegen/1f9f8c5a3e157daf62c891ff9f27db7f76897e2a/modules/swagger-codegen/src/test/resources/2_0/requiredTest.json
+    from codegen test dir, required test..
+samplesServers.yaml -> https://raw.githubusercontent.com/swagger-api/swagger-codegen/343d3d8448d7f975d4cd856371b771a105ac5481/modules/swagger-codegen/src/test/resources/2_0/petstore-for-samples-servers.yaml
+    from codegen test dir, petstore for samples server..

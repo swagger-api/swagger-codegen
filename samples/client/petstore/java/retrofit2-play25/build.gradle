@@ -88,20 +88,20 @@ if(hasProperty('target') && target == 'android') {
     }
 
     task execute(type:JavaExec) {
-        main = System.getProperty('mainClass')
-        classpath = sourceSets.main.runtimeClasspath
+       main = System.getProperty('mainClass')
+       classpath = sourceSets.main.runtimeClasspath
     }
 }
 
 ext {
     oltu_version = "1.0.1"
-    retrofit_version = "2.3.0"
-    jackson_version = "2.10.1"
+    retrofit_version = "2.7.1"
+    jackson_version = "2.11.4"
     play_version = "2.5.14"
-    swagger_annotations_version = "1.5.17"
+    swagger_annotations_version = "1.5.24"
     junit_version = "4.12"
-    threetenbp_version = "1.3.5"
-    json_fire_version = "1.8.0"
+    threetenbp_version = "1.4.1"
+    json_fire_version = "1.8.3"
 }
 
 dependencies {

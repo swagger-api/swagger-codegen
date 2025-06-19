@@ -1,0 +1,31 @@
+from typing import List
+"""
+controller generated to handled auth operation described at:
+https://connexion.readthedocs.io/en/latest/security.html
+"""
+{{#authMethods}}
+{{#isApiKey}}
+def check_{{name}}(api_key, required_scopes):
+    return {'test_key': 'test_value'}
+
+{{/isApiKey}}
+{{#isBasic}}
+def check_{{name}}(username, password, required_scopes):
+    return {'test_key': 'test_value'}
+
+{{/isBasic}}
+{{#isBearer}}
+def check_{{name}}(token):
+    return {'test_key': 'test_value'}
+
+{{/isBearer}}
+{{#isOAuth}}
+def check_{{name}}(token):
+    return {'scopes': ['read:pets', 'write:pets'], 'uid': 'test_value'}
+
+def validate_scope_{{name}}(required_scopes, token_scopes):
+    return set(required_scopes).issubset(set(token_scopes))
+
+{{/isOAuth}}
+{{/authMethods}}
+

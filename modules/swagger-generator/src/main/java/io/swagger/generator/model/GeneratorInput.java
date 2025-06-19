@@ -14,6 +14,8 @@ public class GeneratorInput {
     private SecuritySchemeDefinition auth;
     private AuthorizationValue authorizationValue;
 
+    private Boolean usingFlattenSpec = true;
+
     public AuthorizationValue getAuthorizationValue() {
         return authorizationValue;
     }
@@ -57,4 +59,17 @@ public class GeneratorInput {
     public void setSecurityDefinition(SecuritySchemeDefinition auth) {
         this.auth = auth;
     }
+
+    public Boolean isUsingFlattenSpec() {
+        return usingFlattenSpec;
+    }
+
+    public Boolean getUsingFlattenSpec() {
+        return usingFlattenSpec;
+    }
+
+    public void setUsingFlattenSpec(Boolean usingFlattenSpec) {
+        this.usingFlattenSpec = usingFlattenSpec;
+    }
+
 }

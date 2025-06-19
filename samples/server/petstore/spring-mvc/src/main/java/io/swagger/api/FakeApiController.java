@@ -45,7 +45,7 @@ public class FakeApiController implements FakeApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Boolean>(objectMapper.readValue("{ }", Boolean.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Boolean>(objectMapper.readValue("{\"empty\": true}", Boolean.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,7 +59,7 @@ public class FakeApiController implements FakeApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<OuterComposite>(objectMapper.readValue("{  \"my_string\" : { },  \"my_number\" : { },  \"my_boolean\" : { }}", OuterComposite.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<OuterComposite>(objectMapper.readValue("{\"empty\": false}", OuterComposite.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<OuterComposite>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,7 +73,7 @@ public class FakeApiController implements FakeApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<BigDecimal>(objectMapper.readValue("{ }", BigDecimal.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<BigDecimal>(objectMapper.readValue("{\"empty\": true}", BigDecimal.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<BigDecimal>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -87,7 +87,7 @@ public class FakeApiController implements FakeApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<String>(objectMapper.readValue("{ }", String.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<String>(objectMapper.readValue("{\"empty\": true}", String.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,7 +106,7 @@ public class FakeApiController implements FakeApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Client>(objectMapper.readValue("{  \"client\" : \"client\"}", Client.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Client>(objectMapper.readValue("{\"empty\": false}", Client.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Client>(HttpStatus.INTERNAL_SERVER_ERROR);

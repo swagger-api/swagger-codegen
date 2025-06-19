@@ -2,8 +2,14 @@ package io.swagger.server
 
 // Use this file to hold package-level internal functions that return receiver object passed to the `install` method.
 import io.ktor.auth.OAuthServerSettings
-import io.ktor.features.*
-import io.ktor.http.*
+import io.ktor.features.Compression
+import io.ktor.features.HSTS
+import io.ktor.features.deflate
+import io.ktor.features.gzip
+import io.ktor.features.maxAge
+import io.ktor.features.minimumSize
+import io.ktor.http.HttpMethod
+import io.ktor.util.KtorExperimentalAPI
 import java.time.Duration
 import java.util.concurrent.Executors
 
@@ -13,7 +19,7 @@ import io.swagger.server.settings
 /**
  * Application block for [HSTS] configuration.
  *
- * This file may be excluded in .swagger-codegen-ignore,
+ * This file may be excluded in .openapi-generator-ignore,
  * and application specific configuration can be applied in this function.
  *
  * See http://ktor.io/features/hsts.html
@@ -32,7 +38,7 @@ internal fun ApplicationHstsConfiguration(): HSTS.Configuration.() -> Unit {
 /**
  * Application block for [Compression] configuration.
  *
- * This file may be excluded in .swagger-codegen-ignore,
+ * This file may be excluded in .openapi-generator-ignore,
  * and application specific configuration can be applied in this function.
  *
  * See http://ktor.io/features/compression.html
@@ -50,6 +56,7 @@ internal fun ApplicationCompressionConfiguration(): Compression.Configuration.()
 }
 
 // Defines authentication mechanisms used throughout the application.
+@KtorExperimentalAPI
 val ApplicationAuthProviders: Map<String, OAuthServerSettings> = listOf<OAuthServerSettings>(
         OAuthServerSettings.OAuth2ServerSettings(
             name = "petstore_auth",

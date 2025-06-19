@@ -50,7 +50,7 @@ import io.swagger.codegen.config.CodegenConfigurator;
 /**
  * Goal which generates client/server code from a swagger json/yaml definition.
  */
-@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, threadSafe = true)
 public class CodeGenMojo extends AbstractMojo {
 
     @Parameter(name = "verbose", required = false, defaultValue = "false")
@@ -171,6 +171,12 @@ public class CodeGenMojo extends AbstractMojo {
      */
     @Parameter(name = "modelNameSuffix", required = false)
     private String modelNameSuffix;
+
+    /**
+     * Adds a prefix for all generated local variables
+     */
+    @Parameter(name = "localVariablePrefix", required = false)
+    private String localVariablePrefix;
 
     /**
      * Sets an optional ignoreFileOverride path
@@ -315,6 +321,13 @@ public class CodeGenMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        // Using the naive approach for achieving thread safety
+        synchronized (CodeGenMojo.class) {
+            execute_();
+        }
+    }
+
+    protected void execute_() throws MojoExecutionException {
 
         if (skip) {
             getLog().info("Code generation is skipped.");
@@ -400,6 +413,10 @@ public class CodeGenMojo extends AbstractMojo {
 
         if (isNotEmpty(modelNameSuffix)) {
             configurator.setModelNameSuffix(modelNameSuffix);
+        }
+
+        if (isNotEmpty(localVariablePrefix)) {
+            configurator.setLocalVariablePrefix(localVariablePrefix);
         }
 
         if (null != templateDirectory) {

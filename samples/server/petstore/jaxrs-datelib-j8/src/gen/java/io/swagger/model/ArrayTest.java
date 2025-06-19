@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * ArrayTest
  */
-
 public class ArrayTest  implements Serializable {
   @JsonProperty("array_of_string")
   private List<String> arrayOfString = null;
@@ -84,6 +84,7 @@ public class ArrayTest  implements Serializable {
    **/
   @JsonProperty("array_array_of_integer")
   @ApiModelProperty(value = "")
+  @Valid
   public List<List<Long>> getArrayArrayOfInteger() {
     return arrayArrayOfInteger;
   }
@@ -111,6 +112,7 @@ public class ArrayTest  implements Serializable {
    **/
   @JsonProperty("array_array_of_model")
   @ApiModelProperty(value = "")
+  @Valid
   public List<List<ReadOnlyFirst>> getArrayArrayOfModel() {
     return arrayArrayOfModel;
   }

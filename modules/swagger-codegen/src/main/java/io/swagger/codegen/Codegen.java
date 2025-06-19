@@ -122,11 +122,20 @@ public class Codegen extends DefaultGenerator {
 
     public static List<CodegenConfig> getExtensions() {
         ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
-        List<CodegenConfig> output = new ArrayList<CodegenConfig>();
-        for (CodegenConfig aLoader : loader) {
-            output.add(aLoader);
+        Map<String, CodegenConfig> output = new HashMap<>();
+
+        for (CodegenConfig config : loader) {
+            if (output.get(config.getName()) == null) {
+                output.put(config.getName(), config);
+            } else if (config.isPrivileged() && !output.get(config.getName()).isPrivileged()) {
+                output.put(config.getName(), config);
+            } else if (output.get(config.getName()).isPrivileged() && !config.isPrivileged()) {
+                // skip
+            } else if (config.getPriority() > output.get(config.getName()).getPriority()) {
+                output.put(config.getName(), config);
+            }
         }
-        return output;
+        return new ArrayList<>(output.values());
     }
 
     static void usage(Options options) {

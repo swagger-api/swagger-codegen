@@ -1,24 +1,27 @@
-FROM jimschubert/8-jdk-alpine-mvn:1.0
+FROM maven:3-eclipse-temurin-11-alpine
 
 RUN set -x && \
     apk add --no-cache bash
 
-ENV GEN_DIR /opt/swagger-codegen
+ARG GEN_DIR /opt/swagger-codegen
+ENV GEN_DIR ${GEN_DIR}
 WORKDIR ${GEN_DIR}
-VOLUME  ${MAVEN_HOME}/.m2/repository
+
+VOLUME ${MAVEN_HOME}/.m2/repository
 
 # Required from a licensing standpoint
-COPY ./LICENSE ${GEN_DIR}
+COPY ./LICENSE ./
 
 # Required to compile swagger-codegen
-COPY ./google_checkstyle.xml ${GEN_DIR}
+COPY ./google_checkstyle.xml ./
 
 # Modules are copied individually here to allow for caching of docker layers between major.minor versions
 # NOTE: swagger-generator is not included here, it is available as swaggerapi/swagger-generator
-COPY ./modules/swagger-codegen-maven-plugin ${GEN_DIR}/modules/swagger-codegen-maven-plugin
-COPY ./modules/swagger-codegen-cli ${GEN_DIR}/modules/swagger-codegen-cli
-COPY ./modules/swagger-codegen ${GEN_DIR}/modules/swagger-codegen
-COPY ./pom.xml ${GEN_DIR}
+COPY ./modules/swagger-codegen-maven-plugin ./modules/swagger-codegen-maven-plugin
+COPY ./modules/swagger-codegen-cli ./modules/swagger-codegen-cli
+COPY ./modules/swagger-codegen ./modules/swagger-codegen
+COPY ./modules/swagger-generator ./modules/swagger-generator
+COPY ./pom.xml ./
 
 # Pre-compile swagger-codegen-cli
 RUN mvn -am -pl "modules/swagger-codegen-cli" package

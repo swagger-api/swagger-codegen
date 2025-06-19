@@ -47,6 +47,7 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
     private static final String LIBRARY_PROMISE_KIT = "PromiseKit";
     private static final String LIBRARY_RX_SWIFT = "RxSwift";
     private static final String[] RESPONSE_LIBRARIES = {LIBRARY_PROMISE_KIT, LIBRARY_RX_SWIFT};
+    protected static final String MODEL_CLASSES = "modelClasses";
     protected String projectName = "SwaggerClient";
     private boolean unwrapRequired;
     private boolean objcCompatible = false;
@@ -287,6 +288,10 @@ public class Swift5Codegen extends DefaultCodegen implements CodegenConfig {
 
         if (!additionalProperties.containsKey(POD_AUTHORS)) {
             additionalProperties.put(POD_AUTHORS, DEFAULT_POD_AUTHORS);
+        }
+
+        if (additionalProperties.containsKey(MODEL_CLASSES)) {
+            additionalProperties.put("useModelClasses", true);
         }
 
         setLenientTypeCast(convertPropertyToBooleanAndWriteBack(LENIENT_TYPE_CAST));

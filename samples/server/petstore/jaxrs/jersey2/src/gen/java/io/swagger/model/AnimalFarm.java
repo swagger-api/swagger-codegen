@@ -18,11 +18,11 @@ import io.swagger.model.Animal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * AnimalFarm
  */
-
 public class AnimalFarm extends ArrayList<Animal>  {
 
   @Override
@@ -33,7 +33,7 @@ public class AnimalFarm extends ArrayList<Animal>  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return true;
+    return super.equals(o);
   }
 
   @Override

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,11 +39,20 @@ public class MetaGenerator extends AbstractGenerator {
 
     public static List<CodegenConfig> getExtensions() {
         ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
-        List<CodegenConfig> output = new ArrayList<CodegenConfig>();
+        Map<String, CodegenConfig> output = new HashMap<>();
+
         for (CodegenConfig config : loader) {
-            output.add(config);
+            if (output.get(config.getName()) == null) {
+                output.put(config.getName(), config);
+            } else if (config.isPrivileged() && !output.get(config.getName()).isPrivileged()) {
+                output.put(config.getName(), config);
+            } else if (output.get(config.getName()).isPrivileged() && !config.isPrivileged()) {
+                // skip
+            } else if (config.getPriority() > output.get(config.getName()).getPriority()) {
+                output.put(config.getName(), config);
+            }
         }
-        return output;
+        return new ArrayList<>(output.values());
     }
 
     static void usage(Options options) {
@@ -166,7 +176,7 @@ public class MetaGenerator extends AbstractGenerator {
                     files.add(new File(outputFilename));
                 } else {
                     String template = readTemplate(templateDir + File.separator + support.templateFile);
-                    FileUtils.writeStringToFile(new File(outputFilename), template);
+                    FileUtils.writeStringToFile(new File(outputFilename), template, StandardCharsets.UTF_8);
                     LOGGER.info("copying file to " + outputFilename);
                     files.add(new File(outputFilename));
                 }

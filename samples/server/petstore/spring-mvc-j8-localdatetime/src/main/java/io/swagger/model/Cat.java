@@ -15,6 +15,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 
+
 public class Cat extends Animal  {
   @JsonProperty("declawed")
   private Boolean declawed = null;

@@ -1,0 +1,30 @@
+swagger: '2.0'
+info:
+  title: My API
+  version: v1
+paths:
+  /api/test:
+    get:
+      tags:
+        - TestClass
+      produces:
+        - text/plain
+        - application/json
+        - text/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TestClass'
+definitions:
+  TestClass:
+    type: object
+    properties:
+      name:
+        type: string
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/TestClass'

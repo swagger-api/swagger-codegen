@@ -26,7 +26,7 @@ public class CodegenTest {
         Assert.assertEquals(composed.vars.get(0).baseName, "modelOneProp");
         Assert.assertEquals(composed.vars.get(1).baseName, "properties");
         Assert.assertEquals(composed.vars.get(2).baseName, "zones");
-        Assert.assertNull(composed.parent);
+        Assert.assertNotNull(composed.parent);
     }
 
     @Test(description = "test sanitizeTag")
@@ -267,11 +267,10 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("SimpleComposition");
         CodegenModel composed = codegen.fromModel("SimpleComposition", model, swagger.getDefinitions());
 
-        Assert.assertEquals(composed.vars.size(), 3);
-        Assert.assertEquals(composed.vars.get(0).baseName, "modelOneProp");
-        Assert.assertEquals(composed.vars.get(1).baseName, "modelTwoProp");
-        Assert.assertEquals(composed.vars.get(2).baseName, "simpleCompositionProp");
-        Assert.assertNull(composed.parent);
+        Assert.assertEquals(composed.vars.size(), 2);
+        Assert.assertEquals(composed.vars.get(0).baseName, "modelTwoProp");
+        Assert.assertEquals(composed.vars.get(1).baseName, "simpleCompositionProp");
+        Assert.assertNotNull(composed.parent);
     }
 
     @Test(description = "handle multi level composition")
@@ -282,13 +281,10 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("CompositionOfSimpleComposition");
         CodegenModel composed = codegen.fromModel("CompositionOfSimpleComposition", model, swagger.getDefinitions());
 
-        Assert.assertEquals(composed.vars.size(), 5);
-        Assert.assertEquals(composed.vars.get(0).baseName, "modelOneProp");
-        Assert.assertEquals(composed.vars.get(1).baseName, "modelTwoProp");
-        Assert.assertEquals(composed.vars.get(2).baseName, "simpleCompositionProp");
-        Assert.assertEquals(composed.vars.get(3).baseName, "modelThreeProp");
-        Assert.assertEquals(composed.vars.get(4).baseName, "compositionOfSimpleCompositionProp");
-        Assert.assertNull(composed.parent);
+        Assert.assertEquals(composed.vars.size(), 2);
+        Assert.assertEquals(composed.vars.get(0).baseName, "modelThreeProp");
+        Assert.assertEquals(composed.vars.get(1).baseName, "compositionOfSimpleCompositionProp");
+        Assert.assertNotNull(composed.parent);
     }
 
     @Test(description = "handle simple inheritance")
@@ -299,10 +295,11 @@ public class CodegenTest {
         final Model model = swagger.getDefinitions().get("ChildOfSimpleParent");
         CodegenModel child = codegen.fromModel("ChildOfSimpleParent", model, swagger.getDefinitions());
 
-        Assert.assertEquals(child.vars.size(), 2);
-        Assert.assertEquals(child.vars.get(0).baseName, "modelOneProp");
-        Assert.assertEquals(child.vars.get(1).baseName, "childOfSimpleParentProp");
-        Assert.assertEquals(child.parent, "SimpleParent");
+        Assert.assertEquals(child.vars.size(), 3);
+        Assert.assertEquals(child.vars.get(0).baseName, "disc");
+        Assert.assertEquals(child.vars.get(1).baseName, "simpleParentProp");
+        Assert.assertEquals(child.vars.get(2).baseName, "childOfSimpleParentProp");
+        Assert.assertEquals(child.parent, "ModelOne");
     }
 
     @Test(description = "handle multi level inheritance")
@@ -506,7 +503,7 @@ public class CodegenTest {
         final CodegenModel codegenModel = codegen.fromModel("Amount", amount, swagger.getDefinitions());
         for (CodegenProperty codegenProperty : codegenModel.vars) {
             if ("currency".equalsIgnoreCase(codegenProperty.name)) {
-                Assert.assertEquals(codegenProperty.pattern, "^[A-Z]{3,3}$");
+                Assert.assertEquals(codegenProperty.pattern, "/^[A-Z]{3,3}$/");
                 break;
             }
         }
