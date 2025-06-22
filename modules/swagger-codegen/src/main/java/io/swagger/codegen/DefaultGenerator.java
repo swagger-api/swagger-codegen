@@ -3,7 +3,6 @@ package io.swagger.codegen;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
-import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.codegen.utils.ImplementationVersion;
 import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
@@ -22,6 +21,10 @@ import java.util.*;
 
 public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerator.class);
+
+    private static final String BOOLEAN_TRUE = "true";
+    private static final String BOOLEAN_FALSE = "false";
+
     protected CodegenConfig config;
     protected ClientOptInput opts;
     protected Swagger swagger;
@@ -45,6 +48,17 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         this.swagger = opts.getSwagger();
         this.config = opts.getConfig();
         this.config.additionalProperties().putAll(opts.getOpts().getProperties());
+
+        // sanitizes boolean values being passed as strings to the templates
+        for(final Map.Entry<String, Object> e : this.config.additionalProperties().entrySet()) {
+            if(BOOLEAN_TRUE.equals(e.getValue())) {
+                this.config.additionalProperties().put(e.getKey(), true);
+            } else if(BOOLEAN_FALSE.equals(e.getValue())) {
+                this.config.additionalProperties().put(e.getKey(), false);
+            } else {
+                this.config.additionalProperties().put(e.getKey(), e.getValue());
+            }
+        }
 
         String ignoreFileLocation = this.config.getIgnoreFilePathOverride();
         if (ignoreFileLocation != null) {
