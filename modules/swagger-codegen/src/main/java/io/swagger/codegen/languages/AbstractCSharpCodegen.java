@@ -210,6 +210,7 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
         // {{sourceFolder}}
         if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
             setSourceFolder((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
+            this.testFolder = ((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
         } else {
             additionalProperties.put(CodegenConstants.SOURCE_FOLDER, this.sourceFolder);
         }
