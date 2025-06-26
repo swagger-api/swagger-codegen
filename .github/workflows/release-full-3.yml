@@ -163,12 +163,12 @@ jobs:
         if: env.RELEASE_OK == 'yes'
         uses: docker/build-push-action@v5
         with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_minimal
+          context: ./modules/swagger-codegen-cli
+          file: ./modules/swagger-codegen-cli/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
-          tags: swaggerapi/swagger-codegen-cli-v3:${{ env.SC_VERSION }},swaggerapi/swagger-codegen-cli-v3:latest
+          tags: swaggerapi/swagger-codegen-cli-v3:latest,swaggerapi/swagger-codegen-cli-v3:${{ env.SC_VERSION }}
       - name: docker minimal build and push
         if: env.RELEASE_OK == 'yes'
         uses: docker/build-push-action@v5
