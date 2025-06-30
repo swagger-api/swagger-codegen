@@ -115,7 +115,19 @@ jobs:
         if: env.RELEASE_OK == 'yes'
         working-directory: generators-repo
         run: |
-          mvn --no-transfer-progress -B -Prelease deploy
+          GENERATORS_CURRENT_VERSION=$(mvn -q -Dswagger-codegen-version=3.0.69 -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+          if [[ $GENERATORS_CURRENT_VERSION =~ SNAPSHOT$ ]]; then
+            echo "Version is a snapshot: $GENERATORS_CURRENT_VERSION"
+          else
+            GROUP_ID="io.swagger.codegen.v3"
+            ARTIFACT_ID="swagger-codegen-generators"
+            if mvn -q dependency:get -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dversion=${GENERATORS_CURRENT_VERSION} > /dev/null 2>&1; then
+              echo "Version ${GENERATORS_CURRENT_VERSION} already exists in Maven Central."
+            else
+              echo "Version ${GENERATORS_CURRENT_VERSION} does not exist in Maven Central. Deploying"
+              mvn --no-transfer-progress -B -Prelease deploy
+            fi
+          fi
       - name:  Run maven deploy/release for codegen
         if: env.RELEASE_OK == 'yes'
         run: |
