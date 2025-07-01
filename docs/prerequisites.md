@@ -4,12 +4,12 @@ If you're looking for the latest stable version, you can grab it directly from M
 
 ```sh
 # Download current stable 2.x.x branch (Swagger and OpenAPI version 2)
-wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.45/swagger-codegen-cli-2.4.45.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.46/swagger-codegen-cli-2.4.46.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar help
 
 # Download current stable 3.x.x branch (OpenAPI version 3)
-wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.69/swagger-codegen-cli-3.0.69.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.70/swagger-codegen-cli-3.0.70.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar --help
 ```
