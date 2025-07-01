@@ -121,7 +121,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <swagger-codegen-version>3.0.70</swagger-codegen-version>
-        <swagger-codegen-generators-version>1.0.58</swagger-codegen-generators-version>
+        <swagger-codegen-generators-version>1.0.58-SNAPSHOT</swagger-codegen-generators-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.13.2</junit-version>
         <build-helper-maven-plugin>3.0.0</build-helper-maven-plugin>

@@ -83,10 +83,9 @@ jobs:
           echo "generator version: " ${MY_POM_VERSION_GENERATORS}
           if [[ $MY_POM_VERSION_GENERATORS =~ ^.*SNAPSHOT$ ]];
           then
-            echo "not releasing snapshot version: " ${MY_POM_VERSION_GENERATORS}
-            echo "RELEASE_OK=no" >> $GITHUB_ENV
+            echo "GENERATORS_RELEASE_OK=no" >> $GITHUB_ENV
           else
-            echo "RELEASE_OK=yes" >> $GITHUB_ENV
+            echo "GENERATORS_RELEASE_OK=yes" >> $GITHUB_ENV
           fi
           echo "generator version: " ${MY_POM_VERSION_GENERATORS}
           echo "SC_VERSION_GENERATORS=${MY_POM_VERSION_GENERATORS}" >> $GITHUB_ENV
@@ -112,22 +111,10 @@ jobs:
           export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
           mvn clean install -U -Pdocker -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 ${GENERATORS_VERSION_PROPERTY}
       - name:  Run maven deploy/release for codegen-generators
-        if: env.RELEASE_OK == 'yes'
+        if: env.RELEASE_OK == 'yes' && env.GENERATORS_RELEASE_OK == 'yes'
         working-directory: generators-repo
         run: |
-          GENERATORS_CURRENT_VERSION=$(mvn -q -Dswagger-codegen-version=3.0.69 -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
-          if [[ $GENERATORS_CURRENT_VERSION =~ SNAPSHOT$ ]]; then
-            echo "Version is a snapshot: $GENERATORS_CURRENT_VERSION"
-          else
-            GROUP_ID="io.swagger.codegen.v3"
-            ARTIFACT_ID="swagger-codegen-generators"
-            if mvn -q dependency:get -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dversion=${GENERATORS_CURRENT_VERSION} > /dev/null 2>&1; then
-              echo "Version ${GENERATORS_CURRENT_VERSION} already exists in Maven Central."
-            else
-              echo "Version ${GENERATORS_CURRENT_VERSION} does not exist in Maven Central. Deploying"
-              mvn --no-transfer-progress -B -Prelease deploy
-            fi
-          fi
+          mvn --no-transfer-progress -B -Prelease deploy
       - name:  Run maven deploy/release for codegen
         if: env.RELEASE_OK == 'yes'
         run: |
