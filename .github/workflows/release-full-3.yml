@@ -83,9 +83,18 @@ jobs:
           echo "generator version: " ${MY_POM_VERSION_GENERATORS}
           if [[ $MY_POM_VERSION_GENERATORS =~ ^.*SNAPSHOT$ ]];
           then
-            echo "GENERATORS_RELEASE_OK=no" >> $GITHUB_ENV
+            echo "not releasing snapshot version: " ${MY_POM_VERSION_GENERATORS}
+            echo "RELEASE_OK=no" >> $GITHUB_ENV
           else
-            echo "GENERATORS_RELEASE_OK=yes" >> $GITHUB_ENV
+            GROUP_ID="io.swagger.codegen.v3"
+            ARTIFACT_ID="swagger-codegen-generators"
+            if mvn -q dependency:get -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dversion=${MY_POM_VERSION_GENERATORS} > /dev/null 2>&1; then
+              echo "Version ${MY_POM_VERSION_GENERATORS} already exists in Maven Central."
+              echo "GENERATORS_RELEASE_OK=no" >> $GITHUB_ENV
+            else
+              echo "Version ${MY_POM_VERSION_GENERATORS} does not exist in Maven Central. Will be deployed."
+              echo "GENERATORS_RELEASE_OK=yes" >> $GITHUB_ENV
+            fi
           fi
           echo "generator version: " ${MY_POM_VERSION_GENERATORS}
           echo "SC_VERSION_GENERATORS=${MY_POM_VERSION_GENERATORS}" >> $GITHUB_ENV
