@@ -83,8 +83,8 @@ jobs:
           echo "generator version: " ${MY_POM_VERSION_GENERATORS}
           if [[ $MY_POM_VERSION_GENERATORS =~ ^.*SNAPSHOT$ ]];
           then
-            echo "not releasing snapshot version: " ${MY_POM_VERSION_GENERATORS}
-            echo "RELEASE_OK=no" >> $GITHUB_ENV
+            echo "not releasing codegen-generators snapshot version: " ${MY_POM_VERSION_GENERATORS}
+            echo "GENERATORS_RELEASE_OK=no" >> $GITHUB_ENV
           else
             GROUP_ID="io.swagger.codegen.v3"
             ARTIFACT_ID="swagger-codegen-generators"
@@ -96,7 +96,7 @@ jobs:
               echo "GENERATORS_RELEASE_OK=yes" >> $GITHUB_ENV
             fi
           fi
-          echo "generator version: " ${MY_POM_VERSION_GENERATORS}
+          echo "generators version: " ${MY_POM_VERSION_GENERATORS}
           echo "SC_VERSION_GENERATORS=${MY_POM_VERSION_GENERATORS}" >> $GITHUB_ENV
       - name:  Run maven install for codegen-generators
         if: env.RELEASE_OK == 'yes'
@@ -188,6 +188,7 @@ jobs:
           provenance: false
           tags: swaggerapi/swagger-generator-v3-minimal:${{ env.SC_VERSION }},swaggerapi/swagger-generator-v3-minimal:latest
       - name: deploy
+        if: env.RELEASE_OK == 'yes'
         run: |
           echo "${{ env.SC_VERSION }}"
 
