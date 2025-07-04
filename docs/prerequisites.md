@@ -9,7 +9,7 @@ wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.46/swagge
 java -jar swagger-codegen-cli.jar help
 
 # Download current stable 3.x.x branch (OpenAPI version 3)
-wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.70/swagger-codegen-cli-3.0.70.jar -O swagger-codegen-cli.jar
+wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.71/swagger-codegen-cli-3.0.71.jar -O swagger-codegen-cli.jar
 
 java -jar swagger-codegen-cli.jar --help
 ```
