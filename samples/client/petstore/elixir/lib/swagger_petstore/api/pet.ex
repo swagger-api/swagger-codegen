@@ -17,14 +17,14 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - body (Pet): Pet object that needs to be added to the store
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - body (`Pet`): Pet object that needs to be added to the store
+  - opts (`KeywordList`): [optional] Optional parameters
 
   ## Returns
 
-  {:ok, %{}} on success
-  {:error, info} on failure
+  `{:ok, %{}}` on success
+  `{:error, info}` on failure
   """
   @spec add_pet(Tesla.Env.client, SwaggerPetstore.Model.Pet.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def add_pet(connection, body, _opts \\ []) do
@@ -43,20 +43,20 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (integer()): Pet id to delete
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - pet_id (`integer()`): Pet id to delete
+  - opts (`KeywordList`): [optional] Optional parameters
     - :api_key (String.t): 
 
   ## Returns
 
-  {:ok, %{}} on success
-  {:error, info} on failure
+  `{:ok, %{}}` on success
+  `{:error, info}` on failure
   """
   @spec delete_pet(Tesla.Env.client, integer(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def delete_pet(connection, pet_id, opts \\ []) do
     optional_params = %{
-      :"api_key" => :headers
+      :api_key => :headers
     }
     %{}
     |> method(:delete)
@@ -73,14 +73,14 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - status ([String.t]): Status values that need to be considered for filter
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - status (`[String.t]`): Status values that need to be considered for filter
+  - opts (`KeywordList`): [optional] Optional parameters
 
   ## Returns
 
-  {:ok, [%Pet{}, ...]} on success
-  {:error, info} on failure
+  `{:ok, [Pet, ...]}` on success
+  `{:error, info}` on failure
   """
   @spec find_pets_by_status(Tesla.Env.client, list(String.t), keyword()) :: {:ok, list(SwaggerPetstore.Model.Pet.t)} | {:error, Tesla.Env.t}
   def find_pets_by_status(connection, status, _opts \\ []) do
@@ -99,14 +99,14 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - tags ([String.t]): Tags to filter by
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - tags (`[String.t]`): Tags to filter by
+  - opts (`KeywordList`): [optional] Optional parameters
 
   ## Returns
 
-  {:ok, [%Pet{}, ...]} on success
-  {:error, info} on failure
+  `{:ok, [Pet, ...]}` on success
+  `{:error, info}` on failure
   """
   @spec find_pets_by_tags(Tesla.Env.client, list(String.t), keyword()) :: {:ok, list(SwaggerPetstore.Model.Pet.t)} | {:error, Tesla.Env.t}
   def find_pets_by_tags(connection, tags, _opts \\ []) do
@@ -125,14 +125,14 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (integer()): ID of pet to return
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - pet_id (`integer()`): ID of pet to return
+  - opts (`KeywordList`): [optional] Optional parameters
 
   ## Returns
 
-  {:ok, %SwaggerPetstore.Model.Pet{}} on success
-  {:error, info} on failure
+  `{:ok, SwaggerPetstore.Model.Pet}` on success
+  `{:error, info}` on failure
   """
   @spec get_pet_by_id(Tesla.Env.client, integer(), keyword()) :: {:ok, SwaggerPetstore.Model.Pet.t} | {:error, Tesla.Env.t}
   def get_pet_by_id(connection, pet_id, _opts \\ []) do
@@ -150,14 +150,14 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - body (Pet): Pet object that needs to be added to the store
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - body (`Pet`): Pet object that needs to be added to the store
+  - opts (`KeywordList`): [optional] Optional parameters
 
   ## Returns
 
-  {:ok, %{}} on success
-  {:error, info} on failure
+  `{:ok, %{}}` on success
+  `{:error, info}` on failure
   """
   @spec update_pet(Tesla.Env.client, SwaggerPetstore.Model.Pet.t, keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def update_pet(connection, body, _opts \\ []) do
@@ -176,22 +176,22 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (integer()): ID of pet that needs to be updated
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - pet_id (`integer()`): ID of pet that needs to be updated
+  - opts (`KeywordList`): [optional] Optional parameters
     - :name (String.t): Updated name of the pet
     - :status (String.t): Updated status of the pet
 
   ## Returns
 
-  {:ok, %{}} on success
-  {:error, info} on failure
+  `{:ok, %{}}` on success
+  `{:error, info}` on failure
   """
   @spec update_pet_with_form(Tesla.Env.client, integer(), keyword()) :: {:ok, nil} | {:error, Tesla.Env.t}
   def update_pet_with_form(connection, pet_id, opts \\ []) do
     optional_params = %{
-      :"name" => :form,
-      :"status" => :form
+      :name => :form,
+      :status => :form
     }
     %{}
     |> method(:post)
@@ -208,22 +208,22 @@ defmodule SwaggerPetstore.Api.Pet do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - pet_id (integer()): ID of pet to update
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - pet_id (`integer()`): ID of pet to update
+  - opts (`KeywordList`): [optional] Optional parameters
     - :additional_metadata (String.t): Additional data to pass to server
     - :file (String.t): file to upload
 
   ## Returns
 
-  {:ok, %SwaggerPetstore.Model.ApiResponse{}} on success
-  {:error, info} on failure
+  `{:ok, SwaggerPetstore.Model.ApiResponse}` on success
+  `{:error, info}` on failure
   """
   @spec upload_file(Tesla.Env.client, integer(), keyword()) :: {:ok, SwaggerPetstore.Model.ApiResponse.t} | {:error, Tesla.Env.t}
   def upload_file(connection, pet_id, opts \\ []) do
     optional_params = %{
-      :"additionalMetadata" => :form,
-      :"file" => :form
+      :additionalMetadata => :form,
+      :file => :form
     }
     %{}
     |> method(:post)
