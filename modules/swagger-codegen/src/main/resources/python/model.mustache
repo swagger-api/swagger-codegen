@@ -99,8 +99,10 @@ class {{classname}}(object):
         :type: {{datatype}}
         """
 {{#required}}
+{{^nullable}}
         if self._configuration.client_side_validation and {{name}} is None:
             raise ValueError("Invalid value for `{{name}}`, must not be `None`")  # noqa: E501
+{{/nullable}}
 {{/required}}
 {{#isEnum}}
 {{#isContainer}}
