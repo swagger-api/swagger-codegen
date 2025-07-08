@@ -9,6 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+
 import { HttpHeaders }                                       from '@angular/common/http';
 
 import { Observable }                                        from 'rxjs/Observable';
