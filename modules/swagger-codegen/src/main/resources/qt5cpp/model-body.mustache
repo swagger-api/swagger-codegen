@@ -70,7 +70,8 @@ void
 void
 {{classname}}::fromJsonObject(QJsonObject pJson) {
     {{#vars}}
-    {{^isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");{{/isContainer}}
+    {{^isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");
+    m_{{name}}_isSet = pJson.contains("{{baseName}}");{{/isContainer}} 
     {{#isContainer}}{{^items.isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{items.baseType}}");{{/items.isContainer}}{{#items.isContainer}}{{#isListContainer}}
     if(pJson["{{baseName}}"].isArray()){
         auto arr = pJson["{{baseName}}"].toArray();
