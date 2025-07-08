@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
@@ -24,9 +23,7 @@ import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.DecimalProperty;
 import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
 import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -104,28 +101,10 @@ public class RestbedCodegen extends AbstractCppCodegen {
       supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
       supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
       
-      languageSpecificPrimitives = new HashSet<String>(
-              Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
-
-      typeMapping = new HashMap<String, String>();
       typeMapping.put("date", "std::string");
       typeMapping.put("DateTime", "std::string");
-      typeMapping.put("string", "std::string");
-      typeMapping.put("integer", "int32_t");
-      typeMapping.put("long", "int64_t");
-      typeMapping.put("boolean", "bool");
-      typeMapping.put("array", "std::vector");
-      typeMapping.put("map", "std::map");
       typeMapping.put("file", "std::string");
-      typeMapping.put("object", "Object");
-      typeMapping.put("binary", "restbed::Bytes");
-      typeMapping.put("number", "double");
-      typeMapping.put("UUID", "std::string");
 
-      super.importMapping = new HashMap<String, String>();
-      importMapping.put("std::vector", "#include <vector>");
-      importMapping.put("std::map", "#include <map>");
-      importMapping.put("std::string", "#include <string>");
       importMapping.put("Object", "#include \"Object.h\"");
       importMapping.put("restbed::Bytes", "#include <corvusoft/restbed/byte.hpp>");
   }
@@ -193,7 +172,7 @@ public class RestbedCodegen extends AbstractCppCodegen {
       CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
       Set<String> oldImports = codegenModel.imports;
-      codegenModel.imports = new HashSet<String>();
+      codegenModel.imports = new HashSet<>();
       for (String imp : oldImports) {
           String newImp = toModelImport(imp);
           if (!newImp.isEmpty()) {
@@ -204,45 +183,34 @@ public class RestbedCodegen extends AbstractCppCodegen {
       return codegenModel;
   }
 
-
-  @Override
-  public String toModelFilename(String name) {
-      return initialCaps(name);
-  }
-
-  @Override
-  public String toApiFilename(String name) {
-      return initialCaps(name) + "Api";
-  }
-  
   @SuppressWarnings("unchecked")
   @Override
   public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
       Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
       List<CodegenOperation> operationList = (List<CodegenOperation>) operations.get("operation");
-      List<CodegenOperation> newOpList = new ArrayList<CodegenOperation>();
+      List<CodegenOperation> newOpList = new ArrayList<>();
       for (CodegenOperation op : operationList) {
-          String path = new String(op.path);
+          String path = op.path;
 
           String[] items = path.split("/", -1);
-          String resourceNameCamelCase = "";
+          StringBuilder resourceNameCamelCase = new StringBuilder();
           op.path = "";
           for (String item: items) {
               if (item.length() > 1) {
-                  if (item.matches("^\\{(.*)\\}$")) { 
+                  if (item.matches("^\\{(.*)}$")) {
                       String tmpResourceName = item.substring(1, item.length()-1);
-                      resourceNameCamelCase += Character.toUpperCase(tmpResourceName.charAt(0)) + tmpResourceName.substring(1);
+                      resourceNameCamelCase.append(Character.toUpperCase(tmpResourceName.charAt(0))).append(tmpResourceName.substring(1));
                       item = item.substring(0, item.length()-1);
                       item += ": .*}";
                   } else {
-                      resourceNameCamelCase +=  Character.toUpperCase(item.charAt(0)) + item.substring(1);
+                      resourceNameCamelCase.append(Character.toUpperCase(item.charAt(0))).append(item.substring(1));
                   }
               } else if (item.length() == 1) {
-                  resourceNameCamelCase +=  Character.toUpperCase(item.charAt(0));
+                  resourceNameCamelCase.append(Character.toUpperCase(item.charAt(0)));
               }
               op.path += item + "/";
           }
-          op.vendorExtensions.put("x-codegen-resourceName", resourceNameCamelCase);
+          op.vendorExtensions.put("x-codegen-resourceName", resourceNameCamelCase.toString());
           boolean foundInNewList = false;
           for (CodegenOperation op1 : newOpList) {
               if (!foundInNewList) {
@@ -250,7 +218,7 @@ public class RestbedCodegen extends AbstractCppCodegen {
                       foundInNewList = true;
                       List<CodegenOperation> currentOtherMethodList = (List<CodegenOperation>) op1.vendorExtensions.get("x-codegen-otherMethods");
                       if (currentOtherMethodList == null) {
-                          currentOtherMethodList = new ArrayList<CodegenOperation>();
+                          currentOtherMethodList = new ArrayList<>();
                       }
                       op.operationIdCamelCase = op1.operationIdCamelCase;
                       currentOtherMethodList.add(op);
@@ -264,37 +232,6 @@ public class RestbedCodegen extends AbstractCppCodegen {
       }
       operations.put("operation", newOpList);
       return objs;
-  }
-
-  /**
-   * Optional - type declaration. This is a String which is used by the
-   * templates to instantiate your types. There is typically special handling
-   * for different property types
-   *
-   * @return a string value used as the `dataType` field for model templates,
-   *         `returnType` for api templates
-   */
-  @Override
-  public String getTypeDeclaration(Property p) {
-      String swaggerType = getSwaggerType(p);
-
-      if (p instanceof ArrayProperty) {
-          ArrayProperty ap = (ArrayProperty) p;
-          Property inner = ap.getItems();
-          return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
-      }
-      if (p instanceof MapProperty) {
-          MapProperty mp = (MapProperty) p;
-          Property inner = mp.getAdditionalProperties();
-          return getSwaggerType(p) + "<std::string, " + getTypeDeclaration(inner) + ">";
-      }
-      if (p instanceof StringProperty || p instanceof DateProperty
-              || p instanceof DateTimeProperty || p instanceof FileProperty
-              || languageSpecificPrimitives.contains(swaggerType)) {
-          return toModelName(swaggerType);
-      }
-
-      return "std::shared_ptr<" + swaggerType + ">";
   }
 
   @Override
@@ -313,7 +250,7 @@ public class RestbedCodegen extends AbstractCppCodegen {
           return "0.0f";
       } else if (p instanceof LongProperty) {
           return "0L";
-      } else if (p instanceof IntegerProperty || p instanceof BaseIntegerProperty) {
+      } else if (p instanceof BaseIntegerProperty) {
           return "0";
       } else if (p instanceof DecimalProperty) {
           return "0.0";
@@ -359,7 +296,7 @@ public class RestbedCodegen extends AbstractCppCodegen {
   @Override
   public String getSwaggerType(Property p) {
       String swaggerType = super.getSwaggerType(p);
-      String type = null;
+      String type;
       if (typeMapping.containsKey(swaggerType)) {
           type = typeMapping.get(swaggerType);
           if (languageSpecificPrimitives.contains(type))
@@ -368,33 +305,4 @@ public class RestbedCodegen extends AbstractCppCodegen {
           type = swaggerType;
       return toModelName(type);
   }
-
-  @Override
-  public String toModelName(String type) {
-      if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
-              || importMapping.values().contains(type) || defaultIncludes.contains(type)
-              || languageSpecificPrimitives.contains(type)) {
-          return type;
-      } else {
-          return Character.toUpperCase(type.charAt(0)) + type.substring(1);
-      }
-  }
-
-  @Override
-  public String toApiName(String type) {
-      return Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
-  }
-
-  @Override
-  public String escapeQuotationMark(String input) {
-      // remove " to avoid code injection
-      return input.replace("\"", "");
-  }
-
-  @Override
-  public String escapeUnsafeCharacters(String input) {
-      return input.replace("*/", "*_/").replace("/*", "/_*");
-  }
-
-
 }
