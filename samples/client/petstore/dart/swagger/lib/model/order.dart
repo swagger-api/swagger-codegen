@@ -51,7 +51,7 @@ class Order {
       'id': id,
       'petId': petId,
       'quantity': quantity,
-      'shipDate': shipDate == null ? '' : shipDate.toUtc().toIso8601String(),
+      'shipDate': shipDate == null ? null : shipDate.toUtc().toIso8601String(),
       'status': status,
       'complete': complete
      };
