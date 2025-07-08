@@ -44,6 +44,8 @@ public class AnimalApi {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * Add a new animal to the store
    * 
@@ -81,6 +83,43 @@ public class AnimalApi {
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  public static class DeleteAnimalOptionals {
+    public String apiKey() {
+      return this.apiKey;
+    }
+
+    public DeleteAnimalOptionals apiKey(String apiKey) {
+      this.apiKey = apiKey;
+      return this;
+    }
+
+    private String apiKey = null;
+  }
+
+  /**
+   * Deletes a animal
+   * 
+   * @param animalId Animal id to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteAnimal(Long animalId) throws ApiException {
+    deleteAnimal(animalId, null);
+  }
+
+  /**
+   * Deletes a animal
+   * 
+   * @param animalId Animal id to delete (required)
+   * @param optionals An object containing the optional parameters for this API call.
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteAnimalOpts(Long animalId, DeleteAnimalOptionals optionals) throws ApiException {
+    if (optionals == null) {
+      optionals = new DeleteAnimalOptionals();
+    }
+    deleteAnimal(animalId, optionals.apiKey());
+  }
+
   /**
    * Deletes a animal
    * 
@@ -122,6 +161,8 @@ public class AnimalApi {
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Find animal by ID
    * Returns a single animal
@@ -162,6 +203,8 @@ public class AnimalApi {
     GenericType<Animal> localVarReturnType = new GenericType<Animal>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
+
+
   /**
    * Update an existing animal
    * 
@@ -199,6 +242,53 @@ public class AnimalApi {
 
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  public static class UpdateAnimalWithFormOptionals {
+    public String name() {
+      return this.name;
+    }
+
+    public UpdateAnimalWithFormOptionals name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    private String name = null;
+    public String status() {
+      return this.status;
+    }
+
+    public UpdateAnimalWithFormOptionals status(String status) {
+      this.status = status;
+      return this;
+    }
+
+    private String status = null;
+  }
+
+  /**
+   * Updates a animal
+   * 
+   * @param animalId ID of animal that needs to be updated (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateAnimalWithForm(Long animalId) throws ApiException {
+    updateAnimalWithForm(animalId, null, null);
+  }
+
+  /**
+   * Updates a animal
+   * 
+   * @param animalId ID of animal that needs to be updated (required)
+   * @param optionals An object containing the optional parameters for this API call.
+   * @throws ApiException if fails to make API call
+   */
+  public void updateAnimalWithFormOpts(Long animalId, UpdateAnimalWithFormOptionals optionals) throws ApiException {
+    if (optionals == null) {
+      optionals = new UpdateAnimalWithFormOptionals();
+    }
+    updateAnimalWithForm(animalId, optionals.name(), optionals.status());
+  }
+
   /**
    * Updates a animal
    * 
