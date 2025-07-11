@@ -116,7 +116,7 @@ jobs:
 
       - name: Run wiz-cli docker image scan
         run: |
-          ./wizcli docker scan --image $TAG --policy "$POLICY" >
+          ./wizcli docker scan --image $TAG --policy "$POLICY" 
           ./wizcli docker tag --image $TAG
         env:
           TAG: swagger-codegen:latest
