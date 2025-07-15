@@ -32,6 +32,26 @@ jobs:
       - name: Build with Maven
         run: mvn -B -U verify --file pom.xml
 
+      - name: Download Wiz CLI
+        run: curl -o wizcli https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64 && chmod +x wizcli
+
+      - name: Authenticate to Wiz
+        run: ./wizcli auth --id "$WIZ_CLIENT_ID" --secret "$WIZ_CLIENT_SECRET"
+        env:
+          WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
+          WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
+
+      - name: Scan Maven build directory with Wiz
+        run: |
+          ./wizcli dir scan \
+            --path . \
+            --policy "$POLICY" \
+            --tag repo="${{ github.repository }}" \
+            --tag commit="${{ github.sha }}" \
+            --tag java="${{ matrix.java }}" > /dev/null 2>&1
+        env:
+          POLICY: "SmartBear default vulnerabilities policy"
+
   build-java8:
 
     runs-on: ubuntu-latest
