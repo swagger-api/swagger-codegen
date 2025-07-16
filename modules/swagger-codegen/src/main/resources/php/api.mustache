@@ -403,6 +403,7 @@ use {{invokerPackage}}\ObjectSerializer;
             {{/isFile}}
         }
         {{/formParams}}
+        $multipart = !empty($formParams);
         // body params
         $_tempBody = null;
         {{#bodyParams}}
