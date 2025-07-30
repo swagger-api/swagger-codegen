@@ -57,7 +57,7 @@ Image accepts the following env variables:
 
 - `JAVA_MEM` e.g. `1024m`
 - `HTTP_PORT` e.g. `8080`
-- `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file definining which languages to hide. e.g. `/data/hiddenOptions.yaml`
+- `HIDDEN_OPTIONS_PATH` (alternative to `HIDDEN_OPTIONS`): useful if attaching a volume containing a `hiddenOptions.yaml` file defining which languages to hide. e.g. `/data/hiddenOptions.yaml`
 - `HIDDEN_OPTIONS` (alternative to `HIDDEN_OPTIONS_PATH`): allows to pass hidden options as an env variable, in the format `{category}:{language},{language},{language}|{category}:{language},{language},{language}`
 e.g. `servers:foo,bar|clientsV3:wtf,isthis` where category can be `clients`, `servers`, `clientsV3`, `serversV3`
 
