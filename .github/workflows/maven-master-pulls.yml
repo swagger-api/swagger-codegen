@@ -32,6 +32,18 @@ jobs:
       - name: Build with Maven
         run: mvn -B -U verify --file pom.xml
 
+      - name: Check local context
+        run: |
+          matches=$(find . -type d -name "target")
+          if [ -n "$matches" ]; then
+            echo "Target directory found at:"
+            echo "$matches"
+          else
+            echo "Target directory does not exist."
+            echo "$PWD"
+            exit 1
+          fi
+
       - name: Download Wiz CLI
         run: curl -o wizcli https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64 && chmod +x wizcli
 
@@ -42,18 +54,9 @@ jobs:
           WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Scan Maven build directory with Wiz
-        run: |
-          ./wizcli dir scan \
-            --path . \
-            --policy "$POLICY" \
-            --tag repo="${{ github.repository }}" \
-            --tag commit="${{ github.sha }}" \
-            --tag java="${{ matrix.java }}" > /dev/null 2>&1
-        env:
-          POLICY: "SmartBear default vulnerabilities policy"
+        run: ./wizcli dir scan --path ./ --tag java="${{ matrix.java }}"
 
   build-java8:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
