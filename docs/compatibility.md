@@ -4,8 +4,16 @@ The Swagger Codegen project has the following compatibilities with the OpenAPI S
 
 Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 -------------------------- |--------------| -------------------------- | -----
-3.0.64-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.64-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
-[3.0.63](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.63) (**current stable**) | 2024-10-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.63](https://github.com/swagger-api/swagger-codegen/tree/v3.0.63)
+3.0.72-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.72-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
+[3.0.71](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.71) | 2025-07-03   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.71](https://github.com/swagger-api/swagger-codegen/tree/v3.0.71)
+[3.0.70](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.70) | 2025-07-01   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.70](https://github.com/swagger-api/swagger-codegen/tree/v3.0.70)
+[3.0.69](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.69) | 2025-06-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.69](https://github.com/swagger-api/swagger-codegen/tree/v3.0.69)
+[3.0.68](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.68) | 2025-03-05   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.68](https://github.com/swagger-api/swagger-codegen/tree/v3.0.68)
+[3.0.67](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.67) | 2025-01-27   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.67](https://github.com/swagger-api/swagger-codegen/tree/v3.0.67)
+[3.0.66](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.66) | 2024-12-23   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.66](https://github.com/swagger-api/swagger-codegen/tree/v3.0.66)
+[3.0.65](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.65) | 2024-12-18   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.65](https://github.com/swagger-api/swagger-codegen/tree/v3.0.65)
+[3.0.64](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.64) | 2024-11-07   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.64](https://github.com/swagger-api/swagger-codegen/tree/v3.0.64)
+[3.0.63](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.63) | 2024-10-16   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.63](https://github.com/swagger-api/swagger-codegen/tree/v3.0.63)
 [3.0.62](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.62) | 2024-08-27   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.62](https://github.com/swagger-api/swagger-codegen/tree/v3.0.62)
 [3.0.61](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.61) | 2024-08-09   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.61](https://github.com/swagger-api/swagger-codegen/tree/v3.0.61)
 [3.0.60](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.60) | 2024-08-01   | 1.0, 1.1, 1.2, 2.0, 3.0   | [tag v3.0.60](https://github.com/swagger-api/swagger-codegen/tree/v3.0.60)
@@ -68,8 +76,12 @@ Swagger Codegen Version    | Release Date | OpenAPI Spec compatibility | Notes
 [3.0.2](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.2)| 2018-10-19   | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release
 [3.0.1](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.1)| 2018-10-05   | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
 [3.0.0](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.0)| 2018-09-06   | 1.0, 1.1, 1.2, 2.0, 3.0 | Major release with breaking changes
-2.4.44-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://oss.sonatype.org/content/repositories/snapshots/io/swagger/swagger-codegen-cli/2.4.44-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
-[2.4.43](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.43) (**current stable**) | 2024-08-09   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.42](https://github.com/swagger-api/swagger-codegen/tree/v2.4.43)
+
+2.4.47-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/swagger-codegen-cli/2.4.47-SNAPSHOT/)| TBD          | 1.0, 1.1, 1.2, 2.0   | Minor release
+[2.4.46](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.46) (**current stable**) | 2025-06-30   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.46](https://github.com/swagger-api/swagger-codegen/tree/v2.4.46)
+[2.4.45](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.45) | 2025-06-08   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.45](https://github.com/swagger-api/swagger-codegen/tree/v2.4.45)
+[2.4.44](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.44) | 2024-12-18   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.44](https://github.com/swagger-api/swagger-codegen/tree/v2.4.44)
+[2.4.43](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.43) | 2024-08-09   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.43](https://github.com/swagger-api/swagger-codegen/tree/v2.4.43)
 [2.4.42](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.42) | 2024-07-29   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.42](https://github.com/swagger-api/swagger-codegen/tree/v2.4.42)
 [2.4.41](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.41) | 2024-04-22   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.41](https://github.com/swagger-api/swagger-codegen/tree/v2.4.41)
 [2.4.39](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.39) | 2024-01-02   | 1.0, 1.1, 1.2, 2.0   | [tag v2.4.39](https://github.com/swagger-api/swagger-codegen/tree/v2.4.39)

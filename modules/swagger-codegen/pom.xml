@@ -3,13 +3,14 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.64-SNAPSHOT</version>
+        <version>3.0.72-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-codegen</artifactId>
     <packaging>jar</packaging>
     <name>swagger-codegen (core library)</name>
+    <description>swagger-codegen (core library)</description>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <defaultGoal>install</defaultGoal>
@@ -72,7 +73,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -100,11 +101,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.12.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                 <version>2.5.3</version>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code</groupId>
@@ -193,7 +189,7 @@
     </reporting>
     <properties>
         <diffutils-version>1.3.0</diffutils-version>
-        <swagger-codegen-v2-version>2.4.43</swagger-codegen-v2-version>
+        <swagger-codegen-v2-version>2.4.46</swagger-codegen-v2-version>
     </properties>
     <dependencies>
         <dependency>
@@ -317,13 +313,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>
