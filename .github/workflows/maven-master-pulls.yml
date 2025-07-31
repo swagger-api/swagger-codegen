@@ -32,6 +32,17 @@ jobs:
       - name: Build with Maven
         run: mvn -B -U verify --file pom.xml
 
+      - name: Check local context
+        run: |
+          if find . -type d -name "target" | grep -q .; then
+            echo "Target directory exists."
+            echo "$PWD"
+          else
+            echo "Target directory does not exist."
+            echo "$PWD"
+            exit 1
+          fi
+
       - name: Download Wiz CLI
         run: curl -o wizcli https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64 && chmod +x wizcli
 
