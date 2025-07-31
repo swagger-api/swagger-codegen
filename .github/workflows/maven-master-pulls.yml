@@ -35,8 +35,9 @@ jobs:
       - name: Check local context
         run: |
           if find . -type d -name "target" | grep -q .; then
-            echo "Target directory exists."
-            echo "$PWD"
+            if [ -n "$matches" ]; then
+              echo "Target directory found at:"
+              echo "$matches"
           else
             echo "Target directory does not exist."
             echo "$PWD"
