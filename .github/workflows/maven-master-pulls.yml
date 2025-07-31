@@ -54,7 +54,9 @@ jobs:
           WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Scan Maven build directory with Wiz
-        run: ./wizcli dir scan --path ./
+        run: ./wizcli dir scan --path ./  --tag repo="${{ github.repository }}" \
+            --tag commit="${{ github.sha }}" \
+            --tag java="${{ matrix.java }}" > /dev/null 2>&1
 
   build-java8:
     runs-on: ubuntu-latest
