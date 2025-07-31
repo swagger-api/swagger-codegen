@@ -54,7 +54,7 @@ jobs:
           WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Scan Maven build directory with Wiz
-        run: ./wizcli dir scan --path ./target
+        run: ./wizcli dir scan --path ./modules
 
   build-java8:
     runs-on: ubuntu-latest
