@@ -74,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.JOB_NAME }}generate_outcome
-          path: generate_outcome_${{ env.JOB ][]_NAME }}
+          path: generate_outcome_${{ env.JOB_NAME }}
       - name: upload generate logs
         uses: actions/upload-artifact@v2
         with:
