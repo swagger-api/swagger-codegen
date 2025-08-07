@@ -16,6 +16,7 @@ jobs:
       GENERATORS_VERSION_PROPERTY: ""
       MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
       MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      TEST_DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_SB_USERNAME }}
     steps:
       - uses: actions/checkout@v4
         name: git checkout 3.0.0
@@ -28,11 +29,11 @@ jobs:
           distribution: temurin
           cache: maven
           overwrite-settings: false
-      - name: Add Central-Portal snapshot repo to settings.xml
-        uses: s4u/maven-settings-action@v3.1.0
-        with:
-          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
-          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
+#      - name: Add Central-Portal snapshot repo to settings.xml
+#        uses: s4u/maven-settings-action@v3.1.0
+#        with:
+#          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+#          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
       - name: preliminary checks
         run: |
           docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
