@@ -60,7 +60,7 @@ jobs:
           fi
           echo "SC_VERSION=$MY_POM_VERSION" >> $GITHUB_ENV
       - name: Check Release Version codegen-generators
-        id: preRelease generators
+        id: preReleaseGenerators
         if: env.RELEASE_OK == 'yes'
         working-directory: generators-repo
         run: |
