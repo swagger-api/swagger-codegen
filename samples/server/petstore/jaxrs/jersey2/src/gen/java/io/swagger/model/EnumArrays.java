@@ -22,11 +22,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.*;
+import javax.validation.Valid;
 
 /**
  * EnumArrays
  */
-
 public class EnumArrays   {
   /**
    * Gets or Sets justSymbol

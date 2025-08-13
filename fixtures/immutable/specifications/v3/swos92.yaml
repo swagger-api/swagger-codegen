@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  version: "v2.0"
+  title: Test
+paths:
+  /product:
+    get:
+      operationId: getProduct
+      summary: Gets a Product by ID.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    put:
+      operationId: updateProduct
+      summary: Updates a Product by ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Created
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: object
+          additionalProperties:
+            type: string
+        active:
+          type: boolean
+          example: true
+        foo:
+          type: object
+          additionalProperties: true

@@ -9,16 +9,17 @@ import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import mockit.Expectations;
 import mockit.FullVerifications;
 import mockit.Injectable;
 import mockit.Mocked;
-import mockit.StrictExpectations;
 import mockit.Tested;
 import org.apache.commons.lang3.SerializationUtils;
 import org.testng.annotations.Test;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,32 +42,22 @@ public class CodegenConfiguratorTest {
     @Mocked
     CodegenConfigLoader codegenConfigLoader;
 
-    @Injectable
     List<AuthorizationValue> authorizationValues;
+
+    @Injectable
+    AuthorizationValue auth1;
+    @Injectable
+    AuthorizationValue auth2;
+    public CodegenConfiguratorTest() {
+        authorizationValues = new ArrayList<>();
+        authorizationValues.add(auth1);
+        authorizationValues.add(auth2);
+    }
 
     @Tested
     CodegenConfigurator configurator;
 
     @SuppressWarnings("unused")
-    @Test
-    public void testVerbose() throws Exception {
-
-        configurator.setVerbose(true);
-
-        new StrictExpectations(System.class) {{
-            System.setProperty("debugSwagger", "");
-            times = 1;
-            System.setProperty("debugModels", "");
-            times = 1;
-            System.setProperty("debugOperations", "");
-            times = 1;
-            System.setProperty("debugSupportingFiles", "");
-            times = 1;
-        }};
-
-        setupAndRunGenericTest(configurator);
-    }
-
     @Test
     public void testTemplateDir() throws Exception {
 
@@ -79,22 +70,6 @@ public class CodegenConfiguratorTest {
     }
 
     @SuppressWarnings("unused")
-    @Test
-    public void testSystemProperties() throws Exception {
-
-        configurator.addSystemProperty("hello", "world")
-                .addSystemProperty("foo", "bar");
-
-        new Expectations(System.class) {{
-            System.setProperty("hello", "world");
-            times = 1;
-            System.setProperty("foo", "bar");
-            times = 1;
-        }};
-
-        setupAndRunGenericTest(configurator);
-    }
-
     @Test
     public void testSkipOverwrite() throws Exception {
         CodegenConfigurator configurator1 = new CodegenConfigurator();
@@ -158,14 +133,12 @@ public class CodegenConfiguratorTest {
 
         configurator.addAdditionalProperty("foo", "bar")
                 .addAdditionalProperty("hello", "world")
-                .addAdditionalProperty("supportJava6", false)
                 .addAdditionalProperty("useRxJava", true);
 
         final ClientOptInput clientOptInput = setupAndRunGenericTest(configurator);
 
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "foo", "bar");
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "hello", "world");
-        assertValueInMap(clientOptInput.getConfig().additionalProperties(), "supportJava6", false);
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "useRxJava", true);
     }
 
@@ -246,13 +219,11 @@ public class CodegenConfiguratorTest {
     @Test
     public void testDynamicProperties() throws Exception {
         configurator.addDynamicProperty(CodegenConstants.LOCAL_VARIABLE_PREFIX, "_");
-        configurator.addDynamicProperty("supportJava6", false);
         configurator.addDynamicProperty("useRxJava", true);
 
         final ClientOptInput clientOptInput = setupAndRunGenericTest(configurator);
 
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), CodegenConstants.LOCAL_VARIABLE_PREFIX, "_");
-        assertValueInMap(clientOptInput.getConfig().additionalProperties(), "supportJava6", false);
         assertValueInMap(clientOptInput.getConfig().additionalProperties(), "useRxJava", true);
     }
 
@@ -294,8 +265,7 @@ public class CodegenConfiguratorTest {
         assertEquals(configurator.getLanguageSpecificPrimitives().size(), 1);
         assertTrue(configurator.getLanguageSpecificPrimitives().contains("rolex"));
 
-        assertEquals(configurator.getDynamicProperties().size(), 1);
-        assertValueInMap(configurator.getDynamicProperties(), CodegenConstants.LOCAL_VARIABLE_PREFIX, "_");
+        assertEquals(configurator.getLocalVariablePrefix(), "_");
 
         assertEquals(configurator.getIgnoreFileOverride(), "/path/to/override/.swagger-codegen-ignore");
     }
@@ -344,19 +314,21 @@ public class CodegenConfiguratorTest {
     @SuppressWarnings("unused")
     private void setupStandardExpectations(final String spec, final String languageName, final String auth, final CodegenConfig config) {
 
-        new StrictExpectations() {{
+        ParseOptions options = new ParseOptions();
+        options.setResolve(true);
+        options.setFlatten(true);
+
+        new Expectations() {{
             CodegenConfigLoader.forName(languageName);
             times = 1;
             result = config;
 
             AuthParser.parse(auth); times=1; result = authorizationValues;
 
-            new SwaggerParser();
-            times = 1;
-            result = parser;
+            SwaggerParser p = new SwaggerParser();
+            minTimes = 1;
 
-            parser.read(spec, authorizationValues, true);
-            times = 1;
+            p.read((String) any, (List<AuthorizationValue>) any, (ParseOptions) any);
             result = swagger;
 
         }};

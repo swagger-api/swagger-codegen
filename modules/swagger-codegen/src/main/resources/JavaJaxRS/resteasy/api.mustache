@@ -15,14 +15,28 @@ import {{package}}.NotFoundException;
 
 import java.io.InputStream;
 
+{{#jakarta}}
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
+import jakarta.ws.rs.*;
+import jakarta.inject.Inject;
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 import javax.inject.Inject;
+{{/jakarta}}
 
 {{#useBeanValidation}}
+{{#jakarta}}
+import jakarta.validation.constraints.*;
+{{/jakarta}}
+{{^jakarta}}
 import javax.validation.constraints.*;
+{{/jakarta}}
 {{/useBeanValidation}}
 {{#operations}}{{#operation}}{{#isMultipart}}import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 {{/isMultipart}}{{/operation}}{{/operations}}

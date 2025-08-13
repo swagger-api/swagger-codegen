@@ -1,6 +1,3 @@
-{{#hasEnums}}
-import com.squareup.moshi.Json
-{{/hasEnums}}
 /**
  * {{{description}}}
 {{#vars}}
@@ -8,21 +5,33 @@ import com.squareup.moshi.Json
 {{/vars}}
  */
 data class {{classname}} (
-{{#requiredVars}}
-{{>data_class_req_var}}{{^-last}},
-{{/-last}}{{/requiredVars}}{{#hasRequired}}{{#hasOptional}},
-{{/hasOptional}}{{/hasRequired}}{{#optionalVars}}{{>data_class_opt_var}}{{^-last}},
-{{/-last}}{{/optionalVars}}
+{{#vars}}
+{{#required}}
+{{>data_class_req_var}}{{^@last}},{{/@last}}
+{{/required}}
+{{^required}}
+{{>data_class_opt_var}}{{^@last}},{{/@last}}
+{{/required}}
+{{/vars}}
 ) {
-{{#hasEnums}}{{#vars}}{{#isEnum}}
+{{#hasEnums}}{{#vars}}
+
+{{#isEnum}}
     /**
     * {{{description}}}
     * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
     */
-    enum class {{nameInCamelCase}}(val value: {{datatype}}){
+    {{#items}}
+    enum class {{{datatypeWithEnum}}}(val value: {{{datatype}}}{{#isNullable}}?{{/isNullable}}){
+    {{/items}}
+    {{^items}}
+    enum class {{nameInCamelCase}}(val value: {{{datatype}}}){
+    {{/items}}
     {{#allowableValues}}{{#enumVars}}
-        @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+        {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
     {{/enumVars}}{{/allowableValues}}
     }
-{{/isEnum}}{{/vars}}{{/hasEnums}}
+
+{{/isEnum}}
+{{/vars}}{{/hasEnums}}
 }

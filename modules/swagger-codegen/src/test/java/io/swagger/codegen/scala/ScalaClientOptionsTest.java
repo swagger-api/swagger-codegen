@@ -32,7 +32,7 @@ public class ScalaClientOptionsTest extends AbstractOptionsTest {
             times = 1;
             clientCodegen.setSortParamsByRequiredFlag(Boolean.valueOf(ScalaClientOptionsProvider.SORT_PARAMS_VALUE));
             times = 1;
-            clientCodegen.setModelPropertyNaming(ScalaClientOptionsProvider.MODEL_PROPERTY_NAMING);
+            clientCodegen.setModelPropertyNaming("original");
             times = 1;
             clientCodegen.setSourceFolder(ScalaClientOptionsProvider.SOURCE_FOLDER_VALUE);
             times = 1;

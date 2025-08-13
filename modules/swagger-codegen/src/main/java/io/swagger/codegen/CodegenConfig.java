@@ -202,6 +202,10 @@ public interface CodegenConfig {
 
     String getGitRepoId();
 
+    void setGitRepoBaseURL(String repositoryBaseURL);
+
+    String getGitRepoBaseURL();
+
     void setReleaseNote(String releaseNote);
 
     String getReleaseNote();
@@ -234,4 +238,17 @@ public interface CodegenConfig {
 
     boolean defaultIgnoreImportMappingOption();
 
+    boolean isUsingFlattenSpec();
+
+    default boolean isPrivileged() {
+        return false;
+    }
+
+    default int getPriority() {
+        return Integer.MIN_VALUE;
+    }
+
+    default String getCodeName() {
+        return getName();
+    }
 }

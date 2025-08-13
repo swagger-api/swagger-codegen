@@ -1,4 +1,4 @@
-wget -nc https://dist.nuget.org/win-x86-commandline/latest/nuget.exe;
+curl --location --request GET 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' --output './nuget.exe'
 mozroots --import --sync
 mono nuget.exe install vendor/packages.config -o vendor;
 mkdir -p bin;
@@ -7,6 +7,6 @@ vendor/RestSharp.Net2.1.1.11/lib/net20/RestSharp.Net2.dll,\
 System.Runtime.Serialization.dll \
 -target:library \
 -out:bin/{{packageName}}.dll \
--recurse:'src/*.cs' \
+-recurse:'{{sourceFolder}}/*.cs' \
 -doc:bin/{{packageName}}.xml \
 -platform:anycpu

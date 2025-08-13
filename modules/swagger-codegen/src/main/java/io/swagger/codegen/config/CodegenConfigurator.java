@@ -12,6 +12,7 @@ import io.swagger.codegen.auth.AuthParser;
 import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.SwaggerParser;
+import io.swagger.parser.util.ParseOptions;
 import io.swagger.util.Json;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class CodegenConfigurator implements Serializable {
     private String invokerPackage;
     private String modelNamePrefix;
     private String modelNameSuffix;
+    private String localVariablePrefix;
     private String groupId;
     private String artifactId;
     private String artifactVersion;
@@ -64,11 +66,12 @@ public class CodegenConfigurator implements Serializable {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
     private Map<String, String> importMappings = new HashMap<String, String>();
     private Set<String> languageSpecificPrimitives = new HashSet<String>();
-    private Map<String, String>  reservedWordMappings = new HashMap<String, String>();
+    private Map<String, String> reservedWordMappings = new HashMap<String, String>();
 
-    private String gitUserId="GIT_USER_ID";
-    private String gitRepoId="GIT_REPO_ID";
-    private String releaseNote="Minor update";
+    private String gitUserId = "GIT_USER_ID";
+    private String gitRepoId = "GIT_REPO_ID";
+    private String gitRepoBaseURL = "GIT_REPO_BASE_URL";
+    private String releaseNote = "Minor update";
     private String httpUserAgent;
 
     private final Map<String, Object> dynamicProperties = new HashMap<String, Object>(); //the map that holds the JsonAnySetter/JsonAnyGetter values
@@ -137,6 +140,15 @@ public class CodegenConfigurator implements Serializable {
 
     public CodegenConfigurator setModelNameSuffix(String suffix) {
         this.modelNameSuffix = suffix;
+        return this;
+    }
+
+    public String getLocalVariablePrefix() {
+        return localVariablePrefix;
+    }
+
+    public CodegenConfigurator setLocalVariablePrefix(String localVariablePrefix) {
+        this.localVariablePrefix = localVariablePrefix;
         return this;
     }
 
@@ -338,6 +350,15 @@ public class CodegenConfigurator implements Serializable {
         return gitRepoId;
     }
 
+    public CodegenConfigurator setGitRepoBaseURL(String gitRepoBaseURL) {
+        this.gitRepoBaseURL = gitRepoBaseURL;
+        return this;
+    }
+
+    public String getGitRepoBaseURL() {
+        return gitRepoBaseURL;
+    }
+
     public CodegenConfigurator setGitRepoId(String gitRepoId) {
         this.gitRepoId = gitRepoId;
         return this;
@@ -357,11 +378,11 @@ public class CodegenConfigurator implements Serializable {
     }
 
     public CodegenConfigurator setHttpUserAgent(String httpUserAgent) {
-        this.httpUserAgent= httpUserAgent;
+        this.httpUserAgent = httpUserAgent;
         return this;
     }
 
-    public  Map<String, String> getReservedWordsMappings() {
+    public Map<String, String> getReservedWordsMappings() {
         return reservedWordMappings;
     }
 
@@ -416,6 +437,7 @@ public class CodegenConfigurator implements Serializable {
         checkAndSetAdditionalProperty(templateDir, toAbsolutePathStr(templateDir), CodegenConstants.TEMPLATE_DIR);
         checkAndSetAdditionalProperty(modelNamePrefix, CodegenConstants.MODEL_NAME_PREFIX);
         checkAndSetAdditionalProperty(modelNameSuffix, CodegenConstants.MODEL_NAME_SUFFIX);
+        checkAndSetAdditionalProperty(localVariablePrefix, CodegenConstants.LOCAL_VARIABLE_PREFIX);
         checkAndSetAdditionalProperty(gitUserId, CodegenConstants.GIT_USER_ID);
         checkAndSetAdditionalProperty(gitRepoId, CodegenConstants.GIT_REPO_ID);
         checkAndSetAdditionalProperty(releaseNote, CodegenConstants.RELEASE_NOTE);
@@ -433,8 +455,12 @@ public class CodegenConfigurator implements Serializable {
                 .config(config);
 
         final List<AuthorizationValue> authorizationValues = AuthParser.parse(auth);
-
-        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, true);
+        ParseOptions parseOptions = new ParseOptions();
+        parseOptions.setResolve(true);
+        if (config.isUsingFlattenSpec()) {
+            parseOptions.setFlatten(true);
+        }
+        Swagger swagger = new SwaggerParser().read(inputSpec, authorizationValues, parseOptions);
 
         input.opts(new ClientOpts())
                 .swagger(swagger);
@@ -458,8 +484,7 @@ public class CodegenConfigurator implements Serializable {
             String opt = langCliOption.getOpt();
             if (dynamicProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, dynamicProperties.get(opt));
-            }
-            else if(systemProperties.containsKey(opt)) {
+            } else if (systemProperties.containsKey(opt)) {
                 codegenConfig.additionalProperties().put(opt, systemProperties.get(opt));
             }
         }
@@ -517,5 +542,5 @@ public class CodegenConfigurator implements Serializable {
         }
         return null;
     }
-
 }
+

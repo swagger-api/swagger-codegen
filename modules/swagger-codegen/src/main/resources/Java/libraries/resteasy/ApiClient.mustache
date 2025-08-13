@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,19 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+{{#jakarta}}
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.Invocation;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -32,6 +46,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+{{/jakarta}}
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.client.jaxrs.internal.ClientConfiguration;
@@ -446,7 +461,7 @@ public class ApiClient {
   public Entity<?> serialize(Object obj, Map<String, Object> formParams, String contentType) throws ApiException {
     Entity<?> entity = null;
     if (contentType.startsWith("multipart/form-data")) {
-      MultipartFormDataOutput multipart = new MultipartFormDataOutput();  
+      MultipartFormDataOutput multipart = new MultipartFormDataOutput();
       //MultiPart multiPart = new MultiPart();
       for (Entry<String, Object> param: formParams.entrySet()) {
         if (param.getValue() instanceof File) {
@@ -552,9 +567,9 @@ public class ApiClient {
     }
 
     if (tempFolderPath == null)
-      return File.createTempFile(prefix, suffix);
+      return Files.createTempFile(prefix, suffix).toFile();
     else
-      return File.createTempFile(prefix, suffix, new File(tempFolderPath));
+      return Files.createTempFile(Paths.get(tempFolderPath), prefix, suffix).toFile();
   }
 
   /**

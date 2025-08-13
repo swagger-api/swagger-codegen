@@ -316,7 +316,7 @@ test inline additionalProperties
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **param** | [**interface{}**](interface{}.md)| request body | 
+  **param** | **interface{}**| request body | 
 
 ### Return type
 

@@ -7,8 +7,10 @@ import io.swagger.codegen.*;
 import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import io.swagger.codegen.languages.features.GzipFeatures;
 import io.swagger.codegen.languages.features.NotNullAnnotationFeatures;
+import io.swagger.codegen.languages.features.IgnoreUnknownJacksonFeatures;
 import io.swagger.codegen.languages.features.PerformBeanValidationFeatures;
 
+import io.swagger.codegen.mustache.LowercaseLambda;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class JavaClientCodegen extends AbstractJavaCodegen
         implements BeanValidationFeatures, PerformBeanValidationFeatures,
-                   GzipFeatures, NotNullAnnotationFeatures
+                   GzipFeatures, NotNullAnnotationFeatures, IgnoreUnknownJacksonFeatures
 {
     static final String MEDIA_TYPE = "mediaType";
 
@@ -42,6 +44,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     public static final String RETROFIT_2 = "retrofit2";
     public static final String REST_ASSURED = "rest-assured";
 
+    public static final String WIREMOCK_OPTION = "wiremock";
+
     protected String gradleWrapperPackage = "gradle.wrapper";
     protected boolean useRxJava = false;
     protected boolean useRxJava2 = false;
@@ -54,6 +58,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     protected boolean useGzipFeature = false;
     protected boolean useRuntimeException = false;
     private boolean notNullJacksonAnnotation;
+    private boolean ignoreUnknownJacksonAnnotation = false;
 
     public JavaClientCodegen() {
         super();
@@ -66,25 +71,28 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA, "Whether to use the RxJava adapter with the retrofit2 library."));
         cliOptions.add(CliOption.newBoolean(USE_RX_JAVA2, "Whether to use the RxJava2 adapter with the retrofit2 library."));
-        cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson library."));
+        cliOptions.add(CliOption.newBoolean(PARCELABLE_MODEL, "Whether to generate models for Android that implement Parcelable with the okhttp-gson or okhttp4-gson library."));
         cliOptions.add(CliOption.newBoolean(USE_PLAY_WS, "Use Play! Async HTTP client (Play WS API)"));
         cliOptions.add(CliOption.newString(PLAY_VERSION, "Version of Play! Framework (possible values \"play24\", \"play25\")"));
-        cliOptions.add(CliOption.newBoolean(SUPPORT_JAVA6, "Whether to support Java6 with the Jersey1 library."));
         cliOptions.add(CliOption.newBoolean(USE_BEANVALIDATION, "Use BeanValidation API annotations"));
         cliOptions.add(CliOption.newBoolean(PERFORM_BEANVALIDATION, "Perform BeanValidation"));
         cliOptions.add(CliOption.newBoolean(USE_GZIP_FEATURE, "Send gzip-encoded requests"));
         cliOptions.add(CliOption.newBoolean(USE_RUNTIME_EXCEPTION, "Use RuntimeException instead of Exception"));
 
-        supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.10.1. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
-        supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.10.1");
-        supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.29.1. JSON processing: Jackson 2.10.1");
+        cliOptions.add(CliOption.newBoolean(WIREMOCK_OPTION, "Use wiremock to generate endpoint calls to mock on generated tests."));
+
+        supportedLibraries.put("jersey1", "HTTP client: Jersey client 1.19.4. JSON processing: Jackson 2.11.4. Enable Java6 support using '-DsupportJava6=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
+        supportedLibraries.put("feign", "HTTP client: OpenFeign 9.4.0. JSON processing: Jackson 2.11.4");
+        supportedLibraries.put("jersey2", "HTTP client: Jersey client 2.29.1. JSON processing: Jackson 2.11.4");
+        supportedLibraries.put("jersey3", "HTTP client: Jersey client 3.0.10. JSON processing: Jackson 2.10.2");
         supportedLibraries.put("okhttp-gson", "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.8.1. Enable Parcelable models on Android using '-DparcelableModel=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
+        supportedLibraries.put("okhttp4-gson", "HTTP client: OkHttp 4.10.0. JSON processing: Gson 2.8.1. Enable Parcelable models on Android using '-DparcelableModel=true'. Enable gzip request encoding using '-DuseGzipFeature=true'.");
         supportedLibraries.put(RETROFIT_1, "HTTP client: OkHttp 2.7.5. JSON processing: Gson 2.3.1 (Retrofit 1.9.0). IMPORTANT NOTE: retrofit1.x is no longer actively maintained so please upgrade to 'retrofit2' instead.");
         supportedLibraries.put(RETROFIT_2, "HTTP client: OkHttp 3.8.0. JSON processing: Gson 2.6.1 (Retrofit 2.3.0). Enable the RxJava adapter using '-DuseRxJava[2]=true'. (RxJava 1.x or 2.x)");
-        supportedLibraries.put("resttemplate", "HTTP client: Spring RestTemplate 4.3.9-RELEASE. JSON processing: Jackson 2.10.1");
-        supportedLibraries.put("resteasy", "HTTP client: Resteasy client 3.1.3.Final. JSON processing: Jackson 2.10.1");
-        supportedLibraries.put("vertx", "HTTP client: VertX client 3.2.4. JSON processing: Jackson 2.10.1");
-        supportedLibraries.put("google-api-client", "HTTP client: Google API client 1.23.0. JSON processing: Jackson 2.10.1");
+        supportedLibraries.put("resttemplate", "HTTP client: Spring RestTemplate 4.3.9-RELEASE. JSON processing: Jackson 2.11.4");
+        supportedLibraries.put("resteasy", "HTTP client: Resteasy client 3.1.3.Final. JSON processing: Jackson 2.11.4");
+        supportedLibraries.put("vertx", "HTTP client: VertX client 3.2.4. JSON processing: Jackson 2.11.4");
+        supportedLibraries.put("google-api-client", "HTTP client: Google API client 1.23.0. JSON processing: Jackson 2.11.4");
         supportedLibraries.put("rest-assured", "HTTP client: rest-assured : 3.1.0. JSON processing: Gson 2.6.1. Only for Java8");
 
         CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
@@ -113,6 +121,14 @@ public class JavaClientCodegen extends AbstractJavaCodegen
 
     @Override
     public void processOpts() {
+        if (RETROFIT_1.equalsIgnoreCase(library)) {
+            dateLibrary = "joda";
+        }
+        if ("jersey3".equalsIgnoreCase(library)) {
+            dateLibrary = "java8";
+            additionalProperties.put(JAKARTA, true);
+        }
+
         super.processOpts();
 
         if (additionalProperties.containsKey(USE_RX_JAVA) && additionalProperties.containsKey(USE_RX_JAVA2)) {
@@ -158,6 +174,13 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             this.setUseRuntimeException(convertPropertyToBooleanAndWriteBack(USE_RUNTIME_EXCEPTION));
         }
 
+        if (additionalProperties.containsKey(WIREMOCK_OPTION)) {
+            final boolean useWireMock = additionalProperties.get(WIREMOCK_OPTION) != null && Boolean.parseBoolean(additionalProperties.get(WIREMOCK_OPTION).toString());
+            additionalProperties.put(WIREMOCK_OPTION, useWireMock);
+        }
+
+        additionalProperties.put("lowercase", new LowercaseLambda());
+
         final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
         final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
         final String apiFolder = (sourceFolder + '/' + apiPackage).replace(".", "/");
@@ -165,7 +188,11 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         //Common files
         writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        writeOptional(outputFolder, new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+        if (java11Mode) {
+            writeOptional(outputFolder, new SupportingFile("build.gradle.java11.mustache", "", "build.gradle"));
+        } else {
+            writeOptional(outputFolder, new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+        }
         writeOptional(outputFolder, new SupportingFile("build.sbt.mustache", "", "build.sbt"));
         writeOptional(outputFolder, new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
         writeOptional(outputFolder, new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
@@ -214,8 +241,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             additionalProperties.put("jackson", "true");
             supportingFiles.add(new SupportingFile("ParamExpander.mustache", invokerFolder, "ParamExpander.java"));
             supportingFiles.add(new SupportingFile("EncodingUtils.mustache", invokerFolder, "EncodingUtils.java"));
-        } else if ("okhttp-gson".equals(getLibrary()) || StringUtils.isEmpty(getLibrary())) {
-            // the "okhttp-gson" library template requires "ApiCallback.mustache" for async call
+        } else if ("okhttp-gson".equals(getLibrary()) || "okhttp4-gson".equals(getLibrary()) || StringUtils.isEmpty(getLibrary())) {
+            // the "okhttp-gson" and "okhttp4-gson" library template requires "ApiCallback.mustache" for async call
             supportingFiles.add(new SupportingFile("ApiCallback.mustache", invokerFolder, "ApiCallback.java"));
             supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
@@ -230,7 +257,7 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             if ("retrofit2".equals(getLibrary()) && !usePlayWS) {
                 supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             }
-        } else if ("jersey2".equals(getLibrary())) {
+        } else if ("jersey3".equals(getLibrary()) || "jersey2".equals(getLibrary())) {
             supportingFiles.add(new SupportingFile("JSON.mustache", invokerFolder, "JSON.java"));
             supportingFiles.add(new SupportingFile("ApiResponse.mustache", invokerFolder, "ApiResponse.java"));
             additionalProperties.put("jackson", "true");
@@ -620,5 +647,15 @@ public class JavaClientCodegen extends AbstractJavaCodegen
     @Override
     public boolean isNotNullJacksonAnnotation() {
         return notNullJacksonAnnotation;
+    }
+
+    @Override
+    public void setIgnoreUnknownJacksonAnnotation(boolean ignoreUnknownJacksonAnnotation) {
+        this.ignoreUnknownJacksonAnnotation = ignoreUnknownJacksonAnnotation;
+    }
+
+    @Override
+    public boolean isIgnoreUnknownJacksonAnnotation() {
+        return ignoreUnknownJacksonAnnotation;
     }
 }

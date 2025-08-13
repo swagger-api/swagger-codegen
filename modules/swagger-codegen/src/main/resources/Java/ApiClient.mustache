@@ -29,8 +29,14 @@ import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
+{{#jakarta}}
+import jakarta.ws.rs.core.Response.Status.Family;
+import jakarta.ws.rs.core.MediaType;
+{{/jakarta}}
+{{^jakarta}}
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.MediaType;
+{{/jakarta}}
 
 import java.util.Collection;
 import java.util.Collections;
@@ -646,12 +652,12 @@ public class ApiClient {
       builder = httpClient.resource(url).accept(accept);
     }
 
-    for (Entry<String, String> keyValue : headerParams.entrySet()) {
-      builder = builder.header(keyValue.getKey(), keyValue.getValue());
+    for (String key : headerParams.keySet()) {
+      builder = builder.header(key, headerParams.get(key));
     }
-    for (Map.Entry<String,String> keyValue : defaultHeaderMap.entrySet()) {
-      if (!headerParams.containsKey(keyValue.getKey())) {
-        builder = builder.header(keyValue.getKey(), keyValue.getValue());
+    for (String key : defaultHeaderMap.keySet()) {
+      if (!headerParams.containsKey(key)) {
+        builder = builder.header(key, defaultHeaderMap.get(key));
       }
     }
 

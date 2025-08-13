@@ -1,0 +1,76 @@
+/*
+* jersey2
+*/
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+ext {
+    swagger_annotations_version = "1.5.24"
+    jackson_version = "2.6.4"
+    jersey_version = "{{#jakarta}}3.1.0{{/jakarta}}{{^jakarta}}2.29.1{{/jakarta}}"
+    junit_version = "4.13.1"
+}
+
+dependencies {
+    implementation "io.swagger:swagger-annotations:$swagger_annotations_version"
+    implementation "org.glassfish.jersey.core:jersey-client:$jersey_version"
+    implementation "org.glassfish.jersey.media:jersey-media-multipart:$jersey_version"
+    implementation "org.glassfish.jersey.media:jersey-media-json-jackson:$jersey_version"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    {{#withXml}}
+    implementation "org.glassfish.jersey.media:jersey-media-jaxb:$jersey_version"
+    {{/withXml}}
+    {{#joda}}
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
+    {{/joda}}
+    implementation "org.glassfish.jersey.inject:jersey-hk2:$jersey_version"
+    {{#threetenbp}}
+    implementation "com.github.joschi.jackson:jackson-datatype-threetenbp:$jackson_version"
+    {{/threetenbp}}
+    implementation "com.brsanthu:migbase64:2.2"
+    testImplementation "junit:junit:$junit_version"
+    {{#wiremock}}
+    testImplementation "com.github.tomakehurst:wiremock:2.27.2"
+    {{/wiremock}}
+}
+
+group = '{{groupId}}'
+version = '{{artifactVersion}}'
+description = '{{artifactDescription}}'
+
+java.sourceCompatibility = 11
+java.targetCompatibility = 11
+
+tasks.register('testsJar', Jar) {
+    archiveClassifier = 'tests'
+    from(sourceSets.test.output)
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+            artifact(testsJar)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

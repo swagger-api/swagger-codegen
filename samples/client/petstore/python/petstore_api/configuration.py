@@ -99,6 +99,9 @@ class Configuration(object):
         # Safe chars for path_param
         self.safe_chars_for_path_param = ''
 
+        # Disable client side validation
+        self.client_side_validation = True
+
     @classmethod
     def set_default(cls, default):
         cls._default = default
@@ -222,9 +225,12 @@ class Configuration(object):
 
         :return: The token for basic HTTP authentication.
         """
-        return urllib3.util.make_headers(
-            basic_auth=self.username + ':' + self.password
-        ).get('authorization')
+        token = ""
+        if self.username or self.password:
+            token = urllib3.util.make_headers(
+                basic_auth=self.username + ':' + self.password
+            ).get('authorization')
+        return token
 
     def auth_settings(self):
         """Gets Auth Settings dict for api client.

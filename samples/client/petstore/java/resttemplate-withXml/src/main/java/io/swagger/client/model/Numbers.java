@@ -53,9 +53,9 @@ public enum Numbers {
   }
 
   @JsonCreator
-  public static Numbers fromValue(String text) {
+  public static Numbers fromValue(BigDecimal value) {
     for (Numbers b : Numbers.values()) {
-      if (String.valueOf(b.value).equals(text)) {
+      if (b.value.equals(value)) {
         return b;
       }
     }

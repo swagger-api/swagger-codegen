@@ -40,7 +40,7 @@ export interface FetchAPI {
 }
 
 /**
- *  
+ *
  * @export
  * @interface FetchArgs
  */
@@ -50,12 +50,12 @@ export interface FetchArgs {
 }
 
 /**
- * 
+ *
  * @export
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration;
+    protected configuration?: Configuration;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
@@ -66,13 +66,13 @@ export class BaseAPI {
 };
 
 /**
- * 
+ *
  * @export
  * @class RequiredError
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    name: "RequiredError"
+    name = "RequiredError"
     constructor(public field: string, msg?: string) {
         super(msg);
     }
@@ -386,7 +386,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"Pet" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
@@ -431,7 +431,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -472,7 +472,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -513,7 +513,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -550,7 +550,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -589,7 +589,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"Pet" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
@@ -642,7 +642,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             localVarRequestOptions.body = localVarFormParams.toString();
 
@@ -694,7 +694,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             localVarRequestOptions.body = localVarFormParams.toString();
 
@@ -1103,7 +1103,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1134,7 +1134,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1163,7 +1163,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1193,7 +1193,7 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"Order" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
@@ -1422,7 +1422,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"User" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
@@ -1454,7 +1454,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"Array&lt;User&gt;" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
@@ -1486,7 +1486,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"Array&lt;User&gt;" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
@@ -1517,7 +1517,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1546,7 +1546,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1587,7 +1587,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1610,7 +1610,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
             return {
@@ -1646,7 +1646,7 @@ export const UserApiFetchParamCreator = function (configuration?: Configuration)
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
+            localVarUrlObj.search = null;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"User" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");

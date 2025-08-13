@@ -14,7 +14,7 @@ public class CsharpDotNet2ClientOptionsProvider implements OptionsProvider {
 
     @Override
     public String getLanguage() {
-        return "CsharpDotNet2";
+        return "csharp-dotnet2";
     }
 
     @Override
