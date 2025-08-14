@@ -79,7 +79,18 @@ To add test cases (optional) covering the change in the code generator, please r
 
 To test the templates, please perform the following:
 - Update the [Petstore](http://petstore.swagger.io/) sample by running the shell script under `bin` folder. For example, run `./bin/ruby-petstore.sh` to update the Ruby PetStore API client under [`samples/client/petstore/ruby`](https://github.com/swagger-api/swagger-codegen/tree/master/samples/client/petstore/ruby) For Windows, the batch files can be found under `bin\windows` folder. (If you find that there are new files generated or unexpected changes as a result of the update, that's not unusual as the test cases are added to the OpenAPI/Swagger spec from time to time. If you've questions or concerns, please open a ticket to start a discussion)
+   - To run one of these shell scripts in docker, you can:
+     ```
+     # From the root of this repo
+     docker build -t swagger-codegen .
+     docker run --rm -v $PWD:/cwd -v $PWD/samples:/opt/swagger-codegen/samples swagger-codegen /cwd/bin/<bin file>
+     ```
+   - You may find it helpful to ignore fileMode changes with git: `git -c core.fileMode=false <git command>`
 - Run the tests in the sample folder, e.g. in `samples/client/petstore/ruby`, run `mvn integration-test -rf :RubyPetstoreClientTests`. (some languages may not contain unit testing for Petstore and we're looking for contribution from the community to implement those tests)
+  - You might need a locally running `petstore` server, which can be started with:
+    ```
+    docker run -d -e SWAGGER_HOST=http://petstore.swagger.io -e SWAGGER_BASE_PATH=/v2 -p 80:8080 swaggerapi/petstore
+    ```
 - Finally, git commit the updated samples files: `git commit -a`
   (`git add -A` if added files with new test cases)
 
