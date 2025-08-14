@@ -764,6 +764,82 @@ public class DefaultGeneratorTest {
     }
 
     @Test
+    public void testBooleanFalseValueForProps() throws IOException {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.additionalProperties().put("useBeanValidation", false);
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertFalse(containsSearchStrings(defaultApi,"Validated"));
+    }
+
+    @Test
+    public void testStringFalseValueForProps() throws IOException {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.additionalProperties().put("useBeanValidation", "false");
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertFalse(containsSearchStrings(defaultApi,"Validated"));
+    }
+
+    @Test
+    public void testBooleanTrueValueForProps() throws IOException {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.additionalProperties().put("useBeanValidation", true);
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"Validated"));
+    }
+
+    @Test
+    public void testStringTrueValueForProps() throws IOException {
+        final File output = folder.getRoot();
+
+        Swagger swagger = new SwaggerParser().read("src/test/resources/2_0/ticket-9725-map.json");
+        CodegenConfig codegenConfig = new SpringCodegen();
+        codegenConfig.setLibrary("spring-cloud");
+        codegenConfig.setOutputDir(output.getAbsolutePath());
+        codegenConfig.additionalProperties().put("useBeanValidation", "true");
+
+        ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).swagger(swagger).config(codegenConfig);
+
+        //generate
+        new DefaultGenerator().opts(clientOptInput).generate();
+        final File defaultApi = new File(output, "src/main/java/io/swagger/api/DefaultApi.java");
+        assertTrue(defaultApi.exists());
+        assertTrue(containsSearchStrings(defaultApi,"Validated"));
+    }
+
+    @Test
     public void testRelativeRefs() throws IOException {
         final File output = folder.getRoot();
 
