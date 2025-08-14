@@ -69,6 +69,10 @@ public class FlaskConnexionCodegen extends DefaultCodegen implements CodegenConf
         typeMapping.put("DateTime", "datetime");
         typeMapping.put("object", "object");
         typeMapping.put("file", "file");
+        // TODO binary should be mapped to byte array
+        // mapped to String as a workaround
+        typeMapping.put("binary", "str");
+        typeMapping.put("ByteArray", "str");
         typeMapping.put("UUID", "str");
 
         // from https://docs.python.org/3/reference/lexical_analysis.html#keywords
