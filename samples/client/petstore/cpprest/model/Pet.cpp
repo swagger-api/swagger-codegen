@@ -79,11 +79,11 @@ web::json::value Pet::toJson() const
     return val;
 }
 
-void Pet::fromJson(web::json::value& val)
+void Pet::fromJson(const web::json::value& val)
 {
     if(val.has_field(utility::conversions::to_string_t("id")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("id")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("id"));
         if(!fieldValue.is_null())
         {
             setId(ModelBase::int64_tFromJson(fieldValue));
@@ -91,7 +91,7 @@ void Pet::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("category")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("category")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("category"));
         if(!fieldValue.is_null())
         {
             std::shared_ptr<Category> newItem(new Category());
@@ -99,11 +99,11 @@ void Pet::fromJson(web::json::value& val)
             setCategory( newItem );
         }
     }
-    setName(ModelBase::stringFromJson(val[utility::conversions::to_string_t("name")]));
+    setName(ModelBase::stringFromJson(val.at(utility::conversions::to_string_t("name"))));
     {
         m_PhotoUrls.clear();
         std::vector<web::json::value> jsonArray;
-        for( auto& item : val[utility::conversions::to_string_t("photoUrls")].as_array() )
+        for( auto& item : val.at(utility::conversions::to_string_t("photoUrls")).as_array() )
         {
             m_PhotoUrls.push_back(ModelBase::stringFromJson(item));
         }
@@ -113,7 +113,7 @@ void Pet::fromJson(web::json::value& val)
         std::vector<web::json::value> jsonArray;
         if(val.has_field(utility::conversions::to_string_t("tags")))
         {
-        for( auto& item : val[utility::conversions::to_string_t("tags")].as_array() )
+        for( auto& item : val.at(utility::conversions::to_string_t("tags")).as_array() )
         {
             if(item.is_null())
             {
@@ -130,7 +130,7 @@ void Pet::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("status")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("status")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("status"));
         if(!fieldValue.is_null())
         {
             setStatus(ModelBase::stringFromJson(fieldValue));
