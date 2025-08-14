@@ -152,15 +152,17 @@ class RESTClientObject(object):
                          declared content type."""
                 raise ApiException(status=0, reason=msg)
 
-        async with self.pool_manager.request(**args) as r:
+        r = await self.pool_manager.request(**args)
+        if _preload_content:
+
             data = await r.text()
             r = RESTResponse(r, data)
 
-        # log response body
-        logger.debug("response body: %s", r.data)
+            # log response body
+            logger.debug("response body: %s", r.data)
 
-        if not 200 <= r.status <= 299:
-            raise ApiException(http_resp=r)
+            if not 200 <= r.status <= 299:
+                raise ApiException(http_resp=r)
 
         return r
 
