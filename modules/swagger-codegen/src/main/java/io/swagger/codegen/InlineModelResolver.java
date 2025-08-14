@@ -172,6 +172,10 @@ public class InlineModelResolver {
                                                 swagger.addDefinition(modelName, innerModel);
                                             }
                                         }
+                                    } else if (innerProperty instanceof UntypedProperty) {
+                                        Model mapModel = new PropertyModelConverter().propertyToModel(mp);
+                                        response.setResponseSchema(mapModel);
+                                        swagger.addDefinition(mp.getName(), mapModel);
                                     }
                                 }
                             }
