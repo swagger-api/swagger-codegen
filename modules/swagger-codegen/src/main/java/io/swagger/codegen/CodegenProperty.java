@@ -64,6 +64,7 @@ public class CodegenProperty implements Cloneable {
     public String xmlName;
     public String xmlNamespace;
     public boolean isXmlWrapped = false;
+    public String containedType;
 
 
     @Override
