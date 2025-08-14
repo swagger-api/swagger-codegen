@@ -48,12 +48,6 @@ SWGApiResponse::init() {
 void
 SWGApiResponse::cleanup() {
 
-    if(type != nullptr) { 
-        delete type;
-    }
-    if(message != nullptr) { 
-        delete message;
-    }
 }
 
 SWGApiResponse*
@@ -68,10 +62,13 @@ SWGApiResponse::fromJson(QString json) {
 void
 SWGApiResponse::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&code, pJson["code"], "qint32", "");
+    m_code_isSet = pJson.contains("code");
     
-    ::Swagger::setValue(&type, pJson["type"], "QString", "QString");
+    ::Swagger::setValue(type, pJson["type"], "QString");
+    m_type_isSet = pJson.contains("type");
     
-    ::Swagger::setValue(&message, pJson["message"], "QString", "QString");
+    ::Swagger::setValue(message, pJson["message"], "QString");
+    m_message_isSet = pJson.contains("message");
     
 }
 
@@ -90,10 +87,10 @@ SWGApiResponse::asJsonObject() {
     if(m_code_isSet){
         obj.insert("code", QJsonValue(code));
     }
-    if(type != nullptr && *type != QString("")){
+    if(m_type_isSet){
         toJsonValue(QString("type"), type, obj, QString("QString"));
     }
-    if(message != nullptr && *message != QString("")){
+    if(m_message_isSet){
         toJsonValue(QString("message"), message, obj, QString("QString"));
     }
 
@@ -136,8 +133,8 @@ SWGApiResponse::isSet(){
     bool isObjectUpdated = false;
     do{
         if(m_code_isSet){ isObjectUpdated = true; break;}
-        if(type != nullptr && *type != QString("")){ isObjectUpdated = true; break;}
-        if(message != nullptr && *message != QString("")){ isObjectUpdated = true; break;}
+        if(m_type_isSet){ isObjectUpdated = true; break;}
+        if(m_message_isSet){ isObjectUpdated = true; break;}
     }while(false);
     return isObjectUpdated;
 }

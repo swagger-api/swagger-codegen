@@ -63,8 +63,10 @@ SWGAmount::fromJson(QString json) {
 void
 SWGAmount::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&value, pJson["value"], "double", "");
+    m_value_isSet = pJson.contains("value");
     
     ::Swagger::setValue(&currency, pJson["currency"], "SWGCurrency", "SWGCurrency");
+    m_currency_isSet = pJson.contains("currency");
     
 }
 

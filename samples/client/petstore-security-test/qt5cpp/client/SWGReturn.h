@@ -12,7 +12,7 @@
 
 /*
  * SWGReturn.h
- * 
+ *
  * Model for testing reserved words  *_/ &#39; \&quot; &#x3D;end -- \\r\\n \\n \\r
  */
 
@@ -25,28 +25,31 @@
 
 #include "SWGObject.h"
 
-
 namespace Swagger {
 
 class SWGReturn: public SWGObject {
 public:
     SWGReturn();
-    SWGReturn(QString* json);
-    virtual ~SWGReturn();
+    SWGReturn(QString json);
+    ~SWGReturn();
     void init();
     void cleanup();
 
-    QString asJson ();
-    QJsonObject* asJsonObject();
-    void fromJsonObject(QJsonObject &json);
-    SWGReturn* fromJson(QString &jsonString);
+    QString asJson () override;
+    QJsonObject asJsonObject() override;
+    void fromJsonObject(QJsonObject json) override;
+    SWGReturn* fromJson(QString jsonString) override;
 
     qint32 getReturn();
     void setReturn(qint32 _return);
 
 
+    virtual bool isSet() override;
+
 private:
     qint32 _return;
+    bool m__return_isSet;
+
 };
 
 }
