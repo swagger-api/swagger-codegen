@@ -35,19 +35,19 @@ impl<C: hyper::client::Connect> UserApiClient<C> {
 }
 
 pub trait UserApi {
-    fn create_user(&self, body: ::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn create_users_with_array_input(&self, body: Vec<::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn create_users_with_list_input(&self, body: Vec<::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn create_user(&self, body: crate::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn create_users_with_array_input(&self, body: Vec<crate::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn create_users_with_list_input(&self, body: Vec<crate::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
     fn delete_user(&self, username: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn get_user_by_name(&self, username: &str) -> Box<Future<Item = ::models::User, Error = Error<serde_json::Value>>>;
+    fn get_user_by_name(&self, username: &str) -> Box<Future<Item = crate::models::User, Error = Error<serde_json::Value>>>;
     fn login_user(&self, username: &str, password: &str) -> Box<Future<Item = String, Error = Error<serde_json::Value>>>;
     fn logout_user(&self, ) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn update_user(&self, username: &str, body: ::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn update_user(&self, username: &str, body: crate::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
 }
 
 
 impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
-    fn create_user(&self, body: ::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn create_user(&self, body: crate::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
@@ -98,7 +98,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
         )
     }
 
-    fn create_users_with_array_input(&self, body: Vec<::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn create_users_with_array_input(&self, body: Vec<crate::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
@@ -149,7 +149,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
         )
     }
 
-    fn create_users_with_list_input(&self, body: Vec<::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn create_users_with_list_input(&self, body: Vec<crate::models::User>) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Post;
@@ -247,7 +247,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
         )
     }
 
-    fn get_user_by_name(&self, username: &str) -> Box<Future<Item = ::models::User, Error = Error<serde_json::Value>>> {
+    fn get_user_by_name(&self, username: &str) -> Box<Future<Item = crate::models::User, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Get;
@@ -291,7 +291,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::models::User, _> = serde_json::from_slice(&body);
+                let parsed: Result<crate::models::User, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -396,7 +396,7 @@ impl<C: hyper::client::Connect>UserApi for UserApiClient<C> {
         )
     }
 
-    fn update_user(&self, username: &str, body: ::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn update_user(&self, username: &str, body: crate::models::User) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let method = hyper::Method::Put;
