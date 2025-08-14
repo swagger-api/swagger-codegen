@@ -9,6 +9,8 @@ import json
 import logging
 import re
 import ssl
+import truststore
+import sys
 
 import certifi
 # python 2 and python 3 compatibility library
@@ -40,6 +42,8 @@ class RESTResponse(io.IOBase):
         """Returns a given response header."""
         return self.urllib3_response.headers.get(name, default)
 
+class PythonVersionException(Exception):
+    """Raised when Python version is below 3.10 and requested OS root certificate"""
 
 class RESTClientObject(object):
 
@@ -62,6 +66,13 @@ class RESTClientObject(object):
         else:
             # if not set certificate file, use Mozilla's root certificates.
             ca_certs = certifi.where()
+        
+        if configuration.os_root_cert:
+            py_sys_version = sys.version_info
+            if py_sys_version.major>=3 and py_sys_version.minor>=10:
+                ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+            else:
+                raise PythonVersionException("Python version 3.10 and above required to use OS Root Cert!") 
 
         addition_pool_args = {}
         if configuration.assert_hostname is not None:
@@ -73,28 +84,48 @@ class RESTClientObject(object):
             else:
                 maxsize = 4
 
-        # https pool manager
-        if configuration.proxy:
-            self.pool_manager = urllib3.ProxyManager(
-                num_pools=pools_size,
-                maxsize=maxsize,
-                cert_reqs=cert_reqs,
-                ca_certs=ca_certs,
-                cert_file=configuration.cert_file,
-                key_file=configuration.key_file,
-                proxy_url=configuration.proxy,
-                **addition_pool_args
-            )
+
+        if configuration.os_root_cert:
+            # https pool manager
+            if configuration.proxy:
+                    self.pool_manager = urllib3.ProxyManager(
+                    num_pools=pools_size,
+                    maxsize=maxsize,
+                    ssl_context=ctx,
+                    proxy_url=configuration.proxy,
+                    **addition_pool_args
+                )
+            else:
+                self.pool_manager = urllib3.PoolManager(
+                    num_pools=pools_size,
+                    maxsize=maxsize,
+                    ssl_context=ctx,
+                    **addition_pool_args
+                )
         else:
-            self.pool_manager = urllib3.PoolManager(
-                num_pools=pools_size,
-                maxsize=maxsize,
-                cert_reqs=cert_reqs,
-                ca_certs=ca_certs,
-                cert_file=configuration.cert_file,
-                key_file=configuration.key_file,
-                **addition_pool_args
-            )
+            # https pool manager
+            if configuration.proxy:
+                self.pool_manager = urllib3.ProxyManager(
+                    num_pools=pools_size,
+                    maxsize=maxsize,
+                    cert_reqs=cert_reqs,
+                    ca_certs=ca_certs,
+                    cert_file=configuration.cert_file,
+                    key_file=configuration.key_file,
+                    proxy_url=configuration.proxy,
+                    **addition_pool_args
+                )
+            else:
+                self.pool_manager = urllib3.PoolManager(
+                    num_pools=pools_size,
+                    maxsize=maxsize,
+                    cert_reqs=cert_reqs,
+                    ca_certs=ca_certs,
+                    cert_file=configuration.cert_file,
+                    key_file=configuration.key_file,
+                    **addition_pool_args
+                )
+
 
     def request(self, method, url, query_params=None, headers=None,
                 body=None, post_params=None, _preload_content=True,
