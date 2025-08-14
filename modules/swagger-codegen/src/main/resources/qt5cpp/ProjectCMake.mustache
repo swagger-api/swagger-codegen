@@ -1,0 +1,43 @@
+project(swagger_client)
+
+set(CMAKE_AUTOMOC ON)
+
+set(SOURCES
+{{#models}}
+{{#model}}
+            {{classname}}.cpp
+{{/model}}
+{{/models}}
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+            {{classname}}.cpp
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+            {{prefix}}Helpers.cpp
+            {{prefix}}HttpRequest.cpp
+)
+
+set(HEADERS
+{{#models}}
+{{#model}}
+            {{classname}}.h
+{{/model}}
+{{/models}}
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+            {{classname}}.h
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+            {{prefix}}Helpers.h
+            {{prefix}}HttpRequest.h
+            {{prefix}}ModelFactory.h
+            {{prefix}}Object.h
+            {{prefix}}QObjectWrapper.h
+)
+
+add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+target_link_libraries(${PROJECT_NAME} Qt5::Network Qt5::Core)
