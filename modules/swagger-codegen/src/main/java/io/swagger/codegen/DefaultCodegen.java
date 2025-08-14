@@ -2801,7 +2801,8 @@ public class DefaultCodegen {
                     innerCp = innerCp.items;
                 }
 
-                p.items = cp;
+                // copy fields from CodegenProperty to CodegenParameter
+                p.items = cp.items;
                 p.dataType = cp.datatype;
                 p.baseType = cp.complexType;
                 p.isPrimitiveType = cp.isPrimitiveType;
