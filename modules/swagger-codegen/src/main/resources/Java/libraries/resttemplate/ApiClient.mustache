@@ -40,6 +40,18 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 {{/threetenbp}}
+{{#java8}}
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+{{/java8}}
+{{#joda}}
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+{{/joda}}
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -575,6 +587,22 @@ public class ApiClient {
             }
         }
         {{/threetenbp}}
+        {{#java8}}
+        for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
+            if(converter instanceof AbstractJackson2HttpMessageConverter){
+                ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
+            }
+        }
+        {{/java8}}
+        {{#joda}}
+        for(HttpMessageConverter converter:restTemplate.getMessageConverters()){
+            if(converter instanceof AbstractJackson2HttpMessageConverter){
+                ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter)converter).getObjectMapper();
+                mapper.registerModule(new JodaModule());
+            }
+        }
+        {{/joda}}
         // This allows us to read the response more than once - Necessary for debugging.
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         return restTemplate;
