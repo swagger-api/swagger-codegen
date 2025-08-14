@@ -1,0 +1,9 @@
+{{>licenseInfo}}
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+export { {{classname}} } from './{{classname}}';
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+export * from './models';
