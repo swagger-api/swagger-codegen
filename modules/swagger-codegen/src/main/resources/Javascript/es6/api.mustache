@@ -93,7 +93,9 @@ export class <classname> {
       return this.<operationId>WithHttpInfo(<vendorExtensions.x-codegen-arg-list>)
         .then(function(response_and_data) {
           return response_and_data.data;
-        });
+        }, function(response_and_error) {
+          return response_and_error.error;
+      });
     }
 </usePromises>
 </operation></operations>
