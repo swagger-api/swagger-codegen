@@ -150,7 +150,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
 {{#vendorExtensions.extraAnnotation}}
   {{{vendorExtensions.extraAnnotation}}}
 {{/vendorExtensions.extraAnnotation}}
-  public {{{datatypeWithEnum}}} {{#isBoolean}}is{{/isBoolean}}{{getter}}() {
+  public {{{datatypeWithEnum}}} {{#isBoolean}}is{{#lambda.titlecase}}{{name}}{{/lambda.titlecase}}{{/isBoolean}}{{^isBoolean}}{{getter}}{{/isBoolean}}() {
     return {{name}};
   }
   {{^isReadOnly}}
