@@ -45,6 +45,8 @@ public class AnotherFakeApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * To test special tags
      * To test special tags
@@ -72,7 +74,7 @@ public class AnotherFakeApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling testSpecialTags");
         }
         String path = UriComponentsBuilder.fromPath("/another-fake/dummy").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();

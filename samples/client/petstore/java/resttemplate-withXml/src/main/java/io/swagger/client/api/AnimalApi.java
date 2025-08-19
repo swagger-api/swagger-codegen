@@ -45,6 +45,8 @@ public class AnimalApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Add a new animal to the store
      * 
@@ -71,7 +73,7 @@ public class AnimalApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling addAnimal");
         }
         String path = UriComponentsBuilder.fromPath("/animal").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -88,6 +90,43 @@ public class AnimalApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class DeleteAnimalOptionals {
+        public String apiKey() {
+            return this.apiKey;
+        }
+
+        public DeleteAnimalOptionals apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        private String apiKey = null;
+    }
+
+    /**
+    * Deletes a animal
+    * 
+    * @param animalId Animal id to delete (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deleteAnimal(Long animalId) throws RestClientException {
+        deleteAnimal(animalId, null);
+    }
+
+    /**
+    * Deletes a animal
+    * 
+    * @param animalId Animal id to delete (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deleteAnimalOpts(Long animalId, DeleteAnimalOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new DeleteAnimalOptionals();
+        }
+        deleteAnimal(animalId, optionals.apiKey());
+    }
+
     /**
      * Deletes a animal
      * 
@@ -119,7 +158,7 @@ public class AnimalApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("animalId", animalId);
         String path = UriComponentsBuilder.fromPath("/animal/{animalId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -136,6 +175,8 @@ public class AnimalApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Find animal by ID
      * Returns a single animal
@@ -170,7 +211,7 @@ public class AnimalApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("animalId", animalId);
         String path = UriComponentsBuilder.fromPath("/animal/{animalId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -187,6 +228,8 @@ public class AnimalApi {
         ParameterizedTypeReference<Animal> returnType = new ParameterizedTypeReference<Animal>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Update an existing animal
      * 
@@ -217,7 +260,7 @@ public class AnimalApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling updateAnimal");
         }
         String path = UriComponentsBuilder.fromPath("/animal").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -234,6 +277,53 @@ public class AnimalApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class UpdateAnimalWithFormOptionals {
+        public String name() {
+            return this.name;
+        }
+
+        public UpdateAnimalWithFormOptionals name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String name = null;
+        public String status() {
+            return this.status;
+        }
+
+        public UpdateAnimalWithFormOptionals status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        private String status = null;
+    }
+
+    /**
+    * Updates a animal
+    * 
+    * @param animalId ID of animal that needs to be updated (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updateAnimalWithForm(Long animalId) throws RestClientException {
+        updateAnimalWithForm(animalId, null, null);
+    }
+
+    /**
+    * Updates a animal
+    * 
+    * @param animalId ID of animal that needs to be updated (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updateAnimalWithFormOpts(Long animalId, UpdateAnimalWithFormOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UpdateAnimalWithFormOptionals();
+        }
+        updateAnimalWithForm(animalId, optionals.name(), optionals.status());
+    }
+
     /**
      * Updates a animal
      * 
@@ -267,7 +357,7 @@ public class AnimalApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("animalId", animalId);
         String path = UriComponentsBuilder.fromPath("/animal/{animalId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
