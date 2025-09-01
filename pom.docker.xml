@@ -57,16 +57,6 @@
             <plugin>
                 <groupId>net.revelc.code</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <!-- Uncomment this to format before checkstyle -->
-                <!-- <executions>
-                    <execution>
-                        <id>format</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions> -->
                 <configuration>
                     <compilerSource>1.8</compilerSource>
                     <compilerCompliance>1.8</compilerCompliance>
@@ -74,37 +64,6 @@
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <configuration>
-                            <configLocation>google_checkstyle.xml</configLocation>
-                            Don't include generated sources a la http://stackoverflow.com/a/30406454
-                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                            <encoding>UTF-8</encoding>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
-                            <linkXRef>false</linkXRef>
-                            <skip>true</skip>
-                        </configuration>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>6.19</version>
-                    </dependency>
-                </dependencies>
-            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -845,30 +804,6 @@
                     <value>samples</value>
                 </property>
             </activation>
-            <modules>
-                <!-- <module>samples/server/petstore/erlang-server</module> note: make sample compilation work -->
-				<!-- clients -->
-                <!--<module>samples/client/petstore/php/SwaggerClient-php</module>-->
-                <!--<module>samples/client/petstore/ruby</module>-->
-                <!--<module>samples/client/petstore/scala</module>-->
-                <!--<module>samples/client/petstore/akka-scala</module>-->
-                <!--<module>samples/client/petstore/javascript</module>-->
-                <!--<module>samples/client/petstore/python</module>-->
-                <!--<module>samples/client/petstore/python-tornado</module>-->
-                <!--<module>samples/client/petstore/typescript-fetch/builds/default</module>-->
-                <!--<module>samples/client/petstore/typescript-fetch/builds/es6-target</module>-->
-                <!--<module>samples/client/petstore/typescript-fetch/builds/with-npm-version</module>-->
-                <!--<module>samples/client/petstore/typescript-fetch/tests/default</module>-->
-                <!--<module>samples/client/petstore/typescript-node/npm</module>-->
-                <!-- comment out due to github rate limit error
-                <module>samples/client/petstore/typescript-angularjs</module>-->
-                <!-- comment out due to error `npm run build`
-                <module>samples/client/petstore/typescript-jquery/npm</module>-->
-                <!--<module>samples/client/petstore/typescript-angular-v2/npm</module>-->
-                <!--<module>samples/client/petstore/typescript-angular-v4/npm</module>-->
-                <!--<module>samples/client/petstore/typescript-angular-v4.3/npm</module>-->
-                <!--<module>samples/client/petstore/bash</module>-->
-            </modules>
         </profile>
     </profiles>
     <modules>
@@ -1108,7 +1043,7 @@
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <swagger-codegen-generators-version>1.0.58-SNAPSHOT</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.28</swagger-core-version>
+        <swagger-core-version>2.2.35</swagger-core-version>
         <swagger-core-version-v1>1.6.15</swagger-core-version-v1>
         <swagger-parser-version>2.1.25</swagger-parser-version>
         <swagger-parser-version-v1>1.0.73</swagger-parser-version-v1>
