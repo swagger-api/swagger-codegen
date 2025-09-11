@@ -917,7 +917,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind-version}</version>
+                <version>${jackson-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -1045,12 +1045,10 @@
         <swagger-codegen-generators-version>1.0.57</swagger-codegen-generators-version>
         <swagger-core-version>2.2.35</swagger-core-version>
         <swagger-core-version-v1>1.6.15</swagger-core-version-v1>
-        <swagger-parser-version>2.1.25</swagger-parser-version>
+        <swagger-parser-version>2.1.33</swagger-parser-version>
         <swagger-parser-version-v1>1.0.73</swagger-parser-version-v1>
-        <jackson-version>2.18.2</jackson-version>
-        <jackson-databind-version>2.18.2</jackson-databind-version>
+        <jackson-version>2.19.2</jackson-version>
         <scala-version>2.11.1</scala-version>
-        <felix-version>3.3.0</felix-version>
         <commons-io-version>2.20.0</commons-io-version>
         <commons-cli-version>1.9.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
@@ -1069,7 +1067,7 @@
         <handlebars-version>4.3.1</handlebars-version>
         <httpclient-version>4.5.14</httpclient-version>
         <jersey-version>2.46</jersey-version>
-        <json-version>20231013</json-version>
+        <json-version>20250517</json-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
