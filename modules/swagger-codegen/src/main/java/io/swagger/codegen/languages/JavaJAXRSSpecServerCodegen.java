@@ -7,6 +7,7 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.Parameter;
@@ -197,7 +198,11 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
         //copy input swagger to output folder
         try {
             String swaggerJson = Json.pretty(swagger);
-            FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson, StandardCharsets.UTF_8);
+            SecureFileUtils.validatePath(outputFolder);
+            File outputFile = new File(outputFolder + File.separator + "swagger.json");
+            FileUtils.writeStringToFile(outputFile, swaggerJson, StandardCharsets.UTF_8);
+        } catch (SecurityException e) {
+            throw new RuntimeException("Security violation: attempted to write to unsafe file path: " + outputFolder + File.separator + "swagger.json", e);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }

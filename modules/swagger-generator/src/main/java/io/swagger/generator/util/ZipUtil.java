@@ -14,6 +14,8 @@
 
 package io.swagger.generator.util;
 
+import io.swagger.codegen.utils.SecureFileUtils;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,10 +46,12 @@ public class ZipUtil {
      * @param destZipFile The path of the destination zip file
      * @throws FileNotFoundException if file not found
      * @throws IOException if IO exception occurs
+     * @throws SecurityException if path validation fails
      */
     public void compressFiles(List<File> listFiles, String destZipFile)
-            throws FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException, SecurityException {
 
+        SecureFileUtils.validatePath(destZipFile);
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destZipFile));
 
         for (File file : listFiles) {
@@ -70,9 +74,10 @@ public class ZipUtil {
      * @param zos the current zip output stream
      * @throws FileNotFoundException if file not found
      * @throws IOException if IO exception occurs
+     * @throws SecurityException if path validation fails
      */
     private void addFolderToZip(File folder, String parentFolder, ZipOutputStream zos)
-            throws FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException, SecurityException {
         for (File file : folder.listFiles()) {
             if (file.isDirectory()) {
                 addFolderToZip(file, parentFolder + "/" + file.getName(), zos);
@@ -104,9 +109,11 @@ public class ZipUtil {
      * @param zos the current zip output stream
      * @throws FileNotFoundException if file not found
      * @throws IOException if IO exception occurs
+     * @throws SecurityException if path validation fails
      */
     private static void addFileToZip(File file, ZipOutputStream zos) throws FileNotFoundException,
-            IOException {
+            IOException, SecurityException {
+        SecureFileUtils.validatePath(file.getName());
         zos.putNextEntry(new ZipEntry(file.getName()));
 
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
