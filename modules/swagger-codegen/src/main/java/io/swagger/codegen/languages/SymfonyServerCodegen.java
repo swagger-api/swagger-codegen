@@ -276,6 +276,7 @@ public class SymfonyServerCodegen extends AbstractPhpCodegen implements CodegenC
         // Serialization components
         supportingFiles.add(new SupportingFile("serialization/SerializerInterface.mustache", toPackagePath(servicePackage, srcBasePath), "SerializerInterface.php"));
         supportingFiles.add(new SupportingFile("serialization/JmsSerializer.mustache", toPackagePath(servicePackage, srcBasePath), "JmsSerializer.php"));
+        supportingFiles.add(new SupportingFile("serialization/BundleSerializer.mustache", toPackagePath(servicePackage, srcBasePath), "BundleSerializer.php"));
         supportingFiles.add(new SupportingFile("serialization/StrictJsonDeserializationVisitor.mustache", toPackagePath(servicePackage, srcBasePath), "StrictJsonDeserializationVisitor.php"));
         supportingFiles.add(new SupportingFile("serialization/TypeMismatchException.mustache", toPackagePath(servicePackage, srcBasePath), "TypeMismatchException.php"));
         // Validation components
