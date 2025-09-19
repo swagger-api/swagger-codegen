@@ -13,6 +13,7 @@ import java.io.Writer;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import io.swagger.codegen.utils.SecureFileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,13 @@ public abstract class AbstractGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGenerator.class);
 
     @SuppressWarnings("static-method")
-    public File writeToFile(String filename, String contents) throws IOException {
+    public File writeToFile(String filename, String contents) throws IOException, SecurityException {
         LOGGER.info("writing file " + filename);
+        SecureFileUtils.validatePath(filename);
         File output = new File(filename);
 
         if (output.getParent() != null && !new File(output.getParent()).exists()) {
+            SecureFileUtils.validatePath(output.getParent());
             File parent = new File(output.getParent());
             parent.mkdirs();
         }

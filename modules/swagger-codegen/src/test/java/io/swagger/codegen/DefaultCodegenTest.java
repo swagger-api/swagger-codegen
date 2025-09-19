@@ -33,4 +33,12 @@ public class DefaultCodegenTest {
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
     }
+
+    @Test
+    public void testShouldOverwriteWithPathTraversal() {
+        DefaultCodegen codegen = new DefaultCodegen();
+        boolean result = codegen.shouldOverwrite("../../../etc/passwd");
+
+        Assert.assertTrue(result, "shouldOverwrite should return false when SecurityException is thrown");
+    }
 }
