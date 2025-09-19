@@ -13,18 +13,19 @@ Swagger Codegen version: 2.4.30-SNAPSHOT
 require 'date'
 
 module Petstore
-  class EnumClass
+  class Numbers
     
-    ABC = '_abc'.freeze
-    EFG = '-efg'.freeze
-    XYZ = '(xyz)'.freeze
+    N7 = 7.freeze
+    N8 = 8.freeze
+    N9 = 9.freeze
+    N10 = 10.freeze
 
     # Builds the enum from string
     # @param [String] The enum value in the form of the string
     # @return [String] The enum value
     def build_from_hash(value)
-      constantValues = EnumClass.constants.select { |c| EnumClass::const_get(c) == value }
-      raise "Invalid ENUM value #{value} for class #EnumClass" if constantValues.empty?
+      constantValues = Numbers.constants.select { |c| Numbers::const_get(c) == value }
+      raise "Invalid ENUM value #{value} for class #Numbers" if constantValues.empty?
       value
     end
   end
