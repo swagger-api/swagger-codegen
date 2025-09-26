@@ -17,14 +17,14 @@ defmodule SwaggerPetstore.Api.FakeClassnameTags123 do
 
   ## Parameters
 
-  - connection (SwaggerPetstore.Connection): Connection to server
-  - body (Client): client model
-  - opts (KeywordList): [optional] Optional parameters
+  - connection (`SwaggerPetstore.Connection`): Connection to server
+  - body (`Client`): client model
+  - opts (`KeywordList`): [optional] Optional parameters
 
   ## Returns
 
-  {:ok, %SwaggerPetstore.Model.Client{}} on success
-  {:error, info} on failure
+  `{:ok, SwaggerPetstore.Model.Client}` on success
+  `{:error, info}` on failure
   """
   @spec test_classname(Tesla.Env.client, SwaggerPetstore.Model.Client.t, keyword()) :: {:ok, SwaggerPetstore.Model.Client.t} | {:error, Tesla.Env.t}
   def test_classname(connection, body, _opts \\ []) do

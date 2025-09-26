@@ -9,15 +9,15 @@ defmodule SwaggerPetstore.Model.MixedPropertiesAndAdditionalPropertiesClass do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"uuid",
-    :"dateTime",
-    :"map"
+    :uuid,
+    :dateTime,
+    :map
   ]
 
   @type t :: %__MODULE__{
-    :"uuid" => String.t,
-    :"dateTime" => DateTime.t,
-    :"map" => %{optional(String.t) => Animal}
+    :uuid => String.t,
+    :dateTime => DateTime.t,
+    :map => %{optional(String.t) => SwaggerPetstore.Model.Animal.t()}
   }
 end
 
@@ -25,7 +25,7 @@ defimpl Poison.Decoder, for: SwaggerPetstore.Model.MixedPropertiesAndAdditionalP
   import SwaggerPetstore.Deserializer
   def decode(value, options) do
     value
-    |> deserialize(:"map", :map, SwaggerPetstore.Model.Animal, options)
+    |> deserialize(:map, :map, SwaggerPetstore.Model.Animal, options)
   end
 end
 
