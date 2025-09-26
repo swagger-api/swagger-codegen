@@ -22,13 +22,12 @@ public abstract class AbstractGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGenerator.class);
 
     @SuppressWarnings("static-method")
-    public File writeToFile(String filename, String contents) throws IOException, SecurityException {
+    public File writeToFile(String filename, String contents) throws IOException {
         LOGGER.info("writing file " + filename);
         SecureFileUtils.validatePath(filename);
         File output = new File(filename);
 
         if (output.getParent() != null && !new File(output.getParent()).exists()) {
-            SecureFileUtils.validatePath(output.getParent());
             File parent = new File(output.getParent());
             parent.mkdirs();
         }
@@ -109,7 +108,7 @@ public abstract class AbstractGenerator {
                 return embeddedLibTemplateFile;
             }
         }
-            
+
         // Fall back to the template file embedded/packaged in the JAR file...
         return config.embeddedTemplateDir() + File.separator + templateFile;
     }

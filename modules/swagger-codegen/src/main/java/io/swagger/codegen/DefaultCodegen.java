@@ -3563,11 +3563,7 @@ public class DefaultCodegen {
     }
 
     public boolean shouldOverwrite(String filename) {
-        try {
-            SecureFileUtils.validatePath(filename);
-        } catch (SecurityException e) {
-            return true;
-        }
+        SecureFileUtils.validatePath(filename);
         return !(skipOverwrite && new File(filename).exists());
     }
 
@@ -3831,17 +3827,12 @@ public class DefaultCodegen {
         else {
             folder = supportingFile.destinationFilename;
         }
-        try {
-            SecureFileUtils.validatePath(folder);
-            if(!new File(folder).exists()) {
-                supportingFiles.add(supportingFile);
-            } else {
-                LOGGER.info("Skipped overwriting " + supportingFile.destinationFilename + " as the file already exists in " + folder);
-            }
-        } catch (SecurityException e) {
-            LOGGER.error("Error while validating path" + folder, e);
+        SecureFileUtils.validatePath(folder);
+        if(!new File(folder).exists()) {
+            supportingFiles.add(supportingFile);
+        } else {
+            LOGGER.info("Skipped overwriting " + supportingFile.destinationFilename + " as the file already exists in " + folder);
         }
-
     }
 
     /**

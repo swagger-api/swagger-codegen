@@ -8,9 +8,10 @@ public class RubyClientCodegenTest {
     @Test
     public void testShouldOverwriteWithPathTraversal() {
         RubyClientCodegen codegen = new RubyClientCodegen();
-
-        boolean result = codegen.shouldOverwrite("../../../etc/passwd");
-
-        Assert.assertFalse(result, "shouldOverwrite should return false when SecurityException is thrown");
+        Assert.assertThrows(
+                "shouldOverwrite should throw SecurityException for suspicious path",
+                SecurityException.class,
+                () -> codegen.shouldOverwrite("../../../etc/passwd")
+        );
     }
 }

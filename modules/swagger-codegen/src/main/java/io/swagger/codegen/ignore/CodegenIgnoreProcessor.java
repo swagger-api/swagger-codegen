@@ -41,19 +41,14 @@ public class CodegenIgnoreProcessor {
      */
     @SuppressWarnings("WeakerAccess")
     public CodegenIgnoreProcessor(final String baseDirectory, final String ignoreFile) {
-        try {
-            SecureFileUtils.validatePath(baseDirectory);
-            final File directory = new File(baseDirectory);
-            SecureFileUtils.validatePath(directory);
-            SecureFileUtils.validatePath(ignoreFile);
-            final File targetIgnoreFile = new File(directory, ignoreFile);
-            if (directory.exists() && directory.isDirectory()) {
-                loadFromFile(targetIgnoreFile);
-            } else {
-                LOGGER.warn("Output directory does not exist, or is inaccessible. No file (.swagger-codegen-ignore) will be evaluated.");
-            }
-        } catch (SecurityException e) {
-            LOGGER.error("Security violation: attempted to access unsafe ignore file path ", e);
+        SecureFileUtils.validatePath(baseDirectory);
+        final File directory = new File(baseDirectory);
+        SecureFileUtils.validatePath(ignoreFile);
+        final File targetIgnoreFile = new File(directory, ignoreFile);
+        if (directory.exists() && directory.isDirectory()) {
+            loadFromFile(targetIgnoreFile);
+        } else {
+            LOGGER.warn("Output directory does not exist, or is inaccessible. No file (.swagger-codegen-ignore) will be evaluated.");
         }
     }
 
@@ -63,12 +58,8 @@ public class CodegenIgnoreProcessor {
      * @param targetIgnoreFile The ignore file location.
      */
     public CodegenIgnoreProcessor(final File targetIgnoreFile) {
-        try {
-            SecureFileUtils.validatePath(targetIgnoreFile);
-            loadFromFile(targetIgnoreFile);
-        } catch (SecurityException e) {
-            LOGGER.error("Security violation: attempted to access unsafe ignore file path: " + targetIgnoreFile.getAbsolutePath(), e);
-        }
+        SecureFileUtils.validatePath(targetIgnoreFile);
+        loadFromFile(targetIgnoreFile);
     }
 
     private void loadFromFile(File targetIgnoreFile) {

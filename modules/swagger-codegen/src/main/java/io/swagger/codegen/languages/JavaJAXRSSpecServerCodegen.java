@@ -200,7 +200,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen
             String swaggerJson = Json.pretty(swagger);
             SecureFileUtils.validatePath(outputFolder);
             FileUtils.writeStringToFile(new File(outputFolder + File.separator + "swagger.json"), swaggerJson, StandardCharsets.UTF_8);
-        } catch (IOException | SecurityException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
         super.preprocessSwagger(swagger);

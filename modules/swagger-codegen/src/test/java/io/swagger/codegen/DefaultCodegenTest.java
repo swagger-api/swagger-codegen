@@ -37,8 +37,10 @@ public class DefaultCodegenTest {
     @Test
     public void testShouldOverwriteWithPathTraversal() {
         DefaultCodegen codegen = new DefaultCodegen();
-        boolean result = codegen.shouldOverwrite("../../../etc/passwd");
-
-        Assert.assertTrue(result, "shouldOverwrite should return false when SecurityException is thrown");
+        Assert.assertThrows(
+            "shouldOverwrite should throw SecurityException for suspicious path",
+            SecurityException.class,
+            () -> codegen.shouldOverwrite("../../../etc/passwd")
+        );
     }
 }

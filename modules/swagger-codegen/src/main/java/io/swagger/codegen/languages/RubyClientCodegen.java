@@ -327,7 +327,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -742,13 +742,8 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public boolean shouldOverwrite(String filename) {
         // skip spec file as the file might have been updated with new test cases
-        try {
-            SecureFileUtils.validatePath(filename);
-            return !(skipOverwrite && new File(filename).exists());
-        } catch (SecurityException e) {
-            LOGGER.warn("Security violation: attempted to check unsafe file path: " + filename, e);
-            return false;
-        }
+        SecureFileUtils.validatePath(filename);
+        return !(skipOverwrite && new File(filename).exists());
         //
         //return super.shouldOverwrite(filename) && !filename.endsWith("_spec.rb");
     }

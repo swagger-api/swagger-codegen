@@ -10,7 +10,11 @@ import java.io.IOException;
  */
 public class SecureFileUtils {
 
-    public static void validatePath(File file) throws SecurityException {
+    private SecureFileUtils() {
+        // Utility class
+    }
+
+    public static void validatePath(File file) {
         if (file == null) {
             throw new IllegalArgumentException("File cannot be null");
         }
@@ -32,7 +36,7 @@ public class SecureFileUtils {
         }
     }
 
-    public static void validatePath(String path) throws SecurityException {
+    public static void validatePath(String path) {
         if (path == null || path.trim().isEmpty()) {
             throw new IllegalArgumentException("Path cannot be null or empty");
         }

@@ -29,7 +29,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * This utility compresses a list of files to standard ZIP format file. It is able to compresses all
  * sub files and sub directories, recursively.
- * 
+ *
  * @author Ha Minh Nam
  *
  */
@@ -41,15 +41,14 @@ public class ZipUtil {
 
     /**
      * Compresses a collection of files to a destination zip file.
-     * 
+     *
      * @param listFiles A collection of files and directories
      * @param destZipFile The path of the destination zip file
      * @throws FileNotFoundException if file not found
      * @throws IOException if IO exception occurs
-     * @throws SecurityException if path validation fails
      */
     public void compressFiles(List<File> listFiles, String destZipFile)
-            throws FileNotFoundException, IOException, SecurityException {
+            throws FileNotFoundException, IOException {
 
         SecureFileUtils.validatePath(destZipFile);
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destZipFile));
@@ -68,16 +67,15 @@ public class ZipUtil {
 
     /**
      * Adds a directory to the current zip output stream.
-     * 
+     *
      * @param folder the directory to be added
      * @param parentFolder the path of parent directory
      * @param zos the current zip output stream
      * @throws FileNotFoundException if file not found
      * @throws IOException if IO exception occurs
-     * @throws SecurityException if path validation fails
      */
     private void addFolderToZip(File folder, String parentFolder, ZipOutputStream zos)
-            throws FileNotFoundException, IOException, SecurityException {
+            throws FileNotFoundException, IOException {
         for (File file : folder.listFiles()) {
             if (file.isDirectory()) {
                 addFolderToZip(file, parentFolder + "/" + file.getName(), zos);
@@ -104,15 +102,14 @@ public class ZipUtil {
 
     /**
      * Adds a file to the current zip output stream.
-     * 
+     *
      * @param file the file to be added
      * @param zos the current zip output stream
      * @throws FileNotFoundException if file not found
      * @throws IOException if IO exception occurs
-     * @throws SecurityException if path validation fails
      */
     private static void addFileToZip(File file, ZipOutputStream zos) throws FileNotFoundException,
-            IOException, SecurityException {
+            IOException {
         SecureFileUtils.validatePath(file.getName());
         zos.putNextEntry(new ZipEntry(file.getName()));
 

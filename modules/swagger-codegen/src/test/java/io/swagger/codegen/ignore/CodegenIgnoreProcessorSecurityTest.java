@@ -9,20 +9,21 @@ public class CodegenIgnoreProcessorSecurityTest {
 
     @Test
     public void testConstructorWithPathTraversal() {
-        CodegenIgnoreProcessor processor = new CodegenIgnoreProcessor("../../../etc");
-
-        Assert.assertNotNull(processor, "Processor should be created despite security violation");
-        Assert.assertTrue(processor.getExclusionRules().isEmpty(), "No exclusion rules should be loaded");
-        Assert.assertTrue(processor.getInclusionRules().isEmpty(), "No inclusion rules should be loaded");
+        Assert.assertThrows(
+                "shouldOverwrite should throw SecurityException for suspicious path",
+                SecurityException.class,
+                () -> new CodegenIgnoreProcessor("../../../etc")
+        );
     }
 
     @Test
     public void testFileConstructorWithPathTraversal() {
         File maliciousFile = new File("../../../etc/passwd");
-        CodegenIgnoreProcessor processor = new CodegenIgnoreProcessor(maliciousFile);
 
-        Assert.assertNotNull(processor, "Processor should be created despite security violation");
-        Assert.assertTrue(processor.getExclusionRules().isEmpty(), "No exclusion rules should be loaded");
-        Assert.assertTrue(processor.getInclusionRules().isEmpty(), "No inclusion rules should be loaded");
+        Assert.assertThrows(
+                "shouldOverwrite should throw SecurityException for suspicious path",
+                SecurityException.class,
+                () -> new CodegenIgnoreProcessor(maliciousFile)
+        );
     }
 }
