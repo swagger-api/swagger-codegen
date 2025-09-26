@@ -804,7 +804,6 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     .compile(template);
 
             writeToFile(adjustedOutputFilename, tmpl.execute(templateData));
-            SecureFileUtils.validatePath(adjustedOutputFilename);
             return new File(adjustedOutputFilename);
         }
 
