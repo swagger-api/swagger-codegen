@@ -2,6 +2,7 @@ package io.swagger.generator.online;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.*;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.generator.exception.ApiException;
 import io.swagger.generator.exception.BadRequestException;
 import io.swagger.generator.model.GeneratorInput;
@@ -146,6 +147,7 @@ public class Generator {
             if (files.size() > 0) {
                 List<File> filesToAdd = new ArrayList<File>();
                 LOGGER.debug("adding to " + outputFolder);
+                SecureFileUtils.validatePath(outputFolder);
                 filesToAdd.add(new File(outputFolder));
                 ZipUtil zip = new ZipUtil();
                 zip.compressFiles(filesToAdd, outputFilename);
@@ -161,6 +163,7 @@ public class Generator {
                 }
             }
             try {
+                SecureFileUtils.validatePath(outputFilename);
                 new File(outputFolder).delete();
             } catch (Exception e) {
                 LOGGER.error("unable to delete output folder " + outputFolder);
