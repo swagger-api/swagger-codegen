@@ -9,6 +9,7 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.DefaultCodegen;
 import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.models.Model;
 import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
@@ -326,7 +327,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeReservedWord(String name) {           
+    public String escapeReservedWord(String name) {
         if(this.reservedWordsMappings().containsKey(name)) {
             return this.reservedWordsMappings().get(name);
         }
@@ -741,6 +742,7 @@ public class RubyClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public boolean shouldOverwrite(String filename) {
         // skip spec file as the file might have been updated with new test cases
+        SecureFileUtils.validatePath(filename);
         return !(skipOverwrite && new File(filename).exists());
         //
         //return super.shouldOverwrite(filename) && !filename.endsWith("_spec.rb");

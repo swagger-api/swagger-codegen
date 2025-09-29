@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -3562,6 +3563,7 @@ public class DefaultCodegen {
     }
 
     public boolean shouldOverwrite(String filename) {
+        SecureFileUtils.validatePath(filename);
         return !(skipOverwrite && new File(filename).exists());
     }
 
@@ -3825,6 +3827,7 @@ public class DefaultCodegen {
         else {
             folder = supportingFile.destinationFilename;
         }
+        SecureFileUtils.validatePath(folder);
         if(!new File(folder).exists()) {
             supportingFiles.add(supportingFile);
         } else {
