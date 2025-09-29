@@ -157,6 +157,7 @@ public class Generator {
             }
             for (File file : files) {
                 try {
+                    SecureFileUtils.validatePath(file);
                     file.delete();
                 } catch (Exception e) {
                     LOGGER.error("unable to delete file " + file.getAbsolutePath());
@@ -193,3 +194,4 @@ public class Generator {
         }
     }
 }
+
