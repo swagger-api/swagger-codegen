@@ -1,6 +1,5 @@
 package io.swagger.generator.online;
 
-import io.swagger.generator.exception.BadRequestException;
 import org.testng.annotations.Test;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,7 @@ import java.util.Map;
  */
 public class GeneratorTest {
 
-    @Test(expectedExceptions = BadRequestException.class)
+    @Test(expectedExceptions = SecurityException.class)
     public void testGenerateWithPathTraversalInOutputFolder() throws Exception {
         io.swagger.generator.model.GeneratorInput opts = new io.swagger.generator.model.GeneratorInput();
 
