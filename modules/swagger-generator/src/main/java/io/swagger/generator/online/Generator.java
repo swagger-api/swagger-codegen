@@ -122,6 +122,7 @@ public class Generator {
         if (destPath == null) {
             destPath = language + "-" + type.getTypeName();
         }
+        SecureFileUtils.validatePath(destPath);
 
         ClientOptInput clientOptInput = new ClientOptInput();
         ClientOpts clientOpts = new ClientOpts();
@@ -147,7 +148,6 @@ public class Generator {
             if (files.size() > 0) {
                 List<File> filesToAdd = new ArrayList<File>();
                 LOGGER.debug("adding to " + outputFolder);
-                SecureFileUtils.validatePath(outputFolder);
                 filesToAdd.add(new File(outputFolder));
                 ZipUtil zip = new ZipUtil();
                 zip.compressFiles(filesToAdd, outputFilename);
@@ -164,7 +164,6 @@ public class Generator {
                 }
             }
             try {
-                SecureFileUtils.validatePath(outputFilename);
                 new File(outputFolder).delete();
             } catch (Exception e) {
                 LOGGER.error("unable to delete output folder " + outputFolder);
