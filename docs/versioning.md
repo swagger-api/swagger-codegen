@@ -20,7 +20,7 @@ dependency example:
 <dependency>
     <groupId>io.swagger</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>2.4.46</version>
+    <version>2.4.47</version>
 </dependency>
 ```
 
@@ -40,6 +40,6 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.72</version>
+    <version>3.0.74</version>
 </dependency>
 ```
