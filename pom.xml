@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
     <description>swagger-codegen-project</description>
-    <version>3.0.74-SNAPSHOT</version>
+    <version>3.0.73</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
