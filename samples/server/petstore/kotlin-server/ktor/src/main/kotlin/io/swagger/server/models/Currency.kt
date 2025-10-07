@@ -12,12 +12,4 @@
 package io.swagger.server.models
 
 
-/**
- * some description 
- */
-data class Currency (
-
-) {
-
-}
-
+typealias Currency = kotlin.String

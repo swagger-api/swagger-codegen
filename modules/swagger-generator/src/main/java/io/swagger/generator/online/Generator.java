@@ -2,6 +2,7 @@ package io.swagger.generator.online;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.*;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.generator.exception.ApiException;
 import io.swagger.generator.exception.BadRequestException;
 import io.swagger.generator.model.GeneratorInput;
@@ -121,6 +122,7 @@ public class Generator {
         if (destPath == null) {
             destPath = language + "-" + type.getTypeName();
         }
+        SecureFileUtils.validatePath(destPath);
 
         ClientOptInput clientOptInput = new ClientOptInput();
         ClientOpts clientOpts = new ClientOpts();
@@ -155,6 +157,7 @@ public class Generator {
             }
             for (File file : files) {
                 try {
+                    SecureFileUtils.validatePath(file);
                     file.delete();
                 } catch (Exception e) {
                     LOGGER.error("unable to delete file " + file.getAbsolutePath());
@@ -190,3 +193,4 @@ public class Generator {
         }
     }
 }
+

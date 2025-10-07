@@ -134,9 +134,16 @@
             <version>${resteasy-version}</version>
         </dependency>
         <dependency>
+            {{#jakarta}}
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+            {{/jakarta}}
+            {{^jakarta}}
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
             <version>1.2</version>
+            {{/jakarta}}
         </dependency>
 
         <dependency>
@@ -173,9 +180,16 @@
 {{#useBeanValidation}}
         <!-- Bean Validation API support -->
         <dependency>
+            {{#jakarta}}
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+            {{/jakarta}}
+            {{^jakarta}}
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.1.0.Final</version>
+            {{/jakarta}}
         </dependency>
 {{/useBeanValidation}}
 {{^java8}}

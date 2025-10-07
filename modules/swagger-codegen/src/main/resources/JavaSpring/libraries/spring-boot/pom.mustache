@@ -45,7 +45,7 @@
                 <dependency>
                     <groupId>com.sun.xml.ws</groupId>
                     <artifactId>jaxws-rt</artifactId>
-                    <version>2.3.3</version>
+                    <version>{{#jakarta}}4.0.0{{/jakarta}}{{^jakarta}}2.3.3{{/jakarta}}</version>
                     <type>pom</type>
                 </dependency>
             </dependencies>
@@ -108,10 +108,18 @@
         {{/threetenbp}}
 {{#useBeanValidation}}
     <!-- Bean Validation API support -->
+        {{#jakarta}}
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        {{/jakarta}}
+        {{^jakarta}}
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+        {{/jakarta}}
 {{/useBeanValidation}}
         {{#notNullJacksonAnnotation}}
             <dependency>

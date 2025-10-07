@@ -7,6 +7,7 @@ import io.swagger.codegen.CliOption;
 import io.swagger.codegen.Codegen;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.generator.exception.BadRequestException;
 import io.swagger.generator.model.Generated;
 import io.swagger.generator.model.GeneratorInput;
@@ -59,6 +60,7 @@ public class SwaggerResource {
         System.out.println("looking for fileId " + fileId);
         System.out.println("got filename " + g.getFilename());
         if (g.getFilename() != null) {
+            SecureFileUtils.validatePath(g.getFilename());
             File file = new java.io.File(g.getFilename());
             byte[] bytes = org.apache.commons.io.FileUtils.readFileToByteArray(file);
 
@@ -91,7 +93,7 @@ public class SwaggerResource {
             throws Exception {
 
         String filename = Generator.generateClient(language, opts);
-        String host = getHost(request);        
+        String host = getHost(request);
 
         if (filename != null) {
             String code = String.valueOf(UUID.randomUUID().toString());
