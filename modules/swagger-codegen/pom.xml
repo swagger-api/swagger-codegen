@@ -312,5 +312,10 @@
             <version>2.27.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator</artifactId>
+            <version>7.16.0</version>
+        </dependency>
     </dependencies>
 </project>

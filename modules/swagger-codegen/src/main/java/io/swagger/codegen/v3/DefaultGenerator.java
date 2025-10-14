@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
+import io.swagger.codegen.v3.openapitools.InlineModelResolver;
 import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
 import io.swagger.codegen.v3.utils.URLPathUtil;
@@ -80,6 +81,18 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         this.openAPI = opts.getOpenAPI();
         this.config = opts.getConfig();
         this.config.additionalProperties().putAll(opts.getOpts().getProperties());
+        // resolve inline models
+        if (true) {
+            InlineModelResolver inlineModelResolver = new InlineModelResolver();
+            inlineModelResolver.setInlineSchemaNameMapping(config.inlineSchemaNameMapping());
+            inlineModelResolver.setInlineSchemaOptions(config.inlineSchemaOption());
+
+            inlineModelResolver.flatten(openAPI);
+        }
+
+        // set OpenAPI to make these available to all methods
+        Map<String, Schema> allDefinitions = openAPI.getComponents().getSchemas();
+        Set<String> modelKeys = allDefinitions.keySet();
 
         String ignoreFileLocation = this.config.getIgnoreFilePathOverride();
         if(ignoreFileLocation != null) {
