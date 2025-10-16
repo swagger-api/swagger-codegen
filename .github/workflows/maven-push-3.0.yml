@@ -61,7 +61,7 @@ jobs:
             if [[ ! $GENERATORS_VERSION =~ ^.*SNAPSHOT$ ]];
             then
               # check release version exists
-              export GENERATORS_FOUND_JSON=`curl -s --max-time 60 --retry 15 --connect-timeout 20 https://search.maven.org/solrsearch/select?q=g:io.swagger.codegen.v3%20AND%20a:swagger-codegen-generators%20AND%20v:${GENERATORS_VERSION}%20AND%20p:jar`
+              export GENERATORS_FOUND_JSON=`curl -s --max-time 60 --retry 15 --connect-timeout 20 https://central.sonatype.com/solrsearch/select?q=g:io.swagger.codegen.v3%20AND%20a:swagger-codegen-generators%20AND%20v:${GENERATORS_VERSION}%20AND%20p:jar`
               export GENERATORS_FOUND=`echo ${GENERATORS_FOUND_JSON} | jq '.response.numFound'`
               echo "GENERATORS_FOUND" ${GENERATORS_FOUND}
               if [[ $GENERATORS_FOUND == '0' ]];
