@@ -41,9 +41,9 @@ class FakeApi(object):
         >>> thread = api.test_code_inject____end__rn_n_r(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param str test_code_inject____end____rn_n_r: To test code injection */ ' \" =end -- \\r\\n \\n \\r
-        :return: None
+        :return: None.
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -62,9 +62,9 @@ class FakeApi(object):
         >>> thread = api.test_code_inject____end__rn_n_r_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param str test_code_inject____end____rn_n_r: To test code injection */ ' \" =end -- \\r\\n \\n \\r
-        :return: None
+        :return: None.
                  If the method is called asynchronously,
                  returns the request thread.
         """

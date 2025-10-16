@@ -42,7 +42,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_boolean_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterBoolean body: Input boolean as post body
         :return: OuterBoolean
                  If the method is called asynchronously,
@@ -64,7 +64,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_boolean_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterBoolean body: Input boolean as post body
         :return: OuterBoolean
                  If the method is called asynchronously,
@@ -129,7 +129,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_composite_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterComposite body: Input composite as post body
         :return: OuterComposite
                  If the method is called asynchronously,
@@ -151,7 +151,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_composite_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterComposite body: Input composite as post body
         :return: OuterComposite
                  If the method is called asynchronously,
@@ -216,7 +216,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_number_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterNumber body: Input number as post body
         :return: OuterNumber
                  If the method is called asynchronously,
@@ -238,7 +238,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_number_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterNumber body: Input number as post body
         :return: OuterNumber
                  If the method is called asynchronously,
@@ -303,7 +303,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_string_serialize(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterString body: Input string as post body
         :return: OuterString
                  If the method is called asynchronously,
@@ -325,7 +325,7 @@ class FakeApi(object):
         >>> thread = api.fake_outer_string_serialize_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param OuterString body: Input string as post body
         :return: OuterString
                  If the method is called asynchronously,
@@ -389,7 +389,7 @@ class FakeApi(object):
         >>> thread = api.test_body_with_query_params(body, query, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param User body: (required)
         :param str query: (required)
         :return: None
@@ -411,7 +411,7 @@ class FakeApi(object):
         >>> thread = api.test_body_with_query_params_with_http_info(body, query, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param User body: (required)
         :param str query: (required)
         :return: None
@@ -491,7 +491,7 @@ class FakeApi(object):
         >>> thread = api.test_client_model(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
@@ -513,7 +513,7 @@ class FakeApi(object):
         >>> thread = api.test_client_model_with_http_info(body, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param Client body: client model (required)
         :return: Client
                  If the method is called asynchronously,
@@ -590,7 +590,7 @@ class FakeApi(object):
         >>> thread = api.test_endpoint_parameters(number, double, pattern_without_delimiter, byte, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param float number: None (required)
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
@@ -625,7 +625,7 @@ class FakeApi(object):
         >>> thread = api.test_endpoint_parameters_with_http_info(number, double, pattern_without_delimiter, byte, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param float number: None (required)
         :param float double: None (required)
         :param str pattern_without_delimiter: None (required)
@@ -781,7 +781,7 @@ class FakeApi(object):
         >>> thread = api.test_enum_parameters(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param list[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
         :param list[str] enum_header_string_array: Header parameter enum test (string array)
@@ -810,7 +810,7 @@ class FakeApi(object):
         >>> thread = api.test_enum_parameters_with_http_info(async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param list[str] enum_form_string_array: Form parameter enum test (string array)
         :param str enum_form_string: Form parameter enum test (string)
         :param list[str] enum_header_string_array: Header parameter enum test (string array)
@@ -907,7 +907,7 @@ class FakeApi(object):
         >>> thread = api.test_inline_additional_properties(param, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param object param: request body (required)
         :return: None
                  If the method is called asynchronously,
@@ -929,7 +929,7 @@ class FakeApi(object):
         >>> thread = api.test_inline_additional_properties_with_http_info(param, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param object param: request body (required)
         :return: None
                  If the method is called asynchronously,
@@ -1002,7 +1002,7 @@ class FakeApi(object):
         >>> thread = api.test_json_form_data(param, param2, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param str param: field1 (required)
         :param str param2: field2 (required)
         :return: None
@@ -1025,7 +1025,7 @@ class FakeApi(object):
         >>> thread = api.test_json_form_data_with_http_info(param, param2, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
+        :param bool async_req:
         :param str param: field1 (required)
         :param str param2: field2 (required)
         :return: None
