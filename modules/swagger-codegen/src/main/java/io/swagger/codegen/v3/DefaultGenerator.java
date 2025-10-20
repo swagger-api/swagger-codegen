@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import io.swagger.codegen.v3.ignore.CodegenIgnoreProcessor;
-import io.swagger.codegen.v3.openapitools.InlineModelResolver;
 import io.swagger.codegen.v3.templates.TemplateEngine;
 import io.swagger.codegen.v3.utils.ImplementationVersion;
 import io.swagger.codegen.v3.utils.URLPathUtil;

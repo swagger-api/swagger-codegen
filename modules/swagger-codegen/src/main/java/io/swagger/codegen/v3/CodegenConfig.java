@@ -273,4 +273,7 @@ public interface CodegenConfig {
     default String getCodeName() {
         return getName();
     }
+
+    Schema unaliasSchema(Schema schema);
+
 }
