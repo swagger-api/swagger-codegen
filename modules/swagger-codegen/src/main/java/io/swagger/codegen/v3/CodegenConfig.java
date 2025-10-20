@@ -246,6 +246,10 @@ public interface CodegenConfig {
 
     void setUnflattenedOpenAPI(OpenAPI unflattenedOpenAPI);
 
+    Map<String, String> inlineSchemaNameMapping();
+
+    Map<String, String> inlineSchemaOption();
+
     boolean getIgnoreImportMapping();
 
     void setIgnoreImportMapping(boolean ignoreImportMapping);
@@ -269,4 +273,7 @@ public interface CodegenConfig {
     default String getCodeName() {
         return getName();
     }
+
+    Schema unaliasSchema(Schema schema);
+
 }
