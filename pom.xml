@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <name>swagger-codegen-project</name>
     <description>swagger-codegen-project</description>
-    <version>3.0.73</version>
+    <version>3.0.76-SNAPSHOT</version>
     <url>https://github.com/swagger-api/swagger-codegen</url>
     <scm>
         <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>
@@ -1104,10 +1104,10 @@
     </dependencyManagement>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <swagger-codegen-generators-version>1.0.59</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.37</swagger-core-version>
+        <swagger-codegen-generators-version>1.0.60-SNAPSHOT</swagger-codegen-generators-version>
+        <swagger-core-version>2.2.39</swagger-core-version>
         <swagger-core-version-v1>1.6.16</swagger-core-version-v1>
-        <swagger-parser-version>2.1.34</swagger-parser-version>
+        <swagger-parser-version>2.1.35</swagger-parser-version>
         <swagger-parser-version-v1>1.0.75</swagger-parser-version-v1>
         <jackson-version>2.19.2</jackson-version>
         <scala-version>2.11.1</scala-version>
