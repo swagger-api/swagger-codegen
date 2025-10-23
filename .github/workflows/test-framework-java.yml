@@ -68,7 +68,7 @@ jobs:
       - name: Build remaining modules
         run: mvn -B -U verify -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
       - name: Build with Maven
-        run: mvn -B -U clean verify -DskipTests -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
+        run: mvn -B -U clean verify -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
