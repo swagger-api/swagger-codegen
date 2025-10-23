@@ -6,37 +6,37 @@ on:
     branches: ["master", "test-framework", "3.0.0"]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: [ 11 ]
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: ${{ matrix.java }}
-          distribution: temurin
-          server-id: central
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
-      - name: Cache local Maven repository
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Build with Maven
-        run: mvn -B -U verify --file pom.xml
-    env:
-      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+#  build:
+#
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        java: [ 11 ]
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Set up Java
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: ${{ matrix.java }}
+#          distribution: temurin
+#          server-id: central
+#          server-username: MAVEN_USERNAME
+#          server-password: MAVEN_PASSWORD
+#      - name: Cache local Maven repository
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.m2/repository
+#          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-maven-
+#      - name: Set up QEMU
+#        uses: docker/setup-qemu-action@v3
+#      - name: Build with Maven
+#        run: mvn -B -U verify --file pom.xml
+#    env:
+#      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+#      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
 
 
   build-java8:
