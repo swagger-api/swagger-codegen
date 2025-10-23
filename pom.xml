@@ -1077,7 +1077,7 @@
         <testng-version>7.5.1</testng-version>
         <surefire-version>3.0.0</surefire-version>
         <jmockit-version>1.49</jmockit-version>
-        <mockito-version>5.11.0</mockito-version>
+        <mockito-version>4.11.0</mockito-version>
         <reflections-version>0.10.2</reflections-version>
         <snakeyaml-version>2.2</snakeyaml-version>
         <httpclient-version>4.5.14</httpclient-version>
