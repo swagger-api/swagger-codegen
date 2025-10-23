@@ -66,7 +66,7 @@ jobs:
       - name: Build swagger-codegen with tests
         run: mvn -B -U clean install -DskipTests -Dmaven.site.skip=true -Dmaven.javadoc.skip=true --projects :swagger-codegen --also-make --file pom.xml
       - name: Build remaining modules
-        run: mvn -B -U verify -DskipTests -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
+        run: mvn -B -U verify -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
       - name: Build with Maven
         run: mvn -B -U clean verify -DskipTests -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
         env:
