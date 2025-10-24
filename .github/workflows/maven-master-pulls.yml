@@ -3,6 +3,8 @@ name: PR build - master
 on:
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+
 
 jobs:
   build:
@@ -80,4 +82,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build with Maven
-        run: mvn -B -U clean verify -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
+        run: mvn -B -U clean verify -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Dmaven.jar.skip=true -Psamples-java8 --file pom.xml
