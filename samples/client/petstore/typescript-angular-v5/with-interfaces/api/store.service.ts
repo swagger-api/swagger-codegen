@@ -28,7 +28,7 @@ import { StoreServiceInterface }                            from './store.servic
 @Injectable()
 export class StoreService implements StoreServiceInterface {
 
-    protected basePath = 'https://petstore.swagger.io/v2';
+    protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
