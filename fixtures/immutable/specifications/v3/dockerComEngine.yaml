@@ -6881,7 +6881,7 @@ paths:
             schema:
               example:
                 AdvertiseAddr: 192.168.1.1:2377
-                JoinToken: SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-7p73s1dx5in4tatdymyhg9hu2
+                JoinToken: <Add token here>
                 ListenAddr: 0.0.0.0:2377
                 RemoteAddrs:
                   - node1:2377
@@ -6928,7 +6928,7 @@ paths:
             schema:
               example:
                 AdvertiseAddr: 192.168.1.1:2377
-                JoinToken: SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-7p73s1dx5in4tatdymyhg9hu2
+                JoinToken: <Add token here>
                 ListenAddr: 0.0.0.0:2377
                 RemoteAddrs:
                   - node1:2377
@@ -7048,7 +7048,7 @@ paths:
           application/json:
             schema:
               example:
-                UnlockKey: SWMKEY-1-7c37Cc8654o6p38HnroywCi19pllOnGtbdZEgtKxZu8
+                UnlockKey: <Add unlock key here>
               properties:
                 UnlockKey:
                   description: The swarm's unlock key.
@@ -7082,7 +7082,7 @@ paths:
             application/json:
               schema:
                 example:
-                  UnlockKey: SWMKEY-1-7c37Cc8654o6p38HnroywCi19pllOnGtbdZEgtKxZu8
+                  UnlockKey: <Add unlock key here>
                 properties:
                   UnlockKey:
                     description: The swarm's unlock key.
@@ -7091,7 +7091,7 @@ paths:
             text/plain:
               schema:
                 example:
-                  UnlockKey: SWMKEY-1-7c37Cc8654o6p38HnroywCi19pllOnGtbdZEgtKxZu8
+                  UnlockKey: <Add unlock key here>
                 properties:
                   UnlockKey:
                     description: The swarm's unlock key.
@@ -9179,12 +9179,12 @@ components:
         Manager:
           description: |
             The token managers can use to join the swarm.
-          example: SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-7p73s1dx5in4tatdymyhg9hu2
+          example: <Add token here>
           type: string
         Worker:
           description: |
             The token workers can use to join the swarm.
-          example: SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx
+          example: <Add token here>
           type: string
       type: object
     LocalNodeState:
