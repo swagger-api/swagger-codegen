@@ -3212,28 +3212,20 @@ public class DefaultCodegen {
 
     /**
      * Underscore the given word.
-     * Copied from Twitter elephant bird
-     * https://github.com/twitter/elephant-bird/blob/master/core/src/main/java/com/twitter/elephantbird/util/Strings.java
      *
      * @param word The word
      * @return The underscored version of the word
      */
     public static String underscore(String word) {
-        String firstPattern = "([A-Z]+)([A-Z][a-z][a-z]+)";
-        String secondPattern = "([a-z\\d])([A-Z])";
+        Pattern firstPattern = Pattern.compile("(?<=[A-Z])(?=[A-Z][a-z]{2,})");
+        Pattern secondPattern = Pattern.compile("(?<=[a-z\\d])(?=[A-Z])");
         String replacementPattern = "$1_$2";
-        // Replace package separator with slash.
-        word = word.replaceAll("\\.", "/"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        // Replace $ with two underscores for inner classes.
-        word = word.replaceAll("\\$", "__");
-        // Replace capital letter with _ plus lowercase letter.
-        word = word.replaceAll(firstPattern, replacementPattern);
-        word = word.replaceAll(secondPattern, replacementPattern);
-        word = word.replace('-', '_');
-        // replace space with underscore
-        word = word.replace(' ', '_');
-        word = word.toLowerCase();
-        return word;
+
+        String replaced = word.replace('.', '/').replace("$", "__");
+        replaced = firstPattern.matcher(replaced).replaceAll("_");
+        replaced = secondPattern.matcher(replaced).replaceAll("_");
+        replaced = replaced.replace('-', '_').replace(' ', '_').toLowerCase();
+        return replaced;
     }
 
     /**
