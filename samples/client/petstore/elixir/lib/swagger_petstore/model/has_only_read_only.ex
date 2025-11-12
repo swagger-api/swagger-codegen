@@ -9,13 +9,13 @@ defmodule SwaggerPetstore.Model.HasOnlyReadOnly do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"bar",
-    :"foo"
+    :bar,
+    :foo
   ]
 
   @type t :: %__MODULE__{
-    :"bar" => String.t,
-    :"foo" => String.t
+    :bar => String.t,
+    :foo => String.t
   }
 end
 
