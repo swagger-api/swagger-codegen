@@ -146,7 +146,6 @@
                         <configuration>
                             <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
                             <unpack>true</unpack>
-                            <!--<skipCache>true</skipCache>-->
                             <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
                     </execution>
@@ -325,6 +324,18 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.20.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>5.2.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
