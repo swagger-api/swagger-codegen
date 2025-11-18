@@ -197,6 +197,40 @@ impl ArrayTest {
     }
 }
 
+/// True or False indicator
+/// Enumeration of values.
+/// Since this enum's variants do not hold data, we can easily define them them as `#[repr(C)]`
+/// which helps with FFI.
+#[allow(non_camel_case_types)]
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize, Eq, Ord)]
+pub enum Boolean { 
+    #[serde(rename = "true")]
+    TRUE,
+    #[serde(rename = "false")]
+    FALSE,
+}
+
+impl ::std::fmt::Display for Boolean {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        match *self { 
+            Boolean::TRUE => write!(f, "{}", "true"),
+            Boolean::FALSE => write!(f, "{}", "false"),
+        }
+    }
+}
+
+impl ::std::str::FromStr for Boolean {
+    type Err = ();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "true" => Ok(Boolean::TRUE),
+            "false" => Ok(Boolean::FALSE),
+            _ => Err(()),
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Capitalization {
     #[serde(rename = "smallCamel")]
@@ -235,6 +269,31 @@ impl Capitalization {
             capital_snake: None,
             sca_eth_flow_points: None,
             att_name: None,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Cat {
+    #[serde(rename = "className")]
+    pub class_name: String,
+
+    #[serde(rename = "color")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub color: Option<String>,
+
+    #[serde(rename = "declawed")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub declawed: Option<bool>,
+
+}
+
+impl Cat {
+    pub fn new(class_name: String, ) -> Cat {
+        Cat {
+            class_name: class_name,
+            color: Some("red".to_string()),
+            declawed: None,
         }
     }
 }
@@ -290,6 +349,31 @@ impl Client {
     pub fn new() -> Client {
         Client {
             client: None,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Dog {
+    #[serde(rename = "className")]
+    pub class_name: String,
+
+    #[serde(rename = "color")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub color: Option<String>,
+
+    #[serde(rename = "breed")]
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub breed: Option<String>,
+
+}
+
+impl Dog {
+    pub fn new(class_name: String, ) -> Dog {
+        Dog {
+            class_name: class_name,
+            color: Some("red".to_string()),
+            breed: None,
         }
     }
 }
@@ -486,6 +570,60 @@ impl HasOnlyReadOnly {
     }
 }
 
+/// True or False indicator
+/// Enumeration of values.
+/// Since this enum's variants do not hold data, we can easily define them them as `#[repr(C)]`
+/// which helps with FFI.
+#[allow(non_camel_case_types)]
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize, Eq, Ord)]
+pub enum Ints { 
+    #[serde(rename = "0")]
+    _0,
+    #[serde(rename = "1")]
+    _1,
+    #[serde(rename = "2")]
+    _2,
+    #[serde(rename = "3")]
+    _3,
+    #[serde(rename = "4")]
+    _4,
+    #[serde(rename = "5")]
+    _5,
+    #[serde(rename = "6")]
+    _6,
+}
+
+impl ::std::fmt::Display for Ints {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        match *self { 
+            Ints::_0 => write!(f, "{}", "0"),
+            Ints::_1 => write!(f, "{}", "1"),
+            Ints::_2 => write!(f, "{}", "2"),
+            Ints::_3 => write!(f, "{}", "3"),
+            Ints::_4 => write!(f, "{}", "4"),
+            Ints::_5 => write!(f, "{}", "5"),
+            Ints::_6 => write!(f, "{}", "6"),
+        }
+    }
+}
+
+impl ::std::str::FromStr for Ints {
+    type Err = ();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "0" => Ok(Ints::_0),
+            "1" => Ok(Ints::_1),
+            "2" => Ok(Ints::_2),
+            "3" => Ok(Ints::_3),
+            "4" => Ok(Ints::_4),
+            "5" => Ok(Ints::_5),
+            "6" => Ok(Ints::_6),
+            _ => Err(()),
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct List {
     #[serde(rename = "123-list")]
@@ -635,6 +773,48 @@ impl NumberOnly {
     pub fn new() -> NumberOnly {
         NumberOnly {
             just_number: None,
+        }
+    }
+}
+
+/// some number
+/// Enumeration of values.
+/// Since this enum's variants do not hold data, we can easily define them them as `#[repr(C)]`
+/// which helps with FFI.
+#[allow(non_camel_case_types)]
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Serialize, Deserialize, Eq, Ord)]
+pub enum Numbers { 
+    #[serde(rename = "7")]
+    _7,
+    #[serde(rename = "8")]
+    _8,
+    #[serde(rename = "9")]
+    _9,
+    #[serde(rename = "10")]
+    _10,
+}
+
+impl ::std::fmt::Display for Numbers {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        match *self { 
+            Numbers::_7 => write!(f, "{}", "7"),
+            Numbers::_8 => write!(f, "{}", "8"),
+            Numbers::_9 => write!(f, "{}", "9"),
+            Numbers::_10 => write!(f, "{}", "10"),
+        }
+    }
+}
+
+impl ::std::str::FromStr for Numbers {
+    type Err = ();
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "7" => Ok(Numbers::_7),
+            "8" => Ok(Numbers::_8),
+            "9" => Ok(Numbers::_9),
+            "10" => Ok(Numbers::_10),
+            _ => Err(()),
         }
     }
 }
@@ -855,7 +1035,7 @@ pub struct Pet {
 
     #[serde(rename = "tags")]
     #[serde(skip_serializing_if="Option::is_none")]
-    pub tags: Option<Vec<models::Tag>>,
+    pub tags: Option<Vec<Tag>>,
 
     /// pet status in the store
     // Note: inline enums are not fully supported by swagger-codegen
@@ -987,56 +1167,6 @@ impl User {
             password: None,
             phone: None,
             user_status: None,
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Cat {
-    #[serde(rename = "className")]
-    pub class_name: String,
-
-    #[serde(rename = "color")]
-    #[serde(skip_serializing_if="Option::is_none")]
-    pub color: Option<String>,
-
-    #[serde(rename = "declawed")]
-    #[serde(skip_serializing_if="Option::is_none")]
-    pub declawed: Option<bool>,
-
-}
-
-impl Cat {
-    pub fn new(class_name: String, ) -> Cat {
-        Cat {
-            class_name: class_name,
-            color: Some("red".to_string()),
-            declawed: None,
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Dog {
-    #[serde(rename = "className")]
-    pub class_name: String,
-
-    #[serde(rename = "color")]
-    #[serde(skip_serializing_if="Option::is_none")]
-    pub color: Option<String>,
-
-    #[serde(rename = "breed")]
-    #[serde(skip_serializing_if="Option::is_none")]
-    pub breed: Option<String>,
-
-}
-
-impl Dog {
-    pub fn new(class_name: String, ) -> Dog {
-        Dog {
-            class_name: class_name,
-            color: Some("red".to_string()),
-            breed: None,
         }
     }
 }

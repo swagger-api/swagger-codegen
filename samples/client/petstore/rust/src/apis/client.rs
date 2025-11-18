@@ -5,9 +5,9 @@ use super::configuration::Configuration;
 
 pub struct APIClient<C: hyper::client::Connect> {
   configuration: Rc<Configuration<C>>,
-  pet_api: Box<::apis::PetApi>,
-  store_api: Box<::apis::StoreApi>,
-  user_api: Box<::apis::UserApi>,
+  pet_api: Box<dyn(::apis::PetApi)>,
+  store_api: Box<dyn(::apis::StoreApi)>,
+  user_api: Box<dyn(::apis::UserApi)>,
 }
 
 impl<C: hyper::client::Connect> APIClient<C> {
@@ -22,15 +22,15 @@ impl<C: hyper::client::Connect> APIClient<C> {
     }
   }
 
-  pub fn pet_api(&self) -> &::apis::PetApi{
+  pub fn pet_api(&self) -> &dyn(::apis::PetApi){
     self.pet_api.as_ref()
   }
 
-  pub fn store_api(&self) -> &::apis::StoreApi{
+  pub fn store_api(&self) -> &dyn(::apis::StoreApi){
     self.store_api.as_ref()
   }
 
-  pub fn user_api(&self) -> &::apis::UserApi{
+  pub fn user_api(&self) -> &dyn(::apis::UserApi){
     self.user_api.as_ref()
   }
 
