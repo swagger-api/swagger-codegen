@@ -9,11 +9,11 @@ defmodule SwaggerPetstore.Model.Client do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"client"
+    :client
   ]
 
   @type t :: %__MODULE__{
-    :"client" => String.t
+    :client => String.t
   }
 end
 

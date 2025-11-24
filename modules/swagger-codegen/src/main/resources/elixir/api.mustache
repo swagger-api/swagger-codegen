@@ -20,21 +20,21 @@ defmodule {{moduleName}}.Api.{{classname}} do
 
   ## Parameters
 
-  - connection ({{moduleName}}.Connection): Connection to server
-{{#allParams}}{{#required}}  - {{#underscored}}{{paramName}}{{/underscored}} ({{dataType}}): {{description}}
-{{/required}}{{/allParams}}  - opts (KeywordList): [optional] Optional parameters
-{{#allParams}}{{^required}}    - {{#underscored}}:{{paramName}}{{/underscored}} ({{dataType}}): {{description}}
+  - connection (`{{moduleName}}.Connection`): Connection to server
+{{#allParams}}{{#required}}  - {{#underscored}}{{paramName}}{{/underscored}} (`{{dataType}}`): {{description}}
+{{/required}}{{/allParams}}  - opts (`KeywordList`): [optional] Optional parameters
+{{#allParams}}{{^required}}    - :{{paramName}} ({{dataType}}): {{description}}
 {{/required}}{{/allParams}}
   ## Returns
 
-  {:ok, {{#isListContainer}}[%{{returnBaseType}}{}, ...]{{/isListContainer}}{{#isMapContainer}}%{}{{/isMapContainer}}{{^returnType}}%{}{{/returnType}}{{#returnSimpleType}}%{{#returnType}}{{#isMapContainer}}{{/isMapContainer}}{{moduleName}}.Model.{{{returnType}}}{{/returnType}}{}{{/returnSimpleType}}} on success
-  {:error, info} on failure
+  `{:ok, {{#isListContainer}}[{{returnBaseType}}, ...]{{/isListContainer}}{{#isMapContainer}}%{}{{/isMapContainer}}{{^returnType}}%{}{{/returnType}}{{#returnSimpleType}}{{#returnType}}{{#isMapContainer}}{{/isMapContainer}}{{{returnType}}}{{/returnType}}{{/returnSimpleType}}{{{closebrace}}}` on success
+  `{:error, info}` on failure
   """
   {{typespec}}
   def {{#underscored}}{{operationId}}{{/underscored}}(connection, {{#allParams}}{{#required}}{{#underscored}}{{paramName}}{{/underscored}}, {{/required}}{{/allParams}}{{^hasOptionalParams}}_{{/hasOptionalParams}}opts \\ []) do
 {{#hasOptionalParams}}
     optional_params = %{
-      {{#allParams}}{{^required}}{{^isPathParam}}:"{{baseName}}" => {{#isBodyParam}}:body{{/isBodyParam}}{{#isFormParam}}:form{{/isFormParam}}{{#isQueryParam}}:query{{/isQueryParam}}{{#isHeaderParam}}:headers{{/isHeaderParam}}{{/isPathParam}}{{#hasMore}},
+      {{#allParams}}{{^required}}{{^isPathParam}}{{#atom}}{{baseName}}{{/atom}} => {{#isBodyParam}}:body{{/isBodyParam}}{{#isFormParam}}:form{{/isFormParam}}{{#isQueryParam}}:query{{/isQueryParam}}{{#isHeaderParam}}:headers{{/isHeaderParam}}{{/isPathParam}}{{#hasMore}},
       {{/hasMore}}{{/required}}{{/allParams}}
     }
 {{/hasOptionalParams}}
