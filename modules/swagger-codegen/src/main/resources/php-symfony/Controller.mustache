@@ -34,9 +34,20 @@ use {{servicePackage}}\ValidatorInterface;
  */
 class Controller
 {
+    private $container;
     protected $validator;
     protected $serializer;
     protected $apiServer;
+
+    /**
+     * Controller constructor.
+     *
+     * @param $container
+     */
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
 
     public function setValidator(ValidatorInterface $validator)
     {
