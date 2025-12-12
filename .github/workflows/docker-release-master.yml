@@ -13,16 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: git checkout master
         with:
           ref: master
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
-          cache: maven
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -37,20 +46,6 @@ jobs:
           /bin/bash ./bin/utils/detect_merge_conflict.sh
           # fail if generators contain tab '\t'
           /bin/bash ./bin/utils/detect_tab_in_java_class.sh
-      - uses: s4u/maven-settings-action@v2.8.0
-        name: setup maven settings.xml
-        with:
-          servers: |
-            [{
-                "id": "sonatype-nexus-staging",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            },
-            {
-                "id": "sonatype-nexus-snapshots",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            }]
       - name: Build with Maven
         run: |
           mvn clean install -U
@@ -186,3 +181,5 @@ jobs:
           exit 0
     env:
       TAG: ${{ github.event.inputs.tag }}
+      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
