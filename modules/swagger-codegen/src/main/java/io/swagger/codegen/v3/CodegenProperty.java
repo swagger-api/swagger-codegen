@@ -9,7 +9,7 @@ import java.util.Objects;
 public class CodegenProperty extends CodegenObject implements Cloneable {
     public String baseName, complexType, getter, setter, description, datatype,
           datatypeWithEnum, dataFormat, name, min, max, defaultValue, defaultValueWithParam,
-          baseType, containerType, title;
+          baseType, containerType, title, schemaType;
 
     /** The 'description' string without escape charcters needed by some programming languages/targets */
     public String unescapedDescription;
@@ -248,6 +248,14 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
         this.maximum = maximum;
     }
 
+    public String getSchemaType() {
+        return schemaType;
+    }
+
+    public void setSchemaType(String schemaType) {
+        this.schemaType = schemaType;
+    }
+
     public boolean getExclusiveMinimum() {
         return exclusiveMinimum;
     }
@@ -386,6 +394,7 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
         result = prime * result + ((_enum == null) ? 0 : _enum.hashCode());
         result = prime * result + ((allowableValues == null) ? 0 : allowableValues.hashCode());
         result = prime * result + ((baseName == null) ? 0 : baseName.hashCode());
+        result = prime * result + ((schemaType == null) ? 0 : schemaType.hashCode());
         result = prime * result + ((baseType == null) ? 0 : baseType.hashCode());
         result = prime * result + ((complexType == null) ? 0 : complexType.hashCode());
         result = prime * result + ((containerType == null) ? 0 : containerType.hashCode());
@@ -436,6 +445,9 @@ public class CodegenProperty extends CodegenObject implements Cloneable {
         }
         final CodegenProperty other = (CodegenProperty) obj;
         if ((this.baseName == null) ? (other.baseName != null) : !this.baseName.equals(other.baseName)) {
+            return false;
+        }
+        if ((this.schemaType == null) ? (other.schemaType != null) : !this.schemaType.equals(other.schemaType)) {
             return false;
         }
         if ((this.complexType == null) ? (other.complexType != null) : !this.complexType.equals(other.complexType)) {

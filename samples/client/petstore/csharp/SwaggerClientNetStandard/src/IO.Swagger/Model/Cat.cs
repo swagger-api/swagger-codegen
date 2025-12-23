@@ -18,20 +18,19 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using SwaggerDateConverter = IO.Swagger.Client.SwaggerDateConverter;
-
 namespace IO.Swagger.Model
 {
     /// <summary>
     /// Cat
     /// </summary>
     [DataContract]
-        public partial class Cat : Animal,  IEquatable<Cat>
+        public partial class Cat : Animal,  IEquatable<Cat>, OneOfAllPetsResponseItems, OneOfSinglePetResponsePet 
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Cat" /> class.
         /// </summary>
         /// <param name="declawed">declawed.</param>
-        public Cat(bool? declawed = default(bool?), string className = default(string), string color = "red") : base(className, color)
+        public Cat(bool? declawed = default(bool?), bool? declawed = default(bool?), string className = default(string), string color = "red") : base(className, color)
         {
             this.Declawed = declawed;
         }

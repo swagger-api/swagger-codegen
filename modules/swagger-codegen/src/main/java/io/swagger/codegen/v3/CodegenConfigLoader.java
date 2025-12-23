@@ -15,13 +15,24 @@ public class CodegenConfigLoader {
         ServiceLoader<CodegenConfig> loader = load(CodegenConfig.class);
 
         StringBuilder availableConfigs = new StringBuilder();
-
+        CodegenConfig current = null;
         for (CodegenConfig config : loader) {
-            if (config.getName().equals(name)) {
-                return config;
-            }
 
+            if (config.getName().equals(name)) {
+                if (current == null) {
+                    current = config;
+                } else if (config.isPrivileged() && !current.isPrivileged()) {
+                    current = config;
+                } else if (current.isPrivileged() && !config.isPrivileged()) {
+                    // skip
+                } else if (config.getPriority() > current.getPriority()) {
+                    current = config;
+                }
+            }
             availableConfigs.append(config.getName()).append("\n");
+        }
+        if (current != null) {
+            return current;
         }
 
         // else try to load directly

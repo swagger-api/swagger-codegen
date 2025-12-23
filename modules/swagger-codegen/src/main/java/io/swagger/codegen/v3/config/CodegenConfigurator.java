@@ -515,7 +515,7 @@ public class CodegenConfigurator implements Serializable {
         setVerboseFlags();
         setSystemProperties();
 
-        CodegenConfig config = CodegenConfigLoader.forName(lang);
+        CodegenConfig config = loadCodegenConfig();
         ClientOptInput input = new ClientOptInput();
 
         Predicate<URL> urlMatcher = null;
@@ -669,6 +669,10 @@ public class CodegenConfigurator implements Serializable {
         return input;
     }
 
+    protected CodegenConfig loadCodegenConfig() {
+        return CodegenConfigLoader.forName(lang);
+    }
+
     private ParseOptions buildParseOptions() {
         ParseOptions options = new ParseOptions();
         options.setResolve(true);
@@ -676,6 +680,7 @@ public class CodegenConfigurator implements Serializable {
         options.setFlatten(true);
         options.setFlattenComposedSchemas(flattenInlineSchema);
         options.setSkipMatches(this.skipInlineModelMatches);
+        options.setResolveResponses(true);
 
         if (Objects.equals(System.getenv("SAFELY_RESOLVE_URL"), "true")) {
             setSafelyResolveURLParseOptions(options);

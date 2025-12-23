@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public class GeneratorService {
     protected final Logger LOGGER = LoggerFactory.getLogger(GeneratorService.class);
@@ -50,6 +51,17 @@ public class GeneratorService {
             return new io.swagger.codegen.DefaultGenerator().opts(optsV2).generate();
         }
         throw new RuntimeException("missing opts input");
+    }
+
+    public Map<String, Object> generateBundle() {
+        if (optsV3 != null) {
+            return new DefaultGenerator().opts(optsV3).generateBundle();
+        }
+        throw new RuntimeException("missing opts input");
+    }
+
+    public String renderTemplate(RenderRequest renderRequest) {
+        return new DefaultGenerator().renderTemplate(renderRequest.getTemplate(), renderRequest.getContext());
     }
 
 }
