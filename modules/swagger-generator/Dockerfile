@@ -4,7 +4,7 @@ RUN microdnf -y install \
     gzip \
     shadow-utils \
     tar \
-    which
+    which && microdnf clean all
 ENV disableOas31Resolve=False
 ENV JAVA_HOME=/opt/java/openjdk
 COPY --from=eclipse-temurin:17-jre $JAVA_HOME $JAVA_HOME
