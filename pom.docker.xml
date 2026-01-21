@@ -1055,7 +1055,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.18.0</commons-lang-version>
         <slf4j-version>2.0.9</slf4j-version>
-        <logback-version>1.5.16</logback-version>
+        <logback-version>1.5.19</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.16</jmustache-version>
         <testng-version>7.10.2</testng-version>
