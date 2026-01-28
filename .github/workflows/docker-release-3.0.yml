@@ -93,6 +93,44 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
           tags: swaggerapi/swagger-generator-v3-minimal:latest,swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+      - name: Generate SBOM for swagger-generator-v3
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator-v3:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator-v3.spdx.json
+      - name: Attach SBOM to swagger-generator-v3
+        run: |
+          cosign attach sbom --sbom swagger-generator-v3.spdx.json swaggerapi/swagger-generator-v3:${{ env.TAG }}
+      - name: Generate SBOM for swagger-generator-v3-root
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator-v3-root:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator-v3-root.spdx.json
+      - name: Attach SBOM to swagger-generator-v3-root
+        run: |
+          cosign attach sbom --sbom swagger-generator-v3-root.spdx.json swaggerapi/swagger-generator-v3-root:${{ env.TAG }}
+      - name: Generate SBOM for swagger-codegen-cli-v3
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-codegen-cli-v3:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-codegen-cli-v3.spdx.json
+      - name: Attach SBOM to swagger-codegen-cli-v3
+        run: |
+          cosign attach sbom --sbom swagger-codegen-cli-v3.spdx.json swaggerapi/swagger-codegen-cli-v3:${{ env.TAG }}
+      - name: Generate SBOM for swagger-generator-v3-minimal
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator-v3-minimal.spdx.json
+      - name: Attach SBOM to swagger-generator-v3-minimal
+        run: |
+          cosign attach sbom --sbom swagger-generator-v3-minimal.spdx.json swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
       - name: deploy
         run: |
           echo "${{ env.TAG }}"

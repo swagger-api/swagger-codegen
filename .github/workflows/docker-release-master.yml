@@ -2,7 +2,6 @@ name: Build And Push Docker Release Master
 
 on:
   workflow_dispatch:
-    branches: [ "master" ]
     inputs:
       tag:
         description: tag/version to release
@@ -65,6 +64,26 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
           tags: swaggerapi/swagger-codegen-cli:${{ env.TAG }},swaggerapi/swagger-codegen-cli:latest
+      - name: Generate SBOM for generator image (SPDX-JSON)
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator.spdx.json
+      - name: Generate SBOM for CLI image (SPDX-JSON)
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-codegen-cli:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-codegen-cli.spdx.json
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+      - name: Attach SBOM to generator image using cosign
+        run: |
+          cosign attach sbom --sbom swagger-generator.spdx.json swaggerapi/swagger-generator:${{ env.TAG }}
+      - name: Attach SBOM to CLI image using cosign
+        run: |
+          cosign attach sbom --sbom swagger-codegen-cli.spdx.json swaggerapi/swagger-codegen-cli:${{ env.TAG }}
       - name: deploy
         run: |
           echo "${{ env.TAG }}"
