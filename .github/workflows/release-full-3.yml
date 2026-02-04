@@ -2,7 +2,6 @@ name: Release Codegen 3.0 and Generators
 
 on:
   workflow_dispatch:
-    branches: [ "3.0.0" ]
 
 jobs:
   release:
@@ -112,21 +111,31 @@ jobs:
       - name:  Run maven install for codegen
         if: env.RELEASE_OK == 'yes'
         run: |
-          SNAP_API="https://central.sonatype.com/repository/maven-snapshots"
           ARTIFACT_PATH="io/swagger/codegen/v3/swagger-codegen-generators"
-          ROOT_META="${SNAP_API}/${ARTIFACT_PATH}/maven-metadata.xml"
-          export LAST_SNAP=$(curl -s "$ROOT_META" | grep -oP '(?<=<version>)1\.[^<]+' | sort -V | tail -n1)
-          echo "LAST_SNAP $LAST_SNAP"
-          export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_SNAP
+          LAST_VERSION=""
+          if [[ "${{ env.GENERATORS_RELEASE_OK }}" == 'yes' ]]; then
+            SNAP_API="https://central.sonatype.com/repository/maven-snapshots"
+            ROOT_META="${SNAP_API}/${ARTIFACT_PATH}/maven-metadata.xml"
+            export LAST_VERSION=$(curl -s "$ROOT_META" | awk -F'[<>]' '/<version>1\./{print $3}' | sort -V | tail -n1)
+            echo "Using GENERATORS LAST_VERSION: $LAST_VERSION for codegen install"
+          else
+            RELEASED_API="https://repo1.maven.org/maven2"
+            ROOT_META="${RELEASED_API}/${ARTIFACT_PATH}/maven-metadata.xml"
+            export LAST_VERSION=$(curl -s "$ROOT_META" | awk -F'[<>]' '/<version>1\./{print $3}' | sort -V | tail -n1)
+            echo "Using GENERATORS LAST_VERSION: $LAST_VERSION for codegen install"
+          fi
+          export GENERATORS_VERSION_PROPERTY=-Dswagger-codegen-generators-version=$LAST_VERSION
           mvn clean install -U -Pdocker -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089 ${GENERATORS_VERSION_PROPERTY}
       - name:  Run maven deploy/release for codegen-generators
         if: env.RELEASE_OK == 'yes' && env.GENERATORS_RELEASE_OK == 'yes'
         working-directory: generators-repo
         run: |
+          echo "Releasing codegen-generators"
           mvn --no-transfer-progress -B -Prelease deploy
       - name:  Run maven deploy/release for codegen
         if: env.RELEASE_OK == 'yes'
         run: |
+          echo "Releasing codegen"
           mvn --no-transfer-progress -B -Prelease deploy
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
