@@ -235,7 +235,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <swagger-core-version>2.0.0</swagger-core-version>
+    <swagger-core-version>2.2.35</swagger-core-version>
     <jersey-version>2.29.1</jersey-version>
     <jackson-version>2.10.1</jackson-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>

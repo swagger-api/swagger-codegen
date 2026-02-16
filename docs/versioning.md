@@ -20,19 +20,19 @@ dependency example:
 <dependency>
     <groupId>io.swagger</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>2.4.43</version>
+    <version>2.4.46</version>
 </dependency>
 ```
 
 ## Swagger Codegen 3.X
 
-|||
-|----|-----|
-|Version:| 3.X|
-|Repository branch:|[3.0.0](https://github.com/swagger-api/swagger-codegen/tree/3.0.0)|
-|groupId:| `io.swagger.codegen.v3`|
-|Swagger/OpenAPI support:| 2.0 (_by using engine + generators of 2.X_), 3.0.X|
-|maven central:|[io.swagger.codegen.v3](https://mvnrepository.com/artifact/io.swagger.codegen.v3)
+|                          |                                                                                   |
+|--------------------------|-----------------------------------------------------------------------------------|
+| Version:                 | 3.X                                                                               |
+| Repository branch:       | [3.0.0](https://github.com/swagger-api/swagger-codegen/tree/3.0.0)                |
+| groupId:                 | `io.swagger.codegen.v3`                                                           |
+| Swagger/OpenAPI support: | 2.0 (_by using engine + generators of 2.X_), 3.0.X                                |
+| maven central:           | [io.swagger.codegen.v3](https://mvnrepository.com/artifact/io.swagger.codegen.v3) |
 
 dependency example:
 
@@ -40,6 +40,6 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.61</version>
+    <version>3.0.77</version>
 </dependency>
 ```

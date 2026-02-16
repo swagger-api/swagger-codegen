@@ -3,7 +3,7 @@
     <parent>
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>3.0.67</version>
+        <version>3.0.78-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -12,6 +12,7 @@
     <packaging>jar</packaging>
 
     <name>swagger-codegen (executable)</name>
+    <description>swagger-codegen (executable)</description>
 
     <build>
         <finalName>swagger-codegen-cli</finalName>

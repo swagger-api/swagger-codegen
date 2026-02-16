@@ -13,16 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: git checkout 3.0.0
         with:
           ref: 3.0.0
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
-          cache: maven
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -37,20 +46,6 @@ jobs:
           /bin/bash ./bin/utils/detect_merge_conflict.sh
           # fail if generators contain tab '\t'
           /bin/bash ./bin/utils/detect_tab_in_java_class.sh
-      - uses: s4u/maven-settings-action@v2.8.0
-        name: setup maven settings.xml
-        with:
-          servers: |
-            [{
-                "id": "sonatype-nexus-staging",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            },
-            {
-                "id": "sonatype-nexus-snapshots",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            }]
       - name: Build with Maven
         run: |
           mvn clean install -U -Pdocker -DJETTY_TEST_HTTP_PORT=8090 -DJETTY_TEST_STOP_PORT=8089
@@ -98,6 +93,44 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           provenance: false
           tags: swaggerapi/swagger-generator-v3-minimal:latest,swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+      - name: Generate SBOM for swagger-generator-v3
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator-v3:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator-v3.spdx.json
+      - name: Attach SBOM to swagger-generator-v3
+        run: |
+          cosign attach sbom --sbom swagger-generator-v3.spdx.json swaggerapi/swagger-generator-v3:${{ env.TAG }}
+      - name: Generate SBOM for swagger-generator-v3-root
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator-v3-root:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator-v3-root.spdx.json
+      - name: Attach SBOM to swagger-generator-v3-root
+        run: |
+          cosign attach sbom --sbom swagger-generator-v3-root.spdx.json swaggerapi/swagger-generator-v3-root:${{ env.TAG }}
+      - name: Generate SBOM for swagger-codegen-cli-v3
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-codegen-cli-v3:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-codegen-cli-v3.spdx.json
+      - name: Attach SBOM to swagger-codegen-cli-v3
+        run: |
+          cosign attach sbom --sbom swagger-codegen-cli-v3.spdx.json swaggerapi/swagger-codegen-cli-v3:${{ env.TAG }}
+      - name: Generate SBOM for swagger-generator-v3-minimal
+        uses: anchore/sbom-action@v0
+        with:
+          image: swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
+          format: spdx-json
+          output-file: swagger-generator-v3-minimal.spdx.json
+      - name: Attach SBOM to swagger-generator-v3-minimal
+        run: |
+          cosign attach sbom --sbom swagger-generator-v3-minimal.spdx.json swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
       - name: deploy
         run: |
           echo "${{ env.TAG }}"
@@ -213,4 +246,6 @@ jobs:
           echo "Exiting Build..."
           exit 0
     env:
+      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
       TAG: ${{ github.event.inputs.tag }}
