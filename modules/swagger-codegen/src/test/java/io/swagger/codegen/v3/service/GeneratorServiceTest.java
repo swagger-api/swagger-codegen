@@ -1028,23 +1028,19 @@ public class GeneratorServiceTest {
     public void testSecurityScopesAreProperlyApplied() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath();
-        GenerationRequest request = new GenerationRequest();
-        request
+        GenerationRequest request = new GenerationRequest()
                 .codegenVersion(GenerationRequest.CodegenVersion.V3)
                 .type(GenerationRequest.Type.SERVER)
                 .lang("spring")
                 .spec(loadSpecAsNode("3_0_0/issue-9843.yaml", true, false))
-                .options(
-                        new Options()
-                                .outputDir(path)
-                );
+                .options(new Options().outputDir(path));
 
         List<File> files = new GeneratorService().generationRequest(request).generate();
         boolean petFound = false, userFound = false;
         Assert.assertFalse(files.isEmpty());
         for (File f: files) {
             String relPath = f.getAbsolutePath().substring(path.length()).replace("\\", "/");
-            if ("/src/main/java/io/swagger/api/PetApi_.java".equals(relPath)) {
+            if ("/src/main/java/io/swagger/api/PetApi.java".equals(relPath)) {
                 petFound = true;
                 String actualContents = FileUtils.readFileToString(f, Charset.defaultCharset());
                 Assert.assertTrue(actualContents.contains("@SecurityRequirement(name = \"petstore_auth\", scopes = {"));
