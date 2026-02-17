@@ -1,5 +1,6 @@
 FROM redhat/ubi9-minimal:9.7
-RUN microdnf -y install \
+RUN microdnf -y update && \
+    microdnf -y install \
     glibc-langpack-en \
     gzip \
     shadow-utils \
