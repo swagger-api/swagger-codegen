@@ -17,8 +17,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.*;
 import io.swagger.v3.oas.models.tags.Tag;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -1217,14 +1216,62 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         }
         final Map<String, SecurityScheme> authMethods = new HashMap<>();
         for (SecurityRequirement requirement : securities) {
-            for (String key : requirement.keySet()) {
-                SecurityScheme securityScheme = securitySchemes.get(key);
+            requirement.forEach((securitySchemeName, endpointScopes) -> {
+                SecurityScheme securityScheme = securitySchemes.get(securitySchemeName);
                 if (securityScheme != null) {
-                    authMethods.put(key, securityScheme);
+                    SecurityScheme endpointSecurityScheme = selectScopeSubsetForSecurityScheme(securityScheme, endpointScopes);
+                    authMethods.put(securitySchemeName, endpointSecurityScheme);
                 }
-            }
+            });
         }
         return authMethods;
+    }
+
+    private SecurityScheme selectScopeSubsetForSecurityScheme(SecurityScheme globalSecurityScheme, List<String> scopesToSelect) {
+        OAuthFlows globalOAuthFlows = globalSecurityScheme.getFlows();
+        // the OAuth flows should only be set when security scheme's getType() is either OAUTH2 or OPENIDCONNECT
+        if (globalOAuthFlows == null) {
+            return globalSecurityScheme;
+        }
+        OAuthFlows oauthFlowsWithScopeSubset = new OAuthFlows()
+                .authorizationCode(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getAuthorizationCode(), scopesToSelect))
+                .clientCredentials(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getClientCredentials(), scopesToSelect))
+                .implicit(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getImplicit(), scopesToSelect))
+                .password(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getPassword(), scopesToSelect))
+                .extensions(globalOAuthFlows.getExtensions());
+        return new SecurityScheme()
+                .type(globalSecurityScheme.getType())
+                .$ref(globalSecurityScheme.get$ref())
+                .name(globalSecurityScheme.getName())
+                .description(globalSecurityScheme.getDescription())
+                .scheme(globalSecurityScheme.getScheme())
+                .in(globalSecurityScheme.getIn())
+                .flows(oauthFlowsWithScopeSubset)
+                .bearerFormat(globalSecurityScheme.getBearerFormat())
+                .openIdConnectUrl(globalSecurityScheme.getOpenIdConnectUrl())
+                .extensions(globalSecurityScheme.getExtensions());
+    }
+
+    private OAuthFlow selectScopeSubsetForOAuthFlow(OAuthFlow globalOAuthFlow, List<String> scopesToSelect) {
+        if (globalOAuthFlow != null) {
+            Scopes globalScopes = globalOAuthFlow.getScopes();
+            Scopes scopeSubset = new Scopes();
+            for (String scope : scopesToSelect) {
+                String selectedScope = globalScopes.get(scope);
+                if (selectedScope != null) {
+                    scopeSubset.addString(scope, selectedScope);
+                } else {
+                    LOGGER.warn("Scope {} is not defined in the global security schemes!", scope);
+                }
+            }
+            return new OAuthFlow()
+                    .authorizationUrl(globalOAuthFlow.getAuthorizationUrl())
+                    .tokenUrl(globalOAuthFlow.getTokenUrl())
+                    .refreshUrl(globalOAuthFlow.getRefreshUrl())
+                    .scopes(scopeSubset)
+                    .extensions(globalOAuthFlow.getExtensions());
+        }
+        return null;
     }
 
     private Boolean getCustomOptionBooleanValue(String option) {
