@@ -1219,7 +1219,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             requirement.forEach((securitySchemeName, endpointScopes) -> {
                 SecurityScheme securityScheme = securitySchemes.get(securitySchemeName);
                 if (securityScheme != null) {
-                    SecurityScheme endpointSecurityScheme = selectScopeSubsetForScheme(securityScheme, endpointScopes);
+                    SecurityScheme endpointSecurityScheme = selectScopeSubsetForSecurityScheme(securityScheme, endpointScopes);
                     authMethods.put(securitySchemeName, endpointSecurityScheme);
                 }
             });
@@ -1227,40 +1227,49 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         return authMethods;
     }
 
-    private static SecurityScheme selectScopeSubsetForScheme(SecurityScheme originalScheme, List<String> scopesToSelect) {
-        OAuthFlows originalFlows = originalScheme.getFlows();
-        if (originalFlows == null) {
-            return originalScheme;
+    private SecurityScheme selectScopeSubsetForSecurityScheme(SecurityScheme globalSecurityScheme, List<String> scopesToSelect) {
+        OAuthFlows globalOAuthFlows = globalSecurityScheme.getFlows();
+        // the OAuth flows should only be set when security scheme's getType() is either OAUTH2 or OPENIDCONNECT
+        if (globalOAuthFlows == null) {
+            return globalSecurityScheme;
         }
-        OAuthFlows flowsWithScopeSubset = new OAuthFlows()
-                .authorizationCode(selectScopeSubsetForFlow(originalFlows.getAuthorizationCode(), scopesToSelect))
-                .clientCredentials(selectScopeSubsetForFlow(originalFlows.getClientCredentials(), scopesToSelect))
-                .implicit(selectScopeSubsetForFlow(originalFlows.getImplicit(), scopesToSelect))
-                .password(selectScopeSubsetForFlow(originalFlows.getPassword(), scopesToSelect))
-                .extensions(originalFlows.getExtensions());
+        OAuthFlows oauthFlowsWithScopeSubset = new OAuthFlows()
+                .authorizationCode(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getAuthorizationCode(), scopesToSelect))
+                .clientCredentials(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getClientCredentials(), scopesToSelect))
+                .implicit(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getImplicit(), scopesToSelect))
+                .password(selectScopeSubsetForOAuthFlow(globalOAuthFlows.getPassword(), scopesToSelect))
+                .extensions(globalOAuthFlows.getExtensions());
         return new SecurityScheme()
-                .type(originalScheme.getType())
-                .$ref(originalScheme.get$ref())
-                .name(originalScheme.getName())
-                .description(originalScheme.getDescription())
-                .scheme(originalScheme.getScheme())
-                .in(originalScheme.getIn())
-                .flows(flowsWithScopeSubset)
-                .bearerFormat(originalScheme.getBearerFormat())
-                .openIdConnectUrl(originalScheme.getOpenIdConnectUrl())
-                .extensions(originalScheme.getExtensions());
+                .type(globalSecurityScheme.getType())
+                .$ref(globalSecurityScheme.get$ref())
+                .name(globalSecurityScheme.getName())
+                .description(globalSecurityScheme.getDescription())
+                .scheme(globalSecurityScheme.getScheme())
+                .in(globalSecurityScheme.getIn())
+                .flows(oauthFlowsWithScopeSubset)
+                .bearerFormat(globalSecurityScheme.getBearerFormat())
+                .openIdConnectUrl(globalSecurityScheme.getOpenIdConnectUrl())
+                .extensions(globalSecurityScheme.getExtensions());
     }
 
-    private static OAuthFlow selectScopeSubsetForFlow(OAuthFlow originalFlow, List<String> scopesToSelect) {
-        if (originalFlow != null) {
+    private OAuthFlow selectScopeSubsetForOAuthFlow(OAuthFlow globalOAuthFlow, List<String> scopesToSelect) {
+        if (globalOAuthFlow != null) {
+            Scopes globalScopes = globalOAuthFlow.getScopes();
             Scopes scopeSubset = new Scopes();
-            originalFlow.getScopes().entrySet().stream().filter(e -> scopesToSelect.contains(e.getKey())).forEach(e -> scopeSubset.put(e.getKey(), e.getValue()));
+            for (String scope : scopesToSelect) {
+                String selectedScope = globalScopes.get(scope);
+                if (selectedScope != null) {
+                    scopeSubset.addString(scope, selectedScope);
+                } else {
+                    LOGGER.warn("Scope {} is not defined in the global security schemes!", scope);
+                }
+            }
             return new OAuthFlow()
-                    .authorizationUrl(originalFlow.getAuthorizationUrl())
-                    .tokenUrl(originalFlow.getTokenUrl())
-                    .refreshUrl(originalFlow.getRefreshUrl())
+                    .authorizationUrl(globalOAuthFlow.getAuthorizationUrl())
+                    .tokenUrl(globalOAuthFlow.getTokenUrl())
+                    .refreshUrl(globalOAuthFlow.getRefreshUrl())
                     .scopes(scopeSubset)
-                    .extensions(originalFlow.getExtensions());
+                    .extensions(globalOAuthFlow.getExtensions());
         }
         return null;
     }
