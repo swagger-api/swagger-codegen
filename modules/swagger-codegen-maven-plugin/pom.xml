@@ -7,7 +7,7 @@
         <groupId>io.swagger.codegen.v3</groupId>
         <artifactId>swagger-codegen-project</artifactId>
         <version>3.0.78-SNAPSHOT</version>
-        <relativePath>../..</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
     <name>swagger-codegen (maven-plugin)</name>
