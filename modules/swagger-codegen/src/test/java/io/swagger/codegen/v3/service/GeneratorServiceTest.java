@@ -1,6 +1,9 @@
 package io.swagger.codegen.v3.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.config.CodegenConfigurator;
 import io.swagger.util.Json;
 import io.swagger.util.Yaml;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -15,7 +18,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class GeneratorServiceTest {
 
@@ -210,6 +218,32 @@ public class GeneratorServiceTest {
         }
     }
 
+    @Test
+    public void testIgnoreUnknownJacksonAnnotationJava_True() throws IOException {
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .addAdditionalProperty("ignoreUnknownJacksonAnnotation", true)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("@JsonIgnoreProperties(ignoreUnknown = true)"));
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("import com.fasterxml.jackson.annotation.JsonIgnoreProperties;"));
+            }
+        }
+    }
+
     @Test(description = "test generator service with java enum parameters in type")
     public void testGeneratorService_WithEnumParametersType() throws IOException {
 
@@ -264,6 +298,33 @@ public class GeneratorServiceTest {
         }
     }
 
+    @Test(description = "test generator service with java")
+    public void testGeneratorService_ignoreUnknownJacksonAnnotationJava_False() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("java")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .addAdditionalProperty("ignoreUnknownJacksonAnnotation", false)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("@JsonIgnoreProperties(ignoreUnknown = true)"));
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("import com.fasterxml.jackson.annotation.JsonIgnoreProperties"));
+            }
+        }
+    }
+
 
     @Test(description = "test generator service with spring")
     public void testGeneratorService_notNullJacksonAnnotationSpring_True() throws IOException {
@@ -293,6 +354,33 @@ public class GeneratorServiceTest {
     }
 
     @Test(description = "test generator service with spring")
+    public void testGeneratorService_ignoreUnknownJacksonAnnotationSpring_True() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("spring")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .addAdditionalProperty("ignoreUnknownJacksonAnnotation", true)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("@JsonIgnoreProperties(ignoreUnknown = true)"));
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("import com.fasterxml.jackson.annotation.JsonIgnoreProperties"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with spring")
     public void testGeneratorService_notNullJacksonAnnotationSpring_False() throws IOException {
 
         String path = getTmpFolder().getAbsolutePath();
@@ -315,6 +403,33 @@ public class GeneratorServiceTest {
             if ("/src/main/java/io/swagger/client/model/OrderLineAudit.java".equals(relPath)) {
                 Assert.assertFalse(FileUtils.readFileToString(f).contains("@JsonInclude(JsonInclude.Include.NON_NULL)"));
                 Assert.assertFalse(FileUtils.readFileToString(f).contains("import com.fasterxml.jackson.annotation.JsonInclude"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with spring")
+    public void testGeneratorService_ignoreUnknownJacksonAnnotationSpring_False() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.CLIENT)
+                .lang("spring")
+                .spec(loadSpecAsNode("3_0_0/issue-9203.yaml", true, false))
+                .options(
+                        new Options()
+                                .outputDir(path)
+                                .addAdditionalProperty("ignoreUnknownJacksonAnnotation", false)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/client/model/OrderLineAudit.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("@JsonIgnoreProperties(ignoreUnknown = true)"));
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("import com.fasterxml.jackson.annotation.JsonIgnoreProperties"));
             }
         }
     }
