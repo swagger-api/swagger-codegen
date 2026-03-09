@@ -1058,7 +1058,7 @@ public class JavascriptClientCodegen extends DefaultCodegen implements CodegenCo
         }
 
         // Provide access to all property models.
-        for (CodegenModel cgModel : new HashSet<CodegenModel>(cgModels.values())) {
+        for (CodegenModel cgModel : cgModels.values()) {
             detectRecursiveModel(cgModel.allVars, cgModel.classname, cgModels);
             postProcessProperties(cgModel.vars, cgModels);
             if (cgModel.allVars != cgModel.vars) {

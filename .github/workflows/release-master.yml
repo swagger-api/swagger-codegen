@@ -1,0 +1,228 @@
+name: Release  Master
+
+on:
+  workflow_dispatch:
+    branches: ["master"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: tibdex/github-app-token@v1
+      id: generate-token
+      with:
+        app_id: ${{ secrets.APP_ID }}
+        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Set up Java 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: 11
+        distribution: temurin
+        server-id: central
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
+        gpg-private-key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+    - name: Cache local Maven repository
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Run pre release script
+      id: preRelease
+      run: |
+        # export GPG_TTY=$(tty)
+        export MY_POM_VERSION=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
+        if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
+        then
+          echo "not releasing snapshot version: " ${MY_POM_VERSION}
+          echo "RELEASE_OK=no" >> $GITHUB_ENV
+        else
+          . ./CI/pre-release.sh
+          echo "RELEASE_OK=yes" >> $GITHUB_ENV
+        fi
+        echo "SC_VERSION=$SC_VERSION" >> $GITHUB_ENV
+        echo "SC_NEXT_VERSION=$SC_NEXT_VERSION" >> $GITHUB_ENV
+        echo "SC_LAST_RELEASE=$SC_LAST_RELEASE" >> $GITHUB_ENV
+        echo "SC_RELEASE_TAG=v$SC_VERSION" >> $GITHUB_ENV
+    - name: configure git user email
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git config --global hub.protocol https
+        git remote set-url origin https://\${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/swagger-api/swagger-codegen.git
+    - name:  Run maven deploy/release
+      if: env.RELEASE_OK == 'yes'
+      run: |
+        mvn --no-transfer-progress -B -Prelease deploy
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: docker login
+      run: |
+        docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
+        set -e
+    - name: Build generator image and push
+      if: env.RELEASE_OK == 'yes'
+      uses: docker/build-push-action@v5
+      with:
+        context: ./modules/swagger-generator
+        push: true
+        provenance: false
+        tags: swaggerapi/swagger-generator:${{ env.SC_RELEASE_TAG }},swaggerapi/swagger-generator:latest
+    - name: Build CLI image and push
+      if: env.RELEASE_OK == 'yes'
+      uses: docker/build-push-action@v5
+      with:
+        context: ./modules/swagger-codegen-cli
+        push: true
+        provenance: false
+        tags: swaggerapi/swagger-codegen-cli:${{ env.SC_RELEASE_TAG }},swaggerapi/swagger-codegen-cli:latest
+    - name: Run post release script
+      id: postRelease
+      if: env.RELEASE_OK == 'yes'
+      run: |
+        . ./CI/post-release.sh
+    - name: Create Next Snapshot Pull Request
+      uses: peter-evans/create-pull-request@v4
+      if: env.RELEASE_OK == 'yes'
+      with:
+        token: ${{ steps.generate-token.outputs.token }}
+        commit-message: bump snapshot ${{ env.SC_NEXT_VERSION }}-SNAPSHOT
+        title: 'bump snapshot ${{ env.SC_NEXT_VERSION }}-SNAPSHOT'
+        branch: bump-snap-${{ env.SC_NEXT_VERSION }}-SNAPSHOT
+    - name: deploy
+      run: |
+        echo "${{ env.SC_RELEASE_TAG }}"
+        
+        TOKEN="${{ secrets.RANCHER2_BEARER_TOKEN }}"
+        RANCHER_HOST="rancher.tools.swagger.io"
+        CLUSTER_ID="c-n8zp2"
+        NAMESPACE_NAME="swagger-oss"
+        K8S_OBJECT_TYPE="daemonsets"
+        K8S_OBJECT_NAME="swagger-generator"
+        DEPLOY_IMAGE="swaggerapi/swagger-generator:${{ env.SC_RELEASE_TAG }}"
+        
+        workloadStatus=""
+        getStatus() {
+            echo "Getting update status..."
+            if ! workloadStatus="$(curl -s -X GET \
+              -H "Authorization: Bearer ${TOKEN}" \
+              -H 'Content-Type: application/json' \
+              "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}/status")"
+            then
+                echo 'ERROR - get status k8s API call failed!'
+                echo "Exiting build"...
+                exit 1
+            fi
+        }
+        
+        # $1 = image to deploy
+        updateObject() {
+            local image="${1}"
+            echo "Updating image value..."
+        
+            if ! curl -s -X PATCH \
+              -H "Authorization: Bearer ${TOKEN}" \
+              -H 'Content-Type: application/json-patch+json' \
+              "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}" \
+              -d "[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/image\", \"value\": \"${image}\"}]"
+            then
+                echo 'ERROR - image update k8s API call failed!'
+                echo "Exiting build..."
+                exit 1
+            fi
+        }
+        
+        
+        # Check that the TAG is valid
+        if [[ ${{ env.SC_RELEASE_TAG }} =~ ^[vV]?[0-9]*\.[0-9]*\.[0-9]*$ ]]; then
+            echo ""
+            echo "This is a Valid TAG..."
+        
+            # Get current image/tag in case we need to rollback
+            getStatus
+            ROLLBACK_IMAGE="$(echo "${workloadStatus}" | jq -r '.spec.template.spec.containers[0].image')"
+            echo ""
+            echo "Current image: ${ROLLBACK_IMAGE}"
+        
+            # Update image and validate response
+            echo ""
+            updateObject "${DEPLOY_IMAGE}"
+            echo ""
+        
+            echo ""
+            echo "Waiting for pods to start..."
+            echo ""
+            sleep 60s
+        
+            # Get state of the k8s object. If numberReady == desiredNumberScheduled, consider the upgrade successful. Else raise error
+            getStatus
+                status="$(echo "${workloadStatus}" | jq '.status')"
+            echo ""
+            echo "${status}"
+            echo ""
+        
+            numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
+            numberReady="$(echo "${status}" | jq -r '.numberReady')"
+        
+            if (( numberReady == numberDesired )); then
+                echo "${K8S_OBJECT_NAME} has been upgraded to ${DEPLOY_IMAGE}"
+        
+            # If pods are not starting, rollback the upgrade and exit the build with error
+            else
+                echo "state = error...rolling back upgrade"
+                updateObject "${ROLLBACK_IMAGE}"
+                echo ""
+        
+                echo ""
+                echo "Waiting for rollback pods to start..."
+                echo ""
+                sleep 60s
+        
+                getStatus
+                status="$(echo "${workloadStatus}" | jq '.status')"
+                echo ""
+                echo "${status}"
+                echo ""
+        
+                numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
+                numberReady="$(echo "${status}" | jq -r '.numberReady')"
+        
+                if (( numberReady == numberDesired )); then
+                    echo "Rollback to ${ROLLBACK_IMAGE} completed."
+                else
+                    echo "FATAL - rollback failed"
+                fi
+                echo "Exiting Build..."
+                exit 1
+            fi
+        
+        else
+            echo "This TAG is not in a valid format..."
+            echo "Exiting Build..."
+            exit 0
+        fi
+        echo "Exiting Build..."
+        exit 0
+    env:
+      SC_RELEASE_TAG:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS:  true
+      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SC_VERSION:
+      SC_NEXT_VERSION:
+      GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+      GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
+      GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
+      GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}

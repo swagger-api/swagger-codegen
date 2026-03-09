@@ -34,7 +34,7 @@ public class AnimalFarm extends ArrayList<Animal> implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return true;
+    return super.equals(o);
   }
 
   @Override

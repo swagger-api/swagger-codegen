@@ -3,13 +3,14 @@
     <parent>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.4.33</version>
+        <version>2.4.51-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-codegen</artifactId>
     <packaging>jar</packaging>
     <name>swagger-codegen (core library)</name>
+    <description>swagger-codegen (core library)</description>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <defaultGoal>install</defaultGoal>
@@ -72,7 +73,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -99,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.0</version>
+                <version>3.12.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -156,7 +157,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.6.2</version>
                 <configuration>
                     <source>1.8</source>
                     <encoding>UTF-8</encoding>
@@ -251,7 +252,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20230227</version>
+            <version>${json-version}</version>
         </dependency>
 
         <dependency>
@@ -294,13 +295,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

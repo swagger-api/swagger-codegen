@@ -3,8 +3,8 @@ package io.swagger.codegen;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
-import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.codegen.utils.ImplementationVersion;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
@@ -597,6 +597,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 if (StringUtils.isNotEmpty(support.folder)) {
                     outputFolder += File.separator + support.folder;
                 }
+                SecureFileUtils.validatePath(outputFolder);
                 File of = new File(outputFolder);
                 if (!of.isDirectory()) {
                     of.mkdirs();
@@ -671,6 +672,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         // Output .swagger-codegen-ignore if it doesn't exist and wasn't explicitly created by a generator
         final String swaggerCodegenIgnore = ".swagger-codegen-ignore";
         String ignoreFileNameTarget = config.outputFolder() + File.separator + swaggerCodegenIgnore;
+        SecureFileUtils.validatePath(ignoreFileNameTarget);
         File ignoreFile = new File(ignoreFileNameTarget);
         if (isGenerateSwaggerMetadata && !ignoreFile.exists()) {
             String ignoreFileNameSource = File.separator + config.getCommonTemplateDir() + File.separator + swaggerCodegenIgnore;
@@ -785,6 +787,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
     protected File processTemplateToFile(Map<String, Object> templateData, String templateName, String outputFilename) throws IOException {
         String adjustedOutputFilename = outputFilename.replaceAll("//", "/").replace('/', File.separatorChar);
+        SecureFileUtils.validatePath(adjustedOutputFilename);
         if (ignoreProcessor.allowsFile(new File(adjustedOutputFilename))) {
             String templateFile = getFullTemplateFile(config, templateName);
             String template = readTemplate(templateFile);
@@ -908,9 +911,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
         for (Tag tag : tags) {
             try {
-                CodegenOperation codegenOperation = config.fromOperation(resourcePath, httpMethod, operation, swagger.getDefinitions(), swagger);
+                CodegenOperation codegenOperation = config.fromOperation(config.escapeQuotationMark(resourcePath), httpMethod, operation, swagger.getDefinitions(), swagger);
                 codegenOperation.tags = new ArrayList<Tag>(tags);
-                config.addOperationToGroup(config.sanitizeTag(tag.getName()), resourcePath, operation, codegenOperation, operations);
+                config.addOperationToGroup(config.sanitizeTag(tag.getName()), config.escapeQuotationMark(resourcePath), operation, codegenOperation, operations);
 
                 List<Map<String, List<String>>> securities = operation.getSecurity();
                 if (securities == null && swagger.getSecurity() != null) {

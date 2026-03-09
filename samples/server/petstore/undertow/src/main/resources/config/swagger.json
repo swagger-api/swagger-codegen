@@ -52,14 +52,14 @@
             "$ref" : "#/definitions/Pet"
           }
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
         "responses" : {
           "405" : {
             "description" : "Invalid input"
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
         "x-contentType" : "application/json",
         "x-accepts" : "application/json"
       },
@@ -79,6 +79,9 @@
             "$ref" : "#/definitions/Pet"
           }
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
         "responses" : {
           "400" : {
             "description" : "Invalid ID supplied"
@@ -90,9 +93,6 @@
             "description" : "Validation exception"
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
         "x-contentType" : "application/json",
         "x-accepts" : "application/json"
       }
@@ -117,6 +117,9 @@
           },
           "collectionFormat" : "csv"
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -131,9 +134,6 @@
             "description" : "Invalid status value"
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
         "x-accepts" : "application/json"
       }
     },
@@ -155,6 +155,10 @@
           },
           "collectionFormat" : "csv"
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
+        "deprecated" : true,
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -169,10 +173,6 @@
             "description" : "Invalid tag value"
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
-        "deprecated" : true,
         "x-accepts" : "application/json"
       }
     },
@@ -191,6 +191,9 @@
           "type" : "integer",
           "format" : "int64"
         } ],
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -205,9 +208,6 @@
             "description" : "Pet not found"
           }
         },
-        "security" : [ {
-          "api_key" : [ ]
-        } ],
         "x-accepts" : "application/json"
       },
       "post" : {
@@ -237,14 +237,14 @@
           "required" : false,
           "type" : "string"
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
         "responses" : {
           "405" : {
             "description" : "Invalid input"
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
         "x-contentType" : "application/x-www-form-urlencoded",
         "x-accepts" : "application/json"
       },
@@ -267,14 +267,14 @@
           "type" : "integer",
           "format" : "int64"
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
         "responses" : {
           "400" : {
             "description" : "Invalid pet value"
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
         "x-accepts" : "application/json"
       }
     },
@@ -306,6 +306,9 @@
           "required" : false,
           "type" : "file"
         } ],
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -314,9 +317,6 @@
             }
           }
         },
-        "security" : [ {
-          "petstore_auth" : [ "write:pets", "read:pets" ]
-        } ],
         "x-contentType" : "multipart/form-data",
         "x-accepts" : "application/json"
       }
@@ -329,6 +329,9 @@
         "operationId" : "getInventory",
         "produces" : [ "application/json" ],
         "parameters" : [ ],
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -341,9 +344,6 @@
             }
           }
         },
-        "security" : [ {
-          "api_key" : [ ]
-        } ],
         "x-accepts" : "application/json"
       }
     },

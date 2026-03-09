@@ -40,7 +40,7 @@ if ! type nuget &>/dev/null; then
 fi
 
 mozroots --import --sync
-${nuget_cmd} install src/{{packageName}}/packages.config -o packages;
+${nuget_cmd} install {{sourceFolder}}/{{packageName}}/packages.config -o packages;
 
 echo "[INFO] Copy DLLs to the 'bin' folder"
 mkdir -p bin;
@@ -65,7 +65,7 @@ System.ComponentModel.DataAnnotations.dll,\
 System.Runtime.Serialization.dll \
 -target:library \
 -out:bin/{{packageName}}.dll \
--recurse:'src/{{packageName}}/*.cs' \
+-recurse:'{{sourceFolder}}/{{packageName}}/*.cs' \
 -doc:bin/{{packageName}}.xml \
 -platform:anycpu
 

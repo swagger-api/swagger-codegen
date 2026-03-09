@@ -193,7 +193,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         dateOptions.put("java8-localdatetime", "Java 8 using LocalDateTime (for legacy app only)");
         dateOptions.put("java8-instant", "Java 8 using Instant");
         dateOptions.put("joda", "Joda (for legacy app only)");
-        dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp");
+        dateOptions.put("legacy", "Legacy java.util.Date (if you really have a good reason not to use threetenbp)");
         dateLibrary.setEnum(dateOptions);
         cliOptions.add(dateLibrary);
 

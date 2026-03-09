@@ -79,77 +79,77 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>io.swagger</groupId>
-      <artifactId>swagger-jaxrs</artifactId>
-      <scope>compile</scope>
-      <version>${swagger-core-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>${logback-version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>${logback-version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit-version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- CXF Client -->
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-client</artifactId>
-        <version>${cxf-version}</version>
-        <scope>test</scope>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <scope>compile</scope>
+            <version>${swagger-core-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- CXF Client -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+            <version>${cxf-version}</version>
+            <scope>test</scope>
+        </dependency>
 
-     <!-- CXF server -->
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>${cxf-version}</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-service-description</artifactId>
-        <version>${cxf-version}</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-ws-policy</artifactId>
-        <version>${cxf-version}</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-wsdl</artifactId>
-        <version>${cxf-version}</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.jaxrs</groupId>
-        <artifactId>jackson-jaxrs-json-provider</artifactId>
-        <version>${jackson-jaxrs-version}</version>
-        <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.datatype</groupId>
-        <artifactId>jackson-datatype-joda</artifactId>
-        <version>${jackson-jaxrs-version}</version>
-    </dependency>
-  </dependencies>
-  <repositories>
+        <!-- CXF server -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <version>${cxf-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-service-description</artifactId>
+            <version>${cxf-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-policy</artifactId>
+            <version>${cxf-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-wsdl</artifactId>
+            <version>${cxf-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>${jackson-jaxrs-version}</version>
+            <scope>compile</scope>
+        </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson-jaxrs-version}</version>
+            </dependency>
+    </dependencies>
+    <repositories>
     <repository>
       <id>sonatype-snapshots</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -158,14 +158,14 @@
       </snapshots>
     </repository>
   </repositories>
-  <properties>
+    <properties>
     <java.version>1.7</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <swagger-core-version>1.5.24</swagger-core-version>
     <jetty-version>9.3.27.v20190418</jetty-version>
     <junit-version>4.13.1</junit-version>
-    <logback-version>1.2.9</logback-version>
+    <logback-version>1.4.14</logback-version>
     <servlet-api-version>2.5</servlet-api-version>
     <cxf-version>3.2.1</cxf-version>
     <jackson-jaxrs-version>2.11.4</jackson-jaxrs-version>

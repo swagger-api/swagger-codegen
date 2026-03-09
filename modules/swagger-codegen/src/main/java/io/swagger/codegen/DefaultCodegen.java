@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.models.properties.UntypedProperty;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -3211,28 +3212,20 @@ public class DefaultCodegen {
 
     /**
      * Underscore the given word.
-     * Copied from Twitter elephant bird
-     * https://github.com/twitter/elephant-bird/blob/master/core/src/main/java/com/twitter/elephantbird/util/Strings.java
      *
      * @param word The word
      * @return The underscored version of the word
      */
     public static String underscore(String word) {
-        String firstPattern = "([A-Z]+)([A-Z][a-z][a-z]+)";
-        String secondPattern = "([a-z\\d])([A-Z])";
+        Pattern firstPattern = Pattern.compile("(?<=[A-Z])(?=[A-Z][a-z]{2,})");
+        Pattern secondPattern = Pattern.compile("(?<=[a-z\\d])(?=[A-Z])");
         String replacementPattern = "$1_$2";
-        // Replace package separator with slash.
-        word = word.replaceAll("\\.", "/"); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
-        // Replace $ with two underscores for inner classes.
-        word = word.replaceAll("\\$", "__");
-        // Replace capital letter with _ plus lowercase letter.
-        word = word.replaceAll(firstPattern, replacementPattern);
-        word = word.replaceAll(secondPattern, replacementPattern);
-        word = word.replace('-', '_');
-        // replace space with underscore
-        word = word.replace(' ', '_');
-        word = word.toLowerCase();
-        return word;
+
+        String replaced = word.replace('.', '/').replace("$", "__");
+        replaced = firstPattern.matcher(replaced).replaceAll("_");
+        replaced = secondPattern.matcher(replaced).replaceAll("_");
+        replaced = replaced.replace('-', '_').replace(' ', '_').toLowerCase();
+        return replaced;
     }
 
     /**
@@ -3562,6 +3555,7 @@ public class DefaultCodegen {
     }
 
     public boolean shouldOverwrite(String filename) {
+        SecureFileUtils.validatePath(filename);
         return !(skipOverwrite && new File(filename).exists());
     }
 
@@ -3749,8 +3743,8 @@ public class DefaultCodegen {
 
         // better error handling when map/array type is invalid
         if (name == null) {
-            LOGGER.error("String to be sanitized is null. Default to ERROR_UNKNOWN");
-            return "ERROR_UNKNOWN";
+            LOGGER.error("String to be sanitized is null. Default to " + Object.class.getSimpleName());
+            return Object.class.getSimpleName();
         }
 
         // if the name is just '$', map it to 'value' for the time being.
@@ -3825,6 +3819,7 @@ public class DefaultCodegen {
         else {
             folder = supportingFile.destinationFilename;
         }
+        SecureFileUtils.validatePath(folder);
         if(!new File(folder).exists()) {
             supportingFiles.add(supportingFile);
         } else {

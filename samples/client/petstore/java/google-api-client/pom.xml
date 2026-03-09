@@ -250,7 +250,7 @@
         <swagger-annotations-version>1.5.17</swagger-annotations-version>
         <google-api-client-version>1.23.0</google-api-client-version>
         <jersey-common-version>2.29.1</jersey-common-version>
-        <jackson-version>2.11.4</jackson-version>
+        <jackson-version>2.15.2</jackson-version>
             <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.13.1</junit-version>

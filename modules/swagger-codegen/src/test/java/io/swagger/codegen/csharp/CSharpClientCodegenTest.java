@@ -31,9 +31,13 @@ public class CSharpClientCodegenTest {
     public void testAdditionalPropertiesPutForConfigValues() throws Exception {
         final CSharpClientCodegen codegen = new CSharpClientCodegen();
         codegen.additionalProperties().put(CodegenConstants.HIDE_GENERATION_TIMESTAMP, false);
+        final String sourceFolder = "newSourceFolder/";
+        codegen.additionalProperties().put(CodegenConstants.SOURCE_FOLDER, sourceFolder);
+
         codegen.processOpts();
 
         Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.HIDE_GENERATION_TIMESTAMP), Boolean.FALSE);
+        Assert.assertEquals(codegen.additionalProperties().get(CodegenConstants.SOURCE_FOLDER), sourceFolder);
         Assert.assertEquals(codegen.isHideGenerationTimestamp(), false);
     }
 

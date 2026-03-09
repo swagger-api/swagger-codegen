@@ -58,6 +58,7 @@ import java.util.Map;
 {{#operations}}
 public class {{classname}} {
     private ApiClient {{localVariablePrefix}}apiClient;
+    private Map<String, String> headers;
 
     public {{classname}}() {
         this(Configuration.getDefaultApiClient());
@@ -73,6 +74,10 @@ public class {{classname}} {
 
     public void setApiClient(ApiClient apiClient) {
         this.{{localVariablePrefix}}apiClient = apiClient;
+    }
+
+    public void setHeadersOverrides(Map<String, String> headers) {
+        this.headers = headers;
     }
 
     {{#operation}}
@@ -139,6 +144,9 @@ public class {{classname}} {
         }
 
         String[] {{localVariablePrefix}}localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
+        if (headers != null) {
+            localVarHeaderParams.putAll(headers);
+        }
         return {{localVariablePrefix}}apiClient.buildCall({{localVariablePrefix}}localVarPath, "{{httpMethod}}", {{localVariablePrefix}}localVarQueryParams, {{localVariablePrefix}}localVarCollectionQueryParams, {{localVariablePrefix}}localVarPostBody, {{localVariablePrefix}}localVarHeaderParams, {{localVariablePrefix}}localVarFormParams, {{localVariablePrefix}}localVarAuthNames, progressRequestListener);
     }
 

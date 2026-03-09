@@ -1,0 +1,62 @@
+# Content and material showcasing Swagger Codegen
+
+Here's a legacy list of useful content on Swagger Codegen. If you would like to add to the listing, please raise a PR.
+
+- 2011/08/31 - [Introducing Swagger](https://www.slideshare.net/fehguy/introducing-swagger) by [Tony Tam](https://twitter.com/fehguy)
+- 2014/05/22 - [Swagger APIs for Humans and Robots](https://www.slideshare.net/fehguy/swagger-apis-for-humans-and-robots-gluecon) by [Tony Tam](https://twitter.com/fehguy) at [Gluecon](http://gluecon.com/)
+- 2014/11/11 - [Genie 2.0: Second Wish Granted!](https://medium.com/netflix-techblog/genie-2-0-second-wish-granted-d888d79455c6) by [Tom Gianos](http://www.linkedin.com/in/thomasgianos/) and [Amit Sharma](https://www.linkedin.com/pub/amit-sharma/5/163/a83) @ [Netflix](https://www.netflix.com/) Big Data Platform Team
+- 2015/07/28 - [Enriching RESTful Services with Swagger](https://blog.philipphauer.de/enriching-restful-services-swagger/) by [Philipp Hauer](https://blog.philipphauer.de/)
+- 2015/11/11 - [Generate client stubs & document your REST-API using Swagger & Spring](https://www.youtube.com/watch?v=43GhBbP--oI) by [Johannes Fiala](https://github.com/jfiala) @ Devoxx Belgium 2015
+- 2015/12/03 - [こんなに簡単! Swagger Codegenのカスタマイズ](http://qiita.com/Quramy/items/c583f3213f0b77ff1bac) by [Quramy](http://qiita.com/Quramy)
+- 2016/01/12 - [Generate client side code using Swagger Codegen](http://rnavagamuwa.com/open-source/generate-client-side-code-using-swagger-codegen/) by [RNAVAGAMUWA](http://rnavagamuwa.com/author/admin/)
+- 2016/01/15 - [How to end manual REST-API client coding](https://www.youtube.com/watch?v=RzZRdqZp6Oo) by [Johannes Fiala](https://github.com/jfiala) @ dotJS 2015
+- 2016/04/27 - [Automated REST API Development](https://yos.io/2016/04/27/automated-api-development/) by [Yos Riady](https://www.linkedin.com/in/yosriady)
+- 2016/05/29 - [Generating Java Spring-MVC code from Swagger Spec](https://www.clianz.com/2016/05/29/java-mvc-swagger-gen/) by [@icha024](https://github.com/icha024)
+- 2016/07/22 - [Building Microservices? Here is what you should know](https://cloudncode.blog/2016/07/22/msa-getting-started/) by Sumit Maingi
+- 2016/08/23 - [Generating Dreamfactory Client SDKs based on Swagger API Definitions](http://blog.dreamfactory.com/generating-dreamfactory-client-sdks-based-on-swagger-api-definitions) by [Phil Schuler](https://github.com/philicious/)
+- 2016/09/28 - [1 UNBELIEVABLE TRICK TO CREATE AN EASY TO CONSUME API IN .NET](https://stapp.space/1-simple-trick-to-create-a-good-api-in-net/) by [Piotr Stapp](https://stapp.space/author/piotr-stapp/)
+- 2016/10/10 - [Using swagger-codegen with Marketo](http://developers.marketo.com/blog/using-swagger-codegen-with-marketo/) by [Kenny Elkington](http://developers.marketo.com/blog/using-swagger-codegen-with-marketo/)
+- 2016/10/12 - [Designing a Swagger API](https://sookocheff.com/post/api/swagger/) by [Kevin Sookocheff](https://sookocheff.com/)
+- 2016/11/05 - [How to generate a REST Application](https://www.youtube.com/watch?v=iyC9BWMe75Q) by [Johannes Fiala](https://github.com/jfiala) @ DevFest Vienna 2016
+- 2016/11/10 - [Building an AEM API clients ecosystem](http://blog.cliffano.com/2016/11/10/adobe-marketing-cloud-community-expo/) by Cliffano Subagio, Michael Diender, Stephen Shim from [Shine Solutions](https://shinesolutions.com/) @ [Adobe Marketing Cloud Community Expo (AMCCE)](https://www.meetup.com/Melbourne-AEM-CQ-Meetup/events/233363101/)
+- 2016/11/18 - [How to generate a REST CXF3 application from Swagger-Contract](https://www.slideshare.net/johannes_fiala/how-to-generate-a-rest-cxf3-application-from-swagger-apacheconeu-2016) by [Johannes Fiala](https://github.com/jfiala) @ ApacheConEU 2016
+- 2016/11/25 - [Swagger Codegen for Swift3 and NodeJS](https://normand1.github.io/blog/swift/swagger/codegen/2016/11/25/Swagger-Codegen-for-Swift3-and-NodeJS.html) by [David Norman](https://github.com/normand1)
+- 2016/12/08 - [Building an API with Swagger](https://www.youtube.com/watch?v=PbwQWw7xSOM)
+- 2016/12/08 - [Generate client side code using Swagger Codegen](https://carra-lucia-ltd.co.uk/2016/12/08/generate-client-side-code-using-swagger-codegen/) by [theFerkel](https://carra-lucia-ltd.co.uk/author/theferkel/)
+- 2017/01/16 - [Zero to API in 4 minutes](https://cidrblock.github.io/zero-to-api-in-4-minutes.html) by [Bradley A. Thornton](https://github.com/cidrblock)
+- 2017/02/09 - [「Swaggerを利用した新規サービス開発」というタイトルで登壇して来ました](https://techblog.recochoku.jp/1055) by [recotech](https://www.slideshare.net/recotech)
+- 2017/03/03 - [Swagger Codegen の使い方の簡単な説明です](https://speakerdeck.com/wagyu298/swagger-codegen) by [wagyu298](https://github.com/wagyu298)
+- 2017/03/24 - [Using Open API Specification To Put Lyft SDK Support in the Fast Lane](https://medium.com/lyft-developer-platform/using-open-api-specification-to-put-lyft-sdk-support-in-the-fast-lane-7b623218e4ee) by [Val Polouchkine](https://github.com/vpolouchkine)
+- 2017/04/13 - [Automatically Generating your API Client with Swagger and Swagger Codegen](https://www.youtube.com/watch?v=EzKwi-u9jQo) by [Jesse Collis](https://github.com/jessedc) @ Melbourne Cocoaheads
+- 2017/04/27 - [Swagger Codegen のPHP実装があまりにアレだったので、ライブラリ自作して公開してみた](http://qiita.com/imunew/items/2e9c472e0097e329f2cd) by [imunew](http://qiita.com/imunew)
+- 2017/05/17 - [Diseño de APIs con OpenAPI](https://www.slideshare.net/pjmolina/diseo-de-apis-con-openapi) by [Pedro J. Molina](https://github.com/pjmolina) @ [JSDayES 2017](http://2017.jsday.es/)
+- 2017/05/22 - [Presentation of the Vert.x-Swagger project](http://vertx.io/blog/presentation-of-the-vert-x-swagger-project/) by [@phiz71](http://github.com/phiz71)
+- 2017/05/22 - [Automatically generating your API from a swagger file using gradle](https://www.jcore.com/2017/05/22/automatically-generating-api-using-swagger-and-gradle/) by [Deniz Turan](https://www.jcore.com/author/deniz/)
+- 2017/06/21 - [Swagger Presentation - Warsaw Ruby Users Group](https://www.youtube.com/watch?v=uCnnDMFQB8U) by [@rafalpetryka](http://github.com/rafalpetryka)
+- 2017/06/29 - [Making SDKs: the bespoke, the hopeful and the generated](https://devrel.net/developer-experience/making-sdks-bespoke-hopeful-generated) by [Tristan Sokol](https://github.com/tristansokol) ([Square](https://github.com/square)) at DevXcon 2017
+- 2017/07/11 - [OpenAPI development with Python](https://www.slideshare.net/TakuroWada/20170711-euro-python2017) by [和田拓朗](https://github.com/taxpon) at [EuroPython 2017](https://ep2017.europython.eu/en/)
+- 2017/07/29 - [How Square makes its SDKs](https://medium.com/square-corner-blog/how-square-makes-its-sdks-6a0fd7ea4b2d) by [Tristan Sokol](https://github.com/tristansokol) ([Square](https://github.com/square))
+- 2017/07/31 - [How to Generate a Deployable REST CXF3 Application from a Swagger-Contract](https://www.youtube.com/watch?v=gM63rJlUHZQ) by [Johannes Fiala](https://github.com/jfiala) @ Voxxed Days Vienna
+- 2017/08/11 - [Swagger Codegen 自动生成Retrofit 代码](https://juejin.im/entry/598d8eb86fb9a03c52459e2a) by [徐磊](http://www.jianshu.com/u/792c738b33fc)
+- 2017/08/24 - [APIs First](https://engineering.squarespace.com/blog/2017/apis-first) by [roykachouh](https://github.com/roykachouh) ([Square](https://github.com/square))
+- 2017/08/31 - [Bringing Jenkins Remote Access API To The Masses](http://blog.cliffano.com/2017/09/01/jenkins-world-2017/) by [Cliffano Subagio](http://cliffano.com) from [Shine Solutions](https://shinesolutions.com/) @ [Jenkins World 2017](https://jenkinsworld20162017.sched.com/)
+- 2017/09/08 - [Swagger Codegen で自動生成したクライアントSDKを使う(iOS編)](http://blog.techium.jp/entry/2017/09/08/071650) by [kfurue](http://profile.hatena.ne.jp/kfurue/)
+- 2017/09/09 - [Swagger Codegen で自動生成したクライアントSDKを使う(RxSwift 編)](http://blog.techium.jp/entry/2017/09/09/113003) by [kfurue](http://profile.hatena.ne.jp/kfurue/)
+- 2017/09/09 - [OpenAPIを利用したPythonWebアプリケーション開発](https://www.slideshare.net/TakuroWada/openapipythonweb) by [和田拓朗](https://github.com/taxpon) at [PyCon JP 2017](https://pycon.jp/2017/ja/)
+- 2017/09/21 - [Generating an Elastic Cloud Enterprise Client](https://www.elastic.co/blog/generating-an-elastic-cloud-enterprise-client) by [Greg Marzouka](https://github.com/gmarz) ([Elastic](https://www.elastic.co/))
+- 2017/09/26 - [How to Use IoT Application Enablement Api Hub JSON Descriptor in Postman and How to Generate Client Code](https://www.linkedin.com/in/radu-simen/) by [Radu Simen](https://www.linkedin.com/in/radu-simen/) ([SAP](https://www.sap.com/))
+- 2017/09/28 - [Swagger Codegenで APIクライアントgem 自動生成 #m3kt](https://speakerdeck.com/juntaki/swagger-codegende-apikuraiantogem-zi-dong-sheng-cheng-number-m3kt) by [Jumpei Takiyasu](https://github.com/juntaki)
+- 2017/09/30 - [Swaggerのテンプレートを魔改造した話 #渋谷java](https://www.slideshare.net/int128/swagger-80309224) by [Hidetake Iwata](https://github.com/int128) ([NTT DATA Corporation](http://www.nttdata.com/global/en/))
+- 2017/10/04 - [Enterprise-friendly Java client for Microsoft Machine Learning Server](https://blogs.msdn.microsoft.com/mlserver/2017/10/04/enterprise-friendly-java-client-for-microsoft-machine-learning-server/) by [Pratik Palnitkar](https://www.linkedin.com/in/pratikpalnitkar/) ([Microsoft](https://www.microsoft.com/))
+- 2017/10/08 - [Generating a REST Ada client with OpenAPI and Swagger Codegen](https://blog.vacs.fr/vacs/blogs/post.html?post=2017/10/08/Generating-a-REST-Ada-client-with-OpenAPI-and-Swagger-Codegen) by [Stephane Carrez](https://github.com/stcarrez)
+- 2017/11/08 - [A Beginner's Guide to Code Generation for REST APIs](https://gum.co/swagger_codegen_beginner)(eBook) by [William Cheng](https://twitter.com/wing328)
+- 2017/11/18 - [10年前のレガシーシステムをサーバーサイドKotlinでフルリニューアルしている話 #jjug_ccc #ccc_g2](https://speakerdeck.com/maeharin/10nian-qian-falseregasisisutemuwosabasaidokotlindehururiniyuarusiteiruhua-number-jjug-ccc-number-ccc-g2) by [Hidenori Maehara](https://github.com/maeharin)
+- 2017/11/21 - [swagger-codegen から眺める Swift4](https://speakerdeck.com/d_date/swagger-codegen-karatiao-meru-swift4) by [Daiki Matsudate](https://github.com/d-date)
+- 2017/12/07 - [API-driven development with OpenAPI and Swagger, Part 2](https://www.itworld.com/article/3199190/apis/api-driven-development-with-openapi-and-swagger-part-2.html) by Matthew Tyson
+- 2017/12/29 - [REST APIs代码生成指南](https://gumroad.com/l/swagger_codegen_beginner_zh)(eBook) by [William Cheng](https://github.com/wing328), [Xin Meng](https://github.com/xmeng1)
+- 2017/12/21 - [Using Protocol Buffer to Generate SDK at Hootsuite](http://code.hootsuite.com/using-protocol-buffer-to-generate-sdk-at-hoosuite/?lipi=urn%3Ali%3Apage%3Ad_flagship3_messaging%3By4ATz3SDRXyvXJJ14LQysQ%3D%3D) by [Joy Zhang](https://www.linkedin.com/in/joy8zhang/)
+- 2018/01/11 - [Swagger 工具箱介绍及代码自动生成示例](https://github.com/qct/swagger-example) by [qct](https://github.com/qct)
+- 2018/01/19 - [Generowanie kodu usług REST - przewodnik dla początkujących](https://gum.co/swagger_codegen_beginner_pl)(eBook) by [William Cheng](https://github.com/wing328), [Tomasz Prus](https://github.com/tomplus), [Bartek Kryza](https://github.com/bkryza)
+- 2018/02/03 - [Writing REST APIs with OpenAPI and Swagger Ada](https://www.slideshare.net/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada/StephaneCarrez1/writing-rest-apis-with-openapi-and-swagger-ada) by [Stephane Carrez](https://github.com/stcarrez) at [FOSDEM 2018](https://fosdem.org/2018)
+- 2018/02/28 - [OpenAPI–An eBay Perspective](https://www.ebayinc.com/stories/blogs/tech/openapi-an-ebay-perspective/) by Shekhar Banerjee (eBay)
+- 2018/03/16 - [REST APIのためのコード生成入門](https://gumroad.com/l/swagger_codegen_beginner_jp) by [William Cheng](https://github.com/wing328), [中野暁人](https://github.com/ackintosh), [和田拓朗](https://github.com/taxpon)
