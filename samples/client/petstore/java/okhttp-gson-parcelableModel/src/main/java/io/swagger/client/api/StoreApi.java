@@ -54,6 +54,8 @@ public class StoreApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for deleteOrder
      * @param orderId ID of the order that needs to be deleted (required)
@@ -118,6 +120,7 @@ public class StoreApi {
 
     }
 
+
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -127,6 +130,7 @@ public class StoreApi {
     public void deleteOrder(String orderId) throws ApiException {
         deleteOrderWithHttpInfo(orderId);
     }
+
 
     /**
      * Delete purchase order by ID
@@ -139,6 +143,7 @@ public class StoreApi {
         com.squareup.okhttp.Call call = deleteOrderValidateBeforeCall(orderId, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Delete purchase order by ID (asynchronously)
@@ -173,6 +178,8 @@ public class StoreApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for getInventory
      * @param progressListener Progress listener
@@ -230,6 +237,7 @@ public class StoreApi {
 
     }
 
+
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
@@ -240,6 +248,7 @@ public class StoreApi {
         ApiResponse<Map<String, Integer>> resp = getInventoryWithHttpInfo();
         return resp.getData();
     }
+
 
     /**
      * Returns pet inventories by status
@@ -252,6 +261,7 @@ public class StoreApi {
         Type localVarReturnType = new TypeToken<Map<String, Integer>>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Returns pet inventories by status (asynchronously)
@@ -286,6 +296,8 @@ public class StoreApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for getOrderById
      * @param orderId ID of pet that needs to be fetched (required)
@@ -350,6 +362,7 @@ public class StoreApi {
 
     }
 
+
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -361,6 +374,7 @@ public class StoreApi {
         ApiResponse<Order> resp = getOrderByIdWithHttpInfo(orderId);
         return resp.getData();
     }
+
 
     /**
      * Find purchase order by ID
@@ -374,6 +388,7 @@ public class StoreApi {
         Type localVarReturnType = new TypeToken<Order>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Find purchase order by ID (asynchronously)
@@ -409,6 +424,8 @@ public class StoreApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for placeOrder
      * @param body order placed for purchasing the pet (required)
@@ -472,6 +489,7 @@ public class StoreApi {
 
     }
 
+
     /**
      * Place an order for a pet
      * 
@@ -483,6 +501,7 @@ public class StoreApi {
         ApiResponse<Order> resp = placeOrderWithHttpInfo(body);
         return resp.getData();
     }
+
 
     /**
      * Place an order for a pet
@@ -496,6 +515,7 @@ public class StoreApi {
         Type localVarReturnType = new TypeToken<Order>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Place an order for a pet (asynchronously)

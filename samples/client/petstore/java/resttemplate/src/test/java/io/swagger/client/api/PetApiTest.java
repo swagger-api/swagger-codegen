@@ -206,12 +206,45 @@ public class PetApiTest {
     }
 
     @Test
+    public void testUpdatePetWithFormOpts() throws Exception {
+        Pet pet = createRandomPet();
+        pet.setName("frank");
+        api.addPet(pet);
+
+        Pet fetched = api.getPetById(pet.getId());
+
+        api.updatePetWithFormOpts(
+            fetched.getId(),
+            new PetApi.UpdatePetWithFormOptionals().name("furt"));
+        Pet updated = api.getPetById(fetched.getId());
+
+        assertEquals(updated.getName(), "furt");
+    }
+
+    @Test
     public void testDeletePet() throws Exception {
         Pet pet = createRandomPet();
         api.addPet(pet);
 
         Pet fetched = api.getPetById(pet.getId());
         api.deletePet(fetched.getId(), null);
+
+        try {
+            fetched = api.getPetById(fetched.getId());
+            fail("expected an error");
+        } catch (RestClientException e) {
+            assertTrue(e instanceof HttpClientErrorException);
+            assertEquals(404, ((HttpClientErrorException) e).getStatusCode().value());
+        }
+    }
+
+    @Test
+    public void testDeletePetOnlyRequired() throws Exception {
+        Pet pet = createRandomPet();
+        api.addPet(pet);
+
+        Pet fetched = api.getPetById(pet.getId());
+        api.deletePet(fetched.getId());
 
         try {
             fetched = api.getPetById(fetched.getId());
@@ -233,6 +266,23 @@ public class PetApiTest {
         writer.close();
 
         api.uploadFile(pet.getId(), "a test file", new File(file.getAbsolutePath()));
+    }
+
+    @Test
+    public void testUploadFileOpts() throws Exception {
+        Pet pet = createRandomPet();
+        api.addPet(pet);
+
+        File file = new File("hello.txt");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        writer.write("Hello world!");
+        writer.close();
+
+        api.uploadFileOpts(
+            pet.getId(),
+            new PetApi.UploadFileOptionals()
+                .additionalMetadata("a test file")
+                .file(new File(file.getAbsolutePath())));
     }
 
     @Test

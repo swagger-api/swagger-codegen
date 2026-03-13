@@ -46,6 +46,8 @@ public class AnotherFakeApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * To test special tags
      * To test special tags
@@ -57,6 +59,7 @@ public class AnotherFakeApi {
     public Client testSpecialTags(Client body) throws RestClientException {
         return testSpecialTagsWithHttpInfo(body).getBody();
     }
+
 
     /**
      * To test special tags
