@@ -55,16 +55,70 @@ namespace Swagger {
     return nullptr;
   }
 
-  inline void* create(QString json, QString type) {
-    if(type.startsWith("QString")) {
-      return new QString();
-    }    
+  
+  inline void create(QString json, QString type, SWGAmount** ptr ) { 
     auto val = static_cast<SWGObject*>(create(type));
     if(val != nullptr) {
-      return val->fromJson(json);
+      *ptr = static_cast<SWGAmount*>(val->fromJson(json));
     }
-    return nullptr;
   }
+  
+  inline void create(QString json, QString type, SWGApiResponse** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGApiResponse*>(val->fromJson(json));
+    }
+  }
+  
+  inline void create(QString json, QString type, SWGCategory** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGCategory*>(val->fromJson(json));
+    }
+  }
+  
+  inline void create(QString json, QString type, SWGCurrency** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGCurrency*>(val->fromJson(json));
+    }
+  }
+  
+  inline void create(QString json, QString type, SWGOrder** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGOrder*>(val->fromJson(json));
+    }
+  }
+  
+  inline void create(QString json, QString type, SWGPet** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGPet*>(val->fromJson(json));
+    }
+  }
+  
+  inline void create(QString json, QString type, SWGTag** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGTag*>(val->fromJson(json));
+    }
+  }
+  
+  inline void create(QString json, QString type, SWGUser** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
+    if(val != nullptr) {
+      *ptr = static_cast<SWGUser*>(val->fromJson(json));
+    }
+  }
+  
+
+  inline void create(QString json, QString type, QString* str){
+        if(type.startsWith("QString")) {
+      *str = QString();
+    }   
+  }
+
 
 }
 

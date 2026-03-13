@@ -285,8 +285,12 @@ SWGUserApi::getUserByNameCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
+
     QString json(worker->response);
-    SWGUser* output = static_cast<SWGUser*>(create(json, QString("SWGUser")));
+
+    SWGUser* output = {};
+    create(json, QString("SWGUser"),&output);
+   
     auto wrapper = new SWGQObjectWrapper<SWGUser*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
@@ -354,8 +358,12 @@ SWGUserApi::loginUserCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
+
     QString json(worker->response);
-    QString* output = static_cast<QString*>(create(json, QString("QString")));
+
+    QString* output = {};
+    create(json, QString("QString"),&output);
+   
     auto wrapper = new SWGQObjectWrapper<QString*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
