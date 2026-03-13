@@ -19,12 +19,12 @@ pub struct Amount {
   #[serde(rename = "value")]
   value: f64,
   #[serde(rename = "currency")]
-  currency: ::models::Currency
+  currency: crate::models::Currency
 }
 
 impl Amount {
   /// some description 
-  pub fn new(value: f64, currency: ::models::Currency) -> Amount {
+  pub fn new(value: f64, currency: crate::models::Currency) -> Amount {
     Amount {
       value: value,
       currency: currency
@@ -45,21 +45,19 @@ impl Amount {
   }
 
 
-  pub fn set_currency(&mut self, currency: ::models::Currency) {
+  pub fn set_currency(&mut self, currency: crate::models::Currency) {
     self.currency = currency;
   }
 
-  pub fn with_currency(mut self, currency: ::models::Currency) -> Amount {
+  pub fn with_currency(mut self, currency: crate::models::Currency) -> Amount {
     self.currency = currency;
     self
   }
 
-  pub fn currency(&self) -> &::models::Currency {
+  pub fn currency(&self) -> &crate::models::Currency {
     &self.currency
   }
 
 
 }
-
-
 
