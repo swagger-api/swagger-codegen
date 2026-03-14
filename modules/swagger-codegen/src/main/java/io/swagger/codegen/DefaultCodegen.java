@@ -1239,9 +1239,62 @@ public class DefaultCodegen {
         } else {
             if (p != null) {
                 datatype = p.getType();
+                // Handle OpenAPI 3.1.0 schemas where type may be null but can be inferred from format
+                if (datatype == null) {
+                    datatype = inferTypeFromFormat(p.getFormat());
+                }
             }
         }
+        // Final fallback: if datatype is still null, default to "object"
+        // This handles OpenAPI 3.1.0 schemas that may not have explicit type information
+        if (datatype == null) {
+            LOGGER.warn("Unable to determine type for property, defaulting to 'object'. Property: " + p);
+            datatype = "object";
+        }
         return datatype;
+    }
+
+    /**
+     * Infer the type from the format string when the type is null.
+     * This is particularly useful for OpenAPI 3.1.0 schemas where type information
+     * may not be explicitly set but can be inferred from the format.
+     *
+     * @param format the format string from the property
+     * @return the inferred type or null if it cannot be inferred
+     */
+    private String inferTypeFromFormat(String format) {
+        if (format == null) {
+            return null;
+        }
+        switch (format) {
+            case "int32":
+                return "integer";
+            case "int64":
+                return "long";
+            case "float":
+                return "float";
+            case "double":
+                return "double";
+            case "byte":
+                return "ByteArray";
+            case "binary":
+                return "binary";
+            case "date":
+                return "date";
+            case "date-time":
+                return "DateTime";
+            case "uuid":
+                return "UUID";
+            case "password":
+            case "email":
+            case "uri":
+            case "hostname":
+            case "ipv4":
+            case "ipv6":
+                return "string";
+            default:
+                return null;
+        }
     }
 
     /**
