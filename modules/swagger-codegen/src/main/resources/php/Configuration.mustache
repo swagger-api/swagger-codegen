@@ -39,6 +39,11 @@ class Configuration
     protected $apiKeys = [];
 
     /**
+     * Array to store Guzzle Request Options
+     */
+    protected $requestConfigurations = [];
+
+    /**
      * Associate array to store API prefix (e.g. Bearer)
      *
      * @var string[]
@@ -133,6 +138,29 @@ class Configuration
     public function getApiKey($apiKeyIdentifier)
     {
         return isset($this->apiKeys[$apiKeyIdentifier]) ? $this->apiKeys[$apiKeyIdentifier] : null;
+    }
+
+    /**
+     * Sets Additional Guzzle Request options
+     *
+     * @param array $additionalRequestConfigs Array of Addition Guzzle Configs
+     *
+     * @return $this
+     */
+    public function setRequestOptions(array $additionalRequestConfigs)
+    {
+        $this->requestConfigurations = $additionalRequestConfigs;
+        return $this;
+    }
+
+    /**
+     * Gets Additional Guzzle Request options
+     *
+     * @return array of Guzzle Request options
+     */
+    public function getRequestOptions()
+    {
+        return $this->requestConfigurations;
     }
 
     /**
