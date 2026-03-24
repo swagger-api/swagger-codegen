@@ -135,7 +135,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         if (this.java8) {
             additionalProperties.put("javaVersion", "1.8");
             additionalProperties.put("jdk8", "true");
-            if (!additionalProperties.containsKey(DATE_LIBRARY)) {
+            if (!additionalProperties.containsKey(CodegenConstants.DATE_LIBRARY)) {
                 setDateLibrary("java8");
             }
         }
