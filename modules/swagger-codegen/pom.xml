@@ -73,12 +73,10 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -100,12 +98,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                 <version>2.5.3</version>
+                <version>3.3.1</version>
+                <configuration>
+                    <!-- 3.x changed useReleaseProfile default to false; restore 2.x behavior -->
+                    <releaseProfiles>release-profile</releaseProfiles>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code</groupId>
@@ -157,7 +158,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.2</version>
                 <configuration>
                     <source>1.8</source>
                     <encoding>UTF-8</encoding>
@@ -168,7 +168,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.6.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -176,7 +176,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>3.9.0</version>
                 <reportSets>
                     <reportSet>
                         <reports>

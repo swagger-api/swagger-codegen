@@ -12,7 +12,7 @@
     <packaging>maven-plugin</packaging>
     <description>maven plugin to build modules from swagger codegen</description>
     <prerequisites>
-        <maven>3.2.5</maven>
+        <maven>3.6.3</maven>
     </prerequisites>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,7 +62,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.15.2</version>
                     <configuration>
                         <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                     </configuration>
