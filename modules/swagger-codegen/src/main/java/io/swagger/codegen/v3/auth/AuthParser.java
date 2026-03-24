@@ -4,6 +4,7 @@ import io.swagger.v3.parser.core.models.AuthorizationValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UncheckedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -27,7 +28,7 @@ public class AuthParser {
                     try {
                         auths.add(new AuthorizationValue(URLDecoder.decode(kvPair[0], StandardCharsets.UTF_8.name()), URLDecoder.decode(kvPair[1], StandardCharsets.UTF_8.name()), "header"));
                     } catch (UnsupportedEncodingException e) {
-                        throw new AssertionError("UTF-8 is not supported", e);
+                        throw new UncheckedIOException("UTF-8 is not supported", e);
                     }
                 }
             }
