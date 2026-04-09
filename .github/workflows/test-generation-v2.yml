@@ -23,9 +23,10 @@ jobs:
         java: [ 11 ]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: build codegen
         run: |
@@ -61,9 +62,10 @@ jobs:
       generate_outcome: ${{ steps.outcome.outputs.generate_outcome }}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Download codegen cli
         uses: actions/download-artifact@v4
@@ -119,7 +121,7 @@ jobs:
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -136,8 +138,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: ruby test files
         run: |
@@ -190,9 +193,10 @@ jobs:
       generate_outcome: ${{ steps.outcome.outputs.generate_outcome }}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Download codegen cli
         uses: actions/download-artifact@v4
@@ -248,7 +252,7 @@ jobs:
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -265,8 +269,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Javascript test files
         run: |
@@ -316,9 +321,10 @@ jobs:
       generate_outcome: ${{ steps.outcome.outputs.generate_outcome }}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Download codegen cli
         uses: actions/download-artifact@v4
@@ -374,7 +380,7 @@ jobs:
       ##### END DYNAMIC: Dependent on build environment
       ###############################################
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -391,8 +397,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.java }}
       - name: PHP test files
         run: |
