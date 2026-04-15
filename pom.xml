@@ -905,6 +905,14 @@
     </reporting>
     <dependencyManagement>
         <dependencies>
+            <!-- Jackson BOM -->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- swagger-core v2 -->
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
@@ -1105,11 +1113,11 @@
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <swagger-codegen-generators-version>1.0.60</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.39</swagger-core-version>
+        <swagger-core-version>2.2.48</swagger-core-version>
         <swagger-core-version-v1>1.6.16</swagger-core-version-v1>
-        <swagger-parser-version>2.1.35</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.75</swagger-parser-version-v1>
-        <jackson-version>2.19.2</jackson-version>
+        <swagger-parser-version>2.1.40</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.76</swagger-parser-version-v1>
+        <jackson-version>2.21.2</jackson-version>
         <scala-version>2.11.1</scala-version>
         <commons-io-version>2.20.0</commons-io-version>
         <commons-cli-version>1.9.0</commons-cli-version>
@@ -1117,7 +1125,7 @@
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.18.0</commons-lang-version>
         <slf4j-version>2.0.9</slf4j-version>
-        <logback-version>1.5.19</logback-version>
+        <logback-version>1.5.32</logback-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <jmustache-version>1.16</jmustache-version>
         <testng-version>7.10.2</testng-version>
