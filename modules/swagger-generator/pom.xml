@@ -341,7 +341,7 @@
     </dependencies>
     <properties>
         <servlet-api-version>2.5</servlet-api-version>
-        <logback-version>1.5.3</logback-version>
+        <logback-version>1.5.32</logback-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
         <zip-version>2.11.5</zip-version>

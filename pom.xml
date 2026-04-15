@@ -1015,6 +1015,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml-version}</version>
@@ -1064,9 +1071,9 @@
         <commons-io-version>2.16.1</commons-io-version>
         <commons-cli-version>1.7.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
-        <jackson-version>2.19.2</jackson-version>
+        <jackson-version>2.21.2</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.14.0</commons-lang-version>
+        <commons-lang-version>3.18.0</commons-lang-version>
         <slf4j-version>1.7.36</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <!--
