@@ -84,15 +84,15 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 | Swagger Codegen Version                                                                            | Release Date | Swagger / OpenAPI Spec compatibility | Notes                                                                      |
 |----------------------------------------------------------------------------------------------------|--------------|--------------------------------------|----------------------------------------------------------------------------|
-| [3.0.78](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.78) (**current stable**) | 2026-02-17   | 1.0, 1.1, 1.2, 2.0, 3.0              | [tag v3.0.78](https://github.com/swagger-api/swagger-codegen/tree/v3.0.78) |
-| [2.4.47](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.47) (**current stable**) | 2025-09-16   | 1.0, 1.1, 1.2, 2.0                   | [tag v2.4.47](https://github.com/swagger-api/swagger-codegen/tree/v2.4.47) |
+| [3.0.79](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.79) (**current stable**) | 2026-04-21   | 1.0, 1.1, 1.2, 2.0, 3.0              | [tag v3.0.79](https://github.com/swagger-api/swagger-codegen/tree/v3.0.79) |
+| [2.4.52](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.52) (**current stable**) | 2026-04-15   | 1.0, 1.1, 1.2, 2.0                   | [tag v2.4.52](https://github.com/swagger-api/swagger-codegen/tree/v2.4.52) |
 
 💁 Here's also an overview of what's coming around the corner:
 
 | Swagger Codegen Version                                                                                                                                                                                    | Release Date | Swagger / OpenAPI Spec compatibility | Notes         |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|--------------------------------------|---------------|
-| 3.0.79-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.79-SNAPSHOT/) | TBD          | 1.0, 1.1, 1.2, 2.0, 3.0              | Minor release |
-| 2.4.48-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/swagger-codegen-cli/2.4.48-SNAPSHOT/)           | TBD          | 1.0, 1.1, 1.2, 2.0                   | Minor release |
+| 3.0.80-SNAPSHOT (current 3.0.0, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/codegen/v3/swagger-codegen-cli/3.0.80-SNAPSHOT/) | TBD          | 1.0, 1.1, 1.2, 2.0, 3.0              | Minor release |
+| 2.4.53-SNAPSHOT (current master, upcoming minor release) [SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/io/swagger/swagger-codegen-cli/2.4.53-SNAPSHOT/)           | TBD          | 1.0, 1.1, 1.2, 2.0                   | Minor release |
 
 For detailed breakdown of all versions, please see the [full compatibility listing](./docs/compatibility.md).
 
