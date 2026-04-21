@@ -1,4 +1,4 @@
-FROM redhat/ubi9-minimal:9.7
+FROM redhat/ubi10-minimal:10.1
 RUN microdnf -y update && \
     microdnf -y install \
     glibc-langpack-en \
