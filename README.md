@@ -84,7 +84,7 @@ The OpenAPI Specification has undergone 3 revisions since initial creation in 20
 
 | Swagger Codegen Version                                                                            | Release Date | Swagger / OpenAPI Spec compatibility | Notes                                                                      |
 |----------------------------------------------------------------------------------------------------|--------------|--------------------------------------|----------------------------------------------------------------------------|
-| [3.0.79](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.79) (**current stable**) | 2026-04-21   | 1.0, 1.1, 1.2, 2.0, 3.0              | [tag v3.0.79](https://github.com/swagger-api/swagger-codegen/tree/v3.0.79) |
+| [3.0.79](https://github.com/swagger-api/swagger-codegen/releases/tag/v3.0.79) (**current stable**) | 2026-04-22   | 1.0, 1.1, 1.2, 2.0, 3.0              | [tag v3.0.79](https://github.com/swagger-api/swagger-codegen/tree/v3.0.79) |
 | [2.4.52](https://github.com/swagger-api/swagger-codegen/releases/tag/v2.4.52) (**current stable**) | 2026-04-15   | 1.0, 1.1, 1.2, 2.0                   | [tag v2.4.52](https://github.com/swagger-api/swagger-codegen/tree/v2.4.52) |
 
 💁 Here's also an overview of what's coming around the corner:
