@@ -28,7 +28,7 @@ jobs:
         run: |
           docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
           set -e
-      - uses: s4u/maven-settings-action@v2.8.0
+      - uses: s4u/maven-settings-action@v4.0.0
         name: setup maven settings.xml
         with:
           servers: |
