@@ -38,17 +38,26 @@ jobs:
     - name: Run prepare release script
       id: prepare-release
       run: |
-        export MY_POM_VERSION=`mvn -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-        if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
-        then
+        . ./CI/release/common.sh
+        export MY_POM_VERSION="$(maven_project_version)"
+        require_release_or_snapshot_version "MY_POM_VERSION" "${MY_POM_VERSION}"
+        if [[ "${MY_POM_VERSION}" =~ SNAPSHOT$ ]]; then
+          require_snapshot_version "MY_POM_VERSION" "${MY_POM_VERSION}"
           . ./CI/prepare-release.sh
-          echo "PREPARE_RELEASE_OK=yes" >> $GITHUB_ENV
+          require_release_version "SC_VERSION" "${SC_VERSION}"
+          require_release_version "SC_NEXT_VERSION" "${SC_NEXT_VERSION}"
+          EXPECTED_SC_VERSION="$(release_from_snapshot_version "${MY_POM_VERSION}")"
+          [[ "${SC_VERSION}" == "${EXPECTED_SC_VERSION}" ]] || fail "SC_VERSION (${SC_VERSION}) does not match snapshot-derived release (${EXPECTED_SC_VERSION})"
+          EXPECTED_NEXT_SNAPSHOT="$(next_snapshot_from_release_version "${SC_VERSION}")"
+          [[ "${MY_POM_VERSION}" == "${SC_VERSION}-SNAPSHOT" ]] || fail "MY_POM_VERSION (${MY_POM_VERSION}) is not aligned with SC_VERSION (${SC_VERSION})"
+          [[ "${EXPECTED_NEXT_SNAPSHOT}" == "${SC_NEXT_VERSION}-SNAPSHOT" ]] || fail "SC_NEXT_VERSION (${SC_NEXT_VERSION}) does not match expected next snapshot (${EXPECTED_NEXT_SNAPSHOT})"
+          set_output PREPARE_RELEASE_OK yes
+          set_output SC_VERSION "${SC_VERSION}"
+          set_output SC_NEXT_VERSION "${SC_NEXT_VERSION}"
         else
-          echo "not preparing release for release version: " ${MY_POM_VERSION}
-          echo "PREPARE_RELEASE_OK=no" >> $GITHUB_ENV
+          notice "not preparing release for release version: ${MY_POM_VERSION}"
+          set_output PREPARE_RELEASE_OK no
         fi
-        echo "SC_VERSION=$SC_VERSION" >> $GITHUB_ENV
-        echo "SC_NEXT_VERSION=$SC_NEXT_VERSION" >> $GITHUB_ENV
     - name: Create Prepare Release Pull Request
       uses: peter-evans/create-pull-request@v8
       if: env.PREPARE_RELEASE_OK == 'yes'
