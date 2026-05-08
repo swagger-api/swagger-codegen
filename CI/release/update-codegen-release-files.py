@@ -66,6 +66,22 @@ def update_generators_poms(generators_version: str) -> None:
     replace_text("pom.docker.xml", replacements)
 
 
+def update_sample_meta_codegen_pom(codegen_version: str) -> None:
+    # Keep sample project pinned to the codegen version being prepared.
+    replace_text(
+        "samples/meta-codegen/pom.xml",
+        [(r"<swagger-codegen-version>[^<]+</swagger-codegen-version>", f"<swagger-codegen-version>{codegen_version}</swagger-codegen-version>")],
+    )
+
+
+def update_docker_pom_version(codegen_version: str) -> None:
+    # Keep root project version in pom.docker.xml aligned with released codegen version.
+    replace_text(
+        "pom.docker.xml",
+        [(r"<version>3\.0\.[0-9]+(?:-SNAPSHOT)?</version>", f"<version>{codegen_version}</version>")],
+    )
+
+
 def update_openapi_version(version: str) -> None:
     # Reflect current codegen version in online generator OpenAPI metadata.
     replace_text(
@@ -121,6 +137,8 @@ def main() -> int:
             return 2
         codegen_version, next_snapshot, generators_version = sys.argv[2:5]
         update_generators_poms(generators_version)
+        update_sample_meta_codegen_pom(codegen_version)
+        update_docker_pom_version(codegen_version)
         update_openapi_version(codegen_version)
         update_snapshot_rows(next_snapshot)
         update_release_rows(codegen_version)
