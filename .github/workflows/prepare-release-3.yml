@@ -1,0 +1,116 @@
+name: Prepare Release 3.0
+
+# Manual pre-release workflow for creating the prepare PR on branch 3.0.0.
+on:
+  workflow_dispatch:
+    inputs:
+      codegen_version:
+        description: 'Release version, for example 3.0.80. Leave empty to derive from current SNAPSHOT.'
+        required: false
+        type: string
+      next_codegen_snapshot_version:
+        description: 'Next development version, for example 3.0.81-SNAPSHOT. Leave empty to increment codegen_version.'
+        required: false
+        type: string
+      release_generators:
+        description: 'Prepare for releasing swagger-codegen-generators with codegen'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      generators_version:
+        description: 'Generator release version when release_generators=true, for example 1.0.61'
+        required: false
+        type: string
+      previous_generators_version:
+        description: 'Optional bootstrap generator version for circular dependency validation'
+        required: false
+        type: string
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    # Resolves release versions, applies file updates, validates build, then opens PR.
+    runs-on: ubuntu-latest
+    env:
+      CODEGEN_VERSION: ${{ inputs.codegen_version }}
+      NEXT_CODEGEN_SNAPSHOT_VERSION: ${{ inputs.next_codegen_snapshot_version }}
+      RELEASE_GENERATORS: ${{ inputs.release_generators }}
+      GENERATORS_VERSION: ${{ inputs.generators_version }}
+      PREVIOUS_GENERATORS_VERSION: ${{ inputs.previous_generators_version }}
+    steps:
+      - name: Checkout swagger-codegen 3.0.0
+        uses: actions/checkout@v6
+        with:
+          ref: 3.0.0
+          fetch-depth: 0
+
+      - uses: actions/create-github-app-token@v3
+        id: generate-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: temurin
+          cache: maven
+
+      - name: Add Central Portal snapshot repository
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
+
+      - name: Validate bootstrap generator snapshot
+        if: inputs.previous_generators_version != ''
+        run: |
+          # Optional safeguard for circular dependency bootstrap inputs.
+          source CI/release/common.sh
+          require_release_or_snapshot_version "previous_generators_version" "${PREVIOUS_GENERATORS_VERSION}"
+          if [[ "${PREVIOUS_GENERATORS_VERSION}" =~ SNAPSHOT$ ]]; then
+            assert_snapshot_metadata_exists "${GENERATORS_ARTIFACT}" "${PREVIOUS_GENERATORS_VERSION}"
+          elif ! release_artifact_exists "${GENERATORS_ARTIFACT}" "${PREVIOUS_GENERATORS_VERSION}"; then
+            fail "previous_generators_version ${PREVIOUS_GENERATORS_VERSION} does not exist in Maven Central"
+          fi
+
+      - name: Prepare release file changes
+        id: prepare-release
+        # Performs version bump to release and updates docs/poms/openapi.
+        run: bash CI/release/prepare-codegen-release.sh
+
+      - name: Build release candidate
+        # Build with the resolved generators version to catch dependency issues early.
+        run: |
+          mvn -B -U clean install -Pdocker \
+            -Dswagger-codegen-generators-version="${BUILD_GENERATORS_VERSION}" \
+            -DJETTY_TEST_HTTP_PORT=8090 \
+            -DJETTY_TEST_STOP_PORT=8089
+
+      - name: Print generator repo follow-up
+        if: inputs.release_generators == 'true'
+        run: |
+          # Generators repo changes are intentionally handled in a separate repository PR.
+          echo "::notice::Open a separate PR in swagger-api/swagger-codegen-generators master setting version ${GENERATORS_VERSION} and a usable swagger-codegen-version. This repository workflow does not push cross-repository generator changes."
+
+      - name: Create prepare release pull request
+        # Opens PR with all prepare-release changes targeting 3.0.0.
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          commit-message: prepare release ${{ steps.prepare-release.outputs.codegen_version }}
+          title: prepare release ${{ steps.prepare-release.outputs.codegen_version }}
+          branch: prepare-release-${{ steps.prepare-release.outputs.codegen_version }}
+          base: 3.0.0
+          body: |
+            Prepare Swagger Codegen ${{ steps.prepare-release.outputs.codegen_version }}.
+
+            release_generators: ${{ inputs.release_generators }}
+            swagger-codegen-generators version: ${{ steps.prepare-release.outputs.generators_version }}
+            next codegen snapshot: ${{ steps.prepare-release.outputs.next_codegen_snapshot_version }}
