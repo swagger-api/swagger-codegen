@@ -13,6 +13,8 @@ previous_generators_version="${PREVIOUS_GENERATORS_VERSION:-}"
 build_generators_version=""
 
 # Prepare flow must start from a SNAPSHOT on branch 3.0.0.
+current_branch="$(git rev-parse --abbrev-ref HEAD)"
+[[ "${current_branch}" == "3.0.0" ]] || fail "Prepare release can run only on branch 3.0.0, got ${current_branch}"
 current_version="$(maven_project_version)"
 [[ "${current_version}" =~ SNAPSHOT$ ]] || fail "Prepare release must start from a SNAPSHOT codegen version, got ${current_version}"
 
@@ -76,9 +78,10 @@ mvn -B versions:set -DnewVersion="${codegen_version}"
 mvn -B versions:commit
 
 # Generate a minimal release-notes draft aligned with current GitHub release style.
-mkdir -p docs/release-notes
+release_notes_dir="${RUNNER_TEMP:-/tmp}/swagger-codegen-release-drafts"
+mkdir -p "${release_notes_dir}"
 previous_tag="$(git tag --merged HEAD --list 'v3.*' | sort -V | tail -n 1 || true)"
-release_notes_file="docs/release-notes/v${codegen_version}.md"
+release_notes_file="${release_notes_dir}/v${codegen_version}.md"
 {
   echo "# Swagger Codegen v${codegen_version}"
   echo
@@ -97,6 +100,10 @@ release_notes_file="docs/release-notes/v${codegen_version}.md"
     echo
   fi
 } > "${release_notes_file}"
+
+if [[ -n "${GITHUB_OUTPUT:-}" ]]; then
+  echo "release_notes_file=${release_notes_file}" >> "${GITHUB_OUTPUT}"
+fi
 
 update_codegen_release_files_script="CI/release/update-codegen-release-files.py"
 [[ -f "${update_codegen_release_files_script}" ]] || fail "Missing ${update_codegen_release_files_script}"

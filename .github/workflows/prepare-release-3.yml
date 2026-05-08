@@ -33,8 +33,18 @@ permissions:
   pull-requests: write
 
 jobs:
+  validate-branch:
+    if: github.ref_name != '3.0.0'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require 3.0.0 branch
+        run: |
+          echo "This workflow can run only from branch 3.0.0 (current: ${GITHUB_REF_NAME})."
+          exit 1
+
   prepare:
     # Resolves release versions, applies file updates, validates build, then opens PR.
+    if: github.ref_name == '3.0.0'
     runs-on: ubuntu-latest
     env:
       CODEGEN_VERSION: ${{ inputs.codegen_version }}
@@ -84,6 +94,17 @@ jobs:
         id: prepare-release
         # Performs version bump to release and updates docs/poms/openapi.
         run: bash CI/release/prepare-codegen-release.sh
+
+      - name: Create or update draft GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          bodyFile: ${{ steps.prepare-release.outputs.release_notes_file }}
+          commit: 3.0.0
+          draft: true
+          name: v${{ steps.prepare-release.outputs.codegen_version }}
+          tag: v${{ steps.prepare-release.outputs.codegen_version }}
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Build release candidate
         # Build with the resolved generators version to catch dependency issues early.
