@@ -9,7 +9,7 @@ RELEASE_DOCS = ["README.md", "docs/prerequisites.md", "docs/versioning.md"]
 
 # Regex patterns intentionally target release tables/examples used in public docs.
 SNAPSHOT_ROW_PATTERN = (
-    r"\| [0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT \(current 3\.0\.0, upcoming minor release\).*?\| Minor release\s*\|"
+    r"\|?\s*[0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT \(current 3\.0\.0, upcoming minor release\).*?\|\s*Minor release\s*\|?"
 )
 RELEASE_ROW_PATTERN = (
     r"\| \[[0-9]+\.[0-9]+\.[0-9]+\]\(https://github\.com/swagger-api/swagger-codegen/releases/tag/v[0-9]+\.[0-9]+\.[0-9]+\) "
@@ -18,7 +18,11 @@ RELEASE_ROW_PATTERN = (
 RELEASE_JAR_PATTERN = (
     r"io/swagger/codegen/v3/swagger-codegen-cli/[0-9]+\.[0-9]+\.[0-9]+/swagger-codegen-cli-[0-9]+\.[0-9]+\.[0-9]+\.jar"
 )
+SNAPSHOT_JAR_PATTERN = (
+    r"io/swagger/codegen/v3/swagger-codegen-cli/[0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT/swagger-codegen-cli-[0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT\.jar"
+)
 RELEASE_VERSION_PATTERN = r"<version>3\.0\.[0-9]+</version>"
+SNAPSHOT_VERSION_PATTERN = r"<version>3\.0\.[0-9]+-SNAPSHOT</version>"
 
 
 def replace_text(path: str, replacements: list[tuple[str, str]]) -> None:
@@ -93,9 +97,9 @@ def update_openapi_version(version: str) -> None:
 def update_snapshot_rows(next_snapshot: str) -> None:
     # Update "current upcoming snapshot" row in compatibility docs.
     snapshot_row = (
-        f"| {next_snapshot} (current 3.0.0, upcoming minor release) "
+        f"{next_snapshot} (current 3.0.0, upcoming minor release) "
         "[SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/"
-        f"io/swagger/codegen/v3/swagger-codegen-cli/{next_snapshot}/) | TBD          | 1.0, 1.1, 1.2, 2.0, 3.0              | Minor release |"
+        f"io/swagger/codegen/v3/swagger-codegen-cli/{next_snapshot}/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release"
     )
     replace_text_in_docs(COMPATIBILITY_DOCS, [(SNAPSHOT_ROW_PATTERN, snapshot_row)], require_match=True)
 
@@ -124,9 +128,23 @@ def update_release_docs(codegen_version: str) -> None:
     )
 
 
+def update_snapshot_docs(next_snapshot: str) -> None:
+    # Point snapshot examples to next development CLI coordinates.
+    replace_text_in_docs(
+        RELEASE_DOCS,
+        [
+            (
+                SNAPSHOT_JAR_PATTERN,
+                f"io/swagger/codegen/v3/swagger-codegen-cli/{next_snapshot}/swagger-codegen-cli-{next_snapshot}.jar",
+            ),
+            (SNAPSHOT_VERSION_PATTERN, f"<version>{next_snapshot}</version>"),
+        ],
+    )
+
+
 def main() -> int:
     if len(sys.argv) < 2:
-        print("usage: update-codegen-release-files.py prepare <codegen_version> <next_snapshot> <generators_version>", file=sys.stderr)
+        print("usage: update-codegen-release-files.py <prepare|post> [...]", file=sys.stderr)
         return 2
 
     mode = sys.argv[1]
@@ -143,6 +161,18 @@ def main() -> int:
         update_snapshot_rows(next_snapshot)
         update_release_rows(codegen_version)
         update_release_docs(codegen_version)
+        return 0
+
+    if mode == "post":
+        # Post mode: move docs/content back to next snapshot development state.
+        if len(sys.argv) != 4:
+            print("usage: ... post <next_snapshot> <generators_version>", file=sys.stderr)
+            return 2
+        next_snapshot, generators_version = sys.argv[2:4]
+        update_generators_poms(generators_version)
+        update_openapi_version(next_snapshot)
+        update_snapshot_rows(next_snapshot)
+        update_snapshot_docs(next_snapshot)
         return 0
 
     print(f"unknown mode: {mode}", file=sys.stderr)
