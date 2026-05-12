@@ -1,0 +1,534 @@
+name: Release Codegen 3.0
+
+# Manual release workflow for codegen 3.0.0, with optional generators release.
+on:
+  workflow_dispatch:
+    inputs:
+      release_generators:
+        description: 'Release swagger-codegen-generators together with codegen'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      skip_maven_deploy:
+        description: 'Skip Maven deploy for recovery when artifacts are already published'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      skip_docker_push:
+        description: 'Skip Docker build and push'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      skip_rancher_deploy:
+        description: 'Skip Swagger online generator deployment'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      previous_generators_version:
+        description: 'Generator release or snapshot version used to bootstrap the first codegen build when releasing generators'
+        required: false
+        type: string
+      codegen_generators_bootstrap_version:
+        description: 'Codegen release or snapshot version used to build generators'
+        required: false
+        type: string
+      dry_run:
+        description: 'Run validation and builds without deploy, Docker push, or Rancher deploy (post-release PR is still created)'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-branch:
+    if: github.ref_name != '3.0.0'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require 3.0.0 branch
+        run: |
+          echo "This workflow can run only from branch 3.0.0 (current: ${GITHUB_REF_NAME})."
+          exit 1
+
+  validate:
+    # Single source of truth for resolved versions and release-mode decisions.
+    if: github.ref_name == '3.0.0'
+    runs-on: ubuntu-latest
+    outputs:
+      codegen_version: ${{ steps.resolve.outputs.codegen_version }}
+      generators_version: ${{ steps.resolve.outputs.generators_version }}
+      codegen_build_generators_version: ${{ steps.resolve.outputs.codegen_build_generators_version }}
+      bootstrap_generators_version: ${{ steps.resolve.outputs.bootstrap_generators_version }}
+      bootstrap_codegen_version: ${{ steps.resolve.outputs.bootstrap_codegen_version }}
+      next_codegen_snapshot_version: ${{ steps.resolve.outputs.next_codegen_snapshot_version }}
+      generators_deploy_needed: ${{ steps.resolve.outputs.generators_deploy_needed }}
+    steps:
+      - name: Checkout swagger-codegen 3.0.0
+        uses: actions/checkout@v6
+        with:
+          ref: 3.0.0
+
+      - name: Checkout swagger-codegen-generators
+        if: inputs.release_generators == 'true'
+        uses: actions/checkout@v6
+        with:
+          repository: swagger-api/swagger-codegen-generators
+          ref: master
+          path: generators-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
+        with:
+          java-version: '17'
+          distribution: temurin
+          server-id: central
+          cache: maven
+          overwrite-settings: false
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Add Central Portal snapshot repository
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
+
+      - name: Validate and resolve versions
+        id: resolve
+        # Computes build/deploy coordinates and enforces safe release preconditions.
+        env:
+          RELEASE_GENERATORS: ${{ inputs.release_generators }}
+          PREVIOUS_GENERATORS_VERSION: ${{ inputs.previous_generators_version }}
+          CODEGEN_GENERATORS_BOOTSTRAP_VERSION: ${{ inputs.codegen_generators_bootstrap_version }}
+          SKIP_MAVEN_DEPLOY: ${{ inputs.skip_maven_deploy }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: bash CI/release/resolve-release-versions.sh
+
+  bootstrap_codegen:
+    # Break circular dependency: build codegen first with previous generators version.
+    runs-on: ubuntu-latest
+    needs: validate
+    if: inputs.release_generators == 'true' && needs.validate.outputs.generators_deploy_needed == 'true'
+    steps:
+      - name: Checkout swagger-codegen 3.0.0
+        uses: actions/checkout@v6
+        with:
+          ref: 3.0.0
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+        with:
+          java-version: '17'
+          distribution: temurin
+          server-id: central
+          cache: maven
+          overwrite-settings: false
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+
+      - name: Add Central Portal snapshot repository
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
+
+      - name: Build codegen with bootstrap generators
+        run: |
+          bash CI/release/build-codegen-with-generators.sh "${{ needs.validate.outputs.bootstrap_generators_version }}"
+
+  generators:
+    # Build/deploy generators only when this run is responsible for publishing them.
+    runs-on: ubuntu-latest
+    needs:
+      - validate
+      - bootstrap_codegen
+    if: inputs.release_generators == 'true' && needs.validate.outputs.generators_deploy_needed == 'true'
+    steps:
+      - name: Checkout swagger-codegen-generators
+        uses: actions/checkout@v6
+        with:
+          repository: swagger-api/swagger-codegen-generators
+          ref: master
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
+        with:
+          java-version: '17'
+          distribution: temurin
+          server-id: central
+          cache: maven
+          overwrite-settings: false
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Add Central Portal snapshot repository
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
+
+      - name: Build swagger-codegen-generators
+        run: |
+          mvn -B -U clean install \
+            -Dswagger-codegen-version="${{ needs.validate.outputs.bootstrap_codegen_version }}"
+
+      - name: Deploy swagger-codegen-generators
+        # Recovery controls: deploy can be skipped with dry_run/skip_maven_deploy.
+        if: inputs.skip_maven_deploy != 'true' && inputs.dry_run != 'true'
+        run: mvn --no-transfer-progress -B -Prelease deploy
+
+      - name: Skip swagger-codegen-generators deploy
+        if: inputs.skip_maven_deploy == 'true' || inputs.dry_run == 'true'
+        run: |
+          echo "Generator deploy skipped."
+          echo "skip_maven_deploy=${{ inputs.skip_maven_deploy }}"
+          echo "dry_run=${{ inputs.dry_run }}"
+
+  codegen:
+    # Main codegen build and Maven release deploy.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs:
+      - validate
+      - generators
+    if: always() && needs.validate.result == 'success' && (needs.generators.result == 'success' || needs.generators.result == 'skipped')
+    outputs:
+      codegen_version: ${{ steps.expose.outputs.codegen_version }}
+      generators_version: ${{ steps.expose.outputs.generators_version }}
+      next_codegen_snapshot_version: ${{ steps.expose.outputs.next_codegen_snapshot_version }}
+    steps:
+      - name: Checkout swagger-codegen 3.0.0
+        uses: actions/checkout@v6
+        with:
+          ref: 3.0.0
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
+        with:
+          java-version: '17'
+          distribution: temurin
+          server-id: central
+          cache: maven
+          overwrite-settings: false
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Add Central Portal snapshot repository
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          repositories: '[{"id":"central-portal-snapshots","name":"Sonatype Central Portal snapshots","url":"https://central.sonatype.com/repository/maven-snapshots/","releases":{"enabled":false},"snapshots":{"enabled":true}}]'
+          servers: '[{"id":"central","username":"${{ secrets.MAVEN_CENTRAL_USERNAME }}","password":"${{ secrets.MAVEN_CENTRAL_PASSWORD }}"}]'
+
+      - name: Build swagger-codegen
+        run: |
+          bash CI/release/build-codegen-with-generators.sh "${{ needs.validate.outputs.codegen_build_generators_version }}"
+
+      - name: Deploy swagger-codegen
+        # Intended for final release run; disabled in dry_run/recovery skip mode.
+        if: inputs.skip_maven_deploy != 'true' && inputs.dry_run != 'true'
+        run: |
+          mvn --no-transfer-progress -B -Prelease deploy \
+            -Dswagger-codegen-generators-version="${{ needs.validate.outputs.codegen_build_generators_version }}"
+
+      - name: Skip swagger-codegen deploy
+        if: inputs.skip_maven_deploy == 'true' || inputs.dry_run == 'true'
+        run: |
+          echo "Codegen Maven deploy skipped."
+          echo "skip_maven_deploy=${{ inputs.skip_maven_deploy }}"
+          echo "dry_run=${{ inputs.dry_run }}"
+
+      - name: Expose release outputs
+        id: expose
+        run: |
+          echo "codegen_version=${{ needs.validate.outputs.codegen_version }}" >> "${GITHUB_OUTPUT}"
+          echo "generators_version=${{ needs.validate.outputs.generators_version }}" >> "${GITHUB_OUTPUT}"
+          echo "next_codegen_snapshot_version=${{ needs.validate.outputs.next_codegen_snapshot_version }}" >> "${GITHUB_OUTPUT}"
+
+      - name: Publish prepared draft release notes
+        # Publishes the draft release created in prepare-release workflow.
+        if: inputs.dry_run != 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const tag = `v${{ needs.validate.outputs.codegen_version }}`;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            let release;
+            try {
+              const { data } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+              release = data;
+            } catch (error) {
+              core.setFailed(`Expected prepared draft release for tag ${tag}, but it was not found.`);
+              return;
+            }
+
+            if (!release.draft) {
+              core.info(`Release ${tag} is already published.`);
+              return;
+            }
+
+            await github.rest.repos.updateRelease({
+              owner,
+              repo,
+              release_id: release.id,
+              draft: false
+            });
+            core.info(`Published draft release ${tag}.`);
+
+  docker:
+    # Optional container publication stage; can be disabled independently.
+    runs-on: ubuntu-latest
+    needs: codegen
+    if: inputs.skip_docker_push != 'true' && inputs.dry_run != 'true'
+    steps:
+      - name: Checkout swagger-codegen 3.0.0
+        uses: actions/checkout@v6
+        with:
+          ref: 3.0.0
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: temurin
+          cache: maven
+
+      - name: Build Docker inputs
+        run: |
+          mvn -B -U clean install -Pdocker \
+            -Dswagger-codegen-generators-version="${{ needs.codegen.outputs.generators_version }}" \
+            -DJETTY_TEST_HTTP_PORT=8090 \
+            -DJETTY_TEST_STOP_PORT=8089
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_SB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_SB_PASSWORD }}
+
+      - name: Build and push swagger-generator-v3
+        uses: docker/build-push-action@v5
+        with:
+          context: ./modules/swagger-generator
+          file: ./modules/swagger-generator/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
+          provenance: false
+          build-args: |
+            HIDDEN_OPTIONS_DEFAULT_PATH=hiddenOptions.yaml
+            JAVA_MEM=1024m
+            HTTP_PORT=8080
+          tags: swaggerapi/swagger-generator-v3:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-generator-v3:latest
+
+      - name: Build and push swagger-generator-v3-root
+        uses: docker/build-push-action@v5
+        with:
+          context: ./modules/swagger-generator
+          file: ./modules/swagger-generator/Dockerfile_root
+          push: true
+          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
+          provenance: false
+          build-args: |
+            HIDDEN_OPTIONS_DEFAULT_PATH=hiddenOptions.yaml
+            JAVA_MEM=1024m
+            HTTP_PORT=8080
+          tags: swaggerapi/swagger-generator-v3-root:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-generator-v3-root:latest
+
+      - name: Build and push swagger-codegen-cli-v3
+        uses: docker/build-push-action@v5
+        with:
+          context: ./modules/swagger-codegen-cli
+          file: ./modules/swagger-codegen-cli/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          provenance: false
+          tags: swaggerapi/swagger-codegen-cli-v3:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-codegen-cli-v3:latest
+
+      - name: Build and push swagger-generator-v3-minimal
+        uses: docker/build-push-action@v5
+        with:
+          context: ./modules/swagger-generator
+          file: ./modules/swagger-generator/Dockerfile_minimal
+          push: true
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          provenance: false
+          tags: swaggerapi/swagger-generator-v3-minimal:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-generator-v3-minimal:latest
+
+  online_deploy:
+    # Optional Swagger online deployment with rollback on readiness failure.
+    runs-on: ubuntu-latest
+    needs:
+      - codegen
+      - docker
+    if: inputs.skip_rancher_deploy != 'true' && inputs.skip_docker_push != 'true' && inputs.dry_run != 'true'
+    steps:
+      - name: Deploy Swagger online generator with rollback
+        env:
+          SC_VERSION: ${{ needs.codegen.outputs.codegen_version }}
+          TOKEN: ${{ secrets.RANCHER2_BEARER_TOKEN }}
+          RANCHER_HOST: rancher.tools.swagger.io
+          CLUSTER_ID: c-n8zp2
+          NAMESPACE_NAME: swagger-oss
+          K8S_OBJECT_TYPE: daemonsets
+          K8S_OBJECT_NAME: swagger-generator-v3
+        run: |
+          set -euo pipefail
+
+          DEPLOY_IMAGE="swaggerapi/swagger-generator-v3:${SC_VERSION}"
+          workloadStatus=""
+
+          getStatus() {
+            echo "Getting ${K8S_OBJECT_NAME} status..."
+            workloadStatus="$(curl --fail --silent --show-error -X GET \
+              -H "Authorization: Bearer ${TOKEN}" \
+              -H 'Content-Type: application/json' \
+              "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}/status")"
+          }
+
+          updateObject() {
+            local image="${1}"
+            echo "Updating ${K8S_OBJECT_NAME} to ${image}"
+            curl --fail --silent --show-error -X PATCH \
+              -H "Authorization: Bearer ${TOKEN}" \
+              -H 'Content-Type: application/json-patch+json' \
+              "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}" \
+              -d "[{\"op\":\"replace\",\"path\":\"/spec/template/spec/containers/0/image\",\"value\":\"${image}\"}]"
+          }
+
+          [[ "${SC_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+            echo "::error::Invalid release version ${SC_VERSION}"
+            exit 1
+          }
+
+          getStatus
+          ROLLBACK_IMAGE="$(echo "${workloadStatus}" | jq -r '.spec.template.spec.containers[0].image')"
+          echo "Current image: ${ROLLBACK_IMAGE}"
+
+          updateObject "${DEPLOY_IMAGE}"
+          sleep 60s
+
+          getStatus
+          status="$(echo "${workloadStatus}" | jq '.status')"
+          numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
+          numberReady="$(echo "${status}" | jq -r '.numberReady')"
+
+          if (( numberReady == numberDesired )); then
+            echo "${K8S_OBJECT_NAME} upgraded to ${DEPLOY_IMAGE}"
+            exit 0
+          fi
+
+          echo "::error::Deployment did not become ready; rolling back to ${ROLLBACK_IMAGE}"
+          updateObject "${ROLLBACK_IMAGE}"
+          sleep 60s
+
+          getStatus
+          status="$(echo "${workloadStatus}" | jq '.status')"
+          numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
+          numberReady="$(echo "${status}" | jq -r '.numberReady')"
+
+          if (( numberReady == numberDesired )); then
+            echo "Rollback to ${ROLLBACK_IMAGE} completed."
+          else
+            echo "::error::Rollback to ${ROLLBACK_IMAGE} failed."
+          fi
+
+          exit 1
+
+  post_release_pr:
+    # Prepares and opens next snapshot PR after successful release pipeline.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    needs:
+      - codegen
+      - docker
+      - online_deploy
+    if: always() && needs.codegen.result == 'success' && (needs.docker.result == 'success' || needs.docker.result == 'skipped') && (needs.online_deploy.result == 'success' || needs.online_deploy.result == 'skipped')
+    env:
+      NEXT_CODEGEN_SNAPSHOT_VERSION: ${{ needs.codegen.outputs.next_codegen_snapshot_version }}
+      GENERATORS_VERSION: ${{ needs.codegen.outputs.generators_version }}
+    steps:
+      - name: Checkout swagger-codegen 3.0.0
+        uses: actions/checkout@v6
+        with:
+          ref: 3.0.0
+
+      - uses: actions/create-github-app-token@v3
+        id: generate-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: temurin
+          cache: maven
+
+      - name: Prepare next snapshot changes
+        id: next-snapshot
+        # Moves repo from release version to next -SNAPSHOT and updates docs/poms.
+        run: bash CI/release/post-codegen-snapshot.sh
+
+      - name: Create next snapshot pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          commit-message: bump snapshot ${{ steps.next-snapshot.outputs.next_codegen_snapshot_version }}
+          title: bump snapshot ${{ steps.next-snapshot.outputs.next_codegen_snapshot_version }}
+          branch: bump-snap-${{ steps.next-snapshot.outputs.next_codegen_snapshot_version }}
+          base: 3.0.0
+          body: |
+            Bump Swagger Codegen to ${{ steps.next-snapshot.outputs.next_codegen_snapshot_version }} after release.
+
+            release_generators: ${{ inputs.release_generators }}
+            swagger-codegen-generators dependency retained as: ${{ needs.codegen.outputs.generators_version }}

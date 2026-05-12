@@ -6,10 +6,15 @@ RELEASED_MAVEN_BASE="${RELEASED_MAVEN_BASE:-https://repo1.maven.org/maven2}"
 SNAPSHOT_MAVEN_BASE="${SNAPSHOT_MAVEN_BASE:-https://central.sonatype.com/repository/maven-snapshots}"
 CODEGEN_GROUP_PATH="io/swagger/codegen/v3"
 GENERATORS_ARTIFACT="swagger-codegen-generators"
+CODEGEN_ARTIFACT="swagger-codegen"
 
 fail() {
   echo "::error::$*"
   exit 1
+}
+
+notice() {
+  echo "::notice::$*"
 }
 
 require_release_version() {
@@ -58,6 +63,11 @@ maven_project_version() {
   mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec
 }
 
+maven_property_value() {
+  local property_name="$1"
+  mvn -q -Dexec.executable="echo" -Dexec.args="\${${property_name}}" --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec
+}
+
 ## Shared curl wrapper for metadata fetch with retries and hard timeouts.
 curl_metadata() {
   local url="$1"
@@ -86,6 +96,10 @@ latest_released_generators_version() {
 
 latest_snapshot_generators_version() {
   latest_matching_version "${SNAPSHOT_MAVEN_BASE}/${CODEGEN_GROUP_PATH}/${GENERATORS_ARTIFACT}/maven-metadata.xml" '^1\.[0-9]+\.[0-9]+-SNAPSHOT$'
+}
+
+latest_snapshot_codegen_version() {
+  latest_matching_version "${SNAPSHOT_MAVEN_BASE}/${CODEGEN_GROUP_PATH}/${CODEGEN_ARTIFACT}/maven-metadata.xml" '^3\.[0-9]+\.[0-9]+-SNAPSHOT$'
 }
 
 ## Build canonical artifact URLs and probe existence without downloading payloads.
@@ -122,4 +136,23 @@ assert_snapshot_metadata_exists() {
   if ! curl_metadata "${metadata_url}" >/dev/null; then
     fail "Required SNAPSHOT ${CODEGEN_GROUP_PATH}:${artifact}:${version} cannot be resolved from ${metadata_url}. Sonatype snapshots can expire. Recovery: publish that exact snapshot version, then rerun this workflow."
   fi
+}
+
+## Fast local Maven resolve check to fail early before long release stages.
+assert_maven_resolves() {
+  local coordinates="$1"
+
+  if ! mvn -B -q dependency:get -Dartifact="${coordinates}" >/tmp/maven-resolve.log 2>&1; then
+    cat /tmp/maven-resolve.log
+    fail "Maven could not resolve ${coordinates}. If this is a SNAPSHOT, publish the required snapshot before retrying."
+  fi
+}
+
+## Write outputs for both step outputs and downstream environment reuse.
+set_output() {
+  local name="$1"
+  local value="$2"
+
+  echo "${name}=${value}" >> "${GITHUB_OUTPUT}"
+  echo "${name}=${value}" >> "${GITHUB_ENV}"
 }
