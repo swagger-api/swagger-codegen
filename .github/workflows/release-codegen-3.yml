@@ -208,6 +208,8 @@ jobs:
       - name: Deploy swagger-codegen-generators
         # Recovery controls: deploy can be skipped with dry_run/skip_maven_deploy.
         if: inputs.skip_maven_deploy != 'true' && inputs.dry_run != 'true'
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
         run: |
           mvn --no-transfer-progress -B -Prelease deploy \
             -Dgpg.pinentry.mode=loopback
@@ -268,6 +270,8 @@ jobs:
       - name: Deploy swagger-codegen
         # Intended for final release run; disabled in dry_run/recovery skip mode.
         if: inputs.skip_maven_deploy != 'true' && inputs.dry_run != 'true'
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
         run: |
           mvn --no-transfer-progress -B -Prelease deploy \
             -Dswagger-codegen-generators-version="${{ needs.validate.outputs.codegen_build_generators_version }}" \
