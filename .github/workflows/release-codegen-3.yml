@@ -208,7 +208,9 @@ jobs:
       - name: Deploy swagger-codegen-generators
         # Recovery controls: deploy can be skipped with dry_run/skip_maven_deploy.
         if: inputs.skip_maven_deploy != 'true' && inputs.dry_run != 'true'
-        run: mvn --no-transfer-progress -B -Prelease deploy
+        run: |
+          mvn --no-transfer-progress -B -Prelease deploy \
+            -Dgpg.pinentry.mode=loopback
 
       - name: Skip swagger-codegen-generators deploy
         if: inputs.skip_maven_deploy == 'true' || inputs.dry_run == 'true'
@@ -268,7 +270,8 @@ jobs:
         if: inputs.skip_maven_deploy != 'true' && inputs.dry_run != 'true'
         run: |
           mvn --no-transfer-progress -B -Prelease deploy \
-            -Dswagger-codegen-generators-version="${{ needs.validate.outputs.codegen_build_generators_version }}"
+            -Dswagger-codegen-generators-version="${{ needs.validate.outputs.codegen_build_generators_version }}" \
+            -Dgpg.pinentry.mode=loopback
 
       - name: Skip swagger-codegen deploy
         if: inputs.skip_maven_deploy == 'true' || inputs.dry_run == 'true'
