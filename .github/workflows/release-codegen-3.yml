@@ -316,170 +316,15 @@ jobs:
             });
             core.info(`Published draft release ${tag}.`);
 
-  docker:
-    # Optional container publication stage; can be disabled independently.
-    runs-on: ubuntu-latest
+  docker_release:
+    # Reuse the battle-tested docker release workflow with orchestrator-level skip gates.
     needs: codegen
     if: inputs.skip_docker_push != 'true' && inputs.dry_run != 'true'
-    steps:
-      - name: Checkout swagger-codegen 3.0.0
-        uses: actions/checkout@v6
-        with:
-          ref: 3.0.0
-
-      - name: Set up Java and Maven
-        uses: actions/setup-java@v5
-        with:
-          java-version: '17'
-          distribution: temurin
-          cache: maven
-
-      - name: Build Docker inputs
-        run: |
-          mvn -B -U clean install -Pdocker \
-            -Dswagger-codegen-generators-version="${{ needs.codegen.outputs.generators_version }}" \
-            -DJETTY_TEST_HTTP_PORT=8090 \
-            -DJETTY_TEST_STOP_PORT=8089
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Docker login
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_SB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_SB_PASSWORD }}
-
-      - name: Build and push swagger-generator-v3
-        uses: docker/build-push-action@v5
-        with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile
-          push: true
-          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
-          provenance: false
-          build-args: |
-            HIDDEN_OPTIONS_DEFAULT_PATH=hiddenOptions.yaml
-            JAVA_MEM=1024m
-            HTTP_PORT=8080
-          tags: swaggerapi/swagger-generator-v3:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-generator-v3:latest
-
-      - name: Build and push swagger-generator-v3-root
-        uses: docker/build-push-action@v5
-        with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_root
-          push: true
-          platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x
-          provenance: false
-          build-args: |
-            HIDDEN_OPTIONS_DEFAULT_PATH=hiddenOptions.yaml
-            JAVA_MEM=1024m
-            HTTP_PORT=8080
-          tags: swaggerapi/swagger-generator-v3-root:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-generator-v3-root:latest
-
-      - name: Build and push swagger-codegen-cli-v3
-        uses: docker/build-push-action@v5
-        with:
-          context: ./modules/swagger-codegen-cli
-          file: ./modules/swagger-codegen-cli/Dockerfile
-          push: true
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          provenance: false
-          tags: swaggerapi/swagger-codegen-cli-v3:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-codegen-cli-v3:latest
-
-      - name: Build and push swagger-generator-v3-minimal
-        uses: docker/build-push-action@v5
-        with:
-          context: ./modules/swagger-generator
-          file: ./modules/swagger-generator/Dockerfile_minimal
-          push: true
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-          provenance: false
-          tags: swaggerapi/swagger-generator-v3-minimal:${{ needs.codegen.outputs.codegen_version }},swaggerapi/swagger-generator-v3-minimal:latest
-
-  online_deploy:
-    # Optional Swagger online deployment with rollback on readiness failure.
-    runs-on: ubuntu-latest
-    needs:
-      - codegen
-      - docker
-    if: inputs.skip_rancher_deploy != 'true' && inputs.skip_docker_push != 'true' && inputs.dry_run != 'true'
-    steps:
-      - name: Deploy Swagger online generator with rollback
-        env:
-          SC_VERSION: ${{ needs.codegen.outputs.codegen_version }}
-          TOKEN: ${{ secrets.RANCHER2_BEARER_TOKEN }}
-          RANCHER_HOST: rancher.tools.swagger.io
-          CLUSTER_ID: c-n8zp2
-          NAMESPACE_NAME: swagger-oss
-          K8S_OBJECT_TYPE: daemonsets
-          K8S_OBJECT_NAME: swagger-generator-v3
-        run: |
-          set -euo pipefail
-
-          DEPLOY_IMAGE="swaggerapi/swagger-generator-v3:${SC_VERSION}"
-          workloadStatus=""
-
-          getStatus() {
-            echo "Getting ${K8S_OBJECT_NAME} status..."
-            workloadStatus="$(curl --fail --silent --show-error -X GET \
-              -H "Authorization: Bearer ${TOKEN}" \
-              -H 'Content-Type: application/json' \
-              "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}/status")"
-          }
-
-          updateObject() {
-            local image="${1}"
-            echo "Updating ${K8S_OBJECT_NAME} to ${image}"
-            curl --fail --silent --show-error -X PATCH \
-              -H "Authorization: Bearer ${TOKEN}" \
-              -H 'Content-Type: application/json-patch+json' \
-              "https://${RANCHER_HOST}/k8s/clusters/${CLUSTER_ID}/apis/apps/v1/namespaces/${NAMESPACE_NAME}/${K8S_OBJECT_TYPE}/${K8S_OBJECT_NAME}" \
-              -d "[{\"op\":\"replace\",\"path\":\"/spec/template/spec/containers/0/image\",\"value\":\"${image}\"}]"
-          }
-
-          [[ "${SC_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
-            echo "::error::Invalid release version ${SC_VERSION}"
-            exit 1
-          }
-
-          getStatus
-          ROLLBACK_IMAGE="$(echo "${workloadStatus}" | jq -r '.spec.template.spec.containers[0].image')"
-          echo "Current image: ${ROLLBACK_IMAGE}"
-
-          updateObject "${DEPLOY_IMAGE}"
-          sleep 60s
-
-          getStatus
-          status="$(echo "${workloadStatus}" | jq '.status')"
-          numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
-          numberReady="$(echo "${status}" | jq -r '.numberReady')"
-
-          if (( numberReady == numberDesired )); then
-            echo "${K8S_OBJECT_NAME} upgraded to ${DEPLOY_IMAGE}"
-            exit 0
-          fi
-
-          echo "::error::Deployment did not become ready; rolling back to ${ROLLBACK_IMAGE}"
-          updateObject "${ROLLBACK_IMAGE}"
-          sleep 60s
-
-          getStatus
-          status="$(echo "${workloadStatus}" | jq '.status')"
-          numberDesired="$(echo "${status}" | jq -r '.desiredNumberScheduled')"
-          numberReady="$(echo "${status}" | jq -r '.numberReady')"
-
-          if (( numberReady == numberDesired )); then
-            echo "Rollback to ${ROLLBACK_IMAGE} completed."
-          else
-            echo "::error::Rollback to ${ROLLBACK_IMAGE} failed."
-          fi
-
-          exit 1
+    uses: ./.github/workflows/docker-release-3.0.yml
+    with:
+      tag: ${{ needs.codegen.outputs.codegen_version }}
+      deploy_online: ${{ inputs.skip_rancher_deploy != 'true' }}
+    secrets: inherit
 
   post_release_pr:
     # Prepares and opens next snapshot PR after successful release pipeline.
@@ -489,9 +334,8 @@ jobs:
       pull-requests: write
     needs:
       - codegen
-      - docker
-      - online_deploy
-    if: always() && needs.codegen.result == 'success' && (needs.docker.result == 'success' || needs.docker.result == 'skipped') && (needs.online_deploy.result == 'success' || needs.online_deploy.result == 'skipped')
+      - docker_release
+    if: always() && needs.codegen.result == 'success' && (needs.docker_release.result == 'success' || needs.docker_release.result == 'skipped')
     env:
       NEXT_CODEGEN_SNAPSHOT_VERSION: ${{ needs.codegen.outputs.next_codegen_snapshot_version }}
       GENERATORS_VERSION: ${{ needs.codegen.outputs.generators_version }}

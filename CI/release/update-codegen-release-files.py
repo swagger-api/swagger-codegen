@@ -170,6 +170,7 @@ def main() -> int:
             return 2
         next_snapshot, generators_version = sys.argv[2:4]
         update_generators_poms(generators_version)
+        update_docker_pom_version(next_snapshot)
         update_openapi_version(next_snapshot)
         update_snapshot_rows(next_snapshot)
         update_snapshot_docs(next_snapshot)

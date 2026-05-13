@@ -7,6 +7,34 @@ on:
       tag:
         description: tag/version to release
         required: true
+        type: string
+      deploy_online:
+        description: deploy Swagger online generator via Rancher
+        required: false
+        default: true
+        type: boolean
+  workflow_call:
+    inputs:
+      tag:
+        description: tag/version to release
+        required: true
+        type: string
+      deploy_online:
+        description: deploy Swagger online generator via Rancher
+        required: false
+        default: true
+        type: boolean
+    secrets:
+      MAVEN_CENTRAL_USERNAME:
+        required: true
+      MAVEN_CENTRAL_PASSWORD:
+        required: true
+      DOCKERHUB_SB_USERNAME:
+        required: true
+      DOCKERHUB_SB_PASSWORD:
+        required: true
+      RANCHER2_BEARER_TOKEN:
+        required: false
 jobs:
   build_push_docker_release_30:
 
@@ -132,6 +160,7 @@ jobs:
         run: |
           cosign attach sbom --sbom swagger-generator-v3-minimal.spdx.json swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
       - name: deploy
+        if: ${{ inputs.deploy_online }}
         run: |
           echo "${{ env.TAG }}"
 
@@ -248,4 +277,4 @@ jobs:
     env:
       MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
       MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-      TAG: ${{ github.event.inputs.tag }}
+      TAG: ${{ inputs.tag }}
