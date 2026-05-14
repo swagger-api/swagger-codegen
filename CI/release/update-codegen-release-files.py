@@ -9,11 +9,11 @@ RELEASE_DOCS = ["README.md", "docs/prerequisites.md", "docs/versioning.md"]
 
 # Regex patterns intentionally target release tables/examples used in public docs.
 SNAPSHOT_ROW_PATTERN = (
-    r"\|?\s*[0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT \(current 3\.0\.0, upcoming minor release\).*?\|\s*Minor release\s*\|?"
+    r"^\|[ \t]*[0-9]+\.[0-9]+\.[0-9]+-SNAPSHOT \(current 3\.0\.0, upcoming minor release\).*?\|[ \t]*Minor release[ \t]*\|[ \t]*$"
 )
 RELEASE_ROW_PATTERN = (
-    r"\| \[[0-9]+\.[0-9]+\.[0-9]+\]\(https://github\.com/swagger-api/swagger-codegen/releases/tag/v[0-9]+\.[0-9]+\.[0-9]+\) "
-    r"(?:\(\*\*current stable\*\*\)\s*)?.*?\| \[tag v[0-9]+\.[0-9]+\.[0-9]+\]\(https://github\.com/swagger-api/swagger-codegen/tree/v[0-9]+\.[0-9]+\.[0-9]+\)\s*\|"
+    r"^\| \[[0-9]+\.[0-9]+\.[0-9]+\]\(https://github\.com/swagger-api/swagger-codegen/releases/tag/v[0-9]+\.[0-9]+\.[0-9]+\) "
+    r"(?:\(\*\*current stable\*\*\)[ \t]*)?.*?\| \[tag v[0-9]+\.[0-9]+\.[0-9]+\]\(https://github\.com/swagger-api/swagger-codegen/tree/v[0-9]+\.[0-9]+\.[0-9]+\)\|?[ \t]*$"
 )
 RELEASE_JAR_PATTERN = (
     r"io/swagger/codegen/v3/swagger-codegen-cli/[0-9]+\.[0-9]+\.[0-9]+/swagger-codegen-cli-[0-9]+\.[0-9]+\.[0-9]+\.jar"
@@ -78,6 +78,19 @@ def update_sample_meta_codegen_pom(codegen_version: str) -> None:
     )
 
 
+def update_sample_meta_codegen_generators_version(generators_version: str) -> None:
+    # Keep sample project generators property aligned with release generators version.
+    replace_text(
+        "samples/meta-codegen/pom.xml",
+        [
+            (
+                r"<swagger-codegen-generators-version>[^<]+</swagger-codegen-generators-version>",
+                f"<swagger-codegen-generators-version>{generators_version}</swagger-codegen-generators-version>",
+            )
+        ],
+    )
+
+
 def update_docker_pom_version(codegen_version: str) -> None:
     # Keep root project version in pom.docker.xml aligned with released codegen version.
     replace_text(
@@ -97,9 +110,9 @@ def update_openapi_version(version: str) -> None:
 def update_snapshot_rows(next_snapshot: str) -> None:
     # Update "current upcoming snapshot" row in compatibility docs.
     snapshot_row = (
-        f"{next_snapshot} (current 3.0.0, upcoming minor release) "
+        f"| {next_snapshot} (current 3.0.0, upcoming minor release) "
         "[SNAPSHOT](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/"
-        f"io/swagger/codegen/v3/swagger-codegen-cli/{next_snapshot}/)| TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release"
+        f"io/swagger/codegen/v3/swagger-codegen-cli/{next_snapshot}/) | TBD          | 1.0, 1.1, 1.2, 2.0, 3.0 | Minor release |"
     )
     replace_text_in_docs(COMPATIBILITY_DOCS, [(SNAPSHOT_ROW_PATTERN, snapshot_row)], require_match=True)
 
@@ -156,6 +169,7 @@ def main() -> int:
         codegen_version, next_snapshot, generators_version = sys.argv[2:5]
         update_generators_poms(generators_version)
         update_sample_meta_codegen_pom(codegen_version)
+        update_sample_meta_codegen_generators_version(generators_version)
         update_docker_pom_version(codegen_version)
         update_openapi_version(codegen_version)
         update_snapshot_rows(next_snapshot)
@@ -170,6 +184,7 @@ def main() -> int:
             return 2
         next_snapshot, generators_version = sys.argv[2:4]
         update_generators_poms(generators_version)
+        update_sample_meta_codegen_generators_version(generators_version)
         update_docker_pom_version(next_snapshot)
         update_openapi_version(next_snapshot)
         update_snapshot_rows(next_snapshot)
