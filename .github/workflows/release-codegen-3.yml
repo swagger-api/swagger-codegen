@@ -294,6 +294,7 @@ jobs:
       - name: Publish prepared draft release notes
         # Publishes the draft release created in prepare-release workflow.
         if: inputs.dry_run != 'true'
+        continue-on-error: true
         uses: actions/github-script@v8
         with:
           script: |
@@ -306,8 +307,26 @@ jobs:
               const { data } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
               release = data;
             } catch (error) {
-              core.setFailed(`Expected prepared draft release for tag ${tag}, but it was not found.`);
-              return;
+              if (error.status !== 404) {
+                core.warning(`Failed to fetch release by tag ${tag}: ${error.message}`);
+              }
+
+              // Fallback: search drafts directly in case tag lookup is temporarily inconsistent.
+              try {
+                const { data: releases } = await github.rest.repos.listReleases({
+                  owner,
+                  repo,
+                  per_page: 100
+                });
+                release = releases.find((candidate) => candidate.tag_name === tag);
+              } catch (listError) {
+                core.warning(`Failed to list releases while looking for ${tag}: ${listError.message}`);
+              }
+
+              if (!release) {
+                core.warning(`Prepared draft release for tag ${tag} was not found. Continue workflow; publish it manually.`);
+                return;
+              }
             }
 
             if (!release.draft) {
