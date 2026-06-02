@@ -9852,6 +9852,15 @@
         },
         "workFlowVersion": {
           "type": "string"
+        },
+        "fuelType": {
+          "type": "string"
+        },
+        "fuelGrade": {
+          "type": "string"
+        },
+        "isSubsidyRequested": {
+          "type": "boolean"
         }
       },
       "type": "object"
