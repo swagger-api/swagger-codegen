@@ -1062,7 +1062,7 @@
         <swagger-core-version-v1>1.6.16</swagger-core-version-v1>
         <swagger-parser-version>2.1.40</swagger-parser-version>
         <swagger-parser-version-v1>1.0.76</swagger-parser-version-v1>
-        <jackson-version>2.21.2</jackson-version>
+        <jackson-version>2.21.5</jackson-version>
         <scala-version>2.11.1</scala-version>
         <commons-io-version>2.20.0</commons-io-version>
         <commons-cli-version>1.9.0</commons-cli-version>
