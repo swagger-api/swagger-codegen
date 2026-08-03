@@ -345,7 +345,9 @@ jobs:
   docker_release:
     # Reuse the battle-tested docker release workflow with orchestrator-level skip gates.
     needs: codegen
-    if: inputs.skip_docker_push != 'true' && inputs.dry_run != 'true'
+    # always() suppresses the implicit success() check, which would otherwise see
+    # skipped transitive ancestors (generators/bootstrap_codegen) and skip this job.
+    if: always() && needs.codegen.result == 'success' && inputs.skip_docker_push != 'true' && inputs.dry_run != 'true'
     uses: ./.github/workflows/docker-release-3.0.yml
     with:
       tag: ${{ needs.codegen.outputs.codegen_version }}
