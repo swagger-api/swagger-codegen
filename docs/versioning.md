@@ -40,6 +40,6 @@ dependency example:
 <dependency>
     <groupId>io.swagger.codegen.v3</groupId>
     <artifactId>swagger-codegen-maven-plugin</artifactId>
-    <version>3.0.81</version>
+    <version>3.0.82</version>
 </dependency>
 ```
