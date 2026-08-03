@@ -47,7 +47,7 @@ on:
       dry_run:
         description: 'Run validation and builds without deploy, Docker push, or Rancher deploy (post-release PR is still created)'
         required: true
-        default: 'true'
+        default: 'false'
         type: choice
         options:
           - 'true'
