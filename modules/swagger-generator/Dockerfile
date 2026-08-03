@@ -1,4 +1,4 @@
-FROM redhat/ubi10-minimal:10.1
+FROM redhat/ubi10-minimal:10.2
 RUN microdnf -y update && \
     microdnf -y install \
     glibc-langpack-en \
@@ -45,4 +45,3 @@ RUN groupadd --gid 2000 codegengroup && \
 
 USER codegenuser
 CMD ["./start"]
-
