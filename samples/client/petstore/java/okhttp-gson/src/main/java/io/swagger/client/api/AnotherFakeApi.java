@@ -53,6 +53,8 @@ public class AnotherFakeApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for testSpecialTags
      * @param body client model (required)
@@ -63,7 +65,7 @@ public class AnotherFakeApi {
      */
     public com.squareup.okhttp.Call testSpecialTagsCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/another-fake/dummy";
 
@@ -101,22 +103,23 @@ public class AnotherFakeApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testSpecialTagsValidateBeforeCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testSpecialTags(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = testSpecialTagsCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * To test special tags
@@ -130,6 +133,7 @@ public class AnotherFakeApi {
         return resp.getData();
     }
 
+
     /**
      * To test special tags
      * To test special tags
@@ -142,6 +146,7 @@ public class AnotherFakeApi {
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * To test special tags (asynchronously)

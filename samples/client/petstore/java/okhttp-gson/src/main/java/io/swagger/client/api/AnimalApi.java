@@ -53,6 +53,8 @@ public class AnimalApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for addAnimal
      * @param body Animal object that needs to be added to the store (required)
@@ -63,7 +65,7 @@ public class AnimalApi {
      */
     public com.squareup.okhttp.Call addAnimalCall(Animal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/animal";
 
@@ -101,22 +103,23 @@ public class AnimalApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call addAnimalValidateBeforeCall(Animal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling addAnimal(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = addAnimalCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Add a new animal to the store
@@ -127,6 +130,7 @@ public class AnimalApi {
     public void addAnimal(Animal body) throws ApiException {
         addAnimalWithHttpInfo(body);
     }
+
 
     /**
      * Add a new animal to the store
@@ -139,6 +143,7 @@ public class AnimalApi {
         com.squareup.okhttp.Call call = addAnimalValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Add a new animal to the store (asynchronously)
@@ -173,6 +178,47 @@ public class AnimalApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    public static class DeleteAnimalOptionals {
+        public String apiKey() {
+            return this.apiKey;
+        }
+
+        public DeleteAnimalOptionals apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        private String apiKey = null;
+    }
+
+    /**
+     * Build call for deleteAnimal
+     * @param animalId Animal id to delete (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call deleteAnimalCall(Long animalId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return deleteAnimalCall(animalId, null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for deleteAnimal
+     * @param animalId Animal id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call deleteAnimalOptsCall(Long animalId, DeleteAnimalOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteAnimalOptionals();
+        }
+        return deleteAnimalCall(animalId, optionals.apiKey(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for deleteAnimal
      * @param animalId Animal id to delete (required)
@@ -184,7 +230,7 @@ public class AnimalApi {
      */
     public com.squareup.okhttp.Call deleteAnimalCall(Long animalId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/animal/{animalId}"
             .replaceAll("\\{" + "animalId" + "\\}", apiClient.escapeString(animalId.toString()));
@@ -225,21 +271,45 @@ public class AnimalApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call deleteAnimalValidateBeforeCall(Long animalId, String apiKey, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'animalId' is set
         if (animalId == null) {
             throw new ApiException("Missing the required parameter 'animalId' when calling deleteAnimal(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = deleteAnimalCall(animalId, apiKey, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * Deletes a animal
+     * 
+     * @param animalId Animal id to delete (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void deleteAnimal(Long animalId) throws ApiException {
+        deleteAnimal(animalId, null);
+    }
+
+    /**
+     * Deletes a animal
+     * 
+     * @param animalId Animal id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void deleteAnimalOpts(Long animalId, DeleteAnimalOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteAnimalOptionals();
+        }
+        deleteAnimal(animalId, optionals.apiKey());
     }
 
     /**
@@ -257,6 +327,30 @@ public class AnimalApi {
      * Deletes a animal
      * 
      * @param animalId Animal id to delete (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> deleteAnimalWithHttpInfo(Long animalId) throws ApiException {
+        return deleteAnimalWithHttpInfo(animalId, null);
+    }
+
+    /**
+     * Deletes a animal
+     * 
+     * @param animalId Animal id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> deleteAnimalOptsWithHttpInfo(Long animalId, DeleteAnimalOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteAnimalOptionals();
+        }
+        return deleteAnimalWithHttpInfo(animalId, optionals.apiKey());
+    }
+
+    /**
+     * Deletes a animal
+     * 
+     * @param animalId Animal id to delete (required)
      * @param apiKey  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -264,6 +358,34 @@ public class AnimalApi {
     public ApiResponse<Void> deleteAnimalWithHttpInfo(Long animalId, String apiKey) throws ApiException {
         com.squareup.okhttp.Call call = deleteAnimalValidateBeforeCall(animalId, apiKey, null, null);
         return apiClient.execute(call);
+    }
+
+    /**
+     * Deletes a animal (asynchronously)
+     * 
+     * @param animalId Animal id to delete (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call deleteAnimalAsync(Long animalId, final ApiCallback<Void> callback) throws ApiException {
+        return deleteAnimalAsync(animalId, null, callback);
+    }
+
+    /**
+     * Deletes a animal (asynchronously)
+     * 
+     * @param animalId Animal id to delete (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call deleteAnimalOptsAsync(Long animalId, DeleteAnimalOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new DeleteAnimalOptionals();
+        }
+        return deleteAnimalAsync(animalId, optionals.apiKey(), callback);
     }
 
     /**
@@ -300,6 +422,8 @@ public class AnimalApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for getAnimalById
      * @param animalId ID of pet to return (required)
@@ -310,7 +434,7 @@ public class AnimalApi {
      */
     public com.squareup.okhttp.Call getAnimalByIdCall(Long animalId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/animal/{animalId}"
             .replaceAll("\\{" + "animalId" + "\\}", apiClient.escapeString(animalId.toString()));
@@ -349,22 +473,23 @@ public class AnimalApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call getAnimalByIdValidateBeforeCall(Long animalId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'animalId' is set
         if (animalId == null) {
             throw new ApiException("Missing the required parameter 'animalId' when calling getAnimalById(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = getAnimalByIdCall(animalId, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Find animal by ID
@@ -378,6 +503,7 @@ public class AnimalApi {
         return resp.getData();
     }
 
+
     /**
      * Find animal by ID
      * Returns a single animal
@@ -390,6 +516,7 @@ public class AnimalApi {
         Type localVarReturnType = new TypeToken<Animal>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Find animal by ID (asynchronously)
@@ -425,6 +552,8 @@ public class AnimalApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for updateAnimal
      * @param body Animal object that needs to be added. (required)
@@ -435,7 +564,7 @@ public class AnimalApi {
      */
     public com.squareup.okhttp.Call updateAnimalCall(Animal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/animal";
 
@@ -473,22 +602,23 @@ public class AnimalApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updateAnimalValidateBeforeCall(Animal body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateAnimal(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = updateAnimalCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Update an existing animal
@@ -499,6 +629,7 @@ public class AnimalApi {
     public void updateAnimal(Animal body) throws ApiException {
         updateAnimalWithHttpInfo(body);
     }
+
 
     /**
      * Update an existing animal
@@ -511,6 +642,7 @@ public class AnimalApi {
         com.squareup.okhttp.Call call = updateAnimalValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Update an existing animal (asynchronously)
@@ -545,6 +677,57 @@ public class AnimalApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+    public static class UpdateAnimalWithFormOptionals {
+        public String name() {
+            return this.name;
+        }
+
+        public UpdateAnimalWithFormOptionals name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String name = null;
+        public String status() {
+            return this.status;
+        }
+
+        public UpdateAnimalWithFormOptionals status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        private String status = null;
+    }
+
+    /**
+     * Build call for updateAnimalWithForm
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call updateAnimalWithFormCall(Long animalId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        return updateAnimalWithFormCall(animalId, null, null, progressListener, progressRequestListener);
+    }
+
+    /**
+     * Build call for updateAnimalWithForm
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call updateAnimalWithFormOptsCall(Long animalId, UpdateAnimalWithFormOptionals optionals, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateAnimalWithFormOptionals();
+        }
+        return updateAnimalWithFormCall(animalId, optionals.name(), optionals.status(), progressListener, progressRequestListener);
+    }
+
     /**
      * Build call for updateAnimalWithForm
      * @param animalId ID of animal that needs to be updated (required)
@@ -557,7 +740,7 @@ public class AnimalApi {
      */
     public com.squareup.okhttp.Call updateAnimalWithFormCall(Long animalId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/animal/{animalId}"
             .replaceAll("\\{" + "animalId" + "\\}", apiClient.escapeString(animalId.toString()));
@@ -600,21 +783,45 @@ public class AnimalApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updateAnimalWithFormValidateBeforeCall(Long animalId, String name, String status, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'animalId' is set
         if (animalId == null) {
             throw new ApiException("Missing the required parameter 'animalId' when calling updateAnimalWithForm(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = updateAnimalWithFormCall(animalId, name, status, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
+    }
+
+    /**
+     * Updates a animal
+     * 
+     * @param animalId ID of animal that needs to be updated (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void updateAnimalWithForm(Long animalId) throws ApiException {
+        updateAnimalWithForm(animalId, null, null);
+    }
+
+    /**
+     * Updates a animal
+     * 
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public void updateAnimalWithFormOpts(Long animalId, UpdateAnimalWithFormOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateAnimalWithFormOptionals();
+        }
+        updateAnimalWithForm(animalId, optionals.name(), optionals.status());
     }
 
     /**
@@ -633,6 +840,30 @@ public class AnimalApi {
      * Updates a animal
      * 
      * @param animalId ID of animal that needs to be updated (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> updateAnimalWithFormWithHttpInfo(Long animalId) throws ApiException {
+        return updateAnimalWithFormWithHttpInfo(animalId, null, null);
+    }
+
+    /**
+     * Updates a animal
+     * 
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> updateAnimalWithFormOptsWithHttpInfo(Long animalId, UpdateAnimalWithFormOptionals optionals) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateAnimalWithFormOptionals();
+        }
+        return updateAnimalWithFormWithHttpInfo(animalId, optionals.name(), optionals.status());
+    }
+
+    /**
+     * Updates a animal
+     * 
+     * @param animalId ID of animal that needs to be updated (required)
      * @param name  (optional)
      * @param status  (optional)
      * @return ApiResponse&lt;Void&gt;
@@ -641,6 +872,34 @@ public class AnimalApi {
     public ApiResponse<Void> updateAnimalWithFormWithHttpInfo(Long animalId, String name, String status) throws ApiException {
         com.squareup.okhttp.Call call = updateAnimalWithFormValidateBeforeCall(animalId, name, status, null, null);
         return apiClient.execute(call);
+    }
+
+    /**
+     * Updates a animal (asynchronously)
+     * 
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call updateAnimalWithFormAsync(Long animalId, final ApiCallback<Void> callback) throws ApiException {
+        return updateAnimalWithFormAsync(animalId, null, null, callback);
+    }
+
+    /**
+     * Updates a animal (asynchronously)
+     * 
+     * @param animalId ID of animal that needs to be updated (required)
+     * @param optionals An object containing the optional parameters for this API call.
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call updateAnimalWithFormOptsAsync(Long animalId, UpdateAnimalWithFormOptionals optionals, final ApiCallback<Void> callback) throws ApiException {
+        if (optionals == null) {
+            optionals = new UpdateAnimalWithFormOptionals();
+        }
+        return updateAnimalWithFormAsync(animalId, optionals.name(), optionals.status(), callback);
     }
 
     /**

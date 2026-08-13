@@ -45,6 +45,8 @@ public class StoreApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -76,7 +78,7 @@ public class StoreApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("order_id", orderId);
         String path = UriComponentsBuilder.fromPath("/store/order/{order_id}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -91,6 +93,8 @@ public class StoreApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
@@ -112,7 +116,7 @@ public class StoreApi {
     public ResponseEntity<Map<String, Integer>> getInventoryWithHttpInfo() throws RestClientException {
         Object postBody = null;
         String path = UriComponentsBuilder.fromPath("/store/inventory").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -129,6 +133,8 @@ public class StoreApi {
         ParameterizedTypeReference<Map<String, Integer>> returnType = new ParameterizedTypeReference<Map<String, Integer>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -163,7 +169,7 @@ public class StoreApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("order_id", orderId);
         String path = UriComponentsBuilder.fromPath("/store/order/{order_id}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -180,6 +186,8 @@ public class StoreApi {
         ParameterizedTypeReference<Order> returnType = new ParameterizedTypeReference<Order>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Place an order for a pet
      * 
@@ -209,7 +217,7 @@ public class StoreApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling placeOrder");
         }
         String path = UriComponentsBuilder.fromPath("/store/order").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();

@@ -53,6 +53,8 @@ public class UserApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for createUser
      * @param body Created user object (required)
@@ -63,7 +65,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call createUserCall(User body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/user";
 
@@ -101,22 +103,23 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call createUserValidateBeforeCall(User body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createUser(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = createUserCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Create user
@@ -127,6 +130,7 @@ public class UserApi {
     public void createUser(User body) throws ApiException {
         createUserWithHttpInfo(body);
     }
+
 
     /**
      * Create user
@@ -139,6 +143,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = createUserValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Create user (asynchronously)
@@ -173,6 +178,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for createUsersWithArrayInput
      * @param body List of user object (required)
@@ -183,7 +190,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call createUsersWithArrayInputCall(List<User> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/user/createWithArray";
 
@@ -221,22 +228,23 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call createUsersWithArrayInputValidateBeforeCall(List<User> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createUsersWithArrayInput(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = createUsersWithArrayInputCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Creates list of users with given input array
@@ -247,6 +255,7 @@ public class UserApi {
     public void createUsersWithArrayInput(List<User> body) throws ApiException {
         createUsersWithArrayInputWithHttpInfo(body);
     }
+
 
     /**
      * Creates list of users with given input array
@@ -259,6 +268,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = createUsersWithArrayInputValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Creates list of users with given input array (asynchronously)
@@ -293,6 +303,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for createUsersWithListInput
      * @param body List of user object (required)
@@ -303,7 +315,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call createUsersWithListInputCall(List<User> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/user/createWithList";
 
@@ -341,22 +353,23 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call createUsersWithListInputValidateBeforeCall(List<User> body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling createUsersWithListInput(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = createUsersWithListInputCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Creates list of users with given input array
@@ -367,6 +380,7 @@ public class UserApi {
     public void createUsersWithListInput(List<User> body) throws ApiException {
         createUsersWithListInputWithHttpInfo(body);
     }
+
 
     /**
      * Creates list of users with given input array
@@ -379,6 +393,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = createUsersWithListInputValidateBeforeCall(body, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Creates list of users with given input array (asynchronously)
@@ -413,6 +428,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for deleteUser
      * @param username The name that needs to be deleted (required)
@@ -423,7 +440,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call deleteUserCall(String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/user/{username}"
             .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
@@ -462,22 +479,23 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call deleteUserValidateBeforeCall(String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'username' is set
         if (username == null) {
             throw new ApiException("Missing the required parameter 'username' when calling deleteUser(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = deleteUserCall(username, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Delete user
@@ -488,6 +506,7 @@ public class UserApi {
     public void deleteUser(String username) throws ApiException {
         deleteUserWithHttpInfo(username);
     }
+
 
     /**
      * Delete user
@@ -500,6 +519,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = deleteUserValidateBeforeCall(username, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Delete user (asynchronously)
@@ -534,6 +554,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for getUserByName
      * @param username The name that needs to be fetched. Use user1 for testing.  (required)
@@ -544,7 +566,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call getUserByNameCall(String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/user/{username}"
             .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
@@ -583,22 +605,23 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call getUserByNameValidateBeforeCall(String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'username' is set
         if (username == null) {
             throw new ApiException("Missing the required parameter 'username' when calling getUserByName(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = getUserByNameCall(username, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Get user by user name
@@ -612,6 +635,7 @@ public class UserApi {
         return resp.getData();
     }
 
+
     /**
      * Get user by user name
      * 
@@ -624,6 +648,7 @@ public class UserApi {
         Type localVarReturnType = new TypeToken<User>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Get user by user name (asynchronously)
@@ -659,6 +684,8 @@ public class UserApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for loginUser
      * @param username The user name for login (required)
@@ -670,7 +697,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call loginUserCall(String username, String password, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/user/login";
 
@@ -712,7 +739,7 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call loginUserValidateBeforeCall(String username, String password, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'username' is set
@@ -723,15 +750,16 @@ public class UserApi {
         if (password == null) {
             throw new ApiException("Missing the required parameter 'password' when calling loginUser(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = loginUserCall(username, password, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Logs user into the system
@@ -746,6 +774,7 @@ public class UserApi {
         return resp.getData();
     }
 
+
     /**
      * Logs user into the system
      * 
@@ -759,6 +788,7 @@ public class UserApi {
         Type localVarReturnType = new TypeToken<String>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * Logs user into the system (asynchronously)
@@ -795,6 +825,8 @@ public class UserApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
+
     /**
      * Build call for logoutUser
      * @param progressListener Progress listener
@@ -804,7 +836,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call logoutUserCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
         String localVarPath = "/user/logout";
 
@@ -842,18 +874,19 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call logoutUserValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+
         com.squareup.okhttp.Call call = logoutUserCall(progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Logs out current logged in user session
@@ -863,6 +896,7 @@ public class UserApi {
     public void logoutUser() throws ApiException {
         logoutUserWithHttpInfo();
     }
+
 
     /**
      * Logs out current logged in user session
@@ -874,6 +908,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = logoutUserValidateBeforeCall(null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Logs out current logged in user session (asynchronously)
@@ -907,6 +942,8 @@ public class UserApi {
         apiClient.executeAsync(call, callback);
         return call;
     }
+
+
     /**
      * Build call for updateUser
      * @param body Updated user object (required)
@@ -918,7 +955,7 @@ public class UserApi {
      */
     public com.squareup.okhttp.Call updateUserCall(User body, String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/user/{username}"
             .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
@@ -957,7 +994,7 @@ public class UserApi {
         String[] localVarAuthNames = new String[] {  };
         return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call updateUserValidateBeforeCall(User body, String username, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
@@ -968,15 +1005,16 @@ public class UserApi {
         if (username == null) {
             throw new ApiException("Missing the required parameter 'username' when calling updateUser(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = updateUserCall(body, username, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * Updated user
@@ -988,6 +1026,7 @@ public class UserApi {
     public void updateUser(User body, String username) throws ApiException {
         updateUserWithHttpInfo(body, username);
     }
+
 
     /**
      * Updated user
@@ -1001,6 +1040,7 @@ public class UserApi {
         com.squareup.okhttp.Call call = updateUserValidateBeforeCall(body, username, null, null);
         return apiClient.execute(call);
     }
+
 
     /**
      * Updated user (asynchronously)
