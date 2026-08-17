@@ -15,6 +15,8 @@ components:
     Generate:
       x-command-description: "Generate code with chosen lang"
       x-class-name: "io.swagger.codegen.v3.cli.cmd.Generate"
+      required:
+      - lang
       properties:
         verbose:
           type: "boolean"
@@ -75,7 +77,7 @@ components:
           description: "sets specified system properties in the format of name=value,name=value (or multiple options, each with name=value)"
           x-option: "-D"
         skipOverwrite:
-          type: "string"
+          type: "boolean"
           title: "skip overwrite"
           description: "specifies if the existing files should be overwritten during the generation."
           x-option: "--skip-overwrite"
@@ -191,7 +193,7 @@ components:
           description: "Specifies an override location for the .swagger-codegen-ignore file. Most useful on initial generation."
           x-option: "--ignore-file-override"
         removeOperationIdPrefix:
-          type: "string"
+          type: "boolean"
           title: "remove prefix of the operationId"
           description: "Remove prefix of operationId, e.g. config_getId => getId"
           x-option: "--remove-operation-id-prefix"
@@ -220,6 +222,8 @@ components:
       x-command: "config-help"
       x-command-description: "Config help for chosen lang"
       x-class-name: "io.swagger.codegen.v3.cli.cmd.ConfigHelp"
+      required:
+      - lang
       properties:
         lang:
           type: "string"
@@ -227,7 +231,6 @@ components:
           description: "language to get config help for"
           x-option: "--lang"
           x-short-version: "-l"
-          x-require: true
     Meta:
       x-command-description: "MetaGenerator. Generator for creating a new template set and configuration for Codegen.  The output will be based on the language you specify, and includes default templates to include."
       x-class-name: "io.swagger.codegen.v3.cli.cmd.Meta"
@@ -252,7 +255,7 @@ components:
           x-option: "--package"
           x-short-version: "-p"
     Langs:
-      x-command-description: "Shows available langs"
+      x-command-description: "Show available langs"
       x-class-name: "io.swagger.codegen.v3.cli.cmd.Langs"
     Version:
       x-command-description: "Show version information"
