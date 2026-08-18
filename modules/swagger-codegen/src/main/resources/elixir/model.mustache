@@ -1,8 +1,13 @@
 {{>licenseInfo}}
 {{#models}}{{#model}}defmodule {{moduleName}}.Model.{{classname}} do
-  @moduledoc """
+  @moduledoc {{#description}}
+  """
   {{description}}
   """
+  {{/description}}
+  {{^description}}
+    false
+  {{/description}}
 
   @derive [Poison.Encoder]
   defstruct [
