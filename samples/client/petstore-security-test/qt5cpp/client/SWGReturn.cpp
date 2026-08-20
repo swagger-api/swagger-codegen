@@ -22,9 +22,9 @@
 
 namespace Swagger {
 
-SWGReturn::SWGReturn(QString* json) {
+SWGReturn::SWGReturn(QString json) {
     init();
-    this->fromJson(*json);
+    this->fromJson(json);
 }
 
 SWGReturn::SWGReturn() {
@@ -38,15 +38,16 @@ SWGReturn::~SWGReturn() {
 void
 SWGReturn::init() {
     _return = 0;
+    m__return_isSet = false;
 }
 
 void
 SWGReturn::cleanup() {
-    
+
 }
 
 SWGReturn*
-SWGReturn::fromJson(QString &json) {
+SWGReturn::fromJson(QString json) {
     QByteArray array (json.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(array);
     QJsonObject jsonObject = doc.object();
@@ -55,25 +56,27 @@ SWGReturn::fromJson(QString &json) {
 }
 
 void
-SWGReturn::fromJsonObject(QJsonObject &pJson) {
+SWGReturn::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&_return, pJson["return"], "qint32", "");
+    m__return_isSet = pJson.contains("return");
+    
 }
 
 QString
 SWGReturn::asJson ()
 {
-    QJsonObject* obj = this->asJsonObject();
-    
-    QJsonDocument doc(*obj);
+    QJsonObject obj = this->asJsonObject();
+    QJsonDocument doc(obj);
     QByteArray bytes = doc.toJson();
     return QString(bytes);
 }
 
-QJsonObject*
+QJsonObject
 SWGReturn::asJsonObject() {
-    QJsonObject* obj = new QJsonObject();
-    
-    obj->insert("return", QJsonValue(_return));
+    QJsonObject obj;
+    if(m__return_isSet){
+        obj.insert("return", QJsonValue(_return));
+    }
 
     return obj;
 }
@@ -85,8 +88,17 @@ SWGReturn::getReturn() {
 void
 SWGReturn::setReturn(qint32 _return) {
     this->_return = _return;
+    this->m__return_isSet = true;
 }
 
 
+bool
+SWGReturn::isSet(){
+    bool isObjectUpdated = false;
+    do{
+        if(m__return_isSet){ isObjectUpdated = true; break;}
+    }while(false);
+    return isObjectUpdated;
+}
 }
 

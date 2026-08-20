@@ -18,16 +18,21 @@ namespace {{this}} {
     return nullptr;
   }
 
-  inline void* create(QString json, QString type) {
-    if(type.startsWith("QString")) {
-      return new QString();
-    }    
+  {{#models}}{{#model}}
+  inline void create(QString json, QString type, {{classname}}** ptr ) { 
     auto val = static_cast<{{prefix}}Object*>(create(type));
     if(val != nullptr) {
-      return val->fromJson(json);
+      *ptr = static_cast<{{classname}}*>(val->fromJson(json));
     }
-    return nullptr;
   }
+  {{/model}}{{/models}}
+
+  inline void create(QString json, QString type, QString* str){
+        if(type.startsWith("QString")) {
+      *str = QString();
+    }   
+  }
+
 
 {{#cppNamespaceDeclarations}}
 }
