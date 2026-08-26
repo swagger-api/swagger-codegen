@@ -88,11 +88,11 @@ web::json::value User::toJson() const
     return val;
 }
 
-void User::fromJson(web::json::value& val)
+void User::fromJson(const web::json::value& val)
 {
     if(val.has_field(utility::conversions::to_string_t("id")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("id")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("id"));
         if(!fieldValue.is_null())
         {
             setId(ModelBase::int64_tFromJson(fieldValue));
@@ -100,7 +100,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("username")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("username")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("username"));
         if(!fieldValue.is_null())
         {
             setUsername(ModelBase::stringFromJson(fieldValue));
@@ -108,7 +108,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("firstName")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("firstName")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("firstName"));
         if(!fieldValue.is_null())
         {
             setFirstName(ModelBase::stringFromJson(fieldValue));
@@ -116,7 +116,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("lastName")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("lastName")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("lastName"));
         if(!fieldValue.is_null())
         {
             setLastName(ModelBase::stringFromJson(fieldValue));
@@ -124,7 +124,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("email")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("email")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("email"));
         if(!fieldValue.is_null())
         {
             setEmail(ModelBase::stringFromJson(fieldValue));
@@ -132,7 +132,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("password")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("password")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("password"));
         if(!fieldValue.is_null())
         {
             setPassword(ModelBase::stringFromJson(fieldValue));
@@ -140,7 +140,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("phone")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("phone")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("phone"));
         if(!fieldValue.is_null())
         {
             setPhone(ModelBase::stringFromJson(fieldValue));
@@ -148,7 +148,7 @@ void User::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("userStatus")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("userStatus")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("userStatus"));
         if(!fieldValue.is_null())
         {
             setUserStatus(ModelBase::int32_tFromJson(fieldValue));
