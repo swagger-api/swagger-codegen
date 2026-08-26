@@ -55,7 +55,9 @@ import {{invokerPackage}}.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "{{{basePath}}}";
+    private String scheme = "{{scheme}}";
+    private String host = "{{host}}{{^host}}localhost{{/host}}";
+    private String basePath = "{{{basePathWithoutHost}}}";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
@@ -103,10 +105,51 @@ public class ApiClient {
         authentications = Collections.unmodifiableMap(authentications);
     }
 
+
+    /**
+     * Get scheme
+     *
+     * @return scheme
+     */
+    public String getScheme() {
+        return scheme;
+    }
+
+    /**
+     * Set scheme
+     *
+     * @param host (e.g "{{scheme}}")
+     * @return An instance of OkHttpClient
+     */
+    public ApiClient setScheme(String scheme) {
+        this.scheme = scheme;
+        return this;
+    }
+
+    /**
+     * Get host
+     *
+     * @return host
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Set host
+     *
+     * @param host (e.g "{{host}}{{^host}}localhost{{/host}}")
+     * @return An instance of OkHttpClient
+     */
+    public ApiClient setHost(String host) {
+        this.host = host;
+        return this;
+    }
+
     /**
      * Get base path
      *
-     * @return Baes path
+     * @return Base path
      */
     public String getBasePath() {
         return basePath;
@@ -115,7 +158,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g {{{basePath}}}
+     * @param basePath Base path of the URL (e.g "{{basePathWithoutHost}}")
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {
@@ -1040,7 +1083,7 @@ public class ApiClient {
      */
     public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
-        url.append(basePath).append(path);
+        url.append(scheme).append("://").append(host).append(basePath).append(path);
 
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
