@@ -1,17 +1,20 @@
 package io.swagger.codegen.languages;
 
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.models.Info;
+import io.swagger.models.Swagger;
+import io.swagger.models.properties.BooleanProperty;
 import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.Property;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.SupportingFile;
-import io.swagger.models.properties.BooleanProperty;
 
 public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen {
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeScriptNodeClientCodegen.class);
@@ -23,7 +26,7 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
     public static final String SNAPSHOT = "snapshot";
 
     protected String npmName = null;
-    protected String npmVersion = "1.0.0";
+    protected String npmVersion = null;
     protected String npmRepository = null;
 
     public TypeScriptNodeClientCodegen() {
@@ -52,13 +55,36 @@ public class TypeScriptNodeClientCodegen extends AbstractTypeScriptClientCodegen
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
 
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             addNpmPackageGeneration();
+        }
+        if (additionalProperties.containsKey(NPM_VERSION)) {
+            setNpmVersion(((String) additionalProperties.get(NPM_VERSION)));
         }
     }
 
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        super.preprocessSwagger(swagger);
+
+        if (swagger.getInfo() != null) {
+            Info info = swagger.getInfo();
+            if (StringUtils.isBlank(npmVersion)) {
+                // when npmVersion is not specified, use info.version
+                npmVersion = escapeUnsafeCharacters(escapeQuotationMark(info.getVersion()));
+            }
+        }
+
+        // default values
+        if (StringUtils.isBlank(npmVersion)) {
+            npmVersion = "1.0.0";
+        }
+
+        additionalProperties.put(NPM_VERSION, npmVersion);
+    }
+
     private void addNpmPackageGeneration() {
-        if(additionalProperties.containsKey(NPM_NAME)) {
+        if (additionalProperties.containsKey(NPM_NAME)) {
             this.setNpmName(additionalProperties.get(NPM_NAME).toString());
         }
 
