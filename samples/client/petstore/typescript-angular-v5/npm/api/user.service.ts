@@ -326,7 +326,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<string>(`${this.basePath}/user/login`,
+        return this.httpClient.get(`${this.basePath}/user/login`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
