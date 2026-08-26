@@ -42,7 +42,7 @@ class ObjectSerializer
     {
         if (is_scalar($data) || null === $data) {
             return $data;
-        } elseif ($data instanceof \DateTime) {
+        } elseif ($data instanceof \DateTimeInterface) {
             return ($format === 'date') ? $data->format('Y-m-d') : $data->format(\DateTime::ATOM);
         } elseif (is_array($data)) {
             foreach ($data as $property => $value) {
@@ -113,7 +113,7 @@ class ObjectSerializer
      * If it's a string, pass through unchanged. It will be url-encoded
      * later.
      *
-     * @param string[]|string|\DateTime $object an object to be serialized to a string
+     * @param string[]|string|\DateTimeInterface $object an object to be serialized to a string
      *
      * @return string the serialized object
      */
@@ -163,13 +163,13 @@ class ObjectSerializer
      * the parameter. If it's a string, pass through unchanged
      * If it's a datetime object, format it in ISO8601
      *
-     * @param string|\DateTime $value the value of the parameter
+     * @param string|\DateTimeInterface $value the value of the parameter
      *
      * @return string the header string
      */
     public static function toString($value)
     {
-        if ($value instanceof \DateTime) { // datetime in ISO8601 format
+        if ($value instanceof \DateTimeInterface) { // datetime in ISO8601 format
             return $value->format(\DateTime::ATOM);
         } else {
             return $value;
@@ -245,7 +245,7 @@ class ObjectSerializer
         } elseif ($class === 'object') {
             settype($data, 'array');
             return $data;
-        } elseif ($class === '\DateTime') {
+        } elseif ($class === '\DateTime' || $class === '\DateTimeImmutable') {
             // Some API's return an invalid, empty string as a
             // date-time property. DateTime::__construct() will return
             // the current time for empty input which is probably not
@@ -253,7 +253,7 @@ class ObjectSerializer
             // be interpreted as a missing field/value. Let's handle
             // this graceful.
             if (!empty($data)) {
-                return new \DateTime($data);
+                return new $class($data);
             } else {
                 return null;
             }
