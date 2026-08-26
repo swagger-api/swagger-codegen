@@ -63,9 +63,9 @@ open class {{classname}} {
         let deferred = Promise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>.pending()
         {{operationId}}({{#allParams}}{{paramName}}: {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) { data, error in
             if let error = error {
-                deferred.reject(error)
+                deferred.resolver.reject(error)
             } else {
-                deferred.fulfill(data!)
+                deferred.resolver.fulfill(data!)
             }
         }
         return deferred.promise
