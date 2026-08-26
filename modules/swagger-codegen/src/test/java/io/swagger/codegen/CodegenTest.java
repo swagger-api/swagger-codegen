@@ -14,6 +14,17 @@ import java.util.List;
 
 public class CodegenTest {
 
+    @Test(description = "handle boolean additionalProperties in embedded model")
+    public void booleanAdditionalPropertiesTest() {
+        final Swagger model = parseAndPrepareSwagger("src/test/resources/2_0/additionalProperties.json");
+        final DefaultCodegen codegen = new DefaultCodegen();
+        final String path = "/user/email/v1";
+        final Operation p = model.getPaths().get(path).getPost();
+        final CodegenOperation op = codegen.fromOperation(path, "post", p, model.getDefinitions());
+        
+        Assert.assertEquals(model.getDefinitions().size(), 2);
+    }
+
     @Test(description = "handle simple composition")
     public void  propertiesInComposedModelTest() {
         final Swagger swagger = parseAndPrepareSwagger("src/test/resources/2_0/allOfProperties.yaml");
