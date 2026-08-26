@@ -49,6 +49,79 @@ public class {{classname}} {
     }
 
     {{#operation}}
+    {{#hasOptionalParams}}
+    public static class {{operationIdCamelCase}}Optionals {
+        {{#allParams}}{{^required}}
+        public {{{dataType}}} {{paramName}}() {
+            return this.{{paramName}};
+        }
+
+        public {{operationIdCamelCase}}Optionals {{paramName}}({{{dataType}}} {{paramName}}) {
+            this.{{paramName}} = {{paramName}};
+            return this;
+        }
+
+        private {{{dataType}}} {{paramName}} = null;
+        {{/required}}{{/allParams}}
+    }
+    {{/hasOptionalParams}}
+
+    {{#hasOptionalParams}}
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#requiredParams}}
+    * @param {{paramName}} {{description}} (required)
+    {{/requiredParams}}
+    {{#returnType}}
+    * @return {{returnType}}
+    {{/returnType}}
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    {{#isDeprecated}}
+    * @deprecated
+    {{/isDeprecated}}
+    {{#externalDocs}}
+    * {{description}}
+    * @see <a href="{{url}}">{{summary}} Documentation</a>
+    {{/externalDocs}}
+    */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws RestClientException {
+        {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#requiredParams}}
+    * @param {{paramName}} {{description}} (required)
+    {{/requiredParams}}
+    * @param optionals An object containing the optional parameters for this API call.
+    {{#returnType}}
+    * @return {{returnType}}
+    {{/returnType}}
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    {{#isDeprecated}}
+    * @deprecated
+    {{/isDeprecated}}
+    {{#externalDocs}}
+    * {{description}}
+    * @see <a href="{{url}}">{{summary}} Documentation</a>
+    {{/externalDocs}}
+    */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}Opts({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new {{operationIdCamelCase}}Optionals();
+        }
+        {{#returnType}}return {{/returnType}}{{operationId}}({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+    {{/hasOptionalParams}}
+
     /**
      * {{summary}}
      * {{notes}}
@@ -78,6 +151,58 @@ public class {{classname}} {
         {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
         {{/returnType}}
     }
+
+    {{#hasOptionalParams}}
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#requiredParams}}
+    * @param {{paramName}} {{description}} (required)
+    {{/requiredParams}}
+    * @return ResponseEntity&lt;{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Void{{/returnType}}&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    {{#isDeprecated}}
+    * @deprecated
+    {{/isDeprecated}}
+    {{#externalDocs}}
+    * {{description}}
+    * @see <a href="{{url}}">{{summary}} Documentation</a>
+    {{/externalDocs}}
+    */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public ResponseEntity<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/requiredParams}}) throws RestClientException {
+        return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#requiredParams}}
+    * @param {{paramName}} {{description}} (required)
+    {{/requiredParams}}
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}Void{{/returnType}}&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    {{#isDeprecated}}
+    * @deprecated
+    {{/isDeprecated}}
+    {{#externalDocs}}
+    * {{description}}
+    * @see <a href="{{url}}">{{summary}} Documentation</a>
+    {{/externalDocs}}
+    */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public ResponseEntity<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}OptsWithHttpInfo({{#requiredParams}}{{{dataType}}} {{paramName}}, {{/requiredParams}}{{operationIdCamelCase}}Optionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new {{operationIdCamelCase}}Optionals();
+        }
+        return {{operationId}}WithHttpInfo({{#allParams}}{{#required}}{{paramName}}{{/required}}{{^required}}optionals.{{paramName}}(){{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    }
+    {{/hasOptionalParams}}
 
     /**
      * {{summary}}
