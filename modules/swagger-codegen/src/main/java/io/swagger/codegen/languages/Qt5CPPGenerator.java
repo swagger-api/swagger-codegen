@@ -120,6 +120,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         supportingFiles.add(new SupportingFile("QObjectWrapper.h.mustache", sourceFolder, PREFIX + "QObjectWrapper.h"));
         if (optionalProjectFileFlag) {
             supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder, "client.pri"));
+            supportingFiles.add(new SupportingFile("ProjectCMake.mustache", sourceFolder, "CMakeLists.txt"));
         }
 
         super.typeMapping = new HashMap<String, String>();
