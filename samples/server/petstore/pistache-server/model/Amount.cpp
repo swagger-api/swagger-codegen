@@ -48,6 +48,10 @@ void Amount::fromJson(nlohmann::json& val)
 {
     setValue(val.at("value"));
     
+    std::shared_ptr<Currency> newItem(new Currency());
+    newItem->fromJson(val.at("currency"));
+    setCurrency( newItem );
+    
 }
 
 
