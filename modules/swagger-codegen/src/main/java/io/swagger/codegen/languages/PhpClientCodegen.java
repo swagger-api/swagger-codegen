@@ -60,6 +60,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         outputFolder = "generated-code" + File.separator + "php";
         modelTemplateFiles.put("model.mustache", ".php");
         apiTemplateFiles.put("api.mustache", ".php");
+        apiTemplateFiles.put("api-interface.mustache", "Interface.php");
         modelTestTemplateFiles.put("model_test.mustache", ".php");
         apiTestTemplateFiles.put("api_test.mustache", ".php");
         embeddedTemplateDir = templateDir = "php";

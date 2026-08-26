@@ -37,7 +37,7 @@ use {{invokerPackage}}\ObjectSerializer;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-{{#operations}}class {{classname}}
+{{#operations}}class {{classname}} implements {{classname}}Interface
 {
     /**
      * @var ClientInterface
@@ -78,50 +78,12 @@ use {{invokerPackage}}\ObjectSerializer;
     }
 
 {{#operation}}
-    /**
-     * Operation {{{operationId}}}
-{{#summary}}
-     *
-     * {{{summary}}}
-{{/summary}}
-     *
-{{#description}}
-     * {{.}}
-     *
-{{/description}}
-{{#allParams}}
-     * @param  {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-     *
-     * @throws \{{invokerPackage}}\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
-     */
     public function {{operationId}}({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});{{#returnType}}
         return $response;{{/returnType}}
     }
 
-    /**
-     * Operation {{{operationId}}}WithHttpInfo
-{{#summary}}
-     *
-     * {{{summary}}}
-{{/summary}}
-     *
-{{#description}}
-     * {{.}}
-     *
-{{/description}}
-{{#allParams}}
-     * @param  {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-     *
-     * @throws \{{invokerPackage}}\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}null{{/returnType}}, HTTP status code, HTTP response headers (array of strings)
-     */
     public function {{operationId}}WithHttpInfo({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         $returnType = '{{returnType}}';
@@ -195,22 +157,6 @@ use {{invokerPackage}}\ObjectSerializer;
         }
     }
 
-    /**
-     * Operation {{{operationId}}}Async
-     *
-     * {{{summary}}}
-     *
-{{#description}}
-     * {{.}}
-     *
-{{/description}}
-{{#allParams}}
-     * @param  {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
     public function {{operationId}}Async({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         return $this->{{operationId}}AsyncWithHttpInfo({{#allParams}}${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
@@ -221,22 +167,6 @@ use {{invokerPackage}}\ObjectSerializer;
             );
     }
 
-    /**
-     * Operation {{{operationId}}}AsyncWithHttpInfo
-     *
-     * {{{summary}}}
-     *
-{{#description}}
-     * {{.}}
-     *
-{{/description}}
-{{#allParams}}
-     * @param  {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
     public function {{operationId}}AsyncWithHttpInfo({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         $returnType = '{{returnType}}';
@@ -284,16 +214,6 @@ use {{invokerPackage}}\ObjectSerializer;
             );
     }
 
-    /**
-     * Create request for operation '{{{operationId}}}'
-     *
-{{#allParams}}
-     * @param  {{dataType}} ${{paramName}}{{#description}} {{description}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
     protected function {{operationId}}Request({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}'{{{.}}}'{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
     {
         {{#allParams}}
@@ -507,12 +427,6 @@ use {{invokerPackage}}\ObjectSerializer;
     }
 
     {{/operation}}
-    /**
-     * Create http client option
-     *
-     * @throws \RuntimeException on file opening failure
-     * @return array of http client options
-     */
     protected function createHttpClientOption()
     {
         $options = [];
