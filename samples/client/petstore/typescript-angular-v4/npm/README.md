@@ -140,7 +140,7 @@ import { BASE_PATH } from '@swagger/angular2-typescript-petstore';
 @NgModule({
     imports: [],
     declarations: [ AppComponent ],
-    providers: [ provide: BASE_PATH, useValue: 'https://your-web-service.com' ],
+    providers: [ {provide: BASE_PATH, useValue: 'https://your-web-service.com'} ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {}
