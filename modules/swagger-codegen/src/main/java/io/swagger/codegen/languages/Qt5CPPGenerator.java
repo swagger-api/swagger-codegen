@@ -17,11 +17,7 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig {
     public static final String CPP_NAMESPACE = "cppNamespace";
@@ -29,12 +25,12 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
     public static final String OPTIONAL_PROJECT_FILE_DESC = "Generate client.pri.";
 
     protected final String PREFIX = "SWG";
-    protected Set<String> foundationClasses = new HashSet<String>();
+    protected Set<String> foundationClasses = new HashSet<>();
     // source folder where to write the files
     protected String sourceFolder = "client";
     protected String apiVersion = "1.0.0";
-    protected Map<String, String> namespaces = new HashMap<String, String>();
-    protected Set<String> systemIncludes = new HashSet<String>();
+    protected Map<String, String> namespaces = new HashMap<>();
+    protected Set<String> systemIncludes = new HashSet<>();
     protected String cppNamespace = "Swagger";
     protected boolean optionalProjectFileFlag = true;
 
@@ -45,7 +41,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
         outputFolder = "generated-code/qt5cpp";
 
         // set modelNamePrefix as default for QT5CPP
-        if (modelNamePrefix == "") {
+        if (Objects.equals(modelNamePrefix, "")) {
             modelNamePrefix = PREFIX;
         }
 
@@ -102,7 +98,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
          * Language Specific Primitives.  These types will not trigger imports by
          * the client generator
          */
-        languageSpecificPrimitives = new HashSet<String>(
+        languageSpecificPrimitives = new HashSet<>(
                 Arrays.asList(
                         "bool",
                         "qint32",
@@ -122,33 +118,27 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
             supportingFiles.add(new SupportingFile("Project.mustache", sourceFolder, "client.pri"));
         }
 
-        super.typeMapping = new HashMap<String, String>();
-
-        typeMapping.put("date", "QDate");
-        typeMapping.put("DateTime", "QDateTime");
-        typeMapping.put("string", "QString");
-        typeMapping.put("integer", "qint32");
-        typeMapping.put("long", "qint64");
-        typeMapping.put("boolean", "bool");
         typeMapping.put("array", "QList");
-        typeMapping.put("map", "QMap");
-        typeMapping.put("file", "SWGHttpRequestInputFileElement");
-        typeMapping.put("object", PREFIX + "Object");
         //TODO binary should be mapped to byte array
         // mapped to String as a workaround
         typeMapping.put("binary", "QString");
         typeMapping.put("ByteArray", "QByteArray");
+        typeMapping.put("date", "QDate");
+        typeMapping.put("DateTime", "QDateTime");
+        typeMapping.put("file", "SWGHttpRequestInputFileElement");
+        typeMapping.put("integer", "qint32");
+        typeMapping.put("long", "qint64");
+        typeMapping.put("map", "QMap");
+        typeMapping.put("object", PREFIX + "Object");
+        typeMapping.put("string", "QString");
         // UUID support - possible enhancement : use QUuid instead of QString.
         //   beware though that Serialisation/deserialisation of QUuid does not
         //   come out of the box and will need to be sorted out (at least imply
         //   modifications on multiple templates)
         typeMapping.put("UUID", "QString");
 
-        importMapping = new HashMap<String, String>();
-
+        importMapping = new HashMap<>();
         importMapping.put("SWGHttpRequestInputFileElement", "#include \"" + PREFIX + "HttpRequest.h\"");
-
-        namespaces = new HashMap<String, String>();
 
         foundationClasses.add("QString");
 
@@ -168,7 +158,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
             cppNamespace = (String) additionalProperties.get("cppNamespace");
         }
 
-        additionalProperties.put("cppNamespaceDeclarations", cppNamespace.split("\\::"));
+        additionalProperties.put("cppNamespaceDeclarations", cppNamespace.split("::"));
         if(additionalProperties.containsKey("modelNamePrefix")){
             supportingFiles.clear();
             supportingFiles.add(new SupportingFile("helpers-header.mustache", sourceFolder, modelNamePrefix + "Helpers.h"));
@@ -274,12 +264,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
     @Override
     public String toModelFilename(String name) {
-        return modelNamePrefix + initialCaps(name);
-    }
-
-    @Override
-    public String toApiFilename(String name) {
-        return modelNamePrefix + initialCaps(name) + "Api";
+        return toTypeName(name, modelNamePrefix, "");
     }
 
     /**
@@ -362,7 +347,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type = null;
+        String type;
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type)) {
@@ -386,7 +371,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
                 languageSpecificPrimitives.contains(type)) {
             return type;
         } else {
-            return modelNamePrefix + Character.toUpperCase(type.charAt(0)) + type.substring(1);
+            return toTypeName(type, modelNamePrefix, "");
         }
     }
 
@@ -419,18 +404,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
 
     @Override
     public String toApiName(String type) {
-        return modelNamePrefix + Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
-    }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
-    }
-
-    @Override
-    public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
+        return toTypeName(type, modelNamePrefix, "Api");
     }
 
     public void setOptionalProjectFileFlag(boolean flag) {

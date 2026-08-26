@@ -2,12 +2,7 @@ package io.swagger.codegen.languages;
 
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
@@ -27,9 +22,7 @@ import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.DecimalProperty;
 import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
 import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -80,28 +73,10 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
         supportingFiles.add(new SupportingFile("cmake.mustache", "", "CMakeLists.txt"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
-
-        typeMapping = new HashMap<String, String>();
         typeMapping.put("date", "std::string");
         typeMapping.put("DateTime", "std::string");
-        typeMapping.put("string", "std::string");
-        typeMapping.put("integer", "int32_t");
-        typeMapping.put("long", "int64_t");
-        typeMapping.put("boolean", "bool");
-        typeMapping.put("array", "std::vector");
-        typeMapping.put("map", "std::map");
         typeMapping.put("file", "std::string");
-        typeMapping.put("object", "Object");
-        typeMapping.put("binary", "std::string");
-        typeMapping.put("number", "double");
-        typeMapping.put("UUID", "std::string");
 
-        super.importMapping = new HashMap<String, String>();
-        importMapping.put("std::vector", "#include <vector>");
-        importMapping.put("std::map", "#include <map>");
-        importMapping.put("std::string", "#include <string>");
         importMapping.put("Object", "#include \"Object.h\"");
     }
 
@@ -164,7 +139,7 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
-                    if(cm.datatype == "HttpContent") {
+                    if(Objects.equals(cm.datatype, "HttpContent")) {
                         op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
                     }
                 }
@@ -236,11 +211,6 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
     }
 
     @Override
-    public String toModelFilename(String name) {
-        return initialCaps(name);
-    }
-
-    @Override
     public String apiFilename(String templateName, String tag) {
         String result = super.apiFilename(templateName, tag);
 
@@ -261,42 +231,6 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
     }
 
     @Override
-    public String toApiFilename(String name) {
-        return initialCaps(name) + "Api";
-    }
-
-    /**
-     * Optional - type declaration. This is a String which is used by the
-     * templates to instantiate your types. There is typically special handling
-     * for different property types
-     *
-     * @return a string value used as the `dataType` field for model templates,
-     *         `returnType` for api templates
-     */
-    @Override
-    public String getTypeDeclaration(Property p) {
-        String swaggerType = getSwaggerType(p);
-
-        if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
-            return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
-        }
-        if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            Property inner = mp.getAdditionalProperties();
-            return getSwaggerType(p) + "<std::string, " + getTypeDeclaration(inner) + ">";
-        }
-        if (p instanceof StringProperty || p instanceof DateProperty
-                || p instanceof DateTimeProperty || p instanceof FileProperty
-                || languageSpecificPrimitives.contains(swaggerType)) {
-            return toModelName(swaggerType);
-        }
-
-        return "std::shared_ptr<" + swaggerType + ">";
-    }
-
-    @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
             return "\"\"";
@@ -312,7 +246,7 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
             return "0.0f";
         } else if (p instanceof LongProperty) {
             return "0L";
-        } else if (p instanceof IntegerProperty || p instanceof BaseIntegerProperty) {
+        } else if (p instanceof BaseIntegerProperty) {
             return "0";
         } else if (p instanceof DecimalProperty) {
             return "0.0";
@@ -379,7 +313,7 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type = null;
+        String type;
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type))
@@ -387,32 +321,5 @@ public class PistacheServerCodegen extends AbstractCppCodegen {
         } else
             type = swaggerType;
         return toModelName(type);
-    }
-
-    @Override
-    public String toModelName(String type) {
-        if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
-                || importMapping.values().contains(type) || defaultIncludes.contains(type)
-                || languageSpecificPrimitives.contains(type)) {
-            return type;
-        } else {
-            return Character.toUpperCase(type.charAt(0)) + type.substring(1);
-        }
-    }
-
-    @Override
-    public String toApiName(String type) {
-        return Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
-    }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
-    }
-
-    @Override
-    public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 }
