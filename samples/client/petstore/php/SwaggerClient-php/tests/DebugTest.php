@@ -3,24 +3,36 @@ namespace Swagger\Client;
 
 class DebugTest extends \PHPUnit_Framework_TestCase
 {
-    public function testEnableDebugOutput()
+    const PET_ID = 10005;
+
+    /** @var Api\PetApi */
+    private $api;
+
+    protected function setUp()
     {
-        $this->expectOutputRegex('#GET /v2/pet/1 HTTP/1.1#');
+        $newPetId = self::PET_ID;
+        $newPet = new Model\Pet;
+        $newPet->setId($newPetId);
+        $newPet->setName("PHP Unit Test");
+        $newPet->setPhotoUrls(["http://test_php_unit_test.com"]);
+
+        $this->expectOutputRegex('#GET /v2/pet/' . self::PET_ID . ' HTTP/1.1#');
 
         $config = new Configuration();
         $config->setDebug(true);
-        $api = new Api\PetApi(null, $config);
-        $api->getPetById(1);
+        $this->api = new Api\PetApi(null, $config);
+        $this->api->addPet($newPet);
+    }
+
+
+    public function testEnableDebugOutput()
+    {
+        $this->api->getPetById(self::PET_ID);
     }
 
     public function testEnableDebugOutputAsync()
     {
-        $this->expectOutputRegex('#GET /v2/pet/1 HTTP/1.1#');
-
-        $config = new Configuration();
-        $config->setDebug(true);
-        $api = new Api\PetApi(null, $config);
-        $promise = $api->getPetByIdAsync(1);
+        $promise = $this->api->getPetByIdAsync(self::PET_ID);
         $promise->wait();
     }
 }

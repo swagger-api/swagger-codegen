@@ -2,6 +2,8 @@
 
 namespace Swagger\Client;
 
+use Exception;
+use GuzzleHttp\Client;
 use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
@@ -41,7 +43,8 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $newPet->setCategory($category);
 
         $config = new Configuration();
-        $petApi = new Api\PetApi(null, $config);
+        $client = new Client(['headers' => ['api_key' => 'special-key']]);
+        $petApi = new Api\PetApi($client, $config);
 
         // add a new pet (model)
         list(, $status) = $petApi->addPetWithHttpInfo($newPet);
@@ -152,10 +155,12 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
 
         // verify updated Pet
-        $result = $this->api->getPetById($petId);
-        $this->assertSame($result->getId(), $petId);
-        $this->assertSame($result->getStatus(), 'pending');
-        $this->assertSame($result->getName(), 'updatePet');
+        $this->spin(function () use ($petId) {
+            $result = $this->api->getPetById($petId);
+            $this->assertSame($result->getId(), $petId);
+            $this->assertSame($result->getStatus(), 'pending');
+            $this->assertSame($result->getName(), 'updatePet');
+        });
     }
 
     // test updatePetWithFormWithHttpInfo and verify by the "name" of the response
@@ -172,9 +177,12 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($update_response);
         $this->assertSame($status_code, 200);
         $this->assertSame($http_headers['Content-Type'], ['application/json']);
-        $response = $this->api->getPetById($petId);
-        $this->assertSame($response->getId(), $petId);
-        $this->assertSame($response->getName(), 'update pet with form with http info');
+
+        $this->spin(function () use ($petId) {
+            $response = $this->api->getPetById($petId);
+            $this->assertSame($response->getId(), $petId);
+            $this->assertSame($response->getName(), 'update pet with form with http info');
+        });
     }
 
     // test updatePetWithForm and verify by the "name" and "status" of the response
@@ -185,16 +193,18 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         // return nothing (void)
         $this->assertNull($result);
 
-        $response = $this->api->getPetById($pet_id);
-        $this->assertSame($response->getId(), $pet_id);
-        $this->assertSame($response->getName(), 'update pet with form');
-        $this->assertSame($response->getStatus(), 'sold');
+        $this->spin(function () use ($pet_id) {
+            $response = $this->api->getPetById($pet_id);
+            $this->assertSame($response->getId(), $pet_id);
+            $this->assertSame($response->getName(), 'update pet with form');
+            $this->assertSame($response->getStatus(), 'sold');
+        });
     }
 
     // test addPet and verify by the "id" and "name" of the response
     public function testAddPet()
     {
-        $new_pet_id = 10005;
+        $new_pet_id = 10006;
         $newPet = new Model\Pet;
         $newPet->setId($new_pet_id);
         $newPet->setName("PHP Unit Test 2");
@@ -401,4 +411,28 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 //            'path' => sys_get_temp_dir() . '/' . $result->getFilename()
 //        ]);
 //    }
+
+    /**
+     * @throws Exception
+     */
+    private function spin($callable, $maxWaitTimeSeconds = 5, $waitingIntervalSeconds = 1)
+    {
+        $exception = null;
+
+        for ($index = 0; $index < $maxWaitTimeSeconds; $index++) {
+            try {
+                return $callable($this);
+            } catch (Exception $exception) {
+                // only rethrow the latest exception when timing out
+            }
+            sleep($waitingIntervalSeconds);
+        }
+
+        if ($exception) {
+            throw $exception;
+        }
+
+        $backtrace = debug_backtrace();
+        throw new Exception('Timeout thrown by ' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . "()\n");
+    }
 }
