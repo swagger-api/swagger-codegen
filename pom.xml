@@ -1082,7 +1082,7 @@
          -->
         <jmustache-version>1.15</jmustache-version>
         <testng-version>7.10.2</testng-version>
-        <surefire-version>3.0.0</surefire-version>
+        <surefire-version>3.5.5</surefire-version>
         <jmockit-version>1.49</jmockit-version>
         <mockito-version>5.11.0</mockito-version>
         <reflections-version>0.10.2</reflections-version>
