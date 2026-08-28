@@ -12,13 +12,29 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/{{apiPath}}"
 	//
-	sw "./{{apiPath}}"
+	api "./{{apiPath}}"
 )
 
-func main() {
+func main() {	
+	{{#muxEnabled}}
+	router := api.NewRouter()
+
 	log.Printf("Server started")
 
-	router := sw.NewRouter()
-
 	log.Fatal(http.ListenAndServe(":{{serverPort}}", router))
+	{{/muxEnabled}}
+	{{^muxEnabled}}
+	routes := api.GetRoutes()
+	routeMap := make(map[string]string)
+	for _, r := range routes {
+		if _, exist := routeMap[r.Pattern]; !exist {
+			http.Handle(r.Pattern, r.HandlerFunc)
+			routeMap[r.Pattern] = r.Pattern
+		} else{
+			log.Printf("Warning: route %s thrown away, duplicate paths are not supported by DefaultServeMux", r.Pattern)
+		}
+	}
+	log.Printf("Server started")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+	{{/muxEnabled}}
 }
