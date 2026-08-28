@@ -63,7 +63,7 @@ export class BaseAPI {
             this.basePath = configuration.basePath || this.basePath;
         }
     }
-};
+}
 
 /**
  *
@@ -381,7 +381,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -424,7 +423,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             if (apiKey !== undefined && apiKey !== null) {
                 localVarHeaderParameter['api_key'] = String(apiKey);
             }
@@ -465,7 +463,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             if (status) {
                 localVarQueryParameter['status'] = status.join(COLLECTION_FORMATS["csv"]);
             }
@@ -506,7 +503,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             if (tags) {
                 localVarQueryParameter['tags'] = tags.join(COLLECTION_FORMATS["csv"]);
             }
@@ -547,7 +543,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.apiKey;
                 localVarHeaderParameter["api_key"] = localVarApiKeyValue;
             }
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             localVarUrlObj.search = null;
@@ -584,7 +579,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -619,7 +613,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new URLSearchParams();
 
             // authentication petstore_auth required
             // oauth required
@@ -629,7 +623,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             if (name !== undefined) {
                 localVarFormParams.set('name', name as any);
             }
@@ -671,7 +664,7 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new url.URLSearchParams();
+            const localVarFormParams = new URLSearchParams();
 
             // authentication petstore_auth required
             // oauth required
@@ -681,7 +674,6 @@ export const PetApiFetchParamCreator = function (configuration?: Configuration) 
 					: configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
-
             if (additionalMetadata !== undefined) {
                 localVarFormParams.set('additionalMetadata', additionalMetadata as any);
             }
@@ -1131,7 +1123,6 @@ export const StoreApiFetchParamCreator = function (configuration?: Configuration
 					: configuration.apiKey;
                 localVarHeaderParameter["api_key"] = localVarApiKeyValue;
             }
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             localVarUrlObj.search = null;
