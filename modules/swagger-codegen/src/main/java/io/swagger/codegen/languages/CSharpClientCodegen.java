@@ -584,6 +584,12 @@ public class CSharpClientCodegen extends AbstractCSharpCodegen {
             }
         }
 
+        // Disable overrides for inherited type 'Dictionary'.
+        // https://github.com/swagger-api/swagger-codegen/issues/7669
+        if (codegenModel.parent != null && codegenModel.parent.startsWith("Dictionary")) {
+            codegenModel.isArrayModel = true;
+        }
+
         return codegenModel;
     }
 
