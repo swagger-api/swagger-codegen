@@ -32,7 +32,7 @@ let primitives = [
                     "any"
                  ];
 
-class ObjectSerializer {
+export class ObjectSerializer {
 
     public static findCorrectType(data: any, expectedType: string) {
         if (data == undefined) {
