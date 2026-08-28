@@ -9,16 +9,17 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Currency } from './currency';
 
+import { Currency } from './currency';
 
 /**
  * some description 
  */
-export interface Amount { 
+export interface Amount {
     /**
      * some description 
      */
     value: number;
     currency: Currency;
 }
+

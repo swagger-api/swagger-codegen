@@ -14,7 +14,7 @@
 /**
  * An order for a pets from the pet store
  */
-export interface Order { 
+export interface Order {
     id?: number;
     petId?: number;
     quantity?: number;
@@ -33,3 +33,4 @@ export namespace Order {
         Delivered: 'delivered' as StatusEnum
     };
 }
+

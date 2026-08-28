@@ -9,14 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+
 import { Category } from './category';
 import { Tag } from './tag';
-
 
 /**
  * A pet for sale in the pet store
  */
-export interface Pet { 
+export interface Pet {
     id?: number;
     category?: Category;
     name: string;
@@ -35,3 +35,4 @@ export namespace Pet {
         Sold: 'sold' as StatusEnum
     };
 }
+
