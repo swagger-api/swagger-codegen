@@ -9,18 +9,18 @@ defmodule SwaggerPetstore.Model.Capitalization do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"smallCamel",
+    :smallCamel,
     :"CapitalCamel",
-    :"small_Snake",
+    :small_Snake,
     :"Capital_Snake",
     :"SCA_ETH_Flow_Points",
     :"ATT_NAME"
   ]
 
   @type t :: %__MODULE__{
-    :"smallCamel" => String.t,
+    :smallCamel => String.t,
     :"CapitalCamel" => String.t,
-    :"small_Snake" => String.t,
+    :small_Snake => String.t,
     :"Capital_Snake" => String.t,
     :"SCA_ETH_Flow_Points" => String.t,
     :"ATT_NAME" => String.t

@@ -9,11 +9,11 @@ defmodule SwaggerPetstore.Model.ClassModel do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"_class"
+    :_class
   ]
 
   @type t :: %__MODULE__{
-    :"_class" => String.t
+    :_class => String.t
   }
 end
 

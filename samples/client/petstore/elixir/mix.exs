@@ -29,8 +29,8 @@ defmodule SwaggerPetstore.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:tesla, "~> 0.8"},
-      {:poison, ">= 1.0.0"}
+      {:tesla, "~> 1.12.1"},
+      {:poison, ">= 6.0.0"}
     ]
   end
 end

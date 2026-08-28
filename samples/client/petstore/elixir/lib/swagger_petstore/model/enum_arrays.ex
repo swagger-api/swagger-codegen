@@ -9,13 +9,13 @@ defmodule SwaggerPetstore.Model.EnumArrays do
 
   @derive [Poison.Encoder]
   defstruct [
-    :"just_symbol",
-    :"array_enum"
+    :just_symbol,
+    :array_enum
   ]
 
   @type t :: %__MODULE__{
-    :"just_symbol" => String.t,
-    :"array_enum" => [String.t]
+    :just_symbol => String.t,
+    :array_enum => [String.t]
   }
 end
 
