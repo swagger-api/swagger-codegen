@@ -6,11 +6,13 @@ require 'date'
 require 'json'
 require 'logger'
 require 'tempfile'
-require 'typhoeus'
-require 'addressable/uri'
+require 'openssl'
+require 'httpx'
 
 module {{moduleName}}
   class ApiClient
+    DEFAULT_SESSION = HTTPX.plugin(:compression).plugin(:multipart)
+
     # The Configuration object holding settings to be used in the API client.
     attr_accessor :config
 
@@ -25,9 +27,24 @@ module {{moduleName}}
       @config = config
       @user_agent = "{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/#{VERSION}/ruby{{/httpUserAgent}}"
       @default_headers = {
-        'Content-Type' => 'application/json',
-        'User-Agent' => @user_agent
+        'content-type' => 'application/json',
+        'user-agent' => @user_agent
       }
+
+      ssl_options = {
+        verify_mode: @config.verify_ssl,
+        cert: (OpenSSL::X509::Certificate.new(File.read(@config.cert_file)) if @config.cert_file),
+        key: (OpenSSL::PKey.read(@config.key_file) if @config.key_file),
+        ca_path: (@config.ssl_ca_cert if @config.ssl_ca_cert)
+      }
+      ssl_options[:hostname] = nil if @config.verify_ssl_host
+
+      @session = DEFAULT_SESSION.with(
+        ssl: ssl_options,
+        timeout: ({ request_timeout: @config.timeout } if @config.timeout && @config.timeout.positive?),
+        origin: "#{@config.scheme}://#{@config.host}",
+        base_path: (@config.base_path.sub(/\/+\z/, '') if @config.base_path)
+      )
     end
 
     def self.default
@@ -39,25 +56,23 @@ module {{moduleName}}
     # @return [Array<(Object, Fixnum, Hash)>] an array of 3 elements:
     #   the data deserialized from response body (could be nil), response status code and response headers.
     def call_api(http_method, path, opts = {})
-      request = build_request(http_method, path, opts)
-      response = request.run
+      response = run_request(http_method, path, opts)
 
       if @config.debugging
         @config.logger.debug "HTTP response body ~BEGIN~\n#{response.body}\n~END~\n"
       end
 
-      unless response.success?
-        if response.timed_out?
+      if error = response.error
+        case response.error
+        when HTTPX::TimeoutError
           fail ApiError.new('Connection timed out')
-        elsif response.code == 0
-          # Errors from libcurl will be made visible here
-          fail ApiError.new(:code => 0,
-                            :message => response.return_message)
-        else
-          fail ApiError.new(:code => response.code,
+        when HTTPX::HTTPError
+          fail ApiError.new(:code => response.status,
                             :response_headers => response.headers.to_h,
-                            :response_body => response.body),
-               response.status_message
+                            :response_body => response.body.to_s)
+        else
+          fail ApiError.new(:code => 0,
+                            :message => response.error.message)
         end
       end
 
@@ -66,7 +81,7 @@ module {{moduleName}}
       else
         data = nil
       end
-      return data, response.code, response.headers
+      return data, response.status, response.headers.to_h
     end
 
     # Builds the HTTP request
@@ -77,8 +92,8 @@ module {{moduleName}}
     # @option opts [Hash] :query_params Query parameters
     # @option opts [Hash] :form_params Query parameters
     # @option opts [Object] :body HTTP body (JSON/XML)
-    # @return [Typhoeus::Request] A Typhoeus Request
-    def build_request(http_method, path, opts = {})
+    # @return [HTTPX::Response] A HTTP Response
+    def run_request(http_method, path, opts = {})
       url = build_request_url(path)
       http_method = http_method.to_sym.downcase
 
@@ -90,38 +105,21 @@ module {{moduleName}}
       update_params_for_auth! header_params, query_params, opts[:auth_names]
       {{/hasAuthMethods}}
 
-      # set ssl_verifyhosts option based on @config.verify_ssl_host (true/false)
-      _verify_ssl_host = @config.verify_ssl_host ? 2 : 0
-
       req_opts = {
-        :method => http_method,
-        :headers => header_params,
+        :headers => HTTPX::Headers.new(header_params),
         :params => query_params,
-        :params_encoding => @config.params_encoding,
-        :timeout => @config.timeout,
-        :ssl_verifypeer => @config.verify_ssl,
-        :ssl_verifyhost => _verify_ssl_host,
-        :sslcert => @config.cert_file,
-        :sslkey => @config.key_file,
-        :verbose => @config.debugging
       }
-
-      req_opts.merge!(multipart: true) if header_params['Content-Type'].start_with? "multipart/"
-
-      # set custom cert, if provided
-      req_opts[:cainfo] = @config.ssl_ca_cert if @config.ssl_ca_cert
 
       if [:post, :patch, :put, :delete].include?(http_method)
         req_body = build_request_body(header_params, form_params, opts[:body])
-        req_opts.update :body => req_body
+        req_opts.merge!(req_body)
+
         if @config.debugging
-          @config.logger.debug "HTTP request body param ~BEGIN~\n#{req_body}\n~END~\n"
+          @config.logger.debug "HTTP request body param ~BEGIN~\n#{req_body.values.first}\n~END~\n"
         end
       end
 
-      request = Typhoeus::Request.new(url, req_opts)
-      download_file(request) if opts[:return_type] == 'File'
-      request
+      @session.request(http_method, url, req_opts)
     end
 
     # Check if the given MIME is a JSON MIME.
@@ -145,23 +143,25 @@ module {{moduleName}}
 
       # handle file downloading - return the File instance processed in request callbacks
       # note that response body is empty when the file is written in chunks in request on_body callback
-      return @tempfile if return_type == 'File'
+      if return_type == 'File'
+        return download_file(response)
+      end
 
-      return nil if body.nil? || body.empty?
+      return if body.bodyless?
 
       # return response body directly for String return type
-      return body if return_type == 'String'
+      return body.to_s if return_type == 'String'
 
       # ensuring a default content type
-      content_type = response.headers['Content-Type'] || 'application/json'
+      content_type = response.headers['content-type'] || 'application/json'
 
       fail "Content-Type is not supported: #{content_type}" unless json_mime?(content_type)
 
       begin
-        data = JSON.parse("[#{body}]", :symbolize_names => true)[0]
+        data = body.json(:symbolize_names => true)
       rescue JSON::ParserError => e
         if %w(String Date DateTime).include?(return_type)
-          data = body
+          data = body.to_s
         else
           raise e
         end
@@ -219,33 +219,25 @@ module {{moduleName}}
     # process can use.
     #
     # @see Configuration#temp_folder_path
-    def download_file(request)
-      tempfile = nil
-      encoding = nil
-      request.on_headers do |response|
-        content_disposition = response.headers['Content-Disposition']
-        if content_disposition && content_disposition =~ /filename=/i
-          filename = content_disposition[/filename=['"]?([^'"\s]+)['"]?/, 1]
-          prefix = sanitize_filename(filename)
-        else
-          prefix = 'download-'
-        end
-        prefix = prefix + '-' unless prefix.end_with?('-')
-        encoding = response.body.encoding
-        tempfile = Tempfile.open(prefix, @config.temp_folder_path, encoding: encoding)
-        @tempfile = tempfile
+    def download_file(response)
+      content_disposition = response.headers['content-disposition']
+      if content_disposition && content_disposition =~ /filename=/i
+        filename = content_disposition[/filename=['"]?([^'"\s]+)['"]?/, 1]
+        prefix = sanitize_filename(filename)
+      else
+        prefix = 'download-'
       end
-      request.on_body do |chunk|
-        chunk.force_encoding(encoding)
-        tempfile.write(chunk)
-      end
-      request.on_complete do |response|
-        tempfile.close
-        @config.logger.info "Temp file written to #{tempfile.path}, please copy the file to a proper folder "\
-                            "with e.g. `FileUtils.cp(tempfile.path, '/new/file/path')` otherwise the temp file "\
-                            "will be deleted automatically with GC. It's also recommended to delete the temp file "\
-                            "explicitly with `tempfile.delete`"
-      end
+      prefix = prefix + '-' unless prefix.end_with?('-')
+      encoding = response.body.encoding
+      tempfile = Tempfile.open(prefix, @config.temp_folder_path, encoding: encoding)
+      response.copy_to(tempfile)
+      tempfile.close
+      @config.logger.info "Temp file written to #{tempfile.path}, please copy the file to a proper folder "\
+                          "with e.g. `FileUtils.cp(tempfile.path, '/new/file/path')` otherwise the temp file "\
+                          "will be deleted automatically with GC. It's also recommended to delete the temp file "\
+                          "explicitly with `tempfile.delete`"
+
+      tempfile
     end
 
     # Sanitize filename by removing path.
@@ -259,8 +251,7 @@ module {{moduleName}}
 
     def build_request_url(path)
       # Add leading and trailing slashes to path
-      path = "/#{path}".gsub(/\/+/, '/')
-      Addressable::URI.encode(@config.base_url + path)
+      "/#{path}".gsub(/\/+/, '/')
     end
 
     # Builds the HTTP request body
@@ -271,20 +262,11 @@ module {{moduleName}}
     # @return [String] HTTP body data in the form of string
     def build_request_body(header_params, form_params, body)
       # http form
-      if header_params['Content-Type'] == 'application/x-www-form-urlencoded' ||
-          header_params['Content-Type'] == 'multipart/form-data'
-        data = {}
-        form_params.each do |key, value|
-          case value
-          when ::File, ::Array, nil
-            # let typhoeus handle File, Array and nil parameters
-            data[key] = value
-          else
-            data[key] = value.to_s
-          end
-        end
+      if header_params['content-type'] == 'application/x-www-form-urlencoded' ||
+          header_params['content-type'] == 'multipart/form-data'
+        { form: form_params }
       elsif body
-        data = body.is_a?(String) ? body : body.to_json
+        body.is_a?(String) ? { body: body } : { json: body }
       else
         data = nil
       end
@@ -363,7 +345,7 @@ module {{moduleName}}
     end
 
     # Build parameter value according to the given collection format.
-    # @param [String] collection_format one of :csv, :ssv, :tsv, :pipes and :multi
+    # @param [String] collection_format one of :csv, :ssv, :tsv, :pipes
     def build_collection_param(param, collection_format)
       case collection_format
       when :csv
@@ -374,9 +356,6 @@ module {{moduleName}}
         param.join("\t")
       when :pipes
         param.join('|')
-      when :multi
-        # return the array directly as typhoeus will handle it as expected
-        param
       else
         fail "unknown collection format: #{collection_format.inspect}"
       end
