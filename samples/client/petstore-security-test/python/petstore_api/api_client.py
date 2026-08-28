@@ -237,7 +237,10 @@ class ApiClient(object):
         try:
             data = json.loads(response.data)
         except ValueError:
-            data = response.data
+            try:
+                data = response.data.decode("utf-8")
+            except UnicodeDecodeError:
+                data = str(response.data)
 
         return self.__deserialize(data, response_type)
 
