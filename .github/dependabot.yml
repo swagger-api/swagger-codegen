@@ -4,6 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    target-branch: "3.0.0"
     exclude-paths:
       - "samples/**"
     ignore:
