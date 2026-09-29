@@ -73,7 +73,7 @@
                     <webResources>
                         <resource>
                             <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/swagger-ui-master/dist</directory>
+                            <directory>${project.build.directory}/swagger-ui-main/dist</directory>
                             <excludes>
                                 <exclude>index.html</exclude>
                             </excludes>
@@ -144,7 +144,7 @@
                             <goal>wget</goal>
                         </goals>
                         <configuration>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+                            <url>https://github.com/swagger-api/swagger-ui/archive/main.tar.gz</url>
                             <unpack>true</unpack>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
