@@ -13,13 +13,22 @@ jobs:
         java: [ 11 ]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
-          cache: maven
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Cache local Maven repository
+        uses: actions/cache@v5
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -28,20 +37,6 @@ jobs:
         run: |
           docker login --username=${{ secrets.DOCKERHUB_SB_USERNAME }} --password=${{ secrets.DOCKERHUB_SB_PASSWORD }}
           set -e
-      - uses: s4u/maven-settings-action@v2.8.0
-        name: setup maven settings.xml
-        with:
-          servers: |
-            [{
-                "id": "sonatype-nexus-staging",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            },
-            {
-                "id": "sonatype-nexus-snapshots",
-                "username": "${{ secrets.OSSRH_USERNAME }}",
-                "password": "${{ secrets.OSSRH_TOKEN }}"
-            }]
       - name: Build with Maven
         run: mvn -B -U verify --file pom.xml
       - name: Deploy Maven Snapshot
@@ -62,7 +57,7 @@ jobs:
         with:
           context: ./modules/swagger-generator
           push: true
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le
           provenance: false
           tags: swaggerapi/swagger-generator:unstable
       - name: Build CLI image and push
@@ -71,28 +66,9 @@ jobs:
         with:
           context: ./modules/swagger-codegen-cli
           push: true
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le
           provenance: false
           tags: swaggerapi/swagger-codegen-cli:unstable
-  build-java8:
-
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: [ 8 ]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - name: Build with Maven
-        run: mvn -B -U clean verify -DskipTests -Dmaven.test.skip=true -Dmaven.site.skip=true -Dmaven.javadoc.skip=true -Psamples-java8 --file pom.xml
+    env:
+      MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}

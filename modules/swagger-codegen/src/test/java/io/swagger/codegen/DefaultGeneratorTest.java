@@ -12,7 +12,6 @@ import io.swagger.parser.util.ParseOptions;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.rules.TemporaryFolder;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -44,6 +43,8 @@ public class DefaultGeneratorTest {
     private static final String MODEL_DEFAULT_API_FILE = "/src/main/java/io/swagger/client/api/DefaultApi.java";
 
     public TemporaryFolder folder = new TemporaryFolder();
+
+    private final DefaultGenerator generator = new DefaultGenerator();;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -1133,5 +1134,10 @@ public class DefaultGeneratorTest {
             }
         }
         return null;
+    }
+
+    @Test(expectedExceptions = SecurityException.class)
+    public void testProcessTemplateToFileWithPathTraversal() throws IOException {
+        generator.processTemplateToFile(new HashMap<>(), "template.mustache", "../../../etc/passwd");
     }
 }

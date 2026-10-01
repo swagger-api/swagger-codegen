@@ -615,8 +615,8 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         this.useRuntimeException = useRuntimeException;
     }
 
-    final private static Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application\\/json(;.*)?");
-    final private static Pattern JSON_VENDOR_MIME_PATTERN = Pattern.compile("(?i)application\\/vnd.(.*)+json(;.*)?");
+    private static final Pattern JSON_MIME_PATTERN = Pattern.compile("(?i)application/json(;.*)?");
+    private static final Pattern JSON_VENDOR_MIME_PATTERN = Pattern.compile("(?i)application/vnd\\..*\\+json(;.*)?");
 
     /**
      * Check if the given MIME is a JSON MIME.

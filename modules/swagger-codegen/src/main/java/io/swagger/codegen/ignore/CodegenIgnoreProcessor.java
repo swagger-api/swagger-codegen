@@ -3,6 +3,7 @@ package io.swagger.codegen.ignore;
 import com.google.common.collect.ImmutableList;
 import io.swagger.codegen.ignore.rules.DirectoryRule;
 import io.swagger.codegen.ignore.rules.Rule;
+import io.swagger.codegen.utils.SecureFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,9 @@ public class CodegenIgnoreProcessor {
      */
     @SuppressWarnings("WeakerAccess")
     public CodegenIgnoreProcessor(final String baseDirectory, final String ignoreFile) {
+        SecureFileUtils.validatePath(baseDirectory);
         final File directory = new File(baseDirectory);
+        SecureFileUtils.validatePath(ignoreFile);
         final File targetIgnoreFile = new File(directory, ignoreFile);
         if (directory.exists() && directory.isDirectory()) {
             loadFromFile(targetIgnoreFile);
@@ -55,6 +58,7 @@ public class CodegenIgnoreProcessor {
      * @param targetIgnoreFile The ignore file location.
      */
     public CodegenIgnoreProcessor(final File targetIgnoreFile) {
+        SecureFileUtils.validatePath(targetIgnoreFile);
         loadFromFile(targetIgnoreFile);
     }
 

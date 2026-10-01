@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    exclude-paths:
+      - "samples/**"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

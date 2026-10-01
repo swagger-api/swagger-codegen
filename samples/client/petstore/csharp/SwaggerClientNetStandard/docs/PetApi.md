@@ -460,7 +460,7 @@ void (empty response body)
 
 <a name="uploadfile"></a>
 # **UploadFile**
-> ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream file = null)
+> ApiResponse UploadFile (long? petId, string additionalMetadata = null, System.IO.Stream _file = null)
 
 uploads an image
 
@@ -484,12 +484,12 @@ namespace Example
             var apiInstance = new PetApi();
             var petId = 789;  // long? | ID of pet to update
             var additionalMetadata = additionalMetadata_example;  // string | Additional data to pass to server (optional) 
-            var file = new System.IO.Stream(); // System.IO.Stream | file to upload (optional) 
+            var _file = new System.IO.Stream(); // System.IO.Stream | file to upload (optional) 
 
             try
             {
                 // uploads an image
-                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, file);
+                ApiResponse result = apiInstance.UploadFile(petId, additionalMetadata, _file);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -507,7 +507,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **petId** | **long?**| ID of pet to update | 
  **additionalMetadata** | **string**| Additional data to pass to server | [optional] 
- **file** | **System.IO.Stream**| file to upload | [optional] 
+ **_file** | **System.IO.Stream**| file to upload | [optional] 
 
 ### Return type
 

@@ -51,6 +51,7 @@ public class CodegenTest {
 
         Assert.assertEquals(codegen.underscore("FooBar"), "foo_bar");
         Assert.assertEquals(codegen.underscore("FooBarBaz"), "foo_bar_baz");
+        Assert.assertEquals(codegen.underscore("HTTPServer"), "http_server");
     }
 
     @Test(description = "test camelize")

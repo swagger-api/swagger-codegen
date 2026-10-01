@@ -49,6 +49,8 @@ class Configuration(object):
         self.api_key = {}
         # dict to store API prefix (e.g. Bearer)
         self.api_key_prefix = {}
+        # function to refresh API key if expired
+        self.refresh_api_key_hook = None
         # Username for HTTP basic authentication
         self.username = ""
         # Password for HTTP basic authentication
@@ -63,8 +65,6 @@ class Configuration(object):
         self.logger["urllib3_logger"] = logging.getLogger("urllib3")
         # Log format
         self.logger_format = '%(asctime)s %(levelname)s %(message)s'
-        # Log stream handler
-        self.logger_stream_handler = None
         # Log file handler
         self.logger_file_handler = None
         # Debug file location
@@ -97,6 +97,9 @@ class Configuration(object):
         # Safe chars for path_param
         self.safe_chars_for_path_param = ''
 
+        # Disable client side validation
+        self.client_side_validation = True
+
     @classmethod
     def set_default(cls, default):
         cls._default = default
@@ -104,9 +107,6 @@ class Configuration(object):
     @property
     def logger_file(self):
         """The logger file.
-
-        If the logger_file is None, then add stream handler and remove file
-        handler. Otherwise, add file handler and remove stream handler.
 
         :param value: The logger_file path.
         :type: str
@@ -117,29 +117,22 @@ class Configuration(object):
     def logger_file(self, value):
         """The logger file.
 
-        If the logger_file is None, then add stream handler and remove file
-        handler. Otherwise, add file handler and remove stream handler.
+        If the logger_file is None, then remove file
+        handler. Otherwise, add file handler.
 
         :param value: The logger_file path.
         :type: str
         """
         self.__logger_file = value
         if self.__logger_file:
-            # If set logging file,
-            # then add file handler and remove stream handler.
+            # If set logging file, then add file handler.
             self.logger_file_handler = logging.FileHandler(self.__logger_file)
             self.logger_file_handler.setFormatter(self.logger_formatter)
             for _, logger in six.iteritems(self.logger):
                 logger.addHandler(self.logger_file_handler)
-                if self.logger_stream_handler:
-                    logger.removeHandler(self.logger_stream_handler)
         else:
-            # If not set logging file,
-            # then add stream handler and remove file handler.
-            self.logger_stream_handler = logging.StreamHandler()
-            self.logger_stream_handler.setFormatter(self.logger_formatter)
+            # If not, remove file handler.
             for _, logger in six.iteritems(self.logger):
-                logger.addHandler(self.logger_stream_handler)
                 if self.logger_file_handler:
                     logger.removeHandler(self.logger_file_handler)
 
@@ -203,11 +196,17 @@ class Configuration(object):
         :param identifier: The identifier of apiKey.
         :return: The token for api key authentication.
         """
-        if (self.api_key.get(identifier) and
-                self.api_key_prefix.get(identifier)):
-            return self.api_key_prefix[identifier] + ' ' + self.api_key[identifier]  # noqa: E501
-        elif self.api_key.get(identifier):
-            return self.api_key[identifier]
+
+        if self.refresh_api_key_hook:
+            self.refresh_api_key_hook(self)
+
+        key = self.api_key.get(identifier)
+        if key:
+            prefix = self.api_key_prefix.get(identifier)
+            if prefix:
+                return "%s %s" % (prefix, key)
+            else:
+                return key
 
     def get_basic_auth_token(self):
         """Gets HTTP basic authentication header (string).

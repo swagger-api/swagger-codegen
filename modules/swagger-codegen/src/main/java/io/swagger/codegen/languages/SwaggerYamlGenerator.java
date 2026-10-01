@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import io.swagger.codegen.*;
+import io.swagger.codegen.utils.SecureFileUtils;
 import io.swagger.jackson.mixin.OperationResponseMixin;
 import io.swagger.jackson.mixin.ResponseSchemaMixin;
 import io.swagger.models.Model;
@@ -104,6 +105,7 @@ public class SwaggerYamlGenerator extends DefaultCodegen implements CodegenConfi
             configureMapper(mapper);
             String swaggerString = mapper.writeValueAsString(swagger);
             String outputFile = outputFolder + File.separator + this.outputFile;
+            SecureFileUtils.validatePath(outputFile);
             FileUtils.writeStringToFile(new File(outputFile), swaggerString, StandardCharsets.UTF_8);
             LOGGER.debug("wrote file to " + outputFile);
         } catch (Exception e) {
