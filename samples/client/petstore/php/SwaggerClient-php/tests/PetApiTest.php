@@ -6,14 +6,14 @@ use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
 
-class PetApiTest extends \PHPUnit_Framework_TestCase
+class PetApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var  PetApi */
     private $api;
 
     // add a new pet (id 10005) to ensure the pet object is available for all the tests
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         // increase memory limit to avoid fatal error due to findPetByStatus
         // returning a lot of data
@@ -45,10 +45,10 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
         // add a new pet (model)
         list(, $status) = $petApi->addPetWithHttpInfo($newPet);
-        \PHPUnit_Framework_Assert::assertEquals(200, $status);
+        \PHPUnit\Framework\Assert::assertEquals(200, $status);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = new Api\PetApi();
     }

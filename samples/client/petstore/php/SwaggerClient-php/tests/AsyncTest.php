@@ -5,7 +5,7 @@ namespace Swagger\Client;
 use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\Pet;
 
-class AsyncTest extends \PHPUnit_Framework_TestCase
+class AsyncTest extends \PHPUnit\Framework\TestCase
 {
     /** @var PetApi */
     private $api;
@@ -13,7 +13,7 @@ class AsyncTest extends \PHPUnit_Framework_TestCase
     /** @var  int */
     private $petId;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = new Api\PetApi();
 
@@ -63,7 +63,7 @@ class AsyncTest extends \PHPUnit_Framework_TestCase
 
     public function testAsyncThrowingException()
     {
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
 
         $promise = $this->api->getPetByIdAsync(0);
         $promise->wait();
@@ -77,7 +77,7 @@ class AsyncTest extends \PHPUnit_Framework_TestCase
 
     public function testAsyncHttpInfoThrowingException()
     {
-        $this->setExpectedException(ApiException::class);
+        $this->expectException(ApiException::class);
 
         $promise = $this->api->getPetByIdAsyncWithHttpInfo(0);
         $promise->wait();

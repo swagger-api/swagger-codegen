@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 use Swagger\Client\Model\EnumTest;
 
-class EnumTestTest extends \PHPUnit_Framework_TestCase
+class EnumTestTest extends \PHPUnit\Framework\TestCase
 {
     public function testPossibleValues()
     {

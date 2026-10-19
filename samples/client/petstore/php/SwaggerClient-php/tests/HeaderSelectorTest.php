@@ -2,7 +2,7 @@
 
 namespace Swagger\Client;
 
-class HeaderSelectorTest extends \PHPUnit_Framework_TestCase
+class HeaderSelectorTest extends \PHPUnit\Framework\TestCase
 {
     public function testSelectingHeaders()
     {

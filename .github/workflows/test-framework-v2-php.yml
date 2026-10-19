@@ -143,7 +143,7 @@ jobs:
       - name: Setup PHP with composer v2
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.3'
           tools: composer:v2
     ###############################################
     ##### END DYNAMIC: Dependent on build environment

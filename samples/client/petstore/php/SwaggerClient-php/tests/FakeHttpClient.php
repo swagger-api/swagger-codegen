@@ -4,6 +4,7 @@ namespace Swagger\Client;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -26,7 +27,7 @@ class FakeHttpClient implements ClientInterface
     /**
      * @param null|ResponseInterface $response
      */
-    public function setResponse(ResponseInterface $response = null)
+    public function setResponse(?ResponseInterface $response = null)
     {
         $this->response = $response;
     }
@@ -41,23 +42,23 @@ class FakeHttpClient implements ClientInterface
      * @return ResponseInterface
      * @throws GuzzleException
      */
-    public function send(RequestInterface $request, array $options = [])
+    public function send(RequestInterface $request, array $options = []): ResponseInterface
     {
         $this->request = $request;
         return $this->response ?: new Response(200);
     }
 
-    public function sendAsync(RequestInterface $request, array $options = [])
+    public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         throw new \RuntimeException('not implemented');
     }
 
-    public function request($method, $uri, array $options = [])
+    public function request(string $method, $uri, array $options = []): ResponseInterface
     {
         throw new \RuntimeException('not implemented');
     }
 
-    public function requestAsync($method, $uri, array $options = [])
+    public function requestAsync(string $method, $uri, array $options = []): PromiseInterface
     {
         throw new \RuntimeException('not implemented');
     }

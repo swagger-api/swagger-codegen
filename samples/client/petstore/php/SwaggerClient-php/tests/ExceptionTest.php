@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 use GuzzleHttp\Client;
 
-class ExceptionTest extends \PHPUnit_Framework_TestCase
+class ExceptionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @expectedException \Swagger\Client\ApiException

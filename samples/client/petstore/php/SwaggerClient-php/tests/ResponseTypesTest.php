@@ -8,14 +8,14 @@ use Swagger\Client\Model\Pet;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class ResponseTypesTest extends \PHPUnit_Framework_TestCase
+class ResponseTypesTest extends \PHPUnit\Framework\TestCase
 {
     /** @var PetApi */
     private $api;
     /** @var  FakeHttpClient */
     private $fakeHttpClient;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fakeHttpClient = new FakeHttpClient();
         $this->api = new PetApi($this->fakeHttpClient);

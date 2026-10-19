@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 use Swagger\Client\Model\Pet;
 
-class PetTest extends \PHPUnit_Framework_TestCase
+class PetTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * test empty object serialization

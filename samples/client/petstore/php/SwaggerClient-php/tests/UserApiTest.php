@@ -4,13 +4,13 @@ namespace Swagger\Client;
 
 use Swagger\Client\Api\UserApi;
 
-class UserApiTest extends \PHPUnit_Framework_TestCase
+class UserApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var UserApi*/
     private $api;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = new Api\UserApi();
     }
