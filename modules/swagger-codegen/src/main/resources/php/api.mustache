@@ -60,9 +60,9 @@ use {{invokerPackage}}\ObjectSerializer;
      * @param HeaderSelector  $selector
      */
     public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
+        ?ClientInterface $client = null,
+        ?Configuration $config = null,
+        ?HeaderSelector $selector = null
     ) {
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
@@ -396,7 +396,7 @@ use {{invokerPackage}}\ObjectSerializer;
         if (${{paramName}} !== null) {
             {{#isFile}}
             $multipart = true;
-            $formParams['{{baseName}}'] = \GuzzleHttp\Psr7\try_fopen(ObjectSerializer::toFormValue(${{paramName}}), 'rb');
+            $formParams['{{baseName}}'] = \GuzzleHttp\Psr7\Utils::tryFopen(ObjectSerializer::toFormValue(${{paramName}}), 'rb');
             {{/isFile}}
             {{^isFile}}
             $formParams['{{baseName}}'] = ObjectSerializer::toFormValue(${{paramName}});
@@ -430,11 +430,11 @@ use {{invokerPackage}}\ObjectSerializer;
             if($headers['Content-Type'] === 'application/json') {
                 // \stdClass has no __toString(), so we should encode it manually
                 if ($httpBody instanceof \stdClass) {
-                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                    $httpBody = json_encode($httpBody, JSON_THROW_ON_ERROR);
                 }
                 // array has no __toString(), so we should encode it manually
                 if(is_array($httpBody)) {
-                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($httpBody), JSON_THROW_ON_ERROR);
                 }
             }
         } elseif (count($formParams) > 0) {
@@ -450,7 +450,7 @@ use {{invokerPackage}}\ObjectSerializer;
                 $httpBody = new MultipartStream($multipartContents);
 
             } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
+                $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
 
             } else {
                 // for HTTP post (form)
