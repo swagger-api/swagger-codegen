@@ -1,7 +1,8 @@
 <?php
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setUsingCache(true)
+    ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'ordered_imports' => true,

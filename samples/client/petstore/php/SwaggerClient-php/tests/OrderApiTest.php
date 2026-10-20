@@ -30,11 +30,9 @@ class OrderApiTest extends \PHPUnit\Framework\TestCase
         $this->assertSame("placed", $order->getStatus());
     }
  
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testOrderException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         // initialize the API client
         $order = new Model\Order();
         $order->setStatus("invalid_value");

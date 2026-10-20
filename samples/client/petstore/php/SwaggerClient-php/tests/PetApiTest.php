@@ -86,7 +86,7 @@ class PetApiTest extends \PHPUnit\Framework\TestCase
      * $this->assertSame($response->getPhotoUrls()[0], 'http://test_php_unit_test.com');
      *
      * // category is type "object"
-     * $this->assertInternalType('array', $response->getCategory());
+     * $this->assertIsArray($response->getCategory());
      * $this->assertSame($response->getCategory()['id'], $pet_id);
      * $this->assertSame($response->getCategory()['name'], 'test php category');
      *
@@ -278,7 +278,7 @@ class PetApiTest extends \PHPUnit\Framework\TestCase
         $bytes = $pet_api->petPetIdtestingByteArraytrueGet($pet_id);
         $json = json_decode($bytes, true);
 
-        $this->assertInternalType("string", $bytes);
+        $this->assertIsString($bytes);
 
         $this->assertSame($json['id'], $pet_id);
         // not testing name as it's tested by addPetUsingByteArray
@@ -375,12 +375,11 @@ class PetApiTest extends \PHPUnit\Framework\TestCase
 
     /**
      * test invalid argument
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing the required parameter $status when calling findPetsByStatus
      */
     public function testInvalidArgument()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing the required parameter $status when calling findPetsByStatus');
         // the argument is required, and we must specify one or some from 'available', 'pending', 'sold'
         $this->api->findPetsByStatus([]);
     }
