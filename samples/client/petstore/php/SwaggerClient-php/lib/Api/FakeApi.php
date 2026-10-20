@@ -30,7 +30,8 @@ namespace Swagger\Client\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ResponseException;
+use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -120,13 +121,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -231,17 +236,23 @@ class FakeApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -374,13 +385,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -485,17 +500,23 @@ class FakeApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -628,13 +649,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -739,17 +764,23 @@ class FakeApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -882,13 +913,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -993,17 +1028,23 @@ class FakeApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -1137,13 +1178,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -1214,17 +1259,23 @@ class FakeApi
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -1378,13 +1429,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -1489,17 +1544,23 @@ class FakeApi
                     ];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -1667,13 +1728,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -1768,17 +1833,23 @@ class FakeApi
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -2069,13 +2140,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -2158,17 +2233,23 @@ class FakeApi
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -2346,13 +2427,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -2421,17 +2506,23 @@ class FakeApi
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
@@ -2575,13 +2666,17 @@ class FakeApi
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
+            } catch (ResponseException $e) {
+                $response = $e->getResponse();
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                    $response->getHeaders(),
+                    $response->getBody()->getContents()
                 );
+            } catch (TransferException $e) {
+                // e.g. connection errors: there is no response
+                throw new ApiException("[{$e->getCode()}] {$e->getMessage()}", $e->getCode());
             }
 
             $statusCode = $response->getStatusCode();
@@ -2652,17 +2747,23 @@ class FakeApi
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                 },
                 function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
+                    if ($exception instanceof ResponseException) {
+                        $response = $exception->getResponse();
+                        $statusCode = $response->getStatusCode();
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                $exception->getRequest()->getUri()
+                            ),
                             $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
+                            $response->getHeaders(),
+                            $response->getBody()
+                        );
+                    }
+                    throw new ApiException(
+                        sprintf('[%d] Error connecting to the API (%s)', $exception->getCode(), $exception->getMessage()),
+                        $exception->getCode()
                     );
                 }
             );
