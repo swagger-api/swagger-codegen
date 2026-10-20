@@ -95,8 +95,9 @@ class UserApi
      *
      * @param  \Swagger\Client\Model\User $body Created user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function createUser($body)
@@ -111,8 +112,9 @@ class UserApi
      *
      * @param  \Swagger\Client\Model\User $body Created user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUserWithHttpInfo($body)
@@ -169,6 +171,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User $body Created user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUserAsync($body)
@@ -189,6 +192,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User $body Created user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUserAsyncWithHttpInfo($body)
@@ -231,6 +235,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User $body Created user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createUserRequest($body)
@@ -332,8 +337,9 @@ class UserApi
      *
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function createUsersWithArrayInput($body)
@@ -348,8 +354,9 @@ class UserApi
      *
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUsersWithArrayInputWithHttpInfo($body)
@@ -406,6 +413,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithArrayInputAsync($body)
@@ -426,6 +434,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithArrayInputAsyncWithHttpInfo($body)
@@ -468,6 +477,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createUsersWithArrayInputRequest($body)
@@ -569,8 +579,9 @@ class UserApi
      *
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function createUsersWithListInput($body)
@@ -585,8 +596,9 @@ class UserApi
      *
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function createUsersWithListInputWithHttpInfo($body)
@@ -643,6 +655,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithListInputAsync($body)
@@ -663,6 +676,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function createUsersWithListInputAsyncWithHttpInfo($body)
@@ -705,6 +719,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User[] $body List of user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createUsersWithListInputRequest($body)
@@ -806,8 +821,9 @@ class UserApi
      *
      * @param  string $username The name that needs to be deleted (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function deleteUser($username)
@@ -822,8 +838,9 @@ class UserApi
      *
      * @param  string $username The name that needs to be deleted (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteUserWithHttpInfo($username)
@@ -880,6 +897,7 @@ class UserApi
      * @param  string $username The name that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteUserAsync($username)
@@ -900,6 +918,7 @@ class UserApi
      * @param  string $username The name that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteUserAsyncWithHttpInfo($username)
@@ -942,6 +961,7 @@ class UserApi
      * @param  string $username The name that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteUserRequest($username)
@@ -1048,8 +1068,9 @@ class UserApi
      *
      * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\User
      */
     public function getUserByName($username)
@@ -1065,8 +1086,9 @@ class UserApi
      *
      * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\User, HTTP status code, HTTP response headers (array of strings)
      */
     public function getUserByNameWithHttpInfo($username)
@@ -1145,6 +1167,7 @@ class UserApi
      * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getUserByNameAsync($username)
@@ -1165,6 +1188,7 @@ class UserApi
      * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getUserByNameAsyncWithHttpInfo($username)
@@ -1221,6 +1245,7 @@ class UserApi
      * @param  string $username The name that needs to be fetched. Use user1 for testing. (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getUserByNameRequest($username)
@@ -1328,8 +1353,9 @@ class UserApi
      * @param  string $username The user name for login (required)
      * @param  string $password The password for login in clear text (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return string
      */
     public function loginUser($username, $password)
@@ -1346,8 +1372,9 @@ class UserApi
      * @param  string $username The user name for login (required)
      * @param  string $password The password for login in clear text (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of string, HTTP status code, HTTP response headers (array of strings)
      */
     public function loginUserWithHttpInfo($username, $password)
@@ -1427,6 +1454,7 @@ class UserApi
      * @param  string $password The password for login in clear text (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function loginUserAsync($username, $password)
@@ -1448,6 +1476,7 @@ class UserApi
      * @param  string $password The password for login in clear text (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function loginUserAsyncWithHttpInfo($username, $password)
@@ -1505,6 +1534,7 @@ class UserApi
      * @param  string $password The password for login in clear text (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function loginUserRequest($username, $password)
@@ -1616,8 +1646,9 @@ class UserApi
      * Logs out current logged in user session
      *
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function logoutUser()
@@ -1631,8 +1662,9 @@ class UserApi
      * Logs out current logged in user session
      *
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function logoutUserWithHttpInfo()
@@ -1688,6 +1720,7 @@ class UserApi
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function logoutUserAsync()
@@ -1707,6 +1740,7 @@ class UserApi
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function logoutUserAsyncWithHttpInfo()
@@ -1748,6 +1782,7 @@ class UserApi
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function logoutUserRequest()
@@ -1841,8 +1876,9 @@ class UserApi
      * @param  string $username name that need to be deleted (required)
      * @param  \Swagger\Client\Model\User $body Updated user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function updateUser($username, $body)
@@ -1858,8 +1894,9 @@ class UserApi
      * @param  string $username name that need to be deleted (required)
      * @param  \Swagger\Client\Model\User $body Updated user object (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateUserWithHttpInfo($username, $body)
@@ -1917,6 +1954,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User $body Updated user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateUserAsync($username, $body)
@@ -1938,6 +1976,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User $body Updated user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updateUserAsyncWithHttpInfo($username, $body)
@@ -1981,6 +2020,7 @@ class UserApi
      * @param  \Swagger\Client\Model\User $body Updated user object (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function updateUserRequest($username, $body)

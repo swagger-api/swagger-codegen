@@ -95,8 +95,9 @@ class FakeClassnameTags123Api
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Client
      */
     public function testClassname($body)
@@ -112,8 +113,9 @@ class FakeClassnameTags123Api
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
      */
     public function testClassnameWithHttpInfo($body)
@@ -192,6 +194,7 @@ class FakeClassnameTags123Api
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testClassnameAsync($body)
@@ -212,6 +215,7 @@ class FakeClassnameTags123Api
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testClassnameAsyncWithHttpInfo($body)
@@ -268,6 +272,7 @@ class FakeClassnameTags123Api
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testClassnameRequest($body)

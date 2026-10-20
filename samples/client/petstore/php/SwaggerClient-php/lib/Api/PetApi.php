@@ -95,8 +95,9 @@ class PetApi
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function addPet($body)
@@ -111,8 +112,9 @@ class PetApi
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function addPetWithHttpInfo($body)
@@ -169,6 +171,7 @@ class PetApi
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function addPetAsync($body)
@@ -189,6 +192,7 @@ class PetApi
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function addPetAsyncWithHttpInfo($body)
@@ -231,6 +235,7 @@ class PetApi
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function addPetRequest($body)
@@ -337,8 +342,9 @@ class PetApi
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key api_key (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function deletePet($pet_id, $api_key = null)
@@ -354,8 +360,9 @@ class PetApi
      * @param  int $pet_id Pet id to delete (required)
      * @param  string $api_key (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deletePetWithHttpInfo($pet_id, $api_key = null)
@@ -413,6 +420,7 @@ class PetApi
      * @param  string $api_key (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deletePetAsync($pet_id, $api_key = null)
@@ -434,6 +442,7 @@ class PetApi
      * @param  string $api_key (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deletePetAsyncWithHttpInfo($pet_id, $api_key = null)
@@ -477,6 +486,7 @@ class PetApi
      * @param  string $api_key (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deletePetRequest($pet_id, $api_key = null)
@@ -591,8 +601,9 @@ class PetApi
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Pet[]
      */
     public function findPetsByStatus($status)
@@ -608,8 +619,9 @@ class PetApi
      *
      * @param  string[] $status Status values that need to be considered for filter (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Pet[], HTTP status code, HTTP response headers (array of strings)
      */
     public function findPetsByStatusWithHttpInfo($status)
@@ -688,6 +700,7 @@ class PetApi
      * @param  string[] $status Status values that need to be considered for filter (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function findPetsByStatusAsync($status)
@@ -708,6 +721,7 @@ class PetApi
      * @param  string[] $status Status values that need to be considered for filter (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function findPetsByStatusAsyncWithHttpInfo($status)
@@ -764,6 +778,7 @@ class PetApi
      * @param  string[] $status Status values that need to be considered for filter (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function findPetsByStatusRequest($status)
@@ -873,8 +888,9 @@ class PetApi
      *
      * @param  string[] $tags Tags to filter by (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Pet[]
      */
     public function findPetsByTags($tags)
@@ -890,8 +906,9 @@ class PetApi
      *
      * @param  string[] $tags Tags to filter by (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Pet[], HTTP status code, HTTP response headers (array of strings)
      */
     public function findPetsByTagsWithHttpInfo($tags)
@@ -970,6 +987,7 @@ class PetApi
      * @param  string[] $tags Tags to filter by (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function findPetsByTagsAsync($tags)
@@ -990,6 +1008,7 @@ class PetApi
      * @param  string[] $tags Tags to filter by (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function findPetsByTagsAsyncWithHttpInfo($tags)
@@ -1046,6 +1065,7 @@ class PetApi
      * @param  string[] $tags Tags to filter by (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function findPetsByTagsRequest($tags)
@@ -1155,8 +1175,9 @@ class PetApi
      *
      * @param  int $pet_id ID of pet to return (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Pet
      */
     public function getPetById($pet_id)
@@ -1172,8 +1193,9 @@ class PetApi
      *
      * @param  int $pet_id ID of pet to return (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Pet, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPetByIdWithHttpInfo($pet_id)
@@ -1252,6 +1274,7 @@ class PetApi
      * @param  int $pet_id ID of pet to return (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getPetByIdAsync($pet_id)
@@ -1272,6 +1295,7 @@ class PetApi
      * @param  int $pet_id ID of pet to return (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getPetByIdAsyncWithHttpInfo($pet_id)
@@ -1328,6 +1352,7 @@ class PetApi
      * @param  int $pet_id ID of pet to return (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getPetByIdRequest($pet_id)
@@ -1439,8 +1464,9 @@ class PetApi
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function updatePet($body)
@@ -1455,8 +1481,9 @@ class PetApi
      *
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePetWithHttpInfo($body)
@@ -1513,6 +1540,7 @@ class PetApi
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updatePetAsync($body)
@@ -1533,6 +1561,7 @@ class PetApi
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updatePetAsyncWithHttpInfo($body)
@@ -1575,6 +1604,7 @@ class PetApi
      * @param  \Swagger\Client\Model\Pet $body Pet object that needs to be added to the store (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function updatePetRequest($body)
@@ -1682,8 +1712,9 @@ class PetApi
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function updatePetWithForm($pet_id, $name = null, $status = null)
@@ -1700,8 +1731,9 @@ class PetApi
      * @param  string $name Updated name of the pet (optional)
      * @param  string $status Updated status of the pet (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePetWithFormWithHttpInfo($pet_id, $name = null, $status = null)
@@ -1760,6 +1792,7 @@ class PetApi
      * @param  string $status Updated status of the pet (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updatePetWithFormAsync($pet_id, $name = null, $status = null)
@@ -1782,6 +1815,7 @@ class PetApi
      * @param  string $status Updated status of the pet (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function updatePetWithFormAsyncWithHttpInfo($pet_id, $name = null, $status = null)
@@ -1826,6 +1860,7 @@ class PetApi
      * @param  string $status Updated status of the pet (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function updatePetWithFormRequest($pet_id, $name = null, $status = null)
@@ -1946,8 +1981,9 @@ class PetApi
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\ApiResponse
      */
     public function uploadFile($pet_id, $additional_metadata = null, $file = null)
@@ -1965,8 +2001,9 @@ class PetApi
      * @param  string $additional_metadata Additional data to pass to server (optional)
      * @param  \SplFileObject $file file to upload (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\ApiResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function uploadFileWithHttpInfo($pet_id, $additional_metadata = null, $file = null)
@@ -2047,6 +2084,7 @@ class PetApi
      * @param  \SplFileObject $file file to upload (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function uploadFileAsync($pet_id, $additional_metadata = null, $file = null)
@@ -2069,6 +2107,7 @@ class PetApi
      * @param  \SplFileObject $file file to upload (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function uploadFileAsyncWithHttpInfo($pet_id, $additional_metadata = null, $file = null)
@@ -2127,6 +2166,7 @@ class PetApi
      * @param  \SplFileObject $file file to upload (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function uploadFileRequest($pet_id, $additional_metadata = null, $file = null)

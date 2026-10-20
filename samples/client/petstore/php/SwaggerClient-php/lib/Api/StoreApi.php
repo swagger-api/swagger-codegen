@@ -95,8 +95,9 @@ class StoreApi
      *
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function deleteOrder($order_id)
@@ -111,8 +112,9 @@ class StoreApi
      *
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteOrderWithHttpInfo($order_id)
@@ -169,6 +171,7 @@ class StoreApi
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteOrderAsync($order_id)
@@ -189,6 +192,7 @@ class StoreApi
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function deleteOrderAsyncWithHttpInfo($order_id)
@@ -231,6 +235,7 @@ class StoreApi
      * @param  string $order_id ID of the order that needs to be deleted (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteOrderRequest($order_id)
@@ -336,8 +341,9 @@ class StoreApi
      * Returns pet inventories by status
      *
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return map[string,int]
      */
     public function getInventory()
@@ -352,8 +358,9 @@ class StoreApi
      * Returns pet inventories by status
      *
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of map[string,int], HTTP status code, HTTP response headers (array of strings)
      */
     public function getInventoryWithHttpInfo()
@@ -431,6 +438,7 @@ class StoreApi
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getInventoryAsync()
@@ -450,6 +458,7 @@ class StoreApi
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getInventoryAsyncWithHttpInfo()
@@ -505,6 +514,7 @@ class StoreApi
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getInventoryRequest()
@@ -602,8 +612,9 @@ class StoreApi
      *
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Order
      */
     public function getOrderById($order_id)
@@ -619,8 +630,9 @@ class StoreApi
      *
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOrderByIdWithHttpInfo($order_id)
@@ -699,6 +711,7 @@ class StoreApi
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getOrderByIdAsync($order_id)
@@ -719,6 +732,7 @@ class StoreApi
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function getOrderByIdAsyncWithHttpInfo($order_id)
@@ -775,6 +789,7 @@ class StoreApi
      * @param  int $order_id ID of pet that needs to be fetched (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getOrderByIdRequest($order_id)
@@ -888,8 +903,9 @@ class StoreApi
      *
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Order
      */
     public function placeOrder($body)
@@ -905,8 +921,9 @@ class StoreApi
      *
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Order, HTTP status code, HTTP response headers (array of strings)
      */
     public function placeOrderWithHttpInfo($body)
@@ -985,6 +1002,7 @@ class StoreApi
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function placeOrderAsync($body)
@@ -1005,6 +1023,7 @@ class StoreApi
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function placeOrderAsyncWithHttpInfo($body)
@@ -1061,6 +1080,7 @@ class StoreApi
      * @param  \Swagger\Client\Model\Order $body order placed for purchasing the pet (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function placeOrderRequest($body)

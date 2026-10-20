@@ -93,8 +93,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\OuterBoolean
      */
     public function fakeOuterBooleanSerialize($body = null)
@@ -108,8 +109,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\OuterBoolean, HTTP status code, HTTP response headers (array of strings)
      */
     public function fakeOuterBooleanSerializeWithHttpInfo($body = null)
@@ -188,6 +190,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterBooleanSerializeAsync($body = null)
@@ -208,6 +211,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterBooleanSerializeAsyncWithHttpInfo($body = null)
@@ -264,6 +268,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterBoolean $body Input boolean as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function fakeOuterBooleanSerializeRequest($body = null)
@@ -357,8 +362,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\OuterComposite
      */
     public function fakeOuterCompositeSerialize($body = null)
@@ -372,8 +378,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\OuterComposite, HTTP status code, HTTP response headers (array of strings)
      */
     public function fakeOuterCompositeSerializeWithHttpInfo($body = null)
@@ -452,6 +459,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterCompositeSerializeAsync($body = null)
@@ -472,6 +480,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterCompositeSerializeAsyncWithHttpInfo($body = null)
@@ -528,6 +537,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterComposite $body Input composite as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function fakeOuterCompositeSerializeRequest($body = null)
@@ -621,8 +631,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\OuterNumber
      */
     public function fakeOuterNumberSerialize($body = null)
@@ -636,8 +647,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\OuterNumber, HTTP status code, HTTP response headers (array of strings)
      */
     public function fakeOuterNumberSerializeWithHttpInfo($body = null)
@@ -716,6 +728,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterNumberSerializeAsync($body = null)
@@ -736,6 +749,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterNumberSerializeAsyncWithHttpInfo($body = null)
@@ -792,6 +806,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterNumber $body Input number as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function fakeOuterNumberSerializeRequest($body = null)
@@ -885,8 +900,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\OuterString
      */
     public function fakeOuterStringSerialize($body = null)
@@ -900,8 +916,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\OuterString, HTTP status code, HTTP response headers (array of strings)
      */
     public function fakeOuterStringSerializeWithHttpInfo($body = null)
@@ -980,6 +997,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterStringSerializeAsync($body = null)
@@ -1000,6 +1018,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function fakeOuterStringSerializeAsyncWithHttpInfo($body = null)
@@ -1056,6 +1075,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\OuterString $body Input string as post body (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function fakeOuterStringSerializeRequest($body = null)
@@ -1150,8 +1170,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\User $body body (required)
      * @param  string $query query (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function testBodyWithQueryParams($body, $query)
@@ -1165,8 +1186,9 @@ class FakeApi
      * @param  \Swagger\Client\Model\User $body (required)
      * @param  string $query (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testBodyWithQueryParamsWithHttpInfo($body, $query)
@@ -1224,6 +1246,7 @@ class FakeApi
      * @param  string $query (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testBodyWithQueryParamsAsync($body, $query)
@@ -1245,6 +1268,7 @@ class FakeApi
      * @param  string $query (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testBodyWithQueryParamsAsyncWithHttpInfo($body, $query)
@@ -1288,6 +1312,7 @@ class FakeApi
      * @param  string $query (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testBodyWithQueryParamsRequest($body, $query)
@@ -1399,8 +1424,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \Swagger\Client\Model\Client
      */
     public function testClientModel($body)
@@ -1416,8 +1442,9 @@ class FakeApi
      *
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of \Swagger\Client\Model\Client, HTTP status code, HTTP response headers (array of strings)
      */
     public function testClientModelWithHttpInfo($body)
@@ -1496,6 +1523,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testClientModelAsync($body)
@@ -1516,6 +1544,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testClientModelAsyncWithHttpInfo($body)
@@ -1572,6 +1601,7 @@ class FakeApi
      * @param  \Swagger\Client\Model\Client $body client model (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testClientModelRequest($body)
@@ -1686,8 +1716,9 @@ class FakeApi
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function testEndpointParameters($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -1715,8 +1746,9 @@ class FakeApi
      * @param  string $password None (optional)
      * @param  string $callback None (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEndpointParametersWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -1786,6 +1818,7 @@ class FakeApi
      * @param  string $callback None (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testEndpointParametersAsync($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -1819,6 +1852,7 @@ class FakeApi
      * @param  string $callback None (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testEndpointParametersAsyncWithHttpInfo($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -1874,6 +1908,7 @@ class FakeApi
      * @param  string $callback None (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testEndpointParametersRequest($number, $double, $pattern_without_delimiter, $byte, $integer = null, $int32 = null, $int64 = null, $float = null, $string = null, $binary = null, $date = null, $date_time = null, $password = null, $callback = null)
@@ -2104,8 +2139,9 @@ class FakeApi
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function testEnumParameters($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
@@ -2127,8 +2163,9 @@ class FakeApi
      * @param  int $enum_query_integer Query parameter enum test (double) (optional)
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testEnumParametersWithHttpInfo($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
@@ -2192,6 +2229,7 @@ class FakeApi
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testEnumParametersAsync($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
@@ -2219,6 +2257,7 @@ class FakeApi
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testEnumParametersAsyncWithHttpInfo($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
@@ -2268,6 +2307,7 @@ class FakeApi
      * @param  double $enum_query_double Query parameter enum test (double) (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testEnumParametersRequest($enum_form_string_array = null, $enum_form_string = '-efg', $enum_header_string_array = null, $enum_header_string = '-efg', $enum_query_string_array = null, $enum_query_string = '-efg', $enum_query_integer = null, $enum_query_double = null)
@@ -2398,8 +2438,9 @@ class FakeApi
      *
      * @param  object $param request body (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function testInlineAdditionalProperties($param)
@@ -2414,8 +2455,9 @@ class FakeApi
      *
      * @param  object $param request body (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testInlineAdditionalPropertiesWithHttpInfo($param)
@@ -2472,6 +2514,7 @@ class FakeApi
      * @param  object $param request body (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testInlineAdditionalPropertiesAsync($param)
@@ -2492,6 +2535,7 @@ class FakeApi
      * @param  object $param request body (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testInlineAdditionalPropertiesAsyncWithHttpInfo($param)
@@ -2534,6 +2578,7 @@ class FakeApi
      * @param  object $param request body (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testInlineAdditionalPropertiesRequest($param)
@@ -2636,8 +2681,9 @@ class FakeApi
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return void
      */
     public function testJsonFormData($param, $param2)
@@ -2653,8 +2699,9 @@ class FakeApi
      * @param  string $param field1 (required)
      * @param  string $param2 field2 (required)
      *
-     * @throws \Swagger\Client\ApiException on non-2xx response
+     * @throws \Swagger\Client\ApiException on non-2xx response or a failure without a response
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function testJsonFormDataWithHttpInfo($param, $param2)
@@ -2712,6 +2759,7 @@ class FakeApi
      * @param  string $param2 field2 (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testJsonFormDataAsync($param, $param2)
@@ -2733,6 +2781,7 @@ class FakeApi
      * @param  string $param2 field2 (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public function testJsonFormDataAsyncWithHttpInfo($param, $param2)
@@ -2776,6 +2825,7 @@ class FakeApi
      * @param  string $param2 field2 (required)
      *
      * @throws \InvalidArgumentException
+     * @throws \JsonException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function testJsonFormDataRequest($param, $param2)
