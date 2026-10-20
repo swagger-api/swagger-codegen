@@ -6,14 +6,14 @@ use Swagger\Client\Api\PetApi;
 use Swagger\Client\Model\ApiResponse;
 use Swagger\Client\Model\Pet;
 
-class PetApiTest extends \PHPUnit_Framework_TestCase
+class PetApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var  PetApi */
     private $api;
 
     // add a new pet (id 10005) to ensure the pet object is available for all the tests
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         // increase memory limit to avoid fatal error due to findPetByStatus
         // returning a lot of data
@@ -45,10 +45,10 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
         // add a new pet (model)
         list(, $status) = $petApi->addPetWithHttpInfo($newPet);
-        \PHPUnit_Framework_Assert::assertEquals(200, $status);
+        \PHPUnit\Framework\Assert::assertEquals(200, $status);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = new Api\PetApi();
     }
@@ -86,7 +86,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
      * $this->assertSame($response->getPhotoUrls()[0], 'http://test_php_unit_test.com');
      *
      * // category is type "object"
-     * $this->assertInternalType('array', $response->getCategory());
+     * $this->assertIsArray($response->getCategory());
      * $this->assertSame($response->getCategory()['id'], $pet_id);
      * $this->assertSame($response->getCategory()['name'], 'test php category');
      *
@@ -278,7 +278,7 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
         $bytes = $pet_api->petPetIdtestingByteArraytrueGet($pet_id);
         $json = json_decode($bytes, true);
 
-        $this->assertInternalType("string", $bytes);
+        $this->assertIsString($bytes);
 
         $this->assertSame($json['id'], $pet_id);
         // not testing name as it's tested by addPetUsingByteArray
@@ -375,12 +375,11 @@ class PetApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * test invalid argument
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing the required parameter $status when calling findPetsByStatus
      */
     public function testInvalidArgument()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing the required parameter $status when calling findPetsByStatus');
         // the argument is required, and we must specify one or some from 'available', 'pending', 'sold'
         $this->api->findPetsByStatus([]);
     }

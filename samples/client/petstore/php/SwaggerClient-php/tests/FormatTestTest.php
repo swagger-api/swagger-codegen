@@ -2,7 +2,7 @@
 
 use Swagger\Client\Model\FormatTest;
 
-class FormatTestTest extends \PHPUnit_Framework_TestCase
+class FormatTestTest extends \PHPUnit\Framework\TestCase
 {
     public function testCountTheLengthOfMultiByteStringsCorrectly()
     {
