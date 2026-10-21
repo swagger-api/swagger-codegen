@@ -111,22 +111,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-version}</version>
                 <configuration>
-                    <testNGArtifactName>none:none</testNGArtifactName>
                     <argLine>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar --add-opens java.base/java.lang=ALL-UNNAMED -Djdk.attach.allowAttachSelf</argLine>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>test-testng</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <junitArtifactName>none:none</junitArtifactName>
-                            <testNGArtifactName>org.testng:testng</testNGArtifactName>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
