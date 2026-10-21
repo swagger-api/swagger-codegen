@@ -1067,13 +1067,13 @@
         <swagger-parser-version>1.0.76</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.6.14</swagger-core-version>
-        <commons-io-version>2.16.1</commons-io-version>
-        <commons-cli-version>1.7.0</commons-cli-version>
+        <swagger-core-version>1.6.16</swagger-core-version>
+        <commons-io-version>2.22.0</commons-io-version>
+        <commons-cli-version>1.11.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
-        <jackson-version>2.21.2</jackson-version>
+        <jackson-version>2.22.4</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.18.0</commons-lang-version>
+        <commons-lang-version>3.21.0</commons-lang-version>
         <slf4j-version>1.7.36</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <!--
@@ -1081,14 +1081,14 @@
         Codegen support of Java 8 should be removed if updating to 1.16+
          -->
         <jmustache-version>1.15</jmustache-version>
-        <testng-version>7.10.2</testng-version>
-        <surefire-version>3.0.0</surefire-version>
-        <jmockit-version>1.49</jmockit-version>
-        <mockito-version>5.11.0</mockito-version>
+        <testng-version>7.12.0</testng-version>
+        <surefire-version>3.6.0</surefire-version>
+        <jmockit-version>1.50</jmockit-version>
+        <mockito-version>5.24.0</mockito-version>
         <reflections-version>0.10.2</reflections-version>
-        <snakeyaml-version>2.2</snakeyaml-version>
+        <snakeyaml-version>2.7</snakeyaml-version>
         <httpclient-version>4.5.14</httpclient-version>
-        <json-version>20231013</json-version>
+        <json-version>20260814</json-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
