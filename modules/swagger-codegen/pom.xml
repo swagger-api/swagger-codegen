@@ -45,7 +45,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${exec-maven-plugin-version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -59,6 +59,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin-version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -73,12 +74,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>${maven-compiler-plugin-version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-jar-plugin-version}</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -100,7 +101,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>${maven-site-plugin-version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -157,7 +158,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.2</version>
+                <version>${maven-javadoc-plugin-version}</version>
                 <configuration>
                     <source>1.8</source>
                     <encoding>UTF-8</encoding>
@@ -168,7 +169,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-jxr-plugin-version}</version>
                 <configuration>
                     <aggregate>true</aggregate>
                 </configuration>
@@ -176,7 +177,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>${maven-project-info-reports-plugin-version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
