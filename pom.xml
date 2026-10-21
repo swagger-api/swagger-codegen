@@ -1083,7 +1083,7 @@
         <jmustache-version>1.15</jmustache-version>
         <testng-version>7.12.0</testng-version>
         <surefire-version>3.6.0</surefire-version>
-        <jmockit-version>1.50</jmockit-version>
+        <jmockit-version>1.49</jmockit-version>
         <mockito-version>5.24.0</mockito-version>
         <reflections-version>0.10.2</reflections-version>
         <snakeyaml-version>2.7</snakeyaml-version>
