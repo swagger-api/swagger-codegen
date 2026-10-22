@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-codegen-project</artifactId>
-        <version>2.4.53-SNAPSHOT</version>
+        <version>2.4.54-SNAPSHOT</version>
         <relativePath>../..</relativePath>
     </parent>
     <artifactId>swagger-generator</artifactId>
@@ -26,6 +26,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin-version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -42,7 +43,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${properties-maven-plugin-version}</version>
                 <executions>
                     <execution>
                         <phase>pre-integration-test</phase>
@@ -68,12 +69,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-war-plugin-version}</version>
                 <configuration>
                     <webResources>
                         <resource>
                             <!-- this is relative to the pom.xml directory -->
-                            <directory>${project.build.directory}/swagger-ui-master/dist</directory>
+                            <directory>${project.build.directory}/swagger-ui-main/dist</directory>
                             <excludes>
                                 <exclude>index.html</exclude>
                             </excludes>
@@ -83,7 +84,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.6</version>
+                <version>${maven-failsafe-plugin-version}</version>
                 <configuration>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <useSystemClassLoader>false</useSystemClassLoader>
@@ -136,7 +137,7 @@
             <plugin>
                 <groupId>com.googlecode.maven-download-plugin</groupId>
                 <artifactId>download-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>${download-maven-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>swagger-ui</id>
@@ -144,7 +145,7 @@
                             <goal>wget</goal>
                         </goals>
                         <configuration>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+                            <url>https://github.com/swagger-api/swagger-ui/archive/main.tar.gz</url>
                             <unpack>true</unpack>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
@@ -341,10 +342,10 @@
     </dependencies>
     <properties>
         <servlet-api-version>2.5</servlet-api-version>
-        <logback-version>1.5.32</logback-version>
+        <logback-version>1.6.5</logback-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <servlet-api-version>2.5</servlet-api-version>
-        <zip-version>2.11.5</zip-version>
+        <zip-version>2.11.6</zip-version>
         <jetty-version>9.4.53.v20231009</jetty-version>
         <jersey2-version>2.42</jersey2-version>
     </properties>
