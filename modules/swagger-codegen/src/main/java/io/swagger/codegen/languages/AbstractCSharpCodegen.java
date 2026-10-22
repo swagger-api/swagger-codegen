@@ -355,12 +355,16 @@ public abstract class AbstractCSharpCodegen extends DefaultCodegen implements Co
             Map<String, Object> mo = (Map<String, Object>) _mo;
             CodegenModel cm = (CodegenModel) mo.get("model");
             for (CodegenProperty var : cm.vars) {
+                String paramName = toParamName(var.name);
+
                 // check to see if model name is same as the property name
                 // which will result in compilation error
                 // if found, prepend with _ to workaround the limitation
                 if (var.name.equalsIgnoreCase(cm.name)) {
                     var.name = "_" + var.name;
+                    paramName = "_" + paramName;
                 }
+                var.vendorExtensions.put("x-parameter-name", paramName);
             }
         }
         // process enum in models
