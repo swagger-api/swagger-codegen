@@ -1,13 +1,8 @@
 FROM maven:3.9-eclipse-temurin-17-noble
 
-RUN set -x \
- && apt-get update && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends bash ca-certificates \
- && rm -rf /var/lib/apt/lists/*
-
 ENV GEN_DIR /opt/swagger-codegen
 WORKDIR ${GEN_DIR}
-VOLUME  ${MAVEN_HOME}/.m2/repository
+VOLUME  /root/.m2/repository
 
 # Required from a licensing standpoint
 COPY ./LICENSE ${GEN_DIR}
