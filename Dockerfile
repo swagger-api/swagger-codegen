@@ -1,12 +1,8 @@
-FROM openjdk:17-jdk-alpine
-
-RUN set -x \
- && apk update && apk upgrade \
- && apk add --no-cache bash ca-certificates maven
+FROM maven:3.9-eclipse-temurin-17-noble
 
 ENV GEN_DIR /opt/swagger-codegen
 WORKDIR ${GEN_DIR}
-VOLUME  ${MAVEN_HOME}/.m2/repository
+VOLUME  /root/.m2/repository
 
 # Required from a licensing standpoint
 COPY ./LICENSE ${GEN_DIR}

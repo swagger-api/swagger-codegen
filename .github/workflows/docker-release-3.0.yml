@@ -122,7 +122,7 @@ jobs:
           provenance: false
           tags: swaggerapi/swagger-generator-v3-minimal:latest,swaggerapi/swagger-generator-v3-minimal:${{ env.TAG }}
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@v3.10.1
       - name: Generate SBOM for swagger-generator-v3
         uses: anchore/sbom-action@v0
         with:
