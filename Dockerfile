@@ -1,8 +1,9 @@
-FROM openjdk:17-jdk-alpine
+FROM maven:3.9-eclipse-temurin-17-noble
 
 RUN set -x \
- && apk update && apk upgrade \
- && apk add --no-cache bash ca-certificates maven
+ && apt-get update && apt-get upgrade -y \
+ && apt-get install -y --no-install-recommends bash ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
 ENV GEN_DIR /opt/swagger-codegen
 WORKDIR ${GEN_DIR}

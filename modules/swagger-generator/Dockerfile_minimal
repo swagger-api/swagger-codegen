@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:11-jre-noble
 ENV disableOas31Resolve=False
 WORKDIR /generator
 RUN mkdir /generator/lib
