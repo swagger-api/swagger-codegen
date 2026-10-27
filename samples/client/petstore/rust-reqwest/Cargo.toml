@@ -1,0 +1,14 @@
+[package]
+name = "petstore_client"
+version = "1.0.0"
+authors = ["Swagger Codegen team and contributors"]
+
+[dependencies]
+serde = "^1.0"
+serde_derive = "^1.0"
+serde_json = "^1.0"
+hyper = "~0.11"
+url = "1.5"
+reqwest = "~0.8"
+
+[dev-dependencies]
