@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "{{#supportsES6}}es6{{/supportsES6}}{{^supportsES6}}es5{{/supportsES6}}",
+    "module": "umd",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "lib": [
+        "es2015",
+        "dom"
+    ]
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

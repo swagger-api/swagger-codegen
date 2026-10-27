@@ -85,6 +85,7 @@ io.swagger.codegen.languages.TypeScriptInversifyClientCodegen
 io.swagger.codegen.languages.TypeScriptAngularJsClientCodegen
 io.swagger.codegen.languages.TypeScriptFetchClientCodegen
 io.swagger.codegen.languages.TypeScriptJqueryClientCodegen
+io.swagger.codegen.languages.TypeScriptLinquestClientCodegen
 io.swagger.codegen.languages.TypeScriptNodeClientCodegen
 io.swagger.codegen.languages.UE4CPPGenerator
 io.swagger.codegen.languages.UndertowCodegen
