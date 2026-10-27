@@ -2,17 +2,11 @@ package io.swagger.codegen.languages;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import io.swagger.codegen.CliOption;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
@@ -32,9 +26,7 @@ import io.swagger.models.properties.DateProperty;
 import io.swagger.models.properties.DateTimeProperty;
 import io.swagger.models.properties.DecimalProperty;
 import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FileProperty;
 import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
 import io.swagger.models.properties.LongProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -132,28 +124,11 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("cmake-lists.mustache", "", "CMakeLists.txt"));
 
-        languageSpecificPrimitives = new HashSet<String>(
-                Arrays.asList("int", "char", "bool", "long", "float", "double", "int32_t", "int64_t"));
-
-        typeMapping = new HashMap<String, String>();
         typeMapping.put("date", "utility::datetime");
         typeMapping.put("DateTime", "utility::datetime");
-        typeMapping.put("string", "utility::string_t");
-        typeMapping.put("integer", "int32_t");
-        typeMapping.put("long", "int64_t");
-        typeMapping.put("boolean", "bool");
-        typeMapping.put("array", "std::vector");
-        typeMapping.put("map", "std::map");
         typeMapping.put("file", "HttpContent");
-        typeMapping.put("object", "Object");
-        typeMapping.put("binary", "std::string");
-        typeMapping.put("number", "double");
-        typeMapping.put("UUID", "utility::string_t");
+        typeMapping.put("string", "utility::string_t");
 
-        super.importMapping = new HashMap<String, String>();
-        importMapping.put("std::vector", "#include <vector>");
-        importMapping.put("std::map", "#include <map>");
-        importMapping.put("std::string", "#include <string>");
         importMapping.put("HttpContent", "#include \"HttpContent.h\"");
         importMapping.put("Object", "#include \"Object.h\"");
         importMapping.put("utility::string_t", "#include <cpprest/details/basic_types.h>");
@@ -213,7 +188,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         CodegenModel codegenModel = super.fromModel(name, model, allDefinitions);
 
         Set<String> oldImports = codegenModel.imports;
-        codegenModel.imports = new HashSet<String>();
+        codegenModel.imports = new HashSet<>();
         for (String imp : oldImports) {
             String newImp = toModelImport(imp);
             if (!newImp.isEmpty()) {
@@ -236,7 +211,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
                 if (methodResponse.getSchema() != null) {
                     CodegenProperty cm = fromProperty("response", methodResponse.getSchema());
                     op.vendorExtensions.put("x-codegen-response", cm);
-                    if(cm.datatype == "HttpContent")
+                    if(Objects.equals(cm.datatype, "HttpContent"))
                     {
                         op.vendorExtensions.put("x-codegen-response-ishttpcontent", true);
                     }
@@ -266,47 +241,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
     }
 
     @Override
-    public String toModelFilename(String name) {
-        return initialCaps(name);
-    }
-
-    @Override
-    public String toApiFilename(String name) {
-        return initialCaps(name) + "Api";
-    }
-
-    /**
-     * Optional - type declaration. This is a String which is used by the
-     * templates to instantiate your types. There is typically special handling
-     * for different property types
-     *
-     * @return a string value used as the `dataType` field for model templates,
-     *         `returnType` for api templates
-     */
-    @Override
-    public String getTypeDeclaration(Property p) {
-        String swaggerType = getSwaggerType(p);
-
-        if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
-            return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
-        }
-        if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            Property inner = mp.getAdditionalProperties();
-            return getSwaggerType(p) + "<utility::string_t, " + getTypeDeclaration(inner) + ">";
-        }
-        if (p instanceof StringProperty || p instanceof DateProperty
-                || p instanceof DateTimeProperty || p instanceof FileProperty
-                || languageSpecificPrimitives.contains(swaggerType)) {
-            return toModelName(swaggerType);
-        }
-
-        return "std::shared_ptr<" + swaggerType + ">";
-    }
-
-    @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
             return "utility::conversions::to_string_t(\"\")";
@@ -322,7 +256,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
             return "0.0f";
         } else if (p instanceof LongProperty) {
             return "0L";
-        } else if (p instanceof IntegerProperty || p instanceof BaseIntegerProperty) {
+        } else if (p instanceof BaseIntegerProperty) {
             return "0";
         } else if (p instanceof DecimalProperty) {
             return "0.0";
@@ -368,7 +302,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        String type = null;
+        String type;
         if (typeMapping.containsKey(swaggerType)) {
             type = typeMapping.get(swaggerType);
             if (languageSpecificPrimitives.contains(type))
@@ -376,33 +310,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         } else
             type = swaggerType;
         return toModelName(type);
-    }
-
-    @Override
-    public String toModelName(String type) {
-        if (typeMapping.keySet().contains(type) || typeMapping.values().contains(type)
-                || importMapping.values().contains(type) || defaultIncludes.contains(type)
-                || languageSpecificPrimitives.contains(type)) {
-            return type;
-        } else {
-            return Character.toUpperCase(type.charAt(0)) + type.substring(1);
-        }
-    }
-
-    @Override
-    public String toApiName(String type) {
-        return Character.toUpperCase(type.charAt(0)) + type.substring(1) + "Api";
-    }
-
-    @Override
-    public String escapeQuotationMark(String input) {
-        // remove " to avoid code injection
-        return input.replace("\"", "");
-    }
-
-    @Override
-    public String escapeUnsafeCharacters(String input) {
-        return input.replace("*/", "*_/").replace("/*", "/_*");
     }
 
     @Override
