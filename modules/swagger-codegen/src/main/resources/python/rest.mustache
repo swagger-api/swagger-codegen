@@ -176,10 +176,10 @@ class RESTClientObject(object):
                         preload_content=_preload_content,
                         timeout=timeout,
                         headers=headers)
-                # Pass a `string` parameter directly in the body to support
+                # Pass a `string` or a `bytes` parameter directly in the body to support
                 # other content types than Json when `body` argument is
                 # provided in serialized form
-                elif isinstance(body, str):
+                elif isinstance(body, str) or isinstance(body, bytes):
                     request_body = body
                     r = self.pool_manager.request(
                         method, url,
