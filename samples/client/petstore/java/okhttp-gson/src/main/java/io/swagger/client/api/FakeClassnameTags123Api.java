@@ -54,6 +54,8 @@ public class FakeClassnameTags123Api {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for testClassname
      * @param body client model (required)
@@ -117,6 +119,7 @@ public class FakeClassnameTags123Api {
 
     }
 
+
     /**
      * To test class name in snake case
      * To test class name in snake case
@@ -128,6 +131,7 @@ public class FakeClassnameTags123Api {
         ApiResponse<Client> resp = testClassnameWithHttpInfo(body);
         return resp.getData();
     }
+
 
     /**
      * To test class name in snake case
@@ -141,6 +145,7 @@ public class FakeClassnameTags123Api {
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * To test class name in snake case (asynchronously)

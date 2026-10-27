@@ -35,6 +35,8 @@ public class FakeClassnameTags123Api {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * To test class name in snake case
    * To test class name in snake case
@@ -45,6 +47,7 @@ public class FakeClassnameTags123Api {
   public Client testClassname(Client body) throws ApiException {
     return testClassnameWithHttpInfo(body).getData();
       }
+
 
   /**
    * To test class name in snake case
