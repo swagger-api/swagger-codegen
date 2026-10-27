@@ -302,17 +302,56 @@ class ObjectSerializer
             $instance = new $class();
             foreach ($instance::swaggerTypes() as $property => $type) {
                 $propertySetter = $instance::setters()[$property];
+                $propertyName = self::convertToCamelCase($instance::attributeMap()[$property]);
+                if (!property_exists($data, $propertyName)) {
+                    if (property_exists($data, self::convertCamelCaseToPascalCase($propertyName))) {
+                        $propertyName = self::convertCamelCaseToPascalCase($propertyName);
+                    } else {
+                        $propertyName = self::convertCamelCaseToSnakeCase($propertyName);
+                    }
+                }
 
-                if (!isset($propertySetter) || !isset($data->{$instance::attributeMap()[$property]})) {
+                if (!isset($propertySetter) || !isset($data->{$propertyName})) {
                     continue;
                 }
 
-                $propertyValue = $data->{$instance::attributeMap()[$property]};
+                $propertyValue = $data->{$propertyName};
                 if (isset($propertyValue)) {
                     $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
                 }
             }
             return $instance;
         }
+    }
+
+    private static function convertToCamelCase($property): string
+    {
+        if (str_contains($property, '_')) {
+            $arrStrings = explode('_', $property);
+            $count = count($arrStrings);
+            if ($count > 1) {
+                foreach ($arrStrings as $key => &$string) {
+                    if ($key > 0) {
+                        $string = ucfirst($string);
+                    }
+                }
+            }
+            return implode($arrStrings);
+        }
+        return lcfirst($property);
+    }
+
+    private static function convertCamelCaseToPascalCase($property): string
+    {
+        return ucfirst($property);
+    }
+
+    private static function convertCamelCaseToSnakeCase($property): string
+    {
+        $chunks = preg_split('/(?=[A-Z])/', $property);
+        forEach($chunks as &$chunk) {
+            $chunk = lcfirst($chunk);
+        }
+        return implode('_', $chunks);
     }
 }
