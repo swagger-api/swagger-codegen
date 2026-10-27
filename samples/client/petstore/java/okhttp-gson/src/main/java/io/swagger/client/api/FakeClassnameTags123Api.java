@@ -53,6 +53,8 @@ public class FakeClassnameTags123Api {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Build call for testClassname
      * @param body client model (required)
@@ -63,7 +65,7 @@ public class FakeClassnameTags123Api {
      */
     public com.squareup.okhttp.Call testClassnameCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
-        
+
         // create path and map variables
         String localVarPath = "/fake_classname_test";
 
@@ -101,22 +103,23 @@ public class FakeClassnameTags123Api {
         String[] localVarAuthNames = new String[] { "api_key_query" };
         return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private com.squareup.okhttp.Call testClassnameValidateBeforeCall(Client body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling testClassname(Async)");
         }
-        
+
         com.squareup.okhttp.Call call = testClassnameCall(body, progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
+
+
+
+
     }
+
 
     /**
      * To test class name in snake case
@@ -130,6 +133,7 @@ public class FakeClassnameTags123Api {
         return resp.getData();
     }
 
+
     /**
      * To test class name in snake case
      * 
@@ -142,6 +146,7 @@ public class FakeClassnameTags123Api {
         Type localVarReturnType = new TypeToken<Client>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
+
 
     /**
      * To test class name in snake case (asynchronously)
