@@ -10,7 +10,7 @@ pub struct APIClient<C: hyper::client::Connect> {
 {{#operations}}
 {{#operation}}
   {{#-last}}
-  {{classFilename}}: Box<::apis::{{classname}}>,
+  {{classFilename}}: Box<dyn(::apis::{{classname}})>,
   {{/-last}}
 {{/operation}}
 {{/operations}}
@@ -43,7 +43,7 @@ impl<C: hyper::client::Connect> APIClient<C> {
 {{#operations}}
 {{#operation}}
 {{#-last}}
-  pub fn {{classFilename}}(&self) -> &::apis::{{classname}}{
+  pub fn {{classFilename}}(&self) -> &dyn(::apis::{{classname}}){
     self.{{classFilename}}.as_ref()
   }
 
