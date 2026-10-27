@@ -2,7 +2,7 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}ApiClient'{{#models}}, '{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}{{#modelPackage}}{{modelPackage}}/{{/modelPackage}}{{importPath}}'{{/models}}{{#apiInfo}}{{#apis}}, '{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}{{#apiPackage}}{{apiPackage}}/{{/apiPackage}}{{importPath}}'{{/apis}}{{/apiInfo}}], factory);
+    define(['{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}./ApiClient'{{#models}}, '{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}{{#modelPackage}}./{{modelPackage}}/{{/modelPackage}}{{importPath}}'{{/models}}{{#apiInfo}}{{#apis}}, '{{#invokerPackage}}{{invokerPackage}}/{{/invokerPackage}}{{#apiPackage}}./{{apiPackage}}/{{/apiPackage}}{{importPath}}'{{/apis}}{{/apiInfo}}], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('./ApiClient'){{#models}}, require('./{{#modelPackage}}{{modelPackage}}/{{/modelPackage}}{{importPath}}'){{/models}}{{#apiInfo}}{{#apis}}, require('./{{#apiPackage}}{{apiPackage}}/{{/apiPackage}}{{importPath}}'){{/apis}}{{/apiInfo}});
