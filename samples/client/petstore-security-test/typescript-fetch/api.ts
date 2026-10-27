@@ -109,7 +109,11 @@ export const FakeApiFetchParamCreator = function (configuration?: Configuration)
         testCodeInjectEndRnNR(testCodeInjectEndRnNR?: string, options: any = {}): FetchArgs {
             const localVarPath = `/fake`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new url.URLSearchParams();
