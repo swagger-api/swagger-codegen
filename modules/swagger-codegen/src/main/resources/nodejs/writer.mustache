@@ -7,9 +7,10 @@ exports.respondWithCode = function(code, payload) {
   return new ResponsePayload(code, payload);
 }
 
-var writeJson = exports.writeJson = function(response, arg1, arg2) {
+var writeJson = exports.writeJson = function(response, arg1, arg2, arg3) {
   var code;
   var payload;
+  var headers;
 
   if(arg1 && arg1 instanceof ResponsePayload) {
     writeJson(response, arg1.payload, arg1.code);
@@ -24,6 +25,14 @@ var writeJson = exports.writeJson = function(response, arg1, arg2) {
       code = arg1;
     }
   }
+  
+  if(arg3){
+    headers = arg3;
+	for(var i = 0; i < headers.length; i++){
+      response.setHeader(headers[i].name, headers[i].value);
+    }
+  }
+  
   if(code && arg1) {
     payload = arg1;
   }
