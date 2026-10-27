@@ -549,8 +549,8 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
      */
     @Override
     protected boolean needToImport(String type) {
-        // provides extra protection against improperly trying to import language primitives and java types
-        boolean imports = !type.startsWith("kotlin.") && !type.startsWith("java.") && !defaultIncludes.contains(type) && !languageSpecificPrimitives.contains(type);
+        // provides extra protection against improperly trying to import language primitives, java types and types from --import-mappings
+        boolean imports = !type.startsWith("kotlin.") && !type.startsWith("java.") && !defaultIncludes.contains(type) && !languageSpecificPrimitives.contains(type) && !importMapping.containsValue(type);
         return imports;
     }
 
