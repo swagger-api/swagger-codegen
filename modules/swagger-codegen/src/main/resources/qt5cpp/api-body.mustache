@@ -67,6 +67,22 @@ void
             fullPath.append(" ");
           }
           fullPath.append(stringValue(t));
+          count++;
+        }
+      }
+      else if (QString("{{collectionFormat}}").indexOf("csv") == 0) {
+        if (fullPath.indexOf("?") > 0)
+          fullPath.append("&");
+        else
+          fullPath.append("?");
+        fullPath.append("{{baseName}}=");
+        qint32 count = 0;
+        foreach({{{baseType}}} t, *{{paramName}}) {
+          if (count > 0) {
+            fullPath.append(",");
+          }
+          fullPath.append(stringValue(t));
+          count++;
         }
       }
       else if (QString("{{collectionFormat}}").indexOf("tsv") == 0) {
@@ -81,6 +97,7 @@ void
             fullPath.append("\t");
           }
           fullPath.append(stringValue(t));
+          count++;
         }
       }
     }
