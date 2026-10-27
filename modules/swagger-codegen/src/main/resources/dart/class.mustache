@@ -43,7 +43,7 @@ class {{classname}} {
   Map<String, dynamic> toJson() {
     return {
     {{#vars}}
-      {{#isDateTime}}'{{baseName}}': {{name}} == null ? '' : {{name}}.toUtc().toIso8601String(){{^-last}},{{/-last}}{{/isDateTime}}{{^isDateTime}}'{{baseName}}': {{name}}{{^-last}},{{/-last}}{{/isDateTime}}
+      {{#isDateTime}}'{{baseName}}': {{name}} == null ? null : {{name}}.toUtc().toIso8601String(){{^-last}},{{/-last}}{{/isDateTime}}{{^isDateTime}}'{{baseName}}': {{name}}{{^-last}},{{/-last}}{{/isDateTime}}
     {{/vars}}
      };
   }
