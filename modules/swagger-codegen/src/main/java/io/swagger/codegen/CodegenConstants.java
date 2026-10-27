@@ -239,4 +239,6 @@ public class CodegenConstants {
     public static final String INTERFACE_CONTROLLER = "interface-controller";
 
     public static final String IGNORE_IMPORT_MAPPING_OPTION = "ignoreImportMappings";
+
+    public static final String DATE_LIBRARY = "dateLibrary";
 }

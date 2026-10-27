@@ -55,8 +55,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     static Logger LOGGER = LoggerFactory.getLogger(AbstractJavaCodegen.class);
     public static final String FULL_JAVA_UTIL = "fullJavaUtil";
+    /** @deprecated Use {@link CodegenConstants#DATE_LIBRARY} instead. */
+    @Deprecated
+    public static final String DATE_LIBRARY = CodegenConstants.DATE_LIBRARY;
     public static final String DEFAULT_LIBRARY = "<default>";
-    public static final String DATE_LIBRARY = "dateLibrary";
     public static final String JAVA8_MODE = "java8";
     public static final String JAVA11_MODE = "java11";
     public static final String SUPPORT_ASYNC = "supportAsync";
@@ -185,7 +187,7 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             cliOptions.add(CliOption.newBoolean(IGNORE_UNKNOWN_JACKSON_ANNOTATION,
                 "adds @JsonIgnoreProperties(ignoreUnknown = true) annotation to model classes"));
         }
-        CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
+        CliOption dateLibrary = new CliOption(CodegenConstants.DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
         dateOptions.put("java8", "Java 8 native JSR310 (preferred for jdk 1.8+) - note: this also sets \"" + JAVA8_MODE + "\" to true");
         dateOptions.put("java11", "Java 11 native JSR384 (preferred for jdk 11+) - note: this also sets \"" + JAVA11_MODE + "\" to true");
@@ -491,8 +493,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             }
         }
 
-        if (additionalProperties.containsKey(DATE_LIBRARY)) {
-            setDateLibrary(additionalProperties.get("dateLibrary").toString());
+        if (additionalProperties.containsKey(CodegenConstants.DATE_LIBRARY)) {
+            setDateLibrary(additionalProperties.get(CodegenConstants.DATE_LIBRARY).toString());
         } else if (java8Mode) {
             setDateLibrary("java8");
         }
