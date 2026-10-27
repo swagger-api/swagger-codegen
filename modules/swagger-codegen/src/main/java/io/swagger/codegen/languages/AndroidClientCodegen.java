@@ -10,6 +10,10 @@ import io.swagger.codegen.SupportingFile;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import io.swagger.models.properties.DoubleProperty;
+import io.swagger.models.properties.FloatProperty;
+import io.swagger.models.properties.IntegerProperty;
+import io.swagger.models.properties.LongProperty;
 
 import java.io.File;
 import java.util.Arrays;
@@ -264,6 +268,42 @@ public class AndroidClientCodegen extends DefaultCodegen implements CodegenConfi
     public String toModelFilename(String name) {
         // should be the same as the model name
         return toModelName(name);
+    }
+
+    /**
+     * Return the default value of the property
+     *
+     * @param p Swagger property object
+     * @return string presentation of the default value of the property
+     */
+    @Override
+    public String toDefaultValue(Property p) {
+        if (p instanceof IntegerProperty) {
+            IntegerProperty dp = (IntegerProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString();
+            }
+            return "null";
+        } else if (p instanceof LongProperty) {
+            LongProperty dp = (LongProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString()+"l";
+            }
+            return "null";
+        } else if (p instanceof DoubleProperty) {
+            DoubleProperty dp = (DoubleProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString() + "d";
+            }
+            return "null";
+        } else if (p instanceof FloatProperty) {
+            FloatProperty dp = (FloatProperty) p;
+            if (dp.getDefault() != null) {
+                return dp.getDefault().toString() + "f";
+            }
+            return "null";
+        }
+        return super.toDefaultValue(p);
     }
 
     @Override
