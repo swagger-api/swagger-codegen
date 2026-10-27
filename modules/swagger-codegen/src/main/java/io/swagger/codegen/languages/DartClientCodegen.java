@@ -35,6 +35,8 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
 
+    protected String modelPropertyNaming = CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.camelCase.name();
+
     public DartClientCodegen() {
         super();
 
@@ -50,6 +52,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         modelPackage = "lib.model";
         modelDocTemplateFiles.put("object_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
+
 
         // default HIDE_GENERATION_TIMESTAMP to true
         hideGenerationTimestamp = Boolean.TRUE;
@@ -101,8 +104,11 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         // mapped to String as a workaround
         typeMapping.put("binary", "String");
         typeMapping.put("ByteArray", "String");
-
         cliOptions.add(new CliOption(BROWSER_CLIENT, "Is the client browser based"));
+
+        CliOption modelPropertyNaming = new CliOption(CodegenConstants.MODEL_PROPERTY_NAMING, CodegenConstants.MODEL_PROPERTY_NAMING_DESC);
+        cliOptions.add(modelPropertyNaming.defaultValue("camelCase"));
+        
         cliOptions.add(new CliOption(PUB_NAME, "Name in generated pubspec"));
         cliOptions.add(new CliOption(PUB_VERSION, "Version in generated pubspec"));
         cliOptions.add(new CliOption(PUB_DESCRIPTION, "Description in generated pubspec"));
@@ -135,6 +141,13 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
             //not set, use to be passed to template
             additionalProperties.put(BROWSER_CLIENT, browserClient);
         }
+
+
+        if (additionalProperties.containsKey(CodegenConstants.MODEL_PROPERTY_NAMING)) {
+            setModelPropertyNaming((String) additionalProperties.get(CodegenConstants.MODEL_PROPERTY_NAMING));
+        }
+        
+
 
         if (additionalProperties.containsKey(PUB_NAME)) {
             this.setPubName((String) additionalProperties.get(PUB_NAME));
@@ -215,6 +228,17 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
         return (outputFolder + "/" + modelDocPath).replace('/', File.separatorChar);
     }
 
+
+    public String formatPropertyOrVarName(String name) {
+        switch (CodegenConstants.MODEL_PROPERTY_NAMING_TYPE.valueOf(getModelPropertyNaming())) {
+            case original:    return name;
+            case camelCase:   return camelize(name, true);
+            case PascalCase:  return camelize(name);
+            case snake_case:  return underscore(name);
+            default:          return camelize(name, true); // default=camelCase
+        }
+    }    
+
     @Override
     public String toVarName(String name) {
         // replace - with _ e.g. created-at => created_at
@@ -227,7 +251,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
 
         // camelize (lower first character) the variable name
         // pet_id => petId
-        name = camelize(name, true);
+        name = formatPropertyOrVarName(name);
 
         if (name.matches("^\\d.*")) {
             name = "n" + name;
@@ -250,13 +274,13 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public String toModelName(String name) {
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
-            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + camelize("model_" + name));
+            LOGGER.warn(name + " (reserved word) cannot be used as model filename. Renamed to " + formatPropertyOrVarName("model_" + name));
             name = "model_" + name; // e.g. return => ModelReturn (after camelize)
         }
 
         // camelize the model name
         // phone_number => PhoneNumber
-        return camelize(name);
+        return formatPropertyOrVarName(name);
     }
 
     @Override
@@ -381,7 +405,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
                 new ArrayList<Map<String, String>>();
         for (Map<String, Object> value : values) {
             Map<String, String> enumVar = new HashMap<String, String>();
-            String name = camelize((String) value.get("identifier"), true);
+            String name = formatPropertyOrVarName((String) value.get("identifier"));
             if (isReservedWord(name)) {
                 name = escapeReservedWord(name);
             }
@@ -407,7 +431,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
                 "int".equalsIgnoreCase(datatype)) {
             var = "Number" + var;
         }
-        return escapeReservedWord(camelize(var, true));
+        return escapeReservedWord(formatPropertyOrVarName(var));
     }
 
     @Override
@@ -429,7 +453,7 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
             return newOperationId;
         }
 
-        return camelize(operationId, true);
+        return formatPropertyOrVarName(operationId);
     }
 
     public void setBrowserClient(boolean browserClient) {
@@ -455,6 +479,22 @@ public class DartClientCodegen extends DefaultCodegen implements CodegenConfig {
     public void setSourceFolder(String sourceFolder) {
         this.sourceFolder = sourceFolder;
     }
+
+
+    public void setModelPropertyNaming(String naming) {
+        if ("original".equals(naming) || "camelCase".equals(naming) ||
+                "PascalCase".equals(naming) || "snake_case".equals(naming)) {
+            this.modelPropertyNaming = naming;
+        } else {
+            throw new IllegalArgumentException("Invalid model property naming '" +
+                    naming + "'. Must be 'original', 'camelCase', " +
+                    "'PascalCase' or 'snake_case'");
+        }
+    }
+
+    public String getModelPropertyNaming() {
+        return this.modelPropertyNaming;
+    }    
 
     @Override
     public String escapeQuotationMark(String input) {
