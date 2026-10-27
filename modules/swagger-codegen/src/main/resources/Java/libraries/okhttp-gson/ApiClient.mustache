@@ -94,13 +94,21 @@ public class ApiClient {
         // Set default User-Agent.
         setUserAgent("{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{artifactVersion}}}/java{{/httpUserAgent}}");
 
-        // Setup authentications (key: authentication name, value: authentication).
+        // Prevent the authentications from being modified.
+        authentications = Collections.unmodifiableMap(getClientAuthentications());
+    }
+
+    /**
+     * Get authentications to be used by this API client.
+     *
+     * @return authentications (key: authentication name, value: authentication).
+     */
+    protected Map<String, Authentication> getClientAuthentications() {
         authentications = new HashMap<String, Authentication>();{{#authMethods}}{{#isBasic}}
         authentications.put("{{name}}", new HttpBasicAuth());{{/isBasic}}{{#isApiKey}}
         authentications.put("{{name}}", new ApiKeyAuth({{#isKeyInHeader}}"header"{{/isKeyInHeader}}{{^isKeyInHeader}}"query"{{/isKeyInHeader}}, "{{keyParamName}}"));{{/isApiKey}}{{#isOAuth}}
         authentications.put("{{name}}", new OAuth());{{/isOAuth}}{{/authMethods}}
-        // Prevent the authentications from being modified.
-        authentications = Collections.unmodifiableMap(authentications);
+        return authentications;
     }
 
     /**
