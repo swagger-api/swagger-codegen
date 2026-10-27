@@ -1,16 +1,16 @@
 {{#useHttpClient}}
-    import { HttpUrlEncodingCodec } from '@angular/common/http';
+import { HttpUrlEncodingCodec } from '@angular/common/http';
 {{/useHttpClient}}
 {{^useHttpClient}}
-    import { QueryEncoder } from '@angular/http';
+import { QueryEncoder } from '@angular/http';
 {{/useHttpClient}}
 
 {{#useHttpClient}}
 /**
-* CustomHttpUrlEncodingCodec
-* Fix plus sign (+) not encoding, so sent as blank space
-* See: https://github.com/angular/angular/issues/11058#issuecomment-247367318
-*/
+ * CustomHttpUrlEncodingCodec
+ * Fix plus sign (+) not encoding, so sent as blank space
+ * See: https://github.com/angular/angular/issues/11058#issuecomment-247367318
+ */
 export class CustomHttpUrlEncodingCodec extends HttpUrlEncodingCodec {
     override encodeKey(k: string): string {
         k = super.encodeKey(k);
@@ -24,10 +24,10 @@ export class CustomHttpUrlEncodingCodec extends HttpUrlEncodingCodec {
 {{/useHttpClient}}
 {{^useHttpClient}}
 /**
-* CustomQueryEncoderHelper
-* Fix plus sign (+) not encoding, so sent as blank space
-* See: https://github.com/angular/angular/issues/11058#issuecomment-247367318
-*/
+ * CustomQueryEncoderHelper
+ * Fix plus sign (+) not encoding, so sent as blank space
+ * See: https://github.com/angular/angular/issues/11058#issuecomment-247367318
+ */
 export class CustomQueryEncoderHelper extends QueryEncoder {
     encodeKey(k: string): string {
         k = super.encodeKey(k);
