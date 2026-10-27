@@ -28,6 +28,6 @@ public enum {{datatypeWithEnum}} {
                 return b;
             }
         }
-        {{^errorOnUnknownEnum}}return null;{{/errorOnUnknownEnum}}{{#errorOnUnknownEnum}}throw new IllegalArgumentException("Unexpected value '" + text + "' for '{{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}' enum.");{{/errorOnUnknownEnum}}
+        {{^errorOnUnknownEnum}}return null;{{/errorOnUnknownEnum}}{{#errorOnUnknownEnum}}throw new IllegalArgumentException("Unexpected value '" + v + "' for '{{#datatypeWithEnum}}{{{.}}}{{/datatypeWithEnum}}{{^datatypeWithEnum}}{{{classname}}}{{/datatypeWithEnum}}' enum.");{{/errorOnUnknownEnum}}
     }
 }
