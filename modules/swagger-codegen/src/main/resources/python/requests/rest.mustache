@@ -1,0 +1,219 @@
+# coding: utf-8
+
+{{>partial_header}}
+
+from __future__ import absolute_import
+
+import io
+import logging
+
+# python 2 and python 3 compatibility library
+import six
+
+try:
+    import requests
+except ImportError:
+    raise ImportError('Swagger python client requires requests.')
+
+
+logger = logging.getLogger(__name__)
+
+
+class RESTResponse(io.IOBase):
+
+    def __init__(self, resp):
+        self.request_response = resp
+        self.status = resp.status_code
+        self.reason = resp.reason
+        self.data = resp.content
+
+    def getheaders(self):
+        """Returns a dictionary of the response headers."""
+        return self.request_response.headers
+
+    def getheader(self, name, default=None):
+        """Returns a given response header."""
+        return self.request_response.headers.get(name, default)
+
+
+class RESTClientObject(object):
+
+    def __init__(self, configuration, pools_size=4, maxsize=None):
+        # urllib3.PoolManager will pass all kw parameters to connectionpool
+        # https://github.com/shazow/urllib3/blob/f9409436f83aeb79fbaf090181cd81b784f1b8ce/urllib3/poolmanager.py#L75  # noqa: E501
+        # https://github.com/shazow/urllib3/blob/f9409436f83aeb79fbaf090181cd81b784f1b8ce/urllib3/connectionpool.py#L680  # noqa: E501
+        # maxsize is the number of requests to host that are allowed in parallel  # noqa: E501
+        # Custom SSL certificates and client certificates: http://urllib3.readthedocs.io/en/latest/advanced-usage.html  # noqa: E501
+
+        self.session = configuration.session or requests.Session()
+        # TODO https://stackoverflow.com/questions/34837026/whats-the-meaning-of-pool-connections-in-requests-adapters-httpadapter  # noqa: E501
+
+        # cert_reqs
+        self.session.verify = configuration.verify_ssl
+
+        # ca_certs
+        if configuration.ssl_ca_cert:
+            self.session.verify = configuration.ssl_ca_cert
+
+        # client cert
+        if configuration.cert_file:
+            if configuration.key_file:
+                self.session.cert = (
+                                        configuration.cert_file,
+                                        configuration.key_file
+                                    )
+            else:
+                self.session.cert = configuration.cert_file
+
+        if configuration.proxy:
+            self.session.proxies.update({
+                'http': configuration.proxy,
+                'https': configuration.proxy,
+            })
+
+    def request(self, method, url, query_params=None, headers=None,
+                body=None, post_params=None, _preload_content=True,
+                _request_timeout=None):
+        """Perform requests.
+
+        :param method: http request method
+        :param url: http request url
+        :param query_params: query parameters in the url
+        :param headers: http request headers
+        :param body: request json body, for `application/json`
+        :param post_params: request post parameters,
+                            `application/x-www-form-urlencoded`
+                            and `multipart/form-data`
+        :param _preload_content: if False, the requests.Response object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        """
+        method = method.upper()
+        assert method in ['GET', 'HEAD', 'DELETE', 'POST', 'PUT',
+                          'PATCH', 'OPTIONS']
+
+        if post_params and body:
+            raise ValueError(
+                "body parameter cannot be used with post_params parameter."
+            )
+
+        r = self.session.request(method,
+                                 url,
+                                 params=query_params,
+                                 data=body or post_params,
+                                 headers=headers,
+                                 timeout=_request_timeout
+                                 )
+
+        if _preload_content:
+            r = RESTResponse(r)
+
+            # In the python 3, the response.data is bytes.
+            # we need to decode it to string.
+            if six.PY3:
+                r.data = r.data.decode('utf8')
+
+            # log response body
+            logger.debug("response body: %s", r.data)
+
+        if not 200 <= r.status <= 299:
+            raise ApiException(http_resp=r)
+
+        return r
+
+    def GET(self, url, headers=None, query_params=None, _preload_content=True,
+            _request_timeout=None):
+        return self.request("GET", url,
+                            headers=headers,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            query_params=query_params)
+
+    def HEAD(self, url, headers=None, query_params=None, _preload_content=True,
+             _request_timeout=None):
+        return self.request("HEAD", url,
+                            headers=headers,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            query_params=query_params)
+
+    def OPTIONS(self, url, headers=None, query_params=None, post_params=None,
+                body=None, _preload_content=True, _request_timeout=None):
+        return self.request("OPTIONS", url,
+                            headers=headers,
+                            query_params=query_params,
+                            post_params=post_params,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            body=body)
+
+    def DELETE(self, url, headers=None, query_params=None, body=None,
+               _preload_content=True, _request_timeout=None):
+        return self.request("DELETE", url,
+                            headers=headers,
+                            query_params=query_params,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            body=body)
+
+    def POST(self, url, headers=None, query_params=None, post_params=None,
+             body=None, _preload_content=True, _request_timeout=None):
+        return self.request("POST", url,
+                            headers=headers,
+                            query_params=query_params,
+                            post_params=post_params,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            body=body)
+
+    def PUT(self, url, headers=None, query_params=None, post_params=None,
+            body=None, _preload_content=True, _request_timeout=None):
+        return self.request("PUT", url,
+                            headers=headers,
+                            query_params=query_params,
+                            post_params=post_params,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            body=body)
+
+    def PATCH(self, url, headers=None, query_params=None, post_params=None,
+              body=None, _preload_content=True, _request_timeout=None):
+        return self.request("PATCH", url,
+                            headers=headers,
+                            query_params=query_params,
+                            post_params=post_params,
+                            _preload_content=_preload_content,
+                            _request_timeout=_request_timeout,
+                            body=body)
+
+
+class ApiException(Exception):
+
+    def __init__(self, status=None, reason=None, http_resp=None):
+        if http_resp:
+            self.status = http_resp.status
+            self.reason = http_resp.reason
+            self.body = http_resp.data
+            self.headers = http_resp.getheaders()
+        else:
+            self.status = status
+            self.reason = reason
+            self.body = None
+            self.headers = None
+
+    def __str__(self):
+        """Custom error messages for exception"""
+        error_message = "({0})\n"\
+                        "Reason: {1}\n".format(self.status, self.reason)
+        if self.headers:
+            error_message += "HTTP response headers: {0}\n".format(
+                self.headers)
+
+        if self.body:
+            error_message += "HTTP response body: {0}\n".format(self.body)
+
+        return error_message
