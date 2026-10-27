@@ -44,10 +44,19 @@ void
     {{/collectionFormat}}
 
     {{#collectionFormat}}
-
+    {{^isString}}
     if ({{{paramName}}}->size() > 0) {
+    {{/isString}}
+    {{#isString}}
+    if ({{{paramName}}}.size() > 0) {
+    {{/isString}}
       if (QString("{{collectionFormat}}").indexOf("multi") == 0) {
+        {{^isString}}
         foreach({{{baseType}}} t, *{{paramName}}) {
+        {{/isString}}
+        {{#isString}}
+        foreach({{{baseType}}} t, {{paramName}}) {
+        {{/isString}}
           if (fullPath.indexOf("?") > 0)
             fullPath.append("&");
           else
@@ -62,7 +71,12 @@ void
           fullPath.append("?");
         fullPath.append("{{baseName}}=");
         qint32 count = 0;
+        {{^isString}}
         foreach({{{baseType}}} t, *{{paramName}}) {
+        {{/isString}}
+        {{#isString}}
+        foreach({{{baseType}}} t, {{paramName}}) {
+        {{/isString}}
           if (count > 0) {
             fullPath.append(" ");
           }
@@ -76,7 +90,12 @@ void
           fullPath.append("?");
         fullPath.append("{{baseName}}=");
         qint32 count = 0;
+        {{^isString}}
         foreach({{{baseType}}} t, *{{paramName}}) {
+        {{/isString}}
+        {{#isString}}
+        foreach({{{baseType}}} t, {{paramName}}) {
+        {{/isString}}
           if (count > 0) {
             fullPath.append("\t");
           }
@@ -92,8 +111,13 @@ void
     {{prefix}}HttpRequestInput input(fullPath, "{{httpMethod}}");
 
     {{#formParams}}
+    {{^isString}}
     if ({{paramName}} != nullptr) {
         {{^isFile}}input.add_var("{{baseName}}", *{{paramName}});{{/isFile}}{{#isFile}}input.add_file("{{baseName}}", (*{{paramName}}).local_filename, (*{{paramName}}).request_filename, (*{{paramName}}).mime_type);{{/isFile}}
+   {{/isString}}
+   {{#isString}}
+    if (!{{paramName}}.isEmpty()) {
+        input.add_var("{{baseName}}", {{paramName}});{{/isString}}
     }
     {{/formParams}}
 
@@ -108,7 +132,7 @@ void
     input.request_body.append(bytes);
     {{/isContainer}}
     {{^isContainer}}{{#isString}}
-    QString output(*{{paramName}});{{/isString}}{{#isByteArray}}QString output(*{{paramName}});{{/isByteArray}}{{^isString}}{{^isByteArray}}
+    QString output({{paramName}});{{/isString}}{{#isByteArray}}QString output({{paramName}});{{/isByteArray}}{{^isString}}{{^isByteArray}}
     QString output = {{paramName}}.asJson();{{/isByteArray}}{{/isString}}
     input.request_body.append(output);
     {{/isContainer}}{{/bodyParams}}
@@ -192,8 +216,12 @@ void
     {{/isMapContainer}}
     {{^isMapContainer}}
     {{^returnTypeIsPrimitive}}
+
     QString json(worker->response);
-    {{{returnType}}} output = static_cast<{{{returnType}}}>(create(json, QString("{{{returnBaseType}}}")));
+
+    {{{returnType}}} output = {};
+    create(json, QString("{{{returnBaseType}}}"),&output);
+   
     auto wrapper = new {{prefix}}QObjectWrapper<{{{returnType}}}> (output);
     wrapper->deleteLater();
     {{/returnTypeIsPrimitive}}

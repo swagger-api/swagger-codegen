@@ -17,17 +17,29 @@
 
 namespace Swagger {
 
-    template <typename ObjectPtrT>
+    template <typename ObjectT>
     class SWGQObjectWrapper : public QObject {
         public:
-            SWGQObjectWrapper(ObjectPtrT ptr){
-                data = ptr;
+            SWGQObjectWrapper(ObjectT t){
+                data = t;
+            }
+            ~SWGQObjectWrapper(){
+
+            }
+        private :
+            ObjectT data;
+    };
+    template <typename ObjectT>
+    class SWGQObjectWrapper<ObjectT*> : public QObject {
+        public:
+            SWGQObjectWrapper(ObjectT* t){
+                data = t;
             }
             ~SWGQObjectWrapper(){
                 delete data;
             }
         private :
-            ObjectPtrT data;
+            ObjectT* data;
     };
 
 }

@@ -13,6 +13,7 @@
 #include "SWGFakeApi.h"
 #include "SWGHelpers.h"
 #include "SWGModelFactory.h"
+#include "SWGQObjectWrapper.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -35,11 +36,11 @@ SWGFakeApi::testCodeInject____end__rn_n_r(QString* test_code_inject____end____rn
 
 
 
-    HttpRequestWorker *worker = new HttpRequestWorker();
-    HttpRequestInput input(fullPath, "PUT");
+    SWGHttpRequestWorker *worker = new SWGHttpRequestWorker();
+    SWGHttpRequestInput input(fullPath, "PUT");
 
-    if (test_code_inject____end____rn_n_r != nullptr) {
-        input.add_var("test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r", *test_code_inject____end____rn_n_r);
+    if (!test_code_inject____end____rn_n_r.isEmpty()) {
+        input.add_var("test code inject */ &#39; &quot; &#x3D;end -- \r\n \n \r", test_code_inject____end____rn_n_r);
     }
 
 
@@ -50,7 +51,7 @@ SWGFakeApi::testCodeInject____end__rn_n_r(QString* test_code_inject____end____rn
     }
 
     connect(worker,
-            &HttpRequestWorker::on_execution_finished,
+            &SWGHttpRequestWorker::on_execution_finished,
             this,
             &SWGFakeApi::testCodeInject____end__rn_n_rCallback);
 
@@ -58,7 +59,7 @@ SWGFakeApi::testCodeInject____end__rn_n_r(QString* test_code_inject____end____rn
 }
 
 void
-SWGFakeApi::testCodeInject____end__rn_n_rCallback(HttpRequestWorker * worker) {
+SWGFakeApi::testCodeInject____end__rn_n_rCallback(SWGHttpRequestWorker * worker) {
     QString msg;
     QString error_str = worker->error_str;
     QNetworkReply::NetworkError error_type = worker->error_type;

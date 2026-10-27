@@ -37,24 +37,29 @@ void
 void
 {{classname}}::cleanup() {
     {{#vars}}
+    {{^isString}}
     {{#complexType}}
     if({{name}} != nullptr) { {{#isContainer}}
+         {{^items.isString}}
         auto arr = {{name}};
         for(auto o: *arr) { {{#items.isContainer}}
+         {{^items.isString}}
             for(auto o1: *o) {
                 delete o1;
-            }{{/items.isContainer}}
+            }{{/items.isString}}{{/items.isContainer}}
             delete o;
-        }{{/isContainer}}
+        }{{/items.isString}}{{/isContainer}}
         delete {{name}};
     }{{/complexType}}{{^complexType}}{{#isContainer}}
     if({{name}} != nullptr) { {{#items.isContainer}}
         auto arr = {{name}};
+        {{^items.isString}}
         for(auto o: *arr) { 
             delete o;
-        }{{/items.isContainer}}
+        }{{/items.isString}}{{/items.isContainer}}
         delete {{name}};
     }{{/isContainer}}{{/complexType}}
+    {{/isString}}
     {{/vars}}
 }
 
@@ -70,7 +75,16 @@ void
 void
 {{classname}}::fromJsonObject(QJsonObject pJson) {
     {{#vars}}
-    {{^isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");{{/isContainer}}
+    {{^isContainer}}
+    {{#isString}}
+    ::{{cppNamespace}}::setValue({{name}}, pJson["{{baseName}}"], "{{baseType}}");
+    m_{{name}}_isSet = pJson.contains("{{baseName}}");
+    {{/isString}}
+    {{^isString}}
+    ::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{complexType}}");
+    m_{{name}}_isSet = pJson.contains("{{baseName}}");
+    {{/isString}}
+    {{/isContainer}}
     {{#isContainer}}{{^items.isContainer}}::{{cppNamespace}}::setValue(&{{name}}, pJson["{{baseName}}"], "{{baseType}}", "{{items.baseType}}");{{/items.isContainer}}{{#items.isContainer}}{{#isListContainer}}
     if(pJson["{{baseName}}"].isArray()){
         auto arr = pJson["{{baseName}}"].toArray();
@@ -125,7 +139,7 @@ QJsonObject
     {{/isDate}}
     {{/isString}}
     {{#isString}}
-    if({{name}} != nullptr && *{{name}} != QString("")){
+    if(m_{{name}}_isSet){
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }
     {{/isString}}
@@ -220,7 +234,7 @@ bool
     bool isObjectUpdated = false;
     do{
     {{#vars}}
-        {{#isPrimitiveType}}if(m_{{name}}_isSet){ isObjectUpdated = true; break;}{{/isPrimitiveType}}{{#isContainer}}if({{name}}->size() > 0){ isObjectUpdated = true; break;}{{/isContainer}}{{^isContainer}}{{#complexType}}{{^isString}}{{^isDateTime}}if({{name}} != nullptr && {{name}}->isSet()){ isObjectUpdated = true; break;}{{/isDateTime}}{{/isString}}{{#isString}}if({{name}} != nullptr && *{{name}} != QString("")){ isObjectUpdated = true; break;}{{/isString}}{{/complexType}}{{/isContainer}}
+        {{#isPrimitiveType}}if(m_{{name}}_isSet){ isObjectUpdated = true; break;}{{/isPrimitiveType}}{{#isContainer}}if({{name}}->size() > 0){ isObjectUpdated = true; break;}{{/isContainer}}{{^isContainer}}{{#complexType}}{{^isString}}{{^isDateTime}}if({{name}} != nullptr && {{name}}->isSet()){ isObjectUpdated = true; break;}{{/isDateTime}}{{/isString}}{{#isString}}if(m_{{name}}_isSet){ isObjectUpdated = true; break;}{{/isString}}{{/complexType}}{{/isContainer}}
     {{/vars}}
     }while(false);
     return isObjectUpdated;
