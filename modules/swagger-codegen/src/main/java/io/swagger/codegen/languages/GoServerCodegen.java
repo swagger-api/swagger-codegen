@@ -21,6 +21,8 @@ public class GoServerCodegen extends AbstractGoCodegen {
     protected String projectName = "swagger-server";
     protected String apiPath = "go";
 
+    private String defaultMuxType = "gorilla";
+
     public GoServerCodegen() {
         super();
 
@@ -69,6 +71,18 @@ public class GoServerCodegen extends AbstractGoCodegen {
                 "continue", "for", "import", "return", "var", "error", "nil")
                 // Added "error" as it's used so frequently that it may as well be a keyword
         );
+
+        addOption(CodegenConstants.SOURCE_FOLDER,
+                CodegenConstants.SOURCE_FOLDER_DESC,
+                sourceFolder);
+
+        addOption(CodegenConstants.GO_SERVER_MUX_TYPE,
+                CodegenConstants.GO_SERVER_MUX_TYPE_DESC,
+                serverMuxType);
+
+        addSwitch(CodegenConstants.GENERATE_MAIN_GO,
+                CodegenConstants.GENERATE_MAIN_GO_DESC,
+                generateMainGo);
     }
 
     @Override
@@ -82,6 +96,30 @@ public class GoServerCodegen extends AbstractGoCodegen {
             setPackageName("swagger");
         }
 
+        if (additionalProperties.containsKey(CodegenConstants.SOURCE_FOLDER)) {
+            setSourceFolder((String) additionalProperties.get(CodegenConstants.SOURCE_FOLDER));
+        } else {
+            additionalProperties.put(CodegenConstants.SOURCE_FOLDER, this.sourceFolder);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.GENERATE_MAIN_GO)) {
+            setGenerateMainGo(convertPropertyToBooleanAndWriteBack(CodegenConstants.GENERATE_MAIN_GO));
+        } else {
+            additionalProperties.put(CodegenConstants.GENERATE_MAIN_GO, generateMainGo);
+        }
+
+        if (additionalProperties.containsKey(CodegenConstants.GO_SERVER_MUX_TYPE)) {
+            setServerMuxType((String) additionalProperties.get(CodegenConstants.GO_SERVER_MUX_TYPE));
+        } else {
+            additionalProperties.put(CodegenConstants.GO_SERVER_MUX_TYPE, this.serverMuxType);
+        }
+
+        if (!generateMainGo || generateMainGo && !sourceFolder.equals("") && !sourceFolder.equals("/")){
+            apiPath = sourceFolder;
+        } else {
+            apiPath = packageName;    
+        }
+
         /*
          * Additional Properties.  These values can be passed to the templates and
          * are available in models, apis, and supporting files
@@ -90,6 +128,7 @@ public class GoServerCodegen extends AbstractGoCodegen {
         additionalProperties.put("serverPort", serverPort);
         additionalProperties.put("apiPath", apiPath);
         additionalProperties.put(CodegenConstants.PACKAGE_NAME, packageName);
+        additionalProperties.put("muxEnabled", serverMuxType.equals(defaultMuxType));
 
         modelPackage = packageName;
         apiPackage = packageName;
@@ -101,8 +140,19 @@ public class GoServerCodegen extends AbstractGoCodegen {
          */
         supportingFiles.add(new SupportingFile("swagger.mustache", "api", "swagger.yaml"));
         supportingFiles.add(new SupportingFile("Dockerfile", "", "Dockerfile"));
-        supportingFiles.add(new SupportingFile("main.mustache", "", "main.go"));
-        supportingFiles.add(new SupportingFile("routers.mustache", apiPath, "routers.go"));
+        if (generateMainGo) {
+            supportingFiles.add(new SupportingFile("main.mustache", "", "main.go"));
+        }
+        
+        if (serverMuxType.equals(defaultMuxType))
+        {
+            supportingFiles.add(new SupportingFile("routers.mustache", apiPath, "routers.go"));
+        }
+        else
+        {
+            supportingFiles.add(new SupportingFile("routes.mustache", apiPath, "routes.go"));
+        }
+                
         supportingFiles.add(new SupportingFile("logger.mustache", apiPath, "logger.go"));
         writeOptional(outputFolder, new SupportingFile("README.mustache", apiPath, "README.md"));
     }

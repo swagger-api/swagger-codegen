@@ -25,6 +25,12 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     protected String packageName = "swagger";
 
+    protected String sourceFolder = "go";
+
+    protected boolean generateMainGo = true;
+
+    protected String serverMuxType = "gorilla";
+
     public AbstractGoCodegen() {
         super();
 
@@ -437,6 +443,18 @@ public abstract class AbstractGoCodegen extends DefaultCodegen implements Codege
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
+    }
+
+    public void setSourceFolder(String sourceFolder) {
+        this.sourceFolder = sourceFolder;
+    }
+
+    public void setGenerateMainGo(boolean generateMainGo) {
+        this.generateMainGo = generateMainGo;
+    }
+
+    public void setServerMuxType(String serverMuxType) {
+        this.serverMuxType = serverMuxType;
     }
 
     @Override
