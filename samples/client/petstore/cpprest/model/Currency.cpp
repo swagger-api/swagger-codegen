@@ -40,7 +40,7 @@ web::json::value Currency::toJson() const
     return val;
 }
 
-void Currency::fromJson(web::json::value& val)
+void Currency::fromJson(const web::json::value& val)
 {
 }
 

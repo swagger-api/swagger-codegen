@@ -43,11 +43,11 @@ web::json::value Amount::toJson() const
     return val;
 }
 
-void Amount::fromJson(web::json::value& val)
+void Amount::fromJson(const web::json::value& val)
 {
-    setValue(ModelBase::doubleFromJson(val[utility::conversions::to_string_t("value")]));
+    setValue(ModelBase::doubleFromJson(val.at(utility::conversions::to_string_t("value"))));
     std::shared_ptr<Currency> newCurrency(new Currency());
-    newCurrency->fromJson(val[utility::conversions::to_string_t("currency")]);
+    newCurrency->fromJson(val.at(utility::conversions::to_string_t("currency")));
     setCurrency( newCurrency );
 }
 
