@@ -13,6 +13,7 @@ import java.io.Writer;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,24 @@ public abstract class AbstractGenerator {
 
     @SuppressWarnings("static-method")
     public File writeToFile(String filename, String contents) throws IOException {
-        LOGGER.info("writing file " + filename);
         File output = new File(filename);
+
+        if(output.exists()){
+            try {
+                FileInputStream inp = new FileInputStream(output.getPath());
+                String contentsExisting = IOUtils.toString(inp, "UTF-8");
+                inp.close();
+
+                if(contents.equals(contentsExisting)){
+                    LOGGER.info("writing file " + filename + ": content not changed");
+                    return output;
+                }
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+
+        LOGGER.info("writing file " + filename);
 
         if (output.getParent() != null && !new File(output.getParent()).exists()) {
             File parent = new File(output.getParent());
