@@ -35,19 +35,19 @@ impl<C: hyper::client::Connect> PetApiClient<C> {
 }
 
 pub trait PetApi {
-    fn add_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn add_pet(&self, body: crate::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
     fn delete_pet(&self, pet_id: i64, api_key: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn find_pets_by_status(&self, status: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>>;
-    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>>;
-    fn get_pet_by_id(&self, pet_id: i64) -> Box<Future<Item = ::models::Pet, Error = Error<serde_json::Value>>>;
-    fn update_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn find_pets_by_status(&self, status: Vec<String>) -> Box<Future<Item = Vec<crate::models::Pet>, Error = Error<serde_json::Value>>>;
+    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<crate::models::Pet>, Error = Error<serde_json::Value>>>;
+    fn get_pet_by_id(&self, pet_id: i64) -> Box<Future<Item = crate::models::Pet, Error = Error<serde_json::Value>>>;
+    fn update_pet(&self, body: crate::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
     fn update_pet_with_form(&self, pet_id: i64, name: &str, status: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: ::models::File) -> Box<Future<Item = ::models::ApiResponse, Error = Error<serde_json::Value>>>;
+    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: crate::models::File) -> Box<Future<Item = crate::models::ApiResponse, Error = Error<serde_json::Value>>>;
 }
 
 
 impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
-    fn add_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn add_pet(&self, body: crate::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -181,7 +181,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn find_pets_by_status(&self, status: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>> {
+    fn find_pets_by_status(&self, status: Vec<String>) -> Box<Future<Item = Vec<crate::models::Pet>, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -242,13 +242,13 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<Vec<::models::Pet>, _> = serde_json::from_slice(&body);
+                let parsed: Result<Vec<crate::models::Pet>, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
     }
 
-    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>> {
+    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<crate::models::Pet>, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -309,13 +309,13 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<Vec<::models::Pet>, _> = serde_json::from_slice(&body);
+                let parsed: Result<Vec<crate::models::Pet>, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
     }
 
-    fn get_pet_by_id(&self, pet_id: i64) -> Box<Future<Item = ::models::Pet, Error = Error<serde_json::Value>>> {
+    fn get_pet_by_id(&self, pet_id: i64) -> Box<Future<Item = crate::models::Pet, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -375,13 +375,13 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::models::Pet, _> = serde_json::from_slice(&body);
+                let parsed: Result<crate::models::Pet, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
     }
 
-    fn update_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn update_pet(&self, body: crate::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -511,7 +511,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: ::models::File) -> Box<Future<Item = ::models::ApiResponse, Error = Error<serde_json::Value>>> {
+    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: crate::models::File) -> Box<Future<Item = crate::models::ApiResponse, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -571,7 +571,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::models::ApiResponse, _> = serde_json::from_slice(&body);
+                let parsed: Result<crate::models::ApiResponse, _> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
