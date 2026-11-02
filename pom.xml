@@ -441,7 +441,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/okhttp-gson/parcelableModel</module>
+                <module>samples/client/petstore/java/okhttp-gson-parcelableModel</module>
             </modules>
         </profile>
         <profile>
@@ -465,7 +465,7 @@
                 </property>
             </activation>
             <modules>
-                <module>samples/client/petstore/java/okhttp4-gson/parcelableModel</module>
+                <module>samples/client/petstore/java/okhttp4-gson-parcelableModel</module>
             </modules>
         </profile>
         <profile>
