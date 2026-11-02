@@ -1,5 +1,8 @@
 name: {{pubName}}
 version: {{pubVersion}}
 description: {{pubDescription}}
+environment:
+  # The pub client defaults to an <2.0.0 sdk constraint which we need to explicitly overwrite.
+  sdk: ">=1.0.0 <3.0.0"
 dependencies:
   http: '>=0.11.1 <0.12.0'
