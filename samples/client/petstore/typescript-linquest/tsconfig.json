@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "umd",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "lib": [
+        "es2015",
+        "dom",
+        "esnext.asynciterable"
+    ]
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
