@@ -455,6 +455,10 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
           // return the name in camelCase style
           // phone_number => phoneNumber
           name =  camelize(name, true);
+        } else if ("CamelCase".equals(variableNamingConvention)) {
+          // return the name in camelCase style
+          // phone_number => PhoneNumber
+          name =  camelize(name, false);
         } else { // default to snake case
           // return the name in underscore style
           // PhoneNumber => phone_number
