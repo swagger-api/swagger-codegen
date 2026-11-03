@@ -2,11 +2,11 @@
 
 namespace Swagger\Client;
 
-class OrderApiTest extends \PHPUnit_Framework_TestCase
+class OrderApiTest extends \PHPUnit\Framework\TestCase
 {
 
     // add a new pet (id 10005) to ensure the pet object is available for all the tests
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         // for error reporting (need to run with php5.3 to get no warning)
         //ini_set('display_errors', 1);
@@ -30,11 +30,9 @@ class OrderApiTest extends \PHPUnit_Framework_TestCase
         $this->assertSame("placed", $order->getStatus());
     }
  
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testOrderException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         // initialize the API client
         $order = new Model\Order();
         $order->setStatus("invalid_value");

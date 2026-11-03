@@ -4,13 +4,13 @@ namespace Swagger\Client;
 
 use Swagger\Client\Api\UserApi;
 
-class UserApiTest extends \PHPUnit_Framework_TestCase
+class UserApiTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var UserApi*/
     private $api;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->api = new Api\UserApi();
     }
@@ -22,7 +22,7 @@ class UserApiTest extends \PHPUnit_Framework_TestCase
         // login
         $response = $this->api->loginUser('xxxxx', 'yyyyyyyy');
         
-        $this->assertInternalType('string', $response);
+        $this->assertIsString($response);
         $this->assertRegExp(
             '/logged in user session/',
             $response,

@@ -12,7 +12,7 @@ use Swagger\Client\Model\Dog;
  *
  * @package Swagger\Client
  */
-class ModelInheritanceTest extends \PHPUnit_Framework_TestCase
+class ModelInheritanceTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * test if default values works

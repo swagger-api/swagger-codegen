@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 use Swagger\Client\Api\FakeApi;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends \PHPUnit\Framework\TestCase
 {
 
     /** @var FakeApi */
@@ -12,7 +12,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     /** @var  FakeHttpClient */
     private $fakeClient;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fakeClient = new FakeHttpClient();
         $this->api = new Api\FakeApi($this->fakeClient);

@@ -4,7 +4,7 @@ namespace Swagger\Client;
 
 use Swagger\Client\Model\EnumTest;
 
-class EnumTestTest extends \PHPUnit_Framework_TestCase
+class EnumTestTest extends \PHPUnit\Framework\TestCase
 {
     public function testPossibleValues()
     {
@@ -31,11 +31,9 @@ class EnumTestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $enum->listInvalidProperties());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testThrowExceptionWhenInvalidAmbiguousValueHasPassed()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $enum = new EnumTest();
         $enum->setEnumString(0);
     }

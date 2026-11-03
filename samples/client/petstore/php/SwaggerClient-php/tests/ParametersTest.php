@@ -7,7 +7,7 @@ use Swagger\Client\Api\UserApi;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class ParametersTest extends \PHPUnit_Framework_TestCase
+class ParametersTest extends \PHPUnit\Framework\TestCase
 {
     /** @var  FakeHttpClient */
     private $fakeHttpClient;
@@ -16,7 +16,7 @@ class ParametersTest extends \PHPUnit_Framework_TestCase
     /** @var  UserApi */
     private $userApi;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fakeHttpClient = new FakeHttpClient();
         $this->fakeApi = new Api\FakeApi($this->fakeHttpClient);

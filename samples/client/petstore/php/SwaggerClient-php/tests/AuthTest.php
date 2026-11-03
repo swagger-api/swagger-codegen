@@ -8,7 +8,7 @@ use Swagger\Client\Model\Pet;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class AuthTest extends \PHPUnit_Framework_TestCase
+class AuthTest extends \PHPUnit\Framework\TestCase
 {
     public function testCustomApiKeyHeader()
     {

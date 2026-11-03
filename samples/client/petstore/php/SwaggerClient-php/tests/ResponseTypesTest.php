@@ -8,14 +8,14 @@ use Swagger\Client\Model\Pet;
 
 require_once __DIR__ . '/FakeHttpClient.php';
 
-class ResponseTypesTest extends \PHPUnit_Framework_TestCase
+class ResponseTypesTest extends \PHPUnit\Framework\TestCase
 {
     /** @var PetApi */
     private $api;
     /** @var  FakeHttpClient */
     private $fakeHttpClient;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fakeHttpClient = new FakeHttpClient();
         $this->api = new PetApi($this->fakeHttpClient);
@@ -37,12 +37,10 @@ class ResponseTypesTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Pet::class, $result);
     }
 
-    /**
-     * @expectedException \Swagger\Client\ApiException
-     * @expectedExceptionCode 400
-     */
     public function testDefinedErrorException()
     {
+        $this->expectException(\Swagger\Client\ApiException::class);
+        $this->expectExceptionCode(400);
         $statusCode = 400;
 
         $this->fakeHttpClient->setResponse(new Response($statusCode, [], '{}'));
@@ -68,12 +66,10 @@ class ResponseTypesTest extends \PHPUnit_Framework_TestCase
 //        $this->assertInstanceOf(Error::class, $result);
 //    }
 
-    /**
-     * @expectedException \Swagger\Client\ApiException
-     * @expectedExceptionCode 404
-     */
     public function testDefaultErrorException()
     {
+        $this->expectException(\Swagger\Client\ApiException::class);
+        $this->expectExceptionCode(404);
         $statusCode = 404;
 
         $this->fakeHttpClient->setResponse(new Response($statusCode, [], '{}'));
