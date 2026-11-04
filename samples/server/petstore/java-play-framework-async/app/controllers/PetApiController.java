@@ -17,6 +17,7 @@ import java.io.File;
 import swagger.SwaggerUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import play.libs.concurrent.HttpExecutionContext;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,12 +32,14 @@ public class PetApiController extends Controller {
     private final PetApiControllerImpInterface imp;
     private final ObjectMapper mapper;
     private final Configuration configuration;
+    private HttpExecutionContext executionContext;
 
     @Inject
-    private PetApiController(Configuration configuration, PetApiControllerImpInterface imp) {
+    private PetApiController(Configuration configuration, PetApiControllerImpInterface imp, HttpExecutionContext executionContext) {
         this.imp = imp;
         mapper = new ObjectMapper();
         this.configuration = configuration;
+        this.executionContext = executionContext;
     }
 
 
@@ -53,9 +56,9 @@ public class PetApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         return CompletableFuture.supplyAsync(() -> {
-            imp.addPet(body)
+            imp.addPet(body);
             return ok();
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
@@ -68,9 +71,9 @@ public class PetApiController extends Controller {
             apiKey = null;
         }
         return CompletableFuture.supplyAsync(() -> {
-            imp.deletePet(petId, apiKey)
+            imp.deletePet(petId, apiKey);
             return ok();
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
@@ -87,18 +90,18 @@ public class PetApiController extends Controller {
                 status.add(curParam);
             }
         }
-        CompletionStage<List<Pet>> stage = imp.findPetsByStatus(status).thenApply(obj -> { 
+        CompletionStage<List<Pet>> stage = imp.findPetsByStatus(status).thenApplyAsync(obj -> { 
             if (configuration.getBoolean("useOutputBeanValidation")) {
                 for (Pet curItem : obj) {
                     SwaggerUtils.validate(curItem);
                 }
             }
             return obj;
-        });
-        stage.thenApply(obj -> {
+        }, executionContext.current());
+        stage.thenApplyAsync(obj -> {
             JsonNode result = mapper.valueToTree(obj);
             return ok(result);
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
@@ -115,32 +118,32 @@ public class PetApiController extends Controller {
                 tags.add(curParam);
             }
         }
-        CompletionStage<List<Pet>> stage = imp.findPetsByTags(tags).thenApply(obj -> { 
+        CompletionStage<List<Pet>> stage = imp.findPetsByTags(tags).thenApplyAsync(obj -> { 
             if (configuration.getBoolean("useOutputBeanValidation")) {
                 for (Pet curItem : obj) {
                     SwaggerUtils.validate(curItem);
                 }
             }
             return obj;
-        });
-        stage.thenApply(obj -> {
+        }, executionContext.current());
+        stage.thenApplyAsync(obj -> {
             JsonNode result = mapper.valueToTree(obj);
             return ok(result);
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
     public CompletionStage<Result> getPetById(Long petId) throws Exception {
-        CompletionStage<Pet> stage = imp.getPetById(petId).thenApply(obj -> { 
+        CompletionStage<Pet> stage = imp.getPetById(petId).thenApplyAsync(obj -> { 
             if (configuration.getBoolean("useOutputBeanValidation")) {
                 SwaggerUtils.validate(obj);
             }
             return obj;
-        });
-        stage.thenApply(obj -> {
+        }, executionContext.current());
+        stage.thenApplyAsync(obj -> {
             JsonNode result = mapper.valueToTree(obj);
             return ok(result);
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
@@ -156,9 +159,9 @@ public class PetApiController extends Controller {
             throw new IllegalArgumentException("'body' parameter is required");
         }
         return CompletableFuture.supplyAsync(() -> {
-            imp.updatePet(body)
+            imp.updatePet(body);
             return ok();
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
@@ -178,9 +181,9 @@ public class PetApiController extends Controller {
             status = null;
         }
         return CompletableFuture.supplyAsync(() -> {
-            imp.updatePetWithForm(petId, name, status)
+            imp.updatePetWithForm(petId, name, status);
             return ok();
-        });
+        }, executionContext.current());
     }
 
     @ApiAction
@@ -193,15 +196,15 @@ public class PetApiController extends Controller {
             additionalMetadata = null;
         }
         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
-        CompletionStage<ModelApiResponse> stage = imp.uploadFile(petId, additionalMetadata, file).thenApply(obj -> { 
+        CompletionStage<ModelApiResponse> stage = imp.uploadFile(petId, additionalMetadata, file).thenApplyAsync(obj -> { 
             if (configuration.getBoolean("useOutputBeanValidation")) {
                 SwaggerUtils.validate(obj);
             }
             return obj;
-        });
-        stage.thenApply(obj -> {
+        }, executionContext.current());
+        stage.thenApplyAsync(obj -> {
             JsonNode result = mapper.valueToTree(obj);
             return ok(result);
-        });
+        }, executionContext.current());
     }
 }
