@@ -86,8 +86,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             "application/json", "application/xml"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -208,8 +210,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -331,8 +335,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -457,8 +463,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -587,8 +595,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -709,8 +719,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             "application/json", "application/xml"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -834,8 +846,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             "application/x-www-form-urlencoded"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
@@ -965,8 +979,10 @@ public class PetApi {
         final String[] localVarContentTypes = {
             "multipart/form-data"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
+        if (!localVarHeaderParams.containsKey("Content-Type")) {
+            final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
 
         if(progressListener != null) {
             apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
