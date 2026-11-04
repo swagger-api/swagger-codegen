@@ -4,7 +4,6 @@ import io.swagger.codegen.*;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
-import io.swagger.models.parameters.Parameter;
 
 import java.io.File;
 import java.util.*;
@@ -15,9 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
+
     static Logger LOGGER = LoggerFactory.getLogger(RustClientCodegen.class);
     public static final String PACKAGE_NAME = "packageName";
     public static final String PACKAGE_VERSION = "packageVersion";
+
+    public static final String HYPER_LIBRARY = "hyper";
+    public static final String REQWEST_LIBRARY = "reqwest";
 
     protected String packageName = "swagger";
     protected String packageVersion = "1.0.0";
@@ -42,7 +45,6 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         super();
         outputFolder = "generated-code/rust";
         modelTemplateFiles.put("model.mustache", ".rs");
-        apiTemplateFiles.put("api.mustache", ".rs");
 
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
@@ -115,6 +117,16 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
 
+        supportedLibraries.put(HYPER_LIBRARY, "HTTP client: Hyper.");
+        supportedLibraries.put(REQWEST_LIBRARY, "HTTP client: Reqwest");
+
+        CliOption libraryOption = new CliOption(CodegenConstants.LIBRARY, "library template (sub-template) to use");
+        libraryOption.setEnum(supportedLibraries);
+        // set hyper as the default
+        libraryOption.setDefault(HYPER_LIBRARY);
+        cliOptions.add(libraryOption);
+        setLibrary(HYPER_LIBRARY);
+
     }
 
     @Override
@@ -141,20 +153,30 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         additionalProperties.put("apiDocPath", apiDocPath);
         additionalProperties.put("modelDocPath", modelDocPath);
 
+        if ( HYPER_LIBRARY.equals(getLibrary())){
+            additionalProperties.put(HYPER_LIBRARY, "true");
+        } else if (REQWEST_LIBRARY.equals(getLibrary())) {
+            additionalProperties.put(REQWEST_LIBRARY, "true");
+        } else {
+            LOGGER.error("Unknown library option (-l/--library): {}", getLibrary());
+        }
+
+        apiTemplateFiles.put(getLibrary() + "/api.mustache", ".rs");
+
         modelPackage = packageName;
         apiPackage = packageName;
 
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore.mustache", "", ".gitignore"));
-        supportingFiles.add(new SupportingFile("configuration.mustache", apiFolder, "configuration.rs"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
-
-        supportingFiles.add(new SupportingFile("client.mustache", apiFolder, "client.rs"));
-        supportingFiles.add(new SupportingFile("api_mod.mustache", apiFolder, "mod.rs"));
         supportingFiles.add(new SupportingFile("model_mod.mustache", modelFolder, "mod.rs"));
-        supportingFiles.add(new SupportingFile("lib.rs", "src", "lib.rs"));
+        supportingFiles.add(new SupportingFile("lib.rs.mustache", "src", "lib.rs"));
         supportingFiles.add(new SupportingFile("Cargo.mustache", "", "Cargo.toml"));
+
+        supportingFiles.add(new SupportingFile(getLibrary() + "/configuration.mustache", apiFolder, "configuration.rs"));
+        supportingFiles.add(new SupportingFile(getLibrary() + "/client.mustache", apiFolder, "client.rs"));
+        supportingFiles.add(new SupportingFile(getLibrary() + "/api_mod.mustache", apiFolder, "mod.rs"));
     }
 
     @Override
@@ -332,9 +354,32 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
         Map<String, Object> objectMap = (Map<String, Object>) objs.get("operations");
         @SuppressWarnings("unchecked")
         List<CodegenOperation> operations = (List<CodegenOperation>) objectMap.get("operation");
+        Set<String> headerKeys = new HashSet<>();
         for (CodegenOperation operation : operations) {
             // http method verb conversion (e.g. PUT => Put)
-            operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+            if (HYPER_LIBRARY.equals(getLibrary())) {
+                operation.httpMethod = camelize(operation.httpMethod.toLowerCase());
+            } else if (REQWEST_LIBRARY.equals(getLibrary())) {
+                operation.httpMethod = operation.httpMethod.toLowerCase();
+            }
+
+            // TODO Manage Rust var codestyle (snake case) and compile problems (headers with special chars, like '-').
+
+            // Collect all possible headers.
+            if (operation.authMethods != null) {
+                for (CodegenSecurity authMethod : operation.authMethods) {
+                    if (authMethod.isApiKey && authMethod.isKeyInHeader) {
+                        headerKeys.add(authMethod.keyParamName);
+                    }
+                }
+            }
+
+            if (operation.headerParams != null) {
+                for (CodegenParameter parameter : operation.headerParams) {
+                    headerKeys.add(parameter.baseName);
+                }
+            }
+
             // update return type to conform to rust standard
             /*
             if (operation.returnType != null) {
@@ -385,6 +430,8 @@ public class RustClientCodegen extends DefaultCodegen implements CodegenConfig {
                 }
             }*/
         }
+
+        additionalProperties.put("headerKeys", headerKeys);
 
         return objs;
     }
