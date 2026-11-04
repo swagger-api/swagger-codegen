@@ -21,13 +21,13 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/go"
 	//
-	sw "./go"
+	api "./go"
 )
 
-func main() {
-	log.Printf("Server started")
+func main() {	
+	router := api.NewRouter()
 
-	router := sw.NewRouter()
+	log.Printf("Server started")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
