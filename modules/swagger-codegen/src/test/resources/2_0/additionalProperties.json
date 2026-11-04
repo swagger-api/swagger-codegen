@@ -1,0 +1,75 @@
+{
+  "info": {
+  },
+  "paths": {
+    "/user/email/v1": {
+      "post": {
+        "description": "email address",
+        "operationId": "post_user_email_v1",
+        "parameters": [
+          {
+            "description": "The future business user's email address. AdditionalProperties are allowed in order to accept utm_params",
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "additionalProperties": true,
+              "properties": {
+                "enc_email_addr": {
+                  "description": "An email address",
+                  "type": "string"
+                },
+                "utm_campaign": {
+                  "description": "(Optional) The campaign of the request, provided by the deep link URL",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enc_email_addr"
+              ],
+              "type": "object",
+              "x-model": "PostUserEmailV1_RequestData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful request will return a email address",
+            "examples": {
+              "application/json": {
+                "email": "testuser@example.com"
+              }
+            },
+            "schema": {
+              "additionalProperties": false,
+              "properties": {
+                "email": {
+                  "description": "Email address",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email"
+              ],
+              "type": "object",
+              "x-model": "PostUserEmailV1_ResponseData"
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0"
+}
