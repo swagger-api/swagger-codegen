@@ -555,6 +555,110 @@ public class GeneratorServiceTest {
         }
     }
 
+    @Test(description = "test generator service with spring")
+    public void testGeneratorService_JavaSpringPetStore_WithTrueString() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("spring")
+                .spec(loadSpecAsNode("2_0/petstore.yaml", true, true))
+                .options(
+                        new Options()
+                                .addAdditionalProperty("useBeanValidation", "true")
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/UserApi.java".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("Validated"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with spring")
+    public void testGeneratorService_JavaSpringPetStore_WithTrueBoolean() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("spring")
+                .spec(loadSpecAsNode("2_0/petstore.yaml", true, true))
+                .options(
+                        new Options()
+                                .addAdditionalProperty("useBeanValidation", true)
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/UserApi.java".equals(relPath)) {
+                Assert.assertTrue(FileUtils.readFileToString(f).contains("Validated"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with spring")
+    public void testGeneratorService_JavaSpringPetStore_WithFalseString() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("spring")
+                .spec(loadSpecAsNode("2_0/petstore.yaml", true, true))
+                .options(
+                        new Options()
+                                .addAdditionalProperty("useBeanValidation", "false")
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/UserApi.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("Validated"));
+            }
+        }
+    }
+
+    @Test(description = "test generator service with spring")
+    public void testGeneratorService_JavaSpringPetStore_WithFalseBoolean() throws IOException {
+
+        String path = getTmpFolder().getAbsolutePath();
+        GenerationRequest request = new GenerationRequest();
+        request
+                .codegenVersion(GenerationRequest.CodegenVersion.V3)
+                .type(GenerationRequest.Type.SERVER)
+                .lang("spring")
+                .spec(loadSpecAsNode("2_0/petstore.yaml", true, true))
+                .options(
+                        new Options()
+                                .addAdditionalProperty("useBeanValidation", false)
+                                .outputDir(path)
+                );
+
+        List<File> files = new GeneratorService().generationRequest(request).generate();
+        Assert.assertFalse(files.isEmpty());
+        for (File f: files) {
+            String relPath = f.getAbsolutePath().substring(path.length());
+            if ("/src/main/java/io/swagger/api/UserApi.java".equals(relPath)) {
+                Assert.assertFalse(FileUtils.readFileToString(f).contains("Validated"));
+            }
+        }
+    }
+
     @Test(description = "test generator service with java 3.0")
     public void testGeneratorServiceJava3() {
 
