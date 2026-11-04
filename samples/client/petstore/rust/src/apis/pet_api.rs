@@ -15,7 +15,7 @@ use std::collections::HashMap;
 
 use hyper;
 use serde_json;
-use futures;
+use serde_json::Value;
 use futures::{Future, Stream};
 
 use hyper::header::UserAgent;
@@ -35,19 +35,19 @@ impl<C: hyper::client::Connect> PetApiClient<C> {
 }
 
 pub trait PetApi {
-    fn add_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn delete_pet(&self, pet_id: i64, api_key: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn find_pets_by_status(&self, status: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>>;
-    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>>;
-    fn get_pet_by_id(&self, pet_id: i64) -> Box<Future<Item = ::models::Pet, Error = Error<serde_json::Value>>>;
-    fn update_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn update_pet_with_form(&self, pet_id: i64, name: &str, status: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>>;
-    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: ::models::File) -> Box<Future<Item = ::models::ApiResponse, Error = Error<serde_json::Value>>>;
+    fn add_pet(&self, body: ::models::Pet) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn delete_pet(&self, pet_id: i64, api_key: &str) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn find_pets_by_status(&self, status: Vec<String>) -> Box<dyn Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>>;
+    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<dyn Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>>;
+    fn get_pet_by_id(&self, pet_id: i64) -> Box<dyn Future<Item = ::models::Pet, Error = Error<serde_json::Value>>>;
+    fn update_pet(&self, body: ::models::Pet) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn update_pet_with_form(&self, pet_id: i64, name: &str, status: &str) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>>;
+    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: ::models::File) -> Box<dyn Future<Item = ::models::ApiResponse, Error = Error<serde_json::Value>>>;
 }
 
 
 impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
-    fn add_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn add_pet(&self, body: ::models::Pet) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -114,7 +114,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn delete_pet(&self, pet_id: i64, api_key: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn delete_pet(&self, pet_id: i64, api_key: &str) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -152,7 +152,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
 
         {
             let mut headers = req.headers_mut();
-            headers.set_raw("api_key", api_key);
+            headers.set_raw("api_key", api_key.to_string());
         }
 
         for (key, val) in auth_headers {
@@ -181,7 +181,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn find_pets_by_status(&self, status: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>> {
+    fn find_pets_by_status(&self, status: Vec<String>) -> Box<dyn Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -248,7 +248,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>> {
+    fn find_pets_by_tags(&self, tags: Vec<String>) -> Box<dyn Future<Item = Vec<::models::Pet>, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -315,7 +315,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn get_pet_by_id(&self, pet_id: i64) -> Box<Future<Item = ::models::Pet, Error = Error<serde_json::Value>>> {
+    fn get_pet_by_id(&self, pet_id: i64) -> Box<dyn Future<Item = ::models::Pet, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -381,7 +381,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn update_pet(&self, body: ::models::Pet) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn update_pet(&self, body: ::models::Pet) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -448,7 +448,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn update_pet_with_form(&self, pet_id: i64, name: &str, status: &str) -> Box<Future<Item = (), Error = Error<serde_json::Value>>> {
+    fn update_pet_with_form(&self, pet_id: i64, name: &str, status: &str) -> Box<dyn Future<Item = (), Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
@@ -511,7 +511,7 @@ impl<C: hyper::client::Connect>PetApi for PetApiClient<C> {
         )
     }
 
-    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: ::models::File) -> Box<Future<Item = ::models::ApiResponse, Error = Error<serde_json::Value>>> {
+    fn upload_file(&self, pet_id: i64, additional_metadata: &str, file: ::models::File) -> Box<dyn Future<Item = ::models::ApiResponse, Error = Error<serde_json::Value>>> {
         let configuration: &configuration::Configuration<C> = self.configuration.borrow();
 
         let mut auth_headers = HashMap::<String, String>::new();
