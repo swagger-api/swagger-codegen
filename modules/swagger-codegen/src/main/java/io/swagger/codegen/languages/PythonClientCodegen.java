@@ -255,7 +255,23 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
             if (!"".equals(modelPackage())) {
                 modelImport += modelPackage() + ".";
             }
-            modelImport += toModelFilename(name)+ " import " + name;
+
+            // with modelNamePrefix/modelNameSuffix, name already includes
+            // the prefix/suffix.
+            // for example if modelNamePrefix is 'swg' and the model name 'pet',
+            // name is already SwgPet. toModelFilename(name) is swg_swg_pet instead
+            // of swg_pet.
+            String filename = toModelFilename(name);
+
+            if (!StringUtils.isEmpty(modelNamePrefix)) {
+                filename = StringUtils.removeStartIgnoreCase(filename, modelNamePrefix + "_");
+            }
+
+            if (!StringUtils.isEmpty(modelNameSuffix)) {
+                filename = StringUtils.removeEndIgnoreCase(filename, "_" + modelNameSuffix);
+            }
+
+            modelImport += filename + " import " + name;
         }
         return modelImport;
     }
@@ -467,6 +483,15 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         // remove dollar sign
         name = name.replaceAll("$", "");
 
+        // Add prefix/suffix before testing for reserved words/starts with number.
+        if (!StringUtils.isEmpty(modelNamePrefix)) {
+            name = modelNamePrefix + "_" + name;
+        }
+
+        if (!StringUtils.isEmpty(modelNameSuffix)) {
+            name = name + "_" + modelNameSuffix;
+        }
+
         // model name cannot use reserved keyword, e.g. return
         if (isReservedWord(name)) {
             LOGGER.warn(name + " (reserved word) cannot be used as model name. Renamed to " + camelize("model_" + name));
@@ -477,14 +502,6 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         if (name.matches("^\\d.*")) {
             LOGGER.warn(name + " (model name starts with number) cannot be used as model name. Renamed to " + camelize("model_" + name));
             name = "model_" + name; // e.g. 200Response => Model200Response (after camelize)
-        }
-
-        if (!StringUtils.isEmpty(modelNamePrefix)) {
-            name = modelNamePrefix + "_" + name;
-        }
-
-        if (!StringUtils.isEmpty(modelNameSuffix)) {
-            name = name + "_" + modelNameSuffix;
         }
 
         // camelize the model name
