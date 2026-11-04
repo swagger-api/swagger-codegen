@@ -15,7 +15,7 @@ public class CodegenOperation {
     public boolean hasAuthMethods, hasConsumes, hasProduces, hasParams, hasOptionalParams, hasRequiredParams,
             returnTypeIsPrimitive, returnSimpleType, subresourceOperation, isMapContainer,
             isListContainer, isMultipart, hasMore = true,
-            isResponseBinary = false, isResponseFile = false, hasReference = false,
+            isResponseBinary = false, isResponseFile = false, isResponseString = false, hasReference = false,
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
             isRestful, isDeprecated;
     public String path, testPath, operationId, returnType, httpMethod, returnBaseType,
