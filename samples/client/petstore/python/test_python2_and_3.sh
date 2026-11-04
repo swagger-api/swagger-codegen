@@ -20,6 +20,8 @@ fi
 pip install -r $REQUIREMENTS_FILE | tee -a $REQUIREMENTS_OUT
 python setup.py develop
 
+pip install tox
+
 ### run tests
 tox || exit 1
 
