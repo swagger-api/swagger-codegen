@@ -31,6 +31,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     public static final String CAMEL_CASE_OPTION = "camel";
     public static final String SNAKE_CASE_OPTION = "snake";
     public static final String KEBAB_CASE_OPTION = "kebab";
+    public static final String ORIGINAL_CASE_OPTION = "original";
 
     protected String packageName; // e.g. petstore_api
     protected String packageVersion;
@@ -308,7 +309,7 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     protected void setCaseType() {
         final String caseType = String.valueOf(additionalProperties.get(CASE_OPTION));
-        if (CAMEL_CASE_OPTION.equalsIgnoreCase(caseType) || SNAKE_CASE_OPTION.equalsIgnoreCase(caseType) || KEBAB_CASE_OPTION.equalsIgnoreCase(caseType)) {
+        if (CAMEL_CASE_OPTION.equalsIgnoreCase(caseType) || SNAKE_CASE_OPTION.equalsIgnoreCase(caseType) || KEBAB_CASE_OPTION.equalsIgnoreCase(caseType) || ORIGINAL_CASE_OPTION.equalsIgnoreCase(caseType)) {
             this.caseType = caseType;
         } else {
             this.caseType = SNAKE_CASE_OPTION;
@@ -425,11 +426,13 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
         // remove dollar sign
         name = name.replaceAll("$", "");
 
-        // if it's all uppper case, convert to lower case
-        if (name.matches("^[A-Z_]*$")) {
+        // if it's all upper case, convert to lower case
+        if (!ORIGINAL_CASE_OPTION.equalsIgnoreCase(this.caseType) && name.matches("^[A-Z_]*$")) {
             name = name.toLowerCase();
         }
-        if (CAMEL_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
+        if (ORIGINAL_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
+            // leave the variable name as is
+        } else if (CAMEL_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
             name = camelize(name, true);
         } else if (KEBAB_CASE_OPTION.equalsIgnoreCase(this.caseType)) {
             name = dashize(name);
