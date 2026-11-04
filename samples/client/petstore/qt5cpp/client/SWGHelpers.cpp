@@ -47,19 +47,6 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
         double *val = static_cast<double*>(value);
         *val = obj.toDouble();
     }
-    else if (QStringLiteral("QString").compare(type) == 0) {
-        QString **val = static_cast<QString**>(value);
-        if(val != nullptr) {
-            if(!obj.isNull()) {
-                (*val)->clear();
-                (*val)->append(obj.toString());
-                return;
-            }
-            else {
-                (*val)->clear();
-            }
-        }
-    }
     else if (QStringLiteral("QDateTime").compare(type) == 0) {
         QDateTime **val = static_cast<QDateTime**>(value);
 
@@ -200,15 +187,12 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             }
         }
         else if(QStringLiteral("QString").compare(complexType) == 0) {
-            auto output = reinterpret_cast<QList<QString*> **> (value);
-            for (auto item : **output) {
-                if(item != nullptr) delete item;
-            }
+            auto output = reinterpret_cast<QList<QString> **> (value);
             (*output)->clear();
             QJsonArray arr = obj.toArray();
             for (const QJsonValue & jval : arr){
-                QString * val = new QString();
-                ::Swagger::setValue(&val, jval, QStringLiteral("QString"), QStringLiteral(""));
+                QString val = QString();
+                ::Swagger::setValue(val, jval, QStringLiteral("QString"));
                 (*output)->push_back(val);
             }
         }
@@ -323,17 +307,14 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
             }
         }
         else if(QStringLiteral("QString").compare(complexType) == 0) {
-            auto output = reinterpret_cast<QMap<QString, QString*> **> (value);
-            for (auto item : **output) {
-                if(item != nullptr) delete item;
-            }
+            auto output = reinterpret_cast<QMap<QString, QString> **> (value);
             (*output)->clear();
             auto varmap = obj.toObject().toVariantMap();
             if(varmap.count() > 0){
                 for(auto itemkey : varmap.keys() ){
-                    QString * val = new QString();
+                    QString val = QString();
                     auto  jsonval = QJsonValue::fromVariant(varmap.value(itemkey));
-                    ::Swagger::setValue(&val, jsonval, QStringLiteral("QString"), QStringLiteral(""));
+                    ::Swagger::setValue(val, jsonval, QStringLiteral("QString"));
                     (*output)->insert( itemkey, val);
                 }
             }
@@ -374,6 +355,30 @@ setValue(void* value, QJsonValue obj, QString type, QString complexType) {
 }
 
 void
+setValue(QString& value, QJsonValue obj, QString type) {
+ if (QStringLiteral("QString").compare(type) == 0) {
+        if(value.isEmpty()) {
+            if(!obj.isNull()) {
+                (value).clear();
+                (value).append(obj.toString());
+                return;
+            }
+            else {
+                (value).clear();
+            }
+        }
+    }
+}
+
+void
+toJsonValue(QString name, QString& value, QJsonObject& output, QString type) {
+    if(QStringLiteral("QString").compare(type) == 0) {
+    output.insert(name, QJsonValue(value));
+}
+}
+
+
+void
 toJsonValue(QString name, void* value, QJsonObject& output, QString type) {
     if(value == nullptr) {
         return;
@@ -392,10 +397,6 @@ toJsonValue(QString name, void* value, QJsonObject& output, QString type) {
                 }
             }
         }
-    }
-    else if(QStringLiteral("QString").compare(type) == 0) {
-        QString* str = static_cast<QString*>(value);
-        output.insert(name, QJsonValue(*str));
     }
     else if(QStringLiteral("qint32").compare(type) == 0) {
         qint32* str = static_cast<qint32*>(value);
@@ -446,8 +447,8 @@ toJsonArray(QList<void*>* value, QJsonObject& output, QString innerName, QString
         }
     }
     else if(QStringLiteral("QString").compare(innerType) == 0) {
-        for(QString* obj : *(reinterpret_cast<QList<QString*>*>(value))){
-            outputarray.append(QJsonValue(*obj));
+        for(QString obj : *(reinterpret_cast<QList<QString>*>(value))){
+            outputarray.append(QJsonValue(obj));
         }
     }
     else if(QStringLiteral("QDate").compare(innerType) == 0) {
@@ -488,6 +489,19 @@ toJsonArray(QList<void*>* value, QJsonObject& output, QString innerName, QString
 }
 
 void
+toJsonMap(QMap<QString, QString>* value, QJsonObject& output, QString innerName, QString innerType) {
+    QJsonObject mapobj;
+ if(QStringLiteral("QString").compare(innerType) == 0) {
+    auto items = reinterpret_cast< QMap<QString, QString> *>(value);
+    for(auto itemkey: items->keys()) {
+        QString str= items->value(itemkey);
+        ::Swagger::toJsonValue(itemkey,str, mapobj, innerType);
+    }
+}
+    output.insert(innerName, mapobj);
+}
+
+void
 toJsonMap(QMap<QString, void*>* value, QJsonObject& output, QString innerName, QString innerType) {
     if(value == nullptr)  {
         return;
@@ -497,12 +511,6 @@ toJsonMap(QMap<QString, void*>* value, QJsonObject& output, QString innerName, Q
         auto items = reinterpret_cast< QMap<QString, SWGObject*> *>(value);
         for(auto itemkey: items->keys()) {
             ::Swagger::toJsonValue(itemkey, items->value(itemkey),mapobj, innerType);
-        }
-    }
-    else if(QStringLiteral("QString").compare(innerType) == 0) {
-        auto items = reinterpret_cast< QMap<QString, QString*> *>(value);
-        for(auto itemkey: items->keys()) {
-            ::Swagger::toJsonValue(itemkey, items->value(itemkey), mapobj, innerType);
         }
     }
     else if(QStringLiteral("QDate").compare(innerType) == 0) {
@@ -562,9 +570,9 @@ toJsonMap(QMap<QString, void*>* value, QJsonObject& output, QString innerName, Q
 }
 
 QString
-stringValue(QString* value) {
-    QString* str = static_cast<QString*>(value);
-    return QString(*str);
+stringValue(QString value) {
+    QString str = static_cast<QString>(value);
+    return QString(str);
 }
 
 QString

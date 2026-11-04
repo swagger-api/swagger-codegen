@@ -58,24 +58,6 @@ SWGUser::init() {
 void
 SWGUser::cleanup() {
 
-    if(username != nullptr) { 
-        delete username;
-    }
-    if(first_name != nullptr) { 
-        delete first_name;
-    }
-    if(last_name != nullptr) { 
-        delete last_name;
-    }
-    if(email != nullptr) { 
-        delete email;
-    }
-    if(password != nullptr) { 
-        delete password;
-    }
-    if(phone != nullptr) { 
-        delete phone;
-    }
 
 }
 
@@ -91,20 +73,28 @@ SWGUser::fromJson(QString json) {
 void
 SWGUser::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
+    m_id_isSet = pJson.contains("id");
     
-    ::Swagger::setValue(&username, pJson["username"], "QString", "QString");
+    ::Swagger::setValue(username, pJson["username"], "QString");
+    m_username_isSet = pJson.contains("username");
     
-    ::Swagger::setValue(&first_name, pJson["firstName"], "QString", "QString");
+    ::Swagger::setValue(first_name, pJson["firstName"], "QString");
+    m_first_name_isSet = pJson.contains("firstName");
     
-    ::Swagger::setValue(&last_name, pJson["lastName"], "QString", "QString");
+    ::Swagger::setValue(last_name, pJson["lastName"], "QString");
+    m_last_name_isSet = pJson.contains("lastName");
     
-    ::Swagger::setValue(&email, pJson["email"], "QString", "QString");
+    ::Swagger::setValue(email, pJson["email"], "QString");
+    m_email_isSet = pJson.contains("email");
     
-    ::Swagger::setValue(&password, pJson["password"], "QString", "QString");
+    ::Swagger::setValue(password, pJson["password"], "QString");
+    m_password_isSet = pJson.contains("password");
     
-    ::Swagger::setValue(&phone, pJson["phone"], "QString", "QString");
+    ::Swagger::setValue(phone, pJson["phone"], "QString");
+    m_phone_isSet = pJson.contains("phone");
     
     ::Swagger::setValue(&user_status, pJson["userStatus"], "qint32", "");
+    m_user_status_isSet = pJson.contains("userStatus");
     
 }
 
@@ -123,22 +113,22 @@ SWGUser::asJsonObject() {
     if(m_id_isSet){
         obj.insert("id", QJsonValue(id));
     }
-    if(username != nullptr && *username != QString("")){
+    if(m_username_isSet){
         toJsonValue(QString("username"), username, obj, QString("QString"));
     }
-    if(first_name != nullptr && *first_name != QString("")){
+    if(m_first_name_isSet){
         toJsonValue(QString("firstName"), first_name, obj, QString("QString"));
     }
-    if(last_name != nullptr && *last_name != QString("")){
+    if(m_last_name_isSet){
         toJsonValue(QString("lastName"), last_name, obj, QString("QString"));
     }
-    if(email != nullptr && *email != QString("")){
+    if(m_email_isSet){
         toJsonValue(QString("email"), email, obj, QString("QString"));
     }
-    if(password != nullptr && *password != QString("")){
+    if(m_password_isSet){
         toJsonValue(QString("password"), password, obj, QString("QString"));
     }
-    if(phone != nullptr && *phone != QString("")){
+    if(m_phone_isSet){
         toJsonValue(QString("phone"), phone, obj, QString("QString"));
     }
     if(m_user_status_isSet){
@@ -234,12 +224,12 @@ SWGUser::isSet(){
     bool isObjectUpdated = false;
     do{
         if(m_id_isSet){ isObjectUpdated = true; break;}
-        if(username != nullptr && *username != QString("")){ isObjectUpdated = true; break;}
-        if(first_name != nullptr && *first_name != QString("")){ isObjectUpdated = true; break;}
-        if(last_name != nullptr && *last_name != QString("")){ isObjectUpdated = true; break;}
-        if(email != nullptr && *email != QString("")){ isObjectUpdated = true; break;}
-        if(password != nullptr && *password != QString("")){ isObjectUpdated = true; break;}
-        if(phone != nullptr && *phone != QString("")){ isObjectUpdated = true; break;}
+        if(m_username_isSet){ isObjectUpdated = true; break;}
+        if(m_first_name_isSet){ isObjectUpdated = true; break;}
+        if(m_last_name_isSet){ isObjectUpdated = true; break;}
+        if(m_email_isSet){ isObjectUpdated = true; break;}
+        if(m_password_isSet){ isObjectUpdated = true; break;}
+        if(m_phone_isSet){ isObjectUpdated = true; break;}
         if(m_user_status_isSet){ isObjectUpdated = true; break;}
     }while(false);
     return isObjectUpdated;

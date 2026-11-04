@@ -36,14 +36,14 @@ public:
     void testCodeInject____end__rn_n_r(QString* test_code_inject____end____rn_n_r);
     
 private:
-    void testCodeInject____end__rn_n_rCallback (HttpRequestWorker * worker);
+    void testCodeInject____end__rn_n_rCallback (SWGHttpRequestWorker * worker);
     
 signals:
     void testCodeInject____end__rn_n_rSignal();
     
     void testCodeInject____end__rn_n_rSignalE(QNetworkReply::NetworkError error_type, QString& error_str);
     
-    void testCodeInject____end__rn_n_rSignalEFull(HttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
+    void testCodeInject____end__rn_n_rSignalEFull(SWGHttpRequestWorker* worker, QNetworkReply::NetworkError error_type, QString& error_str);
     
 };
 
