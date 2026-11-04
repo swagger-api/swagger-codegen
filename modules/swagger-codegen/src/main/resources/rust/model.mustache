@@ -9,6 +9,7 @@
 use serde_json::Value;
 
 #[derive(Debug, Serialize, Deserialize)]
+{{^isEnum}}
 pub struct {{classname}} {
 {{#vars}}
   {{#description}}
@@ -53,19 +54,16 @@ impl {{classname}} {
 
   {{/vars}}
 }
-
-{{#isEnum}}
-// TODO enum 
-// List of {{{name}}}
-//const (
-//  {{#allowableValues}}
-//  {{#enumVars}}
-//  {{name}} {{{classname}}} = "{{{value}}}"
-//  {{/enumVars}}
-//  {{/allowableValues}}
-//)
 {{/isEnum}}
-
+{{#isEnum}}
+pub enum {{classname}} {
+  {{#allowableValues}}
+  {{#values}}
+  {{.}}{{^-last}},{{/-last}}
+  {{/values}}
+  {{/allowableValues}}
+}
+{{/isEnum}}
 
 {{/model}}
 {{/models}}
