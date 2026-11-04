@@ -54,7 +54,9 @@ import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "http://petstore.swagger.io:80/v2";
+    private String scheme = "http";
+    private String host = "petstore.swagger.io:80";
+    private String basePath = "/v2";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
@@ -99,10 +101,51 @@ public class ApiClient {
         authentications = Collections.unmodifiableMap(authentications);
     }
 
+
+    /**
+     * Get scheme
+     *
+     * @return scheme
+     */
+    public String getScheme() {
+        return scheme;
+    }
+
+    /**
+     * Set scheme
+     *
+     * @param host (e.g "http")
+     * @return An instance of OkHttpClient
+     */
+    public ApiClient setScheme(String scheme) {
+        this.scheme = scheme;
+        return this;
+    }
+
+    /**
+     * Get host
+     *
+     * @return host
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * Set host
+     *
+     * @param host (e.g "petstore.swagger.io:80")
+     * @return An instance of OkHttpClient
+     */
+    public ApiClient setHost(String host) {
+        this.host = host;
+        return this;
+    }
+
     /**
      * Get base path
      *
-     * @return Baes path
+     * @return Base path
      */
     public String getBasePath() {
         return basePath;
@@ -111,7 +154,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g http://petstore.swagger.io:80/v2
+     * @param basePath Base path of the URL (e.g "/v2")
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {
@@ -1022,7 +1065,7 @@ public class ApiClient {
      */
     public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
-        url.append(basePath).append(path);
+        url.append(scheme).append("://").append(host).append(basePath).append(path);
 
         if (queryParams != null && !queryParams.isEmpty()) {
             // support (constant) query string in `path`, e.g. "/posts?draft=1"
