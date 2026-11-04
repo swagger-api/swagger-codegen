@@ -1,0 +1,114 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "host": "petstore.swagger.io",
+  "basePath": "/v2",
+  "paths" : {
+    "/one" : {
+      "get" : {
+        "operationId" : "One",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/definitions/OneDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/two" : {
+      "get" : {
+        "operationId" : "Two",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/definitions/OneDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/three" : {
+      "get" : {
+        "operationId" : "Three",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/OneDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/four" : {
+      "get" : {
+        "operationId" : "Four",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/five" : {
+      "get" : {
+        "operationId" : "Five",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "object",
+                "additionalProperties" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/OneDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "definitions" : {
+    "OneDto" : {
+      "type" : "object",
+      "properties" : {
+        "yes" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
