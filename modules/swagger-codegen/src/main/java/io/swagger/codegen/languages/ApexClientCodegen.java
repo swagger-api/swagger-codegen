@@ -230,15 +230,6 @@ public class ApexClientCodegen extends AbstractJavaCodegen {
     }
 
     @Override
-    public void postProcessParameter(CodegenParameter parameter) {
-        if (parameter.isBodyParam && parameter.isListContainer) {
-            // items of array bodyParams are being nested an extra level too deep for some reason
-            parameter.items = parameter.items.items;
-            setParameterExampleValue(parameter);
-        }
-    }
-
-    @Override
     public void preprocessSwagger(Swagger swagger) {
         Info info = swagger.getInfo();
         String calloutLabel = info.getTitle();
