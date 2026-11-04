@@ -45,3 +45,4 @@ RUN groupadd --gid 2000 codegengroup && \
 
 USER codegenuser
 CMD ["./start"]
+
