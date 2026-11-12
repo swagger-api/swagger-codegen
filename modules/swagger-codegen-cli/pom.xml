@@ -79,6 +79,13 @@
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <!-- v2 codegen is only used by the online generator (GeneratorService), not by the CLI -->
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-codegen</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
@@ -107,11 +114,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.googlecode.lambdaj</groupId>
-            <artifactId>lambdaj</artifactId>
-            <version>2.3.3</version>
-        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
