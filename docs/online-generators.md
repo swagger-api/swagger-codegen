@@ -4,6 +4,8 @@
 
 The web service is deployed at https://generator3.swagger.io/ui, or it can be easily deployed as docker container.
 
+> Starting with 3.0.86, the `swagger-generator` WAR is no longer published to Maven Central. Use the `swaggerapi/swagger-generator-v3` docker image, or build the WAR from source with `mvn package` (output in `modules/swagger-generator/target/`).
+
 The OpenAPI specification of generator service APIs are available either via UI exposed by web service (e.g. https://generator3.swagger.io/ui), as exposed YAML (https://generator3.swagger.io/openapi.json)
 or in source code repo (https://github.com/swagger-api/swagger-codegen/blob/3.0.0/modules/swagger-generator/src/main/resources/openapi.yaml).
 
