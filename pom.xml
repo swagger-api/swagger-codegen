@@ -198,6 +198,10 @@
                     <autoPublish>true</autoPublish>
                     <waitUntil>published</waitUntil>
                     <waitMaxTime>3600</waitMaxTime>
+                    <excludeArtifacts>
+                        <!-- The WAR is only consumed by the swagger-generator Docker images, which are built from target/ -->
+                        <excludeArtifact>swagger-generator</excludeArtifact>
+                    </excludeArtifacts>
                 </configuration>
             </plugin>
         </plugins>
