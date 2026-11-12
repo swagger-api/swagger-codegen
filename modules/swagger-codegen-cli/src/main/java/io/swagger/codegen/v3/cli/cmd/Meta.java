@@ -82,7 +82,6 @@ public class Meta implements Runnable {
      *
      * @param targetDir - destination directory
      * @param data - map with additional params needed to process templates
-     * @return converter object to pass to lambdaj
      */
     private static void processFiles(DefaultGenerator generator, SupportingFile support, final File targetDir, final Map<String, Object> data) {
         try {

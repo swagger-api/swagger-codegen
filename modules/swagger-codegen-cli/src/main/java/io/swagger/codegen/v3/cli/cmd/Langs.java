@@ -1,10 +1,11 @@
 package io.swagger.codegen.v3.cli.cmd;
 
-import ch.lambdaj.collection.LambdaIterable;
 import io.swagger.codegen.v3.CodegenConfig;
 
-import static ch.lambdaj.Lambda.on;
-import static ch.lambdaj.collection.LambdaCollections.with;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import static java.util.ServiceLoader.load;
 
 /**
@@ -13,8 +14,9 @@ import static java.util.ServiceLoader.load;
 public class Langs implements Runnable {
     @Override
     public void run() {
-        LambdaIterable<String> langs =
-                with(load(CodegenConfig.class)).extract(on(CodegenConfig.class).getName());
+        List<String> langs = StreamSupport.stream(load(CodegenConfig.class).spliterator(), false)
+                .map(CodegenConfig::getName)
+                .collect(Collectors.toList());
         System.out.printf("Available languages: %s%n", langs);
     }
 }
