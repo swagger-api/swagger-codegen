@@ -62,50 +62,10 @@
             <plugin>
                 <groupId>net.revelc.code</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <!-- Uncomment this to format before checkstyle -->
-                <!-- <executions>
-                    <execution>
-                        <id>format</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions> -->
                 <configuration>
                     <lineEnding>LF</lineEnding>
                 </configuration>
             </plugin>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <configuration>
-                            <configLocation>google_checkstyle.xml</configLocation>
-                            Don't include generated sources a la http://stackoverflow.com/a/30406454
-                            <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                            <encoding>UTF-8</encoding>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
-                            <linkXRef>false</linkXRef>
-                        </configuration>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>6.19</version>
-                    </dependency>
-                </dependencies>
-            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -178,6 +138,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven-source-plugin-version}</version>
+                <configuration>
+                    <!-- Resources (mainly templates) already ship in the main jar; keep only Java sources -->
+                    <excludeResources>true</excludeResources>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -218,6 +182,10 @@
                     <autoPublish>true</autoPublish>
                     <waitUntil>published</waitUntil>
                     <waitMaxTime>3600</waitMaxTime>
+                    <excludeArtifacts>
+                        <!-- The WAR is only consumed by the swagger-generator Docker images, which are built from target/ -->
+                        <excludeArtifact>swagger-generator</excludeArtifact>
+                    </excludeArtifacts>
                 </configuration>
             </plugin>
         </plugins>
