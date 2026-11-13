@@ -1,6 +1,5 @@
 package io.swagger.codegen.cmd;
 
-import ch.lambdaj.function.convert.Converter;
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -20,7 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-import static ch.lambdaj.collection.LambdaCollections.with;
 import static com.google.common.base.Joiner.on;
 
 /**
@@ -79,51 +77,44 @@ public class Meta implements Runnable {
                         .put("swaggerCodegenVersion", swaggerVersion).build();
 
 
-        with(supportingFiles).convert(processFiles(targetDir, data));
+        DefaultGenerator generator = new DefaultGenerator();
+        supportingFiles.forEach(f -> processFile(generator, f, targetDir, data));
     }
 
     /**
-     * Converter method to process supporting files: execute with mustache, or simply copy to
-     * destination directory
+     * Processes a supporting file: execute with mustache, or simply copy to destination directory
      *
+     * @param generator - generator used to read templates
+     * @param support - supporting file to process
      * @param targetDir - destination directory
      * @param data - map with additional params needed to process templates
-     * @return converter object to pass to lambdaj
      */
-    private static Converter<SupportingFile, File> processFiles(final File targetDir,
-            final Map<String, Object> data) {
-        return new Converter<SupportingFile, File>() {
-            private DefaultGenerator generator = new DefaultGenerator();
+    private static void processFile(DefaultGenerator generator, SupportingFile support,
+            final File targetDir, final Map<String, Object> data) {
+        try {
+            File destinationFolder =
+                    new File(new File(targetDir.getAbsolutePath()), support.folder);
+            File outputFile = new File(destinationFolder, support.destinationFilename);
 
-            @Override
-            public File convert(SupportingFile support) {
-                try {
-                    File destinationFolder =
-                            new File(new File(targetDir.getAbsolutePath()), support.folder);
-                    File outputFile = new File(destinationFolder, support.destinationFilename);
+            String template =
+                    generator.readTemplate(new File(TEMPLATE_DIR_CLASSPATH,
+                            support.templateFile).getPath());
+            String formatted = template;
 
-                    String template =
-                            generator.readTemplate(new File(TEMPLATE_DIR_CLASSPATH,
-                                    support.templateFile).getPath());
-                    String formatted = template;
-
-                    if (support.templateFile.endsWith(MUSTACHE_EXTENSION)) {
-                        LOGGER.info("writing file to {}", outputFile.getAbsolutePath());
-                        formatted =
-                                Mustache.compiler().withLoader(loader(generator)).defaultValue("")
-                                        .compile(template).execute(data);
-                    } else {
-                        LOGGER.info("copying file to {}", outputFile.getAbsolutePath());
-                    }
-
-                    FileUtils.writeStringToFile(outputFile, formatted, StandardCharsets.UTF_8);
-                    return outputFile;
-
-                } catch (IOException e) {
-                    throw new RuntimeException("Can't generate project", e);
-                }
+            if (support.templateFile.endsWith(MUSTACHE_EXTENSION)) {
+                LOGGER.info("writing file to {}", outputFile.getAbsolutePath());
+                formatted =
+                        Mustache.compiler().withLoader(loader(generator)).defaultValue("")
+                                .compile(template).execute(data);
+            } else {
+                LOGGER.info("copying file to {}", outputFile.getAbsolutePath());
             }
-        };
+
+            FileUtils.writeStringToFile(outputFile, formatted, StandardCharsets.UTF_8);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Can't generate project", e);
+        }
     }
 
     /**
