@@ -171,7 +171,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.6.3</version>
+                <version>3.7.0</version>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -225,7 +225,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.6.2</version>
+                    <version>3.8.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1071,18 +1071,18 @@
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
         <swagger-codegen-generators-version>1.0.62</swagger-codegen-generators-version>
-        <swagger-core-version>2.2.55</swagger-core-version>
-        <swagger-core-version-v1>1.6.16</swagger-core-version-v1>
-        <swagger-parser-version>2.1.48</swagger-parser-version>
-        <swagger-parser-version-v1>1.0.76</swagger-parser-version-v1>
-        <jackson-version>2.22.4</jackson-version>
+        <swagger-core-version>2.2.56</swagger-core-version>
+        <swagger-core-version-v1>1.6.17</swagger-core-version-v1>
+        <swagger-parser-version>2.1.49</swagger-parser-version>
+        <swagger-parser-version-v1>1.0.77</swagger-parser-version-v1>
+        <jackson-version>2.23.0</jackson-version>
         <scala-version>2.11.1</scala-version>
         <commons-io-version>2.22.0</commons-io-version>
         <commons-cli-version>1.11.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
-        <commons-lang-version>3.21.0</commons-lang-version>
+        <commons-lang-version>3.22.0</commons-lang-version>
         <slf4j-version>2.0.20</slf4j-version>
-        <logback-version>1.6.5</logback-version>
+        <logback-version>1.6.8</logback-version>
         <scala-maven-plugin-version>3.3.2</scala-maven-plugin-version>
         <jmustache-version>1.16</jmustache-version>
         <testng-version>7.12.0</testng-version>
