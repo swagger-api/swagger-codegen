@@ -1019,16 +1019,16 @@
     </dependencyManagement>
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
-        <swagger-parser-version>1.0.76</swagger-parser-version>
+        <swagger-parser-version>1.0.77</swagger-parser-version>
         <scala-version>2.11.1</scala-version>
         <felix-version>3.3.0</felix-version>
-        <swagger-core-version>1.6.16</swagger-core-version>
+        <swagger-core-version>1.6.17</swagger-core-version>
         <commons-io-version>2.22.0</commons-io-version>
         <commons-cli-version>1.11.0</commons-cli-version>
         <junit-version>4.13.2</junit-version>
-        <jackson-version>2.22.4</jackson-version>
+        <jackson-version>2.23.0</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.21.0</commons-lang-version>
+        <commons-lang-version>3.22.0</commons-lang-version>
         <slf4j-version>1.7.36</slf4j-version>
         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version>
         <maven-compiler-plugin-version>3.16.0</maven-compiler-plugin-version>
@@ -1037,17 +1037,17 @@
         <maven-javadoc-plugin-version>3.12.0</maven-javadoc-plugin-version>
         <maven-jxr-plugin-version>3.6.0</maven-jxr-plugin-version>
         <maven-project-info-reports-plugin-version>3.9.0</maven-project-info-reports-plugin-version>
-        <maven-enforcer-plugin-version>3.6.3</maven-enforcer-plugin-version>
+        <maven-enforcer-plugin-version>3.7.0</maven-enforcer-plugin-version>
         <maven-gpg-plugin-version>3.2.8</maven-gpg-plugin-version>
-        <build-helper-maven-plugin-version>3.6.2</build-helper-maven-plugin-version>
+        <build-helper-maven-plugin-version>3.8.0</build-helper-maven-plugin-version>
         <central-publishing-maven-plugin-version>0.12.0</central-publishing-maven-plugin-version>
         <maven-shade-plugin-version>3.6.2</maven-shade-plugin-version>
         <maven-plugin-plugin-version>3.16.0</maven-plugin-plugin-version>
         <maven-site-plugin-version>3.22.0</maven-site-plugin-version>
-        <exec-maven-plugin-version>3.6.4</exec-maven-plugin-version>
+        <exec-maven-plugin-version>3.7.0</exec-maven-plugin-version>
         <maven-dependency-plugin-version>3.11.0</maven-dependency-plugin-version>
         <maven-war-plugin-version>3.5.1</maven-war-plugin-version>
-        <maven-failsafe-plugin-version>3.6.0</maven-failsafe-plugin-version>
+        <maven-failsafe-plugin-version>3.6.1</maven-failsafe-plugin-version>
         <properties-maven-plugin-version>1.3.1</properties-maven-plugin-version>
         <download-maven-plugin-version>1.13.0</download-maven-plugin-version>
         <!--
@@ -1056,12 +1056,14 @@
          -->
         <jmustache-version>1.15</jmustache-version>
         <testng-version>7.12.0</testng-version>
-        <surefire-version>3.6.0</surefire-version>
+        <surefire-version>3.6.1</surefire-version>
         <jmockit-version>1.49</jmockit-version>
         <mockito-version>5.24.0</mockito-version>
         <reflections-version>0.10.2</reflections-version>
         <snakeyaml-version>2.7</snakeyaml-version>
         <httpclient-version>4.5.14</httpclient-version>
+        <joda-time-version>2.15.1</joda-time-version>
+        <jsr305-version>3.0.2</jsr305-version>
         <json-version>20260814</json-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
