@@ -389,7 +389,22 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
 
     @Override
     public String getTypeDeclaration(Property p) {
-        if (p instanceof ArrayProperty) {
+        if (p instanceof RefProperty) {
+            String datatype;
+            try {
+                RefProperty r = (RefProperty) p;
+                datatype = r.get$ref();
+                if (datatype.indexOf("#/definitions/") == 0) {
+                    datatype = datatype.substring("#/definitions/".length());
+                    return toModelName(datatype);
+                }
+            } catch (Exception e) {
+                LOGGER.warn("Error obtaining the datatype from RefProperty:" + p + ". Datatype default to Object");
+                datatype = "Object";
+                LOGGER.error(e.getMessage(), e);
+                return toModelName(datatype);
+            }
+        } else if (p instanceof ArrayProperty) {
             ArrayProperty ap = (ArrayProperty) p;
             Property inner = ap.getItems();
             return getSwaggerType(p) + "[" + getTypeDeclaration(inner) + "]";
