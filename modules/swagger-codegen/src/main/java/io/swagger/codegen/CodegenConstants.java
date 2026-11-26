@@ -239,4 +239,10 @@ public class CodegenConstants {
     public static final String INTERFACE_CONTROLLER = "interface-controller";
 
     public static final String IGNORE_IMPORT_MAPPING_OPTION = "ignoreImportMappings";
+
+    public static final String GENERATE_MAIN_GO = "generateMainGo";
+    public static final String GENERATE_MAIN_GO_DESC = "A boolean value that describes if main.go should be generated. If true, main.go will be created in the root and sourceFolder for the api cannot be in the root.";
+
+    public static final String GO_SERVER_MUX_TYPE = "goServerMuxType";
+    public static final String GO_SERVER_MUX_TYPE_DESC = "Describes the server mux to generate code for. Current supported options are: [gorilla], any other value results in no mux specific code being generated";
 }
