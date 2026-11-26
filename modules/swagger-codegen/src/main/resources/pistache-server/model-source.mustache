@@ -107,6 +107,10 @@ void {{classname}}::fromJson(nlohmann::json& val)
     }
     {{/required}}{{#required}}{{#isString}}{{setter}}(val.at("{{baseName}}"));
     {{/isString}}{{^isString}}{{#isDateTime}}{{setter}}(val.at("{{baseName}}"));
+    {{/isDateTime}}{{^isDateTime}}
+    {{{datatype}}} newItem({{{defaultValue}}});
+    newItem->fromJson(val.at("{{baseName}}"));
+    {{setter}}( newItem );
     {{/isDateTime}}{{/isString}}{{/required}}{{/isPrimitiveType}}{{/isListContainer}}{{/vars}}
 }
 
