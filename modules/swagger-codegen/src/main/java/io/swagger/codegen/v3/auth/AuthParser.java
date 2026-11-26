@@ -4,8 +4,11 @@ import io.swagger.v3.parser.core.models.AuthorizationValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UncheckedIOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +25,11 @@ public class AuthParser {
             for (String part : parts) {
                 String[] kvPair = part.split(":");
                 if (kvPair.length == 2) {
-                    // FIXME replace the deprecated method by decode(string, encoding). Which encoding is used ? Default UTF-8 ?
-                    auths.add(new AuthorizationValue(URLDecoder.decode(kvPair[0]), URLDecoder.decode(kvPair[1]), "header"));
+                    try {
+                        auths.add(new AuthorizationValue(URLDecoder.decode(kvPair[0], StandardCharsets.UTF_8.name()), URLDecoder.decode(kvPair[1], StandardCharsets.UTF_8.name()), "header"));
+                    } catch (UnsupportedEncodingException e) {
+                        throw new UncheckedIOException("UTF-8 is not supported", e);
+                    }
                 }
             }
         }
@@ -38,9 +44,9 @@ public class AuthParser {
                     if (b.toString().length() > 0) {
                         b.append(",");
                     }
-                    b.append(URLEncoder.encode(v.getKeyName(), "UTF-8"))
+                    b.append(URLEncoder.encode(v.getKeyName(), StandardCharsets.UTF_8.name()))
                             .append(":")
-                            .append(URLEncoder.encode(v.getValue(), "UTF-8"));
+                            .append(URLEncoder.encode(v.getValue(), StandardCharsets.UTF_8.name()));
                 } catch (Exception e) {
                     // continue
                     LOGGER.error(e.getMessage(), e);
