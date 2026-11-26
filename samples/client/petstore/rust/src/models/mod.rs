@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 mod amount;
 pub use self::amount::Amount;
 mod api_response;
