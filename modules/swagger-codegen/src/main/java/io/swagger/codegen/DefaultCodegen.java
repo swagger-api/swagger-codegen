@@ -939,6 +939,7 @@ public class DefaultCodegen {
     protected void initalizeSpecialCharacterMapping() {
         // Initialize special characters
         specialCharReplacements.put("$", "Dollar");
+        specialCharReplacements.put("€", "Euro");
         specialCharReplacements.put("^", "Caret");
         specialCharReplacements.put("|", "Pipe");
         specialCharReplacements.put("=", "Equal");
