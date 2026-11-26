@@ -13,7 +13,9 @@ import java.util.Map;
 
 public class KotlinClientCodegen extends AbstractKotlinCodegen {
 
-    public static final String DATE_LIBRARY = "dateLibrary";
+    /** @deprecated Use {@link CodegenConstants#DATE_LIBRARY} instead. */
+    @Deprecated
+    public static final String DATE_LIBRARY = CodegenConstants.DATE_LIBRARY;
     protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.camelCase;
     static Logger LOGGER = LoggerFactory.getLogger(KotlinClientCodegen.class);
 
@@ -49,7 +51,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         apiPackage = packageName + ".apis";
         modelPackage = packageName + ".models";
 
-        CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
+        CliOption dateLibrary = new CliOption(CodegenConstants.DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<>();
         dateOptions.put(DateLibrary.THREETENBP.value, "Threetenbp");
         dateOptions.put(DateLibrary.STRING.value, "String");
@@ -78,8 +80,8 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
     public void processOpts() {
         super.processOpts();
 
-        if (additionalProperties.containsKey(DATE_LIBRARY)) {
-            setDateLibrary(additionalProperties.get(DATE_LIBRARY).toString());
+        if (additionalProperties.containsKey(CodegenConstants.DATE_LIBRARY)) {
+            setDateLibrary(additionalProperties.get(CodegenConstants.DATE_LIBRARY).toString());
         }
 
         if (DateLibrary.THREETENBP.value.equals(dateLibrary)) {

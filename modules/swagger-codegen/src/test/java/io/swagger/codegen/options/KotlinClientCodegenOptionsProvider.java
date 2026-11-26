@@ -31,7 +31,7 @@ public class KotlinClientCodegenOptionsProvider implements OptionsProvider {
                 .put(CodegenConstants.GROUP_ID, GROUP_ID)
                 .put(CodegenConstants.SOURCE_FOLDER, SOURCE_FOLDER)
                 .put(CodegenConstants.ENUM_PROPERTY_NAMING, ENUM_PROPERTY_NAMING)
-                .put(KotlinClientCodegen.DATE_LIBRARY, DATE_LIBRARY)
+                .put(CodegenConstants.DATE_LIBRARY, DATE_LIBRARY)
                 .build();
     }
 
