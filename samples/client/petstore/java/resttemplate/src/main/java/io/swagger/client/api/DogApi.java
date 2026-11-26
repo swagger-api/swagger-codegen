@@ -45,6 +45,8 @@ public class DogApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Add a new dog to the store
      * 
@@ -71,7 +73,7 @@ public class DogApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling addDog");
         }
         String path = UriComponentsBuilder.fromPath("/dog").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -88,6 +90,43 @@ public class DogApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class DeleteDogOptionals {
+        public String apiKey() {
+            return this.apiKey;
+        }
+
+        public DeleteDogOptionals apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        private String apiKey = null;
+    }
+
+    /**
+    * Deletes a dog
+    * 
+    * @param dogId Dog id to delete (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deleteDog(Long dogId) throws RestClientException {
+        deleteDog(dogId, null);
+    }
+
+    /**
+    * Deletes a dog
+    * 
+    * @param dogId Dog id to delete (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void deleteDogOpts(Long dogId, DeleteDogOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new DeleteDogOptionals();
+        }
+        deleteDog(dogId, optionals.apiKey());
+    }
+
     /**
      * Deletes a dog
      * 
@@ -119,7 +158,7 @@ public class DogApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("dogId", dogId);
         String path = UriComponentsBuilder.fromPath("/dog/{dogId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -136,6 +175,8 @@ public class DogApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Find dog by ID
      * Returns a single dog
@@ -170,7 +211,7 @@ public class DogApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("dogId", dogId);
         String path = UriComponentsBuilder.fromPath("/dog/{dogId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -187,6 +228,8 @@ public class DogApi {
         ParameterizedTypeReference<Dog> returnType = new ParameterizedTypeReference<Dog>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Update an existing dog
      * 
@@ -217,7 +260,7 @@ public class DogApi {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling updateDog");
         }
         String path = UriComponentsBuilder.fromPath("/dog").build().toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
@@ -234,6 +277,53 @@ public class DogApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class UpdateDogWithFormOptionals {
+        public String name() {
+            return this.name;
+        }
+
+        public UpdateDogWithFormOptionals name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        private String name = null;
+        public String status() {
+            return this.status;
+        }
+
+        public UpdateDogWithFormOptionals status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        private String status = null;
+    }
+
+    /**
+    * Updates a dog
+    * 
+    * @param dogId ID of dog that needs to be updated (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updateDogWithForm(Long dogId) throws RestClientException {
+        updateDogWithForm(dogId, null, null);
+    }
+
+    /**
+    * Updates a dog
+    * 
+    * @param dogId ID of dog that needs to be updated (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void updateDogWithFormOpts(Long dogId, UpdateDogWithFormOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new UpdateDogWithFormOptionals();
+        }
+        updateDogWithForm(dogId, optionals.name(), optionals.status());
+    }
+
     /**
      * Updates a dog
      * 
@@ -267,7 +357,7 @@ public class DogApi {
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
         uriVariables.put("dogId", dogId);
         String path = UriComponentsBuilder.fromPath("/dog/{dogId}").buildAndExpand(uriVariables).toUriString();
-        
+
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();

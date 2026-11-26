@@ -44,6 +44,8 @@ public class DogApi {
     this.apiClient = apiClient;
   }
 
+
+
   /**
    * Add a new dog to the store
    * 
@@ -81,6 +83,43 @@ public class DogApi {
 
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  public static class DeleteDogOptionals {
+    public String apiKey() {
+      return this.apiKey;
+    }
+
+    public DeleteDogOptionals apiKey(String apiKey) {
+      this.apiKey = apiKey;
+      return this;
+    }
+
+    private String apiKey = null;
+  }
+
+  /**
+   * Deletes a dog
+   * 
+   * @param dogId Dog id to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteDog(Long dogId) throws ApiException {
+    deleteDog(dogId, null);
+  }
+
+  /**
+   * Deletes a dog
+   * 
+   * @param dogId Dog id to delete (required)
+   * @param optionals An object containing the optional parameters for this API call.
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteDogOpts(Long dogId, DeleteDogOptionals optionals) throws ApiException {
+    if (optionals == null) {
+      optionals = new DeleteDogOptionals();
+    }
+    deleteDog(dogId, optionals.apiKey());
+  }
+
   /**
    * Deletes a dog
    * 
@@ -122,6 +161,8 @@ public class DogApi {
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+
+
   /**
    * Find dog by ID
    * Returns a single dog
@@ -162,6 +203,8 @@ public class DogApi {
     GenericType<Dog> localVarReturnType = new GenericType<Dog>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
   }
+
+
   /**
    * Update an existing dog
    * 
@@ -199,6 +242,53 @@ public class DogApi {
 
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  public static class UpdateDogWithFormOptionals {
+    public String name() {
+      return this.name;
+    }
+
+    public UpdateDogWithFormOptionals name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    private String name = null;
+    public String status() {
+      return this.status;
+    }
+
+    public UpdateDogWithFormOptionals status(String status) {
+      this.status = status;
+      return this;
+    }
+
+    private String status = null;
+  }
+
+  /**
+   * Updates a dog
+   * 
+   * @param dogId ID of dog that needs to be updated (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateDogWithForm(Long dogId) throws ApiException {
+    updateDogWithForm(dogId, null, null);
+  }
+
+  /**
+   * Updates a dog
+   * 
+   * @param dogId ID of dog that needs to be updated (required)
+   * @param optionals An object containing the optional parameters for this API call.
+   * @throws ApiException if fails to make API call
+   */
+  public void updateDogWithFormOpts(Long dogId, UpdateDogWithFormOptionals optionals) throws ApiException {
+    if (optionals == null) {
+      optionals = new UpdateDogWithFormOptionals();
+    }
+    updateDogWithForm(dogId, optionals.name(), optionals.status());
+  }
+
   /**
    * Updates a dog
    * 
