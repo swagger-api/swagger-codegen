@@ -3,7 +3,6 @@ name: Test Framework V3 Springboot4 (Spring Boot 4 / Jackson 3)
 on:
   # execute on demand
   workflow_dispatch:
-    branches: ["3.0.0"]
 
 jobs:
 
@@ -58,6 +57,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: 3.0.0
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
@@ -115,6 +116,8 @@ jobs:
     ###############################################
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: 3.0.0
       - name: Download artifacts
         uses: actions/download-artifact@v8
         with:
