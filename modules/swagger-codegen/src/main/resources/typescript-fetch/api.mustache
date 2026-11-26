@@ -2,7 +2,7 @@
 // tslint:disable
 {{>licenseInfo}}
 
-import * as url from "url";
+import * as _nodeUrl from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
@@ -101,7 +101,7 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
     {{/allParams}}
             const localVarPath = `{{{path}}}`{{#pathParams}}
                 .replace(`{${"{{baseName}}"}}`, encodeURIComponent(String({{paramName}}))){{/pathParams}};
-            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarUrlObj = _nodeUrl.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: '{{httpMethod}}' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
@@ -235,7 +235,7 @@ export const {{classname}}FetchParamCreator = function (configuration?: Configur
     {{/bodyParam}}
 
             return {
-                url: url.format(localVarUrlObj),
+                url: _nodeUrl.format(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
