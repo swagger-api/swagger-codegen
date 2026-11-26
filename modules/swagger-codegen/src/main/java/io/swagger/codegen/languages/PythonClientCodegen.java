@@ -261,6 +261,13 @@ public class PythonClientCodegen extends DefaultCodegen implements CodegenConfig
     }
 
     @Override
+    protected void addImport(CodegenModel m, String type) {
+        if (m.parent != null && m.parent.equals(type)) {
+            super.addImport(m, type);
+        }
+    }
+
+    @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
         // process enum in models
         return postProcessModelsEnum(objs);
