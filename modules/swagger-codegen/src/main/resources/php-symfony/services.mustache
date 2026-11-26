@@ -14,16 +14,18 @@ services:
         class: {{modelPackage}}\ModelSerializer
 
     {{bundleAlias}}.service.serializer:
-        class: "%{{bundleAlias}}.serializer%"
+        class: '%{{bundleAlias}}.serializer%'
 
     {{bundleAlias}}.service.validator:
-        class: "%{{bundleAlias}}.validator%"
+        class: '%{{bundleAlias}}.validator%'
 
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
     {{bundleAlias}}.controller.{{pathPrefix}}:
         class: {{controllerPackage}}\{{baseName}}Controller
+        arguments:
+          $container: '@service_container'
         calls:
          - [setSerializer, ['@{{bundleAlias}}.service.serializer']]
          - [setValidator,  ['@{{bundleAlias}}.service.validator']]
