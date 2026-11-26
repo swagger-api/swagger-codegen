@@ -107,8 +107,7 @@ public class AkkaScalaClientCodegen extends AbstractScalaCodegen implements Code
         supportingFiles.add(new SupportingFile("apiInvoker.mustache", invokerFolder, "ApiInvoker.scala"));
         supportingFiles.add(new SupportingFile("requests.mustache", invokerFolder, "requests.scala"));
         supportingFiles.add(new SupportingFile("apiSettings.mustache", invokerFolder, "ApiSettings.scala"));
-        final String apiFolder = (sourceFolder + File.separator + apiPackage).replace(".", File.separator);
-        supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFolder, "EnumsSerializers.scala"));
+        supportingFiles.add(new SupportingFile("enumsSerializers.mustache", apiFileFolder(), "EnumsSerializers.scala"));
 
         importMapping.remove("Seq");
         importMapping.remove("List");
