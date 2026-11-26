@@ -64,7 +64,7 @@ public class StoreApi {
     
     // create path and map variables
     String localVarPath = "/store/order/{order_id}"
-      .replaceAll("\\{" + "order_id" + "\\}", apiClient.escapeString(orderId.toString()));
+      .replaceAll("\\{" + "order_id" + "\\}", apiClient.escapeString(apiClient.parameterToString(orderId)));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -143,7 +143,7 @@ public class StoreApi {
     
     // create path and map variables
     String localVarPath = "/store/order/{order_id}"
-      .replaceAll("\\{" + "order_id" + "\\}", apiClient.escapeString(orderId.toString()));
+      .replaceAll("\\{" + "order_id" + "\\}", apiClient.escapeString(apiClient.parameterToString(orderId)));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
