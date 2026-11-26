@@ -52,11 +52,11 @@ web::json::value Tag::toJson() const
     return val;
 }
 
-void Tag::fromJson(web::json::value& val)
+void Tag::fromJson(const web::json::value& val)
 {
     if(val.has_field(utility::conversions::to_string_t("id")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("id")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("id"));
         if(!fieldValue.is_null())
         {
             setId(ModelBase::int64_tFromJson(fieldValue));
@@ -64,7 +64,7 @@ void Tag::fromJson(web::json::value& val)
     }
     if(val.has_field(utility::conversions::to_string_t("name")))
     {
-        web::json::value& fieldValue = val[utility::conversions::to_string_t("name")];
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t("name"));
         if(!fieldValue.is_null())
         {
             setName(ModelBase::stringFromJson(fieldValue));
