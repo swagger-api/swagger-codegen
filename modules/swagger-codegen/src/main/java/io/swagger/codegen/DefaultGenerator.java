@@ -337,7 +337,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 int model2InheritanceDepth = getInheritanceDepth(model2);
 
                 if (model1InheritanceDepth == model2InheritanceDepth) {
-                    return ObjectUtils.compare(config.toModelName(o1), config.toModelName(o2));
+                    int compareModelName = ObjectUtils.compare(config.toModelName(o1), config.toModelName(o2));
+
+                    if (compareModelName == 0) {
+                        return ObjectUtils.compare(config.toModelFilename(o1), config.toModelFilename(o2));
+                    } else {
+                        return compareModelName;
+                    }
                 } else if (model1InheritanceDepth > model2InheritanceDepth) {
                     return 1;
                 } else {
