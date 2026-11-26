@@ -26,5 +26,3 @@ impl Currency {
 
 }
 
-
-
