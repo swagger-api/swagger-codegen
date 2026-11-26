@@ -13,6 +13,7 @@
 #ifndef ModelFactory_H_
 #define ModelFactory_H_
 
+#include "SWGObject.h"
 
 #include "SWGReturn.h"
 
@@ -26,17 +27,21 @@ namespace Swagger {
     return nullptr;
   }
 
-  inline void* create(QString json, QString type) {
-    void* val = create(type);
+  
+  inline void create(QString json, QString type, SWGReturn** ptr ) { 
+    auto val = static_cast<SWGObject*>(create(type));
     if(val != nullptr) {
-      SWGObject* obj = static_cast<SWGObject*>(val);
-      return obj->fromJson(json);
+      *ptr = static_cast<SWGReturn*>(val->fromJson(json));
     }
-    if(type.startsWith("QString")) {
-      return new QString();
-    }
-    return nullptr;
   }
+  
+
+  inline void create(QString json, QString type, QString* str){
+        if(type.startsWith("QString")) {
+      *str = QString();
+    }   
+  }
+
 
 }
 

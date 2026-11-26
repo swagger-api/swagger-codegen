@@ -142,7 +142,6 @@ SWGPetApi::findPetsByStatus(QList<QString*>* status) {
 
 
 
-
     if (status->size() > 0) {
       if (QString("csv").indexOf("multi") == 0) {
         foreach(QString* t, *status) {
@@ -246,7 +245,6 @@ void
 SWGPetApi::findPetsByTags(QList<QString*>* tags) {
     QString fullPath;
     fullPath.append(this->host).append(this->basePath).append("/pet/findByTags");
-
 
 
 
@@ -390,8 +388,12 @@ SWGPetApi::getPetByIdCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
+
     QString json(worker->response);
-    SWGPet* output = static_cast<SWGPet*>(create(json, QString("SWGPet")));
+
+    SWGPet* output = {};
+    create(json, QString("SWGPet"),&output);
+   
     auto wrapper = new SWGQObjectWrapper<SWGPet*> (output);
     wrapper->deleteLater();
     worker->deleteLater();
@@ -468,11 +470,11 @@ SWGPetApi::updatePetWithForm(qint64 pet_id, QString* name, QString* status) {
     SWGHttpRequestWorker *worker = new SWGHttpRequestWorker();
     SWGHttpRequestInput input(fullPath, "POST");
 
-    if (name != nullptr) {
-        input.add_var("name", *name);
+    if (!name.isEmpty()) {
+        input.add_var("name", name);
     }
-    if (status != nullptr) {
-        input.add_var("status", *status);
+    if (!status.isEmpty()) {
+        input.add_var("status", status);
     }
 
 
@@ -525,11 +527,12 @@ SWGPetApi::uploadFile(qint64 pet_id, QString* additional_metadata, SWGHttpReques
     SWGHttpRequestWorker *worker = new SWGHttpRequestWorker();
     SWGHttpRequestInput input(fullPath, "POST");
 
-    if (additional_metadata != nullptr) {
-        input.add_var("additionalMetadata", *additional_metadata);
+    if (!additional_metadata.isEmpty()) {
+        input.add_var("additionalMetadata", additional_metadata);
     }
     if (file != nullptr) {
         input.add_file("file", (*file).local_filename, (*file).request_filename, (*file).mime_type);
+
     }
 
 
@@ -560,8 +563,12 @@ SWGPetApi::uploadFileCallback(SWGHttpRequestWorker * worker) {
         msg = "Error: " + worker->error_str;
     }
 
+
     QString json(worker->response);
-    SWGApiResponse* output = static_cast<SWGApiResponse*>(create(json, QString("SWGApiResponse")));
+
+    SWGApiResponse* output = {};
+    create(json, QString("SWGApiResponse"),&output);
+   
     auto wrapper = new SWGQObjectWrapper<SWGApiResponse*> (output);
     wrapper->deleteLater();
     worker->deleteLater();

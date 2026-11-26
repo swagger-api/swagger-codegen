@@ -46,9 +46,6 @@ SWGCategory::init() {
 void
 SWGCategory::cleanup() {
 
-    if(name != nullptr) { 
-        delete name;
-    }
 }
 
 SWGCategory*
@@ -63,8 +60,10 @@ SWGCategory::fromJson(QString json) {
 void
 SWGCategory::fromJsonObject(QJsonObject pJson) {
     ::Swagger::setValue(&id, pJson["id"], "qint64", "");
+    m_id_isSet = pJson.contains("id");
     
-    ::Swagger::setValue(&name, pJson["name"], "QString", "QString");
+    ::Swagger::setValue(name, pJson["name"], "QString");
+    m_name_isSet = pJson.contains("name");
     
 }
 
@@ -83,7 +82,7 @@ SWGCategory::asJsonObject() {
     if(m_id_isSet){
         obj.insert("id", QJsonValue(id));
     }
-    if(name != nullptr && *name != QString("")){
+    if(m_name_isSet){
         toJsonValue(QString("name"), name, obj, QString("QString"));
     }
 
@@ -116,7 +115,7 @@ SWGCategory::isSet(){
     bool isObjectUpdated = false;
     do{
         if(m_id_isSet){ isObjectUpdated = true; break;}
-        if(name != nullptr && *name != QString("")){ isObjectUpdated = true; break;}
+        if(m_name_isSet){ isObjectUpdated = true; break;}
     }while(false);
     return isObjectUpdated;
 }

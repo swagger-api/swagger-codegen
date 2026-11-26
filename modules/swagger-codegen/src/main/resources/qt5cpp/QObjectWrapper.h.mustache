@@ -8,17 +8,29 @@
 namespace {{this}} {
 {{/cppNamespaceDeclarations}}
 
-    template <typename ObjectPtrT>
+    template <typename ObjectT>
     class {{prefix}}QObjectWrapper : public QObject {
         public:
-            {{prefix}}QObjectWrapper(ObjectPtrT ptr){
-                data = ptr;
+            {{prefix}}QObjectWrapper(ObjectT t){
+                data = t;
+            }
+            ~{{prefix}}QObjectWrapper(){
+
+            }
+        private :
+            ObjectT data;
+    };
+    template <typename ObjectT>
+    class {{prefix}}QObjectWrapper<ObjectT*> : public QObject {
+        public:
+            {{prefix}}QObjectWrapper(ObjectT* t){
+                data = t;
             }
             ~{{prefix}}QObjectWrapper(){
                 delete data;
             }
         private :
-            ObjectPtrT data;
+            ObjectT* data;
     };
 
 {{#cppNamespaceDeclarations}}

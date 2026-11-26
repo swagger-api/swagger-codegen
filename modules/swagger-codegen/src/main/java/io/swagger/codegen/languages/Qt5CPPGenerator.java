@@ -302,7 +302,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
             return getSwaggerType(p) + "<QString, " + getTypeDeclaration(inner) + ">*";
         }
         if (foundationClasses.contains(swaggerType)) {
-            return swaggerType + "*";
+            return swaggerType ;//+ "*";
         } else if (languageSpecificPrimitives.contains(swaggerType)) {
             return toModelName(swaggerType);
         } else {
@@ -314,7 +314,7 @@ public class Qt5CPPGenerator extends AbstractCppCodegen implements CodegenConfig
     @Override
     public String toDefaultValue(Property p) {
         if (p instanceof StringProperty) {
-            return "new QString(\"\")";
+            return "\"\"";
         } else if (p instanceof BooleanProperty) {
             return "false";
         } else if (p instanceof DateProperty) {
