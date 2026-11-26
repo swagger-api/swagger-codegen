@@ -588,7 +588,12 @@ public class SpringCodegen extends AbstractJavaCodegen
                 allParams.add(p);
             }
         }
-        allParams.get(allParams.size()-1).hasMore =false;
+        
+        if(allParams.isEmpty()){
+            return;
+        }
+        
+        allParams.get(allParams.size()-1).hasMore = false;
     }
 
     @Override
