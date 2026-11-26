@@ -51,6 +51,45 @@ public class FakeApi {
         this.apiClient = apiClient;
     }
 
+    public static class FakeOuterBooleanSerializeOptionals {
+        
+        public Boolean body() {
+            return this.body;
+        }
+
+        public FakeOuterBooleanSerializeOptionals body(Boolean body) {
+            this.body = body;
+            return this;
+        }
+
+        private Boolean body = null;
+        
+    }
+
+    /**
+    * 
+    * Test serialization of outer boolean types
+    * @return Boolean
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public Boolean fakeOuterBooleanSerialize() throws RestClientException {
+        return fakeOuterBooleanSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer boolean types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return Boolean
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public Boolean fakeOuterBooleanSerializeOpts(FakeOuterBooleanSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of outer boolean types
@@ -61,6 +100,30 @@ public class FakeApi {
      */
     public Boolean fakeOuterBooleanSerialize(Boolean body) throws RestClientException {
         return fakeOuterBooleanSerializeWithHttpInfo(body).getBody();
+    }
+
+    /**
+    * 
+    * Test serialization of outer boolean types
+    * @return ResponseEntity&lt;Boolean&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Boolean> fakeOuterBooleanSerializeWithHttpInfo() throws RestClientException {
+        return fakeOuterBooleanSerializeWithHttpInfo(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer boolean types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;Boolean&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Boolean> fakeOuterBooleanSerializeOptsWithHttpInfo(FakeOuterBooleanSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterBooleanSerializeOptionals();
+        }
+        return fakeOuterBooleanSerializeWithHttpInfo(optionals.body());
     }
 
     /**
@@ -90,6 +153,45 @@ public class FakeApi {
         ParameterizedTypeReference<Boolean> returnType = new ParameterizedTypeReference<Boolean>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class FakeOuterCompositeSerializeOptionals {
+        
+        public OuterComposite body() {
+            return this.body;
+        }
+
+        public FakeOuterCompositeSerializeOptionals body(OuterComposite body) {
+            this.body = body;
+            return this;
+        }
+
+        private OuterComposite body = null;
+        
+    }
+
+    /**
+    * 
+    * Test serialization of object with outer number type
+    * @return OuterComposite
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public OuterComposite fakeOuterCompositeSerialize() throws RestClientException {
+        return fakeOuterCompositeSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of object with outer number type
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return OuterComposite
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public OuterComposite fakeOuterCompositeSerializeOpts(FakeOuterCompositeSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of object with outer number type
@@ -100,6 +202,30 @@ public class FakeApi {
      */
     public OuterComposite fakeOuterCompositeSerialize(OuterComposite body) throws RestClientException {
         return fakeOuterCompositeSerializeWithHttpInfo(body).getBody();
+    }
+
+    /**
+    * 
+    * Test serialization of object with outer number type
+    * @return ResponseEntity&lt;OuterComposite&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<OuterComposite> fakeOuterCompositeSerializeWithHttpInfo() throws RestClientException {
+        return fakeOuterCompositeSerializeWithHttpInfo(null);
+    }
+
+    /**
+    * 
+    * Test serialization of object with outer number type
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;OuterComposite&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<OuterComposite> fakeOuterCompositeSerializeOptsWithHttpInfo(FakeOuterCompositeSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterCompositeSerializeOptionals();
+        }
+        return fakeOuterCompositeSerializeWithHttpInfo(optionals.body());
     }
 
     /**
@@ -129,6 +255,45 @@ public class FakeApi {
         ParameterizedTypeReference<OuterComposite> returnType = new ParameterizedTypeReference<OuterComposite>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class FakeOuterNumberSerializeOptionals {
+        
+        public BigDecimal body() {
+            return this.body;
+        }
+
+        public FakeOuterNumberSerializeOptionals body(BigDecimal body) {
+            this.body = body;
+            return this;
+        }
+
+        private BigDecimal body = null;
+        
+    }
+
+    /**
+    * 
+    * Test serialization of outer number types
+    * @return BigDecimal
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public BigDecimal fakeOuterNumberSerialize() throws RestClientException {
+        return fakeOuterNumberSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer number types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return BigDecimal
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public BigDecimal fakeOuterNumberSerializeOpts(FakeOuterNumberSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of outer number types
@@ -139,6 +304,30 @@ public class FakeApi {
      */
     public BigDecimal fakeOuterNumberSerialize(BigDecimal body) throws RestClientException {
         return fakeOuterNumberSerializeWithHttpInfo(body).getBody();
+    }
+
+    /**
+    * 
+    * Test serialization of outer number types
+    * @return ResponseEntity&lt;BigDecimal&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<BigDecimal> fakeOuterNumberSerializeWithHttpInfo() throws RestClientException {
+        return fakeOuterNumberSerializeWithHttpInfo(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer number types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;BigDecimal&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<BigDecimal> fakeOuterNumberSerializeOptsWithHttpInfo(FakeOuterNumberSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterNumberSerializeOptionals();
+        }
+        return fakeOuterNumberSerializeWithHttpInfo(optionals.body());
     }
 
     /**
@@ -168,6 +357,45 @@ public class FakeApi {
         ParameterizedTypeReference<BigDecimal> returnType = new ParameterizedTypeReference<BigDecimal>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class FakeOuterStringSerializeOptionals {
+        
+        public String body() {
+            return this.body;
+        }
+
+        public FakeOuterStringSerializeOptionals body(String body) {
+            this.body = body;
+            return this;
+        }
+
+        private String body = null;
+        
+    }
+
+    /**
+    * 
+    * Test serialization of outer string types
+    * @return String
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public String fakeOuterStringSerialize() throws RestClientException {
+        return fakeOuterStringSerialize(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer string types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return String
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public String fakeOuterStringSerializeOpts(FakeOuterStringSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerialize(optionals.body());
+    }
+
     /**
      * 
      * Test serialization of outer string types
@@ -178,6 +406,30 @@ public class FakeApi {
      */
     public String fakeOuterStringSerialize(String body) throws RestClientException {
         return fakeOuterStringSerializeWithHttpInfo(body).getBody();
+    }
+
+    /**
+    * 
+    * Test serialization of outer string types
+    * @return ResponseEntity&lt;String&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<String> fakeOuterStringSerializeWithHttpInfo() throws RestClientException {
+        return fakeOuterStringSerializeWithHttpInfo(null);
+    }
+
+    /**
+    * 
+    * Test serialization of outer string types
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;String&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<String> fakeOuterStringSerializeOptsWithHttpInfo(FakeOuterStringSerializeOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new FakeOuterStringSerializeOptionals();
+        }
+        return fakeOuterStringSerializeWithHttpInfo(optionals.body());
     }
 
     /**
@@ -207,6 +459,8 @@ public class FakeApi {
         ParameterizedTypeReference<String> returnType = new ParameterizedTypeReference<String>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * 
      * 
@@ -218,6 +472,7 @@ public class FakeApi {
     public void testBodyWithQueryParams(User body, String query) throws RestClientException {
         testBodyWithQueryParamsWithHttpInfo(body, query);
     }
+
 
     /**
      * 
@@ -261,6 +516,8 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.PUT, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * To test \&quot;client\&quot; model
      * To test \&quot;client\&quot; model
@@ -272,6 +529,7 @@ public class FakeApi {
     public Client testClientModel(Client body) throws RestClientException {
         return testClientModelWithHttpInfo(body).getBody();
     }
+
 
     /**
      * To test \&quot;client\&quot; model
@@ -309,6 +567,150 @@ public class FakeApi {
         ParameterizedTypeReference<Client> returnType = new ParameterizedTypeReference<Client>() {};
         return apiClient.invokeAPI(path, HttpMethod.PATCH, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class TestEndpointParametersOptionals {
+        
+        public Integer integer() {
+            return this.integer;
+        }
+
+        public TestEndpointParametersOptionals integer(Integer integer) {
+            this.integer = integer;
+            return this;
+        }
+
+        private Integer integer = null;
+        
+        public Integer int32() {
+            return this.int32;
+        }
+
+        public TestEndpointParametersOptionals int32(Integer int32) {
+            this.int32 = int32;
+            return this;
+        }
+
+        private Integer int32 = null;
+        
+        public Long int64() {
+            return this.int64;
+        }
+
+        public TestEndpointParametersOptionals int64(Long int64) {
+            this.int64 = int64;
+            return this;
+        }
+
+        private Long int64 = null;
+        
+        public Float _float() {
+            return this._float;
+        }
+
+        public TestEndpointParametersOptionals _float(Float _float) {
+            this._float = _float;
+            return this;
+        }
+
+        private Float _float = null;
+        
+        public String string() {
+            return this.string;
+        }
+
+        public TestEndpointParametersOptionals string(String string) {
+            this.string = string;
+            return this;
+        }
+
+        private String string = null;
+        
+        public byte[] binary() {
+            return this.binary;
+        }
+
+        public TestEndpointParametersOptionals binary(byte[] binary) {
+            this.binary = binary;
+            return this;
+        }
+
+        private byte[] binary = null;
+        
+        public LocalDate date() {
+            return this.date;
+        }
+
+        public TestEndpointParametersOptionals date(LocalDate date) {
+            this.date = date;
+            return this;
+        }
+
+        private LocalDate date = null;
+        
+        public OffsetDateTime dateTime() {
+            return this.dateTime;
+        }
+
+        public TestEndpointParametersOptionals dateTime(OffsetDateTime dateTime) {
+            this.dateTime = dateTime;
+            return this;
+        }
+
+        private OffsetDateTime dateTime = null;
+        
+        public String password() {
+            return this.password;
+        }
+
+        public TestEndpointParametersOptionals password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        private String password = null;
+        
+        public String paramCallback() {
+            return this.paramCallback;
+        }
+
+        public TestEndpointParametersOptionals paramCallback(String paramCallback) {
+            this.paramCallback = paramCallback;
+            return this;
+        }
+
+        private String paramCallback = null;
+        
+    }
+
+    /**
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * @param number None (required)
+    * @param _double None (required)
+    * @param patternWithoutDelimiter None (required)
+    * @param _byte None (required)
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte) throws RestClientException {
+        testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, null, null, null, null, null, null, null, null, null, null);
+    }
+
+    /**
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * @param number None (required)
+    * @param _double None (required)
+    * @param patternWithoutDelimiter None (required)
+    * @param _byte None (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEndpointParametersOpts(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, TestEndpointParametersOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new TestEndpointParametersOptionals();
+        }
+        testEndpointParameters(number, _double, patternWithoutDelimiter, _byte, optionals.integer(), optionals.int32(), optionals.int64(), optionals._float(), optionals.string(), optionals.binary(), optionals.date(), optionals.dateTime(), optionals.password(), optionals.paramCallback());
+    }
+
     /**
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
      * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
@@ -332,6 +734,38 @@ public class FakeApi {
      */
     public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, byte[] binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws RestClientException {
         testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, integer, int32, int64, _float, string, binary, date, dateTime, password, paramCallback);
+    }
+
+    /**
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * @param number None (required)
+    * @param _double None (required)
+    * @param patternWithoutDelimiter None (required)
+    * @param _byte None (required)
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> testEndpointParametersWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte) throws RestClientException {
+        return testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, null, null, null, null, null, null, null, null, null, null);
+    }
+
+    /**
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * Fake endpoint for testing various parameters 假端點 偽のエンドポイント 가짜 엔드 포인트 
+    * @param number None (required)
+    * @param _double None (required)
+    * @param patternWithoutDelimiter None (required)
+    * @param _byte None (required)
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> testEndpointParametersOptsWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, TestEndpointParametersOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new TestEndpointParametersOptionals();
+        }
+        return testEndpointParametersWithHttpInfo(number, _double, patternWithoutDelimiter, _byte, optionals.integer(), optionals.int32(), optionals.int64(), optionals._float(), optionals.string(), optionals.binary(), optionals.date(), optionals.dateTime(), optionals.password(), optionals.paramCallback());
     }
 
     /**
@@ -428,6 +862,120 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+    public static class TestEnumParametersOptionals {
+        
+        public List<String> enumFormStringArray() {
+            return this.enumFormStringArray;
+        }
+
+        public TestEnumParametersOptionals enumFormStringArray(List<String> enumFormStringArray) {
+            this.enumFormStringArray = enumFormStringArray;
+            return this;
+        }
+
+        private List<String> enumFormStringArray = null;
+        
+        public String enumFormString() {
+            return this.enumFormString;
+        }
+
+        public TestEnumParametersOptionals enumFormString(String enumFormString) {
+            this.enumFormString = enumFormString;
+            return this;
+        }
+
+        private String enumFormString = null;
+        
+        public List<String> enumHeaderStringArray() {
+            return this.enumHeaderStringArray;
+        }
+
+        public TestEnumParametersOptionals enumHeaderStringArray(List<String> enumHeaderStringArray) {
+            this.enumHeaderStringArray = enumHeaderStringArray;
+            return this;
+        }
+
+        private List<String> enumHeaderStringArray = null;
+        
+        public String enumHeaderString() {
+            return this.enumHeaderString;
+        }
+
+        public TestEnumParametersOptionals enumHeaderString(String enumHeaderString) {
+            this.enumHeaderString = enumHeaderString;
+            return this;
+        }
+
+        private String enumHeaderString = null;
+        
+        public List<String> enumQueryStringArray() {
+            return this.enumQueryStringArray;
+        }
+
+        public TestEnumParametersOptionals enumQueryStringArray(List<String> enumQueryStringArray) {
+            this.enumQueryStringArray = enumQueryStringArray;
+            return this;
+        }
+
+        private List<String> enumQueryStringArray = null;
+        
+        public String enumQueryString() {
+            return this.enumQueryString;
+        }
+
+        public TestEnumParametersOptionals enumQueryString(String enumQueryString) {
+            this.enumQueryString = enumQueryString;
+            return this;
+        }
+
+        private String enumQueryString = null;
+        
+        public Integer enumQueryInteger() {
+            return this.enumQueryInteger;
+        }
+
+        public TestEnumParametersOptionals enumQueryInteger(Integer enumQueryInteger) {
+            this.enumQueryInteger = enumQueryInteger;
+            return this;
+        }
+
+        private Integer enumQueryInteger = null;
+        
+        public Double enumQueryDouble() {
+            return this.enumQueryDouble;
+        }
+
+        public TestEnumParametersOptionals enumQueryDouble(Double enumQueryDouble) {
+            this.enumQueryDouble = enumQueryDouble;
+            return this;
+        }
+
+        private Double enumQueryDouble = null;
+        
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEnumParameters() throws RestClientException {
+        testEnumParameters(null, null, null, null, null, null, null, null);
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @param optionals An object containing the optional parameters for this API call.
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public void testEnumParametersOpts(TestEnumParametersOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        testEnumParameters(optionals.enumFormStringArray(), optionals.enumFormString(), optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger(), optionals.enumQueryDouble());
+    }
+
     /**
      * To test enum parameters
      * To test enum parameters
@@ -445,6 +993,30 @@ public class FakeApi {
      */
     public void testEnumParameters(List<String> enumFormStringArray, String enumFormString, List<String> enumHeaderStringArray, String enumHeaderString, List<String> enumQueryStringArray, String enumQueryString, Integer enumQueryInteger, Double enumQueryDouble) throws RestClientException {
         testEnumParametersWithHttpInfo(enumFormStringArray, enumFormString, enumHeaderStringArray, enumHeaderString, enumQueryStringArray, enumQueryString, enumQueryInteger, enumQueryDouble);
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> testEnumParametersWithHttpInfo() throws RestClientException {
+        return testEnumParametersWithHttpInfo(null, null, null, null, null, null, null, null);
+    }
+
+    /**
+    * To test enum parameters
+    * To test enum parameters
+    * @param optionals An object containing the optional parameters for this API call.
+    * @return ResponseEntity&lt;Void&gt;
+    * @throws RestClientException if an error occurs while attempting to invoke the API
+    */
+    public ResponseEntity<Void> testEnumParametersOptsWithHttpInfo(TestEnumParametersOptionals optionals) throws RestClientException {
+        if (optionals == null) {
+            optionals = new TestEnumParametersOptionals();
+        }
+        return testEnumParametersWithHttpInfo(optionals.enumFormStringArray(), optionals.enumFormString(), optionals.enumHeaderStringArray(), optionals.enumHeaderString(), optionals.enumQueryStringArray(), optionals.enumQueryString(), optionals.enumQueryInteger(), optionals.enumQueryDouble());
     }
 
     /**
@@ -502,6 +1074,8 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * test inline additionalProperties
      * 
@@ -512,6 +1086,7 @@ public class FakeApi {
     public void testInlineAdditionalProperties(Object param) throws RestClientException {
         testInlineAdditionalPropertiesWithHttpInfo(param);
     }
+
 
     /**
      * test inline additionalProperties
@@ -547,6 +1122,8 @@ public class FakeApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * test json serialization of form data
      * 
@@ -558,6 +1135,7 @@ public class FakeApi {
     public void testJsonFormData(String param, String param2) throws RestClientException {
         testJsonFormDataWithHttpInfo(param, param2);
     }
+
 
     /**
      * test json serialization of form data

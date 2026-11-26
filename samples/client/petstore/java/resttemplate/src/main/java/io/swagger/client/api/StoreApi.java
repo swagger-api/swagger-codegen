@@ -46,6 +46,8 @@ public class StoreApi {
         this.apiClient = apiClient;
     }
 
+
+
     /**
      * Delete purchase order by ID
      * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
@@ -57,6 +59,7 @@ public class StoreApi {
     public void deleteOrder(String orderId) throws RestClientException {
         deleteOrderWithHttpInfo(orderId);
     }
+
 
     /**
      * Delete purchase order by ID
@@ -96,6 +99,8 @@ public class StoreApi {
         ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {};
         return apiClient.invokeAPI(path, HttpMethod.DELETE, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Returns pet inventories by status
      * Returns a map of status codes to quantities
@@ -106,6 +111,7 @@ public class StoreApi {
     public Map<String, Integer> getInventory() throws RestClientException {
         return getInventoryWithHttpInfo().getBody();
     }
+
 
     /**
      * Returns pet inventories by status
@@ -135,6 +141,8 @@ public class StoreApi {
         ParameterizedTypeReference<Map<String, Integer>> returnType = new ParameterizedTypeReference<Map<String, Integer>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Find purchase order by ID
      * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
@@ -148,6 +156,7 @@ public class StoreApi {
     public Order getOrderById(Long orderId) throws RestClientException {
         return getOrderByIdWithHttpInfo(orderId).getBody();
     }
+
 
     /**
      * Find purchase order by ID
@@ -188,6 +197,8 @@ public class StoreApi {
         ParameterizedTypeReference<Order> returnType = new ParameterizedTypeReference<Order>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
+
+
     /**
      * Place an order for a pet
      * 
@@ -200,6 +211,7 @@ public class StoreApi {
     public Order placeOrder(Order body) throws RestClientException {
         return placeOrderWithHttpInfo(body).getBody();
     }
+
 
     /**
      * Place an order for a pet
