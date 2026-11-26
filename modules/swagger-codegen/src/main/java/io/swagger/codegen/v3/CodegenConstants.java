@@ -307,6 +307,7 @@ public class CodegenConstants {
     public static final String IS_API_KEY_EXT_NAME = PREFIX_IS + "api-key";
     public static final String IS_KEY_IN_QUERY_EXT_NAME = PREFIX_IS + "key-in-query";
     public static final String IS_KEY_IN_HEADER_EXT_NAME = PREFIX_IS + "key-in-header";
+    public static final String IS_KEY_IN_COOKIE_EXT_NAME = PREFIX_IS + "key-in-cookie";
     public static final String IS_CODE_EXT_NAME = PREFIX_IS + "code";
     public static final String IS_PASSWORD_EXT_NAME = PREFIX_IS + "password";
     public static final String IS_APPLICATION_EXT_NAME = PREFIX_IS + "application";
