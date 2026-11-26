@@ -1,4 +1,9 @@
+{{#modelGenericAdditionalProperties}}
 export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{ {{>modelGenericAdditionalProperties}}
+{{/modelGenericAdditionalProperties}}
+{{^modelGenericAdditionalProperties}}
+export interface {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+{{/modelGenericAdditionalProperties}}
 {{#vars}}
     {{#description}}
     /**

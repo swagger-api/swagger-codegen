@@ -9,31 +9,34 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { Http, Headers, URLSearchParams }                    from '@angular/http';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
-import { Response, ResponseContentType }                     from '@angular/http';
-import { CustomQueryEncoderHelper }                          from '../encoder';
+import { Response, ResponseContentType } from '@angular/http';
+import { CustomQueryEncoderHelper } from '../encoder';
 
-import { Observable }                                        from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import '../rxjs-operators';
 
 import { User } from '../model/user';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
 
 
 @Injectable()
 export class UserService {
 
-    protected basePath = 'https://petstore.swagger.io/v2';
+    protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders = new Headers();
     public configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected http: Http,
+                @Optional()@Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -62,7 +65,9 @@ export class UserService {
      * @summary Create user
      * @param body Created user object
      */
-    public createUser(body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public createUser(
+                body: User,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.createUserWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -78,7 +83,9 @@ export class UserService {
      * @summary Creates list of users with given input array
      * @param body List of user object
      */
-    public createUsersWithArrayInput(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public createUsersWithArrayInput(
+                body: Array<User>,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.createUsersWithArrayInputWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -94,7 +101,9 @@ export class UserService {
      * @summary Creates list of users with given input array
      * @param body List of user object
      */
-    public createUsersWithListInput(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public createUsersWithListInput(
+                body: Array<User>,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.createUsersWithListInputWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -110,7 +119,9 @@ export class UserService {
      * @summary Delete user
      * @param username The name that needs to be deleted
      */
-    public deleteUser(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public deleteUser(
+                username: string,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.deleteUserWithHttpInfo(username, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -126,7 +137,9 @@ export class UserService {
      * @summary Get user by user name
      * @param username The name that needs to be fetched. Use user1 for testing.
      */
-    public getUserByName(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<User> {
+    public getUserByName(
+                username: string,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<User> {
         return this.getUserByNameWithHttpInfo(username, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -143,7 +156,10 @@ export class UserService {
      * @param username The user name for login
      * @param password The password for login in clear text
      */
-    public loginUser(username: string, password: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<string> {
+    public loginUser(
+                username: string,
+                password: string,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<string> {
         return this.loginUserWithHttpInfo(username, password, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -158,7 +174,8 @@ export class UserService {
      * 
      * @summary Logs out current logged in user session
      */
-    public logoutUser(extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public logoutUser(
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.logoutUserWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -175,7 +192,10 @@ export class UserService {
      * @param username name that need to be deleted
      * @param body Updated user object
      */
-    public updateUser(username: string, body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public updateUser(
+                username: string,
+                body: User,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.updateUserWithHttpInfo(username, body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -188,26 +208,30 @@ export class UserService {
 
 
     /**
-     * Create user
+     * @summary Create user
      * This can only be done by the logged in user.
      * @param body Created user object
      
      */
-    public createUserWithHttpInfo(body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public createUserWithHttpInfo(
+            body: User,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling createUser.');
+            const string1 = 'Required parameter body was null or undefined ';
+            const string2 = 'when calling createUser.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -215,13 +239,13 @@ export class UserService {
         const consumes: string[] = [
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
+        if (httpContentTypeSelected !== undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers: headers,
+            headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });
@@ -234,26 +258,30 @@ export class UserService {
     }
 
     /**
-     * Creates list of users with given input array
+     * @summary Creates list of users with given input array
      * 
      * @param body List of user object
      
      */
-    public createUsersWithArrayInputWithHttpInfo(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public createUsersWithArrayInputWithHttpInfo(
+            body: Array<User>,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling createUsersWithArrayInput.');
+            const string1 = 'Required parameter body was null or undefined ';
+            const string2 = 'when calling createUsersWithArrayInput.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -261,13 +289,13 @@ export class UserService {
         const consumes: string[] = [
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
+        if (httpContentTypeSelected !== undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers: headers,
+            headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });
@@ -280,26 +308,30 @@ export class UserService {
     }
 
     /**
-     * Creates list of users with given input array
+     * @summary Creates list of users with given input array
      * 
      * @param body List of user object
      
      */
-    public createUsersWithListInputWithHttpInfo(body: Array<User>, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public createUsersWithListInputWithHttpInfo(
+            body: Array<User>,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling createUsersWithListInput.');
+            const string1 = 'Required parameter body was null or undefined ';
+            const string2 = 'when calling createUsersWithListInput.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -307,13 +339,13 @@ export class UserService {
         const consumes: string[] = [
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
+        if (httpContentTypeSelected !== undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers: headers,
+            headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });
@@ -326,26 +358,30 @@ export class UserService {
     }
 
     /**
-     * Delete user
+     * @summary Delete user
      * This can only be done by the logged in user.
      * @param username The name that needs to be deleted
      
      */
-    public deleteUserWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public deleteUserWithHttpInfo(
+            username: string,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling deleteUser.');
+            const string1 = 'Required parameter username was null or undefined ';
+            const string2 = 'when calling deleteUser.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -355,7 +391,7 @@ export class UserService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
-            headers: headers,
+            headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -367,26 +403,30 @@ export class UserService {
     }
 
     /**
-     * Get user by user name
+     * @summary Get user by user name
      * 
      * @param username The name that needs to be fetched. Use user1 for testing.
      
      */
-    public getUserByNameWithHttpInfo(username: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public getUserByNameWithHttpInfo(
+            username: string,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling getUserByName.');
+            const string1 = 'Required parameter username was null or undefined ';
+            const string2 = 'when calling getUserByName.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -396,7 +436,7 @@ export class UserService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers: headers,
+            headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -408,20 +448,27 @@ export class UserService {
     }
 
     /**
-     * Logs user into the system
+     * @summary Logs user into the system
      * 
      * @param username The user name for login
      * @param password The password for login in clear text
      
      */
-    public loginUserWithHttpInfo(username: string, password: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public loginUserWithHttpInfo(
+            username: string,
+            password: string,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling loginUser.');
+            const string1 = 'Required parameter username was null or undefined ';
+            const string2 = 'when calling loginUser.';
+            throw new Error(string1 + string2);
         }
 
         if (password === null || password === undefined) {
-            throw new Error('Required parameter password was null or undefined when calling loginUser.');
+            const string1 = 'Required parameter password was null or undefined ';
+            const string2 = 'when calling loginUser.';
+            throw new Error(string1 + string2);
         }
 
         let queryParameters = new URLSearchParams('', new CustomQueryEncoderHelper());
@@ -435,12 +482,12 @@ export class UserService {
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -450,7 +497,7 @@ export class UserService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers: headers,
+            headers,
             search: queryParameters,
             withCredentials:this.configuration.withCredentials
         });
@@ -463,21 +510,22 @@ export class UserService {
     }
 
     /**
-     * Logs out current logged in user session
+     * @summary Logs out current logged in user session
      * 
      
      */
-    public logoutUserWithHttpInfo(extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public logoutUserWithHttpInfo(
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -487,7 +535,7 @@ export class UserService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers: headers,
+            headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -499,31 +547,38 @@ export class UserService {
     }
 
     /**
-     * Updated user
+     * @summary Updated user
      * This can only be done by the logged in user.
      * @param username name that need to be deleted
      * @param body Updated user object
      
      */
-    public updateUserWithHttpInfo(username: string, body: User, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public updateUserWithHttpInfo(
+            username: string,
+            body: User,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling updateUser.');
+            const string1 = 'Required parameter username was null or undefined ';
+            const string2 = 'when calling updateUser.';
+            throw new Error(string1 + string2);
         }
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateUser.');
+            const string1 = 'Required parameter body was null or undefined ';
+            const string2 = 'when calling updateUser.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -531,13 +586,13 @@ export class UserService {
         const consumes: string[] = [
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
+        if (httpContentTypeSelected !== undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Put,
-            headers: headers,
+            headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });

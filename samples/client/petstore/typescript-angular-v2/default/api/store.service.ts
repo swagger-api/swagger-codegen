@@ -9,31 +9,34 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { Http, Headers, URLSearchParams }                    from '@angular/http';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import { RequestMethod, RequestOptions, RequestOptionsArgs } from '@angular/http';
-import { Response, ResponseContentType }                     from '@angular/http';
-import { CustomQueryEncoderHelper }                          from '../encoder';
+import { Response, ResponseContentType } from '@angular/http';
+import { CustomQueryEncoderHelper } from '../encoder';
 
-import { Observable }                                        from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import '../rxjs-operators';
 
 import { Order } from '../model/order';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
 
 
 @Injectable()
 export class StoreService {
 
-    protected basePath = 'https://petstore.swagger.io/v2';
+    protected basePath = 'http://petstore.swagger.io/v2';
     public defaultHeaders = new Headers();
     public configuration = new Configuration();
 
-    constructor(protected http: Http, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected http: Http,
+                @Optional()@Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration) {
         if (basePath) {
             this.basePath = basePath;
         }
@@ -62,7 +65,9 @@ export class StoreService {
      * @summary Delete purchase order by ID
      * @param orderId ID of the order that needs to be deleted
      */
-    public deleteOrder(orderId: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
+    public deleteOrder(
+                orderId: string,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{}> {
         return this.deleteOrderWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -77,7 +82,8 @@ export class StoreService {
      * Returns a map of status codes to quantities
      * @summary Returns pet inventories by status
      */
-    public getInventory(extraHttpRequestParams?: RequestOptionsArgs): Observable<{ [key: string]: number; }> {
+    public getInventory(
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<{ [key: string]: number; }> {
         return this.getInventoryWithHttpInfo(extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -93,7 +99,9 @@ export class StoreService {
      * @summary Find purchase order by ID
      * @param orderId ID of pet that needs to be fetched
      */
-    public getOrderById(orderId: number, extraHttpRequestParams?: RequestOptionsArgs): Observable<Order> {
+    public getOrderById(
+                orderId: number,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<Order> {
         return this.getOrderByIdWithHttpInfo(orderId, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -109,7 +117,9 @@ export class StoreService {
      * @summary Place an order for a pet
      * @param body order placed for purchasing the pet
      */
-    public placeOrder(body: Order, extraHttpRequestParams?: RequestOptionsArgs): Observable<Order> {
+    public placeOrder(
+                body: Order,
+                extraHttpRequestParams?: RequestOptionsArgs): Observable<Order> {
         return this.placeOrderWithHttpInfo(body, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -122,26 +132,30 @@ export class StoreService {
 
 
     /**
-     * Delete purchase order by ID
-     * For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors
+     * @summary Delete purchase order by ID
+     * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
      * @param orderId ID of the order that needs to be deleted
      
      */
-    public deleteOrderWithHttpInfo(orderId: string, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public deleteOrderWithHttpInfo(
+            orderId: string,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (orderId === null || orderId === undefined) {
-            throw new Error('Required parameter orderId was null or undefined when calling deleteOrder.');
+            const string1 = 'Required parameter orderId was null or undefined ';
+            const string2 = 'when calling deleteOrder.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -151,7 +165,7 @@ export class StoreService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Delete,
-            headers: headers,
+            headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -163,25 +177,26 @@ export class StoreService {
     }
 
     /**
-     * Returns pet inventories by status
+     * @summary Returns pet inventories by status
      * Returns a map of status codes to quantities
      
      */
-    public getInventoryWithHttpInfo(extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public getInventoryWithHttpInfo(
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["api_key"]) {
-            headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys && this.configuration.apiKeys.api_key) {
+            headers.set('api_key', this.configuration.apiKeys.api_key);
         }
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -191,7 +206,7 @@ export class StoreService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers: headers,
+            headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -203,26 +218,30 @@ export class StoreService {
     }
 
     /**
-     * Find purchase order by ID
-     * For valid response try integer IDs with value &lt;&#x3D; 5 or &gt; 10. Other values will generated exceptions
+     * @summary Find purchase order by ID
+     * For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions
      * @param orderId ID of pet that needs to be fetched
      
      */
-    public getOrderByIdWithHttpInfo(orderId: number, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public getOrderByIdWithHttpInfo(
+            orderId: number,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (orderId === null || orderId === undefined) {
-            throw new Error('Required parameter orderId was null or undefined when calling getOrderById.');
+            const string1 = 'Required parameter orderId was null or undefined ';
+            const string2 = 'when calling getOrderById.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -232,7 +251,7 @@ export class StoreService {
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Get,
-            headers: headers,
+            headers,
             withCredentials:this.configuration.withCredentials
         });
         // https://github.com/swagger-api/swagger-codegen/issues/4037
@@ -244,26 +263,30 @@ export class StoreService {
     }
 
     /**
-     * Place an order for a pet
+     * @summary Place an order for a pet
      * 
      * @param body order placed for purchasing the pet
      
      */
-    public placeOrderWithHttpInfo(body: Order, extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
+    public placeOrderWithHttpInfo(
+            body: Order,
+            extraHttpRequestParams?: RequestOptionsArgs): Observable<Response> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling placeOrder.');
+            const string1 = 'Required parameter body was null or undefined ';
+            const string2 = 'when calling placeOrder.';
+            throw new Error(string1 + string2);
         }
 
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
 
         // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
+        const httpHeaderAccepts: string[] = [
             'application/xml',
             'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
+        if (httpHeaderAcceptSelected !== undefined) {
             headers.set('Accept', httpHeaderAcceptSelected);
         }
 
@@ -271,13 +294,13 @@ export class StoreService {
         const consumes: string[] = [
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
+        if (httpContentTypeSelected !== undefined) {
             headers.set('Content-Type', httpContentTypeSelected);
         }
 
         let requestOptions: RequestOptionsArgs = new RequestOptions({
             method: RequestMethod.Post,
-            headers: headers,
+            headers,
             body: body == null ? '' : JSON.stringify(body), // https://github.com/angular/angular/issues/10612
             withCredentials:this.configuration.withCredentials
         });
