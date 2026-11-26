@@ -253,6 +253,13 @@ class ObjectSerializer
             // be interpreted as a missing field/value. Let's handle
             // this graceful.
             if (!empty($data)) {
+                // In some cases the server can send us a valid data
+                // represented as a timestamp either in seconds, 10 digits,
+                // or in milliseconds, 14 digits. We need to transform it in
+                // in valid format before passing it back as DateTime object.
+                if (1 === preg_match('/\d{10,14}/', $data)) {
+                    $data = date(DATE_ISO8601, $data);
+                }
                 return new \DateTime($data);
             } else {
                 return null;
